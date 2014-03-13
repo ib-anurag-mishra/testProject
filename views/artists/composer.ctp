@@ -52,6 +52,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
             <div class="album-scrollable horiz-scroll">
                 <ul style="width:4500px">
                     <?php
+                    $i =0;
                     foreach ($albumData as $palbum) {
                         $albumDetails = $album->getImage($palbum->ReferenceID);
 
@@ -91,8 +92,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                                     <?php
                                 }
                                 ?>
-                                <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($palbum->ArtistText)); ?>/<?php echo $palbum->ReferenceID; ?>/<?php echo base64_encode($palbum->provider_type); ?>" >
-                                </a>   
                             </div>
                             <div class="album-title">
                                 <a title="<?php echo $this->getTextEncode($palbum->Title); ?>" 
@@ -128,6 +127,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                             </div>
                         </li>
                         <?php
+                          $i++;  
                        }
                     ?>
                 </ul>
