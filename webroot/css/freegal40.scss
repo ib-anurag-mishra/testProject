@@ -5345,3 +5345,27 @@ footer {
     }
 
 }
+
+.album-container {
+	.wishlist-icon {
+
+		position: absolute;
+		right: 31px;
+		top: -1px;
+		width: 34px;
+		height: 25px;
+		background: url(../img/freegal_sprite.png) 0 -225px;
+
+		&:hover {
+
+			background: url(../img/freegal_sprite.png) -35px -225px;
+		}
+
+		&:active {
+
+			background: url(../img/freegal_sprite.png) -70px -225px;
+		}	
+
+
+	}
+}
