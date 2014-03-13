@@ -1,4 +1,73 @@
 <?php 
+
+function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryString = null)
+{
+    $queryString = html_entity_decode($queryString);
+    if ($totalPages > 1)
+    {
+
+        $part = floor($pageLimitToShow / 2);
+        if (1 != $facetPage)
+        {
+            $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . ($facetPage - 1) . '/' . $queryString);
+        }
+        else
+        {
+            $pagination_str .= "&lt&ltprevious";
+        }
+        
+        $pagination_str .= " ";
+        
+        if ($facetPage <= $part)
+        {
+            $fromPage = 1;
+            $topage = $facetPage + ($pageLimitToShow - $facetPage);
+            $topage = (($topage <= $totalPages) ? $topage : $totalPages);
+        }
+        elseif ($facetPage >= ($totalPages - $part))
+        {
+            $fromPage = ($facetPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($facetPage - ($pageLimitToShow - ($totalPages - $facetPage))) + 1);
+            $topage = $totalPages;
+            $fromPage = (($fromPage > 1) ? $fromPage : 1);
+        }
+        else
+        {
+            $fromPage = $facetPage - $part;
+            $topage = $facetPage + $part;
+        }
+
+
+        for ($pageCount = $fromPage; $pageCount <= $topage; $pageCount++)
+        {
+            if ($facetPage == $pageCount)
+            {
+                $pagination_str .= $pageCount;
+            }
+            else
+            {
+                $pagination_str .= $html->link($pageCount, '/search/index/' . $pageCount . '/' . $queryString);
+            }
+            $pagination_str .= " ";
+        }
+        $pagination_str .= " ";
+
+        if ($facetPage != $totalPages)
+        {
+            $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . ($facetPage + 1) . '/' . $queryString);
+        }
+        else
+        {
+            $pagination_str .= "next&gt&gt";
+        }
+    }
+    else
+    {
+        $pagination_str = '';
+    }
+
+    return $pagination_str;
+}
+
 function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) {
 
     if (strlen($text) > $char_count) {
@@ -137,6 +206,15 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                     ?>
                 </ul>
             </div>
+            <?php 
+                $pagination_str = createPagination($html,$facetPage,$totalFacetPages, 5, urlencode($composertext)); 
+                if(!empty($pagination_str)){ ?>    
+                    <div  class="paging">
+                    <?php
+                       echo $pagination_str;   
+                    ?>
+                    </div>
+                <?php } ?>
         </div>
         <?php
     }
