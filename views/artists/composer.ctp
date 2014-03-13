@@ -83,7 +83,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
     return $obj->getTextEncode($modified_text);
 }
 ?>
-<section class="artist-page">
+<section class="composer-page">
     <div class="breadcrumbs">
         <?php
             echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
@@ -161,7 +161,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                                     <?php
                                 }
                                 if($this->Session->read("patron")){ ?>
-                                     <button class="wishlist-icon toggleable"></button>
+                                     <button class="wishlist-icon toggeable"></button>
                            <?php }
                                 
                                 

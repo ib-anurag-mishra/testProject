@@ -429,19 +429,19 @@ button::-moz-focus-inner {
 }
 
 /* line 411, freegal40.scss */
-.top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable, .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable, .album-container .toggleable {
+.top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable, .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable {
   display: block;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
 }
 /* line 416, freegal40.scss */
-.top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable.active, .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable.active, .album-container .toggleable.active {
+.top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable.active, .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable.active {
   display: block;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
 }
 /* line 422, freegal40.scss */
-.top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable:hover, .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable:hover, .album-container .toggleable:hover {
+.top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable:hover, .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable:hover {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
@@ -4712,4 +4712,22 @@ footer .inner-wrapper .languages li:nth-child(2) a, footer .inner-wrapper .langu
 /* line 5365, freegal40.scss */
 .album-container .wishlist-icon:active {
   background: url(../img/freegal_sprite.png) -70px -225px;
+}
+
+/* line 5375, freegal40.scss */
+.album-container .toggeable {
+  display: block;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+}
+/* line 5380, freegal40.scss */
+.album-container .toggeable.active {
+  display: block;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+/* line 5386, freegal40.scss */
+.album-container .toggeable:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
 }
