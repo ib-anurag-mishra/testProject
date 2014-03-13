@@ -183,6 +183,9 @@ function Get_Sales_date($sales_date_array, $country) {
         case 'all':
             $search_category = 'search-results-all-page';
             break;
+	 case 'genreAlbum':
+            $search_category = 'search-results-albums-page';
+            break;
         default:
             break;
     }

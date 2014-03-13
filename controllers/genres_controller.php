@@ -991,7 +991,7 @@ Class GenresController extends AppController
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
 			//$totalAlbums = $totalFacetCount;
                         // echo "Group Search for Albums Started at ".time();
-                        $albums = $this->Solr->groupSearch($queryVar, 'genreAlbum', $facetPage, $limit);
+                        $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
 
                         // echo "Group Search for Albums Ended at ".time();
 
@@ -1039,6 +1039,25 @@ Class GenresController extends AppController
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
                         $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
                         $this->set('composers', $composers);
+                        break;
+	
+					case 'genreAlbum':
+                        $limit = 12;
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        // echo "Group Search for Albums Started at ".time();
+                        $albums = $this->Solr->groupSearch($queryVar, 'genreAlbum', $facetPage, $limit);
+                        // echo "Group Search for Albums Ended at ".time();
+                        $arr_albumStream = array();
+                        foreach ($albums as $objKey => $objAlbum)
+                        {
+                            $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                            );
+                        }
+                          //echo "<pre>"; print_r($albums);
+                        $this->set('albumData', $albums);
+                        $this->set('arr_albumStream', $arr_albumStream);
+
                         break;
                 }
 
