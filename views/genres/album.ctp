@@ -1,5 +1,11 @@
 <?php 
 
+/*
+  File Name : album.ctp
+  File Description : View page for genre albums
+  Author : m68interactive
+ */
+
 function createPagination($html, $currentPage, $facetPage, $totalPages, $pageLimitToShow, $queryString = null)
 {
     $queryString = html_entity_decode($queryString);
