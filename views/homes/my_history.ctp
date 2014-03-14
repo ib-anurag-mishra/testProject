@@ -171,7 +171,7 @@ $ieVersion =  ieversion();
                                                href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
                                              <?php 
 						if (strlen($downloadResult['Song']['Title']) >= 19) {
-							echo $this->getTextEncode(substr($downloadResult['Song']['Title'], 0, 19));
+							echo $this->getTextEncode(substr($downloadResult['Song']['Title'], 0, 19)) . '...';
 						} else {
 							echo $this->getTextEncode($downloadResult['Song']['Title']); 
 					 	}
