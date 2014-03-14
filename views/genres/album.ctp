@@ -207,7 +207,8 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                 </ul>
             </div>
             <?php 
-                $pagination_str = createPagination($html,$facetPage,$totalFacetPages, 5, base64_encode($keyword)); 
+		$searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                $pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString); 
                 if(!empty($pagination_str)){ ?>    
                     <div  class="paging">
                     <?php
