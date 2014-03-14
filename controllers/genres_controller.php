@@ -10,7 +10,6 @@ ini_set('memory_limit', '2048M');
 
 Class GenresController extends AppController
 {
-
     var $uses = array('Category', 'Files', 'Album', 'Song', 'Download','Searchrecord','LatestVideodownload','LatestDownload','Page');    
     var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming','Solr');
     var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue','Session','Album','Html','Session','Queue','Wishlist');
@@ -60,9 +59,7 @@ Class GenresController extends AppController
             $this->redirect('/genres/view/');
         }
 
-
         $country = $this->Session->read('territory');
-
         //$country = "'".$country."'";
         $this->layout = 'home';
         $patId = $this->Session->read('patron');
@@ -243,8 +240,6 @@ Class GenresController extends AppController
             $finalArray[$j]['Genre'] = $genreName;
             $j++;
         }
-
-        // print_r($finalArray);
         $this->set('categories', $finalArray);
     }
 
@@ -272,7 +267,6 @@ Class GenresController extends AppController
             $Genre = "QWxs";
         }
 
-
         $this->layout = 'home';
         $country = $this->Session->read('territory');
         if (!base64_decode($Genre))
@@ -280,7 +274,6 @@ Class GenresController extends AppController
             $this->Session->setFlash(__('Invalid Genre.', true));
             $this->redirect(array('controller' => '/', 'action' => 'index'));
         }
-
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
         if (($genre = Cache::read("genre" . $country)) === false)
@@ -307,7 +300,6 @@ Class GenresController extends AppController
             Cache::write("genre" . $country, $genreAll);
         }
         $genreAll = Cache::read("genre" . $country);
-
         $this->set('genresAll', $genreAll);
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
@@ -324,9 +316,6 @@ Class GenresController extends AppController
         {
             $cond = "";
         }
-
-
-
         //login redirect fix if selected 
         if ($this->Session->read('selectedAlpha') == 'All')
         {
@@ -349,7 +338,6 @@ Class GenresController extends AppController
         {
             $condition = "";
         }
-
 
         $this->Song->recursive = 0;
         $genre = base64_decode($Genre);
@@ -422,10 +410,8 @@ Class GenresController extends AppController
             );
         }
 
-
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
-
 
         $allArtistsNew = $allArtists;
 
@@ -518,8 +504,7 @@ Class GenresController extends AppController
 
         if ($genre != 'All')
         {
-
-            //this one
+            
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -564,8 +549,6 @@ Class GenresController extends AppController
             );
         }
 
-
-
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
         $allArtistsNew = $allArtists;
@@ -576,7 +559,6 @@ Class GenresController extends AppController
                 $allArtists[$i] = $allArtistsNew[$i];
             }
         }
-
 
         $tempArray = array();
         for ($i = 0; $i < count($allArtistsNew); $i++)
@@ -594,6 +576,7 @@ Class GenresController extends AppController
         $this->set('selectedAlpha', $Artist);
         $this->set('genre', base64_decode($Genre));
     }
+
 
     function ajax_view_pagination($Genre = null, $Artist = null)
     {
@@ -660,8 +643,6 @@ Class GenresController extends AppController
         }
         else
         {
-
-
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('hasOne' => array('Genre')));
@@ -684,8 +665,6 @@ Class GenresController extends AppController
         }
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
-
-
         $allArtistsNew = $allArtists;
         for ($i = 0; $i < count($allArtistsNew); $i++)
         {
@@ -786,10 +765,6 @@ Class GenresController extends AppController
 	
 	function album($page = 1, $facetPage = 1)
     {
-        //set_time_limit(0);
-        //echo "<br>Started at ".date("Y-m-d H:i:s");
-        // reset page parameters when serach keyword changes
-        // to check if the search is made from search bar or click on search page
         $layout = $_GET['layout'];
 
         if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
@@ -881,20 +856,17 @@ Class GenresController extends AppController
 
         $this->set('sortOrder', $sortOrder);
 
-
         if (!empty($queryVar))
         {
             //Added code for log search data
             $insertArr[] = $this->searchrecords($typeVar, $queryVar);
             $this->Searchrecord->saveAll($insertArr);
             //End Added code for log search data
-
             $patId = $this->Session->read('patron');
             $libId = $this->Session->read('library');
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
             $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
             $docs = array();
-
             $total = 0;
             $limit = 10;
 
@@ -931,10 +903,7 @@ Class GenresController extends AppController
                   $this->redirect();
                   } */
             }
-
-            /* echo "Microtime : ".microtime();
-              echo "Time : ".date('h:m:s'); */
-
+    
             $songArray = array();
             foreach ($songs as $key => $song)
             {
@@ -973,13 +942,8 @@ Class GenresController extends AppController
                     $songs[$key]->status = 'not';
                 }
             }
-            /* echo "Microtime : ".microtime();
-              echo "Time : ".date('h:m:s'); */
-
+            
             $this->set('songs', $songs);
-            // print_r($songs);
-            // Added code for all functionality
-            // print_r($songs);
 
             if (!empty($type) && !($type == 'all'))
             {
@@ -989,12 +953,9 @@ Class GenresController extends AppController
                     case 'album':
                         $limit = 12;
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
-			//$totalAlbums = $totalFacetCount;
-                        // echo "Group Search for Albums Started at ".time();
+             
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
-
-                        // echo "Group Search for Albums Ended at ".time();
-
+                      
                         $arr_albumStream = array();
 
                         foreach ($albums as $objKey => $objAlbum)
@@ -1003,7 +964,7 @@ Class GenresController extends AppController
                                     array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
                             );
                         }
-                          //echo "<pre>"; print_r($albums);
+                        
                         $this->set('albumData', $albums);
                         $this->set('arr_albumStream', $arr_albumStream);
 
@@ -1014,7 +975,6 @@ Class GenresController extends AppController
 			
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
                         $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
-                        //print_r($genres); die;
                         $this->set('genres', $genres);
                         break;
 
@@ -1026,8 +986,7 @@ Class GenresController extends AppController
                         break;
 
                     case 'artist':
-                        $limit = 18;
-			
+                        $limit = 18;	
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
                         $artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
                         $this->set('artists', $artists);
@@ -1035,7 +994,6 @@ Class GenresController extends AppController
 
                     case 'composer':
                         $limit = 18;
-			
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
                         $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
                         $this->set('composers', $composers);
@@ -1074,10 +1032,7 @@ Class GenresController extends AppController
             else
             {
 
-                //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 15);
-		//$totalAlbums = $this->Solr->getFacetSearchTotal($queryVar, 'album');
-                //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 $queryArr = null;
                 $albumData = array();
                 $albumsCheck = array_keys($albums);
@@ -1087,7 +1042,6 @@ Class GenresController extends AppController
                     $albumData[] = $queryArr[0];
                 }
                 
-
                 $arr_albumStream = array();
 
                 foreach ($albums as $objKey => $objAlbum)
@@ -1097,51 +1051,37 @@ Class GenresController extends AppController
                     );
                 }
 
-                //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
                 
-                //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
-                //echo "<br>Group Search for Genres Started at ".date("Y-m-d H:i:s");
                 $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
 		
-                //echo "<br>Group Search for Genres Ended at ".date("Y-m-d H:i:s");;
-                //echo "<br>Group Search for Composers Started at ".date("Y-m-d H:i:s");
                 $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
 		
-                //echo "<br>Group Search for Composers Ended at ".date("Y-m-d H:i:s");
-                // $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
-                //echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
                 $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
-                //echo "<br>Group Search for Video ended at ".date("Y-m-d H:i:s");
-                // print_r($videos); die;
+                
                 $this->set('albums', $albums);
                 $this->set('arr_albumStream', $arr_albumStream);
                 //$this->set('albumData',$albumData);
                 $this->set('albumData', $albums);
                 $this->set('artists', $artists);
                 $this->set('genres', $genres);
-                //print_r($genres);die;
+                
                 $this->set('composers', $composers);
-                //$this->set('labels', $labels);
+                
                 $this->set('videos', $videos);
 		
             }
-	   // $totalAlbums = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+	  
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
             $this->set('total', $total);
             $this->set('totalPages', $totalPages);
             $this->set('currentPage', $page);
             $this->set('facetPage', $facetPage);
-	  //  $this->set('totalAlbums',$totalAlbums);
-   	   // $this->set('totalArtists',18);
-	  //  $this->set('totalComposers',18);
-	  //  $this->set('totalGenres',30);
-	  //  $this->set('totalSongs', $totalPages*10);
+	  
         }
         $this->set('keyword', htmlspecialchars($queryVar));
-        //echo "<br>search end- ".date("Y-m-d H:i:s");
-
+        
         if (isset($this->params['isAjax']) && $this->params['isAjax'] && $layout == 'ajax')
         {
             $this->layout = 'ajax';
