@@ -154,35 +154,42 @@ $ieVersion =  ieversion();
                         
                         ?>
 					</div>
-					<div class="song-title"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" href="javascript:void(0)">
-                    <?php 
-						if (strlen($downloadResult['Download']['track_title']) >= 19) {
-							echo '<a title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 19) . '...</a>';
-						} else {
-							echo $downloadResult['Download']['track_title']; 
-					 	}
-					?>
-                    <?php if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></a></div>
+					<div class="song-title">
+                                            <a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" href="javascript:void(0)">
+                                            <?php
+                                            if (strlen($downloadResult['Download']['track_title']) >= 19) {
+                                                            echo $this->getTextEncode(substr($downloadResult['Download']['track_title'], 0, 19));
+                                                    } else {
+                                                            echo $this->getTextEncode($downloadResult['Download']['track_title']); 
+                                                    }
+                                            if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
+                                            </a>
+                                        </div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a title="<?php echo $this->getTextEncode($downloadResult['Song']['Title']); ?>" href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
+					<div class="album-title">
+                                            <a title="<?php echo $this->getTextEncode($downloadResult['Song']['Title'] ); ?>" 
+                                               href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
                                              <?php 
 						if (strlen($downloadResult['Song']['Title']) >= 19) {
-							echo '<a title="'.htmlentities($downloadResult['Song']['Title']).'">' .substr($downloadResult['Song']['Title'], 0, 19) . '...</a>';
+							echo $this->getTextEncode(substr($downloadResult['Song']['Title'], 0, 19));
 						} else {
-							echo $downloadResult['Song']['Title']; 
+							echo $this->getTextEncode($downloadResult['Song']['Title']); 
 					 	}
-					?>
-                                            
-                                            </div>
-					<div class="artist-name"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['artist']); ?>" href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>"><?php
+                                             ?>                                            
+                                            </a>
+                                        </div>
+					<div class="artist-name">
+                                            <a title="<?php echo $this->getTextEncode($downloadResult['Download']['artist']); ?>" href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>">
+                                            <?php
 						if (strlen($downloadResult['Download']['artist']) >= 19) {
-							echo '<a title="'.htmlentities($downloadResult['Download']['artist']).'">' .substr($downloadResult['Download']['artist'], 0, 19) . '...</a>';
+							echo $this->getTextEncode(substr($downloadResult['Download']['artist'], 0, 19));
 						} else {
-							$ArtistName = $downloadResult['Download']['artist'];
+							$ArtistName = $this->getTextEncode($downloadResult['Download']['artist']);
 							echo $ArtistName;
-						}
-						
-					?></a></div>
+						}						
+                                            ?>
+                                            </a>
+                                        </div>
 					
 					<!-- <div class="wishlist-popover">
 						<!--	
