@@ -2636,7 +2636,7 @@ Class ArtistsController extends AppController
     function composer($composer_text,$facetPage = 1){
         
         $this->layout = 'home';
-        $composer_text = base64_decode($this->params['pass'][0]); 
+        $composer_text = urldecode($this->params['pass'][0]); 
         if(!empty($this->params['pass'][1])){
             $facetPage = $this->params['pass'][1];
         }
