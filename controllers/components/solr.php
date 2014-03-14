@@ -599,7 +599,11 @@ class SolrComponent extends Object {
             );
 
             if ($type != 'video') {
-                $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                if(!empty($check)){
+                    $response = self::$solr->search($query, $start, $limit, $additionalParams,1);
+                }else{
+                    $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                }
                 if ($response->getHttpStatus() == 200) {
                     if (!empty($response->facet_counts->facet_fields->$field)) {
                         return count($response->facet_counts->facet_fields->$field);
