@@ -10,11 +10,10 @@ ini_set('memory_limit', '2048M');
 
 Class GenresController extends AppController
 {
-
-    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download');
-    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming');
-    var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue');
-
+    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download','Searchrecord','LatestVideodownload','LatestDownload','Page');    
+    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming','Solr');
+    var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue','Session','Album','Html','Session','Queue','Wishlist');
+    
     /*
       Function Name : beforeFilter
       Desc : actions that needed before other functions are getting called
@@ -24,7 +23,7 @@ Class GenresController extends AppController
     {
         parent::beforeFilter();
 
-        $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions');
+        $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions', 'album');
         $libraryCheckArr = array("view", "index");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //		  $validPatron = $this->ValidatePatron->validatepatron();
@@ -60,9 +59,7 @@ Class GenresController extends AppController
             $this->redirect('/genres/view/');
         }
 
-
         $country = $this->Session->read('territory');
-
         //$country = "'".$country."'";
         $this->layout = 'home';
         $patId = $this->Session->read('patron');
@@ -243,8 +240,6 @@ Class GenresController extends AppController
             $finalArray[$j]['Genre'] = $genreName;
             $j++;
         }
-
-        // print_r($finalArray);
         $this->set('categories', $finalArray);
     }
 
@@ -272,7 +267,6 @@ Class GenresController extends AppController
             $Genre = "QWxs";
         }
 
-
         $this->layout = 'home';
         $country = $this->Session->read('territory');
         if (!base64_decode($Genre))
@@ -280,7 +274,6 @@ Class GenresController extends AppController
             $this->Session->setFlash(__('Invalid Genre.', true));
             $this->redirect(array('controller' => '/', 'action' => 'index'));
         }
-
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
         if (($genre = Cache::read("genre" . $country)) === false)
@@ -307,7 +300,6 @@ Class GenresController extends AppController
             Cache::write("genre" . $country, $genreAll);
         }
         $genreAll = Cache::read("genre" . $country);
-
         $this->set('genresAll', $genreAll);
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
@@ -324,9 +316,6 @@ Class GenresController extends AppController
         {
             $cond = "";
         }
-
-
-
         //login redirect fix if selected 
         if ($this->Session->read('selectedAlpha') == 'All')
         {
@@ -349,7 +338,6 @@ Class GenresController extends AppController
         {
             $condition = "";
         }
-
 
         $this->Song->recursive = 0;
         $genre = base64_decode($Genre);
@@ -422,10 +410,8 @@ Class GenresController extends AppController
             );
         }
 
-
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
-
 
         $allArtistsNew = $allArtists;
 
@@ -518,8 +504,7 @@ Class GenresController extends AppController
 
         if ($genre != 'All')
         {
-
-            //this one
+            
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -564,8 +549,6 @@ Class GenresController extends AppController
             );
         }
 
-
-
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
         $allArtistsNew = $allArtists;
@@ -576,7 +559,6 @@ Class GenresController extends AppController
                 $allArtists[$i] = $allArtistsNew[$i];
             }
         }
-
 
         $tempArray = array();
         for ($i = 0; $i < count($allArtistsNew); $i++)
@@ -594,6 +576,7 @@ Class GenresController extends AppController
         $this->set('selectedAlpha', $Artist);
         $this->set('genre', base64_decode($Genre));
     }
+
 
     function ajax_view_pagination($Genre = null, $Artist = null)
     {
@@ -660,8 +643,6 @@ Class GenresController extends AppController
         }
         else
         {
-
-
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('hasOne' => array('Genre')));
@@ -684,8 +665,6 @@ Class GenresController extends AppController
         }
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
-
-
         $allArtistsNew = $allArtists;
         for ($i = 0; $i < count($allArtistsNew); $i++)
         {
@@ -758,6 +737,224 @@ Class GenresController extends AppController
         $this->layout = 'admin';
     }
 
+
+    function searchrecords($type, $search_text)
+    {
+        $search_text = strtolower(trim($search_text));
+        $search_text = preg_replace('/\s\s+/', ' ', $search_text);
+        $insertArr['search_text'] = $search_text;
+        $insertArr['type'] = $type;
+        $genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
+        if (count($genre_id_count_array) > 0)
+        {
+            $insertArr['count'] = $genre_id_count_array[0]['Searchrecord']['count'] + 1;
+            $insertArr['id'] = $genre_id_count_array[0]['Searchrecord']['id'];
+        }
+        else
+        {
+            $insertArr['count'] = 1;
+        }
+
+        return $insertArr;
+    }
+
+	/*
+      Function Name : album
+      Desc : actions for genre albums 
+    */
+	
+	function album($page = 1, $facetPage = 1)
+    {
+        $layout = $_GET['layout'];
+
+        if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
+        {
+            unset($_SESSION['SearchReq']);
+        }// unset session when no params
+        if ((isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type'])))
+        {
+            unset($_SESSION['SearchReq']);
+            $this->redirect(array('controller' => 'search', 'action' => 'index?q=' . $_GET['q'] . '&type=' . $_GET['type']));
+        }//reset session & redirect to 1st page
+        if (('' != trim($_GET['q'])) && ('' != trim($_GET['type'])))
+        {
+            $_SESSION['SearchReq']['word'] = $_GET['q'];
+            $_SESSION['SearchReq']['type'] = $_GET['type'];
+        }//sets values in session
+
+        $queryVar = null;
+        $check_all = null;
+        $sortVar = 'ArtistText';
+        $sortOrder = 'asc';
+
+        if (isset($_GET['q']))
+        {
+            $queryVar = $_GET['q']; 
+        }
+        if (isset($_GET['type']))
+        {
+            $type = $_GET['type'];
+            $typeVar = $_GET['type'];
+        }
+        else
+        {
+            $typeVar = 'album';
+        }
+        $this->set('type', $typeVar);
+
+        if (isset($_GET['sort']))
+        {
+            $sort = $_GET['sort'];
+			$sortVar = 'Title';
+            
+        }
+        else
+        {
+            $sort = 'artist';
+        }
+
+        $this->set('sort', $sort);
+
+        if (isset($_GET['sortOrder']))
+        {
+            $sortOrder = $_GET['sortOrder'];
+            $sortOrder = (($sortOrder == 'asc' || $sortOrder == 'desc') ? $sortOrder : 'asc');
+        }
+        else
+        {
+            $sortOrder = 'asc';
+        }
+
+        $this->set('sortOrder', $sortOrder);
+
+        if (!empty($queryVar))
+        {
+            //Added code for log search data
+            $insertArr[] = $this->searchrecords($typeVar, $queryVar);
+            $this->Searchrecord->saveAll($insertArr);
+            //End Added code for log search data
+            $patId = $this->Session->read('patron');
+            $libId = $this->Session->read('library');
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $docs = array();
+            $total = 0;
+            $limit = 10;
+
+            if (!isset($page) || $page < 1)
+            {
+                $page = 1;
+            }
+            else
+            {
+                $page = $page;
+            }
+
+            if (!isset($facetPage) || $facetPage < 1)
+            {
+                $facetPage = 1;
+            }
+            else
+            {
+                $facetPage = $facetPage;
+            }
+
+            $country = $this->Session->read('territory');
+            //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
+            $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
+            //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
+
+            $total = $this->Solr->total;
+            $totalPages = ceil($total / $limit);
+
+            if ($total != 0)
+            {
+                /* if($page > $totalPages){
+                  $page = $totalPages;
+                  $this->redirect();
+                  } */
+            }
+    
+            $songArray = array();
+            foreach ($songs as $key => $song)
+            {
+                $songArray[] = $song->ProdID;
+            }
+            
+      
+            $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+   
+            foreach ($songs as $key => $song)
+            {
+                $set = 0;
+                foreach ($downloadsUsed as $downloadKey => $downloadData)
+                {
+                   if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
+                    {
+                        $songs[$key]->status = 'avail';
+                        $set = 1;
+                        break;
+                    }
+                   
+                }
+                if ($set == 0)
+                {
+                    $songs[$key]->status = 'not';
+                }
+            }
+            
+            $this->set('songs', $songs);
+
+            if (!empty($type))
+            {
+             	$limit = 12;
+                $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genreAlbum');
+                       
+                $albums = $this->Solr->groupSearch($queryVar, 'genreAlbum', $facetPage, $limit);
+                      
+                $arr_albumStream = array();
+                foreach ($albums as $objKey => $objAlbum) {
+                	$arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                    	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                    );
+                }
+                        
+                $this->set('albumData', $albums);
+                $this->set('arr_albumStream', $arr_albumStream);
+                $this->set('totalFacetFound', $totalFacetCount);
+                if (!empty($totalFacetCount))
+                {
+                    $this->set('totalFacetPages', ceil($totalFacetCount / $limit));
+                }
+                else
+                {
+                    $this->set('totalFacetPages', 0);
+                }
+            }
+          
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+            $this->set('total', $total);
+            $this->set('totalPages', $totalPages);
+            $this->set('currentPage', $page);
+            $this->set('facetPage', $facetPage);
+	  
+        }
+        $this->set('keyword', htmlspecialchars($queryVar));
+        
+        if (isset($this->params['isAjax']) && $this->params['isAjax'] && $layout == 'ajax')
+        {
+            $this->layout = 'ajax';
+            $this->autoLayout = false;
+            $this->autoRender = false;
+            echo $this->render();
+            die;
+        }
+        else
+        {
+            $this->layout = 'home';
+        }
+    }
 }
 
 ?>

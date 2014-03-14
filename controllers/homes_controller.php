@@ -5004,7 +5004,12 @@ STR;
 
                 $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
                 if(!empty($albumSongs)){
-                    $log_data .= $this->addsToWishlist($albumSongs);
+                    $wishlistResult = $this->addsToWishlist($albumSongs);
+                    if(!is_array($wishlistResult)){
+                        $log_data .= $wishlistResult;
+                    }else{
+                        $log_data .= $wishlistResult[1];
+                    } 
                 }else{
                     echo "error|There are no songs found in this Album.";
                     die;
@@ -5039,10 +5044,19 @@ STR;
                     array_push($songsArray, array_pop($songDetails));
                 }
 
-                $log_data .= $this->addsToWishlist($songsArray);
-                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-                $this->log($log_data, $log_name);
-                echo "success|" . ((count($selectedSongs) > 1) ? "songs are " : "song is ") . " added succesfully to wishlist.";
+                $wishlistResult = $this->addsToWishlist($songsArray);
+                
+                if(!is_array($wishlistResult)){
+                    $log_data .= $wishlistResult;
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);
+                    echo "success|" . ((count($selectedSongs) > 1) ? "songs are " : "song is ") . " added succesfully to wishlist.";
+                }else{
+                    $log_data .= $wishlistResult[1];
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);
+                    echo "error|" . ((count($selectedSongs) > 1) ? "songs are " : "song is ") . " already added to wishlist.";                    
+                }
             }
             else
             {
@@ -5068,7 +5082,6 @@ STR;
         //check if the album is already add  to wishlist
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
-
         foreach ($songsArray as $song)
         {
             $wishlistCount = $this->Wishlist->find(
@@ -5080,6 +5093,7 @@ STR;
                     'ProdID' => $song['Song']['ProdID']
                 )
             ));
+            $allreadyAdded = 0;
             if (!$wishlistCount)
             {
                 $insertArr = Array();
@@ -5118,10 +5132,21 @@ STR;
                 }
                 
                  $this->Wishlist->setDataSource('default');
+            }else{
+                
+                $allreadyAdded = 1;
+                $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is already added to wishlist";
             }
         }
-
-        return $log_data;
+        
+        if(!empty($allreadyAdded)){
+            $wishlistalreadyadded = array();
+            $wishlistalreadyadded[] = 'You have already added this song to wishlist';
+            $wishlistalreadyadded[] = $log_data;
+            return $wishlistalreadyadded;
+        }else{
+            return $log_data;
+        }    
     }
 
 }

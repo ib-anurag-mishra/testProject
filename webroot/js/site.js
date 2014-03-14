@@ -1876,10 +1876,30 @@ function documentHtml(html) {
 
 function callSearchAjax() {
     $("#headerSearchSubmit").click(function(event) {
-
+        console.log('called ajaxsearch');
         ajaxSearch();
+        return false;
     });
 }
+
+$(document).ready(function(){
+    
+    $('#headerSearchSubmit').on('click', function() {
+        ajaxSearch();
+        return false;
+    });
+    
+    $('#btnMyAccount').on('click', function() {
+        ajaxMyAccount();
+        return false;
+    });
+
+    $('#btnNotification').on('click', function() {
+        ajaxNotification();
+        return false;
+    });
+    
+});
 
 function resetNavigation() {
 
@@ -1911,7 +1931,6 @@ function resetNavigation() {
 }
 
 function ajaxSearch() {
-
     resetNavigation();
 
     var loading_div = "<div class='loader'>";
@@ -1936,11 +1955,11 @@ function ajaxSearch() {
             $(document).find('.content').find('section').remove();
             $(document).find('.content').append(response);            
 
-            $.getScript(webroot + 'css/styles.css');
-            $.getScript(webroot + 'css/freegal_styles.css');
+            //$.getScript(webroot + 'css/styles.css');
+            //$.getScript(webroot + 'css/freegal_styles.css');
 
-            $.getScript(webroot + 'js/site.js');
-            $.getScript(webroot + 'js/freegal.js');
+            //$.getScript(webroot + 'js/site.js');
+            //$.getScript(webroot + 'js/freegal.js');
 
             $('.loader').fadeOut(500);
             $('.content').remove('.loader');
@@ -1948,7 +1967,7 @@ function ajaxSearch() {
             $(document).find('.content').ajaxify().css('opacity', 100).show();
             $('div.ac_results').hide();
             $('#search-text').val('');
-            callSearchAjax();
+            //callSearchAjax();
         },
         error: function(response) {
            
@@ -1965,6 +1984,7 @@ function callMyAccountAjax() {
 }
 
 function ajaxMyAccount() {
+    //console.log('inside ajaxMyaccount');
 //       $('#btnMyAccount').click(function(){
     var UFirstName = '';
     var ULastName = '';
@@ -2079,8 +2099,8 @@ function ajaxMyAccount() {
             $.getScript(webroot + 'css/styles.css');
             $.getScript(webroot + 'css/freegal_styles.css');
 
-            $.getScript(webroot + 'js/freegal.js');
-            $.getScript(webroot + 'js/site.js');
+            //$.getScript(webroot + 'js/freegal.js');
+            //$.getScript(webroot + 'js/site.js');
 
             $.getScript(webroot + 'js/audioPlayer.js');
             $.getScript(webroot + 'js/recent-downloads.js');
@@ -2090,7 +2110,7 @@ function ajaxMyAccount() {
             $('.loader').fadeOut(500);
 
             $('.content').remove('.loader');
-            callMyAccountAjax();
+            //callMyAccountAjax();
         },
         failure: function() {
             alert('Problem fetching data');
@@ -2110,6 +2130,7 @@ function callNotificationAjax() {
 
 // code to ajaxify Notification form end
 function ajaxNotification() {
+    //console.log('inside ajaxnotification');
 //       $('#btnMyAccount').click(function(){
     var USendNewsLetterCheck = '';
     var UNewsletterEmail = '';
@@ -2217,8 +2238,8 @@ function ajaxNotification() {
             $.getScript(webroot + 'css/styles.css');
             $.getScript(webroot + 'css/freegal_styles.css');
 
-            $.getScript(webroot + 'js/freegal.js');
-            $.getScript(webroot + 'js/site.js');
+            //$.getScript(webroot + 'js/freegal.js');
+            //$.getScript(webroot + 'js/site.js');
 
             $.getScript(webroot + 'js/audioPlayer.js');
             $.getScript(webroot + 'js/recent-downloads.js');
@@ -2228,7 +2249,7 @@ function ajaxNotification() {
             $('.loader').fadeOut(500);
 
             $('.content').remove('.loader');
-            callNotificationAjax();
+            //callNotificationAjax();
         },
         failure: function() {
             alert('Problem fetching data');
@@ -2287,8 +2308,8 @@ $('document').ready(function() {
          }*/
     });
 
-    callSearchAjax();
-    callMyAccountAjax();
-    callNotificationAjax();
+    //callSearchAjax();
+    //callMyAccountAjax();
+    //callNotificationAjax();
 
 });

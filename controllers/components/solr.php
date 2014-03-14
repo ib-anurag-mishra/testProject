@@ -7,7 +7,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/'); //108.166.39.24//192.168.100.24//192.168.100.24
+    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicstage/'); //108.166.39.24//192.168.100.24//192.168.100.24
 
     /**
      * Used for runtime configuration of model
@@ -160,6 +160,10 @@ class SolrComponent extends Object {
                             $query = $searchkeyword;
                             $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
                             break;
+			case 'genreAlbum':
+                            $query = $searchkeyword;
+                            $queryFields = "CGenre^60"; // CArtistText^80
+                            break;
                         default:
                             $query = $searchkeyword;
                             $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
@@ -198,8 +202,9 @@ class SolrComponent extends Object {
                     else
                     {
                         $response = self::$solr2->search($query . $provider_query, 0, 1, $additionalParams);
+			$num_found = $response->response->numFound;
                     }
-                    $num_found = $response->response->numFound;
+                    
                     
                     if (0 == $num_found)
                     {
@@ -283,7 +288,7 @@ class SolrComponent extends Object {
                         }
                         
                         if ($sec_response->response->numFound > 0) {
-                            $response->response->numFound = $sec_response->response->numFound;
+                         //   $response->response->numFound = $sec_response->response->numFound;
                         }
                     }
                 }//sony & ioda
@@ -301,7 +306,7 @@ class SolrComponent extends Object {
                         $response = self::$solr2->search($query . $provider_query, $tmp_start, $limit, $additionalParams);
                     }
                     
-                    $response->response->numFound = $response->response->numFound + $_SESSION['sony_total'];
+                  //  $response->response->numFound = $response->response->numFound + $_SESSION['sony_total'];
                 }//ioda
                 
                 //---------------------------------------------------------------------------------------------------------------------------------------//
@@ -407,6 +412,10 @@ class SolrComponent extends Object {
                         $query = '(CComposer:(' . $searchkeyword . '))';
                         $field = 'Composer';
                         break;
+		   case 'album':
+                        $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:(' . $searchkeyword . '))';
+                        $field = 'Title';
+                        break;
                     default:
                         $query = '(CSongTitle:(' . $searchkeyword . '))';
                         $field = 'SongTitle';
@@ -468,7 +477,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function getFacetSearchTotal($keyword, $type='song') {
+    function getFacetSearchTotal($keyword, $type='song',$check=0) {
         $query = '';
         $country = $this->Session->read('territory');
 //        
@@ -519,38 +528,55 @@ class SolrComponent extends Object {
 
             switch ($type) {
                 case 'song':
-                    $query = '(CSongTitle:(' . $searchkeyword . '))';
+                    $query = $searchkeyword;
+                    $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                     $field = 'SongTitle';
                     break;
                 case 'genre':
-                    $query = '(CGenre:(' . $searchkeyword . '))';
+                    $queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
+                    $query = $searchkeyword;
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') CComposer:(' . $searchkeyword . '))';
-                    $field = 'Title';
+                    if(!empty($check)){
+                        $queryFields = "CComposer";
+                    }else{
+                        $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+                    }
+                    $query = $searchkeyword;
+                    $field = 'rpjoin';
                     break;
                 case 'artist':
-                    $query = '(CArtistText:(' . $searchkeyword . '))';
-                    $field = 'ArtistText';
-                    break;
-                case 'label':
-                    $query = '(CLabel:(' . $searchkeyword . '))';
-                    $field = 'Label';
-                    break;
-                case 'video':
-                    $query = '(CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
-                    $field = 'VideoTitle';
-                    break;
-                case 'composer':
-                    $query = '(CComposer:(' . $searchkeyword . '))';
-                    $field = 'Composer';
-                    break;
-                default:
-                    $query = '(CSongTitle:(' . $searchkeyword . '))';
-                    $field = 'SongTitle';
-                    break;
-            }
+                        $queryFields = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
+                        $query = $searchkeyword;
+                        $field = 'ArtistText';
+                        break;
+                    case 'label':
+                        $queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+                        $query = $searchkeyword;
+                        $field = 'Label';
+                        break;
+                    case 'video':
+                        $query = $searchkeyword;
+                        $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
+                        $field = 'VideoTitle';
+                        break;
+                    case 'composer':
+                        $query = $searchkeyword;
+                        $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
+                        $field = 'Composer';
+                        break;
+		    case 'genreAlbum':
+			$queryFields = "CGenre^60";
+                    	$query = $searchkeyword;
+                    	$field = 'rpjoin';
+			break;
+                    default:
+                        $query = $searchkeyword;
+                        $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+                        $field = 'SongTitle';
+                        break;
+                }
 
             $query = $query . ' AND Territory:' . $country . $cond;
 
@@ -561,6 +587,8 @@ class SolrComponent extends Object {
             }
 
             $additionalParams = array(
+                'defType' => 'edismax',
+                'qf' => $queryFields,
                 'facet' => 'true',
                 'facet.field' => array(
                     $field
@@ -571,7 +599,11 @@ class SolrComponent extends Object {
             );
 
             if ($type != 'video') {
-                $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                if(!empty($check)){
+                    $response = self::$solr->search($query, $start, $limit, $additionalParams,1);
+                }else{
+                    $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                }
                 if ($response->getHttpStatus() == 200) {
                     if (!empty($response->facet_counts->facet_fields->$field)) {
                         return count($response->facet_counts->facet_fields->$field);
@@ -605,7 +637,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null)
+    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null, $check = 0)
     {
     
         set_time_limit(0);
@@ -676,7 +708,11 @@ class SolrComponent extends Object {
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+                    if(!empty($check)){
+                        $queryFields = "CComposer";
+                    }else{
+                        $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+                    }
                     $query = $searchkeyword;
                     $field = 'rpjoin';
                     break;
@@ -700,6 +736,11 @@ class SolrComponent extends Object {
                         $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                         $field = 'Composer';
                         break;
+		    case 'genreAlbum':
+			$queryFields = "CGenre^60";
+                    	$query = $searchkeyword;
+                    	$field = 'rpjoin';
+			break;
                     default:
                         $query = $searchkeyword;
                         $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
@@ -725,7 +766,11 @@ class SolrComponent extends Object {
                 );
                 
                 if ($type != 'video') {
-                    $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                    if(!empty($check)){
+                        $response = self::$solr->search($query, $start, $limit, $additionalParams,1);
+                    }else{
+                        $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                    }
                     if ($response->getHttpStatus() == 200) {
                         if (!empty($response->grouped->$field->groups)) {
                             $docs = array();
@@ -857,6 +902,11 @@ class SolrComponent extends Object {
                         $query = $searchkeyword;
                         $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                         $field = 'Composer';
+                        break;
+		    case 'genreAlbum':
+			$queryFields = "CGenre^60";
+                        $query = $searchkeyword;
+                        $field = 'rpjoin';
                         break;
                     default:
                         $query = $searchkeyword;
@@ -1020,6 +1070,11 @@ class SolrComponent extends Object {
                         $query = $searchkeyword;
                         $queryFields = "CComposer";
                         $field = 'Composer';
+                        break;
+		    case 'genreAlbum':
+		    	$query = $searchkeyword;
+                        $queryFields = "CGenre";
+                        $field = 'Genre';
                         break;
                     default:
                         $query = $searchkeyword;

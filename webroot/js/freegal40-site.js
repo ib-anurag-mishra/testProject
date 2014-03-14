@@ -64,16 +64,17 @@ $(document).ready(function() {
     });
 
 
-    $('.album-cover-container').on('mouseenter', function() {
+    $('.album-cover-container , .album-container').on('mouseenter', function() {
 
         $(this).find('.toggleable').addClass('active');
+        $(this).find('.toggeable').addClass('active');
 
     });
 
-    $('.album-cover-container').on('mouseleave', function() {
+    $('.album-cover-container , .album-container').on('mouseleave', function() {
 
         $(this).find('.toggleable').removeClass('active');
-
+        $(this).find('.toggeable').removeClass('active');
     });
 
 
@@ -662,12 +663,13 @@ $(document).ready(function() {
                     for (i = 0; i < selected_songs.length; i++)
                     {
                         var temp = selected_songs[i].split('&');
-
-                        if (languageSet === 'en') {
-                            document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
-                        } else {                            
-                            document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
-                        }                        
+                        if ($('#wishlist'+temp[0]).length > 0){
+                            if (languageSet === 'en') {
+                                document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+                            } else {                            
+                                document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
+                            }
+                        }
                     }                  
                     
                     displayMessage(response);
