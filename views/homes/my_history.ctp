@@ -173,7 +173,7 @@ $ieVersion =  ieversion();
 					 	}
 					?>
                                             
-                                            </div>
+                                            </a> </div>
 					<div class="artist-name"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['artist']); ?>" href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>"><?php
 						if (strlen($downloadResult['Download']['artist']) >= 19) {
 							echo '<a title="'.htmlentities($downloadResult['Download']['artist']).'">' .substr($downloadResult['Download']['artist'], 0, 19) . '...</a>';
