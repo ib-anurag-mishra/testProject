@@ -789,53 +789,24 @@ Class GenresController extends AppController
 
         if (isset($_GET['q']))
         {
-            $queryVar = $_GET['q']; // html_entity_decode();
+            $queryVar = $_GET['q']; 
         }
         if (isset($_GET['type']))
         {
             $type = $_GET['type'];
-            $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer' || $_GET['type'] == 'video' || $_GET['type'] == 'genreAlbum' ) ? $_GET['type'] : 'all');
+            $typeVar = $_GET['type'];
         }
         else
         {
-            $typeVar = 'all';
+            $typeVar = 'album';
         }
         $this->set('type', $typeVar);
 
         if (isset($_GET['sort']))
         {
             $sort = $_GET['sort'];
-            $sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer' || $sort == 'genreAlbum') ? $sort : 'artist');
-            switch ($sort)
-            {
-                case 'song':
-                    $sortVar = 'SongTitle';
-                    break;
-                case 'album':
-                    $sortVar = 'Title';
-                    break;
-                case 'genre':
-                    $sortVar = 'Genre';
-                    break;
-                case 'label':
-                    $sortVar = 'Label';
-                    break;
-                case 'video':
-                    $sortVar = 'VideoTitle';
-                    break;
-                case 'artist':
-                    $sortVar = 'ArtistText';
-                    break;
-                case 'composer':
-                    $sortVar = 'Composer';
-                    break;
-				case 'genreAlbum':
-                    $sortVar = 'Title';
-                    break;
-                default:
-                    $sortVar = 'ArtistText';
-                    break;
-            }
+			$sortVar = 'Title';
+            
         }
         else
         {
@@ -910,32 +881,21 @@ Class GenresController extends AppController
                 $songArray[] = $song->ProdID;
             }
             
-            if($type == 'video'){
-                $downloadsUsed = $this->LatestVideodownload->find('all', array('conditions' => array('LatestVideodownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
-            } else {
-                $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
-            }
+      
+            $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+   
             foreach ($songs as $key => $song)
             {
                 $set = 0;
                 foreach ($downloadsUsed as $downloadKey => $downloadData)
                 {
-		   if($type == video)
-                   {
-                    if ($downloadData['LatestVideodownload']['ProdID'] == $song->ProdID)
-                    {
-                        $songs[$key]->status = 'avail';
-                        $set = 1;
-                        break;
-                    } 
-                   } else {
                    if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
                     {
                         $songs[$key]->status = 'avail';
                         $set = 1;
                         break;
                     }
-                   }
+                   
                 }
                 if ($set == 0)
                 {
@@ -945,80 +905,22 @@ Class GenresController extends AppController
             
             $this->set('songs', $songs);
 
-            if (!empty($type) && !($type == 'all'))
+            if (!empty($type))
             {
-
-                switch ($typeVar)
-                {
-                    case 'album':
-                        $limit = 12;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
-             
-                        $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
+             	$limit = 12;
+                $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genreAlbum');
+                       
+                $albums = $this->Solr->groupSearch($queryVar, 'genreAlbum', $facetPage, $limit);
                       
-                        $arr_albumStream = array();
-
-                        foreach ($albums as $objKey => $objAlbum)
-                        {
-                            $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
-                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
-                            );
-                        }
-                        
-                        $this->set('albumData', $albums);
-                        $this->set('arr_albumStream', $arr_albumStream);
-
-                        break;
-
-                    case 'genre':
-                        $limit = 30;
-			
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
-                        $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
-                        $this->set('genres', $genres);
-                        break;
-
-                    case 'label':
-                        $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
-                        $labels = $this->Solr->groupSearch($queryVar, 'label', $facetPage, $limit);
-                        $this->set('labels', $labels);
-                        break;
-
-                    case 'artist':
-                        $limit = 18;	
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
-                        $artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
-                        $this->set('artists', $artists);
-                        break;
-
-                    case 'composer':
-                        $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
-                        $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
-                        $this->set('composers', $composers);
-                        break;
-	
-					case 'genreAlbum':
-                        $limit = 12;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genreAlbum');
-                        // echo "Group Search for Albums Started at ".time();
-                        $albums = $this->Solr->groupSearch($queryVar, 'genreAlbum', $facetPage, $limit);
-                        // echo "Group Search for Albums Ended at ".time();
-                        $arr_albumStream = array();
-                        foreach ($albums as $objKey => $objAlbum)
-                        {
-                            $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
-                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
-                            );
-                        }
-                          //echo "<pre>"; print_r($albums);
-                        $this->set('albumData', $albums);
-                        $this->set('arr_albumStream', $arr_albumStream);
-
-                        break;
+                $arr_albumStream = array();
+                foreach ($albums as $objKey => $objAlbum) {
+                	$arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                    	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                    );
                 }
-
+                        
+                $this->set('albumData', $albums);
+                $this->set('arr_albumStream', $arr_albumStream);
                 $this->set('totalFacetFound', $totalFacetCount);
                 if (!empty($totalFacetCount))
                 {
@@ -1029,49 +931,7 @@ Class GenresController extends AppController
                     $this->set('totalFacetPages', 0);
                 }
             }
-            else
-            {
-
-                $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 15);
-                $queryArr = null;
-                $albumData = array();
-                $albumsCheck = array_keys($albums);
-                for ($i = 0; $i <= count($albumsCheck) - 1; $i++)
-                {
-                    $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
-                    $albumData[] = $queryArr[0];
-                }
-                
-                $arr_albumStream = array();
-
-                foreach ($albums as $objKey => $objAlbum)
-                {
-                    $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
-                    );
-                }
-
-                $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
-                
-                $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
-		
-                $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
-		
-                $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
-                
-                $this->set('albums', $albums);
-                $this->set('arr_albumStream', $arr_albumStream);
-                //$this->set('albumData',$albumData);
-                $this->set('albumData', $albums);
-                $this->set('artists', $artists);
-                $this->set('genres', $genres);
-                
-                $this->set('composers', $composers);
-                
-                $this->set('videos', $videos);
-		
-            }
-	  
+          
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
             $this->set('total', $total);
