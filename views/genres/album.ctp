@@ -1,6 +1,6 @@
 <?php 
 
-function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryString = null)
+function createPagination($html, $currentPage, $facetPage, $totalPages, $pageLimitToShow, $queryString = null)
 {
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
@@ -9,7 +9,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
         $part = floor($pageLimitToShow / 2);
         if (1 != $facetPage)
         {
-            $pagination_str .= $html->link('<<' . __('previous', true),  "/genres/album/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
+            $pagination_str .= $html->link('<<' . __('previous', true),  "/genres/album/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString);
         }
         else
         {
@@ -45,7 +45,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
             }
             else
             {
-                $pagination_str .= $html->link($pageCount, '/genres/album/' . ($pageCount) . '/' . $facetPage . '/' . $queryString);
+                $pagination_str .= $html->link($pageCount,  '/genres/album/' . $currentPage . '/' . $pageCount . '/' . $queryString);
             }
             $pagination_str .= " ";
         }
@@ -53,7 +53,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
 
         if ($facetPage != $totalPages)
         {
-            $pagination_str .= $html->link(__('next', true) . '>>', '/genres/album/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString);
+            $pagination_str .= $html->link(__('next', true) . '>>', '/genres/album/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString);
         }
         else
         {
@@ -208,7 +208,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
             </div>
             <?php 
 		$searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
-                $pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString); 
+                $pagination_str = createPagination($html, $currentPage, $facetPage, $totalFacetPages, 5, $searchString); 
                 if(!empty($pagination_str)){ ?>    
                     <div  class="paging">
                     <?php
