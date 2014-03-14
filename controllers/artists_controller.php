@@ -2643,7 +2643,7 @@ Class ArtistsController extends AppController
         if(isset($composer_text)){
             $totalFacetCount = $this->Solr->getFacetSearchTotal($composer_text, 'album');
             $limit = 12;
-            $albums = $this->Solr->groupSearch($composer_text, 'album', $facetPage, $limit);
+            $albums = $this->Solr->groupSearch($composer_text, 'album', $facetPage, $limit , 0, null, 1);
             $arr_albumStream = array();
             foreach ($albums as $objKey => $objAlbum)
             {

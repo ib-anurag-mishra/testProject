@@ -618,7 +618,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null)
+    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null, $check = 0)
     {
     
         set_time_limit(0);
@@ -689,7 +689,11 @@ class SolrComponent extends Object {
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+                    if(!empty($check)){
+                        $queryFields = "CComposer";
+                    }else{
+                        $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+                    }
                     $query = $searchkeyword;
                     $field = 'rpjoin';
                     break;
@@ -743,7 +747,11 @@ class SolrComponent extends Object {
                 );
                 
                 if ($type != 'video') {
-                    $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                    if(!empty($check)){
+                        $response = self::$solr->search($query, $start, $limit, $additionalParams,1);
+                    }else{
+                        $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                    }
                     if ($response->getHttpStatus() == 200) {
                         if (!empty($response->grouped->$field->groups)) {
                             $docs = array();
