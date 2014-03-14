@@ -9961,6 +9961,9 @@ img {
 .recent-downloads-page .recent-downloads-shadow-container .recent-downloads-scrollable .row-container .row .song-title.hovered {
   color: #000000;
 }
+.recent-downloads-page .recent-downloads-shadow-container .recent-downloads-scrollable .row-container .row .song-title a {
+  cursor: default;
+}
 .recent-downloads-page .recent-downloads-shadow-container .recent-downloads-scrollable .row-container .row .song-title a:hover {
   text-decoration: none;
 }
