@@ -9,7 +9,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
         $part = floor($pageLimitToShow / 2);
         if (1 != $facetPage)
         {
-            $pagination_str .= $html->link('<<' . __('previous', true), "/artists/composer/" . $queryString.'/' . ($facetPage - 1));
+            $pagination_str .= $html->link('<<' . __('previous', true),  "/genres/album/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
         }
         else
         {
@@ -45,7 +45,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
             }
             else
             {
-                $pagination_str .= $html->link($pageCount, '/artists/composer/' . $queryString.'/' .$pageCount);
+                $pagination_str .= $html->link($pageCount, '/genres/album/' . ($pageCount) . '/' . $facetPage . '/' . $queryString);
             }
             $pagination_str .= " ";
         }
@@ -53,7 +53,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
 
         if ($facetPage != $totalPages)
         {
-            $pagination_str .= $html->link(__('next', true) . '>>', '/artists/composer/' . $queryString.'/' .($facetPage + 1));
+            $pagination_str .= $html->link(__('next', true) . '>>', '/genres/album/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString);
         }
         else
         {
