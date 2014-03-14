@@ -83,6 +83,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
     return $obj->getTextEncode($modified_text);
 }
 ?>
+
 <section class="composer-page">
     <div class="breadcrumbs">
         <?php
@@ -111,7 +112,9 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
         ?>        
         <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
     </header>
+
     <!-- Album Section -->
+
     <?php
     if (!empty($albumData))
     {
@@ -124,9 +127,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                     $i =0;
                     foreach ($albumData as $palbum) {
                         $albumDetails = $album->getImage($palbum->ReferenceID);
-
-                        //$albumDetails = $album->getImage($palbum->ReferenceID);
-
                         if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                             $image = Configure::read('App.Music_Path') . $albumArtwork;
@@ -162,15 +162,11 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                                 }
                                 if($this->Session->read("patron")){ ?>
                                      <button class="wishlist-icon toggeable"></button>
-                           <?php }
-                                
-                                
-                                ?>
+                           <?php } ?>
                             </div>
                             <div class="album-title">
                                 <a title="<?php echo $this->getTextEncode($palbum->Title); ?>" 
                                    href="/artists/view/<?php echo str_replace('/', '@', base64_encode($palbum->ArtistText)); ?>/<?php echo $palbum->ReferenceID; ?>/<?php echo base64_encode($palbum->provider_type); ?>" >
-
                                     <b>
                                         <?php
                                         if (strlen($palbum->Title) >= 50)
