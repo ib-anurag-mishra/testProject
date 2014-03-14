@@ -191,74 +191,86 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         }
                         ?>
 
-											<div class="song-title">
-												<a href="#">
-													<?php
-														if ( strlen( $nationalTopSong['Song']['SongTitle'] ) > 25 ) {
-                                    						echo $this->getValidText( $this->getTextEncode( substr( $nationalTopSong['Song']['SongTitle'], 0, 25 ) ) ) . "...";
-														}
-                                						else {
-                                    						echo $this->getValidText( $this->getTextEncode( $nationalTopSong['Song']['SongTitle'] ) );
-                                						}
-													?>	
-												</a>
-											</div>
-											<div class="artist-name">
-												<a href="/artists/album/<?= base64_encode( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) ); ?>">
-													<?php
-                                						if ( strlen( $nationalTopSong['Song']['ArtistText'] ) > 30 ) {
-                                    						echo $this->getValidText( $this->getTextEncode( substr( $nationalTopSong['Song']['ArtistText'], 0, 30 ) ) ) . "...";
-                                						}
-                                						else {
-                                    						echo $this->getValidText( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) );
-                                						}
-                                ?>
-												</a>
-											</div>
-											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-												<li><a href="#">David's Favorites</a></li>
-												<li><a href="#">Pop</a></li>
-												<li><a href="#">Day After Christmas</a></li>
-												<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-												<li><a href="#">80's</a></li>
-												<li><a href="#">90's</a></li>
-												<li><a href="#">Country</a></li>
-												<li><a href="#">Rock</a></li>
-												<li><a href="#">Metal</a></li>
-												<li><a href="#">Breakup Songs</a></li>
-												<li><a href="#">New Years</a></li>
-												<li><a href="#">Christmas</a></li>
-												<li><a href="#">Summer</a></li>
-												<li><a href="#">Road Trip</a></li>
-												<li><a href="#">Christian</a></li>
-												<li><a href="#">Cleaning</a></li>
-												<li><a href="#">Workout</a></li>
-												<li><a href="#">Running</a></li>
-												<li><a href="#">Romantic</a></li>
-											</ul>
-										</div>
-									<?php 
-										if( $count % 2 == 0 ) {
-									?>
-									</li>
-									<?php
-										}
-									?>
-									<?php
-								}
-							} else {
-								?>
-								<li>No Songs Found.</li>
-							<?php
-								}
-							?>																											
-								</ul>
-							</div>
-							<button class="left-scroll-button"></button>
-							<button class="right-scroll-button"></button>	
-						</div>
-					</section>
+                               
+                                    <?php
+                                    if (strlen($nationalTopSong['Song']['SongTitle']) >= 30)
+                                    {
+                                        $songTitle = $this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 30)) . "..";
+                                    }
+                                    else
+                                    {
+                                        $songTitle = $this->getTextEncode($nationalTopSong['Song']['SongTitle']);
+                                    }
+
+                                    if ('T' == $nationalTopSong['Song']['Advisory'])
+                                    {
+                                        if (strlen($songTitle) >= 20)
+                                        {
+                                            $songTitle = $this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 20)) . "..";
+                                        }
+                                        $songTitle .='<span style="color: red;display: inline;"> (Explicit)</span> ';
+                                    }
+                                    ?>
+
+                                    <div class="song-title">
+                                        <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['SongTitle'])); ?> " href="/artists/view/<?= base64_encode($nationalTopSong['Song']['ArtistText']); ?>/<?= $nationalTopSong['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopSong['Song']['provider_type']); ?>"><?php echo $this->getTextEncode($songTitle); ?></a>
+                                    </div>                               
+                                    <div class="artist-name">
+                                            <a href="/artists/album/<?= base64_encode( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) ); ?>">
+                                                    <?php
+                            if ( strlen( $nationalTopSong['Song']['ArtistText'] ) > 30 ) {
+                            echo $this->getValidText( $this->getTextEncode( substr( $nationalTopSong['Song']['ArtistText'], 0, 30 ) ) ) . "...";
+                            }
+                            else {
+                            echo $this->getValidText( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) );
+                            }
+?>
+                                            </a>
+                                    </div>
+                                    <ul>
+                                            <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+                                            <li><a href="#">David's Favorites</a></li>
+                                            <li><a href="#">Pop</a></li>
+                                            <li><a href="#">Day After Christmas</a></li>
+                                            <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+                                            <li><a href="#">80's</a></li>
+                                            <li><a href="#">90's</a></li>
+                                            <li><a href="#">Country</a></li>
+                                            <li><a href="#">Rock</a></li>
+                                            <li><a href="#">Metal</a></li>
+                                            <li><a href="#">Breakup Songs</a></li>
+                                            <li><a href="#">New Years</a></li>
+                                            <li><a href="#">Christmas</a></li>
+                                            <li><a href="#">Summer</a></li>
+                                            <li><a href="#">Road Trip</a></li>
+                                            <li><a href="#">Christian</a></li>
+                                            <li><a href="#">Cleaning</a></li>
+                                            <li><a href="#">Workout</a></li>
+                                            <li><a href="#">Running</a></li>
+                                            <li><a href="#">Romantic</a></li>
+                                    </ul>
+                            </div>
+                    <?php 
+                            if( $count % 2 == 0 ) {
+                    ?>
+                    </li>
+                    <?php
+                            }
+                    ?>
+                    <?php
+            }
+    } else {
+            ?>
+            <li>No Songs Found.</li>
+    <?php
+            }
+    ?>																											
+            </ul>
+    </div>
+    <button class="left-scroll-button"></button>
+    <button class="right-scroll-button"></button>	
+</div>
+</section>
 <!-- Top Singles code end here -->
 
 
