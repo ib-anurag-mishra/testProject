@@ -588,6 +588,7 @@ class SolrComponent extends Object {
 
             $additionalParams = array(
                 'defType' => 'edismax',
+                'qf' => $queryFields,
                 'facet' => 'true',
                 'facet.field' => array(
                     $field
