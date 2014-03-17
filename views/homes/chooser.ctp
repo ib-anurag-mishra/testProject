@@ -15,7 +15,8 @@
     </header>
     <div class="login-library-container clearfix">
         <div class="form-wrapper">
-            <legend align="center" ><?php __('<p>Please enter either your Library Name, Zip Code, City, State or Country.</p>'); ?></legend>
+            <?php /*<legend align="center" ><?php __('<p>Please enter either your Library Name, Zip Code, City, State or Country.</p>'); ?></legend> */ ?>
+                <p>Please enter either your Library Name, Zip Code, City, State or Country.</p>
                 <?php
                     echo $this->Form->create('Library_details1', array('url' => array('controller' => 'homes', 'action' =>'chooser')));
                 ?>
