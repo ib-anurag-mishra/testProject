@@ -56,8 +56,9 @@
 		if(!empty($libraries)){
         ?>
 	<div class="library-list-container" align='center'>
-        <legend align="center"><?php __('<b>Please select your Library</b>'); ?></legend>
-        <br>
+        <?php /*<legend align="center"><?php __('<b>Please select your Library</b>'); ?></legend> */ ?>
+        <p><b>Please select your Library</b></p>
+        <?php /*<br>*/ ?>
             <div class="sidebox">
                     <div class="holder">
                             <div class="frame library-list-scrollable" align="left">
