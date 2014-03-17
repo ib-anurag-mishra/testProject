@@ -7115,8 +7115,7 @@ img {
   border: 0;
 }
 .login-container .login-library-container .form-wrapper div select {
-  background: url(../img/login/select-bkg.gif);
-  width: 301px;
+  width: 295px;
   height: 23px;
   -webkit-appearance: none;
   border: none;
