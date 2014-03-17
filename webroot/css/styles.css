@@ -7101,6 +7101,7 @@ img {
   width: 295px;
   height: 24px;
   padding-left: 5px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .login-container .login-library-container .form-wrapper div input[type="submit"] {
   background: url(../img/login/submit-bkg.gif) no-repeat;
