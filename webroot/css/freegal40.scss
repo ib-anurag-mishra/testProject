@@ -1409,7 +1409,12 @@ sub { top: 0.4em; }
 	}
 }
 
+@media \0screen {
+    .login-container .login-library-container .form-wrapper div input[type="submit"] {
+    	border: 1px solid #ddd;
 
+    }
+} 
 .content {
 	padding-left:177px;
 	padding-top:20px;
