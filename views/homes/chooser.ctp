@@ -43,9 +43,9 @@
 		<?php
                     //Added code for contries
                     if(count($territorylist) > 1) { 
-                        echo '<div class="select_country"><div style="float:right"><div class="select-wrapper">';
+                        echo '<div class="select_country"><div style="float:right">';
                         echo $this->Form->input('Library_details1.country', array('type'=>'select','label' => 'Country ','options'=>$territorylist));
-                        echo '</div></div></div>';																
+                        echo '</div></div>';																
                     } 
 
                    echo $this->Html->div('loginbtn', $form->end('Find Libraries'));

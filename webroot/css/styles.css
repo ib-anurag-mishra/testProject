@@ -7114,15 +7114,9 @@ img {
   -webkit-appearance: none;
   border: 0;
 }
-.login-container .login-library-container .form-wrapper div .select-wrapper {
-  width: 295px;
-  height: 23px;
-  background: #fafafa url(../img/country-select-arrow.png) no-repeat;
-  display: inline-block;
-  overflow-x: hidden;
-}
 .login-container .login-library-container .form-wrapper div select {
-  width: 320px;
+  background: url(../img/login/select-bkg.gif);
+  width: 301px;
   height: 23px;
   -webkit-appearance: none;
   border: none;
