@@ -7035,9 +7035,7 @@ img {
 /* end video details page */
 /* site login */
 .login-container {
-  margin-top: 10px;
-  margin-left: 15px;
-  width: 850px;
+  width: 847px;
   padding-bottom: 20px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -7047,19 +7045,19 @@ img {
   background: url(../img/login/border.gif) no-repeat center bottom;
   margin-bottom: 10px;
   padding-bottom: 10px;
+  position: relative;
 }
 .login-container header h3 {
-  float: left;
   font-size: 26px;
   letter-spacing: 1px;
   line-height: 33px;
-  margin-top: 20px;
 }
 .login-container header .more-info {
-  float: right;
+  position: absolute;
   color: rgba(0, 0, 0, 0.4);
   font-size: 13px;
-  margin-top: 35px;
+  top: 14px;
+  right: 0;
 }
 .login-container header .more-info a {
   color: #52c6ec;
