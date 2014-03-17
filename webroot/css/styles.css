@@ -7113,6 +7113,7 @@ img {
   font-weight: bold;
   -webkit-appearance: none;
   border: 0;
+  cursor: pointer;
 }
 .login-container .login-library-container .form-wrapper div select {
   background: url(../img/login/select-bkg.gif);
