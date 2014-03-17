@@ -26,7 +26,7 @@ $(document).ready(function() {
 
 
      
-
+    $('#LibraryZipcode').focus();
 
     $('.music-note-icon').on('mouseenter', function() {
 
