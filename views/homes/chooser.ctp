@@ -24,7 +24,7 @@
                     <input type="text" id="LibraryZipcode"  name="data[Library_details1][library_name]" >
                 </div>
 		<div class="input text">
-                    <label for="LibraryZipcode">Zipcode </label>
+                    <label for="LibraryZipcode">Zip Code</label>
                     <input type="text" id="LibraryZipcode"  name="data[Library_details1][zipcode]" >
                 </div>
 		<div class="input text">
