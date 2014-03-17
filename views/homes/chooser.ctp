@@ -10,7 +10,7 @@
 ?>
 <div class="login-container clearfix">
     <header class="clearfix">
-        <h3>Log In</h3>
+        <h3>Select Your Library</h3>
             <div class="more-info">Need help? Visit our <a href="/questions">FAQ section</a></div>
     </header>
     <div class="login-library-container clearfix">
