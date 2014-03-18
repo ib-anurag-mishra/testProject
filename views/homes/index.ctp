@@ -141,11 +141,18 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                         </a>              
                                                          <![endif]>
                                                         <!--[if IE]>
+                                                        <?php /*
                                                                <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
                                                                     class="no-ajaxy top-10-download-now-button" 
                                                                     title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
                                                                     onclick='wishlistDownloadIEHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>", "<?php echo $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopSong['Full_Files']['SaveAsName']; ?>",1);' 
                                                                     href="javascript:void(0);"><button class="download-icon"></button></a>
+                                                        */ ?>
+                                                        <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
+                                                                    class="download-icon" 
+                                                                    title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
+                                                                    onclick='wishlistDownloadIEHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>", "<?php echo $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopSong['Full_Files']['SaveAsName']; ?>",1);' 
+                                                                    ></a>
                                                         <![endif]-->                                                         
 						</span>
                                                 <span class="afterClick" id="downloading_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait.."); ?>
@@ -154,7 +161,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 				</span>
 			<?php
 			} else { ?>
-				<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-icon song-downloaded"></button></a>
+				<?php /*<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-icon song-downloaded"></button></a>*/ ?>
+                <a class="download-icon song-downloaded" href='/homes/my_history' title="You have already downloaded this song. Get it from your recent downloads"></a>
 			<?php
 			}
 		} else { ?>
