@@ -6,6 +6,8 @@
 
 class Token extends AppModel {
 
+	$name = 'Token';
+
 	function regularToken($uri) {
 		$gen = '5';
 		$key = 'LibrariesrockwithFreegalmusic.com!';
