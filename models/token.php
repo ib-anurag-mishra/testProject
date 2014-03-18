@@ -7,6 +7,7 @@
 class Token extends AppModel {
 
 	$name = 'Token';
+	$useTable = false;
 
 	function regularToken($uri) {
 		$gen = '5';
