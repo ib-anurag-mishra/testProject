@@ -763,7 +763,8 @@ function Get_Sales_date($sales_date_array, $country) {
                                                 <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/videos/download">
                                                     <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
                                                     <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
-                                                    <button class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></button>                                                                        
+                                                    <?php /*<button class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></button> */ ?>
+                                                    <a class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>                                                                                                                            
                                                 </form>
                                                 </p>
                                                     <?php
