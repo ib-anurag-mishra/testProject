@@ -637,7 +637,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null, $check = 0)
+    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null, $check = 0, $filter = null)
     {
     
         set_time_limit(0);
@@ -655,7 +655,13 @@ class SolrComponent extends Object {
                 if($type == 'video'){
                     $cond = " AND DownloadStatus:1";
                 } else {
+		    if(!empty($filter)) {
+		    
+		    $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1) AND Genre:".$filter;
+		    }
+		    else{
                     $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+		    }
                 }
     
                 if(1 == $mobileExplicitStatus)
