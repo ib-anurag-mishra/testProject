@@ -5033,17 +5033,27 @@ STR;
                 $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron');
 
-                $selectedSongs = $this->params["form"]["songs"];
-                $songsArray = array();
-                foreach ($selectedSongs as $song)
-                {
-                    $songInfo = explode('&', $song);
-                    $log_data .= " ProdID:$songInfo[0]  :ProviderType:$songInfo[1] ";
+                $prodID      = $this->params["form"]["prodID"];
+                $provider    = $this->params["form"]["provider_type"];
+                $songsArray  = array();
 
-                    $songDetails = $this->Song->getdownloaddata($songInfo[0], $songInfo[1]);
-                    array_push($songsArray, array_pop($songDetails));
+                $log_data   .= " ProdID:$prodID  :ProviderType:$provider ";
+                $songDetails = $this->Song->getdownloaddata( $prodID, $provider );
+
+                if( empty( $prodID ) && empty( $provider ) ) {
+
+	                $selectedSongs = $this->params["form"]["songs"];
+	                
+	                foreach ($selectedSongs as $song) {
+	                	
+	                    $songInfo = explode('&', $song);
+	                    $log_data .= " ProdID:$songInfo[0]  :ProviderType:$songInfo[1] ";
+	                    $songDetails = $this->Song->getdownloaddata($songInfo[0], $songInfo[1]);
+	                }
                 }
 
+                array_push($songsArray, array_pop($songDetails));
+                
                 $wishlistResult = $this->addsToWishlist($songsArray);
                 
                 if(!is_array($wishlistResult)){

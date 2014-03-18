@@ -165,15 +165,14 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 			</span>
 		</a>
 	<?php
-	}  
-} ?>
+	}
+?>
+			<input type="hidden" id="<?= $nationalTopSong['Song']['ProdID'] ?>" value="song" data-provider="<?= $nationalTopSong['Song']['provider_type'] ?>"/>
+			<button class="wishlist-icon"></button>
+			<button class="playlist-menu-icon"></button>
 
-											<button class="wishlist-icon"></button>
-											<button class="playlist-menu-icon"></button>
-											
-
-<?php
-                        if ($this->Session->read("patron"))
+<?php   
+}                         if ($this->Session->read("patron"))
                         {
                             if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1)
                             {
