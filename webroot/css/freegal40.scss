@@ -3673,6 +3673,10 @@ sub { top: 0.4em; }
 			}
 
 			.wishlist-btn {
+				display: block;
+				text-decoration: none;
+				text-indent: -9999px;
+				
 				position: absolute;
 				right:-1px;
 				top:-1px;
