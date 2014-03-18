@@ -477,7 +477,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function getFacetSearchTotal($keyword, $type='song',$check=0) {
+    function getFacetSearchTotal($keyword, $type='song',$check=0, $filter = null) {
         $query = '';
         $country = $this->Session->read('territory');
 //        
@@ -493,7 +493,12 @@ class SolrComponent extends Object {
             if($type == 'video'){
                     $cond = " AND DownloadStatus:1";
             } else {
-                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+		if(!empty($filter)){
+                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1) AND Genre:".$filter;
+		}
+		else{
+	        $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+		}
             }
             
             if ($this->Session->read('block') == 'yes') {

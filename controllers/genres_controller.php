@@ -914,7 +914,7 @@ Class GenresController extends AppController
             if (!empty($type))
             {
              	$limit = 12;
-                $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album', 0, $filter);
                        
                 $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit, 0, null, 0, $filter);
                       
