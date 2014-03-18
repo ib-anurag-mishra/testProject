@@ -57,15 +57,14 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
 
         if ($facetPage != $totalPages)
         {
-            $pagination_str .= $html->link(__('next', true) . '>>', '/artists/composer/' . $queryString.'/' .($facetPage + 1));
-            
             $pagination_str .= $html->link('<button class="next"></button>', '/artists/composer/' . $queryString . '/' . ($facetPage + 1), array('escape' => FALSE));
             $pagination_str .= $html->link('<button class="last"></button>', '/artists/composer/' . $queryString . '/' . $totalPages, array('escape' => FALSE));
             
         }
         else
         {
-            $pagination_str .= "next&gt&gt";
+            $pagination_str .= '<button class="next" style="cursor:text;"></button>';
+            $pagination_str .= '<button class="last" style="cursor:text;"></button>';
         }
     }
     else
