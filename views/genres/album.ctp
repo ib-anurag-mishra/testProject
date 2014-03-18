@@ -148,7 +148,7 @@ function Get_Sales_date($sales_date_array, $country) {
         <?php
             echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
             echo " > ";
-            echo "<a href = '/../search/index?q=".$prevSearch."&type=genre' >Search Results</a>";
+            echo "<a href = '/../search/index?q=".$keyword."&type=genre' >Search Results</a>";
             if(!empty($keyword)){
                 echo " > ";
                 if (strlen($keyword) >= 30)
@@ -272,7 +272,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         <section style="position: relative; width: 866px; right: 21px;" class="search-results-songs-page"> 
                             <div class="pagination-container">
                         <?php
-                        $searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder."&psearch=".$prevSearch;
+                        $searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder."&filter=".$filter;
                         $pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString);
                         echo $pagination_str;
                         ?>

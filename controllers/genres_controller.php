@@ -802,11 +802,11 @@ Class GenresController extends AppController
         }
         $this->set('type', $typeVar);
 		
-		if(isset($_GET['psearch']))
+		if(isset($_GET['filter']))
 		{
-			$prevSearch = $_GET['psearch'];
+			$filter = $_GET['filter'];
 		}
-		$this->set('prevSearch',$prevSearch);
+		$this->set('filter',$filter);
 
         if (isset($_GET['sort']))
         {
@@ -916,7 +916,7 @@ Class GenresController extends AppController
              	$limit = 12;
                 $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genreAlbum');
                        
-                $albums = $this->Solr->groupSearch($queryVar, 'genreAlbum', $facetPage, $limit);
+                $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit, $filter);
                       
                 $arr_albumStream = array();
                 foreach ($albums as $objKey => $objAlbum) {

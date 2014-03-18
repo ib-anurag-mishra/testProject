@@ -685,7 +685,7 @@ function Get_Sales_date($sales_date_array, $country) {
                             $name = $genre->Genre;
                             $count = $genre->numFound;
                             ?>
-                                <li><a href="<?php echo "/genres/album?q=$tilte&type=genreAlbum&psearch=$keyword"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $count; ?>)</a></li>
+                                <li><a href="<?php echo "/genres/album?q=$keyword&type=genreAlbum&filter=$tilte"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $count; ?>)</a></li>
                             <?php
                             $i++;
                         }
