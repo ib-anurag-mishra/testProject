@@ -416,7 +416,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                     if ($this->Session->read("patron")) {
                                         ?>
                                             <?php /*<button class="menu-btn"></button>*/ ?>
-                                            <a class="menu-btn no-ajaxy" href="#" title="Add To Wishlist, Playlist, or Download"></a>
+                                            <a class="menu-btn no-ajaxy" href="#" title="Add To Wishlist, Playlist, or Downloadmu"></a>
                                             <section class="options-menu">
                                                 <input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>"/>
                                                 <ul>
@@ -1173,7 +1173,9 @@ function Get_Sales_date($sales_date_array, $country) {
                 <?php
                 if ($this->Session->read("patron")) {
                     ?>
-                        <button class="multi-select-icon"></button>
+                        <?php /*<button class="multi-select-icon"></button> */ ?>
+
+                        <a class="multi-select-icon no-ajaxy" href="#" title="Select All, Clear All, Add to Wishlist, or Add to Playlist"></a>
                         <section class="options-menu">
                             <ul>
                                 <li><a class="select-all no-ajaxy" href="#">Select All</a></li>
