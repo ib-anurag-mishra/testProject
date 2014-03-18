@@ -1377,9 +1377,9 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
                 if(type == 1){
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                     if (languageSet === 'en') {
-                        document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><button class="download-btn song-downloaded"></button></a>';
+                        document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><button class="download-icon song-downloaded"></button></a>';
                     } else {
-                        document.getElementById('wishlist_song_' + prodId).innerHTML = '<a href="/homes/my_history"><button class="download-btn song-downloaded"></a>';
+                        document.getElementById('wishlist_song_' + prodId).innerHTML = '<a href="/homes/my_history"><button class="download-icon song-downloaded"></a>';
                     }
                     document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                     document.getElementById('downloading_' + prodId).style.display = 'none';
