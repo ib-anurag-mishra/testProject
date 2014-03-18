@@ -133,17 +133,25 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                 	<![if !IE]>
                                                         <a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?= $nationalTopSong["Song"]['ProdID']; ?>", "0", "<?= $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>", "<?= $nationalTopSong["Song"]["provider_type"]; ?>");'>
                                                                      <button class="download-icon"></button>
+                                                        </a>             
                                                          <![endif]>
+                                                        <!--[if IE]>
+                                                               <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
+                                                                    class="no-ajaxy top-10-download-now-button" 
+                                                                    title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
+                                                                    onclick='wishlistDownloadIEHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>", "<?php echo $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopSong['Full_Files']['SaveAsName']; ?>");' 
+                                                                    href="javascript:void(0);"><button class="download-icon"></button></a>
+                                                        <![endif]-->                                                         
 						</span>
 					</form>
 				</span>
 			<?php
 			} else { ?>
-				<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></a>
+				<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-btn song-downloaded"></a>
 			<?php
 			}
 		} else { ?>
-			<a class="top-100-download-now-button" href="javascript:void(0);"><button class="download-btn download-limit-met"></button></a> 
+			<button class="download-btn download-limit-met"></button>
 		<?php
 		}
 	} else { ?>
@@ -181,10 +189,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             } 
                             else if ($nationalTopSong['Country']['SalesDate'] <= date('Y-m-d'))
                             {
-                               ?>
-
-                               <a href="#" class="preview" style="cursor:pointer;display:block;" id="play_audio"<?=$i?> onClick='playSample(this, "<?=$i?>", "<?=$nationalTopSong['Song']['ProdID'] ?>", "<?=base64_encode($nationalTopSong['Song']['provider_type'])?>", "<?=$this->webroot?>");'><button class="play-btn-icon"></button></a>
-<?php
+                                echo $html->image('sample-icon.png', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'playSample(this, "' . $i . '", ' . $nationalTopSong['Song']['ProdID'] . ', "' . base64_encode($nationalTopSong['Song']['provider_type']) . '", "' . $this->webroot . '");'));
                                 echo $html->image('sample-loading-icon-v3.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
                                 echo $html->image('sample-stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));                                
                             }
@@ -217,14 +222,14 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     </div>                               
                                     <div class="artist-name">
                                             <a href="/artists/album/<?= base64_encode( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) ); ?>">
-                                                    <?php
-                            if ( strlen( $nationalTopSong['Song']['ArtistText'] ) > 30 ) {
-                            echo $this->getValidText( $this->getTextEncode( substr( $nationalTopSong['Song']['ArtistText'], 0, 30 ) ) ) . "...";
-                            }
-                            else {
-                            echo $this->getValidText( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) );
-                            }
-?>
+                                                <?php
+                                                if ( strlen( $nationalTopSong['Song']['ArtistText'] ) > 30 ) {
+                                                    echo $this->getValidText( $this->getTextEncode( substr( $nationalTopSong['Song']['ArtistText'], 0, 30 ) ) ) . "...";
+                                                }
+                                                else {
+                                                echo $this->getValidText( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) );
+                                                }
+                                                ?>
                                             </a>
                                     </div>
                                     <ul>
