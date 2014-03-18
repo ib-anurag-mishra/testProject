@@ -894,7 +894,7 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results album-results">
             <header>
                 <h3 class="albums-header">Albums</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=album"></a>
+                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=album" title="See More Albums"></a>
             </header>
             <div class="search-results-all-albums-carousel">
         <?php if (!empty($albumData)) { ?>
