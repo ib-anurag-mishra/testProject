@@ -769,11 +769,14 @@ function Get_Sales_date($sales_date_array, $country) {
                                                 </p>
                                                     <?php
                                                 } else {
-                                                    ?><a href='/homes/my_history' title='<?php __("You have already downloaded this video. Get it from your recent downloads"); ?>'><button class="download-btn video-downloaded"></button></a>
+                                                    ?>
+                                                    <?php /*<a href='/homes/my_history' title='<?php __("You have already downloaded this video. Get it from your recent downloads"); ?>'><button class="download-btn video-downloaded"></button></a> */ ?>
+                                                    <a href="/homes/my_history" title="You have already download this video. Get it from your recent downloads" class="download-btn video-downloaded"></a>
                                                 <?php
                                                 }
                                             }else{ ?>
-                                                    <button class="download-btn download-limit-met"></button> 
+                                                    <?php /*<button class="download-btn download-limit-met"></button>*/ ?>
+                                                    <a class="download-btn download-limit-met"></a>
                                        <?php }
                                         }
                                     }
