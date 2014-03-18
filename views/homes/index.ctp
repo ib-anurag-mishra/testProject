@@ -139,7 +139,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                                <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
                                                                     class="no-ajaxy top-10-download-now-button" 
                                                                     title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
-                                                                    onclick='wishlistDownloadIEHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>", "<?php echo $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopSong['Full_Files']['SaveAsName']; ?>");' 
+                                                                    onclick='wishlistDownloadIEHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>", "<?php echo $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopSong['Full_Files']['SaveAsName']; ?>",1);' 
                                                                     href="javascript:void(0);"><button class="download-icon"></button></a>
                                                         <![endif]-->                                                         
 						</span>
