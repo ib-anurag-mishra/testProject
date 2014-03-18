@@ -1795,7 +1795,10 @@ sub { top: 0.4em; }
 						}
 
 						.wishlist-icon {
-
+							display: block;
+							cursor: pointer;
+							text-indent: -9999px;
+							text-decoration: none;
 							position: absolute;
 							right: 31px;
 							top: -1px;
