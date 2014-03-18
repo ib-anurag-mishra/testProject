@@ -131,9 +131,14 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                 <input type="hidden" name="ProviderType" value="<?= $nationalTopSong["Song"]["provider_type"]; ?>" />
                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?= $nationalTopSong["Song"]["ProdID"]; ?>">
                                                 	<![if !IE]>
+                                                        <?php /*
                                                         <a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?= $nationalTopSong["Song"]['ProdID']; ?>", "0", "<?= $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>", "<?= $nationalTopSong["Song"]["provider_type"]; ?>",1);'>
                                                                      <button class="download-icon"></button>
-                                                        </a>             
+                                                        </a>
+                                                        */ ?>
+                                                        <a class="download-icon" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not." onclick='return wishlistDownloadOthersHome("<?= $nationalTopSong["Song"]['ProdID']; ?>", "0", "<?= $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>", "<?= $nationalTopSong["Song"]["provider_type"]; ?>",1);'>
+                                                                     
+                                                        </a>              
                                                          <![endif]>
                                                         <!--[if IE]>
                                                                <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
