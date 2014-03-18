@@ -95,7 +95,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
         <?php
             echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
             echo " > ";
-            echo "<a href = '/../search/index?q=".$keyword."&type=genre' >Search Results</a>";
+            echo "<a href = '/../search/index?q=".$prevSearch."&type=genre' >Search Results</a>";
             if(!empty($keyword)){
                 echo " > ";
                 if (strlen($keyword) >= 30)

@@ -801,6 +801,12 @@ Class GenresController extends AppController
             $typeVar = 'album';
         }
         $this->set('type', $typeVar);
+		
+		if(isset($_GET['psearch']))
+		{
+			$prevSearch = $_GET['psearch'];
+		}
+		$this->set('prevSearch',$prevSearch);
 
         if (isset($_GET['sort']))
         {
