@@ -149,7 +149,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 				</span>
 			<?php
 			} else { ?>
-				<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-btn song-downloaded"></a>
+				<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-btn song-downloaded"></button></a>
 			<?php
 			}
 		} else { ?>
