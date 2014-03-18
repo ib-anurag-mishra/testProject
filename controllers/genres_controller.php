@@ -10,7 +10,7 @@ ini_set('memory_limit', '2048M');
 
 Class GenresController extends AppController
 {
-    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download','Searchrecord','LatestVideodownload','LatestDownload','Page', 'Token');    
+    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download','Searchrecord','LatestVideodownload','LatestDownload','Page');    
     var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming','Solr');
     var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue','Session','Album','Html','Session','Queue','Wishlist');
     
