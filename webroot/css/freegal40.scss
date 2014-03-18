@@ -3735,29 +3735,29 @@ sub { top: 0.4em; }
 				}
 
 				&.download-limit-met {
-					background: url(../img/freegal_sprite.png) -115px -200px;
+					background: url(../img/freegal_sprite.png) -115px -250px;
 
 					&:hover {
 
-						background: url(../img/freegal_sprite.png) -150px -200px;
+						background: url(../img/freegal_sprite.png) -150px -250px;
 					}
 
 					&:active {
 
-						background: url(../img/freegal_sprite.png) -185px -200px;
+						background: url(../img/freegal_sprite.png) -185px -250px;
 					}					
 
 				}
 
 				&.video-downloaded {
-					background: url(../img/freegal_sprite.png) -115px -225px;
+					background: url(../img/freegal_sprite.png) -115px -275px;
 
 					&:hover {
-						background: url(../img/freegal_sprite.png) -150px -225px;	
+						background: url(../img/freegal_sprite.png) -150px -275px;	
 					}
 
 					&:active {
-						background: url(../img/freegal_sprite.png) -185px -225px;	
+						background: url(../img/freegal_sprite.png) -185px -275px;	
 					}
 
 				}
