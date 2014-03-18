@@ -776,7 +776,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                                 }
                                             }else{ ?>
                                                     <?php /*<button class="download-btn download-limit-met"></button>*/ ?>
-                                                    <a class="download-btn download-limit-met"></a>
+                                                    <a title="Your download limit has been met." class="download-btn download-limit-met"></a>
                                        <?php }
                                         }
                                     }
