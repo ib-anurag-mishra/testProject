@@ -304,7 +304,8 @@ function Get_Sales_date($sales_date_array, $country) {
                         <?php
                         if ($this->Session->read("patron")) {
                             ?>
-                                <button class="multi-select-icon"></button>
+                                <?php /*<button class="multi-select-icon"></button> */?>
+                                <a class="multi-select-icon no-ajaxy" href="#" title="Select All, Clear All, Add to Wishlist, Add to Playlist"></a>
                                 <section class="options-menu">
                                     <ul>
                                         <li><a class="select-all no-ajaxy" href="#">Select All</a></li>

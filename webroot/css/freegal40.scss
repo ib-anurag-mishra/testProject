@@ -2721,7 +2721,9 @@ sub { top: 0.4em; }
 		}
 
 		.multi-select-icon {
-
+			display: block;
+			text-indent: -9999px;
+			text-decoration: none;
 			position: absolute;
 			right:8px;
 			top:9px;
