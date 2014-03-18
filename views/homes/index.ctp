@@ -332,7 +332,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             }
                         }
                         ?>                     
-                        <a class="more-by-artist" 
+                        <a title="More by <?php echo $this->getTextEncode($ArtistText); ?>" class="more-by-artist" 
                            href="/artists/album/<?php echo str_replace('/', '@', base64_encode($v['Album']['ArtistText'])); ?>/<?= base64_encode($v['Genre']['Genre']) ?>">
                                <?php echo $this->getTextEncode($ArtistText); ?>
                         </a>
