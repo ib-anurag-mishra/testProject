@@ -58,7 +58,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     }
                                     //echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
                                     ?>
-                                    <button class="wishlist-icon toggleable"></button>
+                                    <?php /*<button class="wishlist-icon toggleable"></button> */ ?>
+                                    <a class="wishlist-icon toggleable" title="Add To Wishlist"></a>
                                     <?php
                                 }
                                 ?>
