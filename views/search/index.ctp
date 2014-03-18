@@ -998,7 +998,7 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results artist-results">
             <header>
                 <h3 class="artists-header">Artists</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=artist"></a>
+                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=artist" title="See More Artists"></a>
             </header>
             <div class="search-results-list">
                 <?php
@@ -1034,7 +1034,7 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results composers-results">
             <header>
                 <h3 class="composers-header">Composers</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=composer"></a>
+                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=composer" title="See More Composers"></a>
             </header>
             <div class="search-results-list">
 
@@ -1074,7 +1074,7 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results videos-results">
             <header>
                 <h3 class="videos-header">Videos</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=video"></a>
+                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=video" title="See More Videos"></a>
             </header>
             <div class="search-results-list">
                             <?php
@@ -1108,7 +1108,7 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results genres-results">
             <header>
                 <h3 class="genres-header">Genres</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=genre"></a>
+                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=genre" title="See More Genres"></a>
             </header>
             <div class="search-results-list">
         <?php
