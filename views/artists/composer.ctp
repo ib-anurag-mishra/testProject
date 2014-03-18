@@ -2,7 +2,6 @@
 
 function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryString = null)
 {
-    $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
 
