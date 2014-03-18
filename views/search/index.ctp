@@ -748,7 +748,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     ?>
 
                                     <?php /*<button class="wishlist-btn" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></button>*/ ?>
-                                    <a class="wishlist-btn" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
+                                    <a class="wishlist-btn" title="Add To Your Wishlist" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
                                                 <?php
                                                 $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
                                           if ($sales_date <= date('Y-m-d')) {
