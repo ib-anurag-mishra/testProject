@@ -143,11 +143,13 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                                     href="javascript:void(0);"><button class="download-icon"></button></a>
                                                         <![endif]-->                                                         
 						</span>
+                                                <span class="afterClick" id="downloading_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait.."); ?>
+                                                <span id="wishlist_loader_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif'); ?></span> </a> </span>
 					</form>
 				</span>
 			<?php
 			} else { ?>
-				<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-btn song-downloaded"></a>
+				<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-btn song-downloaded"></button></a>
 			<?php
 			}
 		} else { ?>

@@ -1348,13 +1348,12 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
 function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, type)
 {
     //console.log('wishlistDownloadOthers called');
-    if(type != 1){
-        $('.beforeClick').hide();
-        $('.afterClick').show();
-        document.getElementById('downloading_' + prodId).style.display = 'block';
-        document.getElementById('wishlist_song_' + prodId).style.display = 'none';
-        document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
-    }
+
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('wishlist_song_' + prodId).style.display = 'none';
+    document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
 //    var finalURL = downloadUrl1;
 //    finalURL += downloadUrl2;
 //    finalURL += downloadUrl3;
@@ -1378,13 +1377,16 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
                 if(type == 1){
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                     if (languageSet === 'en') {
-                                            document.getElementById("ajaxflashMessage44").style.display = "block";
-                        document.getElementById('ajaxflashMessage44').innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                        document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><button class="download-btn song-downloaded"></button></a>';
                     } else {
-                                            document.getElementById("ajaxflashMessage44").style.display = "block";
-                        document.getElementById('ajaxflashMessage44').innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
+                        document.getElementById('wishlist_song_' + prodId).innerHTML = '<a href="/homes/my_history"><button class="download-btn song-downloaded"></a>';
                     }
+                    document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
+                    document.getElementById('downloading_' + prodId).style.display = 'none';
+                    document.getElementById('wishlist_song_' + prodId).style.display = 'block';
                     location.href = unescape(downloadUsedArr[2]);
+                    $('.afterClick').hide();
+                    $('.beforeClick').show();
                 }else{                
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                     if (languageSet === 'en') {
