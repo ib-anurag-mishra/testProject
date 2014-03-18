@@ -901,7 +901,9 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results album-results">
             <header>
                 <h3 class="albums-header">Albums</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=album" title="See More Albums"></a>
+                <?php if (!empty($albumData)) { ?>
+                    <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=album" title="See More Albums"></a>
+                <?php } ?>
             </header>
             <div class="search-results-all-albums-carousel">
         <?php if (!empty($albumData)) { ?>
@@ -1007,7 +1009,13 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results artist-results">
             <header>
                 <h3 class="artists-header">Artists</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=artist" title="See More Artists"></a>
+                <?php
+                if (!empty($artists)) {
+                ?>
+                    <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=artist" title="See More Artists"></a>
+                <?php
+                }
+                ?>
             </header>
             <div class="search-results-list">
                 <?php
@@ -1043,7 +1051,13 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results composers-results">
             <header>
                 <h3 class="composers-header">Composers</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=composer" title="See More Composers"></a>
+                <?php
+                if (!empty($composers)) {
+                ?>
+                    <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=composer" title="See More Composers"></a>
+                <?php
+                }
+                ?>
             </header>
             <div class="search-results-list">
 
@@ -1123,7 +1137,13 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results genres-results">
             <header>
                 <h3 class="genres-header">Genres</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=genre" title="See More Genres"></a>
+                <?php
+                if (!empty($genres)) {
+                ?>
+                    <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=genre" title="See More Genres"></a>
+                <?php
+                }
+                ?>
             </header>
             <div class="search-results-list">
         <?php
