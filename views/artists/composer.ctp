@@ -9,11 +9,13 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
         $part = floor($pageLimitToShow / 2);
         if (1 != $facetPage)
         {
-            $pagination_str .= $html->link('<<' . __('previous', true), "/artists/composer/" . $queryString.'/' . ($facetPage - 1));
+            $pagination_str .= $html->link('<button class="beginning"></button>', "/artists/composer/" . $queryString.'/1', array('escape' => FALSE));
+            $pagination_str .= $html->link('<button class="prev"></button>', "/artists/composer/" . $queryString . '/' . ($facetPage - 1), array('escape' => FALSE));
         }
         else
         {
-            $pagination_str .= "&lt&ltprevious";
+            $pagination_str .= '<button class="beginning" style="cursor:text;"></button>';
+            $pagination_str .= '<button class="prev" style="cursor:text;" ></button>';
         }
         
         $pagination_str .= " ";
@@ -36,24 +38,30 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
             $topage = $facetPage + $part;
         }
 
-
+        $classCounter = 1;
         for ($pageCount = $fromPage; $pageCount <= $topage; $pageCount++)
         {
             if ($facetPage == $pageCount)
             {
-                $pagination_str .= $pageCount;
+                $pagination_str .= '<button class="page-' . $classCounter . '" style="cursor:text;background: none repeat scroll 0 0 #808080;
+                                    color: #FFFFFF;" >' . $pageCount . '</button>';                
             }
             else
             {
-                $pagination_str .= $html->link($pageCount, '/artists/composer/' . $queryString.'/' .$pageCount);
+                $pagination_str .= $html->link('<button class="page-' . $classCounter . '">' . $pageCount . '</button>', '/artists/composer/' . $queryString . '/' . $pageCount, array('escape' => FALSE));
             }
             $pagination_str .= " ";
+            $classCounter++;
         }
         $pagination_str .= " ";
 
         if ($facetPage != $totalPages)
         {
             $pagination_str .= $html->link(__('next', true) . '>>', '/artists/composer/' . $queryString.'/' .($facetPage + 1));
+            
+            $pagination_str .= $html->link('<button class="next"></button>', '/artists/composer/' . $queryString . '/' . ($facetPage + 1), array('escape' => FALSE));
+            $pagination_str .= $html->link('<button class="last"></button>', '/artists/composer/' . $queryString . '/' . $totalPages, array('escape' => FALSE));
+            
         }
         else
         {
@@ -195,7 +203,15 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                                 <?php
                                 $i++;
                             }
-                            ?> 
+                        $pagination_str = createPagination($html,$facetPage,$totalFacetPages, 5, base64_encode($composertext)); 
+                        if(!empty($pagination_str)){ ?>
+                            <div class="pagination-container">
+                              <?php
+                              echo $pagination_str;
+                              ?>
+                            </div>                    
+                    
+                   <?php } ?>    
                 <?php } else { ?>
                     <div class="album-detail-container">
                         <div style="color:red; padding:50px; ">
