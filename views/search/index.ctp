@@ -417,7 +417,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                     if ($this->Session->read("patron")) {
                                         ?>
                                             <?php /*<button class="menu-btn"></button>*/ ?>
-                                            <a class="menu-btn no-ajaxy" href="#" title="Add To Wishlist, Playlist, or Downloadmu"></a>
+                                            <a class="menu-btn no-ajaxy" href="#" title="Add to Wishlist, Playlist, or Download"></a>
                                             <section class="options-menu">
                                                 <input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>"/>
                                                 <ul>
@@ -750,7 +750,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     ?>
 
                                     <?php /*<button class="wishlist-btn" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></button>*/ ?>
-                                    <a class="wishlist-btn" title="Add To Your Wishlist" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
+                                    <a class="wishlist-btn" title="Add to Wishlist" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
                                                 <?php
                                                 $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
                                           if ($sales_date <= date('Y-m-d')) {
@@ -959,7 +959,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                 echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1);
                                 ?>                                          
                                                 <?php /*<button class="playlist-menu-icon toggleable"></button>*/ ?>
-                                                <a class="playlist-menu-icon toggleable no-ajaxy" title="Add To a Playlist or Create a New Playlist" href="#"></a>                                        
+                                                <a class="playlist-menu-icon toggleable no-ajaxy" title="Add to a Playlist or Create a New Playlist" href="#"></a>                                        
                                                 <ul>
                                                     <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 
@@ -969,7 +969,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         //echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
                         ?>
                                             <?php /*<button class="wishlist-icon toggleable"></button>*/ ?>
-                                            <a class="wishlist-icon toggleable no-ajaxy" title="Add This To Your Wishlist" href="#"></a>
+                                            <a class="wishlist-icon toggleable no-ajaxy" title="Add to Wishlist" href="#"></a>
                         <?php
                     }
                     ?>

@@ -50,7 +50,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
                                         ?>                                          
                                         <?php /*<button class="playlist-menu-icon toggleable"></button> */ ?>    
-                                        <a class="playlist-menu-icon toggleable no-ajaxy" href="#" title="Add To a Playlist or Create a New Playlist"></a>                                   
+                                        <a class="playlist-menu-icon toggleable no-ajaxy" href="#" title="Add to a Playlist or Create a New Playlist"></a>                                   
                                         <ul>
                                             <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 
@@ -60,7 +60,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     //echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
                                     ?>
                                     <?php /*<button class="wishlist-icon toggleable"></button> */ ?>
-                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add To Wishlist"></a>
+                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
                                     <?php
                                 }
                                 ?>
@@ -187,10 +187,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 ?>
 			<input type="hidden" id="<?= $nationalTopSong['Song']['ProdID'] ?>" value="song" data-provider="<?= $nationalTopSong['Song']['provider_type'] ?>"/>
 			<?php /*<button class="wishlist-icon"></button> */ ?>
-            <a class="wishlist-icon no-ajaxy" title="Add this song to your wishlist" hrefe="#"></a>
+            <a class="wishlist-icon no-ajaxy" title="Add to Wishlist" hrefe="#"></a>
                         <?php    if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?>
                             <?php /*<button class="playlist-menu-icon"></button>*/ ?>
-                            <a class="playlist-menu-icon no-ajaxy" href="#" title="Add To a Playlist or Create a New Playlist"></a> ?>
+                            <a class="playlist-menu-icon no-ajaxy" href="#" title="Add to a Playlist or Create a New Playlist"></a> ?>
                             <ul>
                                 <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 
