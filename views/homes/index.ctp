@@ -166,7 +166,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 			<?php
 			}
 		} else { ?>
-			<button class="download-icon download-limit-met"></button>
+			<?php /*<button class="download-icon download-limit-met"></button>*/ ?>
+            <a class="download-icon download-limit-met" title="Your download limit has been met."></a>
 		<?php
 		}
 	} else { ?>
