@@ -688,6 +688,7 @@ function addToWishlist(prodId, providerType)
             {
 
                 document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
+                
 
                 //alert("You can not add more songs to your wishlist.");
                 //location.reload();
