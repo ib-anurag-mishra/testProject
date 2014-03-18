@@ -1522,10 +1522,11 @@ sub { top: 0.4em; }
 						
 						@extend %toggleable;
 
-						.wishlist-icon {
+						.wishlist-icon,.playlist-menu-icon {
 
 							text-indent: -9999px;
 							text-decoration: none;
+							cursor: pointer;
 						}
 						.ranking {
 
