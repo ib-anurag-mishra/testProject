@@ -957,7 +957,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                 echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1);
                                 ?>                                          
                                                 <?php /*<button class="playlist-menu-icon toggleable"></button>*/ ?>
-                                                <a class="playlist-menu-icon no-ajaxy" href="#"></a>                                        
+                                                <a class="playlist-menu-icon toggleable no-ajaxy" href="#"></a>                                        
                                                 <ul>
                                                     <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 
