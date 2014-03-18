@@ -966,7 +966,8 @@ function Get_Sales_date($sales_date_array, $country) {
                         }
                         //echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
                         ?>
-                                            <button class="wishlist-icon toggleable"></button>
+                                            <?php /*<button class="wishlist-icon toggleable"></button>*/ ?>
+                                            <a class="wishlist-icon toggleable no-ajaxy" title="Add This To Your Wishlist" href="#"></a>
                         <?php
                     }
                     ?>
