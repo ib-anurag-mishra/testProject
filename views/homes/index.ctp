@@ -49,7 +49,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     {
                                         echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
                                         ?>                                          
-                                        <button class="playlist-menu-icon toggleable"></button>                                        
+                                        <?php /*<button class="playlist-menu-icon toggleable"></button> */ ?>    
+                                        <a class="playlist-menu-icon toggleable" title="Add To A Playlist or Create a New Playlist"></a>                                   
                                         <ul>
                                             <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 
