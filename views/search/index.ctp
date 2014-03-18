@@ -1262,7 +1262,8 @@ function Get_Sales_date($sales_date_array, $country) {
                             <?php
                             if ($this->Session->read("patron")) {
                                 ?>                                
-                                    <button class="menu-btn"></button>
+                                    <?php /*<button class="menu-btn"></button>*/ ?>
+                                    <a href="#" class="menu-btn no-ajaxy" title="Add To a Playlist, Wishlist, or Download"></a>
                                     <section class="options-menu">
                                         <input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>"/>
                                         <ul>

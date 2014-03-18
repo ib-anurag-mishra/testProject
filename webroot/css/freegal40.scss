@@ -4144,7 +4144,9 @@ sub { top: 0.4em; }
 	}
 
 	.menu-btn {
-
+		display: block;
+		text-decoration: none;
+		text-indent: -9999px;
 		position: absolute;
 		left: 795px;
 		top:11px;
