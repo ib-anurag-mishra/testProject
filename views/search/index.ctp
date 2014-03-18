@@ -1074,7 +1074,13 @@ function Get_Sales_date($sales_date_array, $country) {
         <section class="category-results videos-results">
             <header>
                 <h3 class="videos-header">Videos</h3>
-                <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=video" title="See More Videos"></a>
+                <?php
+                if (!empty($videos)) {
+                ?>
+                    <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=video" title="See More Videos"></a>
+                <?php
+                }
+                ?>
             </header>
             <div class="search-results-list">
                             <?php
