@@ -494,6 +494,7 @@ class SolrComponent extends Object {
                     $cond = " AND DownloadStatus:1";
             } else {
 		if(!empty($filter)){
+		 $filter = str_replace(' ', '*', $filter);
                 $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1) AND Genre:".$filter;
 		}
 		else{
@@ -661,7 +662,7 @@ class SolrComponent extends Object {
                     $cond = " AND DownloadStatus:1";
                 } else {
 		    if(!empty($filter)) {
-		    
+		    $filter = str_replace(' ', '*', $filter);
 		    $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1) AND Genre:".$filter;
 		    }
 		    else{
