@@ -1249,7 +1249,8 @@ Class ArtistsController extends AppController
 
                     if ($this->Session->read('library_type') == 2)
                     {
-                        $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                        // $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                        $filePath = $this->Token->artworkToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                         if (!empty($filePath))
                         {
                             $songPath = explode(':', $filePath);
