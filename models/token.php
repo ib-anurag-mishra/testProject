@@ -6,9 +6,10 @@
 
 class Token extends AppModel {
 
-	$name = 'Token';
-	$useTable = false;
+	var $name = 'Token';
+	var $useTable = false;
 
+	// this replaces 'files/tokengen'
 	function regularToken($uri) {
 		$gen = '5';
 		$key = 'LibrariesrockwithFreegalmusic.com!';
@@ -50,6 +51,7 @@ class Token extends AppModel {
 		return $uri;
 	}
 	
+	// this replaces 'files/tokengen_artwork'
 	function artworkToken($uri) {	
 		$gen = '5';
 		$key = 'LibrariesrockwithFreegalmusic.com!';
@@ -70,6 +72,7 @@ class Token extends AppModel {
 		return $uri;
 	}
 
+	// this replaces 'files/tokengen_hls'
 	function hlsToken($file, $path) {
 		$gen = '5';
 		$key = 'LibrariesrockwithFreegalmusic.com!';
@@ -91,6 +94,7 @@ class Token extends AppModel {
 		return $final_uri;
 	}
 
+	// this replaces 'files/tokengen_streaming'
 	function streamingToken($uri) {
 		$gen = '5';
 		$key = 'LibrariesrockwithFreegalmusic.com!';
