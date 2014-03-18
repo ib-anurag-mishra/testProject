@@ -2,7 +2,6 @@
 
 function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryString = null)
 {
-    $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
 
@@ -204,12 +203,13 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                             }
                         $pagination_str = createPagination($html,$facetPage,$totalFacetPages, 5, base64_encode($composertext)); 
                         if(!empty($pagination_str)){ ?>
-                            <div class="pagination-container">
-                              <?php
-                              echo $pagination_str;
-                              ?>
-                            </div>                    
-                    
+                            <section style="position: relative; width: 866px; right: 21px;" class="search-results-songs-page">    
+                               <div class="pagination-container">
+                                 <?php
+                                 echo $pagination_str;
+                                 ?>
+                               </div> 
+                            </section>    
                    <?php } ?>    
                 <?php } else { ?>
                     <div class="album-detail-container">
