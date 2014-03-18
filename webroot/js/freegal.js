@@ -1938,7 +1938,7 @@ function addToQueueResponse(response, type)
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added ' + type + ' to Playlist';
-            $('#ajaxflashMessage44').fadeOut(4000);
+            $('#ajaxflashMessage44').fadeOut(5000);
 
         }
         else
