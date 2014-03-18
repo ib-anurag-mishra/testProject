@@ -187,7 +187,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 ?>
 			<input type="hidden" id="<?= $nationalTopSong['Song']['ProdID'] ?>" value="song" data-provider="<?= $nationalTopSong['Song']['provider_type'] ?>"/>
 			<?php /*<button class="wishlist-icon"></button> */ ?>
-            <a class="wishlist-icon" title="Add this song to your wishlist"></a>
+            <a class="wishlist-icon no-ajaxy" title="Add this song to your wishlist" hrefe="#"></a>
                         <?php    if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?>
                             <?php /*<button class="playlist-menu-icon"></button>*/ ?>
                             <a class="playlist-menu-icon no-ajaxy" href="#" title="Add To a Playlist or Create a New Playlist"></a> ?>
