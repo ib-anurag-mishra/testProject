@@ -111,3 +111,4 @@ class Token extends AppModel {
 		return $final_uri;
 	}
 }
+?>
