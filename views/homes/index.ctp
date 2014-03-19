@@ -190,7 +190,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             <a class="wishlist-icon no-ajaxy" title="Add to Wishlist" hrefe="#"></a>
                         <?php    if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?>
                             <?php /*<button class="playlist-menu-icon"></button>*/ ?>
-                            <a class="playlist-menu-icon no-ajaxy" href="#" title="Add to a Playlist or Create a New Playlist"></a> ?>
+                            <a class="playlist-menu-icon no-ajaxy" href="#" title="Add to a Playlist or Create a New Playlist"></a> 
                             <ul>
                                 <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 
@@ -265,6 +265,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             }
                     ?>
                     <?php
+                    
+                    if($count == 20){
+                        break;
+                    }
             }
     } else {
             ?>
