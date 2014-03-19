@@ -867,14 +867,14 @@ function Get_Sales_date($sales_date_array, $country) {
                     $i = 0;
                     foreach ($composers as $composer) {
                         $composer_name = str_replace('"', '', $composer->Composer);
-                       // $composer_name = truncate_text($composer_name, 30, $this);
+                        $composer_name = truncate_text($composer_name, 200, $this);
                         $tilte = urlencode($composer->Composer);
                         $name = $composer->Composer;
                         $count = $composer->numFound;
                         $name = $this->getTextEncode($name);
                         if ( "" !=  $this->getTextEncode($composer_name) ) {
                             ?>
-                                    <li><a href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1" title="<?php echo $this->getTextEncode($composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?></a><span>(<?php echo $count; ?>)</span></li>
+                                    <li><a href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1" title="<?php echo $this->getTextEncode($composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></li>
                                     <?php
                                 }
                                 $i++;
