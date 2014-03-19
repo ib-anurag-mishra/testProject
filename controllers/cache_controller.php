@@ -94,7 +94,7 @@ class CacheController extends AppController {
             
             $this->setNewsCache($territory);
             $this->Common->getGenres($territory);
-            $this->Common->getNationalTop100($territory);
+            $this->Common->getTopSingles($territory);
             $this->Common->getFeaturedVideos($territory);
             $this->Common->getTopVideoDownloads($territory);
             //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
