@@ -721,7 +721,7 @@ function displayMessage(response)
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById("ajaxflashMessage44").style.background = "red";
         document.getElementById('ajaxflashMessage44').innerHTML = responseArray[1];
-
+        $('#ajaxflashMessage44').fadeOut(5000);
         return false;
     }
     else if (responseArray[0] === 'success')
@@ -734,6 +734,7 @@ function displayMessage(response)
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById('ajaxflashMessage44').innerHTML = responseArray[1];
+        $('#ajaxflashMessage44').fadeOut(5000);
         return false;
     }
 }
