@@ -823,7 +823,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         $i = 0;
                         foreach ($artists as $artist) {
                             $artist_name = str_replace('"', '', $artist->ArttistText);
-                           // $artist_name_text = truncate_text($artist_name, 30, $this);
+                            $artist_name_text = truncate_text($artist_name, 125, $this);
 							$artist_name_text = $artist_name;
                             $tilte = urlencode($artist->ArtistText);
                             $count = $artist->numFound;
