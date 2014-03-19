@@ -1245,6 +1245,453 @@ Class ArtistsController extends AppController
         $this->set('albumSongs', $albumSongs);
 
     }
+    
+    
+    /*
+      Function Name : new_view
+      Desc : For artist view page
+     */
+
+    function new_view($id = null, $album = null, $provider = null)
+    {
+        //Configure::write("debug", 2);
+
+        if (count($this->params['pass']) >= 4)      /*  if 4 or more paramerters are passed in url */
+        {            
+             $this->log("4 or more Parameters passed in URL artists/view/: ".  serialize($this->params['pass']), "cache");
+             exit;
+        }
+        
+        $this->layout = 'home';
+
+        //Reading the parameters from URL
+        if (count($this->params['pass']) > 1)
+        {
+            $count = count($this->params['pass']);
+            $id = $this->params['pass'][0];
+            for ($i = 1; $i < $count - 1; $i++)
+            {
+                if (!is_numeric($this->params['pass'][$i]))
+                {
+                    $id .= "/" . $this->params['pass'][$i];
+                }
+            }
+            
+            
+            if (is_numeric($this->params['pass'][$count - 2]))
+            {
+                $album = $this->params['pass'][$count - 2];
+                $provider = base64_decode($this->params['pass'][$count - 1]);
+                
+                echo "<br>album: ".$album;
+                echo "<br>provider: ".$provider;
+                
+                
+            }
+            else
+            {
+                $album = "";
+                $provider = "";
+            }
+        }
+
+        
+        //reading sessin vlaues
+        $country = $this->Session->read('territory');
+        $libType = $this->Session->read('library_type');
+        $patId = $this->Session->read('patron');
+        $libId = $this->Session->read('library');
+        
+        //checking the download status for the patron & library
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+
+        //setting the values for view        
+        $this->set('album', $album);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+
+        $cond = "";
+        if ($this->Session->read('block') == 'yes')
+        {
+            $cond = array('Song.Advisory' => 'F');
+        }
+        else
+        {
+            $cond = "";
+        }
+
+        $val = '';
+        $val_provider_type = '';
+        $condition = array();
+
+        //check if album value is set in url
+        if ($album != '')
+        {
+            $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
+        }
+        else
+        {
+            $this->Song->Behaviors->attach('Containable');
+            if ($libType != 2)
+            {
+                $songs = $this->Song->find('all', array(
+                    'fields' => array(
+                        'DISTINCT Song.ReferenceID',
+                        'Song.provider_type'),
+                    'conditions' => array(
+                        'Song.ArtistText' => base64_decode($id),
+                        'Country.DownloadStatus' => 1,
+                        "Song.Sample_FileID != ''",
+                        "Song.FullLength_FIleID != ''",
+                        'Country.Territory' => $country, 
+                        $cond),
+                    'contain' => array(
+                        'Country' => array(
+                            'fields' => array(
+                                'Country.Territory')
+                        )
+                    ),
+                    'recursive' => 0,
+                    'limit' => 1)
+                );
+            }
+            else
+            {
+                $songs = $this->Song->find('all', array(
+                    'fields' => array(
+                        'DISTINCT Song.ReferenceID',
+                        'Song.provider_type'),
+                    'conditions' => array(
+                        'Song.ArtistText' => base64_decode($id),
+                        "Song.Sample_FileID != ''",
+                        "Song.FullLength_FIleID != ''",
+                        'Country.Territory' => $country,
+                        'Country.DownloadStatus' => 1,
+                        array('or' =>
+                            array(
+                                array('Country.StreamingStatus' => 1)
+                            )),
+                        $cond
+                    ), 'contain' => array(
+                        'Country' => array(
+                            'fields' => array('Country.Territory')
+                        )),
+                    'recursive' => 0, 'limit' => 1)
+                );
+            }
+            foreach ($songs as $k => $v)
+            {
+                $val = $val . $v['Song']['ReferenceID'] . ",";
+                $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "'),";
+            }
+            $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
+        }
+
+        if ($this->Session->read('block') == 'yes')
+        {
+            $cond = array('Album.Advisory' => 'F');
+        }
+        else
+        {
+            $cond = "";
+        }
+
+
+        
+                $this->paginate = array('conditions' =>
+                    array('and' =>
+                        array(
+                            $condition
+                        ),
+                        "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+                    ),
+                    'fields' => array(
+                        'Album.ProdID',
+                        'Album.Title',
+                        'Album.ArtistText',
+                        'Album.AlbumTitle',
+                        'Album.Advisory',
+                        'Album.Artist',
+                        'Album.ArtistURL',
+                        'Album.Label',
+                        'Album.Copyright',
+                        'Album.provider_type'
+                    ),
+                    'contain' => array(
+                        'Genre' => array(
+                            'fields' => array(
+                                'Genre.Genre'
+                            )
+                        ),
+                        'Country' => array(
+                            'fields' => array(
+                                'Country.Territory'
+                            )
+                        ),
+                        'Files' => array(
+                            'fields' => array(
+                                'Files.CdnPath',
+                                'Files.SaveAsName',
+                                'Files.SourceURL'
+                            ),
+                        )
+                    ),
+                    'order' => array('Country.SalesDate' => 'desc'),
+                    'limit' => '3',
+                    'cache' => 'yes',
+                    'chk' => 2
+                );
+
+                if ($this->Session->read('block') == 'yes')
+                {
+                    $cond = array('Song.Advisory' => 'F');
+                }
+                else
+                {
+                    $cond = "";
+                }
+                $this->Album->recursive = 2;
+                $albumData = $this->paginate('Album'); //getting the Albums for the artist
+  
+//        echo "<pre>";
+//        print_r($albumData);
+//        exit;
+        
+        if (!empty($albumData))
+        {            
+            if ($libType == 2)
+            {
+//                        $albumData[0]['albumSongs'] = $this->requestAction(
+//                                array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+//                                array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+//                        );
+                $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
+            }
+        }
+
+        //check for provider if null
+        if ($provider == "")
+        {
+            $provider = $albumData[0]['Album']['provider_type'];
+        }
+
+
+        //creating the Artist Url
+        if (isset($albumData[0]['Song']['ArtistURL']))
+        {
+            $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
+        }
+        else
+        {
+            $this->set('artistUrl', "N/A");
+        }
+
+        if (isset($albumData['0']['Genre']['Genre']))
+        {
+            $this->set("genre", $albumData['0']['Genre']['Genre']);
+        }
+        else
+        {
+            $this->set("genre", '');
+        }
+
+        $this->set('albumData', $albumData);
+//        echo "<pre>";
+//        print_r($albumData);
+//        exit;       
+
+        //getting the songs for album
+        $albumSongs = array();
+        if (!empty($albumData))
+        {
+            foreach ($albumData as $album)
+            {   
+                if ($libType != 2)
+                {
+                    $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
+                        'conditions' =>
+                        array('and' =>
+                            array(
+                                array('Song.ReferenceID' => $album['Album']['ProdID']),
+                                array('Song.provider_type = Country.provider_type'),
+                                array('Country.DownloadStatus' => 1),
+                                array("Song.Sample_FileID != ''"),
+                                array("Song.FullLength_FIleID != ''"),
+                                array("Song.provider_type" => $provider),
+                                array('Country.Territory' => $country),
+                                $cond
+                            )
+                        ),
+                        'fields' => array(
+                            'Song.ProdID',
+                            'Song.Title',
+                            'Song.ArtistText',
+                            'Song.DownloadStatus',
+                            'Song.SongTitle',
+                            'Song.Artist',
+                            'Song.Advisory',
+                            'Song.Sample_Duration',
+                            'Song.FullLength_Duration',
+                            'Song.Sample_FileID',
+                            'Song.FullLength_FIleID',
+                            'Song.provider_type',
+                            'Song.sequence_number'
+                        ),
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
+                            ),
+                            'Country' => array(
+                                'fields' => array(
+                                    'Country.Territory',
+                                    'Country.SalesDate',
+                                    'Country.StreamingSalesDate',
+                                    'Country.StreamingStatus',
+                                    'Country.DownloadStatus'
+                                )
+                            ),
+                            'Sample_Files' => array(
+                                'fields' => array(
+                                    'Sample_Files.CdnPath',
+                                    'Sample_Files.SaveAsName'
+                                )
+                            ),
+                            'Full_Files' => array(
+                                'fields' => array(
+                                    'Full_Files.CdnPath',
+                                    'Full_Files.SaveAsName'
+                                )
+                            ),
+                        ),
+                        'group' => 'Song.ProdID, Song.provider_type',
+                        'order' => array('Song.sequence_number', 'Song.ProdID')
+                    ));
+                }
+                else
+                {
+                    $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
+                        'conditions' =>
+                        array('and' =>
+                            array(
+                                array('Song.ReferenceID' => $album['Album']['ProdID']),
+                                array('Song.provider_type = Country.provider_type'),
+                                array("Song.Sample_FileID != ''"),
+                                array("Song.FullLength_FIleID != ''"),
+                                array("Song.provider_type" => $provider),
+                                array('Country.Territory' => $country),
+                                $cond
+                            ),
+                            'or' => array(array('and' => array(
+                                        'Country.StreamingStatus' => 1,
+                                        'Country.StreamingSalesDate <=' => date('Y-m-d')
+                                    ))
+                                ,
+                                array('and' => array(
+                                        'Country.DownloadStatus' => 1
+                                    ))
+                            )
+                        ),
+                        'fields' => array(
+                            'Song.ProdID',
+                            'Song.Title',
+                            'Song.ArtistText',
+                            'Song.DownloadStatus',
+                            'Song.SongTitle',
+                            'Song.Artist',
+                            'Song.Advisory',
+                            'Song.Sample_Duration',
+                            'Song.FullLength_Duration',
+                            'Song.Sample_FileID',
+                            'Song.FullLength_FIleID',
+                            'Song.provider_type',
+                            'Song.sequence_number'
+                        ),
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
+                            ),
+                            'Country' => array(
+                                'fields' => array(
+                                    'Country.Territory',
+                                    'Country.SalesDate',
+                                    'Country.StreamingSalesDate',
+                                    'Country.StreamingStatus',
+                                    'Country.DownloadStatus',
+                                )
+                            ),
+                            'Sample_Files' => array(
+                                'fields' => array(
+                                    'Sample_Files.CdnPath',
+                                    'Sample_Files.SaveAsName'
+                                )
+                            ),
+                            'Full_Files' => array(
+                                'fields' => array(
+                                    'Full_Files.CdnPath',
+                                    'Full_Files.SaveAsName'
+                                )
+                            ),
+                        ),
+                        'group' => 'Song.ProdID, Song.provider_type',
+                        'order' => array('Song.sequence_number', 'Song.ProdID')
+                    ));
+                }
+            }
+        }
+
+
+        //if Artist name is not found in URL
+        if ($id != "")
+        {
+            $id = str_replace('@', '/', $id);
+            $this->set('artistName', base64_decode($id));
+        }
+        else
+        {
+            $this->set('artistName', $albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']);
+        }
+
+        //checking the downlaod status for songs in Album
+        if (!empty($albumSongs))
+        {
+            $this->Download->recursive = -1;
+            foreach ($albumSongs as $k => $albumSong)
+            {
+                foreach ($albumSong as $key => $value)
+                {
+                    $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $value['Song']['ProdID'], 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+                    if (count($downloadsUsed) > 0)
+                    {
+                        $albumSongs[$k][$key]['Song']['status'] = 'avail';
+                    }
+                    else
+                    {
+                        $albumSongs[$k][$key]['Song']['status'] = 'not';
+                    }
+
+                    if ($this->Session->read('library_type') == 2)
+                    {
+                        $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                        if (!empty($filePath))
+                        {
+                            $songPath = explode(':', $filePath);
+                            $streamUrl = trim($songPath[1]);
+                            $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
+                            $albumSongs[$k][$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                        }
+                    }
+                }
+            }
+        }
+        
+        $this->set('albumSongs', $albumSongs);
+
+    }
 
     /*
       Function Name : getAlbumSongs
