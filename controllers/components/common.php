@@ -1742,22 +1742,13 @@ STR;
             
             if (!empty($topSingleData))
             {
-//                foreach ($topSingleData as $key => $value)
-//                {
-//                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
-//                    $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
-//                    $data[$key]['songAlbumImage'] = $songAlbumImage;
-//                }
-                Cache::delete("top_singles" . $territory, "cache");
-                Cache::write("top_singles" . $territory, $topSingleData, "cache");
+                Cache::write("top_singles" . $territory, $topSingleData);
                 $data = $topSingleData;
                 $this->log("cache written for national top 100 songs for $territory", "cache");
             }
             else
             {
-                $data = Cache::read("top_singles" . $territory, "cache");
-                Cache::write("top_singles" . $territory, Cache::read("top_singles" . $territory, "cache"), "cache");
-
+                $data = Cache::read("top_singles" . $territory);
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
 
