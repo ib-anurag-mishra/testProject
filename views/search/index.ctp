@@ -1080,7 +1080,7 @@ function Get_Sales_date($sales_date_array, $country) {
                             <?php
                             foreach ($composers as $composer) {
                                 $tilte = urlencode($composer->Composer);
-                               // $composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
+                                //$composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
 								$composer_name = $this->getTextEncode($composer->Composer);
                                 if (!empty($composer_name)) {
                                     ?>

@@ -7,8 +7,8 @@ class ServicesController extends AppController {
 	var $helpers = array('Xml'); // helpers used	
 	
     function textEncode($text){
-        $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
-        return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
+        $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+        return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
     }
     
     function search() {
@@ -756,8 +756,8 @@ class ServicesController extends AppController {
 				$card = strtolower($card);			
 				$data['card'] = $card;
 				$data['card_orig'] = $card;
-				$data['pin'] = @$this->params['pass'][3];
-				$data['name'] = @$this->params['pass'][3];
+				$data['pin'] = $this->params['pass'][3];
+				$data['name'] = $this->params['pass'][3];
 
 				$patronId = $card;
 				$data['patronId'] = $patronId;
@@ -766,10 +766,10 @@ class ServicesController extends AppController {
 				$data['library_cond'] = $this->params['pass'][1];
 				$url = $this->Url->find('all', array('conditions' => array('library_id' => $this->params['pass'][1])));
 				if(count($url) > 0){
-					$data['referral']= @$url[0]['Url']['domain_name'];
+					$data['referral']= $url[0]['Url']['domain_name'];
 				}
 		
-				$data['referral']= @$urlArr[0]['domain_name'];
+				$data['referral']= $urlArr[0]['domain_name'];
 				$data['subdomain']= $existingLibraries['0']['Library']['library_subdomain'];
 				$data['database'] = 'freegal';
 				if($existingLibraries['0']['Library']['library_authentication_method'] != 'ezproxy' && $existingLibraries['0']['Library']['library_authentication_method'] != 'user_account') {
