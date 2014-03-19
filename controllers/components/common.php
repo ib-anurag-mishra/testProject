@@ -1752,6 +1752,7 @@ STR;
 //                }
                 Cache::delete("top_singles" . $territory, "cache");
                 Cache::write("top_singles" . $territory, $topSingleData, "cache");
+                $data = $topSingleData;
                 $this->log("cache written for national top 100 songs for $territory", "cache");
             }
             else
