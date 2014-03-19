@@ -2,7 +2,7 @@
 /**
  * File Name: token.php
  * Class Name: Token
-*/
+ */
 
 class Token extends AppModel {
 
@@ -50,12 +50,12 @@ class Token extends AppModel {
 		// return the token
 		return $uri;
 	}
-	
+
 	// this replaces 'files/tokengen_artwork'
-	function artworkToken($uri) {	
+	function artworkToken($uri) {
 		$gen = '5';
 		$key = 'LibrariesrockwithFreegalmusic.com!';
-		
+
 		// add beginning forward slash to the uri
 		$uri = '/' . $uri;
 
@@ -64,7 +64,7 @@ class Token extends AppModel {
 
 		// format the hash
 		$hash = sprintf("%1.1s%20.20s", $gen, $hmac);
-		
+
 		// append the hash to the uri
 		$uri .= "?token=$hash";
 
@@ -98,7 +98,7 @@ class Token extends AppModel {
 	function streamingToken($uri) {
 		$gen = '5';
 		$key = 'LibrariesrockwithFreegalmusic.com!';
-		
+
 		$start_path = '/libraryideas';
 		$full_path = $start_path . '/' . $uri;
 
@@ -107,7 +107,7 @@ class Token extends AppModel {
 
 		// format the hash
 		$hash = sprintf("%1.1s%20.20s", $gen, $hmac);
-		
+
 		// format the final uri
 		$final_uri = $start_path . '/mp3:' . $uri . '?token=' . $hash;
 

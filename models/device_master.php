@@ -9,6 +9,4 @@ class DeviceMaster extends AppModel {
   
   var $name = 'DeviceMaster';
   var $useTable = 'device_masters';
-  
- 
 }

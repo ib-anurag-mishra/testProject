@@ -8,8 +8,6 @@
 class Download extends AppModel
 {
   var $name = 'Download';
-  //var $usetable = 'downloads';
-
   var $belongsTo = array(
     'Genre' => array(
     'className' => 'Genre',
@@ -436,7 +434,6 @@ class Download extends AppModel
       } else {
         //Do nothing
         return false;
-        //$data = $this->query("SELECT date_format(Download.created,'%Y-%m-%d') as day_downloaded,Download.library_id,Download.patron_id, CASE Download.email WHEN '' THEN NULL ELSE Download.email END AS emailtest, COUNT(patron_id) AS total FROM downloads AS Download WHERE Download.created >= DATE('".$date."') AND Download.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY day_downloaded,patron_id,library_id, emailtest");
       }
     }
     if(!empty($data)){
@@ -472,7 +469,6 @@ class Download extends AppModel
       } else {
         //Do nothing
         return false;
-        //$data = $this->query("SELECT day_downloaded,library_id,Genre,count(id) as total FROM (SELECT date_format(Download.created,'%Y-%m-%d') as day_downloaded, Download.id, Download.library_id, Genre.Genre FROM downloads AS Download LEFT JOIN Genre AS Genre ON (Download.ProdID = Genre.ProdId) WHERE Download.created >= DATE('".$date."') AND Download.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY Download.id) as table1 Group by day_downloaded,Genre");
       }
     }
     if(!empty($data)){

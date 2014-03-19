@@ -5,15 +5,14 @@
  Author : m68interactive
  */
 
-class Album extends AppModel
+class Album extends AppModel 
 {
-	var $name = 'Albums';
-//	var $useDbConfig = 'freegal';
-	var $useTable = 'Albums';
+	var $name 		= 'Albums';
+	var $useTable 	= 'Albums';
 	var $primaryKey = 'ProdID';
-	var $actsAs = array('Containable');
-	var $uses = array('Featuredartist');
-	var $hasOne = array(
+	var $actsAs 	= array('Containable');
+	var $uses 		= array('Featuredartist');
+	var $hasOne 	= array(
 		'Genre' => array(
 			'className' => 'Genre',
 			'foreignKey' => 'ProdID'
@@ -37,11 +36,5 @@ class Album extends AppModel
 			'foreignKey' => 'FileID'
 		)
 	);
-	
-	/*function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
-		$group = array('Album.ProdID');
-	    $results = $this->find('count', compact('conditions','recursive', 'group'));
-	    return $results;
-	}*/
 }
 ?>

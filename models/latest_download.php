@@ -8,8 +8,6 @@
 class LatestDownload extends AppModel
 {
   var $name = 'LatestDownload';
-  //var $usetable = 'downloads';
-
   var $belongsTo = array(
     'Genre' => array(
     'className' => 'Genre',

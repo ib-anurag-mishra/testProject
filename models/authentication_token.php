@@ -9,6 +9,4 @@ class AuthenticationToken extends AppModel {
   
   var $name = 'AuthenticationToken';
   var $useTable = 'authentication_tokens';
-  
- 
 }

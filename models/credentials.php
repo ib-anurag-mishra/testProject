@@ -9,7 +9,5 @@ class Credentials extends AppModel {
   
   var $name = 'Credentials';
   var $usetable = 'credentials';
-  
- 
 }
 ?>

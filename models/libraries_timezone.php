@@ -22,6 +22,4 @@ class LibrariesTimezone extends AppModel {
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_timezone' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Timezone for Library.')
     );
-  
- 
 }
