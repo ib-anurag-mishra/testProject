@@ -1867,6 +1867,41 @@ sub { top: 0.4em; }
 
 						}
 
+                                                .play-btn {
+                                                        position: absolute;
+                                                        left:9px;
+                                                        top:8px;
+                                                        width: 24px;
+                                                        height: 24px;
+                                                        @include border-radius(20px);
+                                                        border:1px solid #cacaca;
+                                                        @include background-image(radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px));
+
+                                                        &:hover {
+
+                                                                @include background-image(radial-gradient(45px 45px, #fdfdfd 10px, #fff 30px));
+                                                        }
+
+                                                        &:active {
+
+                                                                @include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
+                                                        }		
+
+                                                        &:before {
+
+                                                                content: "";
+                                                                position: absolute;
+                                                                left:9px;
+                                                                top:7px;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-left:6px solid #000;
+                                                                border-top:4px solid transparent;
+                                                                border-bottom:4px solid transparent;
+                                                        }
+
+                                                }
+
 						.song-title {
 
 							position: absolute;
