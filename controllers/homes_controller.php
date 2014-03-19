@@ -143,11 +143,11 @@ class HomesController extends AppController
         if (($national = Cache::read("top_singles" . $territory)) === false)       
        //         if(1)
         {
-            $top_singles = $this->Common->getTopSingles($territory);
+            $nationalTopDownload = $this->Common->getTopSingles($territory);
         }
         else
         {
-            $top_singles = Cache::read("top_singles" . $territory);
+            $nationalTopDownload = Cache::read("top_singles" . $territory);
         }
          $this->set('top_singles', $nationalTopDownload);
       
