@@ -867,7 +867,7 @@ function Get_Sales_date($sales_date_array, $country) {
                     $i = 0;
                     foreach ($composers as $composer) {
                         $composer_name = str_replace('"', '', $composer->Composer);
-                       // $composer_name = truncate_text($composer_name, 30, $this);
+                        $composer_name = truncate_text($composer_name, 300, $this);
                         $tilte = urlencode($composer->Composer);
                         $name = $composer->Composer;
                         $count = $composer->numFound;
