@@ -683,6 +683,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         foreach ($genres as $genre) {
                             $genre_name = str_replace('"', '', $genre->Genre);
                            // $genre_name_text = truncate_text($genre_name, 30, $this);
+                            $genre_name_text = truncate_text($genre_name, 125, $this);
 							$genre_name_text =$genre_name;
                             $tilte = urlencode($genre->Genre);
                             $name = $genre->Genre;
@@ -1127,7 +1128,8 @@ function Get_Sales_date($sales_date_array, $country) {
                                 foreach ($videos as $video) {
                                     $tilte = urlencode($video->VideoTitle);
                                    // $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
-									$video_name_text = $this->getTextEncode($video->VideoTitle);
+                                    $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 65, $this);
+									// $video_name_text = $this->getTextEncode($video->VideoTitle);
                                     $name = $this->getTextEncode($video->VideoTitle);
                                     // $count = $video->numFound;
                                     ?>
