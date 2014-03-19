@@ -485,6 +485,11 @@ button::-moz-focus-inner {
 
 				text-decoration: none;
 				color:#000;
+				display: block;
+				white-space: nowrap;
+  				overflow: hidden;
+  				text-overflow: ellipsis;
+  				width:770px;
 
 				&:hover {
 
