@@ -3114,7 +3114,7 @@ function login($library = null){
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => @$_SERVER['HTTP_REFERER'])));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);

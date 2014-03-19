@@ -35,9 +35,8 @@ class WishlistHelper extends AppHelper {
         }else{
            
             $wishlistVariArray = $this->Session->read('wishlistVariArray');  
-            $wishlistVariArray= @array_unique($wishlistVariArray);
-            //print_r($wishlistVariArray);
-            //comman code for check wishlist add
+            $wishlistVariArray= array_unique($wishlistVariArray);
+
             if(!empty($wishlistVariArray)){
                 if (in_array($id, $wishlistVariArray)) {                                                               
                     return "Added To Wishlist";

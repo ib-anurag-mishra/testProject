@@ -441,7 +441,7 @@ class SearchController extends AppController
                 }
 
                 //sort ain decending order of match result count
-                @krsort($arr_result);
+                krsort($arr_result);
 
                 //get 3 elements of each filter
                 $arr_show = $arr_result;

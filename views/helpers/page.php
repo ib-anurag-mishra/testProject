@@ -34,7 +34,7 @@ class PageHelper extends AppHelper {
 			  'method' => 'HEAD'
 		   ));
 		$ctx = stream_context_create($params);
-		$fp = @fopen($url, 'rb', false, $ctx);
+		$fp = fopen($url, 'rb', false, $ctx);
 		if (!$fp){ 
 			return false;  // Problem with url
 		}

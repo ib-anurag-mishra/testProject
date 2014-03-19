@@ -43,7 +43,7 @@ class WishlistVideoHelper extends AppHelper
         else
         {
             $wishlistVideoArray = $this->Session->read('wishlistVideoArray');
-            $wishlistVideoArray = @array_unique($wishlistVideoArray);
+            $wishlistVideoArray = array_unique($wishlistVideoArray);
 
             if (!empty($wishlistVideoArray))
             {
