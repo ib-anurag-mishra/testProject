@@ -1283,10 +1283,6 @@ Class ArtistsController extends AppController
                 $album = $this->params['pass'][$count - 2];
                 $provider = base64_decode($this->params['pass'][$count - 1]);
                 
-                echo "<br>album: ".$album;
-                echo "<br>provider: ".$provider;
-                
-                
             }
             else
             {
@@ -1497,8 +1493,8 @@ Class ArtistsController extends AppController
         }
 
         $this->set('albumData', $albumData);
-//        echo "<pre>";
-//        print_r($albumData);
+        echo "<pre>";
+        print_r($albumData);
 //        exit;       
 
         //getting the songs for album
@@ -1690,6 +1686,7 @@ Class ArtistsController extends AppController
         }
         
         $this->set('albumSongs', $albumSongs);
+        print_r($albumSongs);
 
     }
 
