@@ -1038,7 +1038,8 @@ function Get_Sales_date($sales_date_array, $country) {
                 foreach ($artists as $artist) {
                     $tilte = urlencode($artist->ArtistText);
                     //$artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
-		    		$artist_name_text = $this->getTextEncode($artist->ArtistText);
+                    $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 125, $this);
+		    		// $artist_name_text = $this->getTextEncode($artist->ArtistText);
                     $link = $html->link(str_replace('"', '', $artist->ArtistText), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))), array('title' => $this->getTextEncode($artist->ArtistText)));
                     if (!empty($artist_name_text)) {
                         ?>
@@ -1082,7 +1083,8 @@ function Get_Sales_date($sales_date_array, $country) {
                             foreach ($composers as $composer) {
                                 $tilte = urlencode($composer->Composer);
                                 //$composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
-								$composer_name = $this->getTextEncode($composer->Composer);
+                                $composer_name = truncate_text($this->getTextEncode($composer->Composer), 125, $this);
+								// $composer_name = $this->getTextEncode($composer->Composer);
                                 if (!empty($composer_name)) {
                                     ?>
                                 <li>
@@ -1171,7 +1173,8 @@ function Get_Sales_date($sales_date_array, $country) {
                                         $genre_name = str_replace('"', '', $genre->Genre);
                                         $tilte = urlencode($genre_name);
                                         //$genre_name_text = truncate_text($this->getTextEncode($genre_name), 30, $this);
-										$genre_name_text = $this->getTextEncode($genre_name);
+                                        $genre_name_text = truncate_text($this->getTextEncode($genre_name), 125, $this);
+										// $genre_name_text = $this->getTextEncode($genre_name);
                                         $name = $genre->Genre;
                                         $count = $genre->numFound;
                                         if (!empty($genre_name_text)) {
