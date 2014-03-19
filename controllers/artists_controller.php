@@ -6,24 +6,22 @@
   Author : m68interactive
  */
 
-Class ArtistsController extends AppController
-{
+Class ArtistsController extends AppController {
 
-    var $name = 'Artists';
-    var $uses = array('Featuredartist', 'Artist', 'Newartist', 'Files', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token');
-    var $layout = 'admin';
-    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo');
-    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'CdnUpload', 'Streaming', 'Common','Solr');
+	var $name = 'Artists';
+	var $uses = array('Featuredartist', 'Artist', 'Newartist', 'Files', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token');
+	var $layout = 'admin';
+	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo');
+	var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'CdnUpload', 'Streaming', 'Common','Solr');
 
     /*
       Function Name : beforeFilter
       Desc : actions that needed before other functions are getting called
      */
 
-    function beforeFilter()
-    {
-        parent::beforeFilter();
-        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer');
+    function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer');
 //		$libraryCheckArr = array("view");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //			$validPatron = $this->ValidatePatron->validatepatron();
@@ -45,8 +43,7 @@ Class ArtistsController extends AppController
       Desc : action for listing all the featured artists
      */
 
-    function admin_managefeaturedartist()
-    {
+    function admin_managefeaturedartist() {
         $artists = $this->paginate('Featuredartist', array('album != ""', 'language' => Configure::read('App.LANGUAGE')));
         $this->set('artists', $artists);
     }
@@ -56,21 +53,17 @@ Class ArtistsController extends AppController
       Desc : action for displaying the add/edit featured artist form
      */
 
-    function admin_artistform()
-    {
+    function admin_artistform() {
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
         $territories = $this->Territory->find("all");
-        for ($m = 0; $m < count($territories); $m++)
-        {
+        for ($m = 0; $m < count($territories); $m++) {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $this->set("territories", $territoriesArray);
-        if (!empty($this->params['named']))
-        { //gets the values from the url in form  of array
+        if (!empty($this->params['named'])) { //gets the values from the url in form  of array
             $artistId = $this->params['named']['id'];
-            if (trim($artistId) != '' && is_numeric($artistId))
-            {
+            if (trim($artistId) != '' && is_numeric($artistId)) {
                 $this->set('formAction', 'admin_updatefeaturedartist/id:' . $artistId);
                 $this->set('formHeader', 'Edit Featured Artist');
                 $getArtistrDataObj = new Featuredartist();
@@ -93,19 +86,15 @@ Class ArtistsController extends AppController
 
                 $val = '';
                 $this->Song->Behaviors->attach('Containable');
-                foreach ($allAlbum as $k => $v)
-                {
+                foreach ($allAlbum as $k => $v) {
                     $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $getData['Featuredartist']['territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
-                    if (count($recordCount) > 0)
-                    {
+                    if (count($recordCount) > 0) {
                         $result[$v['Album']['ProdID']] = $v['Album']['AlbumTitle'];
                     }
                 }
                 $this->set('album', $result);
             }
-        }
-        else
-        {
+        } else {
             $this->set('formAction', 'admin_insertfeaturedartist');
             $this->set('formHeader', 'Add Featured Artist');
             $getFeaturedDataObj = new Featuredartist();
@@ -141,47 +130,35 @@ Class ArtistsController extends AppController
       Desc : inserts a featured artist
      */
 
-    function admin_insertfeaturedartist()
-    {
+    function admin_insertfeaturedartist() {
         $errorMsg = '';
         $artist = '';
         $album_provider_type = '';
         $album_prodid = 0;
         $alb_det = explode('-', $_REQUEST['album']);
-        if (isset($alb_det[0]))
-        {
+        if (isset($alb_det[0])) {
             $album_prodid = $alb_det[0];
         }
-        if (isset($alb_det[1]))
-        {
+        if (isset($alb_det[1])) {
             $album_provider_type = $alb_det[1];
         }
-        if (isset($_REQUEST['artistName']))
-        {
+        if (isset($_REQUEST['artistName'])) {
             $artist = $_REQUEST['artistName'];
-        }
-        else
-        {
+        } else {
             $artist = $this->data['Artist']['artist_name'];
         }
-        if (isset($_REQUEST['album']))
-        {
+        if (isset($_REQUEST['album'])) {
             $album = $album_prodid;
-        }
-        else
-        {
+        } else {
             $album = $this->data['Artist']['album'];
         }
-        if ($artist == '')
-        {
+        if ($artist == '') {
             $errorMsg .= 'Please select an Artist.<br/>';
         }
-        if ($this->data['Artist']['territory'] == '')
-        {
+        if ($this->data['Artist']['territory'] == '') {
             $errorMsg .= 'Please Choose a Territory<br/>';
         }
-        if ($album == '')
-        {
+        if ($album == '') {
             $errorMsg .= 'Please select an Album.<br/>';
         }
         $insertArr = array();
@@ -189,15 +166,12 @@ Class ArtistsController extends AppController
         $insertArr['album'] = $album;
         $insertArr['territory'] = $this->data['Artist']['territory'];
         $insertArr['language'] = Configure::read('App.LANGUAGE');
-        if (isset($album_provider_type))
-        {
+        if (isset($album_provider_type)) {
             $insertArr['provider_type'] = $album_provider_type;
         }
         $insertObj = new Featuredartist();
-        if (empty($errorMsg))
-        {
-            if ($insertObj->insert($insertArr))
-            {
+        if (empty($errorMsg)) {
+            if ($insertObj->insert($insertArr)) {
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                 /*
                   $memcache = new Memcache;
@@ -222,9 +196,7 @@ Class ArtistsController extends AppController
                 Configure::write('Cache.disable', true);
                 $this->redirect('managefeaturedartist');
             }
-        }
-        else
-        {
+        } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
             $this->redirect('artistform');
         }
@@ -235,53 +207,40 @@ Class ArtistsController extends AppController
       Desc : Updates a featured artist
      */
 
-    function admin_updatefeaturedartist()
-    {
+    function admin_updatefeaturedartist() {
         $errorMsg = '';
         $album_provider_type = '';
         $album_prodid = 0;
         $this->Featuredartist->id = $this->data['Artist']['id'];
         $alb_det = explode('-', $_REQUEST['album']);
-        if (isset($alb_det[0]))
-        {
+        if (isset($alb_det[0])) {
             $album_prodid = $alb_det[0];
         }
-        if (isset($alb_det[1]))
-        {
+        if (isset($alb_det[1])) {
             $album_provider_type = $alb_det[1];
         }
         $artistName = '';
-        if (isset($_REQUEST['artistName']))
-        {
+        if (isset($_REQUEST['artistName'])) {
             $artistName = $_REQUEST['artistName'];
         }
         $artist = '';
-        if (isset($_REQUEST['artistName']))
-        {
+        if (isset($_REQUEST['artistName'])) {
             $artist = $_REQUEST['artistName'];
-        }
-        else
-        {
+        } else {
             $artist = $this->data['Artist']['artist_name'];
         }
-        if (isset($_REQUEST['album']))
-        {
+        if (isset($_REQUEST['album'])) {
             $album = $album_prodid;
-        }
-        else
-        {
+        } else {
             $album = $this->data['Artist']['album'];
         }
-        if ($artist == '')
-        {
+        if ($artist == '') {
             $errorMsg .= 'Please select an Artist.<br/>';
         }
-        if ($this->data['Artist']['territory'] == '')
-        {
+        if ($this->data['Artist']['territory'] == '') {
             $errorMsg .= 'Please Choose a Territory';
         }
-        if ($album == '')
-        {
+        if ($album == '') {
             $errorMsg .= 'Please select an Album.<br/>';
         }
         $updateArr = array();
@@ -290,15 +249,12 @@ Class ArtistsController extends AppController
         $updateArr['territory'] = $this->data['Artist']['territory'];
         $updateArr['language'] = Configure::read('App.LANGUAGE');
         $updateArr['album'] = $album;
-        if (isset($album_provider_type))
-        {
+        if (isset($album_provider_type)) {
             $updateArr['provider_type'] = $album_provider_type;
         }
         $updateObj = new Featuredartist();
-        if (empty($errorMsg))
-        {
-            if ($updateObj->insert($updateArr))
-            {
+        if (empty($errorMsg)) {
+            if ($updateObj->insert($updateArr)) {
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));
                 /*
                   $memcache = new Memcache;
@@ -324,9 +280,7 @@ Class ArtistsController extends AppController
                 Configure::write('Cache.disable', true);
                 $this->redirect('managefeaturedartist');
             }
-        }
-        else
-        {
+        } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
             $this->redirect('managefeaturedartist');
         }
@@ -337,17 +291,13 @@ Class ArtistsController extends AppController
       Desc : For deleting a featured artist
      */
 
-    function admin_delete()
-    {
+    function admin_delete() {
         $deleteArtistUserId = $this->params['named']['id'];
         $deleteObj = new Featuredartist();
-        if ($deleteObj->del($deleteArtistUserId))
-        {
+        if ($deleteObj->del($deleteArtistUserId)) {
             $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
             $this->redirect('managefeaturedartist');
-        }
-        else
-        {
+        } else {
             $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
             $this->redirect('managefeaturedartist');
         }
@@ -358,22 +308,18 @@ Class ArtistsController extends AppController
       Desc : assigns artists with images
      */
 
-    function admin_createartist()
-    {
+    function admin_createartist() {
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
         $errorMsg = '';
         $territories = $this->Territory->find("all");
-        for ($m = 0; $m < count($territories); $m++)
-        {
+        for ($m = 0; $m < count($territories); $m++) {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $this->set("territories", $territoriesArray);
-        if (!empty($this->params['named']['id']))
-        { //gets the values from the url in form  of array
+        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
             $artistId = $this->params['named']['id'];
-            if (trim($artistId) != '' && is_numeric($artistId))
-            {
+            if (trim($artistId) != '' && is_numeric($artistId)) {
                 $this->set('formAction', 'admin_createartist/id:' . $artistId);
                 $this->set('formHeader', 'Edit Artist');
                 $getArtistrDataObj = new Artist();
@@ -381,41 +327,31 @@ Class ArtistsController extends AppController
                 $this->set('getData', $getData);
                 $condition = 'edit';
                 $artistName = '';
-                if (isset($_REQUEST['artistName']))
-                {
+                if (isset($_REQUEST['artistName'])) {
                     $artistName = $_REQUEST['artistName'];
-                }
-                else
-                {
+                } else {
                     $artistName = $getData['Artist']['artist_name'];
                 }
                 $artist = '';
-                if (isset($_REQUEST['artistName']))
-                {
+                if (isset($_REQUEST['artistName'])) {
                     $artist = $_REQUEST['artistName'];
-                }
-                else
-                {
+                } else {
                     $artist = $this->data['Artist']['artist_name'];
                 }
-                if (isset($this->data))
-                {
+                if (isset($this->data)) {
                     $updateObj = new Artist();
                     $updateArr = array();
-                    if ($artist == '')
-                    {
+                    if ($artist == '') {
                         $errorMsg .= 'Please select Artist Name';
                     }
-                    if ($this->data['Artist']['territory'] == '')
-                    {
+                    if ($this->data['Artist']['territory'] == '') {
                         $errorMsg .= 'Please Choose a Territory';
                     }
                     $updateArr['id'] = $this->data['Artist']['id'];
                     $updateArr['artist_name'] = $artist;
                     $updateArr['territory'] = $this->data['Artist']['territory'];
                     $updateArr['language'] = Configure::read('App.LANGUAGE');
-                    if ($this->data['Artist']['artist_image']['name'] != '')
-                    {
+                    if ($this->data['Artist']['artist_image']['name'] != '') {
                         $newPath = '../webroot/img/';
                         $fileName = $this->data['Artist']['artist_image']['name'];
                         $newPath = $newPath . $fileName;
@@ -427,28 +363,21 @@ Class ArtistsController extends AppController
                         unlink($newPath);
                         $updateArr['artist_image'] = $this->data['Artist']['artist_image']['name'];
                     }
-                    if (empty($errorMsg))
-                    {
-                        if ($updateObj->insert($updateArr))
-                        {
+                    if (empty($errorMsg)) {
+                        if ($updateObj->insert($updateArr)) {
                             Configure::write('Cache.disable', false);
                             $cacheKey = 'ssartists_' . $this->data['Artist']['territory'] . '_' . Configure::read('App.LANGUAGE');
-                            if (Cache::delete($cacheKey) == true)
-                            {
+                            if (Cache::delete($cacheKey) == true) {
                                 Configure::write('Cache.disable', true);
                                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                                 $this->redirect('manageartist');
-                            }
-                            else
-                            {
+                            } else {
                                 Configure::write('Cache.disable', true);
                                 $this->Session->setFlash('Data has been saved successfully, but the cache is not cleared!', 'modal', array('class' => 'modal success'));
                                 $this->redirect('manageartist');
                             }
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
                     }
                 }
@@ -458,36 +387,26 @@ Class ArtistsController extends AppController
                 $getArtistData = array();
                 $this->set('getArtistData', $getArtistData);
             }
-        }
-        else
-        {
+        } else {
             $this->set('formAction', 'admin_createartist');
             $this->set('formHeader', 'Add  Artist');
             $condition = 'add';
             $artistName = '';
-            if (isset($_REQUEST['artistName']))
-            {
+            if (isset($_REQUEST['artistName'])) {
                 $artist = $_REQUEST['artistName'];
-            }
-            else
-            {
+            } else {
                 $artist = $this->data['Artist']['artist_name'];
             }
 
+            if (isset($this->data)) {
 
-            if (isset($this->data))
-            {
-
-                if ($this->data['Artist']['artist_image']['name'] == '')
-                {
+                if ($this->data['Artist']['artist_image']['name'] == '') {
                     $errorMsg .= 'Please upload an image<br/>';
                 }
-                if ($artist == '')
-                {
+                if ($artist == '') {
                     $errorMsg .= 'Please select an artist name<br/>';
                 }
-                if ($this->data['Artist']['territory'] == '')
-                {
+                if ($this->data['Artist']['territory'] == '') {
                     $errorMsg .= 'Please Choose a Territory<br/>';
                 }
                 $newPath = '../webroot/img/';
@@ -506,28 +425,21 @@ Class ArtistsController extends AppController
                 $insertArr['artist_image'] = $this->data['Artist']['artist_image']['name'];
                 $insertArr['language'] = Configure::read('App.LANGUAGE');
                 $insertObj = new Artist();
-                if (empty($errorMsg))
-                {
-                    if ($insertObj->insert($insertArr))
-                    {
+                if (empty($errorMsg)) {
+                    if ($insertObj->insert($insertArr)) {
                         $cacheKey = 'ssartists_' . $this->data['Artist']['territory'] . '_' . Configure::read('App.LANGUAGE');
                         Configure::write('Cache.disable', false);
-                        if (Cache::delete($cacheKey) == true)
-                        {
+                        if (Cache::delete($cacheKey) == true) {
                             Configure::write('Cache.disable', true);
                             $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                             $this->redirect('manageartist');
-                        }
-                        else
-                        {
+                        } else {
                             Configure::write('Cache.disable', true);
                             $this->Session->setFlash('Data has been saved successfully, but the cache is not cleared!', 'modal', array('class' => 'modal success'));
                             $this->redirect('manageartist');
                         }
                     }
-                }
-                else
-                {
+                } else {
                     $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
                 }
             }
@@ -543,8 +455,7 @@ Class ArtistsController extends AppController
       Desc : manages new artists with images
      */
 
-    function admin_manageartist()
-    {
+    function admin_manageartist() {
 
         $artists = $this->paginate('Artist', array('language' => Configure::read('App.LANGUAGE')));
 
@@ -556,20 +467,16 @@ Class ArtistsController extends AppController
       Desc : For deleting a new artist
      */
 
-    function admin_deleteartists()
-    {
+    function admin_deleteartists() {
 
         ob_start();
         $deleteArtistIdArray = $this->data['Info'];
         $deleteOption = $this->data['artist']['selectedOpt'];
 
         //if admin want to remove selected records then
-        if ($deleteOption == 1)
-        {
-            if (count($deleteArtistIdArray) > 0)
-            {
-                for ($i = 0; $i < count($deleteArtistIdArray); $i++)
-                {
+        if ($deleteOption == 1) {
+            if (count($deleteArtistIdArray) > 0) {
+                for ($i = 0; $i < count($deleteArtistIdArray); $i++) {
                     $deleteArtistId = $deleteArtistIdArray[$i];
                     $deleteObj = new Artist();
                     $data = $this->Artist->find('all', array('conditions' => array('id' => $deleteArtistId)));
@@ -584,12 +491,10 @@ Class ArtistsController extends AppController
         }
 
         //if admin want to remove all records then
-        if ($deleteOption == 2)
-        {
+        if ($deleteOption == 2) {
             $deleteObj = new Artist();
             $data = $this->Artist->find('all', array('conditions' => array('language' => Configure::read('App.LANGUAGE'))));
-            for ($i = 0; $i < count($data); $i++)
-            {
+            for ($i = 0; $i < count($data); $i++) {
                 $fileName = $data[$i]['Artist']['artist_image'];
                 $deleteArtistId = $data[$i]['Artist']['id'];
                 $error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH') . 'artistimg/' . $fileName);
@@ -612,14 +517,11 @@ Class ArtistsController extends AppController
       Desc : assigns artists with images
      */
 
-    function admin_addnewartist()
-    {
+    function admin_addnewartist() {
         $errorMsg = '';
-        if (!empty($this->params['named']['id']))
-        { //gets the values from the url in form  of array
+        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
             $artistId = $this->params['named']['id'];
-            if (trim($artistId) != '' && is_numeric($artistId))
-            {
+            if (trim($artistId) != '' && is_numeric($artistId)) {
                 $this->set('formAction', 'admin_addnewartist/id:' . $artistId);
                 $this->set('formHeader', 'Edit New Artsit');
                 $getArtistrDataObj = new Newartist();
@@ -627,41 +529,31 @@ Class ArtistsController extends AppController
                 $this->set('getData', $getData);
                 $condition = 'edit';
                 $artistName = '';
-                if (isset($_REQUEST['artistName']))
-                {
+                if (isset($_REQUEST['artistName'])) {
                     $artistName = $_REQUEST['artistName'];
-                }
-                else
-                {
+                } else {
                     $artistName = $getData['Newartist']['artist_name'];
                 }
                 $artist = '';
-                if (isset($_REQUEST['artistName']))
-                {
+                if (isset($_REQUEST['artistName'])) {
                     $artist = $_REQUEST['artistName'];
-                }
-                else
-                {
+                } else {
                     $artist = $this->data['Artist']['artist_name'];
                 }
-                if (isset($this->data))
-                {
+                if (isset($this->data)) {
                     $updateObj = new Newartist();
                     $updateArr = array();
-                    if ($artist == '')
-                    {
+                    if ($artist == '') {
                         $errorMsg .= 'Please select Artist Name';
                     }
-                    if ($this->data['Artist']['territory'] == '')
-                    {
+                    if ($this->data['Artist']['territory'] == '') {
                         $errorMsg .= 'Please Choose a Territory';
                     }
                     $updateArr['id'] = $this->data['Artist']['id'];
                     $updateArr['artist_name'] = $artist;
                     $updateArr['territory'] = $this->data['Artist']['territory'];
                     $updateArr['language'] = Configure::read('App.LANGUAGE');
-                    if ($this->data['Artist']['artist_image']['name'] != '')
-                    {
+                    if ($this->data['Artist']['artist_image']['name'] != '') {
                         $newPath = '../webroot/img/';
                         $fileName = $this->data['Artist']['artist_image']['name'];
                         $error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH') . 'newartistimg/' . $getData['Newartist']['artist_image']);
@@ -673,16 +565,12 @@ Class ArtistsController extends AppController
                         unlink($newPath);
                         $updateArr['artist_image'] = $this->data['Artist']['artist_image']['name'];
                     }
-                    if (empty($errorMsg))
-                    {
-                        if ($updateObj->insert($updateArr))
-                        {
+                    if (empty($errorMsg)) {
+                        if ($updateObj->insert($updateArr)) {
                             $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                             $this->redirect('managenewartist');
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
                     }
                 }
@@ -691,35 +579,26 @@ Class ArtistsController extends AppController
                 $getArtistData = $getArtistDataObj->getallartistname($condition, $artistName, $country);
                 $this->set('getArtistData', $getArtistData);
             }
-        }
-        else
-        {
+        } else {
             $this->set('formAction', 'admin_addnewartist');
             $this->set('formHeader', 'Add New Artist');
             $condition = 'add';
             $artistName = '';
             $artist = '';
-            if (isset($_REQUEST['artistName']))
-            {
+            if (isset($_REQUEST['artistName'])) {
                 $artist = $_REQUEST['artistName'];
-            }
-            else
-            {
+            } else {
                 $artist = $this->data['Artist']['artist_name'];
             }
 
-            if (isset($this->data))
-            {
-                if ($this->data['Artist']['artist_image']['name'] == '')
-                {
+            if (isset($this->data)) {
+                if ($this->data['Artist']['artist_image']['name'] == '') {
                     $errorMsg .= 'Please upload an image<br/>';
                 }
-                if ($this->data['Artist']['territory'] == '')
-                {
+                if ($this->data['Artist']['territory'] == '') {
                     $errorMsg .= 'Please Choose a Territory<br/>';
                 }
-                if (trim($artist) == '')
-                {
+                if (trim($artist) == '') {
                     $errorMsg .= 'Please select an artist name<br/>';
                 }
                 $newPath = '../webroot/img/';
@@ -737,16 +616,12 @@ Class ArtistsController extends AppController
                 $insertArr['artist_name'] = $artist;
                 $insertArr['language'] = Configure::read('App.LANGUAGE');
                 $insertObj = new Newartist();
-                if (empty($errorMsg))
-                {
-                    if ($insertObj->insert($insertArr))
-                    {
+                if (empty($errorMsg)) {
+                    if ($insertObj->insert($insertArr)) {
                         $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                         $this->redirect('managenewartist');
                     }
-                }
-                else
-                {
+                } else {
                     $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
                 }
             }
@@ -762,8 +637,7 @@ Class ArtistsController extends AppController
       Desc : manages artists with images
      */
 
-    function admin_managenewartist()
-    {
+    function admin_managenewartist() {
         $artists = $this->paginate('Newartist', array('language' => Configure::read('App.LANGUAGE')));
         $this->set('artists', $artists);
     }
@@ -773,20 +647,16 @@ Class ArtistsController extends AppController
       Desc : For deleting a featured artist
      */
 
-    function admin_deletenewartists()
-    {
+    function admin_deletenewartists() {
         $deleteArtistUserId = $this->params['named']['id'];
         $deleteObj = new Newartist();
         $data = $this->Newartist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
         $fileName = $data[0]['Newartist']['artist_image'];
         $error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH') . 'newartistimg/' . $fileName);
-        if ($deleteObj->del($deleteArtistUserId))
-        {
+        if ($deleteObj->del($deleteArtistUserId)) {
             $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
             $this->redirect('managenewartist');
-        }
-        else
-        {
+        } else {
             $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
             $this->redirect('managenewartist');
         }
@@ -801,32 +671,24 @@ Class ArtistsController extends AppController
      * Function Name : featuredAjaxListing
      * Desc          : This function is used to get featured artists which are called through ajax 
      */
-    function featuredAjaxListing()
-    {
+    function featuredAjaxListing() {
         //Configure::write('debug', 2);
-        if (!empty($this->params['form']['page']))
-        {
+        if (!empty($this->params['form']['page'])) {
             $page = $this->params['form']['page'];
-            if (!empty($page))
-            {
+            if (!empty($page)) {
                 $territory = $this->Session->read('territory');
-                if (Cache::read("featured_artists_" . $territory . '_' . $page) === false)
-                {
+                if (Cache::read("featured_artists_" . $territory . '_' . $page) === false) {
                     $featuresArtists = $this->Common->getFeaturedArtists($territory, $page);
-                    if(!empty($featuresArtists)){
+                    if(!empty($featuresArtists)) {
                         Cache::write("featured_artists_" . $territory . '_' . $page, $featuresArtists);
                     }
-                }
-                else
-                {   
+                } else {   
                     $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);
                 }
                 
                 $this->set('featuredArtists', $featuresArtists);
                 echo $this->render('/artists/feature_ajaxlisting');
-            }
-            else
-            {
+            } else {
                 
             }
         }
@@ -838,39 +700,30 @@ Class ArtistsController extends AppController
       Desc : For artist view page
      */
 
-    function view($id = null, $album = null, $provider = null)
-    {
+    function view($id = null, $album = null, $provider = null) {
         //Configure::write("debug", 2);
 
         $this->layout = 'home';
 
         //Reading the parameters from URL
-        if (count($this->params['pass']) > 1)
-        {
+        if (count($this->params['pass']) > 1) {
             $count = count($this->params['pass']);
             $id = $this->params['pass'][0];
-            for ($i = 1; $i < $count - 1; $i++)
-            {
-                if (!is_numeric($this->params['pass'][$i]))
-                {
+            for ($i = 1; $i < $count - 1; $i++) {
+                if (!is_numeric($this->params['pass'][$i])) {
                     $id .= "/" . $this->params['pass'][$i];
                 }
             }
             
-            
-            if (is_numeric($this->params['pass'][$count - 2]))
-            {
+            if (is_numeric($this->params['pass'][$count - 2])) {
                 $album = $this->params['pass'][$count - 2];
                 $provider = base64_decode($this->params['pass'][$count - 1]);
-            }
-            else
-            {
+            } else {
                 $album = "";
                 $provider = "";
             }
         }
-
-        
+ 
         //reading sessin vlaues
         $country = $this->Session->read('territory');
         $libType = $this->Session->read('library_type');
@@ -887,12 +740,9 @@ Class ArtistsController extends AppController
         $this->set('patronDownload', $patronDownload);
 
         $cond = "";
-        if ($this->Session->read('block') == 'yes')
-        {
+        if ($this->Session->read('block') == 'yes') {
             $cond = array('Song.Advisory' => 'F');
-        }
-        else
-        {
+        } else {
             $cond = "";
         }
 
@@ -901,15 +751,11 @@ Class ArtistsController extends AppController
         $condition = array();
 
         //check if album value is set in url
-        if ($album != '')
-        {
+        if ($album != '') {
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
-        }
-        else
-        {
+        } else {
             $this->Song->Behaviors->attach('Containable');
-            if ($libType != 2)
-            {
+            if ($libType != 2) {
                 $songs = $this->Song->find('all', array(
                     'fields' => array(
                         'DISTINCT Song.ReferenceID',
@@ -930,9 +776,7 @@ Class ArtistsController extends AppController
                     'recursive' => 0,
                     'limit' => 1)
                 );
-            }
-            else
-            {
+            } else {
                 $songs = $this->Song->find('all', array(
                     'fields' => array(
                         'DISTINCT Song.ReferenceID',
@@ -955,20 +799,16 @@ Class ArtistsController extends AppController
                     'recursive' => 0, 'limit' => 1)
                 );
             }
-            foreach ($songs as $k => $v)
-            {
+            foreach ($songs as $k => $v) {
                 $val = $val . $v['Song']['ReferenceID'] . ",";
                 $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "'),";
             }
             $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
         }
 
-        if ($this->Session->read('block') == 'yes')
-        {
+        if ($this->Session->read('block') == 'yes') {
             $cond = array('Album.Advisory' => 'F');
-        }
-        else
-        {
+        } else {
             $cond = "";
         }
 
@@ -1016,12 +856,9 @@ Class ArtistsController extends AppController
             'chk' => 2
         );
 
-        if ($this->Session->read('block') == 'yes')
-        {
+        if ($this->Session->read('block') == 'yes') {
             $cond = array('Song.Advisory' => 'F');
-        }
-        else
-        {
+        } else {
             $cond = "";
         }
         $this->Album->recursive = 2;
@@ -1031,10 +868,8 @@ Class ArtistsController extends AppController
 //        print_r($albumData);
 //        exit;
         
-        if (!empty($albumData))
-        {            
-            if ($libType == 2)
-            {
+        if (!empty($albumData)) {            
+            if ($libType == 2) {
 //                        $albumData[0]['albumSongs'] = $this->requestAction(
 //                                array('controller' => 'artists', 'action' => 'getAlbumSongs'),
 //                                array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
@@ -1044,28 +879,21 @@ Class ArtistsController extends AppController
         }
 
         //check for provider if null
-        if ($provider == "")
-        {
+        if ($provider == "") {
             $provider = $albumData[0]['Album']['provider_type'];
         }
 
 
         //creating the Artist Url
-        if (isset($albumData[0]['Song']['ArtistURL']))
-        {
+        if (isset($albumData[0]['Song']['ArtistURL'])) {
             $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
-        }
-        else
-        {
+        } else {
             $this->set('artistUrl', "N/A");
         }
 
-        if (isset($albumData['0']['Genre']['Genre']))
-        {
+        if (isset($albumData['0']['Genre']['Genre'])) {
             $this->set("genre", $albumData['0']['Genre']['Genre']);
-        }
-        else
-        {
+        } else {
             $this->set("genre", '');
         }
 
@@ -1076,12 +904,9 @@ Class ArtistsController extends AppController
 
         //getting the songs for album
         $albumSongs = array();
-        if (!empty($albumData))
-        {
-            foreach ($albumData as $album)
-            {   
-                if ($libType != 2)
-                {
+        if (!empty($albumData)) {
+            foreach ($albumData as $album) {   
+                if ($libType != 2) {
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
                         array('and' =>
@@ -1142,9 +967,7 @@ Class ArtistsController extends AppController
                         'group' => 'Song.ProdID, Song.provider_type',
                         'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
-                }
-                else
-                {
+                } else {
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
                         array('and' =>
@@ -1217,42 +1040,30 @@ Class ArtistsController extends AppController
             }
         }
 
-
         //if Artist name is not found in URL
-        if ($id != "")
-        {
+        if ($id != "") {
             $id = str_replace('@', '/', $id);
             $this->set('artistName', base64_decode($id));
-        }
-        else
-        {
+        } else {
             $this->set('artistName', $albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']);
         }
 
         //checking the downlaod status for songs in Album
-        if (!empty($albumSongs))
-        {
+        if (!empty($albumSongs)) {
             $this->Download->recursive = -1;
-            foreach ($albumSongs as $k => $albumSong)
-            {
-                foreach ($albumSong as $key => $value)
-                {
+            foreach ($albumSongs as $k => $albumSong) {
+                foreach ($albumSong as $key => $value) {
                     $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $value['Song']['ProdID'], 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-                    if (count($downloadsUsed) > 0)
-                    {
+                    if (count($downloadsUsed) > 0) {
                         $albumSongs[$k][$key]['Song']['status'] = 'avail';
-                    }
-                    else
-                    {
+                    } else {
                         $albumSongs[$k][$key]['Song']['status'] = 'not';
                     }
 
-                    if ($this->Session->read('library_type') == 2)
-                    {
+                    if ($this->Session->read('library_type') == 2) {
                         // $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                         $filePath = $this->Token->artworkToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
-                        if (!empty($filePath))
-                        {
+                        if (!empty($filePath)) {
                             $songPath = explode(':', $filePath);
                             $streamUrl = trim($songPath[1]);
                             $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
@@ -1272,8 +1083,7 @@ Class ArtistsController extends AppController
       Desc : For getting songs related to an Album
      */
 
-    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null, $territory = null)
-    {
+    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null, $territory = null) {
         //Configure::write('debug' , 2);
 
         if (empty($ajax))
@@ -1540,7 +1350,6 @@ Class ArtistsController extends AppController
                 }
                 //}   
 
-
                 unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
                 unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
                 unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
@@ -1574,8 +1383,7 @@ Class ArtistsController extends AppController
      * 
      */
 
-    function getAlbumData()
-    {
+    function getAlbumData() {
         Configure::write('debug', 0);
         $albumSongs = json_decode(base64_decode($_POST['albumtData']));
         if (!empty($albumSongs))
@@ -1625,7 +1433,7 @@ Class ArtistsController extends AppController
         }
     }
     
-    function getNationalAlbumData(){
+    function getNationalAlbumData() {
         
         Configure::write('debug', 0);
         $artistText = $_POST['artistText'];
@@ -1692,7 +1500,7 @@ Class ArtistsController extends AppController
      * Description   : This function is used to get song stream Url 
      * 
      */    
-    function getSongStreamUrl(){
+    function getSongStreamUrl() {
         Configure::write('debug', 0);
         $cdnPath = $_POST['cdnPath'];
         $sourceUrl = $_POST['sourceUrl'];
@@ -1740,8 +1548,7 @@ Class ArtistsController extends AppController
       Desc : For artist view page
      */
 
-    function album_ajax_view($id = null, $album = null, $provider = null)
-    {
+    function album_ajax_view($id = null, $album = null, $provider = null) {
 
         $this->layout = 'ajax';
 
@@ -2096,8 +1903,7 @@ Class ArtistsController extends AppController
         $this->set("genre", $albumData['0']['Genre']['Genre']);
     }
 
-    function album($id = null, $album = null, $provider = null)
-    {
+    function album($id = null, $album = null, $provider = null) {
         //Configure::write('debug', 2);
 
         $country = $this->Session->read('territory');
@@ -2284,8 +2090,7 @@ Class ArtistsController extends AppController
         }
     }
 
-    function album_ajax($id = null, $album = null, $provider = null)
-    {
+    function album_ajax($id = null, $album = null, $provider = null) {
         //Configure::write('debug', 2);
 
         $country = $this->Session->read('territory');
@@ -2505,8 +2310,7 @@ Class ArtistsController extends AppController
       Desc : For artist view page
      */
 
-    function admin_getArtists()
-    {
+    function admin_getArtists() {
         Configure::write('debug', 0);
         $this->Song->recursive = 0;
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -2545,8 +2349,7 @@ Class ArtistsController extends AppController
      * @return
      *  
      * */
-    function admin_getAlbums()
-    {
+    function admin_getAlbums() {
         Configure::write('debug', 0);
         $result = array();
         $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID', 'Album.AlbumTitle', 'Album.provider_type'), 'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
@@ -2582,8 +2385,7 @@ Class ArtistsController extends AppController
      * @return
      *  
      * */
-    function admin_getAutoArtist()
-    {
+    function admin_getAutoArtist() {
 
         $artist = $this->Song->find('all', array(
             'conditions' =>
@@ -2634,7 +2436,7 @@ Class ArtistsController extends AppController
      * 
      */
     
-    function composer($composer_text,$facetPage = 1){
+    function composer($composer_text,$facetPage = 1) {
         
         $this->layout = 'home';
         $composer_text = base64_decode($this->params['pass'][0]); 
