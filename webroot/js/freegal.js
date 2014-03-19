@@ -1047,7 +1047,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
 }
 
 
-function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
+function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName,type)
 {
     $('.beforeClick').hide();
     $('.afterClick').show();
@@ -1072,19 +1072,27 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
             else if (msg === 'suces')
             {
                 var downloadUsedArr = response.split('|');
-
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-
-                location.href = unescape(downloadUsedArr[2]);
-                $('.afterClick').hide();
-                $('.beforeClick').show();
-
-                document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
-                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
-                document.getElementById('vdownloading_' + prodId).style.display = 'none';
-                document.getElementById('download_video_' + prodId).style.display = 'block';
-
-                return false;
+                
+                if(type == 1){
+                    location.href = unescape(downloadUsedArr[2]);
+                    $('.afterClick').hide();
+                    $('.beforeClick').show();
+                    document.getElementById('download_video_' + prodId).innerHTML = '<a title=You have already download this video. Get it from your recent downloads" class="download-btn video-downloaded" href="/homes/my_history"></a>';
+                    document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
+                    document.getElementById('vdownloading_' + prodId).style.display = 'none';
+                    document.getElementById('download_video_' + prodId).style.display = 'block';
+                    return false;                    
+                }else{
+                    location.href = unescape(downloadUsedArr[2]);
+                    $('.afterClick').hide();
+                    $('.beforeClick').show();
+                    document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                    document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
+                    document.getElementById('vdownloading_' + prodId).style.display = 'none';
+                    document.getElementById('download_video_' + prodId).style.display = 'block';
+                    return false;
+                }
 
             }
             else
@@ -1485,15 +1493,11 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
 function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provider,type)
 {
     
-    if(type == 1){
-    
-	}else{
-        $('.beforeClick').hide();
-        $('.afterClick').show();
-        document.getElementById('vdownloading_' + prodId).style.display = 'block';
-        document.getElementById('download_video_' + prodId).style.display = 'none';
-        document.getElementById('vdownload_loader_' + prodId).style.display = 'block';	
-	}
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('vdownloading_' + prodId).style.display = 'block';
+    document.getElementById('download_video_' + prodId).style.display = 'none';
+    document.getElementById('vdownload_loader_' + prodId).style.display = 'block';	
 //    var finalURL = downloadUrl1;
 //    finalURL += downloadUrl2;
 //    finalURL += downloadUrl3;
@@ -1518,13 +1522,16 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
                 if(type == 1){
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 if (languageSet === 'en') {
-					document.getElementById("ajaxflashMessage44").style.display = "block";
-                    document.getElementById('ajaxflashMessage44').innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                    document.getElementById('download_video_' + prodId).innerHTML = '<a  class = "download-btn video-downloaded" title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"></a>';
                 } else {
-					document.getElementById("ajaxflashMessage44").style.display = "block";
-                    document.getElementById('ajaxflashMessage44').innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
+                    document.getElementById('download_video_' + prodId).innerHTML = '<a  class = "download-btn video-downloaded" title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"></a>';
                 }
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
+                document.getElementById('vdownloading_' + prodId).style.display = 'none';
+                document.getElementById('download_video_' + prodId).style.display = 'block';
                 location.href = unescape(downloadUsedArr[2]);
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
                 }else{
                     
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
@@ -1903,6 +1910,7 @@ function addToQueueResponse(response, type)
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById("ajaxflashMessage44").style.background = "red";
         document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding ' + type + ' to Playlist.';
+        $('#ajaxflashMessage44').fadeOut(5000);
 
         return false;
     } else if (msg === 'error1') {
@@ -1915,6 +1923,7 @@ function addToQueueResponse(response, type)
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is already added to Playlist';
+        $('#ajaxflashMessage44').fadeOut(5000);
     }
     else if (msg === 'invalid_for_stream')
     {
@@ -1926,6 +1935,7 @@ function addToQueueResponse(response, type)
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is not allowed for Streaming';
+        $('#ajaxflashMessage44').fadeOut(5000);
     }
     else
     {
@@ -1953,6 +1963,7 @@ function addToQueueResponse(response, type)
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
             document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding ' + type + ' to Playlist.';
+            $('#ajaxflashMessage44').fadeOut(5000);
             return false;
         }
     }
@@ -1991,6 +2002,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding song to Playlist.';
+                $('#ajaxflashMessage44').fadeOut(5000);
 
                 return false;
             } else if (msg === 'error1') {
@@ -2003,6 +2015,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Playlist';
+                $('#ajaxflashMessage44').fadeOut(5000);
             }
             else if (msg === 'invalid_for_stream')
             {
@@ -2014,6 +2027,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not allowed for Streaming';
+                $('#ajaxflashMessage44').fadeOut(5000);
             }
             else
             {
@@ -2027,6 +2041,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added song to playlist';
+                    $('#ajaxflashMessage44').fadeOut(5000);
 
                 }
                 else
@@ -2040,6 +2055,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "red";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to playlist.';
+                    $('#ajaxflashMessage44').fadeOut(5000);
                     return false;
                 }
             }
@@ -2053,6 +2069,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
             document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to playlist is unsuccessfull';
+            $('#ajaxflashMessage44').fadeOut(5000);
         }
     });
     return false;
@@ -2090,6 +2107,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding Album to Playlist.';
+                $('#ajaxflashMessage44').fadeOut(5000);
 
                 return false;
             } else if (msg === 'error1') {
@@ -2102,6 +2120,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is already added to playlist';
+                $('#ajaxflashMessage44').fadeOut(5000);
             }
             else if (msg === 'invalid_for_stream')
             {
@@ -2113,6 +2132,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is not allowed for Streaming';
+                $('#ajaxflashMessage44').fadeOut(5000);
             }
             else
             {
@@ -2126,6 +2146,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added Album to Playlist';
+                    $('#ajaxflashMessage44').fadeOut(5000);
 
                 }
                 else
@@ -2139,6 +2160,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "red";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding Album to Playlist.';
+                    $('#ajaxflashMessage44').fadeOut(5000);
                     return false;
                 }
             }
@@ -2152,6 +2174,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
             document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding Album to playlist is unsuccessfull';
+            $('#ajaxflashMessage44').fadeOut(5000);
         }
     });
     return false;
@@ -2191,6 +2214,7 @@ function removeSong(pdId, divId) {
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in deleting song from Playlist';
+                $('#ajaxflashMessage44').fadeOut(5000);
 
                 return false;
             } else if (msg === 'error1') {
@@ -2203,6 +2227,8 @@ function removeSong(pdId, divId) {
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song cannot be deleted';
+                $('#ajaxflashMessage44').fadeOut(5000);
+
             }
             else if (msg === 'error2')
             {
@@ -2214,6 +2240,8 @@ function removeSong(pdId, divId) {
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'You need to login in for Removing a Song from your Playlist';
+                $('#ajaxflashMessage44').fadeOut(5000);
+
             }
             else
             {
@@ -2228,6 +2256,8 @@ function removeSong(pdId, divId) {
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     $('.clearfix' + divId).remove();
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Playlist';
+                    $('#ajaxflashMessage44').fadeOut(5000);
+                
 
                 }
                 else
@@ -2241,6 +2271,8 @@ function removeSong(pdId, divId) {
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "red";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when removing from Playlist.';
+                    $('#ajaxflashMessage44').fadeOut(5000);
+                    
                     return false;
                 }
             }
@@ -2254,6 +2286,8 @@ function removeSong(pdId, divId) {
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
             document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for removing song from playlist is unsuccessfull';
+            $('#ajaxflashMessage44').fadeOut(5000);
+            
         }
     });
     return false;

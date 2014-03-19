@@ -767,7 +767,16 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
                                                     <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
                                                     <?php /*<button class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></button> */ ?>
-                                                    <a class="download-btn" title="Download This Video" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>                                                                                                                            
+                                                    <span class="beforeClick" id="download_video_<?php echo $psong->ProdID; ?>"> 
+                                                        <![if !IE]>
+                                                        <a class="download-btn" title="Download This Video" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
+                                                        <![endif]>
+                                                        <!--[if IE]>
+                                                               <a class="download-btn" title="Download This Video" onclick='wishlistVideoDownloadIEToken("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>",1);' href="javascript:void(0);"></a>
+                                                        <![endif]--> 
+                                                    </span>
+                                                    <span class="afterClick" id="vdownloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"></span>
+                                                    <span id="vdownload_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                                                 </form>
                                                 </p>
                                                     <?php
