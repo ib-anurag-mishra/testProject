@@ -868,6 +868,7 @@ function Get_Sales_date($sales_date_array, $country) {
                     $i = 0;
                     foreach ($composers as $composer) {
                         $composer_name = str_replace('"', '', $composer->Composer);
+                        $full_composer_name = $composer_name;
                         $composer_name = truncate_text($composer_name, 125, $this);
                         $tilte = urlencode($composer->Composer);
                         $name = $composer->Composer;
@@ -875,7 +876,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         $name = $this->getTextEncode($name);
                         if ( "" !=  $this->getTextEncode($composer_name) ) {
                             ?>
-                                    <li><a href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1" title="<?php echo $this->getTextEncode($composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></li>
+                                    <li><a href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1" title="<?php echo $this->getTextEncode($full_composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></li>
                                     <?php
                                 }
                                 $i++;
@@ -1130,7 +1131,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                 foreach ($videos as $video) {
                                     $tilte = urlencode($video->VideoTitle);
                                    // $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
-                                    $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 65, $this);
+                                    $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 125, $this);
 									// $video_name_text = $this->getTextEncode($video->VideoTitle);
                                     $name = $this->getTextEncode($video->VideoTitle);
                                     // $count = $video->numFound;
