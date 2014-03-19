@@ -474,13 +474,12 @@ function login($library = null){
 				}
 				$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));
                 $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-                //print_r($isApproved); die;
-                //echo "Setting Stream popup session";
+
 		if($libraryArr['Library']['library_type'] == 2){
 		    $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 		    $this->Session->write("userlogin", 'yes');
                 }
-                //echo "Stream popup session set"; die;
+
                 $this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
 				if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 					$this->Session->write('Config.language', $libraryArr['Library']['library_language']);
@@ -4070,8 +4069,7 @@ function login($library = null){
 						else{
 							$this ->Session->write("block", 'no');
 						}
-                                                
-                                                //echo "redirection_url: ".$redirection_url; die;
+
                                                 if ($this->Session->read('UrlReferer') != '') {
                                                       $UrlReferer = $this->Session->read('UrlReferer');
                                                       $this->Session->delete('UrlReferer');
@@ -6196,7 +6194,7 @@ function login($library = null){
             $userType = $this->Session->read('Auth.User.type_id');
             if($userType != 1){
                 $this->redirect('/home/aboutus');
-		die('You are not allowed to use this section.');
+		$this->_stop('You are not allowed to use this section.');
             }
             $this->Library->recursive = -1;
             $libId = 2;
@@ -6248,7 +6246,7 @@ function login($library = null){
                 echo false;
             }
             
-            die;
+            $this->_stop();
         }
 
 }

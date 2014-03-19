@@ -10,7 +10,7 @@ class CountController extends AppController {
     var $uses = array();
 /*	function admin_index(){
 		$memcache = new Memcache;
-		$memcache->connect('127.0.0.1', 11211) or die ("Could not connect to memcache server");
+		$memcache->connect('127.0.0.1', 11211) or $this->_stop("Could not connect to memcache server");
 		$list = array();
 		$allSlabs = $memcache->getExtendedStats('slabs');
 		$items = $memcache->getExtendedStats('items');

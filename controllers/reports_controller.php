@@ -300,7 +300,6 @@ Class ReportsController extends AppController {
                         $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('patronDownloads', $patronDownloads[0]);
                 }
@@ -333,7 +332,6 @@ Class ReportsController extends AppController {
                             $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
                           }
                         }
-                        //die;
                       }
                       $this->set('patronBothDownloads', $patronBothDownloads);
                     }
@@ -373,7 +371,6 @@ Class ReportsController extends AppController {
                         $patronVideoDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('patronVideoDownloads', $patronVideoDownloads[0]);
                 }                
@@ -415,7 +412,6 @@ Class ReportsController extends AppController {
                         $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('genreDownloads', $genreDownloads[0]);
                 }
@@ -457,7 +453,6 @@ Class ReportsController extends AppController {
                         $genreVideoDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('genreVideoDownloads', $genreVideoDownloads[0]);
                 }                
@@ -746,7 +741,6 @@ Class ReportsController extends AppController {
                         $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('patronDownloads', $patronDownloads[0]);
                 }
@@ -779,7 +773,6 @@ Class ReportsController extends AppController {
                             $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
                           }
                         }
-                        //die;
                       }
                       $this->set('patronBothDownloads', $patronBothDownloads);
                     }
@@ -820,7 +813,6 @@ Class ReportsController extends AppController {
                         $patronVideoDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('patronVideoDownloads', $patronVideoDownloads[0]);
                 }                
@@ -863,7 +855,6 @@ Class ReportsController extends AppController {
                         $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('genreDownloads', $genreDownloads[0]);
                 }
@@ -905,7 +896,6 @@ Class ReportsController extends AppController {
                         $genreVideoDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('genreVideoDownloads', $genreVideoDownloads[0]);
                 }                
@@ -1185,7 +1175,6 @@ Class ReportsController extends AppController {
                         $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('patronDownloads', $patronDownloads[0]);
                 }
@@ -1218,7 +1207,6 @@ Class ReportsController extends AppController {
                             $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
                           }
                         }
-                        //die;
                       }
                       $this->set('patronBothDownloads', $patronBothDownloads);
                     }
@@ -1259,7 +1247,6 @@ Class ReportsController extends AppController {
                         $patronVideoDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('patronVideoDownloads', $patronVideoDownloads[0]);
                 }                
@@ -1302,7 +1289,6 @@ Class ReportsController extends AppController {
                         $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('genreDownloads', $genreDownloads[0]);
                 }
@@ -1344,7 +1330,6 @@ Class ReportsController extends AppController {
                         $genreVideoDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
                       }
                     }
-                    //die;
                   }
                   $this->set('genreVideoDownloads', $genreVideoDownloads[0]);
                 }                
@@ -2083,7 +2068,6 @@ Class ReportsController extends AppController {
                   $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
                   }
                   }
-                  //die;
                   }
                   $this->set('patronStramedInfo', $patronDownloads[0]);
                   }
@@ -2116,7 +2100,6 @@ Class ReportsController extends AppController {
                   $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
                   }
                   }
-                  //die;
                   }
                   $this->set('patronBothDownloads', $patronBothDownloads);
                   }
@@ -2160,7 +2143,6 @@ Class ReportsController extends AppController {
                   $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
                   }
                   }
-                  //die;
                   }
                   $this->set('genreDownloads', $genreDownloads[0]);
                   }

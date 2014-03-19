@@ -172,7 +172,6 @@
                     ?>
 
                     <?php
-                    //print_r($topVideoDownloads); die;
                     $total_videos = count($topVideoDownloads);
                     $sr_no = 0;
                     foreach ($topVideoDownloads as $key => $topDownload)

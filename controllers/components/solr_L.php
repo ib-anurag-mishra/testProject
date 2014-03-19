@@ -42,16 +42,12 @@ class SolrLComponent extends Object {
         self::$solr = new Apache_Solr_Service($settings['server'], $settings['port'], $settings['solrpath']);
         //var_dump($solr);
         if (!self::$solr->ping()) {
-            //echo "Not Connected";
-            //die;
             throw new SolrException();
         }
 
         self::$solr2 = new Apache_Solr_Service($settings2['server'], $settings2['port'], $settings2['solrpath']);
 
         if (!self::$solr2->ping()) {
-            //echo "Not Connected";
-            //die;
             throw new SolrException();
         }
     }
@@ -136,8 +132,6 @@ class SolrLComponent extends Object {
             }*/
 
             $query = $query . ' AND Territory:' . $country . $cond;
-
-            // echo '<br /> Rows :'.$query.'<br />'; die;
 
             if ($page == 1) {
                 $start = 0;
@@ -326,7 +320,6 @@ class SolrLComponent extends Object {
             }
 
             $query = $query . ' AND Territory:' . $country;
-            //echo $query; die;
 
             if ($page == 1) {
                 $start = 0;
@@ -523,7 +516,7 @@ class SolrLComponent extends Object {
             }
 
             $query = $query . ' AND Territory:' . $country;
-            // echo $query; // die;
+
             if ($page == 1) {
                 $start = 0;
             } else {
@@ -537,28 +530,17 @@ class SolrLComponent extends Object {
                 'group.sort' => 'provider_type desc',
             );
 
-            /* $query = '(
-              CArtistText: (britney spears)  OR
-              CArtistText: (britney spears*) OR
-              CArtistText: (*britney spears) OR
-              CArtistText: (*britney*)       OR
-              CArtistText: (*spears*)        OR
-              ArtistText:Britney\ spears
-              ) AND Territory:US'; */
-            //$query = '(CArtistText:(*britney* *spears*) OR ArtistText:Britney\ spears) AND Territory:US';
-            // echo '<br /> Boxs : '.$query.'<br />';
-
             if ($type != 'video') {
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
                 if ($response->getHttpStatus() == 200) {
-                    //print_r($response->grouped); die;
+
                     if (!empty($response->grouped->$field->groups)) {
                         $docs = array();
                         foreach ($response->grouped->$field->groups as $group) {
                             $group->doclist->docs[0]->numFound = $group->doclist->numFound;
                             $docs[] = $group->doclist->docs[0];
-                        } //echo '<pre>'; print_r($docs); echo '</pre>';
-                        // print_r($docs); die;
+                        }
+
                         return $docs;
                     } else {
                         return array();
@@ -570,14 +552,13 @@ class SolrLComponent extends Object {
             } else {
                 $response = self::$solr2->search($query, $start, $limit, $additionalParams);
                 if ($response->getHttpStatus() == 200) {
-                    //print_r($response->grouped); die;
+
                     if (!empty($response->grouped->$field->groups)) {
                         $docs = array();
                         foreach ($response->grouped->$field->groups as $group) {
                             $group->doclist->docs[0]->numFound = $group->doclist->numFound;
                             $docs[] = $group->doclist->docs[0];
-                        } //echo '<pre>'; print_r($docs); echo '</pre>';
-                        // print_r($docs); die;
+                        }
                         return $docs;
                     } else {
                         return array();
@@ -742,8 +723,6 @@ class SolrLComponent extends Object {
                 }
 
                 $query = $query . ' AND Territory:' . $country . $cond;
-
-                //echo $query.'<br />'; //die;
 
                 $additionalParams = array(
                     'facet' => 'true',

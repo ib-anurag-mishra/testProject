@@ -223,7 +223,7 @@ STR;
             $this->log("cache written for national top ten for $territory", 'debug');
 
 print_r(Cache::read("national" . $country));
-die;
+$this->_stop();
           
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
@@ -231,7 +231,7 @@ die;
             if (!empty($featuredVideos)) {
                 foreach($featuredVideos as $key => $featureVideo){
                     $videoArtwork = shell_exec(Configure::read('App.tokengen') . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
-                    // print_r($featureVideo); die;
+
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
                 }                
@@ -285,8 +285,7 @@ die;
                 $ids = '';
                 $ids_provider_type = '';
                 $natTopDownloaded = $this->Album->query($sql);
-                // echo $sql;
-                // print_r($natTopDownloaded); die;
+
                 foreach ($natTopDownloaded as $natTopSong) {
                     if (empty($ids)) {
                         $ids .= $natTopSong['Download']['ProdID'];
@@ -347,7 +346,6 @@ die;
                 LIMIT 100 
 STR;
 
-                // echo $sql_national_100_v; die;
                 $data = $this->Album->query($sql_national_100_v);
                 $this->log($sql_national_100_v, "cachequery");
                 if ($ids_provider_type == "") {
@@ -427,8 +425,6 @@ SELECT
     LIMIT 20       
 STR;
 
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
-            // echo $sql_coming_soon_s; die;
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
 
             if (!empty($coming_soon_rs)) {

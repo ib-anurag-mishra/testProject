@@ -195,17 +195,11 @@ class ServicesController extends AppController {
 				$searchResults = $this->paginate('Song');*/
                 
 				$reference = '';
-
-                // echo $solrFinalCondition; die;
                 
                 $response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 
                 if ($response->getHttpStatus() == 200) {
-                    // echo "here";
-                    // print_r($response);
-                    // print_r($response);
-                    // echo $response->response->numFound;
-                    // die;
+
                     if ($response->response->numFound > 0) {
                         foreach ($response->response->docs as $doc) {
                             $docs[] = $doc;
@@ -216,9 +210,6 @@ class ServicesController extends AppController {
                 } else {
                     $docs = array();
                 }
-                
-                // print_r($docs); 
-                // die;
                 
 				foreach($docs as $k=>$v){
                     if(!empty($v->ProdID)){
@@ -292,11 +283,9 @@ class ServicesController extends AppController {
 										),                             
 								)
 						));
-                        print_r($data); die; 
                         */
 						$reference = $v->ReferenceID;
-                        // echo $this->Album->lastQuery();
-                        // print_r($albumData); die;
+
                         if(!empty($albumData)){
 						$albumArtWork = Configure::read('App.Music_Path').shell_exec(Configure::read('App.tokengen') . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
                         } else {
@@ -463,7 +452,7 @@ class ServicesController extends AppController {
 						));
 				
 				$searchResults = $this->paginate('Song');*/
-                // echo $solrFinalCondition; die;
+
 				$response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 
                 // print_r($response);
@@ -479,8 +468,6 @@ class ServicesController extends AppController {
                 } else {
                     $docs = array();
                 }
-                
-                // print_r($docs); die;
                 
 				$reference = '';
 				foreach($docs as $k=>$v){
@@ -639,8 +626,6 @@ class ServicesController extends AppController {
 				
 				$searchResults = $this->paginate('Song');*/
 				$reference = '';
-                
-                // echo $solrFinalCondition; die;
                 
                 $response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 

@@ -191,11 +191,6 @@ class VideosController extends AppController
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
-        /* echo $prodId;
-          echo "<br />";
-          echo $provider;
-          echo "<br />";
-          print_r($validationResult); die; */
         // sets user id
         $user = $this->Session->read('Auth.User.id');
         if (empty($user))
@@ -715,7 +710,7 @@ STR;
 //                $VideosData = $this->Album->query($VideosSql);
 //                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
 //                $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
-//                //echo "<pre>"; print_r($VideosData); die;
+//                //echo "<pre>"; print_r($VideosData); $this->_stop();
 //
 //                if (!empty($VideosData)) {
 //                    Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
@@ -805,7 +800,7 @@ STR;
 //                        Cache::write("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText'], $MoreVideosData);
 //                    }                    
 //                    
-//                    // echo "<pre>"; print_r($MoreVideosData); die;
+//                    // echo "<pre>"; print_r($MoreVideosData); $this->_stop();
 //                }else{
 //                    $MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);                    
 //                }   
@@ -826,7 +821,7 @@ STR;
             
             if($prefix === '_'){
                 $this->log("Empty prefix:".$prefix." in getComingSoonSongs for : ".$territory, "cache");
-                die;
+                $this->_stop();
             }
             
             
@@ -851,7 +846,6 @@ STR;
             {
                 $TopVideoGenreData = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']);
             }
-            //echo "<pre>"; print_r($TopVideoGenreData); die;
         }
         else
         {

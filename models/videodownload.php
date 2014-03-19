@@ -438,8 +438,7 @@ class Videodownload extends AppModel
         //$data = $this->query("SELECT date_format(Videodownload.created,'%Y-%m-%d') as day_downloaded,Videodownload.library_id,Videodownload.patron_id, CASE Videodownload.email WHEN '' THEN NULL ELSE Videodownload.email END AS emailtest, COUNT(patron_id) AS total FROM videodownloads AS Videodownload WHERE Videodownload.created >= DATE('".$date."') AND Videodownload.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY day_downloaded,patron_id,library_id, emailtest");
       }
     }
-    //print_r($data);
-    //die;
+
     if(!empty($data)){
       return $data;
     } else {
@@ -460,8 +459,7 @@ class Videodownload extends AppModel
         //$data = $this->query("SELECT day_downloaded,library_id,Genre,count(id) as total FROM (SELECT date_format(Videodownload.created,'%Y-%m-%d') as day_downloaded, Videodownload.id, Videodownload.library_id, Genre.Genre FROM videodownloads AS Videodownload LEFT JOIN Genre AS Genre ON (Videodownload.ProdID = Genre.ProdId) WHERE Videodownload.created >= DATE('".$date."') AND Videodownload.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY Videodownload.id) as table1 Group by day_downloaded,Genre");
       }
     }
-    //print_r($data);
-    //die;
+
     if(!empty($data)){
       return $data;
     } else {

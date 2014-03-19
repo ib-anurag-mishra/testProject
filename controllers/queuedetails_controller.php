@@ -29,28 +29,17 @@ class QueueDetailsController extends AppController{
     function index(){
         
          $this->layout = 'home';   
-                 
-         
-//         echo "<pre>";
-//         print_r($_POST);
-//         die;
+
             if($_POST['hdn_remove_song']) 
             {
-                // echo $_POST["Pdid"]; die;
                 if(!empty($_POST["Pdid"]))
                 {
-                  // echo "Result: ". $this->QueuelistDetails->deleteAll($_POST["Pdid"]); 
                     $conditions = array (
                                                         "Pdid" => $_POST["Pdid"]										
                                         );
                                                 
                     $delete_reponse	= $this->QueuelistDetails->delete(array('Pdid' => $_POST["Pdid"])); 
-//                    echo $this->QueuelistDetails->lastQuery();
-//                    echo "<pre>";
-//                    print_r($delete_reponse);
-//                    die;
-                    
-                    
+
                 }
                
             }
@@ -63,17 +52,9 @@ class QueueDetailsController extends AppController{
                     $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
                     $this->set('patronDownload',$patronDownload);
 
-
-                    //echo "<pre>";
-                     //print_r($this->params['pass'][0]); die;
-
-                    //echo "123";
                     $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
-                   // echo 456;
-                    
-                    
+
                     // Find Total Duration
-                    
                     $total_seconds = 0;
                     
                     foreach($queue_list_array as $k => $v)

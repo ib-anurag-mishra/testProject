@@ -81,7 +81,7 @@ class QueuesController extends AppController
                         $this->QueueList->setDataSource('default');
                         $this->layout = 'ajax';
                         echo "Playlist has been Added successfully.&" . $this->QueueList->getLastInsertID() . "&" . $this->data['QueueList']['queue_name'];
-                        die;
+                        $this->_stop();
                         //$this->redirect($this->referer());						
                     }
                     else
@@ -421,7 +421,7 @@ class QueuesController extends AppController
 
             echo $message;
         }
-        die;
+        $this->_stop();
     }
     
     /**

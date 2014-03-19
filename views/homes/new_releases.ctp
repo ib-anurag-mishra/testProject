@@ -21,8 +21,6 @@
                 $arr_all_albums =   array();
                 foreach ($new_releases_albums as $key => $value)
                 {
-//                    echo '<pre>';
-//                    print_r($value);die;
                     if($count==101) break;
                     if(in_array($value['Albums']['AlbumTitle'], $arr_all_albums))
                     {
@@ -334,7 +332,7 @@
             $count = 1;
 
             //for($d=1;$d<$count;$d++) {
-// print_r($topDownload_videos_data); die;
+// print_r($topDownload_videos_data); $this->_stop();
             foreach ($new_releases_videos as $key => $value)
             {
 

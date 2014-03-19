@@ -251,7 +251,6 @@ class SearchController extends AppController
 			
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
                         $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
-                        //print_r($genres); die;
                         $this->set('genres', $genres);
                         break;
 
@@ -331,14 +330,13 @@ class SearchController extends AppController
                 //echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
                 $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
                 //echo "<br>Group Search for Video ended at ".date("Y-m-d H:i:s");
-                // print_r($videos); die;
                 $this->set('albums', $albums);
                 $this->set('arr_albumStream', $arr_albumStream);
                 //$this->set('albumData',$albumData);
                 $this->set('albumData', $albums);
                 $this->set('artists', $artists);
                 $this->set('genres', $genres);
-                //print_r($genres);die;
+
                 $this->set('composers', $composers);
                 //$this->set('labels', $labels);
                 $this->set('videos', $videos);
@@ -366,7 +364,7 @@ class SearchController extends AppController
             $this->autoLayout = false;
             $this->autoRender = false;
             echo $this->render();
-            die;
+            $this->_stop();
         }
         else
         {
@@ -532,8 +530,6 @@ class SearchController extends AppController
                     }
                 }
 
-
-                //echo '<pre>'; print_r($data1); print_r($records); die;
                 //$records = array_slice($records,0,20);
                 break;
             case 'artist':
@@ -629,7 +625,6 @@ class SearchController extends AppController
                 }
                 break;
         }
-        //print_r($typeVar); print_r($records); //die;
         $this->set('type', $typeVar);
         $this->set('records', $records);
     }

@@ -1650,7 +1650,7 @@ STR;
         {
             echo $row['Library']['library_name'] . "|" . $row['Library']['id'] . "\n";
         }
-        die;
+        $this->_stop();
     }
 
 }

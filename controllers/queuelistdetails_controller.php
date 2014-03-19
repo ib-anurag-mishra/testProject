@@ -64,7 +64,7 @@ class QueueListDetailsController extends AppController
                         //$this->Session->setFlash('Queue has been renamed successfully', 'modal', array('class' => 'queue success'));
                         $this->layout = 'ajax';
                                 echo 'Playlist has been renamed successfully';
-                                die;
+                                $this->_stop();
                     }
                     else
                     {
@@ -72,7 +72,7 @@ class QueueListDetailsController extends AppController
 //                        $this->redirect($this->referer());
                         $this->layout = 'ajax';
                                 echo 'Error occured while renaming playlist';
-                                die;
+                                $this->_stop();
                     }
                 }
             }
@@ -211,8 +211,6 @@ class QueueListDetailsController extends AppController
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('patronDownload', $patronDownload);
 
-        //echo '<pre>'; print_r($this->params); die;
-
         if ($this->params['pass'][1] == '1')   //  Default Queue
         {
             if ($queue_list_array = Cache::read("defaultqueuelistdetails".$territory. $this->params['pass'][0]) === false)
@@ -237,9 +235,6 @@ class QueueListDetailsController extends AppController
             $this->set('queueType', 'Custom');
         }
 
-
-        // print_r($queue_list_array );die;
-        //echo 456;
         //Find Total Duration
         $total_seconds = 0;
         foreach ($queue_list_array as $k => $v)
@@ -374,12 +369,12 @@ class QueueListDetailsController extends AppController
         if ($this->Session->read('patron') == '')
         {
             echo 'Patron Not Login';
-            die;
+            $this->_stop();
         }
         elseif ($this->data['QueueList']['queue_name'] == '')
         {
             echo 'Playlist Name is empty';
-            die;
+            $this->_stop();
         }
         else
         {
@@ -409,10 +404,10 @@ class QueueListDetailsController extends AppController
                 echo 'Playlist Name you entered is already present. Please try different name.';
             }
 
-            die;
+            $this->_stop();
         }
 
-        die;
+        $this->_stop();
     }
 
 }
