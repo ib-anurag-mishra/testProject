@@ -110,6 +110,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 									<li>
 								<?php }?>
 										<div class="top-single-container">
+											<input type="hidden" id="<?= $nationalTopSong['Song']['ProdID'] ?>" value="song" data-provider="<?= $nationalTopSong['Song']['provider_type'] ?>"/>
 											<div class="single-bar"></div>
 											<div class="ranking"><?=$count;?></div>
 											
@@ -185,7 +186,6 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 	<?php
 	}
 ?>
-			<input type="hidden" id="<?= $nationalTopSong['Song']['ProdID'] ?>" value="song" data-provider="<?= $nationalTopSong['Song']['provider_type'] ?>"/>
 			<?php /*<button class="wishlist-icon"></button> */ ?>
             <a class="wishlist-icon no-ajaxy" title="Add to Wishlist" hrefe="#"></a>
                         <?php    if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?>

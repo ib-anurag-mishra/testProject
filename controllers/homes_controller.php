@@ -5033,19 +5033,17 @@ STR;
                 $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron');
 
-                $prodID      = $this->params["form"]["prodID"];
-                $provider    = $this->params["form"]["provider_type"];
-                $songsArray  = array();
+                $prodID     = $this->params["form"]["prodID"];
+                $provider   = $this->params["form"]["provider_type"];
+                $songsArray = array();
 
-                $log_data   .= " ProdID:$prodID  :ProviderType:$provider ";
+                $log_data .= " ProdID:$prodID  :ProviderType:$provider ";
                 $songDetails = $this->Song->getdownloaddata( $prodID, $provider );
 
                 if( empty( $prodID ) && empty( $provider ) ) {
 
 	                $selectedSongs = $this->params["form"]["songs"];
-	                
 	                foreach ($selectedSongs as $song) {
-	                	
 	                    $songInfo = explode('&', $song);
 	                    $log_data .= " ProdID:$songInfo[0]  :ProviderType:$songInfo[1] ";
 	                    $songDetails = $this->Song->getdownloaddata($songInfo[0], $songInfo[1]);
