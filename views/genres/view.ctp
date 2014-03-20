@@ -75,6 +75,10 @@
         var preValue = 1;
         var artistPage = 2;
         var selectedAlpha = '<? echo ($this->Session->read('selectedAlpha') != '') ? $this->Session->read('selectedAlpha') : 'All' ?>';
+	
+	var split = location.search.replace('?', '').split('=');
+        var genre = 'li a[data-genre="'+split[1]+'"]';
+        $(genre).click();
 
         $("#artistscroll").scroll(function() {
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {

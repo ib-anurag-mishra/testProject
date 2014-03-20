@@ -225,7 +225,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                         </a>                                                        
 
                                     </div>
-                                    <div class="genre">Genre:<?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', base64_encode($album_genre)), array("title" => $this->getTextEncode($album_genre))); ?> </div>
+                                    <div class="genre">Genre:<?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?> </div>
                                                     <?php
                                                     if ($this->Session->read("patron")) {
                                                         if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) {
