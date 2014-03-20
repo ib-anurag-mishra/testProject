@@ -1,60 +1,60 @@
 <?php
 
 class SongDownloadSuccess{
-  /**
+	/**
 	 * songdownloadsuccess
 	 * @var SongDownloadSuccessType
 	 */
-  public $songdownloadsuccess;
+	public $songdownloadsuccess;
 
-  /**
+	/**
 	 * Constructor
 	 * @param SongDownloadSuccessType $songdownloadsuccess
 	 * @return bool
 	 */
-  public function __construct($songdownloadsuccess){
-    $this->songdownloadsuccess = $songdownloadsuccess;
-    return true;
-  }
+	public function __construct($songdownloadsuccess){
+		$this->songdownloadsuccess = $songdownloadsuccess;
+		return true;
+	}
 }
 
 class SongDownloadSuccessType{
-  /**
+	/**
 	 * message
 	 * @var string
 	 */
-  public $message;
-  /**
+	public $message;
+	/**
 	 * song_url
 	 * @var string
 	 */
-  public $song_url; 
-  /**
+	public $song_url;
+	/**
 	 * success
 	 * @var bool
 	 */
-  public $success;
-  /**
+	public $success;
+	/**
 	 * currentDownloadCount
 	 * @var int
 	 */
-  public $currentDownloadCount;
-  /**
+	public $currentDownloadCount;
+	/**
 	 * totalDownloadLimit
 	 * @var int
 	 */
-  public $totalDownloadLimit;
-  
-  /**
+	public $totalDownloadLimit;
+
+	/**
 	 * showWishlist
 	 * @var int
 	 */
-  public $showWishlist;
-  
-  /**
+	public $showWishlist;
+
+	/**
 	 * Constructor
 	 */
-  public function __construct(){
-  
-  }
+	public function __construct(){
+
+	}
 }

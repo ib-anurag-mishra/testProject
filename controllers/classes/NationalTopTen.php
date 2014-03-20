@@ -1,131 +1,131 @@
 <?php
 
 class NationalTopTen{
-  /**
+	/**
 	 * nationaltopten
 	 * @var NationalTopTenType
 	 */
-  public $nationaltopten;
+	public $nationaltopten;
 
-  /**
+	/**
 	 * Constructor
 	 * @param NationalTopTenType $nationaltopten
 	 * @return bool
 	 */
-  public function __construct($nationaltopten){
-    $this->nationaltopten = $nationaltopten;
-    return true;
-  }
+	public function __construct($nationaltopten){
+		$this->nationaltopten = $nationaltopten;
+		return true;
+	}
 }
 
 class NationalTopTenType{
-  /**
+	/**
 	 * ProdId
 	 * @var int
 	 */
-  public $ProdId;
-  /**
+	public $ProdId;
+	/**
 	 * ProductId
 	 * @var string
 	 */
-  public $ProductId;
-  /**
+	public $ProductId;
+	/**
 	 * ReferenceId
 	 * @var int
 	 */
-  public $ReferenceId;
-  /**
+	public $ReferenceId;
+	/**
 	 * Title
 	 * @var string
 	 */
-  public $Title;
-  /**
+	public $Title;
+	/**
 	 * SongTitle
 	 * @var string
 	 */
-  public $SongTitle;
-  /**
+	public $SongTitle;
+	/**
 	 * ArtistText
 	 * @var string
 	 */
-  public $ArtistText;
+	public $ArtistText;
 
-  /**
+	/**
 	 * Artist
 	 * @var string
 	 */
-  public $Artist;
+	public $Artist;
 
-  /**
+	/**
 	 * AlbumTitle
 	 * @var string
 	 */
-  public $AlbumTitle;
+	public $AlbumTitle;
 
-  /**
+	/**
 	 * ISRC
 	 * @var string
 	 */
-  public $ISRC;
+	public $ISRC;
 
-  /**
+	/**
 	 * Composer
 	 * @var string
 	 */
-  public $Composer;
+	public $Composer;
 
-  /**
+	/**
 	 * Genre
 	 * @var string
 	 */
-  public $Genre;
+	public $Genre;
 
-  /**
+	/**
 	 * Territory
 	 * @var string
 	 */
-  public $Territory;
+	public $Territory;
 
-  /**
+	/**
 	 * Sample_Duration
 	 * @var string
 	 */
-  public $Sample_Duration;
+	public $Sample_Duration;
 
-  /**
+	/**
 	 * FullLength_Duration
 	 * @var string
 	 */
-  public $FullLength_Duration;
+	public $FullLength_Duration;
 
-  /**
+	/**
 	 * fileURL
 	 * @var string
 	 */
-  public $fileURL;
+	public $fileURL;
 
-  /**
+	/**
 	 * FullLength_FIleID
 	 * @var int
 	 */
-  public $FullLength_FIleID;
+	public $FullLength_FIleID;
 
-  /**
+	/**
 	 * FullLength_FIleURL
 	 * @var string
 	 */
-  public $FullLength_FIleURL;
+	public $FullLength_FIleURL;
 
-  /**
+	/**
 	 * playButtonStatus
 	 * @var int
 	 */
-  public $playButtonStatus;
-  
-  /**
+	public $playButtonStatus;
+
+	/**
 	 * Constructor
 	 */
-  public function __construct(){
+	public function __construct(){
 
-  }
+	}
 }
