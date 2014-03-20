@@ -222,9 +222,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
                                
                                     <?php
-                                    if (strlen($nationalTopSong['Song']['SongTitle']) >= 30)
+                                    if (strlen($nationalTopSong['Song']['SongTitle']) >= 36)
                                     {
-                                        $songTitle = $this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 30)) . "..";
+                                        $songTitle = $this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 36)) . "..";
                                     }
                                     else
                                     {
