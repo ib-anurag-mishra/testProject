@@ -996,7 +996,7 @@ function Get_Sales_date($sales_date_array, $country) {
                 <?php echo $album_title; ?>
                                             </a>
                                         </p>
-                                        <p class="artist">Genre:<span><a href="javascript:void(0)"><?php echo $album_genre; ?></a></span></p>
+                                        <p class="artist">Genre: <span><a href="javascript:void(0)"><?php echo $album_genre; ?></a></span></p>
                                         <p class="label"><?php echo $album_label_str; ?></p>
                                     </div>
                                 </li>
