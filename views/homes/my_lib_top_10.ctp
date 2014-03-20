@@ -82,7 +82,7 @@
                                     if (strlen($value['Albums']['AlbumTitle']) > 20)
                                         echo substr($value['Albums']['AlbumTitle'], 0, 20) . "...";
                                     else
-                                        echo $value['Albums']['AlbumTitle'];
+                                        echo $this->getValidText($value['Albums']['AlbumTitle']);
                                     ?>
                                 </a><?php
                                 if ('T' == $value['Albums']['Advisory'])
@@ -95,7 +95,7 @@
                                     if (strlen($value['Song']['Artist']) > 32)
                                         echo substr($value['Song']['Artist'], 0, 32) . "...";
                                     else
-                                        echo $value['Song']['Artist'];
+                                        echo $this->getValidText($value['Song']['Artist']);
                                     ?>
                                 </a>
                             </div>
@@ -327,7 +327,7 @@
                                     if (strlen($value['Song']['SongTitle']) > 20)
                                         echo substr($value['Song']['SongTitle'], 0, 20) . "...";
                                     else
-                                        echo $value['Song']['SongTitle'];
+                                        echo $this->getValidText($value['Song']['SongTitle']);
                                     ?>
                                 </a><?php
                                 if ('T' == $value['Song']['Advisory'])
@@ -340,7 +340,7 @@
                                     if (strlen($value['Song']['Artist']) > 32)
                                         echo substr($value['Song']['Artist'], 0, 32) . "...";
                                     else
-                                        echo $value['Song']['Artist'];
+                                        echo $this->getValidText($value['Song']['Artist']);
                                     ?>
                                 </a>
                             </div>
@@ -522,7 +522,7 @@
                                     if (strlen($value['Video']['VideoTitle']) > 20)
                                         echo substr($value['Video']['VideoTitle'], 0, 20) . "...";
                                     else
-                                        echo $value['Video']['VideoTitle'];
+                                        echo $this->getValidText($value['Video']['VideoTitle']);
                                     ?>
                                 </a><?php
                                 if ('T' == $value['Video']['Advisory'])
@@ -535,7 +535,7 @@
                                     if (strlen($value['Video']['Artist']) > 32)
                                         echo substr($value['Video']['Artist'], 0, 32) . "...";
                                     else
-                                        echo $value['Video']['Artist'];
+                                        echo $this->getValidText($value['Video']['Artist']);
                                     ?>
                                 </a>
                             </div>

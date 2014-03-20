@@ -110,7 +110,7 @@
             {
                 ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
             <h3 class="artist-name">
-                <a title="<?php echo $this->getTextEncode($VideosData[0]['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
+                <a title="<?php echo $this->getTextEncode($VideosData[0]['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $this->getValidText($VideosData[0]['Video']['ArtistText']); ?></a>
             </h3>
             <?php
             $duration = $VideosData[0]['Video']['FullLength_Duration'];
@@ -127,7 +127,7 @@
     </div>
     <section class="more-videos">
         <header>
-            <h2><?php echo __('More Videos By', true); ?> <?php echo $VideosData[0]['Video']['ArtistText']; ?></h2>
+            <h2><?php echo __('More Videos By', true); ?> <?php $this->getValidText(echo $VideosData[0]['Video']['ArtistText']); ?></h2>
         </header>
         <div class="more-videos-scrollable horiz-scroll">
             <ul style="width:30900px;">
