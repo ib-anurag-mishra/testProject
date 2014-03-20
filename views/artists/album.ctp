@@ -81,7 +81,7 @@
 		?>
 	</div>
 
-	<br class="clr">
+
 
 	<header class="clearfix">
 		<?php
@@ -419,5 +419,5 @@
 		echo '<span> Sorry, there are no details available for this artist.</span>';
 	}
 	?>
-	<br class="clr">
+	
 </section>
