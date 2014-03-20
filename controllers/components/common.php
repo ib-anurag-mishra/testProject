@@ -2090,6 +2090,12 @@ STR;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                 //{
                     $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    
+                    echo "oldfilepath: ".$filePath;
+                    
+                    $filePath = $this->Token->artworkToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    
+                    echo "newfilepath: ".$filePath;
 
                     if (!empty($filePath))
                     {
