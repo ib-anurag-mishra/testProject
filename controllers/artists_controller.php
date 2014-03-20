@@ -1062,10 +1062,10 @@ Class ArtistsController extends AppController {
 
                     if ($this->Session->read('library_type') == 2) {
                         // $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
-                        $filePath = $this->Token->artworkToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                        $filePath = $this->Token->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                         if (!empty($filePath)) {
                             $songPath = explode(':', $filePath);
-                            $streamUrl = trim($songPath[0]);
+                            $streamUrl = trim($songPath[1]);
                             $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
                             $albumSongs[$k][$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
                         }
