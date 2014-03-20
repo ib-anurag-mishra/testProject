@@ -880,7 +880,9 @@ STR;
                     $songs_img = Configure::read('App.Music_Path') . $songs_img;
                     $data[$key]['songs_img'] = $songs_img;
 
-                    $filePath = shell_exec(Configure::read('App.tokengen_streaming'). $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    //$filePath = shell_exec(Configure::read('App.tokengen_streaming'). $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    $tokeninstance = ClassRegistry::init('Token');
+                    $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 
                     if (!empty($filePath))
                     {
