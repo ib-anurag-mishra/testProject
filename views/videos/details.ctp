@@ -127,7 +127,7 @@
     </div>
     <section class="more-videos">
         <header>
-            <h2><?php echo __('More Videos By', true); ?> <?php $this->getValidText(echo $VideosData[0]['Video']['ArtistText']); ?></h2>
+            <h2><?php echo __('More Videos By', true); ?> <?php echo $this->getValidText($VideosData[0]['Video']['ArtistText']); ?></h2>
         </header>
         <div class="more-videos-scrollable horiz-scroll">
             <ul style="width:30900px;">
