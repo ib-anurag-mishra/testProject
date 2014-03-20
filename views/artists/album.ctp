@@ -410,7 +410,7 @@
     }
     else
     {
-        echo '<span> Sorry,there are no details available for this Artist.</span>';
+        echo '<span> Sorry, there are no details available for this artist.</span>';
     }
     ?>
     <br class="clr">
