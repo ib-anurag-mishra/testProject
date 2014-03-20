@@ -43,7 +43,7 @@ if(isset($searchtype)){
 	<?php echo $paginator->sort(__("Track") , 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <div id="genreDownload" <?php if(isset($composer)){ ?> style="width:180px;" <?php }else{ ?> style="width:215px;" <?php } ?>><?php __("Download");?></div>
-<br class="clr">
+
 <div id="genreResults">
 	<table cellspacing="0" cellpadding="0"style="margin-left:53px;">
 	<?php 

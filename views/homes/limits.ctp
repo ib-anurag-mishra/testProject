@@ -5,7 +5,7 @@
 	 Author : m68interactive
  */
 ?>
-<br class="clr" />
+
 <div id="aboutBox">
 	About Download Limits
 </div>

@@ -1,4 +1,4 @@
-<br class="clr" />
+
 <?php echo $session->flash(); ?>
 <div id="aboutBox">Error Freegal Music&trade;</div>
 <div id="aboutUs">

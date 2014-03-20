@@ -93,7 +93,7 @@
 		<div id="content">
 			<?php echo $content_for_layout; ?>
 		</div>
-		<br class="clr">
+
 	</div>
 	<?php echo $this->element('footer'); ?>
 </body>

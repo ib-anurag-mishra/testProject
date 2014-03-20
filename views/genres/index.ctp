@@ -26,7 +26,7 @@ $ieVersion = ieversion();
     <div id="genreViewAllBox">
         <?php __('All Genres') ?>
     </div>
-    <br class="clr" />
+
     <div height="400px" style="color:blue;">
         <?php
         $totalRows = count($genresAll);

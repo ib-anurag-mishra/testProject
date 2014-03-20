@@ -35,7 +35,7 @@
 <div class="txt-my-terms">
 	<?php echo __('Terms &amp; Conditions');?>
 </div>
-<br class="clr">
+
 <div id="terms">
     <?php echo $page->getPageContent('terms'); ?>
 </div>

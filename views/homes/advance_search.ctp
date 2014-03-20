@@ -14,7 +14,7 @@
 <div id="advance_search_box">
 	<?php __('Advanced Search'); ?>
 </div>
-<br class="clr">
+
 <div id="advance_search">
 	<?php
 		echo $form->create('Home', array('action' => 'search'));

@@ -105,7 +105,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 		}
 		?>
 	</div>
-	<br class="clr" />
+
 	<header class="clearfix">
 		<div class="faq-link">
 			Need help? Visit our <a href="/questions">FAQ section.</a>
