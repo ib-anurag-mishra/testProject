@@ -815,23 +815,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </ul>
                                             </div>
                                              <?php } ?>
-                                             <?php                                                                                             
-                                                        $temp_text  =   strip_tags($announcment_value);
-                                                        
-                                                        if($temp_text!="")
-                                                        {
-                                                            // $announcment_class  =   "display:block;overflow-y:scroll;";
-                                                            $announcment_class  =   "display:block;";
-                                                        }
-                                                        else
-                                                        {
-                                                            $announcment_class  =   "";
-                                                        }
-                                                        
-                                                        ?>
+
                                                         <div class="announcements">
                                                         <h2><?php __('Announcements'); ?></h2>
-                                                        <div class="announcement" style="<?php echo $announcment_class; ?>">
+                                                        <div class="announcement">
                                                             <?php echo $announcment_value; ?>
                                                         </div>
                                                         </div>
