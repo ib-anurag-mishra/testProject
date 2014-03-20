@@ -247,7 +247,6 @@ $this->_stop();
                 foreach($topDownloads as $key => $topDownload)
                 {
                      $videoArtwork = shell_exec(Configure::read('App.tokengen') . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
-                     // print_r($featureVideo);
                      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                      $topDownloads[$key]['videoImage'] = $videoImage;
                 }                
@@ -484,7 +483,6 @@ STR;
     ORDER BY Country.SalesDate ASC
     LIMIT 20 	  
 STR;
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
 
             $coming_soon_rv = $this->Album->query($sql_coming_soon_v);
 
@@ -621,8 +619,6 @@ STR;
             }
             $this->log("cache written for US top ten for $territory", 'debug');
              //End Caching functionality for US TOP 10 Songs
-            
-         
             
              //Added caching functionality for us top 10 Album            
             $country = $territory;
@@ -860,11 +856,6 @@ STR;
             $this->log("cache written for US top ten video for $territory", 'debug');
             //End Caching functionality for US TOP 10 Videos
             
-                  
-     
-            
-            
-            
             //Added caching functionality for new release Songs           
             $country = $territory;
             if ( !empty($country ) && ( $territory == "US" ) ) {
@@ -921,12 +912,6 @@ STR;
                  
                 $data = $this->Album->query($sql_song_coming_soon);
                 $this->log($sql_song_coming_soon, "cachequery");
-//                if ($ids_provider_type == "") {
-//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
-//                    echo "ids_provider_type is set blank for " . $territory;
-//                }
-                
-               
 
                 if (!empty($data)) {
                     Cache::delete("new_releases_songs" . $country);
@@ -1000,10 +985,6 @@ STR;
                  
                 $data = $this->Album->query($sql_album_new_release);
                 $this->log($sql_album_new_release, "cachequery");
-//                if ($ids_provider_type == "") {
-//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
-//                    echo "ids_provider_type is set blank for " . $territory;
-//                }
 
                 if (!empty($data)) {
                     foreach($data as $key => $value){
@@ -1077,10 +1058,6 @@ STR;
                  
                 $data = $this->Album->query($sql_video_new_release);
                 $this->log($sql_video_new_release, "cachequery");
-//                if ($ids_provider_type == "") {
-//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
-//                    echo "ids_provider_type is set blank for " . $territory;
-//                }
 
                 if (!empty($data)) {
                     foreach($data as $key => $value){

@@ -415,12 +415,7 @@ function restoreallgenretemp($country){
                                         
       }  
     }    
- }
-  
-  
-  
+ }  
 }
 
-
-  
 ?>

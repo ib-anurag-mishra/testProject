@@ -8,8 +8,6 @@
 class NewsController extends AppController
 {
 	var $name = 'News';
-	//var $helpers = array('Library', 'Page', 'Language');
-	//var $components = array('RequestHandler','ValidatePatron');
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language');
 	var $components = array('CdnUpload');
@@ -20,18 +18,6 @@ class NewsController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
-		// if(($this->action != 'admin_reorder') && ($this->action != 'admin_index') && ($this->action != 'admin_view') && ($this->action != 'admin_add') && ($this->action != 'admin_edit') && ($this->action != 'admin_delete')) {
-			// $validPatron = $this->ValidatePatron->validatepatron();
-			// if($validPatron == '0') {
-
-				// $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-			// }
-			// else if($validPatron == '2') {
-
-				// $this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-				// $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
-			// }
-		// }
 	}
 	
 	/*
@@ -60,9 +46,6 @@ class NewsController extends AppController
 			);		
 		}
 		$this->set('news', $this->paginate('News'));
-		
-		
-		  // print_r($news);
 	}
 	
 	/*
@@ -88,7 +71,6 @@ class NewsController extends AppController
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
 		$this->layout = 'admin';
-		//$this->Question->recursive = -2;
 		$this->paginate = array('conditions' => array('language' => 'en'),		     
 		      'order' => 'News.created'		     
 		);
@@ -182,8 +164,6 @@ class NewsController extends AppController
 				$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			}
 		}
-		//$sections = $this->Question->Section->find('list');
-		//$this->set(compact('sections'));
 	}
 	
 	/*
@@ -308,7 +288,6 @@ class NewsController extends AppController
 						}	
 					}
 					
-					//$this->clearnewcache(1, $language, $id);
 					$this->redirect(array('action'=>'../../news/clearnewcache/1/' . $language . '/' . $id));
 				}
 				else {

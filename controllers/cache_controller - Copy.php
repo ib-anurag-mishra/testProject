@@ -432,7 +432,6 @@ STR;
     ORDER BY Country.SalesDate ASC
     LIMIT 20 	  
 STR;
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
 
             $coming_soon_rv = $this->Album->query($sql_coming_soon_v);
 

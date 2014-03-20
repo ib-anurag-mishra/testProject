@@ -87,7 +87,6 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
-        //Configure::write('debug', 2);
        
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){            
@@ -97,7 +96,6 @@ class CacheController extends AppController {
             $this->Common->getTopSingles($territory);
             $this->Common->getFeaturedVideos($territory);
             $this->Common->getTopVideoDownloads($territory);
-            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
             $this->Common->getTopAlbums($territory);
             $this->Common->getComingSoonSongs($territory);
             $this->Common->getComingSoonVideos($territory);
@@ -108,7 +106,6 @@ class CacheController extends AppController {
             $this->Common->getNewReleaseVideos($territory);
             $this->Common->getDifferentGenreData($territory);            
             $this->Common->getDefaultQueues($territory);  
-            //$this->getArtistText($territory);
             $this->setFeaturedArtists($territory);
         }
        $this->Common->setLibraryTopTenCache();
@@ -579,12 +576,5 @@ class CacheController extends AppController {
 
     $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
     return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
-  }     
-        
-        
-        
-        
-        
-        
-        
+  }           
 }

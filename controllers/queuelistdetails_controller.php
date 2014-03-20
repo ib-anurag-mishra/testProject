@@ -17,8 +17,7 @@ class QueueListDetailsController extends AppController
     
     function beforeFilter(){
            
-            parent::beforeFilter();
-            // $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');     
+            parent::beforeFilter();    
             if($this->Session->read('patron')!='')  //  After Login
             {
                     $this->Auth->allow('*');
@@ -61,15 +60,12 @@ class QueueListDetailsController extends AppController
                     $this->QueueList->set($this->data['QueueList']);
                     if ($this->QueueList->save())
                     {
-                        //$this->Session->setFlash('Queue has been renamed successfully', 'modal', array('class' => 'queue success'));
                         $this->layout = 'ajax';
                                 echo 'Playlist has been renamed successfully';
                                 $this->_stop();
                     }
                     else
                     {
-//                        $this->Session->setFlash('Error occured while renaming queue', 'modal', array('class' => 'queue problem'));
-//                        $this->redirect($this->referer());
                         $this->layout = 'ajax';
                                 echo 'Error occured while renaming playlist';
                                 $this->_stop();
@@ -201,7 +197,6 @@ class QueueListDetailsController extends AppController
 
     function queue_details()
     {
-        //Configure::write('debug', 0);
         $this->layout = 'home';
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -252,15 +247,6 @@ class QueueListDetailsController extends AppController
                 $queue_list_array[$k]['streamUrl'] = $streamUrl;
             }
             
-            //for checking the song download status we are checking in view with Download helper
-//            //add the condition for already download songs
-//            $this->Download->recursive = -1;
-//            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $v['Songs']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-//            if(count($downloadsUsed) > 0){
-//                    $queue_list_array[$k]['Songs']['status'] = 'avail';
-//            } else{
-//                    $queue_list_array[$k]['Songs']['status'] = 'not';
-//            }
         }    
         $total_duration     =    $total_seconds/60;
         $total_minutes      =    floor($total_duration);
@@ -295,7 +281,6 @@ class QueueListDetailsController extends AppController
 
     function getPlaylistData()
     {
-        //Configure::write('debug', 0);
         $prodId = $_POST['prodId'];
         $provider = $_POST['providerType'];
         $eventType = $_POST['eventFired'];
@@ -312,7 +297,6 @@ class QueueListDetailsController extends AppController
         {
             if ($validationResponse[0] == 0)
             {
-                //$error_message = array('error' => $validationResponse);
                 echo json_encode($validationResponse);
                 exit;
             }
@@ -333,7 +317,6 @@ class QueueListDetailsController extends AppController
                         }
                     }
                 }
-                //$success_message = array('success' => $validationResponse);
                 echo json_encode($validationResponse);
                 exit;
             }
@@ -411,5 +394,4 @@ class QueueListDetailsController extends AppController
     }
 
 }
-
 ?>

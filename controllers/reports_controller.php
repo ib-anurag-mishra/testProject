@@ -33,17 +33,14 @@ Class ReportsController extends AppController {
      Desc : actions for library reports page
     */
     function admin_index() {
-//        Configure::write('debug',2);
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
-        //	print_r($this->data);exit;
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
         } else {
             if ($this->data['Report']['Territory'] == '') {
-                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                 $this->set('libraries', $this->admin_getLibraryIds());
             } else {
                 $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'conditions' => array('Library.library_territory= "' . $this->data['Report']['Territory'] . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
@@ -51,7 +48,6 @@ Class ReportsController extends AppController {
             $this->set('libraryID', "");
         }
         if(isset($this->data)) {
-			//Configure::write('debug',0); // Otherwise we cannot use this method while developing
 			$all_Ids = '';
             $this->Report->set($this->data);
 			if(isset($_REQUEST['library_id'])){
@@ -242,7 +238,6 @@ Class ReportsController extends AppController {
                 }
                 
                 $date = date('Y-m-d',time());
-                //$date = '2013-06-28';
                 if($compareDate == $date){
                   $currentPatronDownload = $this->Download->getCurrentPatronDownloads($library_id,$date,$territory,$all_Ids);
                   if($library_id != "all") {
@@ -1456,14 +1451,11 @@ Class ReportsController extends AppController {
     }
 
     function admin_getLibraryIds() {
-//        Configure::write('debug', 0);
-         //$libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_admin_id' => $this->Session->read("Auth.User.id"), 
-//                    'Library.library_territory' => $_REQUEST['Territory']
                     ), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
@@ -1474,16 +1466,12 @@ Class ReportsController extends AppController {
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
-//                    'Library.library_territory' => $_REQUEST['Territory']
                     ), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1));
         } else {
             $var = $this->Library->find('list', array(
-//                'conditions' => array(
-//                    'Library.library_territory' => $_REQUEST['Territory']
-//                    ), 
                 'fields' => array('Library.id', 'Library.library_name'),
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1));
@@ -1491,23 +1479,9 @@ Class ReportsController extends AppController {
         }
         
         return $var;
-//        foreach ($var as $k => $v) {
-//            
-//            $selected= '';
-//            if(isset($libValue) && $libValue == $k){
-//                 $selected= 'selected';
-//            }
-//            
-//            $data = $data . "<option value=" . $k . " ".$selected.">" . $v . "</option>";
-//        }
-//        print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
-//        exit;
     }
     
     function admin_getLibraryIdsStream() {
-          
-        //$territory = $_REQUEST['Territory'];        
-       // $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
         $data = '';
         $var = array();
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
@@ -1536,7 +1510,6 @@ Class ReportsController extends AppController {
          
             $var = $this->Library->find('list', array(
                 'conditions' => array(
-                   // 'Library.library_territory' => $territory, 
                     'Library.library_type =2'), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
@@ -1546,18 +1519,6 @@ Class ReportsController extends AppController {
         }
         
          return $var;
-         
-//        foreach ($var as $k => $v) {
-//            
-//            $selected= '';
-//            if(isset($libValue) && $libValue == $k){
-//                 $selected= 'selected';
-//            }
-//            
-//            $data = $data . "<option value=" . $k . " ".$selected.">" . $v . "</option>";
-//        }
-//        print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
-//        exit;
     }
 
     function admin_unlimited() {
@@ -1605,7 +1566,6 @@ Class ReportsController extends AppController {
 		}
 	}
 	function admin_unlimitedcsv(){
-//        Configure::write('debug', 0);
         $this->layout = false;
 		$all_Ids = '';
 		$sql = "SELECT id from libraries where library_unlimited = '1'";
@@ -1758,22 +1718,13 @@ Class ReportsController extends AppController {
      */
 
     function admin_streamingreport() {       
-//        /Configure::write('debug',2);
 
         ini_set('memory_limit', '512M');
         set_time_limit(0);
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
-        //checking for Consortium as any library is there or not which is allowed for streaming
-//                $is_having_streaming_libarry  = $this->admin_getLibraryIdsStream();
-//                if(!empty($is_having_streaming_libarry))
-//                {
-//                    $this->set('isHavingStreaming' , 1);   
-//                }else{
-//                      $this->set('isHavingStreaming' , 0);   
-//                }
-                
+
         $libraryAdminID = array();
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '')
         {
@@ -1798,12 +1749,10 @@ Class ReportsController extends AppController {
                 'fields' => array('Library.id', 'Library.library_name', 'Library.library_territory'),
                 'order' => 'Library.library_name ASC',
                 'recursive' => -1));
-            //$this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
 
             if ($this->data['Report']['Territory'] == '')
             {
-                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
             }
             else
@@ -1822,12 +1771,10 @@ Class ReportsController extends AppController {
                 'fields' => array('Library.id', 'Library.library_name', 'Library.library_territory'),
                 'order' => 'Library.library_name ASC',
                 'recursive' => -1));
-            //$this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
             
             if ($this->data['Report']['Territory'] == '')
             {
-                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
             }
             else
@@ -1872,23 +1819,10 @@ Class ReportsController extends AppController {
             } else {
                 $this->Report->setValidation('reports_manual');
             }
-            /*if ($territory != '') {
-              if ($library_id == 'all') {
-              $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
-              $result = mysql_query($sql);
-              while ($row = mysql_fetch_assoc($result)) {
-              $all_Ids = $all_Ids . $row["id"] . ",";
-              }
-              $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
-              $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-              } else {
-              $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads'), 'conditions' => array('Library.id = ' . $library_id, 'Library.library_territory= "' . $territory . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-              }
-            }*/
+            
             if ($this->Report->validates()) {
                 if ($this->data['Report']['reports_daterange'] == 'day') {
-                    /*$date_arr = explode("/", $this->data['Report']['date']);
-                    $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];*/
+                   
                     $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory,'day');
                     if ($library_id != "all") {
                         $streamingHours = $streamingInfo[0][0]['total_streamed'];
@@ -1902,10 +1836,8 @@ Class ReportsController extends AppController {
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
-//                    echo "<pre>";print_r($patronStreaminInfo);exit;
                     //commenting since don't need to display this information
                     $arr_day_streaming_report = array();
-                    //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'day');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'day');
 
@@ -1939,10 +1871,8 @@ Class ReportsController extends AppController {
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
-//                    echo "<pre>";print_r($patronStreaminInfo);exit;
                     //commenting since don't need to display this information
                     $arr_day_streaming_report = array();
-                    //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'week');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'week');
 
@@ -1967,10 +1897,8 @@ Class ReportsController extends AppController {
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
-//                    echo "<pre>";print_r($patronStreaminInfo);exit;
                     //commenting since don't need to display this information
                     $arr_day_streaming_report = array();
-                    //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'month');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'month');
 
@@ -1980,7 +1908,6 @@ Class ReportsController extends AppController {
                 elseif ($this->data['Report']['reports_daterange'] == 'manual') {
                     $date_arr = explode("/", $this->data['Report']['date_to']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
-//$this->data['Report']['date_from'], $this->data['Report']['date_to']
                     $datesInfo=array($this->data['Report']['date_from'],$this->data['Report']['date_to']);
                     $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id,$datesInfo, $territory,'manual');
                     if ($library_id != "all") {
@@ -1995,10 +1922,9 @@ Class ReportsController extends AppController {
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
-//                    echo "<pre>";print_r($patronStreaminInfo);exit;
+
                     //commenting since don't need to display this information
                     $arr_day_streaming_report = array();
-                    // $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $datesInfo, $territory,'manual');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $datesInfo, $territory, 'manual');
 
@@ -2006,7 +1932,7 @@ Class ReportsController extends AppController {
                 }
 
                 $date = date('Y-m-d', time());
-                //$date = '2013-06-28';
+
                 if ($compareDate == $date)
                 {
                     $currentPatronDownload = $this->Download->getCurrentPatronDownloads($library_id, $date, $territory, $all_Ids);
@@ -2024,18 +1950,6 @@ Class ReportsController extends AppController {
                 }
 
                 $this->set('streamingHours', $streamingHours);
-//                $this->set('arr_all_library_downloads', $arr_all_library_downloads);
-//                $this->set('arr_all_patron_downloads', $arr_all_patron_downloads);
-
-                /* if ($this->data['Report']['reports_daterange'] == 'day') {
-                  if (!empty($currentPatronDownload)) {
-                  foreach ($currentPatronDownload as $patronRecord) {
-                  $i = count($patronDownloads);
-                  $patronDownloads[$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['library_id'];
-                  $patronDownloads[$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
-                  $patronDownloads[$i]['Downloadpatron']['total'] = $patronRecord[0]['total'];
-                  }
-                  } */
                 $this->set('patronStreamedInfo', $patronStreaminInfo);
                 $this->set('dayStreamingInfo', $arr_day_streaming_report);
                 
@@ -2043,110 +1957,6 @@ Class ReportsController extends AppController {
                 
                 $this->set('patronStreamedDetailedInfo', $patronStreamedInformation);
                 
-                /* } else {
-                  if (!empty($currentPatronDownload)) {
-                  foreach ($currentPatronDownload as $patronRecord) {
-                  if (!empty($patronDownloads[0])) {
-                  $i = count($patronDownloads[0]);
-                  $flag = false;
-                  foreach ($patronDownloads[0] as $pkey => $patronDownload) {
-                  if ($patronRecord['Download']['patron_id'] == $patronDownload['Downloadpatron']['patron_id']) {
-                  $patronDownloads[0][$pkey][0]['total'] += $patronRecord[0]['total'];
-                  $flag = true;
-                  break;
-                  }
-                  }
-                  if ($flag == false) {
-                  $patronDownloads[0][$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['library_id'];
-                  $patronDownloads[0][$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
-                  $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
-                  }
-                  } else {
-                  $i = count($patronDownloads[0]);
-                  $patronDownloads[0][$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['patron_id'];
-                  $patronDownloads[0][$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
-                  $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
-                  }
-                  }
-                  }
-                  $this->set('patronStramedInfo', $patronDownloads[0]);
-                  }
-                  if ($library_id != "all") {
-                  if ($this->data['Report']['reports_daterange'] == 'day') {
-                  if (!empty($currentPatronBothDownload)) {
-                  foreach ($currentPatronBothDownload as $patronRecord) {
-                  $i = count($patronBothDownloads);
-                  $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
-                  }
-                  }
-                  $this->set('patronBothDownloads', $patronBothDownloads);
-                  } else {
-                  if (!empty($currentPatronBothDownload)) {
-                  foreach ($currentPatronBothDownload as $patronRecord) {
-                  if (!empty($patronBothDownloads)) {
-                  $i = count($patronBothDownloads);
-                  $flag = false;
-                  foreach ($patronBothDownloads as $pkey => $patronDownload) {
-                  if ($patronRecord['table1']['patron_id'] == $patronDownload['table1']['patron_id']) {
-                  $flag = true;
-                  break;
-                  }
-                  }
-                  if ($flag == false) {
-                  $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
-                  }
-                  } else {
-                  $i = count($patronBothDownloads);
-                  $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
-                  }
-                  }
-                  }
-                  $this->set('patronBothDownloads', $patronBothDownloads);
-                  }
-                  }
-
-                  if ($this->data['Report']['reports_daterange'] == 'day') {
-                  if (!empty($currentGenreDownload)) {
-                  foreach ($currentGenreDownload as $genreRecord) {
-                  $i = count($genreDownloads);
-                  $genreDownloads[$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
-                  $genreDownloads[$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
-                  $genreDownloads[$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
-                  $genreDownloads[$i]['Downloadgenre']['total'] = $genreRecord[0]['total'];
-                  }
-                  }
-                  $this->set('genreDownloads', $genreDownloads);
-                  } else {
-                  if (!empty($currentGenreDownload)) {
-                  foreach ($currentGenreDownload as $genreRecord) {
-                  if (!empty($genreDownloads[0])) {
-                  $i = count($genreDownloads[0]);
-                  $flag = false;
-                  foreach ($genreDownloads[0] as $gkey => $genreDownload) {
-                  if ($genreRecord['table1']['Genre'] == $genreDownload['Downloadgenre']['genre_name']) {
-                  $genreDownloads[0][$gkey][0]['total'] += $genreRecord[0]['total'];
-                  $flag = true;
-                  break;
-                  }
-                  }
-                  if ($flag == false) {
-                  $genreDownloads[0][$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
-                  $genreDownloads[0][$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
-                  $genreDownloads[0][$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
-                  $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
-                  }
-                  } else {
-                  $i = count($genreDownloads[0]);
-                  $genreDownloads[0][$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
-                  $genreDownloads[0][$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
-                  $genreDownloads[0][$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
-                  $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
-                  }
-                  }
-                  }
-                  $this->set('genreDownloads', $genreDownloads[0]);
-                  }
-                 */
                 $arr = array();
                 $this->set('errors', $arr);
             }
@@ -2190,5 +2000,4 @@ Class ReportsController extends AppController {
     }
     
 }
-
 ?>
