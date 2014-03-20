@@ -160,7 +160,7 @@
                         ?>	
 
                         <?php
-                        if ($this->Session->read('library_type') == 2)
+                       /* if ($this->Session->read('library_type') == 2)
                         {
                             $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
 
@@ -171,7 +171,7 @@
                                 $albumSong['streamUrl'] = $streamUrl;
                                 $albumSong['totalseconds'] = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']);
                             }
-                        }
+                        }*/
                         ?>
 
                         <div class="tracklist">

@@ -1065,7 +1065,7 @@ Class ArtistsController extends AppController {
                         $filePath = $this->Token->artworkToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                         if (!empty($filePath)) {
                             $songPath = explode(':', $filePath);
-                            $streamUrl = trim($songPath[1]);
+                            $streamUrl = trim($songPath[0]);
                             $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
                             $albumSongs[$k][$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
                         }
