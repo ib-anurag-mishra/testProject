@@ -247,8 +247,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     <div class="artist-name">
                                             <a href="/artists/album/<?= base64_encode( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) ); ?>">
                                                 <?php
-                                                if ( strlen( $nationalTopSong['Song']['ArtistText'] ) > 30 ) {
-                                                    echo $this->getValidText( $this->getTextEncode( substr( $nationalTopSong['Song']['ArtistText'], 0, 30 ) ) ) . "...";
+                                                if ( strlen( $nationalTopSong['Song']['ArtistText'] ) > 36 ) {
+                                                    echo $this->getValidText( $this->getTextEncode( substr( $nationalTopSong['Song']['ArtistText'], 0, 36 ) ) ) . "...";
                                                 }
                                                 else {
                                                 echo $this->getValidText( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) );
