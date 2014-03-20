@@ -48,19 +48,6 @@
 </div>
 
 <div id="wishlistText"><?php echo $page->getPageContent('wishlist'); ?></div>
-<!--<div id="genreArtist">
-	<P><?php __("Artist");?></p>
-</div>
-<div id="genreAlbum">
-	<P><?php __("Album");?></p>
-</div>
-<div id="genreTrack" style="width:250px;">
-	<P><?php __("Track");?></p>
-</div>
-<div id="genreDownload">
-	<?php __("Download");?>
-</div>
-<br class="clr">-->
 <div id="genreResults">
 	<table cellspacing="2" cellpadding="0" id="wishlist-table">
 	<tr>
@@ -90,7 +77,6 @@
 				$class = ' class="altrow"';
 			}
 	?>
-			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
 			<tr <?php echo $class; ?>>
 				<td width="170" valign="top">
 

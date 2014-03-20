@@ -1,71 +1,81 @@
 <?php
- $this->pageTitle = 'Content'; 
- echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));       	 	
- if(empty($getData))
- {
-	$getData['Featuredartist']['artist_name'] = ""; 
+$this->pageTitle = 'Content';
+echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));
+if(empty($getData))
+{
+	$getData['Featuredartist']['artist_name'] = "";
 	$getData['Featuredartist']['id'] = "";
 	$getData['Featuredartist']['territory'] = "";
 	$getData['Featuredartist']['language'] = "";
 	$getData['Featuredartist']['album'] = "";
- }
- if(empty($getArtistData)){
+}
+if(empty($getArtistData)){
 	$getArtistData = array();
- }
- if(empty($album)){
+}
+if(empty($album)){
 	$album = array();
- }
+}
 ?>
 <fieldset>
- <legend><?php echo $formHeader;?></legend>
- <div class="formFieldsContainer">
-  <?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['Featuredartist']['id'])); ?>
-  <div class="form_steps">
-   <table cellspacing="10" cellpadding="0" border="0" width="100%">
-		<tr>
-			<td align="right" width="390"><?php echo $form->label('Choose Territory');?></td>
-			<td align="left">
-				<?php
+	<legend>
+		<?php echo $formHeader;?>
+	</legend>
+	<div class="formFieldsContainer">
+		<?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['Featuredartist']['id'])); ?>
+		<div class="form_steps">
+			<table cellspacing="10" cellpadding="0" border="0" width="100%">
+				<tr>
+					<td align="right" width="390"><?php echo $form->label('Choose Territory');?>
+					</td>
+					<td align="left"><?php
 					echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Featuredartist']['territory'])
 					);
-				?>
-			</td>
-		</tr>
-		<tr>
-		  <td align="right" width="390"><?php echo $form->label('Artist Name');?></td>
-      <td align="left">
-        <div id="getArtist">
-          <?php
-            echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['Featuredartist']['artist_name'], 'autocomplete' => 'off'));
-          ?>
-          <div id="AutoArtistResult-DIV"></div>
-        </div>
-      </td>
-	  </tr>
-		
-		<tr>
-			<td align="right" width="390"><?php echo $form->label('Choose Album');?></td>
-			<td align="left">
-				<div id="getAlbum">
-					<?php
-						echo $form->select('album', $album, $getData['Featuredartist']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
 					?>
-				</div>
-			</td>
-		</tr>		
-        <tr>
-                 <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" /></p></td>
-          </tr>
-   </table>
-   </div>
-  </div>
-</fieldset> 
+					</td>
+				</tr>
+				<tr>
+					<td align="right" width="390"><?php echo $form->label('Artist Name');?>
+					</td>
+					<td align="left">
+						<div id="getArtist">
+							<?php
+							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['Featuredartist']['artist_name'], 'autocomplete' => 'off'));
+							?>
+							<div id="AutoArtistResult-DIV"></div>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right" width="390"><?php echo $form->label('Choose Album');?>
+					</td>
+					<td align="left">
+						<div id="getAlbum">
+							<?php
+							echo $form->select('album', $album, $getData['Featuredartist']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							?>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" colspan="2"><p class="submit">
+							<input type="submit" value="Save" />
+						</p></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</fieldset>
 <?php
- echo $form->end();
- echo $session->flash();
+echo $form->end();
+echo $session->flash();
 ?>
-<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=flick/jquery-ui-1.8.custom.css" />
-<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
+<link
+	type="text/css" rel="stylesheet"
+	href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=flick/jquery-ui-1.8.custom.css" />
+<script
+	type="text/javascript"
+	src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
 
 <script type="text/javascript">
     
@@ -149,19 +159,20 @@
 
 </script>
 <style type="text/css">
-  #AutoArtistResult-DIV > ul > li{
-    cursor: pointer;
-    padding-left: 5px;
-  }  
-  #AutoArtistResult-DIV{
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #000000;
-    display: block;
-    font: 80% Verdana,Arial,Helvetica,sans-serif;
-    margin-left: 20px;
-    position: absolute;
-    width: 210px;
-    color: #000000;
-    display: none;
-  }
+#AutoArtistResult-DIV>ul>li {
+	cursor: pointer;
+	padding-left: 5px;
+}
+
+#AutoArtistResult-DIV {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #000000;
+	display: block;
+	font: 80% Verdana, Arial, Helvetica, sans-serif;
+	margin-left: 20px;
+	position: absolute;
+	width: 210px;
+	color: #000000;
+	display: none;
+}
 </style>

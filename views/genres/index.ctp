@@ -30,11 +30,9 @@ $ieVersion = ieversion();
     <div height="400px" style="color:blue;">
         <?php
         $totalRows = count($genresAll);
-//		$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*2)), ($i+($totalRows*3)));
         foreach ($genresAll as $genres):
             echo $html->link(ucwords($genres['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genres['Genre']['Genre']))) . "</br>";
         endforeach;
-//	}
         ?>
     </div>
 </div>

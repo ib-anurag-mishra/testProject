@@ -1,64 +1,74 @@
 <?php
 /*
  File Name : admin_createartist.php
- File Description : View page for create artist
- Author : m68interactive
- */
-       $this->pageTitle = 'Content';
-       echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));
-       if(empty($getData))
-       {
-	      $getData['Artist']['artist_name'] = ""; 
-	      $getData['Artist']['id'] = "";
-		  $getData['Artist']['territory'] = "";  		  
-       }
-		if(empty($getArtistData)){
-			$getArtistData = array();
-		}	   
+File Description : View page for create artist
+Author : m68interactive
+*/
+$this->pageTitle = 'Content';
+echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));
+if(empty($getData))
+{
+	$getData['Artist']['artist_name'] = "";
+	$getData['Artist']['id'] = "";
+	$getData['Artist']['territory'] = "";
+}
+if(empty($getArtistData)){
+	$getArtistData = array();
+}
 ?>
 <fieldset>
-       <legend><?php echo $formHeader;?></legend>
-       <div class="formFieldsContainer">
-	      <?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['Artist']['id'])); ?>
-	      <div class="form_steps">
-		     <table cellspacing="10" cellpadding="0" border="0" width="100%">
+	<legend>
+		<?php echo $formHeader;?>
+	</legend>
+	<div class="formFieldsContainer">
+		<?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['Artist']['id'])); ?>
+		<div class="form_steps">
+			<table cellspacing="10" cellpadding="0" border="0" width="100%">
 				<tr>
-					<td align="right" width="390"><?php echo $form->label('Choose Territory');?></td>
-					<td align="left">
-						<?php
-							echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory'])
-							);
-						?>
+					<td align="right" width="390"><?php echo $form->label('Choose Territory');?>
 					</td>
-				</tr>			 
-			    <tr>
-				   <td align="right" width="390"><?php echo $form->label('Artist Name');?></td>
-				   <td align="left"><div id="getArtist">
-           <?php 
-           
-            /*echo $form->select('artist_name', $getArtistData, $getData['Artist']['artist_name'], array('label' => false, 'div' => false, 'class' => 'select_fields'));*/
-            echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['Artist']['artist_name'], 'autocomplete' => 'off'));
-           
-           ?>
-           <div id="AutoArtistResult-DIV"></div>
-           </div></td>
-			    </tr>
-			    <tr>
-				   <td align="right" width="390"><?php echo $form->label('Artist Photo');?></td>
-				   <td align="left"><?php echo $form->file('artist_image', array('label' => false, 'div' => false, 'class' => 'form_fields')); ?></td>
-			    </tr>
-			    <tr>
-				   <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" /></p></td>
-			    </tr>
-			    
-		     </table>
-	      </div>
-       </div>
+					<td align="left"><?php
+					echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory'])
+					);
+					?>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" width="390"><?php echo $form->label('Artist Name');?>
+					</td>
+					<td align="left"><div id="getArtist">
+							<?php 
+
+							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['Artist']['artist_name'], 'autocomplete' => 'off'));
+
+							?>
+							<div id="AutoArtistResult-DIV"></div>
+						</div></td>
+				</tr>
+				<tr>
+					<td align="right" width="390"><?php echo $form->label('Artist Photo');?>
+					</td>
+					<td align="left"><?php echo $form->file('artist_image', array('label' => false, 'div' => false, 'class' => 'form_fields')); ?>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" colspan="2"><p class="submit">
+							<input type="submit" value="Save" />
+						</p></td>
+				</tr>
+
+			</table>
+		</div>
+	</div>
 </fieldset>
 <?php echo $form->end(); ?>
 <?php echo $session->flash();?>
-<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=flick/jquery-ui-1.8.custom.css" />
-<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
+<link
+	type="text/css" rel="stylesheet"
+	href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=flick/jquery-ui-1.8.custom.css" />
+<script
+	type="text/javascript"
+	src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript">
     
     $(document).ready(function() {
@@ -123,19 +133,20 @@
 </script>
 
 <style type="text/css">
-  #AutoArtistResult-DIV > ul > li{
-    cursor: pointer;
-    padding-left: 5px;
-  }  
-  #AutoArtistResult-DIV{
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #000000;
-    display: block;
-    font: 80% Verdana,Arial,Helvetica,sans-serif;
-    margin-left: 20px;
-    position: absolute;
-    width: 210px;
-    color: #000000;
-    display: none;
-  }
+#AutoArtistResult-DIV>ul>li {
+	cursor: pointer;
+	padding-left: 5px;
+}
+
+#AutoArtistResult-DIV {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #000000;
+	display: block;
+	font: 80% Verdana, Arial, Helvetica, sans-serif;
+	margin-left: 20px;
+	position: absolute;
+	width: 210px;
+	color: #000000;
+	display: none;
+}
 </style>

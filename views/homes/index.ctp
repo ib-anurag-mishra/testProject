@@ -1,7 +1,6 @@
 <?php
 echo $session->flash();
-ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
-//$this->log(" home index.ctp start", "siteSpeed");   
+ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed  
 ?>
 <section class="top-albums">
     <header>
@@ -48,8 +47,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
                                     {
                                         echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
-                                        ?>                                          
-                                        <?php /*<button class="playlist-menu-icon toggleable"></button> */ ?>    
+                                        ?>                                            
                                         <a class="playlist-menu-icon toggleable no-ajaxy" href="#" title="Add to a Playlist or Create a New Playlist"></a>                                   
                                         <ul>
                                             <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
@@ -57,9 +55,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         </ul>   
                                         <?php
                                     }
-                                    //echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
+                                  
                                     ?>
-                                    <?php /*<button class="wishlist-icon toggleable"></button> */ ?>
+                                  
                                     <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
                                     <?php
                                 }
@@ -134,23 +132,12 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                 <input type="hidden" name="ProviderType" value="<?= $nationalTopSong["Song"]["provider_type"]; ?>" />
                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?= $nationalTopSong["Song"]["ProdID"]; ?>">
                                                 	<![if !IE]>
-                                                        <?php /*
-                                                        <a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?= $nationalTopSong["Song"]['ProdID']; ?>", "0", "<?= $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>", "<?= $nationalTopSong["Song"]["provider_type"]; ?>",1);'>
-                                                                     <button class="download-icon"></button>
-                                                        </a>
-                                                        */ ?>
+                                                        
                                                         <a class="download-icon" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not." onclick='return wishlistDownloadOthersHome("<?= $nationalTopSong["Song"]['ProdID']; ?>", "0", "<?= $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>", "<?= $nationalTopSong["Song"]["provider_type"]; ?>",1);'>
                                                                      
                                                         </a>              
                                                          <![endif]>
                                                         <!--[if IE]>
-                                                        <?php /*
-                                                               <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
-                                                                    class="no-ajaxy top-10-download-now-button" 
-                                                                    title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
-                                                                    onclick='wishlistDownloadIEHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>", "<?php echo $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopSong['Full_Files']['SaveAsName']; ?>",1);' 
-                                                                    href="javascript:void(0);"><button class="download-icon"></button></a>
-                                                        */ ?>
                                                         <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
                                                                     class="download-icon" 
                                                                     title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
@@ -164,12 +151,12 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 				</span>
 			<?php
 			} else { ?>
-				<?php /*<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-icon song-downloaded"></button></a>*/ ?>
+				
                 <a class="download-icon song-downloaded" href='/homes/my_history' title="You have already downloaded this song. Get it from your recent downloads"></a>
 			<?php
 			}
 		} else { ?>
-			<?php /*<button class="download-icon download-limit-met"></button>*/ ?>
+
             <a class="download-icon download-limit-met" title="Your download limit has been met."></a>
 		<?php
 		}
@@ -186,10 +173,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 	<?php
 	}
 ?>
-			<?php /*<button class="wishlist-icon"></button> */ ?>
+			
             <a class="wishlist-icon no-ajaxy" title="Add to Wishlist" hrefe="#"></a>
                         <?php    if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?>
-                            <?php /*<button class="playlist-menu-icon"></button>*/ ?>
+            
                             <a class="playlist-menu-icon no-ajaxy" href="#" title="Add to a Playlist or Create a New Playlist"></a> 
                             <ul>
                                 <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
@@ -289,12 +276,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
     <h2>Featured Artists &amp; Composers</h2>
     <div class="featured-artists-grid clearfix" id="featured-artists-grid-div">
         <?php
-        // $this->log("index.ctp featuredArtists start", "siteSpeed");  
         $count = 1;
         foreach ($featuredArtists as $k => $v)
         {
-            //$albumArtwork = shell_exec(Configure::read('App.tokengen') . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
-            //$image =  Configure::read('App.Music_Path').$albumArtwork;
             if (strlen($v['Album']['AlbumTitle']) > 22)
             {
                 $title = substr($v['Album']['AlbumTitle'], 0, 22) . "..";
@@ -357,4 +341,3 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
              style="padding-left:115px;padding-bottom:25px;border:0;" alt=""/>
     </span>
 </section>
-

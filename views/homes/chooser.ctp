@@ -15,7 +15,7 @@
     </header>
     <div class="login-library-container clearfix">
         <div class="form-wrapper">
-            <?php /*<legend align="center" ><?php __('<p>Please enter either your Library Name, Zip Code, City, State or Country.</p>'); ?></legend> */ ?>
+
                 <p>Please enter either your Library Name, Zip Code, City, State or Country.</p>
                 <?php
                     echo $this->Form->create('Library_details1', array('url' => array('controller' => 'homes', 'action' =>'chooser')));
@@ -35,11 +35,6 @@
 		<div class="input text">
                     <label for="LibraryZipcode">State </label>
                     <input type="text" id="LibraryZipcode"  name="data[Library_details1][state]" >
-                    <!--<select name="state" id="state">
-                        <option>Tennessee</option>
-			<option>California</option>
-			<option>New York</option>
-                    </select>-->
 		</div>
 		<?php
                     //Added code for contries
@@ -56,7 +51,7 @@
 		if(!empty($libraries)){
         ?>
 	<div class="library-list-container">
-        <?php /*<legend align="center"><?php __('<b>Please select your Library</b>'); ?></legend> */ ?>
+
         <p>Please select your Library</p>
         <?php /*<br>*/ ?>
             <div class="sidebox">
