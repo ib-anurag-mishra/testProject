@@ -28,7 +28,7 @@
 			</td>
 		</tr>
 		<tr>
-				<td style="text-align:right;"><label>API Key</lable></td>
+				<td style="text-align:right;"><label>API Key</label></td>
 			<td>
 				<?php
 					echo $this->Form->input('consortium_key',array('type'=>'textarea','label' => false , 'div' => false,'style' => 'width:40%', 'value' => $consortium['Consortium']['consortium_key']));

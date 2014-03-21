@@ -5,8 +5,6 @@
 
         <?php
         echo $this->Html->charset();
-        //echo $this->Html->meta(array('http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"));
-
         echo $this->Html->meta('icon');
 
         if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
@@ -37,15 +35,12 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
         
-        <!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>-->
         <?php
         echo $javascript->link(
                 array(
-                    //'freegal40-libraries',
                     'freegal',
                     'ajaxify-html5.js', 
                     'site.js',
-                    //'html5shiv',
                     'freegal40-site',
                     'jquery-scrollto',
                     'search-results'
@@ -59,12 +54,8 @@
             <?php
         }
         ?>        
-
-<!--            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
-            <!--<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script> -->
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
 

@@ -8,7 +8,6 @@
         $displaylibraryName = "All Libraries";
     }
     else {
-        //$savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];        
         $savelibraryName =  $library->getLibraryName($library_id);
         $displaylibraryName = "LibraryID ".$library_id;
     }
@@ -63,9 +62,6 @@
     $tcpdf->SetHeaderMargin("10");
     $tcpdf->SetFooterMargin("10");
 
-    //set image scale factor
-    //$tcpdf->setImageScale("1");
-
     // ---------------------------------------------------------
       
     // set font
@@ -78,76 +74,11 @@
     
     // add a page
     $tcpdf->AddPage();
-        
-    /*$tcpdf->SetTextColor(0);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Library Remaining Downloads', 0, 0, 'C', 0);
-    $tcpdf->Ln();
 
-    $tcpdf->SetFillColor(0, 153, 255);
-    $tcpdf->SetTextColor(255);
-    $tcpdf->SetDrawColor(224, 224, 224);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    
-    
-    // Header
-    $w = array(10, 50, 190);
-    $DownloadCount_header = array('', 'Library Name', 'Number of Remaining Downloads');
-    for($i = 0; $i < count($DownloadCount_header); $i++)
-        $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
-        $tcpdf->Ln();
-    // Color and font restoration
-    $tcpdf->SetFillColor(224, 235, 255);
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetFont('');*/
     // Data
     $fill = 0;
 	
     $key = 1;
-    /*foreach($libraries_download as $LibraryName => $DownloadCount) {
-		if($DownloadCount['Library']['library_unlimited'] == 1){
-			$text = "Unlimited";
-		} else {
-			$text = $DownloadCount['Library']['library_available_downloads'];
-		}
-        $libraries_downloads[] = array($key, $this->getAdminTextEncode($DownloadCount['Library']['library_name']), $text);
-		$key++;
-    }*/
-    /*foreach($libraries_downloads as $k=>$row) {
-        if($k%27 == 0 && $k != 0) {
-            $tcpdf->SetTextColor(0);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Libraries Remaining Downloads', 0, 0, 'C', 0);
-            $tcpdf->Ln();
-
-            // Colors, line width and bold font
-            $tcpdf->SetFillColor(0, 153, 255);
-            $tcpdf->SetTextColor(255);
-            $tcpdf->SetDrawColor(224, 224, 224);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            // Header
-            for($i = 0; $i < count($DownloadCount_header); $i++)
-                $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
-                $tcpdf->Ln();
-        }
-        // Color and font restoration
-        $tcpdf->SetFillColor(224, 235, 255);
-        $tcpdf->SetTextColor(0);
-        $tcpdf->SetFont('');
-
-        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'C', $fill, '', 3);
-        $tcpdf->Ln();
-        $fill=!$fill;
-    }
-
-    $tcpdf->Cell(array_sum($w), 0, '', 'T');
-    */
     // end - Library Remaining Downloads  
       
     //----------------------------------------------------------------------------------------------  
@@ -461,9 +392,6 @@
     if($this->data['Report']['library_id'] == "all") {
         foreach($dayStreamingInfo as $key => $stream) {
                     if($stream['StreamingHistory']['patron_id']!=''){
-                            /*$patron = $stream['users']['email'];
-                    }
-                    else{*/
                             $patron = $stream['StreamingHistory']['patron_id'];
                     }
             $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
@@ -472,12 +400,8 @@
     }else{
         foreach($dayStreamingInfo as $key => $stream) {
                     if($stream['StreamingHistory']['patron_id']!=''){
-                            /*$patron = $stream['users']['email'];
-                    }
-                    else{*/
                             $patron = $stream['StreamingHistory']['patron_id'];
                     }
-//            $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
             $data[] = array($key+1, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
         }
     }
@@ -485,9 +409,6 @@
     if($this->data['Report']['library_id'] == "all") {
         foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
                     if($patronStreamed['StreamingHistory']['patron_id']!=''){
-                            /*$patron_id = $patronStreamed['users']['email'];
-                    }
-                    else{*/
                             $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
                     }
             $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
@@ -495,9 +416,6 @@
     }else{
         foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
                     if($patronStreamed['StreamingHistory']['patron_id']!=''){
-                            /*$patron_id = $patronStreamed['users']['email'];
-                    }
-                    else{*/
                             $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
                     }
             $patron_data[] = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
@@ -555,15 +473,6 @@
         $tcpdf->SetTextColor(0);
         $tcpdf->SetFont('');
 
-        /*$tcpdf->Cell($w[0], 12, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[1], 12, $row[1], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[2], 12, $row[2], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[3], 12, (strlen($row[3])>40)?substr($row[3],0,40)."...":$row[3], 'LR', 0, 'L', $fill, '', 3);        
-        $tcpdf->Cell($w[4], 12, $row[4], 'LR', 0, 'L', $fill, '', 3, true, 'T', 'T');       
-        //$tcpdf->MultiCell($w[4], 12, $row[4], 'LR', 'L',  $fill, 1, '', '', true);        
-	$tcpdf->Cell($w[5], 12, $row[5], 'LR', 0, 'L', $fill, '', 3);*/
-        
-        
         $tcpdf->MultiCell($w[0], 12.5, number_format($row[0]), 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[1], 12.5, $row[1], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[2], 12.5, $row[2], 'LR', 'L',  $fill, 0);
@@ -690,8 +599,6 @@
         $tcpdf->Ln();
         $fill=!$fill;
     }
-
-//    $tcpdf->Cell(array_sum($w), 0, '', 'T');
 
     echo $tcpdf->Output('StreamingReport_'.str_replace(" ", "_", $savelibraryName).$savedateRange.'.pdf', 'D');
 ?>

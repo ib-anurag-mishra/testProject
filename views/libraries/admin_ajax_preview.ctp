@@ -273,7 +273,6 @@ ul.marquee li {
 }
 
 #artist_search a:hover {
-/*		text-decoration: underline;*/
         color:<?php echo $library_links_hover_color; ?>;
 }
 #artist_links a {
@@ -319,7 +318,6 @@ ul.marquee li {
 }
 
 #genre_artist_search a:hover {
-/*		text-decoration: underline;*/
         color:<?php echo $library_box_hover_color; ?>;
 }
 
@@ -389,7 +387,6 @@ ul.marquee li {
 	float:left;
 	text-align:center;
 	width:144px;
-/*	background:url(../img/tab-gray.png) top left no-repeat;*/
 	text-decoration:none;
 	color:<?php echo $library_navlinks_color; ?>;
 }
@@ -417,7 +414,6 @@ ul.marquee li {
 }
 
 #nav li:hover a, #nav li.hover a, #nav li.active a{ 
-/*	background:url(../img/tab-white.png) top left no-repeat; */
 	color:<?php echo $library_navlinks_hover_color; ?>;
 	text-decoration: underline;
 }
@@ -429,7 +425,6 @@ ul.marquee li {
 }
 
 #nav li.hover li a, #nav li:hover li a {
-	/*background:url(../img/nav_back80.png) top left repeat;*/
         background:<?php echo $library_nav_bgcolor; ?>;
         opacity: .9; filter: alpha(opacity=90); -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
 	color:<?php echo $library_navlinks_color; ?>;
@@ -446,8 +441,6 @@ ul.marquee li {
 }
 
 #nav li.hover li.hover a, #nav li:hover li:hover a {
-	/*background:url(../img/nav_back_grey.png) top left repeat;*/
-        /*text-decoration: underline;*/
         opacity: .5; filter: alpha(opacity=50); -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
         color:<?php echo $library_navlinks_hover_color; ?>;
 }
@@ -1321,11 +1314,7 @@ div.code-coverage-results span.result-good {
 		</li>
 		<li id="search">
 
-			<!--<form name="search_form" method="post" action="homes/search" class="search_form">-->
-			<form controller="Home" class="search_form" id="HomeSearchForm" method="get"  accept-charset="utf-8"><div class="input text"><input name="search" type="text" size="24" id="autoComplete" value="" /></div>				<!-- <div style="float:left;">
-			<input type="submit" class="searchButton" value=""></input>
-			</div> -->
-			<!-- </form>-->
+			<form controller="Home" class="search_form" id="HomeSearchForm" method="get"  accept-charset="utf-8"><div class="input text"><input name="search" type="text" size="24" id="autoComplete" value="" /></div>
 			<div class="submit"><input type="submit" value="GO" /></div></form>			<a>Advanced Search</a>		</li>	
 	</ul>
 </div>
@@ -1379,7 +1368,6 @@ div.code-coverage-results span.result-good {
 							 <img src="/img/play.png" alt="Play Sample" title="Play Sample" style="cursor:pointer;display:block;" id="play_audio0"  />                            
 							 <img src="/img/ajax-loader.gif" alt="Loading Sample" title="Loading Sample" style="cursor:pointer;display:none;" id="load_audio0" />
 							 <img src="/img/stop.png" alt="Stop Sample" title="Stop Sample" style="cursor:pointer;display:none;" id="stop_audio0" onClick="stopThis(this, &quot;0&quot;);" />                        </p>
-
                     </td>
             </tr>
 			<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">

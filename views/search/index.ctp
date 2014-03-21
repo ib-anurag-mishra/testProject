@@ -178,8 +178,6 @@ function Get_Sales_date($sales_date_array, $country) {
     <section class="<?php echo $search_category; ?>">
         <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
         <div class="search-results-heading">Results for your search <?php echo $keyword; ?></div>
-    <!--
-        <div class="search-results-text"><span><?php echo ((empty($totalAlbums)) ? '0' : $totalAlbums) ?></span> Albums,<span><?php echo ((empty($totalArtists)) ? '0' : $totalArtists) ?></span> Artists, <span><?php echo ((empty($totalComposers)) ? '0' : $totalComposers) ?></span> Composers, <span><?php echo ((empty($videos)) ? '0' : count($videos)) ?></span> Videos, <span><?php echo ((empty($totalGenres)) ? '0' : $totalGenres) ?></span> Genres, <span><?php echo ((empty($totalSongs)) ? '0' : $totalSongs) ?></span> Songs</div> -->
         <div class="refine-text">Not what you're looking for? Refine your search below.</div> 
         <div class="filter-container clearfix">
     <?php
@@ -284,16 +282,6 @@ function Get_Sales_date($sales_date_array, $country) {
                         </header>
 
                         <div class="header-container">
-                            <!-- Disabled this feature to deploy it in next phase
-                             <button class="top-songs-filter-icon"></button>
-                             <div class="top-songs-filter-menu">
-                                     <ul>
-                                             <li><a href="#">All Genres</a></li>
-                                             <li><a href="#">Rock</a></li>
-                                             <li><a href="#">Country</a></li>
-                                             <li><a href="#">Pop</a></li>
-                                     </ul>
-                             </div> -->
                             <div class="song-header"><a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=song&sortOrder=" . (($sort == 'song') ? $reverseSortOrder : 'asc'); ?>"><span class="song">Song</span></a></div>
                             <div class="song-border header-border"></div>
                             <div class="artist-header"> <a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=artist&sortOrder=" . (($sort == 'artist') ? $reverseSortOrder : 'asc'); ?>"><span class="artist">Artist</span></a></div>
@@ -304,7 +292,6 @@ function Get_Sales_date($sales_date_array, $country) {
                         <?php
                         if ($this->Session->read("patron")) {
                             ?>
-                                <?php /*<button class="multi-select-icon"></button> */?>
                                 <a class="multi-select-icon no-ajaxy" href="#" title="Select All, Clear All, Add to Wishlist, Add to Playlist"></a>
                                 <section class="options-menu">
                                     <ul>
@@ -377,12 +364,10 @@ function Get_Sales_date($sales_date_array, $country) {
                                 $style = '';
                                 $styleSong = '';
                             } else {
-                                // $style = 'style="left:10px"';
                                 $styleSong = "style='left:12px'";
                             }
                             ?>
 
-                                        <!--	<button class="play-btn"></button> -->
                                         <div class="artist artist-name">
                         <?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?>
                                         </div>
@@ -396,7 +381,6 @@ function Get_Sales_date($sales_date_array, $country) {
                         if ($psong->Advisory == 'T') {
                             echo '<font class="explicit"> (Explicit)</font>';
                         }
-                        //
                         ?>
                                             </a>   
                                         </div>
@@ -416,7 +400,6 @@ function Get_Sales_date($sales_date_array, $country) {
                                     <?php
                                     if ($this->Session->read("patron")) {
                                         ?>
-                                            <?php /*<button class="menu-btn"></button>*/ ?>
                                             <a class="menu-btn no-ajaxy" href="#" title="Add to Wishlist, Playlist, or Download"></a>
                                             <section class="options-menu">
                                                 <input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>"/>
@@ -428,9 +411,6 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     $productInfo = $song->getDownloadData($psong->ProdID, $psong->provider_type);
 
                                                     if ($libraryDownload == '1' && $patronDownload == '1') {
-                                                        /* $songUrl = shell_exec(Configure::read('App.tokengen') . $nationalTopSong['Full_Files']['CdnPath'] . "/" . $nationalTopSong['Full_Files']['SaveAsName']);
-                                                          $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-                                                          $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3)); */
                                                         if ($psong->status != 'avail') {
                                                             ?>
                                                                         <span class="top-100-download-now-button">
@@ -554,8 +534,6 @@ function Get_Sales_date($sales_date_array, $country) {
                     foreach ($albumData as $palbum) {
                         $albumDetails = $album->getImage($palbum->ReferenceID);
 
-                        //$albumDetails = $album->getImage($palbum->ReferenceID);
-
                         if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                             $image = Configure::read('App.Music_Path') . $albumArtwork;
@@ -566,7 +544,6 @@ function Get_Sales_date($sales_date_array, $country) {
                             //Image is a correct one
                         } else {
 
-                            //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                         }
                         $album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
                         $album_genre = str_replace('"', '', $palbum->Genre);
@@ -606,7 +583,6 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     <?php
                                                     if ($this->Session->read("patron")) {
                                                         if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) {
-                                                            //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                             echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 3);
                                                         }
                                                         ?>
@@ -682,7 +658,6 @@ function Get_Sales_date($sales_date_array, $country) {
                         $i = 0;
                         foreach ($genres as $genre) {
                             $genre_name = str_replace('"', '', $genre->Genre);
-                           // $genre_name_text = truncate_text($genre_name, 30, $this);
                             $genre_name_text = truncate_text($genre_name, 125, $this);
 							$genre_name_text =$genre_name;
                             $tilte = urlencode($genre->Genre);
@@ -751,15 +726,11 @@ function Get_Sales_date($sales_date_array, $country) {
                                                 if ($this->Session->read("patron")) {
                                                     ?>
 
-                                    <?php /*<button class="wishlist-btn" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></button>*/ ?>
                                     <a class="wishlist-btn" title="Add to Wishlist" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
                                                 <?php
                                                 $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
                                           if ($sales_date <= date('Y-m-d')) {
                                                     $productInfo = $mvideo->getDownloadData($psong->ProdID, $psong->provider_type);
-                                                    //                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
-                                                    //                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-                                                    //                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                             if ($libraryDownload == '1' && $patronDownload == '1') {
                                                 if ($psong->status != 'avail') {
                                                             ?>
@@ -767,7 +738,6 @@ function Get_Sales_date($sales_date_array, $country) {
                                                 <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/videos/download">
                                                     <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
                                                     <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
-                                                    <?php /*<button class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></button> */ ?>
                                                     <span class="beforeClick" id="download_video_<?php echo $psong->ProdID; ?>"> 
                                                         <![if !IE]>
                                                         <a class="download-btn" title="Download This Video" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
@@ -783,12 +753,10 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     <?php
                                                 } else {
                                                     ?>
-                                                    <?php /*<a href='/homes/my_history' title='<?php __("You have already downloaded this video. Get it from your recent downloads"); ?>'><button class="download-btn video-downloaded"></button></a> */ ?>
                                                     <a href="/homes/my_history" title="You have already download this video. Get it from your recent downloads" class="download-btn video-downloaded"></a>
                                                 <?php
                                                 }
                                             }else{ ?>
-                                                    <?php /*<button class="download-btn download-limit-met"></button>*/ ?>
                                                     <a title="Your download limit has been met." class="download-btn download-limit-met"></a>
                                        <?php }
                                         }
@@ -929,7 +897,6 @@ function Get_Sales_date($sales_date_array, $country) {
                                 <li>
                         <?php
                         $albumDetails = $album->getImage($palbum->ReferenceID);
-                        //print_r($albumDetails); die;
                         if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                             $image = Configure::read('App.Music_Path') . $albumArtwork;
@@ -939,7 +906,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         if ($page->isImage($image)) {
                             //Image is a correct one
                         } else {
-                            //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+
                         }
                         $album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
                         $title = urlencode($palbum->Title);
@@ -973,7 +940,6 @@ function Get_Sales_date($sales_date_array, $country) {
                             if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) {
                                 echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1);
                                 ?>                                          
-                                                <?php /*<button class="playlist-menu-icon toggleable"></button>*/ ?>
                                                 <a class="playlist-menu-icon toggleable no-ajaxy" title="Add to a Playlist or Create a New Playlist" href="#"></a>                                        
                                                 <ul>
                                                     <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
@@ -981,9 +947,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                                 </ul>   
                             <?php
                         }
-                        //echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
                         ?>
-                                            <?php /*<button class="wishlist-icon toggleable"></button>*/ ?>
                                             <a class="wishlist-icon toggleable no-ajaxy" title="Add to Wishlist" href="#"></a>
                         <?php
                     }
@@ -1038,9 +1002,7 @@ function Get_Sales_date($sales_date_array, $country) {
                 <?php
                 foreach ($artists as $artist) {
                     $tilte = urlencode($artist->ArtistText);
-                    //$artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
                     $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 125, $this);
-		    		// $artist_name_text = $this->getTextEncode($artist->ArtistText);
                     $link = $html->link(str_replace('"', '', $artist->ArtistText), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))), array('title' => $this->getTextEncode($artist->ArtistText)));
                     if (!empty($artist_name_text)) {
                         ?>
@@ -1083,9 +1045,7 @@ function Get_Sales_date($sales_date_array, $country) {
                             <?php
                             foreach ($composers as $composer) {
                                 $tilte = urlencode($composer->Composer);
-                                //$composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
                                 $composer_name = truncate_text($this->getTextEncode($composer->Composer), 125, $this);
-								// $composer_name = $this->getTextEncode($composer->Composer);
                                 if (!empty($composer_name)) {
                                     ?>
                                 <li>
@@ -1130,11 +1090,8 @@ function Get_Sales_date($sales_date_array, $country) {
                                 <?php
                                 foreach ($videos as $video) {
                                     $tilte = urlencode($video->VideoTitle);
-                                   // $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
                                     $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 125, $this);
-									// $video_name_text = $this->getTextEncode($video->VideoTitle);
                                     $name = $this->getTextEncode($video->VideoTitle);
-                                    // $count = $video->numFound;
                                     ?>
                             <li><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></li>
                                     <?php }
@@ -1173,9 +1130,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                     foreach ($genres as $genre) {
                                         $genre_name = str_replace('"', '', $genre->Genre);
                                         $tilte = urlencode($genre_name);
-                                        //$genre_name_text = truncate_text($this->getTextEncode($genre_name), 30, $this);
                                         $genre_name_text = truncate_text($this->getTextEncode($genre_name), 125, $this);
-										// $genre_name_text = $this->getTextEncode($genre_name);
                                         $name = $genre->Genre;
                                         $count = $genre->numFound;
                                         if (!empty($genre_name_text)) {
@@ -1215,7 +1170,6 @@ function Get_Sales_date($sales_date_array, $country) {
                 <?php
                 if ($this->Session->read("patron")) {
                     ?>
-                        <?php /*<button class="multi-select-icon"></button> */ ?>
 
                         <a class="multi-select-icon no-ajaxy" href="#" title="Select All, Clear All, Add to Wishlist, or Add to Playlist"></a>
                         <section class="options-menu">
@@ -1286,7 +1240,6 @@ function Get_Sales_date($sales_date_array, $country) {
                     $styleSong = '';
                 } else {
                     $style = 'style="left:18px"';
-                    // $styleSong = "style='left:570px'";
                 }
                 ?>
                                 <!--      <button class="play-btn"></button> -->
@@ -1307,7 +1260,6 @@ function Get_Sales_date($sales_date_array, $country) {
                             <?php
                             if ($this->Session->read("patron")) {
                                 ?>                                
-                                    <?php /*<button class="menu-btn"></button>*/ ?>
                                     <a href="#" class="menu-btn no-ajaxy" title="Add To a Playlist, Wishlist, or Download"></a>
                                     <section class="options-menu">
                                         <input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>"/>
@@ -1319,9 +1271,6 @@ function Get_Sales_date($sales_date_array, $country) {
                                     $productInfo = $song->getDownloadData($psong->ProdID, $psong->provider_type);
 
                                     if ($libraryDownload == '1' && $patronDownload == '1') {
-                                        /* $songUrl = shell_exec(Configure::read('App.tokengen') . $nationalTopSong['Full_Files']['CdnPath'] . "/" . $nationalTopSong['Full_Files']['SaveAsName']);
-                                          $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-                                          $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3)); */
                                         if ($psong->status != 'avail') {
                                             ?>
                                                                 <span class="top-100-download-now-button">

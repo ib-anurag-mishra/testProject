@@ -657,10 +657,6 @@ if (empty($getData))
                                             <input id="varialbe_index_flag10" type="radio" name="data[Variable][0][variable_index]" value="2" class="form_fields"  >All Index
                                         </td>
                                     </tr>
-    <!--                                                <tr>
-                                                    <td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index'); ?></td>
-                                                    <td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="50" id="authentication_variable_index0"></td>                                     
-                                            </tr>-->
                                     <tr id="msgNo">
                                         <td align="right" width="250"><?php echo $this->Form->label(null, 'Message No'); ?></td>
                                         <td align="left" style="padding-left:20px" class="libselect">
@@ -1319,7 +1315,7 @@ if (empty($getData))
                                 <th><label><b>Purchase Order #</b></label></th>
                                 <th><label><b># Of Purchased Tracks</b></label></th>
                                 <th><label><b>Purchased Amount In $</b></label></th>
-                                <th><label><b>Purchase Entry Date</b></lable></th>
+                                <th><label><b>Purchase Entry Date</b></label></th>
                             </tr>
                             <?php
                             foreach ($allPurchases as $key => $purchases)
@@ -1377,9 +1373,7 @@ if (isset($javascript))
                                                     $("#allurl").hide();
                                                     $("#innovative1").hide();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1409,9 +1403,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();					
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1441,9 +1433,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();					
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1473,9 +1463,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();					
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1505,9 +1493,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").show();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1538,9 +1524,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").show();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1572,8 +1556,6 @@ if (isset($javascript))
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
                                                     $("#innv_var").show();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
                                                     $("#sip_host").show();                                                    
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1604,9 +1586,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").show();					
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1637,9 +1617,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").show();				
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1670,9 +1648,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").show();				
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1702,9 +1678,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();				
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1735,9 +1709,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();				
                                                     $("#sip_host").show();
                                                     $("#sip_port").show();
                                                     $("#sip_pin").show();
@@ -1767,9 +1739,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();		
                                                     $("#sip_host").show();
                                                     $("#sip_port").show();
                                                     $("#sip_pin").show();
@@ -1799,9 +1769,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").show();
-                                                    //$("#innovative_var_pin").show();
-                                                    //$("#variable").show();						
+                                                    $("#innv_var").show();			
                                                     $("#sip_host").show();
                                                     $("#sip_port").show();
                                                     $("#sip_pin").show();
@@ -1832,9 +1800,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").show();
-                                                    //$("#innovative_var_pin").show();
-                                                    //$("#variable").show();						
+                                                    $("#innv_var").show();			
                                                     $("#sip_host").show();
                                                     $("#sip_port").show();
                                                     $("#sip_pin").show();
@@ -1865,9 +1831,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").hide();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();			
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1898,8 +1862,6 @@ if (isset($javascript))
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
                                                     $("#innv_var").show();
-                                                    //$("#innovative_var_pin").show();
-                                                    //$("#variable").show();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1931,8 +1893,6 @@ if (isset($javascript))
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
                                                     $("#innv_var").show();
-                                                    //$("#innovative_var_pin").show();
-                                                    //$("#variable").show();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1963,9 +1923,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();
-                                                    //$("#innovative_var_pin").show();
-                                                    //$("#variable").show();						
+                                                    $("#innv_var").show();				
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1997,9 +1955,7 @@ if (isset($javascript))
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
                                                     $("#soap").show();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();				
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -2029,9 +1985,7 @@ if (isset($javascript))
                                                     $("#innovative1").hide();
                                                     $("#innovative2").hide();
                                                     $("#soap").hide();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();				
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -2060,9 +2014,7 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").hide();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();
-                                                    //$("#innovative_var_pin").hide();
-                                                    //$("#variable").hide();						
+                                                    $("#innv_var").hide();			
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();

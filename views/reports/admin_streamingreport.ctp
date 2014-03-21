@@ -29,14 +29,6 @@ if (empty($getData)) {
                         <?php
                         if ($libraryID == "") {
                             ?>
-                        <!-- commented as Territory is not required for consortium. As suggested by Micah -->
-<!--                            <td align="right"><?php echo $this->Form->label('Choose Territory'); ?></td>
-                            <td align="left">
-                                <?php
-                                echo $this->Form->input('Territory', array('options' => $territory, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
-                                );
-                                ?>
-                            </td>-->
                         <td align="right"><?php echo $this->Form->label('Select Library'); ?></td>
                             <td align="left">
                                 <div id="allLibrary">
@@ -127,40 +119,6 @@ if (empty($getData)) {
                             </td>
                         </tr>
                         <tr><td colspan="6">&nbsp;</td></tr>
-                        <!--<tr><th colspan="6" align="center">Library Remaining Stream</th></tr>-->
-<!--                        <tr>
-                            <td colspan="6" align="center">
-                                <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th>Library Name</th>
-                                        <th>Number of Remaining Stream</th>
-                                    </tr>
-                                    <?php
-                                    $i = 1;
-                                    foreach ($libraries_download as $LibraryName => $libraryid) {
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php echo $this->getTextEncode($libraryid['Library']['library_name']); ?></td>
-                                            <?php
-                                            // and library_user_download_limit should >4 than "Unlimited"
-                                            if ($libraryid['Library']['library_unlimited'] == 1) {
-                                                $text = "Unlimited";
-                                            } else {
-                                                $text = $libraryid['Library']['library_available_downloads'];
-                                            }
-                                            ?>
-                                            <td align="center"><?php echo $text; ?></td>
-                                        </tr>
-                                        <?php
-                                        $i++;
-                                    }
-                                    ?>
-                                </table>
-                            </td>
-                        </tr>-->
-
 
                         <tr><td colspan="6">&nbsp;</td></tr>
 
@@ -445,24 +403,6 @@ if (empty($library_id) || ($this->Session->read("Auth.User.type_id") == 4 && $th
             });
             return false;
         });
-
-
-//        function report_load_page() {
-//            var data = "Territory=" + $("#ReportTerritory").val()+"&lib_id=<?=  $library_id; ?>";
-//            jQuery.ajax({
-//                type: "post", // Request method: post, get
-//                url: webroot + "admin/reports/getLibraryIds", // URL to request
-//                data: data, // post data
-//                success: function(response) {
-//                    $('#allLibrary').text('');
-//                    $('#allLibrary').html(response);
-//                },
-//                error: function(XMLHttpRequest, textStatus, errorThrown) {
-//                }
-//            });
-//
-//        }
-
     });
 <?php
 if (!empty($streamingHours)) {
@@ -484,5 +424,3 @@ if (!empty($streamingHours)) {
 }
 ?>
 </script>
-
-<?php //echo $this->element('sql_dump');?>

@@ -38,9 +38,6 @@ $ieVersion =  ieversion();
 			<h2><?php echo __('Streaming History', true); ?></h2>
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="/questions">FAQ section.</a></div>
 		</header>
-<!--		<div class="instructions">
-			<?php //echo $page->getPageContent('history'); ?>			
-		</div>-->
 		<nav class="recent-downloads-filter-container clearfix">
 			<?php 
             if($sort == 'date'){
@@ -164,8 +161,7 @@ $ieVersion =  ieversion();
 					?>
                                             </a>
                                         </div>
-                                        
-					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
+
 					<div class="album-title" style="left:561px;"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
                                              <?php 
 						if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
@@ -186,21 +182,6 @@ $ieVersion =  ieversion();
 						
 					?></a></div>
 					
-					<!-- <div class="wishlist-popover">
-						<!--	
-						<a class="remove-song" href="#">Remove Song</a>
-						<a class="make-cover-art" href="#">Make Cover Art</a>
-						*/
-                                        <?php
-                                        if($this->Session->read('library_type') == '2'){
-                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$streamingArr["Song"]["ProdID"],$streamingArr["Song"]["provider_type"],$streamingArr["Album"]["ProdID"],$streamingArr["Album"]["provider_type"]); ?>
-                                            <a class="add-to-playlist" href="#">Add To Playlist</a>
-                                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
-                                        <?php } else {
-                                                   // echo $this->Queue->getSocialNetworkinglinksMarkup(); 
-                                              }
-                                        ?>
-					</div> -->
 					<div class="download"><?php
 						 echo $streamingArr[0]['StreamingTime'];						
 					?></div>
@@ -216,7 +197,4 @@ $ieVersion =  ieversion();
 			</div>
 		</div>
 		<!-- (this is the html for the videos) -->
-		
-
-
 	</section>

@@ -1,8 +1,4 @@
 <section class="queue-detail-page <?php echo ($default_queue != 1) ? '' : 'fq'; ?>">
-    <?php
-//    if (!empty($queue_list_array))
-//    {
-    ?>
     <div class="breadcrumbs">
         <?php
         $queue_type = ($queueType == 'Default') ? '1' : '0';
@@ -60,11 +56,6 @@
                     <?php
                 }
                 ?>
-                <!--<div class="share clearfix">
-                        <p>Share via</p>
-                        <a class="facebook" href="javascript:void(0);"></a>
-                        <a class="twitter" href="javascript:void(0);"></a>
-                </div> -->
             </div>
         </div>
     </div>
@@ -145,15 +136,9 @@
                                 <?php
                                 //check if this song is allowed for download
                                 if (($value['Countries']['SalesDate'] <= date('Y-m-d') ) && ($value['Countries']['DownloadStatus'] == 1))
-                                {
-                                    //$productInfo = $song->getDownloadData($value["Songs"]['ProdID'], $value["Songs"]['provider_type']);
-                                   
+                                {  
                                     if ($libraryDownload == '1' && $patronDownload == '1')
-                                    {
-//                                        $songUrl = shell_exec(Configure::read('App.tokengen') . $value['SongFile']['SCdnPath'] . "/" . $value['SongFile']['SSaveAsName']);
-//                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-//                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
-                                        
+                                    {                                        
                                         //checking the downlaod status from session
                                          if ($this->Session->read('downloadVariArray'))
                                                     {
@@ -258,7 +243,6 @@
                                         <?php
                                     }
                                     ?>
-                                    <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                 </span>
                             </div>
 

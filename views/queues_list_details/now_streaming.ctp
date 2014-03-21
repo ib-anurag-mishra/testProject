@@ -28,11 +28,6 @@
 			</div>
 			<div class="col-3">
 				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="javascript:void(0);">FAQ section</a>.</div>
-				<!--
-                                <div class="button-container">
-					<div class="play-queue-btn"></div>
-					<div class="gear-icon no-ajaxy"></div>
-				</div> -->
 				<div class="queue-options">
                                     <?php                                    
                                     
@@ -81,7 +76,6 @@
 					?>
 					
 					<div class="row clearfix">
-						<!-- <a class="preview" href="#"></a>  -->
                                             <?php
                                                 
                                                 if ('T' == $value['Songs']['Advisory'])
@@ -123,7 +117,6 @@
                                                                 if($libraryDownload == '1' && $patronDownload == '1') {
 
                                                           ?>
-							<!--<a class="download-now" href="#">Download Now</a> -->
                                                         <span class="top-100-download-now-button">
                                                         <form method="Post" id="form<?php echo $value["Songs"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
                                                         <input type="hidden" name="ProdID" value="<?php echo $value["Songs"]["ProdID"];?>" />
@@ -139,21 +132,16 @@
                                                                     
                                                                  }
                                                          ?>
-							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
 
                                                          <?php
                                                             $wishlistInfo = $wishlist->getWishlistData($value["Songs"]["ProdID"]);
 
                                                             echo $wishlist->getWishListMarkup($wishlistInfo,$value["Songs"]["ProdID"],$value["Songs"]["provider_type"]);    
                                                          ?>
-
-
-							<!--<a class="remove-song" href="#">Remove Song</a> -->
                                                         <span class="top-100-download-now-button">
                                                         <span class="beforeClick" id="song_<?php echo $value["Songs"]["ProdID"]; ?>">
                                                         <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"];?>)"><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
-                                                        <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 						</div>
 					</div>
 					<?php 
@@ -193,7 +181,6 @@
 					?>
 					
 					<div class="row clearfix">
-						<!-- <a class="preview" href="#"></a>  -->
                                             <?php
                                                 if ('T' == $value['Song']['Advisory'])
                                                 {
@@ -234,7 +221,6 @@
                                                                 if($libraryDownload == '1' && $patronDownload == '1') {
 
                                                           ?>
-							<!--<a class="download-now" href="#">Download Now</a> -->
                                                         <span class="top-100-download-now-button">
                                                         <form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
                                                         <input type="hidden" name="ProdID" value="<?php echo $value["Song"]["ProdID"];?>" />
@@ -250,16 +236,11 @@
                                                                     
                                                                  }
                                                          ?>
-							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
-
                                                          <?php
                                                             $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
                                                             echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);    
                                                          ?>
-
-
-							<!--<a class="remove-song" href="#">Remove Song</a> -->
                                                         <span class="top-100-download-now-button">
                                                         <form method="Post" name="form_rename<?php echo $value["Song"]["ProdID"]; ?>" action="/queuelistdetails/index/<?php echo $queue_id; ?>" class="suggest_text1">
                                                         <input type="hidden" name="Pdid" value="<?php echo $value["QueueDetail"]["id"];?>" />
@@ -269,7 +250,6 @@
                                                         <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"];?>)"><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
                                                         </form>
-                                                        <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 						</div>
 					</div>
 					<?php 

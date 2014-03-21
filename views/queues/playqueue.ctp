@@ -96,10 +96,6 @@ table {
 		</div>
 	</div>
 	<script type="text/javascript">
-
-	
-
-	
 	jwplayer("myElement").setup({
 	    playlist:[{
 		    
@@ -127,18 +123,6 @@ table {
 			position:"right",
 			size:150
 		},
-		
-		
-	    
-	    
-
 	});
-	
-
-
-	
-
-	
-	
 	</script>
 </body>
