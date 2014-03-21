@@ -1245,8 +1245,8 @@ Class ArtistsController extends AppController {
         $albumSongs = json_decode(base64_decode($_POST['albumtData']));
         if (!empty($albumSongs)) {
             foreach ($albumSongs as $value) {
-
-                $filePath = shell_exec(Configure::read('App.tokengen_streaming'). $value->CdnPath . "/" . $value->SaveAsName);
+                
+                $filePath = $this->Token->streamingToken($value->CdnPath . "/" . $value->SaveAsName);
                 if (!empty($filePath)) {
                     $songPath = explode(':', $filePath);
                     $streamUrl = trim($songPath[1]);
@@ -1349,8 +1349,8 @@ Class ArtistsController extends AppController {
         $prodId = $_POST['prodId'];
         $artistName = $_POST['artistName'];
         if (!empty($cdnPath) && !empty($sourceUrl) && !empty($songLength)) {
-            $data = array();
-            $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $cdnPath . "/" . $sourceUrl);
+            $data = array();            
+            $filePath = $this->Token->streamingToken($cdnPath . "/" . $sourceUrl);
             $songPath = explode(':', $filePath);
             $streamUrl = trim($songPath[1]);
             $songStreamUrl = $streamUrl;
