@@ -78,6 +78,7 @@ class HomesController extends AppController {
         {
             $nationalTopDownload = Cache::read("top_singles" . $territory);
         }
+        $this->set('top_singles', $nationalTopDownload);
         /* Top Singles Ends */ 
         
         /* National Top 100 Albums slider start */
