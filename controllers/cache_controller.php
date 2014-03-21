@@ -205,7 +205,7 @@ class CacheController extends AppController {
      * all this function query must be same as queries written in the Genere code.
      */
     function getArtistText($territory){
-        
+        $territory = 'US';
         //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
         try {
             
@@ -362,6 +362,7 @@ class CacheController extends AppController {
                 $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
                 $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
                 $genreNoAlphabits = array();
+                if($genre == 'Alternative/Indie' || $genre == 'Banda'){
                 for($k = 65;$k < 93;$k++){
                     $alphabet = chr($k);
                     if($alphabet == '[') {
@@ -411,6 +412,8 @@ class CacheController extends AppController {
                     $this->log("cache written for artists with no alphabits data for genre ".$genre."for territory".$territory, "cache");
                 }else{
                     $this->log("There is data for all alphabets for".$genre."for territory".$territory, "cache");
+                }
+                
                 }
                 
             }
