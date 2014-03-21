@@ -419,11 +419,17 @@ Class GenresController extends AppController
         {
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
         }
-
-        $artistsNoAlpha = Cache::read("all_Artist_No_Alphabet" . $country);
+        if ($genre != 'All'){
+            if(!empty($genre)){
+                $artistsNoAlpha = Cache::read("genre_Artist_No_Alphabet_" .$genre."_" . $country);
+            }    
+        }else{
+            $artistsNoAlpha = Cache::read("all_Artist_No_Alphabet" . $country);
+        }
+        
         if(!empty($artistsNoAlpha)){
             $this->set('artistsNoAlpha',$artistsNoAlpha);
-        }
+        }        
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);
         $this->set('genre', $genre);
@@ -560,12 +566,19 @@ Class GenresController extends AppController
         {
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
         }
-        if(!empty($genre)){
-            $artistsNoAlpha = Cache::read("genre_Artist_No_Alphabet_" .$genre."_" . $country);
-            if(!empty($artistsNoAlpha)){
-                $this->set('artistsNoAlpha',$artistsNoAlpha);
-            }
+
+        if ($genre != 'All'){
+            if(!empty($genre)){
+                $artistsNoAlpha = Cache::read("genre_Artist_No_Alphabet_" .$genre."_" . $country);
+            }    
+        }else{
+            $artistsNoAlpha = Cache::read("all_Artist_No_Alphabet" . $country);
         }
+        
+        if(!empty($artistsNoAlpha)){
+            $this->set('artistsNoAlpha',$artistsNoAlpha);
+        }        
+        
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);
         $this->set('selectedAlpha', $Artist);
