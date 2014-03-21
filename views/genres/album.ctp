@@ -137,13 +137,7 @@ function Get_Sales_date($sales_date_array, $country) {
 ?>
 
 <section class="search-page">
-   <!-- <div class="breadcrumbs">
-    <?php
-    $html->addCrumb(__('Search Results', true), '/search/index');
-    echo $html->getCrumbs(' > ', __('Home', true), '/homes');
-    ?>
-    </div> -->
-
+   
  <div class="breadcrumbs">
         <?php
             echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
@@ -177,8 +171,6 @@ function Get_Sales_date($sales_date_array, $country) {
                     foreach ($albumData as $palbum) {
                         $albumDetails = $album->getImage($palbum->ReferenceID);
 
-                        //$albumDetails = $album->getImage($palbum->ReferenceID);
-
                         if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                             $image = Configure::read('App.Music_Path') . $albumArtwork;
@@ -187,10 +179,8 @@ function Get_Sales_date($sales_date_array, $country) {
                         }
                         if ($page->isImage($image)) {
                             //Image is a correct one
-                        } else {
+                        } else { }
 
-                            //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
-                        }
                         $album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
                         $album_genre = str_replace('"', '', $palbum->Genre);
                         $album_label = $palbum->Label;
@@ -229,7 +219,6 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     <?php
                                                     if ($this->Session->read("patron")) {
                                                         if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) {
-                                                            //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                             echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 3);
                                                         }
                                                         ?>
