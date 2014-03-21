@@ -69,33 +69,18 @@ class HomesController extends AppController {
             $this->set('patronDownload', $patronDownload);
         }
 
-        // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national" . $territory)) === false) {
-            if ($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ') {
-                $cacheFlag = $this->MemDatas->find('count', array('conditions' => array('territory' => $territory, 'vari_info != ' => '')));
-                if ($cacheFlag > 0) {
-                    $memDatasArr = $this->MemDatas->find('first', array('conditions' => array('territory' => $territory)));
-                    $unMemDatasArr = unserialize(base64_decode($memDatasArr['MemDatas']['vari_info']));
-                    Cache::write("national" . $territory, $unMemDatasArr);
-                    $nationalTopDownload = $unMemDatasArr;
-                } else {
-                    $nationalTopDownload = $this->Common->getNationalTop100($territory);
-                    $nationalTopDownloadSer = base64_encode(serialize($nationalTopDownload));
-                    $memQuery = "update mem_datas  set vari_info='" . $nationalTopDownloadSer . "'  where territory='" . $territory . "'";
-                    $this->MemDatas->setDataSource('master');
-                    $this->MemDatas->query($memQuery);
-                    $this->MemDatas->setDataSource('default');
-                }
-            } else {
-                $nationalTopDownload = $this->Common->getNationalTop100($territory);
-            }
-        } else {
-            $nationalTopDownload = Cache::read("national" . $territory);
+        /* Top Singles Starts */  
+        if (($national = Cache::read("top_singles" . $territory)) === false)       
+        {
+            $nationalTopDownload = $this->Common->getTopSingles($territory);
         }
-
-        $this->set('top_singles', $nationalTopDownload);
-       
-        // National Top 100 Albums slider        
+        else
+        {
+            $nationalTopDownload = Cache::read("top_singles" . $territory);
+        }
+        /* Top Singles Ends */ 
+        
+        /* National Top 100 Albums slider start */
         if (($national = Cache::read("topAlbums" . $territory)) === false)
         {
             $TopAlbums = $this->Common->getTopAlbums($territory);
@@ -103,11 +88,9 @@ class HomesController extends AppController {
             $TopAlbums = Cache::read("topAlbums" . $territory);
         }
         $this->set('nationalTopAlbums', $TopAlbums);
+        /* National Top 100 Albums slider Ends */
 
-        $ids = '';
-        $ids_provider_type = '';
-        //featured artist slideshow code start
-        
+        /* featured artist slideshow code start */
         if (Cache::read("featured_artists_" . $territory.'_'.'1') === false) {
             $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
             Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
@@ -115,65 +98,8 @@ class HomesController extends AppController {
             $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.'1');
         }        
         $this->set('featuredArtists', $featuresArtists);
+        /* featured artist slideshow code Ends */
 
-        /*
-          Code OF NEWS Section --- START
-         */
-
-        if (!$this->Session->read('Config.language') && $this->Session->read('Config.language') == '') {
-            $this->Session->write('Config.language', 'en');
-        }
-
-        $news_rs = array();
-        //create the cache variable name
-        $newCacheVarName = "news" . $this->Session->read('territory') . $this->Session->read('Config.language');
-        //first check lenguage and territory set or not        
-        if ($this->Session->read('territory') && $this->Session->read('Config.language')) {
-            if (($newsInfo = Cache::read($newCacheVarName)) === false) {
-                //if cache not set then run the queries
-                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
-                    'order' => 'News.created DESC',
-                    'limit' => '10'
-                ));
-                Cache::write($newCacheVarName, $news_rs);
-            } else {
-                //get all the information from the cache for news
-                $news_rs = Cache::read($newCacheVarName);
-            }
-        }
-
-        $this->set('news', $news_rs);
-
-        /*
-          Code OF NEWS Section --- END
-         */
-
-        /*
-         *  Code For Coming Soon --- START
-         */
-
-        $territory = $this->Session->read('territory');
-
-        if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false) {
-            $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
-        } else {  //  Show From Cache
-            $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
-        }
-
-        $this->set('coming_soon_rs', $coming_soon_rs);
-
-        // Videos
-        if (($coming_soon = Cache::read("coming_soon_videos" . $territory)) === false) {
-            $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
-        } else {   //  Show From Cache
-            $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
-        }
-
-        $this->set('coming_soon_videos', $coming_soon_videos);
-
-        /*
-         * Code For Coming Soon --- END
-         */
     }
 
     //this is just for streaming component test
