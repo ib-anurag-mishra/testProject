@@ -213,80 +213,80 @@ class CacheController extends AppController {
 
             $country = $territory;
             
-            //This code is running for all artist            
-            $condition = "";
-            $this->Song->unbindModel(array('hasOne' => array('Participant')));
-            $this->Song->unbindModel(array('hasOne' => array('Country')));
-            $this->Song->unbindModel(array('hasOne' => array('Genre')));
-            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-            $this->Song->Behaviors->attach('Containable');
-            $this->Song->recursive = 0;
-            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 ');
-            
-            $this->paginate = array(
-                'conditions' => $gcondition,
-                'fields' => array('DISTINCT Song.ArtistText'),
-                'extra' => array('chk' => 1),
-                'order' => 'TRIM(Song.ArtistText) ASC',
-                'limit' => '60',
-                'cache' => 'yes',
-                'check' => 2,
-                'all_query'=> true,                
-                'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
-            );
-            
-           
-            $allArtists = $this->paginate('Song');
-            //this code is running for every alphabets
-            $allArtistsNoAlphabits =  array();
-            for($j = 65;$j < 93;$j++){
-
-                $alphabet = chr($j);
-                if($alphabet == '[') {
-                    $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
-                }
-                elseif($j == 92) {
-                    $condition = "";
-                }
-                elseif($alphabet != '') {
-                    $condition = array('Song.ArtistText LIKE' => $alphabet.'%');
-                }
-                else {
-                    $condition = "";
-                }
-                $this->Song->unbindModel(array('hasOne' => array('Participant')));
-                $this->Song->unbindModel(array('hasOne' => array('Country')));
-                $this->Song->unbindModel(array('hasOne' => array('Genre')));
-                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-                $this->Song->Behaviors->attach('Containable');
-                $this->Song->recursive = 0;
-                $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 ');
-
-                $this->paginate = array(
-                    'conditions' => $gcondition,
-                    'fields' => array('DISTINCT Song.ArtistText'),
-                    'order' => 'TRIM(Song.ArtistText) ASC',
-                    'extra' => array('chk' => 1),                
-                    'limit' => '60',
-                    'cache' => 'yes',
-                    'check' => 2,
-                    'all_query'=> true,                
-                    'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
-                );
-                $allArtists = $this->paginate('Song');
-                $allArtistsCount = count($allArtists);
-                if(empty($allArtistsCount)){
-                    $allArtistsNoAlphabits[] = $alphabet;
-                    $this->log("There is no artist with the alphabet".$alphabet."for territory".$territory, "cache");
-                }
-                $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
-                $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
-                
-            }
-            
-            if(!empty($allArtistsNoAlphabits)){
-                Cache::write("all_Artist_No_Alphabet" . $territory, $allArtistsNoAlphabits);
-            }
+//            //This code is running for all artist            
+//            $condition = "";
+//            $this->Song->unbindModel(array('hasOne' => array('Participant')));
+//            $this->Song->unbindModel(array('hasOne' => array('Country')));
+//            $this->Song->unbindModel(array('hasOne' => array('Genre')));
+//            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+//            $this->Song->Behaviors->attach('Containable');
+//            $this->Song->recursive = 0;
+//            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 ');
+//            
+//            $this->paginate = array(
+//                'conditions' => $gcondition,
+//                'fields' => array('DISTINCT Song.ArtistText'),
+//                'extra' => array('chk' => 1),
+//                'order' => 'TRIM(Song.ArtistText) ASC',
+//                'limit' => '60',
+//                'cache' => 'yes',
+//                'check' => 2,
+//                'all_query'=> true,                
+//                'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
+//            );
+//            
+//           
+//            $allArtists = $this->paginate('Song');
+//            //this code is running for every alphabets
+//            $allArtistsNoAlphabits =  array();
+//            for($j = 65;$j < 93;$j++){
+//
+//                $alphabet = chr($j);
+//                if($alphabet == '[') {
+//                    $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
+//                }
+//                elseif($j == 92) {
+//                    $condition = "";
+//                }
+//                elseif($alphabet != '') {
+//                    $condition = array('Song.ArtistText LIKE' => $alphabet.'%');
+//                }
+//                else {
+//                    $condition = "";
+//                }
+//                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+//                $this->Song->unbindModel(array('hasOne' => array('Country')));
+//                $this->Song->unbindModel(array('hasOne' => array('Genre')));
+//                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+//                $this->Song->Behaviors->attach('Containable');
+//                $this->Song->recursive = 0;
+//                $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 ');
+//
+//                $this->paginate = array(
+//                    'conditions' => $gcondition,
+//                    'fields' => array('DISTINCT Song.ArtistText'),
+//                    'order' => 'TRIM(Song.ArtistText) ASC',
+//                    'extra' => array('chk' => 1),                
+//                    'limit' => '60',
+//                    'cache' => 'yes',
+//                    'check' => 2,
+//                    'all_query'=> true,                
+//                    'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
+//                );
+//                $allArtists = $this->paginate('Song');
+//                $allArtistsCount = count($allArtists);
+//                if(empty($allArtistsCount)){
+//                    $allArtistsNoAlphabits[] = $alphabet;
+//                    $this->log("There is no artist with the alphabet".$alphabet."for territory".$territory, "cache");
+//                }
+//                $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
+//                $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
+//                
+//            }
+//            
+//            if(!empty($allArtistsNoAlphabits)){
+//                Cache::write("all_Artist_No_Alphabet" . $territory, $allArtistsNoAlphabits);
+//            }
     
 
             $this->Song->bindmodel(array('hasOne'=>array(
@@ -331,36 +331,36 @@ class CacheController extends AppController {
             foreach($genreAll as $genreRow){
                 
                 $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
-                $condition = "";
-                $this->Song->unbindModel(array('hasOne' => array('Participant')));
-                $this->Song->unbindModel(array('hasOne' => array('Country')));
-                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-                $this->Song->Behaviors->attach('Containable');
-                $this->Song->recursive = 0;               
-                
-                $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1 ');
-                $this->paginate = array(
-                    'conditions' => $gcondition,
-                    'fields' => array('DISTINCT Song.ArtistText'),
-                    'order' => 'TRIM(Song.ArtistText) ASC',
-                    'contain' => array(
-                        'Genre' => array(
-                            'fields' => array(
-                                'Genre.Genre'
-                            )),
-                    ),
-                    'extra' => array('chk' => 1),
-                    'limit' => '60', 'cache' => 'yes', 'check' => 2
-                );
-             
-                $allArtists = $this->paginate('Song');
-                $artsistCount = count($allArtists);
-                if(empty($artsistCount)){
-                    $noArtistGenre[] = $genre;
-                    $this->log("There is no genre associated with this genre".$genre."for territory".$territory, "cache");
-                }             
-                $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
-                $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
+//                $condition = "";
+//                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+//                $this->Song->unbindModel(array('hasOne' => array('Country')));
+//                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+//                $this->Song->Behaviors->attach('Containable');
+//                $this->Song->recursive = 0;               
+//                
+//                $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1 ');
+//                $this->paginate = array(
+//                    'conditions' => $gcondition,
+//                    'fields' => array('DISTINCT Song.ArtistText'),
+//                    'order' => 'TRIM(Song.ArtistText) ASC',
+//                    'contain' => array(
+//                        'Genre' => array(
+//                            'fields' => array(
+//                                'Genre.Genre'
+//                            )),
+//                    ),
+//                    'extra' => array('chk' => 1),
+//                    'limit' => '5', 'cache' => 'yes', 'check' => 2
+//                );
+//             
+//                $allArtists = $this->paginate('Song');
+//                $artsistCount = count($allArtists);
+//                if(empty($artsistCount)){
+//                    $noArtistGenre[] = $genre;
+//                    $this->log("There is no genre associated with this genre".$genre."for territory".$territory, "cache");
+//                }             
+//                $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
+//                $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
                 $genreNoAlphabits = array();
                 for($k = 65;$k < 93;$k++){
                     $alphabet = chr($k);
@@ -393,12 +393,12 @@ class CacheController extends AppController {
                                 )),
                         ),
                         'extra' => array('chk' => 1),
-                        'limit' => '60', 'cache' => 'yes', 'check' => 2
+                        'limit' => '5', 'cache' => 'yes', 'check' => 2
                     );
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $allArtists = $this->paginate('Song');
                     $genreartsistCount = count($allArtists);
-                    if(empty($artsistCount)){
+                    if(empty($genreartsistCount)){
                         $genreNoAlphabits[] = $alphabet;
                         $this->log("There is no artist with the alphabet".$alphabet."in genre".$genre."for territory".$territory, "cache");
                     }                    
@@ -408,6 +408,9 @@ class CacheController extends AppController {
                 
                 if(!empty($genreNoAlphabits)){
                     Cache::write("genre_Artist_No_Alphabet_" .$genre."_". $territory, $genreNoAlphabits);
+                    $this->log("cache written for artists with no alphabits data for genre ".$genre."for territory".$territory, "cache");
+                }else{
+                    $this->log("There is data for all alphabets for".$genre."for territory".$territory, "cache");
                 }
                 
             }

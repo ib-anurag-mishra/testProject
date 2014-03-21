@@ -287,10 +287,12 @@ Class GenresController extends AppController
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $country = $this->Session->read('territory');
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+        if($patId){
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+        }
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -418,6 +420,10 @@ Class GenresController extends AppController
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
         }
 
+        $artistsNoAlpha = Cache::read("all_Artist_No_Alphabet" . $country);
+        if(!empty($artistsNoAlpha)){
+            $this->set('artistsNoAlpha',$artistsNoAlpha);
+        }
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);
         $this->set('genre', $genre);
@@ -553,6 +559,12 @@ Class GenresController extends AppController
         for ($i = 0; $i < count($tempArray); $i++)
         {
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
+        }
+        if(!empty($Genre)){
+            $artistsNoAlpha = Cache::read("genre_Artist_No_Alphabet_" .$Genre."_" . $country);
+            if(!empty($artistsNoAlpha)){
+                $this->set('artistsNoAlpha',$artistsNoAlpha);
+            }
         }
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);
