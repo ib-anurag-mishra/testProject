@@ -102,7 +102,7 @@ class CacheController extends AppController {
             $this->Common->getUsTop10Videos($territory);
             $this->Common->getNewReleaseAlbums($territory);
             $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getDifferentGenreData($territory);            
+            //$this->Common->getDifferentGenreData($territory);            
             $this->Common->getDefaultQueues($territory);  
             $this->getArtistText($territory);
             $this->setFeaturedArtists($territory);
