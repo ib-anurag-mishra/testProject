@@ -120,7 +120,9 @@
 				?>
 				<li>
 					<div class="album-container">
-						<?php $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
+						<?php                                                         
+                                                        $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+                                                 ?>
 						<a
 							href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
 							<img
