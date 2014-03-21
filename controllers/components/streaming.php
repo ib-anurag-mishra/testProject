@@ -470,7 +470,7 @@ Class StreamingComponent extends Object
 				return array(true,'First validation passed', 1);
 			} else {
 				$this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested for streaming does not allow for streaming or its mp4 file id is empty in Songs table",'streaming');
-				return array(false,'The song requested for streaming does not exist', 3);
+				return array(false,'Streaming for this song is currently unavailable. Please enjoy the sample.', 3);
 			}
 		} else {
 			$this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as streaming is not allowed for this library",'streaming');

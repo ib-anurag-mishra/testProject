@@ -1104,7 +1104,7 @@ STR;
 									array('Song.ReferenceID' => $prodId),
 									array('Song.provider_type = Country.provider_type'),
 									array('Country.DownloadStatus' => 1),
-									array('Country.StreamingStatus' => 1),
+								//	array('Country.StreamingStatus' => 1),
 									array('Country.StreamingSalesDate < NOW()'),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
