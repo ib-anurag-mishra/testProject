@@ -84,8 +84,8 @@ foreach ($albumData as $album_key => $album):
 
 	<?php
 	if ($this->Session->read('library_type') == 2)
-	{
-		$filePath = shell_exec(Configure::read('App.tokengen_streaming') . $albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
+	{		
+                $filePath = $this->Token->streamingToken($albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
 
 		if (!empty($filePath))
 		{
