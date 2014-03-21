@@ -72,16 +72,15 @@ Class CommonComponent extends Object
             $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
             if ($maintainLatestDownload)
             {
-$natTopDownloaded = $topAlbumInstance->find('all', array(
-            'conditions' => array(
-                'TopAlbum.territory' => $territory,
-                'TopAlbum.language' => Configure::read('App.LANGUAGE')),
-            'recursive' => -1,
-            'order' => array(
-                'TopAlbum.id' => 'desc')
-                )
-        );
-               
+            	$natTopDownloaded = $topAlbumInstance->find('all', array(
+            			'conditions' => array(
+            					'TopAlbum.territory' => $territory,
+            					'TopAlbum.language' => Configure::read('App.LANGUAGE')),
+            			'recursive' => -1,
+            			'order' => array(
+            					'TopAlbum.id' => 'desc')
+            	)
+            	);
             }
             $ids = '';
             $ids_provider_type = '';
@@ -174,15 +173,6 @@ STR;
                     $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
-
-//                    $filePath = shell_exec(Configure::read('App.tokengen_streaming'). $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
-//                    if (!empty($filePath))
-//                    {
-//                        $songPath = explode(':', $filePath);
-//                        $streamUrl = trim($songPath[1]);
-//                        $data[$key]['streamUrl'] = $streamUrl;
-//                        $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
-//                    }
                 }
                 Cache::delete("national" . $country,"cache2");
                 Cache::write("national" . $country, $data, "cache2");
@@ -331,8 +321,6 @@ STR;
                     $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
-                   // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
-                    //{
                     $albumSongs = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
@@ -345,7 +333,6 @@ STR;
                         Cache::write("nationaltopalbum_" . $territory.'_'.$value['Albums']['ProdID'], $albumSongs);
                         $this->log("cache written for national top album for $territory".$prodId, "cache");
                     }
-                    //}
                 }
 
                 Cache::write("nationaltop100albums" . $country, $data);
@@ -438,7 +425,6 @@ STR;
             foreach ($topDownloads as $key => $topDownload)
             {
                 $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $topDownload['File']['CdnPath'] . "/" . $topDownload['File']['SourceURL']);
-                // print_r($featureVideo);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $topDownloads[$key]['videoImage'] = $videoImage;
             }
@@ -652,7 +638,6 @@ STR;
 STR;
 
         $coming_soon_rs = $albumInstance->query($sql_coming_soon_s);
-        //print_r($coming_soon_rs);
 
         $this->log("coming soon songs $territory", "cachequery");
         $this->log($sql_coming_soon_s, "cachequery");
@@ -880,7 +865,6 @@ STR;
                     $songs_img = Configure::read('App.Music_Path') . $songs_img;
                     $data[$key]['songs_img'] = $songs_img;
 
-                    //$filePath = shell_exec(Configure::read('App.tokengen_streaming'). $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                     $tokeninstance = ClassRegistry::init('Token');
                     $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 
@@ -1028,12 +1012,9 @@ STR;
                     $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['album_img'] = $album_img;
-                    // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
-                    //{
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
-                    //}
                 }
                 Cache::delete("national_us_top10_albums" . $country);
                 Cache::write("national_us_top10_albums" . $country, $data);
@@ -1279,12 +1260,9 @@ STR;
                     $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['albumImage'] = $album_img;
-                    // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
-                    //{
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
-                    //}
                 }
                 Cache::delete("new_releases_albums" . $country);
                 Cache::write("new_releases_albums" . $country, $data);
@@ -1392,18 +1370,14 @@ STR;
 
     function getFeaturedArtists($territory,$page = 0, $limit = 20)
     {
-        set_time_limit(0);
-        //$countryPrefix = $this->getCountryPrefix($territory);       
-       // $featured = array();       
-        
-        
-        if(isset($page)){
-            if($page <= 0)
-            {
-                $page = 1;
-            }
-            $offset = ($page - 1) * $limit;
-        }
+    	set_time_limit(0);
+    	if(isset($page)){
+    		if($page <= 0)
+    		{
+    			$page = 1;
+    		}
+    		$offset = ($page - 1) * $limit;
+    	}
 
         
         $ids = '';
@@ -1503,12 +1477,9 @@ STR;
                 $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
                 $image = Configure::read('App.Music_Path') . $albumArtwork;
                 $featured[$k]['featuredImage'] = $image;
-                // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
-                //{
                     $featured[$k]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),1,$territory))
                     );
-               // }
             }
         }
         return $featured;
@@ -1522,9 +1493,7 @@ STR;
 
     function getTopAlbums($territory)
     {
-        set_time_limit(0);
-        //$countryPrefix = $this->getCountryPrefix($territory);       
-       // $featured = array();       
+        set_time_limit(0);      
         
         $ids = '';
         $ids_provider_type = '';
@@ -1628,12 +1597,9 @@ STR;
                 $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
                 $image = Configure::read('App.Music_Path') . $albumArtwork;
                 $topAlbumData[$k]['topAlbumImage'] = $image;
-                // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
-                //{
                     $topAlbumData[$k]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),1,$territory))
                     );
-               // }
             }
             Cache::delete("topAlbums" . $territory);
             Cache::write("topAlbums" . $territory, $topAlbumData);
@@ -2088,12 +2054,6 @@ STR;
                 $songs_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $songs_img = Configure::read('App.Music_Path') . $songs_img;
                 $topDownload[$key]['songs_img'] = $songs_img;
-
-                // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
-                //{
-                    
-                    //$filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
-                
                     $tokeninstance = ClassRegistry::init('Token');
                     $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                     
@@ -2104,7 +2064,6 @@ STR;
                         $topDownload[$key]['streamUrl'] = $streamUrl;
                         $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
                     }
-                //}
             }
             Cache::delete("lib" . $libId);
             Cache::write("lib" . $libId, $topDownload);
@@ -2291,12 +2250,9 @@ STR;
                 $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $album_img = Configure::read('App.Music_Path') . $album_img;
                 $topDownload[$key]['album_img'] = $album_img;
-                // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
-                //{
                     $topDownload[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
-                //}
             }
             Cache::delete("lib_album" . $libId);
             Cache::write("lib_album" . $libId, $topDownload);
