@@ -70,20 +70,16 @@ class HomesController extends AppController {
         }
 
         /* Top Singles Starts */  
-        if (($national = Cache::read("top_singles" . $territory)) === false)       
-        {
+        if (($national = Cache::read("top_singles" . $territory)) === false) {
             $nationalTopDownload = $this->Common->getTopSingles($territory);
-        }
-        else
-        {
+        } else {
             $nationalTopDownload = Cache::read("top_singles" . $territory);
         }
         $this->set('top_singles', $nationalTopDownload);
         /* Top Singles Ends */ 
         
         /* National Top 100 Albums slider start */
-        if (($national = Cache::read("topAlbums" . $territory)) === false)
-        {
+        if (($national = Cache::read("topAlbums" . $territory)) === false) {
             $TopAlbums = $this->Common->getTopAlbums($territory);
         } else {
             $TopAlbums = Cache::read("topAlbums" . $territory);
