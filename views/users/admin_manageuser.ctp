@@ -56,7 +56,6 @@ echo $paginator->counter(array(
 			<th class="left">Admin Type</th>
             <th>Edit</th>
 			<th>Action</th>
-	    <!-- <th>Delete</th> -->
           </tr>
           <?php
           foreach($admins as $admin)
@@ -82,7 +81,6 @@ echo $paginator->counter(array(
 		<?php
 		if($admin['User']['type_id'] != 4 && $this->Session->read("Auth.User.id") != $admin['User']['id']) {
 		?>
-			<!-- <td><?php //echo $html->link('Delete', array('controller'=>'users','action'=>'admin_delete','id'=>$admin['User']['id']));?></td> -->
 		<? } ?>
             </tr>
             

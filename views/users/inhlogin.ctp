@@ -21,4 +21,3 @@
 		echo $form->end(array('label' => $this->getTextEncode( __('Login', true)),'div' => false, 'class' => 'button' ));
 		echo '</div>';
 ?>
-

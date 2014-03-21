@@ -57,7 +57,6 @@ echo $paginator->counter(array(
 			<th class="left"><?php echo $paginator->sort('Created', 'created')."&nbsp;".$paginator->sort('`', 'created', array('id' => 'sort_arrow')); ?></th>
             <th>Edit</th>
 			<th>Action</th>
-	    <!-- <th>Delete</th> -->
           </tr>
           <?php
           foreach($patrons as $patron)
@@ -81,7 +80,6 @@ echo $paginator->counter(array(
 		<?php
 		if($patron['User']['type_id'] != 4 && $this->Session->read("Auth.User.id") != $patron['User']['id']) {
 		?>
-			<!-- <td><?php //echo $html->link('Delete', array('controller'=>'users','action'=>'admin_delete','id'=>$admin['User']['id']));?></td> -->
 		<? } ?>
             </tr>
             

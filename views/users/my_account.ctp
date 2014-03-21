@@ -138,10 +138,6 @@ $ieVersion =  ieversion();
                 
             }            
         });
-        
-        
-
-        
     });
     function checkEmailValue(){
         
@@ -166,6 +162,5 @@ $ieVersion =  ieversion();
     
 </script>
 <?php
-       
         }
 ?>
