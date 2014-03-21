@@ -168,15 +168,14 @@ $ieVersion = ieversion();
                             <div class="date"><?php echo date('Y-m-d', strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
                             <div class="small-album-container">                                     
 
-                                <?php
-                                $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $wishlistResults[$i]['File']['CdnPath'] . "/" . $wishlistResults[$i]['File']['SaveAsName']);
-
+                                <?php                                                                
 
                                 if ($this->Session->read('library_type') == 2 && $wishlistResults[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $wishlistResults[$i]['Country']['StreamingStatus'] == 1)
                                 {
                                     //do the streaming work
 
-                                    $filePath = shell_exec(Configure::read('App.tokengen_streaming'). $wishlistResults[$i]['Full_Files']['CdnPath'] . "/" . $wishlistResults[$i]['Full_Files']['SaveAsName']);
+                                    $filePath = $this->Token->streamingToken($wishlistResults[$i]['Full_Files']['CdnPath'] . "/" . $wishlistResults[$i]['Full_Files']['SaveAsName']);
+                                    
                                     if (!empty($filePath))
                                     {
                                         $songPath = explode(':', $filePath);
