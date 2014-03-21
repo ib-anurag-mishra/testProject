@@ -10,6 +10,7 @@ Class CommonComponent extends Object
 {
 
     var $components = array('Session', 'Streaming', 'Queue');
+    var $uses = array('Token');
 
     /*
      * Function Name : getGenres
@@ -65,6 +66,7 @@ Class CommonComponent extends Object
     function getNationalTop100($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $country = $territory;
         if (!empty($country))
@@ -169,8 +171,9 @@ STR;
             if (!empty($data))
             {   
                 foreach ($data as $key => $value)
-                {
-                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                {      
+                    
+                    $albumArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
                 }
@@ -197,7 +200,7 @@ STR;
     function getNationalTop100Albums($territory)
     {
         set_time_limit(0);
-
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $country = $territory;
         if (!empty($country))
@@ -317,8 +320,8 @@ STR;
             {
 
                 foreach ($data as $key => $value)
-                {
-                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                {                    
+                    $albumArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
                     $albumSongs = $this->requestAction(
@@ -357,6 +360,7 @@ STR;
     function getFeaturedVideos($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         // Added caching functionality for featured videos
@@ -376,8 +380,8 @@ STR;
         if (!empty($featuredVideos))
         {
             foreach ($featuredVideos as $key => $featureVideo)
-            {
-                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['File']['SourceURL']);
+            {                
+                $videoArtwork = $tokeninstance->artworkToken($featureVideo['File']['CdnPath'] . "/" . $featureVideo['File']['SourceURL']);
 
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $featuredVideos[$key]['videoImage'] = $videoImage;
@@ -404,6 +408,7 @@ STR;
     function getTopVideoDownloads($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         // Added caching functionality for top video downloads
@@ -423,8 +428,8 @@ STR;
         if (!empty($topDownloads))
         {
             foreach ($topDownloads as $key => $topDownload)
-            {
-                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $topDownload['File']['CdnPath'] . "/" . $topDownload['File']['SourceURL']);
+            {                
+                $videoArtwork = $tokeninstance->artworkToken($topDownload['File']['CdnPath'] . "/" . $topDownload['File']['SourceURL']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $topDownloads[$key]['videoImage'] = $videoImage;
             }
@@ -449,6 +454,7 @@ STR;
     function getNationalTop100Videos($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         // Added caching functionality for national top 100 videos   
@@ -567,8 +573,8 @@ STR;
             {
                 Cache::delete("nationalvideos" . $country);
                 foreach ($data as $key => $value)
-                {
-                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                {                    
+                    $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
@@ -595,6 +601,7 @@ STR;
     function getComingSoonSongs($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         
         if(empty($countryPrefix))
@@ -646,8 +653,8 @@ STR;
         if (!empty($coming_soon_rs))
         {
             foreach ($coming_soon_rs as $key => $value)
-            {
-                $cs_img_url = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+            {                
+                $cs_img_url = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $cs_songImage = Configure::read('App.Music_Path') . $cs_img_url;
                 $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
             }
@@ -675,6 +682,7 @@ STR;
     function getComingSoonVideos($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         
         if(empty($countryPrefix))
@@ -726,8 +734,8 @@ STR;
         if (!empty($coming_soon_rv))
         {
             foreach ($coming_soon_rv as $key => $value)
-            {
-                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+            {                
+                $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $coming_soon_rv[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
@@ -754,6 +762,7 @@ STR;
     function getUsTop10Songs($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for us top 10 Songs           
@@ -860,12 +869,11 @@ STR;
             if (!empty($data))
             {
                 foreach ($data as $key => $value)
-                {
-                    $songs_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                {                         
+                    $songs_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songs_img = Configure::read('App.Music_Path') . $songs_img;
                     $data[$key]['songs_img'] = $songs_img;
-
-                    $tokeninstance = ClassRegistry::init('Token');
+                                        
                     $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 
                     if (!empty($filePath))
@@ -900,6 +908,7 @@ STR;
     function getUsTop10Albums($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for us top 10 Album            
@@ -1008,8 +1017,7 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-
-                    $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);                    
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['album_img'] = $album_img;
                     $data[$key]['albumSongs'] = $this->requestAction(
@@ -1040,6 +1048,7 @@ STR;
     function getUsTop10Videos($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for us top 10 Video            
@@ -1141,8 +1150,8 @@ STR;
             if (!empty($data))
             {
                 foreach ($data as $key => $value)
-                {
-                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                {                    
+                    $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
@@ -1170,6 +1179,7 @@ STR;
     function getNewReleaseAlbums($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $songInstance = ClassRegistry::init('Song');
         //Added caching functionality for new release Albums           
@@ -1257,7 +1267,7 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-                    $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);                    
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['albumImage'] = $album_img;
                     $data[$key]['albumSongs'] = $this->requestAction(
@@ -1294,6 +1304,7 @@ STR;
     function getNewReleaseVideos($territory)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for new release videos           
@@ -1342,8 +1353,8 @@ STR;
             if (!empty($data))
             {
                 foreach ($data as $key => $value)
-                {
-                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                {                    
+                    $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
@@ -1371,6 +1382,7 @@ STR;
     function getFeaturedArtists($territory,$page = 0, $limit = 20)
     {
     	set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
     	if(isset($page)){
     		if($page <= 0)
     		{
@@ -1473,8 +1485,8 @@ STR;
         }
         if(!empty($featured)){
             foreach ($featured as $k => $v)
-            {
-                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
+            {                
+                $albumArtwork = $tokeninstance->artworkToken($v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
                 $image = Configure::read('App.Music_Path') . $albumArtwork;
                 $featured[$k]['featuredImage'] = $image;
                     $featured[$k]['albumSongs'] = $this->requestAction(
@@ -1493,7 +1505,8 @@ STR;
 
     function getTopAlbums($territory)
     {
-        set_time_limit(0);      
+        set_time_limit(0); 
+        $tokeninstance = ClassRegistry::init('Token');
         
         $ids = '';
         $ids_provider_type = '';
@@ -1593,8 +1606,8 @@ STR;
         else
         {
             foreach ($topAlbumData as $k => $v)
-            {
-                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
+            {                
+                $albumArtwork = $tokeninstance->artworkToken($v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
                 $image = Configure::read('App.Music_Path') . $albumArtwork;
                 $topAlbumData[$k]['topAlbumImage'] = $image;
                     $topAlbumData[$k]['albumSongs'] = $this->requestAction(
@@ -1877,6 +1890,7 @@ STR;
     function getLibraryTopTenSongs($territory, $libId)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
         $latestDownloadInstance = ClassRegistry::init('LatestDownload');
         $downloadInstance = ClassRegistry::init('Download');
@@ -2050,11 +2064,11 @@ STR;
         else
         {
             foreach ($topDownload as $key => $value)
-            {
-                $songs_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+            {                  
+                $songs_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $songs_img = Configure::read('App.Music_Path') . $songs_img;
                 $topDownload[$key]['songs_img'] = $songs_img;
-                    $tokeninstance = ClassRegistry::init('Token');
+                    
                     $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                     
                     if (!empty($filePath))
@@ -2082,6 +2096,7 @@ STR;
     function getLibraryTop10Albums($territory, $libId)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');         
         $albumInstance = ClassRegistry::init('Album');
         $latestDownloadInstance = ClassRegistry::init('LatestDownload');
         $downloadInstance = ClassRegistry::init('Download');
@@ -2246,8 +2261,8 @@ STR;
         else
         {
             foreach ($topDownload as $key => $value)
-            {
-                $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+            {                
+                $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $album_img = Configure::read('App.Music_Path') . $album_img;
                 $topDownload[$key]['album_img'] = $album_img;
                     $topDownload[$key]['albumSongs'] = $this->requestAction(
@@ -2427,8 +2442,8 @@ STR;
         else
         {
             foreach ($topDownload as $key => $value)
-            {
-                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+            {                
+                $albumArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
@@ -2481,6 +2496,7 @@ STR;
     function getVideoDetails($territory, $indiMusicVidID)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $videoInstance = ClassRegistry::init('Video');
         $albumInstance = ClassRegistry::init('Album');
@@ -2502,8 +2518,8 @@ STR;
             $this->log("Music video id $indiMusicVidID returns null ", "cache");
         }
         else
-        {
-            $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $EachVideosData[0]['File']['CdnPath'] . "/" . $EachVideosData[0]['File']['SourceURL']);
+        {            
+            $videoArtwork = $tokeninstance->artworkToken($EachVideosData[0]['File']['CdnPath'] . "/" . $EachVideosData[0]['File']['SourceURL']);
             $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path') . $videoArtwork;
         }
         if (count($EachVideosData) > 0)
@@ -2532,8 +2548,8 @@ STR;
 
             $MoreVideosData = $albumInstance->query($MoreVideosSql);
             foreach ($MoreVideosData as $key => $value)
-            {
-                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+            {                
+                $videoArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $MoreVideosData[$key]['videoImage'] = $videoImage;
             }
@@ -2557,8 +2573,8 @@ STR;
 
             $TopVideoGenreData = $albumInstance->query($TopVideoGenreSql);
             foreach ($TopVideoGenreData as $key => $value)
-            {
-                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+            {                
+                $videoArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $TopVideoGenreData[$key]['videoImage'] = $videoImage;
             }
@@ -2580,7 +2596,7 @@ STR;
      */
     function getAllVideoByArtist($country, $decodedId)
     {
-
+        $tokeninstance = ClassRegistry::init('Token');
         //add the slashes in the text
         $decodedId = addslashes($decodedId);
         $videoInstance = ClassRegistry::init('Video');
@@ -2641,8 +2657,8 @@ STR;
 
             $artistVideoList = $videoInstance->query($sql_us_10_v);
             foreach ($artistVideoList as $key => $value)
-            {
-                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+            {                
+                $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
