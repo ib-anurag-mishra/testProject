@@ -560,8 +560,8 @@ Class GenresController extends AppController
         {
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
         }
-        if(!empty($Genre)){
-            $artistsNoAlpha = Cache::read("genre_Artist_No_Alphabet_" .$Genre."_" . $country);
+        if(!empty($genre)){
+            $artistsNoAlpha = Cache::read("genre_Artist_No_Alphabet_" .$genre."_" . $country);
             if(!empty($artistsNoAlpha)){
                 $this->set('artistsNoAlpha',$artistsNoAlpha);
             }
