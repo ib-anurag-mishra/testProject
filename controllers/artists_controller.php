@@ -2202,24 +2202,13 @@ Class ArtistsController extends AppController {
 
         $cond = $this->Common->getBlockCondition();
         $songs = $this->Song->getArtistAlbums($id, $this->patron_country, $cond);
+        
         if (!empty($songs))
         {
-
-            $val = '';
-            $val_provider_type = '';
-            foreach ($songs as $k => $v)
-            {
-                if (empty($val))
-                {
-                    $val .= $v['Song']['ReferenceID'];
-                    $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
-                }
-                else
-                {
-                    $val .= ',' . $v['Song']['ReferenceID'];
-                    $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
-                }
-            }
+            $val_ref_prov = explode('&', $this->Common->getRefAndProviderConditionString($songs) );
+            $val = $val_ref_prov[0];
+            $val_provider_type = $val_ref_prov[1];
+            
 
             $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
 

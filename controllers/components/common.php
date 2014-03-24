@@ -3048,6 +3048,10 @@ STR;
         }
     }
 
+    /**
+     * This function get Condition for Block if its found in session
+     * @return string
+     */
     function getBlockCondition()
     {
         if ($this->Session->read('block') == 'yes')
@@ -3058,6 +3062,32 @@ STR;
         {
             return "";
         }
+    }
+    
+    /**
+     * this function return the string which contains the
+     * @param array $song_array
+     * @return String
+     */
+    function getRefAndProviderConditionString($song_array)
+    {
+        $val = '';
+        $val_provider_type = '';
+        
+        foreach ($song_array as $k => $v)
+        {
+            if (empty($val))
+            {
+                $val .= $v['Song']['ReferenceID'];
+                $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+            }
+            else
+            {
+                $val .= ',' . $v['Song']['ReferenceID'];
+                $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+            }
+        }
+        return $val . "&" . $val_provider_type;
     }
 
 }
