@@ -1134,7 +1134,8 @@ Class LibrariesController extends AppController
             {
                 $this->Session->write("block", 'no');
             }
-            $redirecting = $this->Cookie->read('redirecting');
+          //  $redirecting = $this->Cookie->read('redirecting'); // Commented to fix login redirection issue in ocls library
+	    $redirecting = $_COOKIE['lastUrl'];
             if (isset($redirecting) && !empty($redirecting) && '/homes/chooser' && !strpos($redirecting, '/users/login') && !strpos($redirecting, '/homes/chooser'))
             {
                 $this->redirect($redirecting);
