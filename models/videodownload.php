@@ -476,7 +476,7 @@ class Videodownload extends AppModel
          */
         function getPatronDownloadCount($library_id , $patron_id , $start_date , $end_date )
         {
-            $this->find(
+            return $this->find(
                     'all', array(
                 'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
                 'conditions' => array(
