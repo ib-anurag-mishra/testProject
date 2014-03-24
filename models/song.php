@@ -273,7 +273,7 @@ class Song extends AppModel
     function getArtistAlbums($artist_text , $country, $cond)
     {
         $this->Behaviors->attach('Containable');
-        return $this->Song->find('all', array(
+        return $this->find('all', array(
             'fields' => array(
                 'DISTINCT Song.ReferenceID',
                 'Song.provider_type',
