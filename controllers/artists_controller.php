@@ -1083,10 +1083,11 @@ Class ArtistsController extends AppController {
                 
                 $songs = $this->Song->getArtistView($id , $country, $cond, 2) ;
             }
-            foreach ($songs as $k => $v) {
-                $val = $val . $v['Song']['ReferenceID'] . ",";
-                $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "'),";
-            }
+            
+            $val_ref_prov = explode('&', $this->Common->getRefAndProviderCondString($songs) );
+            $val = $val_ref_prov[0];
+            $val_provider_type = $val_ref_prov[1];
+            
             $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
         }
 
@@ -1150,7 +1151,6 @@ Class ArtistsController extends AppController {
         
         if (!empty($albumData)) {            
             if ($libType == 2) {
-
                 $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
             }
         }
@@ -1201,7 +1201,7 @@ Class ArtistsController extends AppController {
             $this->Download->recursive = -1;
             foreach ($albumSongs as $k => $albumSong) {
                 foreach ($albumSong as $key => $value) {
-                    $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $value['Song']['ProdID'], 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+                    $downloadsUsed = $this->Download->getDownloadStatus($value['Song']['ProdID'] , $libId, $patId) ;                    
                     if (count($downloadsUsed) > 0) {
                         $albumSongs[$k][$key]['Song']['status'] = 'avail';
                     } else {
