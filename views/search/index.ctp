@@ -700,8 +700,8 @@ function Get_Sales_date($sales_date_array, $country) {
                         ?>
                         <div class="video-result-container">
                             <div class="video-thumb">
-                                    <?php
-                                    $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
+                                    <?php                                    
+                                    $videoArtwork = $this->Token->artworkToken($psong->ACdnPath . "/" . $psong->ASourceURL);
                                     $VideoImage = Configure::read('App.Music_Path') . $videoArtwork;
                                     ?>
                                 <a href="/videos/details/<?php echo $psong->ProdID; ?>"><img src="<?php echo $VideoImage; ?>"></a>
@@ -898,7 +898,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         <?php
                         $albumDetails = $album->getImage($palbum->ReferenceID);
                         if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
-                            $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
+                            $albumArtwork = $this->Token->artworkToken($albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                             $image = Configure::read('App.Music_Path') . $albumArtwork;
                         } else {
                             $image = 'no-image.jpg';
