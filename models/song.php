@@ -431,7 +431,7 @@ class Song extends AppModel
                         'conditions' =>
                         array('and' =>
                             array(
-                                array('Song.ReferenceID' => $album['Album']['ProdID']),
+                                array('Song.ReferenceID' => $prodID),
                                 array('Song.provider_type = Country.provider_type'),
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
