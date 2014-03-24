@@ -3,7 +3,9 @@ foreach ($albumData as $album_key => $album):
 ?>
 <section class="album-detail">
 	<div class="album-cover-image" id="genres_stream_now">
-		<?php $albumArtwork = shell_exec(Configure::read('App.tokengen') . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
+		<?php                         
+                        $albumArtwork = $this->Token->regularToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+                 ?>
 		<img
 			src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>"
 			alt="album-detail-cover" width="250" height="250" />

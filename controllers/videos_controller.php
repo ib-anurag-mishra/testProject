@@ -219,8 +219,8 @@ class VideosController extends AppController
             $insertArr['ProductID'] = $trackDetails['0']['Video']['ProductID'];
             $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
 
-            // creates download url
-            $videoUrl = shell_exec(Configure::read('App.tokengen') . $trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']); //"sony_test/".
+            // creates download url            
+            $videoUrl = $this->Token->regularToken($trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
             $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 
             //collects video data 
