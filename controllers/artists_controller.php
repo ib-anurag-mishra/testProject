@@ -2317,7 +2317,7 @@ Class ArtistsController extends AppController {
 
             $albumData = $this->paginate('Album');
 
-            if ($libType == 2)
+            if ($this->library_type == 2)
             {
                 foreach ($albumData as $key => $value)
                 {
