@@ -48,7 +48,9 @@
 			?>
 		<section class="album-detail">
 			<div class="album-cover-image">
-				<?php $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
+				<?php                                         
+                                        $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+                                 ?>
 				<img
 					src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>"
 					alt="album-detail-cover" width="250" height="250" />
