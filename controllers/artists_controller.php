@@ -2168,15 +2168,6 @@ Class ArtistsController extends AppController {
 
     function newAlbum($id = null, $album = null)
     {
-        if ($this->Session->read('block') == 'yes')
-        {
-            $cond = array('Song.Advisory' => 'F');
-        }
-        else
-        {
-            $cond = "";
-        }
-
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
@@ -2209,6 +2200,7 @@ Class ArtistsController extends AppController {
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
 
+        $cond = $this->Common->getBlockCondition();
         $songs = $this->Song->getArtistAlbums($id, $this->patron_country, $cond);
         if (!empty($songs))
         {

@@ -3048,6 +3048,19 @@ STR;
         }
     }
 
+    function getBlockCondition()
+    {
+        if ($this->Session->read('block') == 'yes')
+        {
+            return array('Song.Advisory' => 'F');
+        }
+        else
+        {
+            return "";
+        }
+    }
+
 }
+
 
 ?>

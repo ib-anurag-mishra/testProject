@@ -270,6 +270,15 @@ class Song extends AppModel
         return $allArtists;
     }
 
+    /**
+     * This function is used to return the Album id with there provider type 
+     * and the sales date of the album
+     * 
+     * @param string $artist_text
+     * @param string $country
+     * @param string $cond
+     * @return array
+     */
     function getArtistAlbums($artist_text , $country, $cond)
     {
         $this->Behaviors->attach('Containable');
