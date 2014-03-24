@@ -354,9 +354,149 @@ class Song extends AppModel
                         )),
                     'recursive' => 0, 'limit' => 1)
             );
+        }        
+    }
+    
+    
+    function getArtistSongs($prodID , $provider, $country, $cond, $queryType)
+    {     
+        
+        if($queryType==1)
+        {        
+            return $this->find('all', array(
+                            'conditions' =>
+                            array('and' =>
+                                array(
+                                    array('Song.ReferenceID' => $prodID),
+                                    array('Song.provider_type = Country.provider_type'),
+                                    array('Country.DownloadStatus' => 1),
+                                    array("Song.Sample_FileID != ''"),
+                                    array("Song.FullLength_FIleID != ''"),
+                                    array("Song.provider_type" => $provider),
+                                    array('Country.Territory' => $country),
+                                    $cond
+                                )
+                            ),
+                            'fields' => array(
+                                'Song.ProdID',
+                                'Song.Title',
+                                'Song.ArtistText',
+                                'Song.DownloadStatus',
+                                'Song.SongTitle',
+                                'Song.Artist',
+                                'Song.Advisory',
+                                'Song.Sample_Duration',
+                                'Song.FullLength_Duration',
+                                'Song.Sample_FileID',
+                                'Song.FullLength_FIleID',
+                                'Song.provider_type',
+                                'Song.sequence_number'
+                            ),
+                            'contain' => array(
+                                'Genre' => array(
+                                    'fields' => array(
+                                        'Genre.Genre'
+                                    )
+                                ),
+                                'Country' => array(
+                                    'fields' => array(
+                                        'Country.Territory',
+                                        'Country.SalesDate',
+                                        'Country.StreamingSalesDate',
+                                        'Country.StreamingStatus',
+                                        'Country.DownloadStatus'
+                                    )
+                                ),
+                                'Sample_Files' => array(
+                                    'fields' => array(
+                                        'Sample_Files.CdnPath',
+                                        'Sample_Files.SaveAsName'
+                                    )
+                                ),
+                                'Full_Files' => array(
+                                    'fields' => array(
+                                        'Full_Files.CdnPath',
+                                        'Full_Files.SaveAsName'
+                                    )
+                                ),
+                            ),
+                            'group' => 'Song.ProdID, Song.provider_type',
+                            'order' => array('Song.sequence_number', 'Song.ProdID')
+                        )
+                );
         }
-        
-        
+        else
+        {
+            return $this->find('all', array(
+                        'conditions' =>
+                        array('and' =>
+                            array(
+                                array('Song.ReferenceID' => $album['Album']['ProdID']),
+                                array('Song.provider_type = Country.provider_type'),
+                                array("Song.Sample_FileID != ''"),
+                                array("Song.FullLength_FIleID != ''"),
+                                array("Song.provider_type" => $provider),
+                                array('Country.Territory' => $country),
+                                $cond
+                            ),
+                            'or' => array(array('and' => array(
+                                        'Country.StreamingStatus' => 1,
+                                        'Country.StreamingSalesDate <=' => date('Y-m-d')
+                                    ))
+                                ,
+                                array('and' => array(
+                                        'Country.DownloadStatus' => 1
+                                    ))
+                            )
+                        ),
+                        'fields' => array(
+                            'Song.ProdID',
+                            'Song.Title',
+                            'Song.ArtistText',
+                            'Song.DownloadStatus',
+                            'Song.SongTitle',
+                            'Song.Artist',
+                            'Song.Advisory',
+                            'Song.Sample_Duration',
+                            'Song.FullLength_Duration',
+                            'Song.Sample_FileID',
+                            'Song.FullLength_FIleID',
+                            'Song.provider_type',
+                            'Song.sequence_number'
+                        ),
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
+                            ),
+                            'Country' => array(
+                                'fields' => array(
+                                    'Country.Territory',
+                                    'Country.SalesDate',
+                                    'Country.StreamingSalesDate',
+                                    'Country.StreamingStatus',
+                                    'Country.DownloadStatus',
+                                )
+                            ),
+                            'Sample_Files' => array(
+                                'fields' => array(
+                                    'Sample_Files.CdnPath',
+                                    'Sample_Files.SaveAsName'
+                                )
+                            ),
+                            'Full_Files' => array(
+                                'fields' => array(
+                                    'Full_Files.CdnPath',
+                                    'Full_Files.SaveAsName'
+                                )
+                            ),
+                        ),
+                        'group' => 'Song.ProdID, Song.provider_type',
+                        'order' => array('Song.sequence_number', 'Song.ProdID')
+                    )
+                );
+        }
         
     }
     
