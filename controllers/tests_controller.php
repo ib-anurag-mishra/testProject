@@ -900,8 +900,8 @@ STR;
 		$insertArr['provider_type'] = $provider;
 
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-		$songUrl = shell_exec(Configure::read('App.tokengen') . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
+        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];		
+                $songUrl = $this->Token->regularToken($trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
 		$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
@@ -2239,8 +2239,8 @@ STR;
 												)
 											)
 										);
-
-		$songUrl = shell_exec(Configure::read('App.tokengen') . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
+		
+                $songUrl = $this->Token->regularToken($data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
 		$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 		echo $finalSongUrl;
 		exit;

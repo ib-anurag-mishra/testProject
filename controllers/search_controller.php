@@ -11,7 +11,7 @@ class SearchController extends AppController
     var $name = 'Search';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Song', 'Language', 'Album', 'Session', 'WishlistVideo', 'Mvideo', 'Search', 'Queue', 'Token');
     var $components = array('Auth', 'Acl', 'RequestHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Solr', 'Session');
-    var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'Album', 'Song', 'Language', 'Searchrecord','LatestDownload','LatestVideodownload');
+    var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'Album', 'Song', 'Language', 'Searchrecord','LatestDownload','LatestVideodownload', 'Token');
 
     /*
       Function Name : beforeFilter
