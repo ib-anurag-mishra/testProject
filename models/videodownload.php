@@ -465,5 +465,28 @@ class Videodownload extends AppModel
 		}
 	}
 
+        /**
+         * This function is used to return the downlaod count 
+         * for the current patron 
+         * 
+         * @param string $library_id
+         * @param string $patron_id
+         * @param string $start_date
+         * @param string $end_date
+         */
+        function getPatronDownloadCount($library_id , $patron_id , $start_date , $end_date )
+        {
+            $this->find(
+                    'all', array(
+                'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+                'conditions' => array(
+                    'library_id' => $library_id,
+                    'patron_id' => $patron_id,
+                    'history < 2',
+                    'created BETWEEN ? AND ?' => array($start_date, $end_date)
+                ),
+                'group' => 'ProdID',
+            ));
+        }
 }
 ?>
