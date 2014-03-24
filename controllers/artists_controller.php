@@ -1075,12 +1075,9 @@ Class ArtistsController extends AppController {
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
         } else {
             $this->Song->Behaviors->attach('Containable');
-            if ($libType != 2) {                
-                
-                $songs = $this->Song->getArtistView($id , $country, $cond, 1) ;
-                
-            } else {  
-                
+            if ($libType != 2) {                                
+                $songs = $this->Song->getArtistView($id , $country, $cond, 1) ;                
+            } else {                  
                 $songs = $this->Song->getArtistView($id , $country, $cond, 2) ;
             }
             
