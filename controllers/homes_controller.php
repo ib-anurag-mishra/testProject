@@ -1019,8 +1019,8 @@ STR;
             $insertArr['provider_type'] = $provider;
 
             $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-            $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-            $songUrl = shell_exec(Configure::read('App.tokengen') . $trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
+            $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];            
+            $songUrl  = $this->Token->regularToken($trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);                
             $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 
             if ($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
@@ -2801,8 +2801,8 @@ STR;
         $prodId = $_REQUEST['prodId'];
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-
-        $videoUrl = shell_exec(Configure::read('App.tokengen') . $CdnPath . "/" . $SaveAsName);
+        
+        $videoUrl  = $this->Token->regularToken($CdnPath . "/" . $SaveAsName);                
         $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
         $finalURL = urlencode($finalVideoUrlArr[0]) . urlencode($finalVideoUrlArr[1]) . urlencode($finalVideoUrlArr[2]);
@@ -3014,8 +3014,8 @@ STR;
 
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-
-        $songUrl = shell_exec(Configure::read('App.tokengen') . $CdnPath . "/" . $SaveAsName);
+        
+        $songUrl  = $this->Token->regularToken($CdnPath . "/" . $SaveAsName);                
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
         $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
@@ -3366,7 +3366,8 @@ STR;
                 )
         );
 
-        $songUrl = shell_exec(Configure::read('App.tokengen') . $data['Sample_Files']['CdnPath'] . "/" . $data['Sample_Files']['SaveAsName']);
+        
+        $songUrl  = $this->Token->regularToken($data['Sample_Files']['CdnPath'] . "/" . $data['Sample_Files']['SaveAsName']);                
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         echo $finalSongUrl;
         exit;
@@ -3594,8 +3595,8 @@ STR;
          * if all required field are not null then we continue 
          * for download and  insert record in download table
          */
-
-        $songUrl = shell_exec(Configure::read('App.tokengen'). $CdnPath . "/" . $SaveAsName);
+        
+        $songUrl  = $this->Token->regularToken($CdnPath . "/" . $SaveAsName);   
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
         $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
