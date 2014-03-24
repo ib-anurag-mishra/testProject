@@ -1043,8 +1043,7 @@ Class ArtistsController extends AppController {
             }
         }
  
-        //reading session vlaues from app_controller.php
-        
+        //reading session vlaues from app_controller.php        
         $country = $this->patron_country;
         $libType = $this->library_type;
         $patId = $this->patron_id;
@@ -1059,6 +1058,7 @@ Class ArtistsController extends AppController {
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
 
+        // Explicit songs
         $cond = "";
         if ($this->Session->read('block') == 'yes') {
             $cond = array('Song.Advisory' => 'F');
@@ -1089,12 +1089,6 @@ Class ArtistsController extends AppController {
             $val_provider_type = $val_ref_prov[1];
             
             $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
-        }
-
-        if ($this->Session->read('block') == 'yes') {
-            $cond = array('Album.Advisory' => 'F');
-        } else {
-            $cond = "";
         }
 
         $this->paginate = array('conditions' =>
@@ -1140,12 +1134,7 @@ Class ArtistsController extends AppController {
             'cache' => 'yes',
             'chk' => 2
         );
-
-        if ($this->Session->read('block') == 'yes') {
-            $cond = array('Song.Advisory' => 'F');
-        } else {
-            $cond = "";
-        }
+        
         $this->Album->recursive = 2;
         $albumData = $this->paginate('Album'); //getting the Albums for the artist
         
