@@ -250,13 +250,13 @@
 
 									$downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value["Video"]["provider_type"], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
-									if ($downloadsUsed > 0)
+									if ($downloadsUsed[0] > 0)
 									{
-										$value['Video']['status'] = 'avail';
+										$value['Video']['status'] = 'not';
 									}
 									else
 									{
-										$value['Video']['status'] = 'not';
+										$value['Video']['status'] = 'avail';
 									}
 									if ($value['Video']['status'] != 'avail')
 									{
