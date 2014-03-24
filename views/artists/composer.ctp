@@ -119,7 +119,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 			foreach ($albumData as $palbum) {
 				$albumDetails = $album->getImage($palbum->ReferenceID);
 
-				if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {					$albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
+				if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {					                                        
                                         $albumArtwork = $this->Token->artworkToken($albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
 					$image = Configure::read('App.Music_Path') . $albumArtwork;
 				} else {
