@@ -31,7 +31,7 @@ class VideodownloadHelper extends AppHelper
         }
         else
         {
-           return $videodownloadInstance->checkVideoDownloadStatus($prodId, $provider_type, $libId ,  $patID, $startDate, $endDate );            
+            return array_pop($videodownloadInstance->checkVideoDownloadStatus($prodId, $provider_type, $libId ,  $patID, $startDate, $endDate ));             
         }
     }
 

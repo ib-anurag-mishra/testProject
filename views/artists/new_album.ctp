@@ -250,7 +250,7 @@
 
 									$downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value["Video"]["provider_type"], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
-									if ($downloadsUsed[0] > 0)
+									if ($downloadsUsed > 0)
 									{
 										$value['Video']['status'] = 'not';
 									}
