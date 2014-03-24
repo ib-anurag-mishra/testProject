@@ -2292,8 +2292,8 @@ Class ArtistsController extends AppController {
                     else
                     { }
                 }
-
-                $albumArtwork = shell_exec(Configure::read('App.tokengen') . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+                
+                $albumArtwork = $this->Token->regularToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
 
                 //get the album title
                 $title_album_on_hover = $album['Album']['AlbumTitle'];

@@ -194,9 +194,10 @@ Class GenresController extends AppController
                             ),
                         )
                 )));
-                $albumArtwork = shell_exec(Configure::read('App.tokengen') . $downloadData[0]['Files']['CdnPath'] . "/" . $downloadData[0]['Files']['SourceURL']);
-                $sampleSongUrl = shell_exec(Configure::read('App.tokengen') . $genre['Sample_Files']['CdnPath'] . "/" . $genre['Sample_Files']['SaveAsName']);
-                $songUrl = shell_exec(Configure::read('App.tokengen') . $genre['Full_Files']['CdnPath'] . "/" . $genre['Full_Files']['SaveAsName']);
+                
+                $albumArtwork  = $this->Token->regularToken($downloadData[0]['Files']['CdnPath'] . "/" . $downloadData[0]['Files']['SourceURL']);                
+                $sampleSongUrl = $this->Token->regularToken($genre['Sample_Files']['CdnPath'] . "/" . $genre['Sample_Files']['SaveAsName']);                
+                $songUrl = $this->Token->regularToken($genre['Full_Files']['CdnPath'] . "/" . $genre['Full_Files']['SaveAsName']);
                 $finalArr[$i]['Album'] = $genre['Song']['Title'];
                 $finalArr[$i]['Song'] = $genre['Song']['SongTitle'];
                 $finalArr[$i]['Artist'] = $genre['Song']['Artist'];
