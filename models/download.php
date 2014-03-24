@@ -477,5 +477,22 @@ class Download extends AppModel
       return false;
     }
   }
+  
+  
+  function getDownloadStatus($prodID , $libId, $patId)
+    {        
+        return $this->find('all', array('conditions' => 
+                                                    array('ProdID' => $prodID,
+                                                            'library_id' => $libId,
+                                                            'patron_id' => $patId,
+                                                            'history < 2',
+                                                            'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
+                                                            Configure::read('App.twoWeekEndDate'))
+                                                        ),
+                                        'limit' => '1'
+                                        )
+                        );
+    }
+  
 }
 ?>
