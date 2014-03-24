@@ -1668,7 +1668,8 @@ Class ArtistsController extends AppController {
     }
 
     function album($id = null, $album = null, $provider = null) {
-
+     echo $this->patron_country ;
+     exit;
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
@@ -1716,7 +1717,7 @@ Class ArtistsController extends AppController {
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
-                'Country.Territory' => $country, $cond,
+                'Country.Territory' => $this->patron_country, $cond,
                 'Song.provider_type = Country.provider_type'),
             'contain' => array(
                 'Country' => array(

@@ -3,14 +3,19 @@
 class AppController extends Controller
 {
 
-    var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common'); 
+    var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download','Library');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library');
     var $view = 'Dataencode';
+    var $patron_country;
+    var $patron_id;
+    var $library_id;
+    var $library_type;
 
     function beforeFilter()
     {
-       // $this->log("App Controller -- START", "siteSpeed");
+
+        // $this->log("App Controller -- START", "siteSpeed");
         ini_set('session.cookie_domain', env('HTTP_BASE'));
         Configure::write('Session.checkAgent', false);
         Configure::write('Session.ini', array('session.cookie_secure' => false, 'session.referer_check' => false));
@@ -66,20 +71,22 @@ class AppController extends Controller
                 $this->Session->write("library", 1);
                 //$this->Session->write("library_type", $libraryData['Library']['test_library_type']);
                 $this->Session->write("block", (($libraryData['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
-            }elseif($this->Session->read("patron") != "" && $this->Session->read("library") !=""){
-                $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => $this->Session->read("library")), 'fields' => array('library_territory','test_library_type','library_type'), 'recursive' => -1));
+            }
+            elseif ($this->Session->read("patron") != "" && $this->Session->read("library") != "")
+            {
+                $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => $this->Session->read("library")), 'fields' => array('library_territory', 'test_library_type', 'library_type'), 'recursive' => -1));
                 $country = $libraryData['Library']['library_territory'];
                 $lib_type = $this->Session->read("library_type");
-                if(empty($lib_type))
+                if (empty($lib_type))
                 {
                     $this->Session->write("library_type", $libraryData['Library']['library_type']);
                 }
-            }            
-            
-            if($country == 'IT')
+            }
+
+            if ($country == 'IT')
             {
-                $this->Session->write("library_type", '1');          
-            }            
+                $this->Session->write("library_type", '1');
+            }
         }
         $this->switchCpuntriesTable();
         if ((Cache::read('maintainLatestDownload')) === false)
@@ -98,10 +105,11 @@ class AppController extends Controller
         $this->Auth->authorize = 'actions';
         $this->Auth->fields = array('username' => 'email', 'password' => 'password');
         $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
-        
+
         //adding this hack because of urgency of report
         //need to be modify
-        if($this->Session->read("Auth.User.id") ){
+        if ($this->Session->read("Auth.User.id"))
+        {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('library_type'), 'recursive' => -1));
             $this->Session->write('AdminlibraryType', $libraryAdminID["Library"]["library_type"]);
         }
@@ -116,47 +124,48 @@ class AppController extends Controller
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache');
         //$this->checkOnlinePatron();
-
-
-         // add announcement in the cache
+        // add announcement in the cache
         if (($announceInfo = Cache::read("announcementCache")) === false)
         {
             $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
             $announcment_rs = $this->Album->query($announcment_query);
-            Cache::write("announcementCache",$announcment_rs);
+            Cache::write("announcementCache", $announcment_rs);
         }
         else
-        {         
+        {
             //get announcement from the cache
             $announcment_rs = Cache::read("announcementCache");
         }
-        
-        if(isset($announcment_rs[0]['pages']['page_content'])){
-            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
-        }else{
-            $announcmentValue = '';
-        }        
-        $this->set('announcment_value', $announcmentValue);
-        
-        
-        
-        
-        /*
-         * Below Code of Register Concert is Commented as per Request
-         */
-        
-        // Code for Register Concert  -- START
 
-     /*   if (($this->Session->read("patron") != '') && ($this->Session->read("lId") != ''))
+        if (isset($announcment_rs[0]['pages']['page_content']))
         {
-            $concert_query = "SELECT * from register_concerts WHERE library_card = '" . $this->Session->read("patron") . "' and library_id=" . $this->Session->read("lId");
-            $concert_rs = $this->Album->query($concert_query);
-            $this->set('register_concert_id', empty($concert_rs[0]['register_concerts']['id']) ? '' : $concert_rs[0]['register_concerts']['id']);
+            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
         }
         else
         {
-            $this->set('register_concert_id', '');
-        } */
+            $announcmentValue = '';
+        }
+        $this->set('announcment_value', $announcmentValue);
+
+
+
+
+        /*
+         * Below Code of Register Concert is Commented as per Request
+         */
+
+        // Code for Register Concert  -- START
+
+        /*   if (($this->Session->read("patron") != '') && ($this->Session->read("lId") != ''))
+          {
+          $concert_query = "SELECT * from register_concerts WHERE library_card = '" . $this->Session->read("patron") . "' and library_id=" . $this->Session->read("lId");
+          $concert_rs = $this->Album->query($concert_query);
+          $this->set('register_concert_id', empty($concert_rs[0]['register_concerts']['id']) ? '' : $concert_rs[0]['register_concerts']['id']);
+          }
+          else
+          {
+          $this->set('register_concert_id', '');
+          } */
 
         // Code for Register Concert  -- END
         //common funcitonality for the user wishlist items which are already added
@@ -198,11 +207,11 @@ class AppController extends Controller
                 $wishlistVariArray = @array_unique($wishlistVariArray);
                 $this->Session->write('wishlistVideoArray', $wishlistVariArray);
             }
-            
-           // print_r($this->Session->read('wishlistVideoArray'));
-            
-            
-            
+
+            // print_r($this->Session->read('wishlistVideoArray'));
+
+
+
 
             if (!$this->Session->read('downloadVariArray'))
             {
@@ -227,10 +236,14 @@ class AppController extends Controller
                 $this->Common->getVideodownloadStatus($this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
             }
         }
-        
-        //$this->Session->write("library_type", $libraryData['Library']['library_type']);
 
-       // $this->log("App Controller -- END", "siteSpeed");
+        //$this->Session->write("library_type", $libraryData['Library']['library_type']);
+        // $this->log("App Controller -- END", "siteSpeed");
+
+        $this->patron_country = $this->Session->read('territory');
+        $this->patron_id = $this->Session->read('patron');
+        $this->library_id = $this->Session->read('library');
+        $this->library_type = $this->Session->read('library_type');
     }
 
     function checkOnlinePatron()
