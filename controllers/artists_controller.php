@@ -22,7 +22,7 @@ Class ArtistsController extends AppController {
     function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer','newAlbum' , 'newView');
+		$this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer','newAlbum' , 'new_view');
 
 		
 
@@ -1021,11 +1021,11 @@ Class ArtistsController extends AppController {
     
     
     /*
-      Function Name : newView
+      Function Name : new_view
       Desc : For artist view page
      */
 
-    function newView($id = null, $album = null, $provider = null) {
+    function new_view($id = null, $album = null, $provider = null) {
 
         $this->layout = 'home';
 
