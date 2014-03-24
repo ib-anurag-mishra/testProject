@@ -317,9 +317,8 @@ STR;
 					$albumDetails = $album->getImage( $palbum->ReferenceID );
 					$albumDetails = $album->getImage( $palbum->ReferenceID );
 					
-					if( !empty( $albumDetails[0]['Files']['CdnPath'] ) && !empty( $albumDetails[0]['Files']['SourceURL'] ) ) {
-
-						$albumArtwork = shell_exec( Configure::read( 'App.tokengen' ) . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL'] );
+					if( !empty( $albumDetails[0]['Files']['CdnPath'] ) && !empty( $albumDetails[0]['Files']['SourceURL'] ) ) {					
+                                                $albumArtwork = $this->Token->regularToken($albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL'] );
 						$image = Configure::read( 'App.Music_Path' ) . $albumArtwork;
 
 					} else {
@@ -758,10 +757,9 @@ STR;
 
 					$albumDetails = $album->getImage( $palbum->ReferenceID );
 
-					if( !empty( $albumDetails[0]['Files']['CdnPath'] ) && !empty( $albumDetails[0]['Files']['SourceURL'] ) ) {
-
-						$albumArtwork = shell_exec( Configure::read( 'App.tokengen' ) . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL'] );
-						$image 		  = Configure::read( 'App.Music_Path' ) . $albumArtwork;
+					if( !empty( $albumDetails[0]['Files']['CdnPath'] ) && !empty( $albumDetails[0]['Files']['SourceURL'] ) ) {				
+                                                $albumArtwork = $this->Token->regularToken($albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL'] );
+						$image = Configure::read( 'App.Music_Path' ) . $albumArtwork;
 
 					} else {
 						$image = 'no-image.jpg';
@@ -1127,8 +1125,8 @@ STR;
               						?>
               						</span>
 									<?php
-									$sampleFile   	= $song->getSampleFile( $psong->Sample_FileID );
-									$songUrl 	  	= shell_exec( Configure::read( 'App.tokengen' ) . $sampleFile['CdnPath'] . "/" . $sampleFile['SaveAsName'] );
+									$sampleFile   	= $song->getSampleFile( $psong->Sample_FileID );									
+                                                                        $songUrl = $this->Token->regularToken($sampleFile['CdnPath'] . "/" . $sampleFile['SaveAsName'] );
 									$finalSongUrl 	= Configure::read( 'App.Music_Path' ) . $songUrl;
 									$finalSongUrlArr = str_split( $finalSongUrl, ceil( strlen( $finalSongUrl ) / 3 ) );
 
