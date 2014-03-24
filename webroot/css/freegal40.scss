@@ -2808,6 +2808,11 @@ sub { top: 0.4em; }
 				display: block;
 			}
 
+			ul:first-child {
+
+				height: 126px;
+			}
+
 			.playlist-menu {
 
 				display: none;
