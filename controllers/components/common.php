@@ -3065,11 +3065,12 @@ STR;
     }
     
     /**
-     * this function return the string which contains the
+     * This function return the string which contains the
+     * 
      * @param array $song_array
      * @return String
      */
-    function getRefAndProviderConditionString($song_array)
+    function getRefAndProviderCondString($song_array)
     {
         $val = '';
         $val_provider_type = '';

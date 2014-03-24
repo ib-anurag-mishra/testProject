@@ -2205,7 +2205,7 @@ Class ArtistsController extends AppController {
         
         if (!empty($songs))
         {
-            $val_ref_prov = explode('&', $this->Common->getRefAndProviderConditionString($songs) );
+            $val_ref_prov = explode('&', $this->Common->getRefAndProviderCondString($songs) );
             $val = $val_ref_prov[0];
             $val_provider_type = $val_ref_prov[1];
             
