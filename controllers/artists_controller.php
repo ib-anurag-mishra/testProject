@@ -1051,7 +1051,7 @@ Class ArtistsController extends AppController {
 
             $countryPrefix = $this->Common->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
         } else {
-            $country = $this->Session->read('territory');
+            $country = $this->Session->read('territory'); 
         }
         $libType = $this->Session->read('library_type');
         if ($this->Session->read('block') == 'yes') {
