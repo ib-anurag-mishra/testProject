@@ -2237,9 +2237,26 @@ Class ArtistsController extends AppController {
         $this->set('patronDownload', $patronDownload);
         
         $songs = $this->Song->getArtistAlbums($id , $this->patron_country, $cond) ;
-        echo '<pre>';
-        print_r($songs);
-        exit;
+          if (!empty($songs)) {
+           
+       }
+       
+       
+       // Videos Section
+        $decodedId = trim(base64_decode($id));
+
+        if (!empty($this->patron_country)) {
+            if (((Cache::read("videolist_" . $this->patron_country . "_" . $decodedId)) === false) || (Cache::read("videolist_" . $this->patron_country . "_" . $decodedId) === null)) {
+
+                if (!empty($decodedId)) {
+                    $artistVideoList = $this->Common->getAllVideoByArtist($this->patron_country, $decodedId);
+                    Cache::write("videolist_" . $this->patron_country . "_" . $decodedId, $artistVideoList);
+                }
+            } else {
+                $artistVideoList = Cache::read("videolist_" . $this->patron_country . "_" . $decodedId);
+            }
+            $this->set('artistVideoList', $artistVideoList);
+        }
     }
     
     
