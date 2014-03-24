@@ -1048,11 +1048,12 @@ Class ArtistsController extends AppController {
             }
         }
  
-        //reading sessin vlaues
-        $country = $this->Session->read('territory');
-        $libType = $this->Session->read('library_type');
-        $patId = $this->Session->read('patron');
-        $libId = $this->Session->read('library');
+        //reading session vlaues from app_controller.php
+        
+        $country = $this->patron_country;
+        $libType = $this->library_type;
+        $patId = $this->patron_id;
+        $libId = $this->library_id;
         
         //checking the download status for the patron & library
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
