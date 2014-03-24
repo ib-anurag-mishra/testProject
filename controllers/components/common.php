@@ -3026,17 +3026,7 @@ STR;
 
         if (!$this->Session->check('videodownloadCountArray') || $update)
         {
-            $videodownloadCount = $videodownloadInstance->find(
-                    'all', array(
-                'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
-                'conditions' => array(
-                    'library_id' => $libId,
-                    'patron_id' => $patID,
-                    'history < 2',
-                    'created BETWEEN ? AND ?' => array($startDate, $endDate)
-                ),
-                'group' => 'ProdID',
-            ));
+            $videodownloadCount = $videodownloadInstance->getPatronDownloadCount($libId ,  $patID, $startDate, $endDate );;
             foreach ($videodownloadCount as $key => $value)
             {
                 $videodownloadCountArray[$value['Videodownload']['ProdID']] = array(

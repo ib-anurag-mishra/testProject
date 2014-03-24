@@ -31,16 +31,7 @@ class VideodownloadHelper extends AppHelper
         }
         else
         {
-            $videodownloadCount = $videodownloadInstance->getPatronDownloadCount($libId ,  $patID, $startDate, $endDate );
-            foreach ($videodownloadCount as $key => $value)
-            {
-                $videodownloadCountArray[$value['Videodownload']['ProdID']] = array(
-                    'provider_type' => $value['Videodownload']['provider_type'],
-                    'totalProds' => $value[0]['totalProds']
-                );
-            }
-            $this->Session->write('videodownloadCountArray', $videodownloadCountArray);
-            return $videodownloadCountArray[$prodId]['totalProds'];
+           return $videodownloadInstance->checkVideoDownloadStatus($prodId, $provider_type, $libId ,  $patID, $startDate, $endDate );            
         }
     }
 

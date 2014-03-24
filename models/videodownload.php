@@ -488,5 +488,34 @@ class Videodownload extends AppModel
                 'group' => 'ProdID',
             ));
         }
+        
+        /**
+         * This function check if the video is downloaded or not.
+         * and it return the count.
+         * 
+         * @param int $prodId
+         * @param string $provider_type
+         * @param int $library_id
+         * @param int $patron_id
+         * @param datetime $start_date
+         * @param datetime $end_date
+         * @return array
+         */
+        function checkVideoDownloadStatus($prodId, $provider_type,$library_id , $patron_id , $start_date , $end_date)
+        {
+             return $this->find(
+                    'all', array(
+                'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+                'conditions' => array(
+                    'ProdID' => $prodId,
+                    'provider_type' => $provider_type,
+                    'library_id' => $library_id,
+                    'patron_id' => $patron_id,
+                    'history < 2',
+                    'created BETWEEN ? AND ?' => array($start_date, $end_date)
+                ),
+                'group' => 'ProdID',
+            ));
+        }
 }
 ?>
