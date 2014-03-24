@@ -1075,49 +1075,13 @@ Class ArtistsController extends AppController {
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
         } else {
             $this->Song->Behaviors->attach('Containable');
-            if ($libType != 2) {
-                $songs = $this->Song->find('all', array(
-                    'fields' => array(
-                        'DISTINCT Song.ReferenceID',
-                        'Song.provider_type'),
-                    'conditions' => array(
-                        'Song.ArtistText' => base64_decode($id),
-                        'Country.DownloadStatus' => 1,
-                        "Song.Sample_FileID != ''",
-                        "Song.FullLength_FIleID != ''",
-                        'Country.Territory' => $country, 
-                        $cond),
-                    'contain' => array(
-                        'Country' => array(
-                            'fields' => array(
-                                'Country.Territory')
-                        )
-                    ),
-                    'recursive' => 0,
-                    'limit' => 1)
-                );
-            } else {
-                $songs = $this->Song->find('all', array(
-                    'fields' => array(
-                        'DISTINCT Song.ReferenceID',
-                        'Song.provider_type'),
-                    'conditions' => array(
-                        'Song.ArtistText' => base64_decode($id),
-                        "Song.Sample_FileID != ''",
-                        "Song.FullLength_FIleID != ''",
-                        'Country.Territory' => $country,
-                        'Country.DownloadStatus' => 1,
-                        array('or' =>
-                            array(
-                                array('Country.StreamingStatus' => 1)
-                            )),
-                        $cond
-                    ), 'contain' => array(
-                        'Country' => array(
-                            'fields' => array('Country.Territory')
-                        )),
-                    'recursive' => 0, 'limit' => 1)
-                );
+            if ($libType != 2) {                
+                
+                $songs = $this->Song->getArtistView($id , $country, $cond, 1) ;
+                
+            } else {  
+                
+                $songs = $this->Song->getArtistView($id , $country, $cond, 2) ;
             }
             foreach ($songs as $k => $v) {
                 $val = $val . $v['Song']['ReferenceID'] . ",";

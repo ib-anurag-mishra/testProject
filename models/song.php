@@ -294,6 +294,63 @@ class Song extends AppModel
             ))
         );
     }
+    
+    function getArtistView($id , $country, $cond, $query_id)
+    {
+        $this->Behaviors->attach('Containable');
+        
+        if($query_id==1)
+        {
+            return $this->find('all', array(
+                        'fields' => array(
+                            'DISTINCT Song.ReferenceID',
+                            'Song.provider_type'),
+                        'conditions' => array(
+                            'Song.ArtistText' => base64_decode($id),
+                            'Country.DownloadStatus' => 1,
+                            "Song.Sample_FileID != ''",
+                            "Song.FullLength_FIleID != ''",
+                            'Country.Territory' => $country, 
+                            $cond),
+                        'contain' => array(
+                            'Country' => array(
+                                'fields' => array(
+                                    'Country.Territory')
+                            )
+                        ),
+                        'recursive' => 0,
+                        'limit' => 1)
+            );
+        }
+        else if($query_id==2)
+        {
+            return $this->find('all', array(
+                    'fields' => array(
+                        'DISTINCT Song.ReferenceID',
+                        'Song.provider_type'),
+                    'conditions' => array(
+                        'Song.ArtistText' => base64_decode($id),
+                        "Song.Sample_FileID != ''",
+                        "Song.FullLength_FIleID != ''",
+                        'Country.Territory' => $country,
+                        'Country.DownloadStatus' => 1,
+                        array('or' =>
+                            array(
+                                array('Country.StreamingStatus' => 1)
+                            )),
+                        $cond
+                    ), 'contain' => array(
+                        'Country' => array(
+                            'fields' => array('Country.Territory')
+                        )),
+                    'recursive' => 0, 'limit' => 1)
+            );
+        }
+        
+        
+        
+    }
+    
 
 }
 
