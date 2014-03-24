@@ -8,7 +8,6 @@
 
 class VideodownloadHelper extends AppHelper
 {
-
     var $uses = array('Videodownload');
     var $helpers = array('Session');
 

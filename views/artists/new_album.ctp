@@ -252,11 +252,11 @@
 
 									if ($downloadsUsed > 0)
 									{
-										$value['Video']['status'] = 'not';
+										$value['Video']['status'] = 'avail';
 									}
 									else
 									{
-										$value['Video']['status'] = 'avail';
+										$value['Video']['status'] = 'not';
 									}
 									if ($value['Video']['status'] != 'avail')
 									{
