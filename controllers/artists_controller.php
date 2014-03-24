@@ -21,7 +21,7 @@ Class ArtistsController extends AppController {
 
     function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer');
+		$this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer','newAlbum');
     }
 
     /*
@@ -1668,8 +1668,7 @@ Class ArtistsController extends AppController {
     }
 
     function album($id = null, $album = null, $provider = null) {
-     echo $this->patron_country ;
-     exit;
+    
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
@@ -1717,7 +1716,7 @@ Class ArtistsController extends AppController {
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
-                'Country.Territory' => $this->patron_country, $cond,
+                'Country.Territory' => $country, $cond,
                 'Song.provider_type = Country.provider_type'),
             'contain' => array(
                 'Country' => array(
@@ -1829,6 +1828,47 @@ Class ArtistsController extends AppController {
         }
     }
 
+    function newAlbum($id = null, $album = null)
+    {
+         if ($this->Session->read('block') == 'yes') {
+            $cond = array('Song.Advisory' => 'F');
+        } else {
+            $cond = "";
+        }
+
+        if (count($this->params['pass']) > 1) {
+            $count = count($this->params['pass']);
+            $id = $this->params['pass'][0];
+            for ($i = 1; $i < $count - 1; $i++) {
+                if (!is_numeric($this->params['pass'][$i])) {
+                    $id .= "/" . $this->params['pass'][$i];
+                }
+            }
+        }
+
+        if (isset($this->params['named']['page'])) {
+            $this->layout = 'ajax';
+        } else {
+            $this->layout = 'home';
+        }
+        
+        $id = str_replace('@', '/', $id);
+        $this->set('artisttext', base64_decode($id));
+        $this->set('artisttitle', base64_decode($id));
+        $this->set('genre', base64_decode($album));
+        
+        $libraryDownload = $this->Downloads->checkLibraryDownload($this->library_id);
+        $patronDownload = $this->Downloads->checkPatronDownload($this->patron_id, $this->library_id);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+        
+        $songs = $this->Song->getArtistAlbums($id , $this->patron_country, $cond) ;
+        echo '<pre>';
+        print_r($songs);
+        exit;
+    }
+    
+    
     function album_ajax($id = null, $album = null, $provider = null) {
 
         $country = $this->Session->read('territory');
