@@ -169,7 +169,7 @@ class SolrComponent extends Object {
 
 						case 'composer':
 							$query 		 = $searchkeyword;
-							$queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
+							$queryFields = "CComposer^100";
 							break;
 
 						case 'all':
