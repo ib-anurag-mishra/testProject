@@ -580,6 +580,14 @@ function Get_Sales_date($sales_date_array, $country) {
 
                                     </div>
                                     <div class="genre">Genre: <?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?> </div>
+                                    <?php
+                                    if ($palbum->Copyright != '' && $album['Album']['Copyright'] != 'Unknown')
+                                    {  ?>                                   	
+                                        <div class="label">
+                                           <?php  echo $this->getTextEncode($palbum->Copyright); ?>
+					</div>
+                              <?php }
+                                    ?>                                        
                                                     <?php
                                                     if ($this->Session->read("patron")) {
                                                         if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) {
