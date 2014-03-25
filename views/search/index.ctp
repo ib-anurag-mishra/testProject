@@ -144,7 +144,7 @@ function Get_Sales_date($sales_date_array, $country) {
 <section class="search-page">
     <div class="breadcrumbs">
     <?php
-    $html->addCrumb(__('Search Results', true), '/search/index');
+    $html->addCrumb(__('Search Results', true));
     echo $html->getCrumbs(' > ', __('Home', true), '/homes');
     ?>
     </div>
