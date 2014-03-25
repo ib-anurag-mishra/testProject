@@ -241,11 +241,13 @@ $totalRows = count($genresAll);
                             {
                                 ?>class="selected" <?php } ?> data-letter="All"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>', '', '')">ALL</a></li>                                            
                         
+                       <?php  if(!in_array('[',$artistsNoAlpha)){ ?>
                         <li><a   href="javascript:void(0);" <?php
                             if ($selectedAlpha == "#")
                             {
                                 ?>class="selected" <?php } ?>  data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl', '', '')">#</a>
                         </li>
+                        <?php } ?>
                         <?php  if(!in_array('A',$artistsNoAlpha)){ ?>                            
                             <li><a   href="javascript:void(0);" <?php
                                 if ($selectedAlpha == "A")

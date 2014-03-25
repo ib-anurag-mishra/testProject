@@ -49,7 +49,7 @@ var preValue= 1;
 				<div class="alpha-artist-list-column">
                                     <ul>
                                     <li><a  href="javascript:void(0);" data-letter="All" <?php if($selectedAlpha =="All") {?>class="selected active" <?php } ?>   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/All' ,'' , '')">ALL</a></li>                                            
-                                    <li><a  href="javascript:void(0);" data-letter="#"   <?php if($selectedAlpha =="spl") {?>class="selected active" <?php } ?>   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl' ,'' , '')" >#</a></li> 
+                                    <?php  if(!in_array('[',$artistsNoAlpha)){ ?><li><a  href="javascript:void(0);" data-letter="#"   <?php if($selectedAlpha =="spl") {?>class="selected active" <?php } ?>   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl' ,'' , '')" >#</a></li><?php } ?> 
                                     
                                     <?php  if(!in_array('A',$artistsNoAlpha)){ ?><li><a  href="javascript:void(0);" data-letter="A"   <?php if($selectedAlpha =="A") {?>class="selected active" <?php } ?>   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/A' ,'' , '')">A</a></li><?php } ?>
                                     <?php  if(!in_array('B',$artistsNoAlpha)){ ?><li><a  href="javascript:void(0);" data-letter="B"   <?php if($selectedAlpha =="B") {?>class="selected active" <?php } ?>   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/B' ,'' , '')">B</a></li><?php } ?>
