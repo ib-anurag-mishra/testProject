@@ -3729,8 +3729,8 @@ STR;
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
 
             if ($maintainLatestDownload) {
-                $this->log("sonyproc_new called", 'download');
-                $procedure = 'sonyproc_new';
+                $this->log("downloadsong called", 'download');
+                $procedure = 'downloadsong';
                 $sql = "CALL downloadsong('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Song']['ProductID'] . "', '" . $trackDetails['0']['Song']['ISRC'] . "', '" . addslashes($trackDetails['0']['Song']['Artist']) . "', '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
             } else {
                 $this->log("sonyproc_ioda called", 'download');
