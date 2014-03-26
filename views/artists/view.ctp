@@ -1,3 +1,4 @@
+
 <section class="albums-page">
     <section class="album-detail-container clearfix">
         <div class="breadcrumbs">
@@ -53,12 +54,17 @@
                         <?php
                         if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
                         {
+                            //echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
                             echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
                             ?>
                             <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                             <div class="wishlist-popover">
                                 <input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album"/>
+                                <?php
+                                // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
+                                ?>
                                 <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+                                <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                             </div>
                             <?php
                         }
@@ -66,13 +72,23 @@
 
                         <?php
                         $image = Configure::read('App.Music_Path') . $albumArtwork;
-                        if ($page->isImage($image)) {
+                        if ($page->isImage($image))
+                        {
                             //Image is a correct one
-                        } else { /*Blank*/ }
+                        }
+                        else
+                        {
+
+                            //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                        }
                         ?>
 
                     </div>
                     <div class="release-info">Release Information</div>
+
+
+
+
 
                     <div class="album-genre">
                         <?php echo __('Genre') . ": "; ?>
@@ -223,6 +239,8 @@
                             }
                             ?>
 
+
+
                             <div class="song <?php       echo $class;     echo $cs;  ?>">
                                 <?php
                                      if (strlen($albumSong['Song']['SongTitle']) >= 30)
@@ -274,9 +292,13 @@
                                     <?php
                                     if (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
                                     {
+                                        //$productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'], $albumSong["Song"]['provider_type']);
 
                                         if ($libraryDownload == '1' && $patronDownload == '1')
                                         {
+//                                        $songUrl = shell_exec('perl files/tokengen ' . $albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
+//                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+//                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                             if ($albumSong['Song']['status'] != 'avail')
                                             {
                                                 ?>
@@ -329,16 +351,19 @@
                                     <?php
                                     if ($streamingFlag == 1)
                                     {
+                                        //echo $this->Queue->getQueuesList($this->Session->read('patron'), $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"], $album['Album']["ProdID"], $album['Album']["provider_type"]);
                                         ?>
                                         <a class="add-to-playlist" href="javascript:void(0);">Add To Playlist</a>
                                         <?php
                                     }
                                     ?>
+                                    <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
                                     <?php
                                     $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
 
                                     echo $wishlist->getWishListMarkup($wishlistInfo, $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"]);
-                                    ?>                                                                              
+                                    ?>
+                                <?php //echo $this->Queue->getSocialNetworkinglinksMarkup();  ?>                                                                                 
                                 </div> 
                                 <?php
                             }
@@ -369,7 +394,9 @@
                             }
                             ?>
                         </div>
-        <?php } ?>
+        <?php } ?>    
+
+
                 </section>
                 <?php
             endforeach;

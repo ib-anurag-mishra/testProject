@@ -265,6 +265,12 @@ EOD;
      */
     function getSocialNetworkinglinksMarkup()
     {
+
+//        return  '<div class="share clearfix">
+//                        <p>Share via</p>
+//                        <a class="facebook" href="#"></a>
+//                        <a class="twitter" href="#"></a>
+//                </div>';
         return "";
     }
 
@@ -291,5 +297,9 @@ EOD;
             return 0;
         }
     }
+    
+     
+
 }
+
 ?>

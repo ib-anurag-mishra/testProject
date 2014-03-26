@@ -16,6 +16,7 @@
         </title>
         <?php
         echo $this->Html->meta('icon');
+        //echo $javascript->link('ImageDisableRightClick');
         echo $this->Html->css('freegal_styles');
         echo $this->Html->css('freegal40');
           echo $this->Html->css('jquery.autocomplete');
@@ -26,13 +27,17 @@
           echo $javascript->link('curvycorners');
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
-          echo $javascript->link('jquery.bgiframe'); 
+          echo $javascript->link('jquery.bgiframe');
+       //   echo $javascript->link('jquery.autocomplete'); 
         ?>		
 
 
 
         <?php
         echo $javascript->link('jquery-1.3.2.min');
+//		echo $javascript->link('qtip');
+//		echo $javascript->link('qtip_add');
+//		echo $scripts_for_layout;
         if ($this->Session->read('Config.language') == 'en') {
             $setLang = 'en';
         } else {
@@ -45,12 +50,41 @@
             <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script>                                            
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
+            <!-- <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" /> -->
+            <!--
+<link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
+            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
+-->
+           
+            <!-- <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" /> -->
+
+
+            <!-- <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script> -->
+            
+            <?php /*if(preg_match('/(?i)msie 8/',$_SERVER['HTTP_USER_AGENT']))
+                {
+            ?>
+                <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.min.css" />
+            <?php
+                }
+            else{
+            ?>
+                <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
+                <script src="<?php echo $this->webroot; ?>app/webroot/js/less.js"></script>
+            <?php
+                }*/
+            ?>
             <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.css" />
              <!--[if IE 8]>
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
             <![endif]-->   
             <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>
             <script src="<? echo $this->webroot; ?>app/webroot/js/respond.min.js"></script>    
+            
+<!--
+            <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
+            <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
+-->
 
                <script type="text/javascript">
                 var webroot = '<?php echo $this->webroot; ?>';
@@ -111,6 +145,17 @@
                     ?>
                 </noscript>
                 <script type="text/javascript">
+//                    $().ready(function() {
+//                        var tmpcookie = new Date();
+//                        chkcookie = (tmpcookie.getTime() + '');
+//                        document.cookie = "chkcookie=" + chkcookie;
+//                        if (document.cookie.indexOf(chkcookie,0) < 0) {
+//<?php if (!isset($this->params['pass']['0'])) { ?>				
+//                location.href = "<?php echo $this->webroot; ?>homes/aboutus/cookie_err";
+//<?php } ?>
+//        }
+//    });
+                
                               
     function validateEmail(email) { 
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

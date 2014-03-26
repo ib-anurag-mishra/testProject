@@ -47,6 +47,7 @@
                     <a href="javascript:void(0);" class="no-ajaxy">
                         <?php echo strip_tags($questionquText); ?>
                     </a>
+                    <?php /*<p style="display: none;" ></p>*/?>
                     <?php echo str_replace(array("<li>", "</li>", "<ul>", "</ul>"), array("<p style='display: none;'>", "</p>", "", ""), $questionansText); ?>
                 </li>
 

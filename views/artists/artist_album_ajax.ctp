@@ -32,7 +32,14 @@
                         <?php
                         if (empty($album['Files']['CdnPath']))
                         {
-                            if (empty($album['Files']['SourceURL'])) { /*Blank*/ } else { /*Blank*/ }
+                            if (empty($album['Files']['SourceURL']))
+                            {
+                                // mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                            }
+                            else
+                            {
+                                // mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                            }
                         }
                         ?>
 
@@ -41,7 +48,11 @@
                         if ($page->isImage($image))
                         {
                             // Image is a correct one
-                        } else { /*Blank*/ }
+                        }
+                        else
+                        {
+                            //mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                        }
                         ?>
 
                     </a>   

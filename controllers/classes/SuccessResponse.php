@@ -1,39 +1,39 @@
 <?php
 
 class SuccessResponse{
-	/**
+  /**
 	 * successresponse
 	 * @var SuccessResponseType
 	 */
-	public $successresponse;
+  public $successresponse;
 
-	/**
+  /**
 	 * Constructor
 	 * @param SuccessResponseType $successresponse
 	 * @return bool
 	 */
-	public function __construct($successresponse){
-		$this->successresponse = $successresponse;
-		return true;
-	}
+  public function __construct($successresponse){
+    $this->successresponse = $successresponse;
+    return true;
+  }
 }
 
 class SuccessResponseType{
-	/**
+  /**
 	 * success
 	 * @var bool
 	 */
-	public $success;
-	/**
+  public $success;
+  /**
 	 * message
 	 * @var string
 	 */
-	public $message;
+  public $message; 
 
-	/**
+  /**
 	 * Constructor
 	 */
-	public function __construct(){
-
-	}
+  public function __construct(){
+  
+  }
 }

@@ -113,6 +113,9 @@ $ieVersion =  ieversion();
 				<div class="row clearfix">
 					<div class="date"><?php echo date("Y-m-d",strtotime($downloadResult['Download']['created'])); ?></div>
 					<div class="small-album-container">
+						
+						<!-- <a class="preview" href="#"></a> -->
+                        
                                                     
                        <?php
                        
@@ -162,6 +165,7 @@ $ieVersion =  ieversion();
                                             if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                             </a>
                                         </div>
+					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title">
                                             <a title="<?php echo $this->getTextEncode($downloadResult['Song']['Title'] ); ?>" 
                                                href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
@@ -187,11 +191,29 @@ $ieVersion =  ieversion();
                                             </a>
                                         </div>
 					
+					<!-- <div class="wishlist-popover">
+						<!--	
+						<a class="remove-song" href="#">Remove Song</a>
+						<a class="make-cover-art" href="#">Make Cover Art</a>
+						*/
+                                        <?php
+                                        if($this->Session->read('library_type') == '2'){
+                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$downloadResult["Song"]["ProdID"],$downloadResult["Song"]["provider_type"],$downloadResult["Album"]["ProdID"],$downloadResult["Album"]["provider_type"]); ?>
+                                            <a class="add-to-playlist" href="#">Add To Playlist</a>
+                                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                        <?php } else {
+                                                    //echo $this->Queue->getSocialNetworkinglinksMarkup(); 
+                                              }
+                                        ?>
+					</div> -->
 					<div class="download">
                    
                         <p>
                             <?php
                             $productInfo = $song->getDownloadData($downloadResult['Download']['ProdID'],$downloadResult['Download']['provider_type']);
+//                            $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
+//                            $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+//                            $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
                             ?>
                                     <span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
                                             <![if !IE]>
@@ -223,8 +245,12 @@ $ieVersion =  ieversion();
 				<?php
                 if(count($videoDownloadResults) != 0)
                 {
+                    //$i = 1;
                     foreach($videoDownloadResults as $key => $videoDownloadResult):
-
+                    /*$class = null;
+                    if ($i++ % 2 == 0) {
+                        $class = ' class="altrow"';
+                    }*/
                 ?>
 				
 				<div class="row clearfix">
@@ -235,6 +261,7 @@ $ieVersion =  ieversion();
                         $videoImageUrl = Configure::read('App.Music_Path').$videoImage;
                         ?>
                         <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
+						<!-- <a class="preview" href="#"></a> -->
 					</div>
 					<div class="song-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>" href="javascript:void(0)">
                     <?php 
@@ -245,6 +272,7 @@ $ieVersion =  ieversion();
 					 	}
 					?><?php if('T' == $videoDownloadResult['Video']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </a></div>
+					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Video']['Title']); ?>" href="javascript:void(0)">
                                              <?php 
 						if (strlen($videoDownloadResult['Video']['Title']) >= 22) {

@@ -14,6 +14,7 @@ class ClearController extends AppController {
   
     
   function cachekey($key){
+  //Configure::write('debug', 2);
 
     if(!empty($key)){
       $this->autoRender = false;
@@ -650,6 +651,7 @@ STR;
 		$ids_provider_type = '';
 		$ids = '';
 		$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => $language), 'recursive' => -1));
+		//	print "<pre>";print_r($featured);exit;
 		foreach($featured as $k => $v){
 			if($v['Featuredartist']['album'] != 0){
 				if(empty($ids)){
@@ -1105,5 +1107,8 @@ STR;
     }
 
   }
+  
+  
+  
 }
 ?>

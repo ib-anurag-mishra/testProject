@@ -1,3 +1,6 @@
 <?php
-class ToolbarComponent extends Object { }
+class ToolbarComponent extends Object {
+
+
+}
 ?>

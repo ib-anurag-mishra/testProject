@@ -7,7 +7,8 @@
 
 class Graphic extends AppModel
 {
-  var $name = 'Graphic';  
+  var $name = 'Graphic';
+//  var $useDbConfig = 'freegal';  
   var $useTable = 'Graphic';  
   var $primaryKey = 'FileID';
   
@@ -18,4 +19,5 @@ class Graphic extends AppModel
 		)
 	);
 }
+
 ?>

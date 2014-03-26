@@ -1,6 +1,6 @@
 <?php
 
-class LibraryTopTen {
+class LibraryTopTen{
   /**
 	 * librarytopten
 	 * @var LibraryTopTenType
@@ -12,13 +12,13 @@ class LibraryTopTen {
 	 * @param LibraryTopTenType $librarytopten
 	 * @return bool
 	 */
-  public function __construct($librarytopten) {
+  public function __construct($librarytopten){
     $this->librarytopten = $librarytopten;
     return true;
   }
 }
 
-class LibraryTopTenType {
+class LibraryTopTenType{
   /**
 	 * ProdId
 	 * @var int
@@ -125,7 +125,7 @@ class LibraryTopTenType {
   /**
 	 * Constructor
 	 */
-  public function __construct() {
+  public function __construct(){
 
   }
 }

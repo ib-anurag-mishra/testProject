@@ -1,59 +1,59 @@
 <?php
 
 class FreegalLibrary{
-	/**
+  /**
 	 * library
 	 * @var FreegalLibraryType
 	 */
-	public $library;
+  public $library;
 
-	/**
+  /**
 	 * Constructor
 	 * @param FreegalLibraryType $library
 	 * @return bool
 	 */
-	public function __construct($library){
-		$this->library = $library;
-		return true;
-	}
+  public function __construct($library){
+    $this->library = $library;
+    return true;
+  }
 }
 
 class FreegalLibraryType{
-	/**
+  /**
 	 * LibraryId
 	 * @var int
 	 */
-	public $LibraryId;
-	/**
+  public $LibraryId;
+  /**
 	 * LibraryName
 	 * @var string
 	 */
-	public $LibraryName;
-	/**
+  public $LibraryName;
+  /**
 	 * LibraryApiKey
 	 * @var string
 	 */
-	public $LibraryApiKey;
-	/**
+  public $LibraryApiKey;
+  /**
 	 * LibraryAuthenticationMethod
 	 * @var string
 	 */
-	public $LibraryAuthenticationMethod;
-	/**
+  public $LibraryAuthenticationMethod;
+  /**
 	 * LibraryAuthenticationNum
 	 * @var string
 	 */
-	public $LibraryAuthenticationNum;
-	/**
+  public $LibraryAuthenticationNum;
+  /**
 	 * LibraryAuthenticationUrl
 	 * @var string
 	 */
-	public $LibraryAuthenticationUrl;
+  public $LibraryAuthenticationUrl;
 
-	/**
+  /**
 	 * Constructor
 	 */
-	public function __construct(){
+  public function __construct(){
 
-	}
+  }
 }

@@ -1,3 +1,5 @@
+<?php //echo $this->element('sql_dump');     ?>
+
 <section class="videos">
 
 
@@ -43,6 +45,13 @@
 
                                         if ($libraryDownload == '1' && $patronDownload == '1')
                                         {
+
+                                            //$productInfo = $mvideo->getDownloadData($featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+//                                            $videoUrl = shell_exec('perl files/tokengen ' . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['Video_file']['SaveAsName']);
+//                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+//                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
+
+
                                             $downloadsUsed = $this->Videodownload->getVideodownloadfind($featureVideo['FeaturedVideo']['ProdID'], $featureVideo['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
 
@@ -89,11 +98,13 @@
                                             <?php
                                         }
                                         ?>
+                    <!-- <a class="featured-video-download-now-button" href="javascript:void(0)"><?php echo __('Download Now'); ?></a> -->
                                         <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                                         <div class="wishlist-popover">
                                             <?php
                                             $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
                                             echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $featureVideo["FeaturedVideo"]["ProdID"], $featureVideo["Video"]["provider_type"]);
+                                            //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                             ?>
                                         </div>
                                         <?php
@@ -161,6 +172,7 @@
                     ?>
 
                     <?php
+                    //print_r($topVideoDownloads); die;
                     $total_videos = count($topVideoDownloads);
                     $sr_no = 0;
                     foreach ($topVideoDownloads as $key => $topDownload)
@@ -180,6 +192,7 @@
                                 if ($this->Session->read('patron'))
                                 {
                                     ?>
+                                    <!--  <a class="top-video-download-now-button" href="javascript:void(0)">Download Now</a> -->
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a> 
                                     <?php
                                 }
@@ -197,6 +210,13 @@
                                     {
                                         if ($libraryDownload == '1' && $patronDownload == '1')
                                         {
+
+                                            //$productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
+
+
+//                                            $videoUrl = shell_exec('perl files/tokengen ' . $topDownload["File"]['CdnPath'] . "/" . $topDownload['Video_file']['SaveAsName']);
+//                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+//                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
 
                                             $downloadsUsed = $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'], $topDownload['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
@@ -251,6 +271,7 @@
                                         <?php
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $topDownload["Video"]["ProdID"], $featureVideo["Video"]["provider_type"]);
+                                        //echo $this->Queue->getSocialNetworkinglinksMarkup(); 
                                         ?>
 
                                         <?php
@@ -304,4 +325,13 @@
             </ul>
         </div>
     </section> <!-- end .video-top-genres -->
+
+
+
+
+
+
+
+
 </section> <!-- end .videos -->
+

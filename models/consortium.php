@@ -7,7 +7,8 @@
 
 class Consortium extends AppModel
 {
-  var $name 	= 'Consortium';
+  var $name = 'Consortium';
   var $useTable = 'consortia';
+  
 }
 ?>

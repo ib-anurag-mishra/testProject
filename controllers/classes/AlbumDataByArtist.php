@@ -1,64 +1,64 @@
 <?php
 
 class AlbumDataByArtist{
-	/**
+  /**
 	 * albumdatabyartist
 	 * @var AlbumDataByArtistType
 	 */
-	public $albumdatabyartist;
+  public $albumdatabyartist;
 
-	/**
+  /**
 	 * Constructor
 	 * @param AlbumDataByArtistType $albumdatabyartist
 	 * @return bool
 	 */
-	public function __construct($albumdatabyartist){
-		$this->albumdatabyartist = $albumdatabyartist;
-		return true;
-	}
+  public function __construct($albumdatabyartist){
+    $this->albumdatabyartist = $albumdatabyartist;
+    return true;
+  }
 }
 
 class AlbumDataByArtistType{
-	/**
+  /**
 	 * ProdID
 	 * @var int
 	 */
-	public $ProdID;
+  public $ProdID;
 
-	/**
+  /**
 	 * Genre
 	 * @var string
 	 */
-	public $Genre;
-	 
-	/**
+  public $Genre;
+   
+  /**
 	 * AlbumTitle
 	 * @var string
 	 */
-	public $AlbumTitle;
-
-	/**
+  public $AlbumTitle;
+  
+  /**
 	 * Title
 	 * @var string
 	 */
-	public $Title;
-
-	/**
+  public $Title;
+  
+  /**
 	 * Label
 	 * @var string
 	 */
-	public $Label;
-
-	/**
+  public $Label;
+  
+  /**
 	 * FileURL
 	 * @var string
 	 */
-	public $FileURL;
+  public $FileURL;
 
-	/**
+  /**
 	 * Constructor
 	 */
-	public function __construct(){
-
-	}
+  public function __construct(){
+  
+  }
 }

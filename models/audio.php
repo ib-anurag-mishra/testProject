@@ -8,10 +8,10 @@
 
 class Audio extends AppModel
 {
-  var $name 	  = 'Audio';  
-  var $useTable   = 'Audio';  
+  var $name = 'Audio';
+//  var $useDbConfig = 'freegal';  
+  var $useTable = 'Audio';  
   var $primaryKey = 'TrkID';
-
   var $belongsTo = array(
 		'Files' => array(
 			'className' => 'Files',
@@ -19,4 +19,5 @@ class Audio extends AppModel
 		)
 	);
 }
+
 ?>

@@ -2,6 +2,42 @@
 
 var createLinkThis;
 
+/*
+$(document).ready(function() {
+     $("#FormRegisterConcert").submit(function() {
+     var frm = $('#FormRegisterConcert');
+        $.ajax({
+            type: "post",
+            url: webroot+'registerconcerts/ajax_submit_register_concert',
+            data: frm.serialize(),
+            success: function (response) { 
+                //alert("["+response+"]");
+                if(response=='Failure')
+                {
+                  $('#FailureMessage').html("<br><span style='color:red;'>Please fill information in all fields.</span><br>");   
+                }
+                else
+                {
+                    $('#FormRegisterConcert').hide();   
+                    $('#FailureMessage').hide();
+                    $('#ReturnMessage').append(response); 
+                       
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            // log the error to the console
+            console.log(
+                "The following error occured: "+
+                textStatus, errorThrown
+            );
+            }
+ 
+        });
+ 
+        return false;
+    });
+}); */
+
 $(document).ready(function() {
      $("#FormRename").submit(function() {
         var frm = $('#FormRename');
@@ -10,7 +46,7 @@ $(document).ready(function() {
                url: webroot+'queuelistdetails/ajaxQueueValidation',
                data: frm.serialize(),
                success: function (response) { 
-
+                   //alert("["+response+"]");
                    if(response=='Insertion Allowed')
                    {     
                         $(this).unbind('submit').submit();
@@ -40,6 +76,8 @@ $(document).ready(function() {
 
 function renameQueue()
 {
+    //alert($('.rename-form-container').find('#name').val());
+
     $.ajax({
             type: "post",
             url: webroot+'queuelistdetails/index/'+ $('#rqPlid').val(),
@@ -166,6 +204,7 @@ function createQueue(){
                  var updated_queue_list = '<li><a href="JavaScript:void(0);" onclick="JavaScript:addToAlbumTest('+album_data[1]+', this );" id="'+album_data[1]+'">' +album_data[2] + '</a></li>';
                  $(updated_queue_list).insertAfter( $(document).find('.playlist-options-test').find('.playlist-options').find('ul li:eq(0)') );
 
+                //History.pushState(null, title, url);
                 event.preventDefault();
             },
             error: function(jqXHR, textStatus, errorThrown){
@@ -199,6 +238,16 @@ $(document).ready(function() {
         } else {
 
             $(this).next('ul').addClass('active');
+            /* var home07 = $('#home07');
+            home07.removeClass('active');
+            var musicVideo07 = $('#musicVideo07');
+            musicVideo07.removeClass('active');
+            var newsRelease07 = $('#newsRelease07');
+            newsRelease07.removeClass('active');
+            var genre07 = $('#genre07');
+            genre07.removeClass('active');
+            var faq07 = $('#faq07');
+            faq07.removeClass('active'); */
         }
 
     });
@@ -404,6 +453,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                        if($this->Session->read("patron")){ 
                                                             $maxStreamTime    =   $libraryInfo['Library']['library_streaming_hours']*60*60;
 
+                                                         //if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
                                                             if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
 
                                                            { 
@@ -733,7 +783,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <h2><?php __('My Downloads'); ?></h2>
                                                     <ul>
                                                         <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css,"id"=>'leftmyhistory07',"onclick"=>"setUpperNavigation('leftmyhistory07')")); ?></li>
-                                                        <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css,"id"=>'leftmywishlist07',"onclick"=>"setUpperNavigation('leftmywishlist07')")); ?></li> 
+                                                        <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
+                                                        <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css,"id"=>'leftmywishlist07',"onclick"=>"setUpperNavigation('leftmywishlist07')")); ?></li>
+                                                        <?php /* } */ ?> 
                                                     </ul>
                                             </div>
                                              <?php } ?>
@@ -742,6 +794,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         
                                                         if($temp_text!="")
                                                         {
+                                                            // $announcment_class  =   "display:block;overflow-y:scroll;";
                                                             $announcment_class  =   "display:block;";
                                                         }
                                                         else
@@ -759,3 +812,4 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					</section>					
 					<div class="content" style="<?php echo $section_class; ?>">
                                             <span class="ajaxmessage44" id="ajaxflashMessage44"></span>
+ 

@@ -1,34 +1,34 @@
 <?php
 
 class UserTypeResponse{
-	/**
+  /**
 	 * usertyperesponse
 	 * @var UserTypeResponseType
 	 */
-	public $usertyperesponse;
+  public $usertyperesponse;
 
-	/**
+  /**
 	 * Constructor
 	 * @param UserTypeResponseType $usertyperesponse
 	 * @return bool
 	 */
-	public function __construct($usertyperesponse){
-		$this->usertyperesponse = $usertyperesponse;
-		return true;
-	}
+  public function __construct($usertyperesponse){
+    $this->usertyperesponse = $usertyperesponse;
+    return true;
+  }
 }
 
 class UserTypeResponseType{
-	/**
+  /**
 	 * usertype
 	 * @var integer
 	 */
-	public $usertype;
+  public $usertype;
 
-	/**
+  /**
 	 * Constructor
 	 */
-	public function __construct(){
-
-	}
+  public function __construct(){
+  
+  }
 }

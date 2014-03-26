@@ -7,11 +7,13 @@
 
 class Country extends AppModel
 {
-  var $name 	   = 'Country';
-  var $usetable    = 'countries';
+  var $name = 'Country';
+
+  var $usetable = 'countries';
+  
   var $tablePrefix = '';
   
-  function setTablePrefix( $prefix ) {  
+  function setTablePrefix($prefix){  
 
     $this->tablePrefix = $prefix;
   }

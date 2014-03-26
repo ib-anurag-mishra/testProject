@@ -172,6 +172,7 @@ class sip2Component extends Object {
         $this->_addFixedOption($this->PWDalgorithm, 1);
         $this->_addVarOption('CN',$sipLogin);
         $this->_addVarOption('CO',$sipPassword);
+	//	$this->_addVarOption('CP',$this->scLocation, true);
         $this->_addVarOption('CP', $sipLocation);
 		return $this->_returnMessage();
 

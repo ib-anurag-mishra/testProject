@@ -28,6 +28,8 @@ class PhysicalproductHelper extends AppHelper {
 							)
 							)                                  
 						)
+						/*,
+                                                 'group' => 'Physicalproduct.ReferenceID'*/
 					  ));
         return  $physicalproductDetails;
     }

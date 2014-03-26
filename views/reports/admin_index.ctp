@@ -23,6 +23,14 @@
                         <?php
                             if($libraryID == "") {
                         ?>
+                        <!-- commented as Territory is not required for consortium. As suggested by Micah -->
+<!--							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>
+							<td align="left">
+										<?php
+											echo $this->Form->input('Territory', array('options' => $territory, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
+																	);
+                                ?>
+                            </td>-->
                             <td align="right"><?php echo $this->Form->label('Select Library');?></td>
                             <td align="left">
                                     <div id="allLibrary">
@@ -257,6 +265,7 @@
                                 </tr>
                                 <?php
 								$i = 1;
+				//				print "<pre>";print_r($downloads);exit;
                                 foreach($downloads as $key => $download) {
                                 ?>
                                     <tr>
@@ -296,6 +305,7 @@
                                 </tr>
                                 <?php
 								$i = 1;
+				//				print "<pre>";print_r($downloads);exit;
                                 foreach($videoDownloads as $key => $download) {
                                 ?>
                                     <tr>
@@ -508,6 +518,23 @@
 			});
 			return false;
 		});
+		
+				
+//		function report_load_page(){
+//			var data = "Territory="+$("#ReportTerritory").val()+"&lib_id=<?=  $library_id; ?>";
+//			jQuery.ajax({
+//				type: "post",  // Request method: post, get
+//				url: webroot+"admin/reports/getLibraryIds", // URL to request
+//				data: data,  // post data
+//				success: function(response) {
+//						$('#allLibrary').text('');
+//						$('#allLibrary').html(response);
+//				},
+//				error:function (XMLHttpRequest, textStatus, errorThrown) {}
+//			});
+//
+//		}
+
     });
     <?php
         if(!empty($downloads) || !empty($videoDownloads)) {

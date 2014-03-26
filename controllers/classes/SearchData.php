@@ -1,113 +1,113 @@
 <?php
 
 class SearchData{
-	/**
+  /**
 	 * searchdata
 	 * @var SearchDataType
 	 */
-	public $searchdata;
+  public $searchdata;
 
-	/**
+  /**
 	 * Constructor
 	 * @param SearchDataType $searchdata
 	 * @return bool
 	 */
-	public function __construct($searchdata){
-		$this->searchdata = $searchdata;
-		return true;
-	}
+  public function __construct($searchdata){
+    $this->searchdata = $searchdata;
+    return true;
+  }
 }
 
 class SearchDataType{
-	/**
+  /**
 	 * SongProdID
 	 * @var int
 	 */
-	public $SongProdID;
-	/**
+  public $SongProdID;
+  /**
 	 * SongTitle
 	 * @var string
 	 */
-	public $SongTitle;
-	/**
+  public $SongTitle;
+  /**
 	 * Title
 	 * @var string
 	 */
-	public $Title;
-	/**
+  public $Title;
+  /**
 	 * SongArtist
 	 * @var string
 	 */
-	public $SongArtist;
-
-	/**
+  public $SongArtist;
+  
+  /**
 	 * ArtistText
 	 * @var string
 	 */
-	public $ArtistText;
-	/**
+  public $ArtistText;
+  /**
 	 * AlbumArtist
 	 * @var string
 	 */
-	public $AlbumArtist;
-	/**
+  public $AlbumArtist;
+  /**
 	 * fileURL
 	 * @var string
 	 */
-	public $fileURL;
-	/**
+  public $fileURL;
+  /**
 	 * FullLengthFileURL
 	 * @var string
 	 */
-	public $FullLengthFileURL;
-
-	/**
+  public $FullLengthFileURL;
+  
+  /**
 	 * AlbumProdID
 	 * @var int
 	 */
-	public $AlbumProdID;
-
-	/**
+  public $AlbumProdID;
+  
+  /**
 	 * AlbumTitle
 	 * @var string
 	 */
-	public $AlbumTitle;
-
-	/**
+  public $AlbumTitle;
+  
+  /**
 	 * Sample_Duration
 	 * @var string
 	 */
-	public $Sample_Duration;
-
-	/**
+  public $Sample_Duration;
+  
+  /**
 	 * FullLength_Duration
 	 * @var string
 	 */
-	public $FullLength_Duration;
-
-	/**
+  public $FullLength_Duration;
+  
+  /**
 	 * ISRC
 	 * @var string
 	 */
-	public $ISRC;
-
-	/**
+  public $ISRC;
+  
+  /**
 	 * DownloadStatus
 	 * @var int
 	 */
-	public $DownloadStatus;
-
-	/**
+  public $DownloadStatus;
+  
+  /**
 	 * playButtonStatus
 	 * @var int
 	 */
-	public $playButtonStatus;
-
-
-	/**
+  public $playButtonStatus;
+  
+  
+  /**
 	 * Constructor
 	 */
-	public function __construct(){
-
-	}
+  public function __construct(){
+  
+  }
 }

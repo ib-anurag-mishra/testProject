@@ -276,7 +276,11 @@ class SoapsController extends AppController {
       }
 
       return new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalLibraryType');
+
+
     }
+
+
   }
 
 
@@ -1095,6 +1099,7 @@ STR;
 									array('Song.ReferenceID' => $prodId),
 									array('Song.provider_type = Country.provider_type'),
 									array('Country.DownloadStatus' => 1),
+								//	array('Country.StreamingStatus' => 1),
 									array('Country.StreamingSalesDate < NOW()'),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
@@ -7265,7 +7270,8 @@ STR;
             
       if(true === $this->validateMp4FileExist($FileData['f4']['SaveAsName'], $FileData['f4']['CdnPath'])) {
         //creates mp4
-        return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']); 
+        return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
+        //return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['SaveAsName'].' '.$FileData['f4']['CdnPath']); 
       }else{
         //sends mp3
         return $this->sendMp3Url($ProdID, $provider_type);
@@ -7332,6 +7338,7 @@ STR;
     $connection = ssh2_connect($this->CDN_HOST, 22);
     ssh2_auth_password($connection, $this->CDN_USER, $this->CDN_PASS);
     $filePath = '/published/'.$SaveAsName.'/'.$CdnPath;
+    //$filePath = '/published/000/000/000/000/004/519/20/RoseFalcon_LooksAreEverything_G010001640168b_1_2-256K_44S_2C_cbr1x.mp4';
 
     $sftp = ssh2_sftp($connection);
     $statinfo = null;
@@ -7345,5 +7352,7 @@ STR;
       return false;
     }
   
-  } 
+  }
+  
+  
 }

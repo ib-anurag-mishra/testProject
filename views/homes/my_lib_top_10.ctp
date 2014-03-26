@@ -17,6 +17,7 @@
         <div class="album-scrollable horiz-scroll">
             <ul style="width:2700px;">
                 <?php
+                //$this->log("My Lib Top 10 -- Album START", "siteSpeed");
                 $count = 1;
                 if (count($topDownload_albums) > 0)
                 {
@@ -27,10 +28,16 @@
                         if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T'))
                         {
                             continue;
-                        }                                   					
+                        }
+
+                        // $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                        // $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
                         ?>					
                         <li>
                             <div class="album-container">
+                                    <!-- <a href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['ProdID']); ?>">
+                                    <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
+                                    </a> -->
 
                                 <?php
                                 echo $html->link($html->image($value['album_img'], array("height" => "250", "width" => "250")), array('controller' => 'artists', 'action' => 'view',
@@ -47,7 +54,11 @@
                                         <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                         <div class="wishlist-popover">
                                             <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
+                                            <?php
+                                            // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
+                                            ?>
                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+                                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                         </div>
                                         <?php
                                     }
@@ -67,6 +78,7 @@
                             <div class="album-title">							
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
                                     <?php
+                                    //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                     if (strlen($value['Albums']['AlbumTitle']) > 20)
                                         echo substr($value['Albums']['AlbumTitle'], 0, 20) . "...";
                                     else
@@ -96,6 +108,7 @@
 
                     echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                 }
+                //$this->log("My Lib Top 10 -- Album END", "siteSpeed");
                 ?>
             </ul>
         </div>
@@ -105,11 +118,16 @@
         <div class="songs-scrollable horiz-scroll">
             <ul style="width:2700px;">
                 <?php
+                //$this->log("My Lib Top 10 -- Songs START", "siteSpeed");
                 $count = 1;
                 if (count($top_10_songs) > 0)
                 {
+                    //for($d=1;$d<$count;$d++) {
                     foreach ($top_10_songs as $key => $value)
                     {
+
+
+
                         //hide song if library block the explicit content
                         if (($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] == 'T'))
                         {
@@ -118,6 +136,10 @@
 
                         if ($count > 10)
                             break;
+
+                        //$songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                        //$songs_img =  Configure::read('App.Music_Path').$songs_img; 
+                        //echo "<pre>"; print_r($value); 
                         ?>
                         <li>
 
@@ -131,6 +153,7 @@
                                 if ($this->Session->read("patron"))
                                 {
                                     ?> 
+                                    <!-- <a href="#" class="preview"></a>  -->
                                     <?php
                                     if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                     {
@@ -143,7 +166,8 @@
                                             $song_title = $value['Song']['SongTitle'];
                                         }
 
-                                        echo $this->Queue->getStreamNowLabel($value['streamUrl'], $song_title, $value['Song']['ArtistText'], $value['totalseconds'], $value['Song']['ProdID'], $value['Song']['provider_type']); 
+                                        echo $this->Queue->getStreamNowLabel($value['streamUrl'], $song_title, $value['Song']['ArtistText'], $value['totalseconds'], $value['Song']['ProdID'], $value['Song']['provider_type']);
+                                        //echo $html->image('/img/news/top-100/preview-off.png', array( "class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$song_title.'","'.$value['Song']['ArtistText'].'",'.$value['totalseconds'].',"'.$value['Song']['ProdID'].'","'.$value['Song']['provider_type'].'");')); 
                                     }
                                     else if ($value['Country']['SalesDate'] <= date('Y-m-d'))
                                     {
@@ -167,6 +191,9 @@
                                         if ($libraryDownload == '1' && $patronDownload == '1')
                                         {
                                             $productInfo = $song->getDownloadData($value['Song']['ProdID'], $value['Song']['provider_type']);
+//                                            $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+//                                            $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+//                                            $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                                                                         
                                             if($this->Session->read('downloadVariArray'))
                                             {
@@ -276,6 +303,7 @@
                                         <?php
                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                         {
+                                            // echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Song"]["ProdID"], $value["Song"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
                                             ?>
                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                         <?php } ?>
@@ -286,6 +314,7 @@
                                         $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
+                                        //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                         ?>
                                     </div>
                                 <?php } ?>
@@ -294,6 +323,7 @@
                             <div class="album-title">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['SongTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
                                     <?php
+                                    //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                     if (strlen($value['Song']['SongTitle']) > 20)
                                         echo substr($value['Song']['SongTitle'], 0, 20) . "...";
                                     else
@@ -324,6 +354,7 @@
 
                     echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                 }
+                //$this->log("My Lib Top 10 -- Songs END", "siteSpeed");
                 ?>
 
 
@@ -336,6 +367,7 @@
         <div class="videos-scrollable horiz-scroll">
             <ul style="width:4430px;">
                 <?php
+                //$this->log("My Lib Top 10 -- Video START", "siteSpeed");
                 $count = 1;
 
                 if (count($topDownload_videos_data) > 0)
@@ -376,6 +408,9 @@
                                         if ($libraryDownload == '1' && $patronDownload == '1')
                                         {
                                             $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
+//                                            $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+//                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+//                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                             $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                             if ($downloadsUsed > 0)
                                             {
@@ -462,6 +497,8 @@
                                 }
                                 ?>
 
+
+                                <!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
                                 <?php
                                 if ($this->Session->read('patron'))
                                 {
@@ -472,6 +509,7 @@
                                         <?php
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"]);
+                                        //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                         ?>
 
                                     </div>
@@ -480,6 +518,7 @@
                             <div class="album-title">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                     <?php
+                                    //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                     if (strlen($value['Video']['VideoTitle']) > 20)
                                         echo substr($value['Video']['VideoTitle'], 0, 20) . "...";
                                     else
@@ -510,6 +549,7 @@
 
                     echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                 }
+                 //$this->log("My Lib Top 10 -- Video END", "siteSpeed");
                 
                 ?>
 

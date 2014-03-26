@@ -1,53 +1,53 @@
 <?php
 
 class QueueListData{
-	/**
+  /**
 	 * queuelistdata
 	 * @var QueueListDataType
 	 */
-	public $queuelistdata;
+  public $queuelistdata;
 
-	/**
+  /**
 	 * Constructor
 	 * @param QueueListDataType $queuelistdata
 	 * @return bool
 	 */
-	public function __construct($queuelistdata){
-		$this->queuelistdata = $queuelistdata;
-		return true;
-	}
+  public function __construct($queuelistdata){
+    $this->queuelistdata = $queuelistdata;
+    return true;
+  }
 }
 
 class QueueListDataType{
-	/**
+  /**
 	 * QueueID
 	 * @var int
 	 */
-	public $QueueID;
-	/**
+  public $QueueID;
+  /**
 	 * QueueName
 	 * @var string
 	 */
-	public $QueueName;
-	/**
+  public $QueueName;
+  /**
 	 * QueueCreated
 	 * @var string
 	 */
-	public $QueueCreated;
-	/**
+  public $QueueCreated;  
+  /**
 	 * Queuemodified
 	 * @var string
 	 */
-	public $QueueModified;
-	/**
+  public $QueueModified;
+  /**
 	 * Queueuser
 	 * @var string
 	 */
-	public $QueueUser;
-	/**
+  public $QueueUser;
+  /**
 	 * Constructor
 	 */
-	public function __construct(){
-
-	}
+  public function __construct(){
+  
+  }
 }

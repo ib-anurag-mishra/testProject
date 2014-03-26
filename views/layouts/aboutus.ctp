@@ -17,6 +17,7 @@
 
 	?>		
 	<?php
+		//echo $javascript->link('jquery-1.3.2.min');
 		if($this->Session->read('Config.language') == 'en'){
 			$setLang = 'en';
 		}else{
