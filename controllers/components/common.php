@@ -1570,7 +1570,8 @@ STR;
 
         foreach ($randomSongs as $key => $value) {
             if (empty($ajax)) {
-                $filePath = $this->Token->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                $tokeninstance = ClassRegistry::init('Token');
+                $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                 if (!empty($filePath)) {
                     $songPath = explode(':', $filePath);
                     $streamUrl = trim($songPath[1]);
