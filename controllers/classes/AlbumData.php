@@ -1,110 +1,110 @@
 <?php
 
 class AlbumData{
-  /**
+	/**
 	 * albumdata
 	 * @var AlbumDataType
 	 */
-  public $albumdata;
+	public $albumdata;
 
-  /**
+	/**
 	 * Constructor
 	 * @param AlbumDataType $albumdata
 	 * @return bool
 	 */
-  public function __construct($albumdata){
-    $this->albumdata = $albumdata;
-    return true;
-  }
+	public function __construct($albumdata){
+		$this->albumdata = $albumdata;
+		return true;
+	}
 }
 
 class AlbumDataType{
-  /**
+	/**
 	 * ProdID
 	 * @var int
 	 */
-  public $ProdID;
-  /**
+	public $ProdID;
+	/**
 	 * ProductID
 	 * @var string
 	 */
-  public $ProductID;
-  /**
+	public $ProductID;
+	/**
 	 * AlbumTitle
 	 * @var string
 	 */
-  public $AlbumTitle;
-  /**
+	public $AlbumTitle;
+	/**
 	 * Title
 	 * @var string
 	 */
-  public $Title;
+	public $Title;
 
-  /**
+	/**
 	 * ArtistText
 	 * @var string
 	 */
-  public $ArtistText;
+	public $ArtistText;
 
-  /**
+	/**
 	 * Artist
 	 * @var string
 	 */
-  public $Artist;
+	public $Artist;
 
-  /**
+	/**
 	 * ArtistURL
 	 * @var string
 	 */
-  public $ArtistURL;
+	public $ArtistURL;
 
-  /**
+	/**
 	 * Label
 	 * @var string
 	 */
-  public $Label;
+	public $Label;
 
-  /**
+	/**
 	 * Copyright
 	 * @var string
 	 */
-  public $Copyright;
+	public $Copyright;
 
-  /**
+	/**
 	 * Advisory
 	 * @var string
 	 */
-  public $Advisory;
+	public $Advisory;
 
-  /**
+	/**
 	 * FileURL
 	 * @var string
 	 */
-  public $FileURL;
+	public $FileURL;
 
-  /**
+	/**
 	 * DownloadStatus
 	 * @var int
 	 */
-  public $DownloadStatus;
+	public $DownloadStatus;
 
-  /**
+	/**
 	 * TrackBundleCount
 	 * @var int
 	 */
-  public $TrackBundleCount;
+	public $TrackBundleCount;
 
-  /**
+	/**
 	 * TrackBundleCount
 	 * @var SongDataType[]
 	 */
-  public $Songs;
+	public $Songs;
 
-  /**
+	/**
 	 * Constructor
 	 * @param SongDataType[] $songs
 	 */
-  public function __construct($songs){
+	public function __construct($songs){
 
-  }
+	}
 }

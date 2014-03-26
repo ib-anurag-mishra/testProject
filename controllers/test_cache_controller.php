@@ -99,10 +99,7 @@ class CacheController extends AppController {
                 $this->log("no data available for genre" . $territory, "cache");
                 echo "no data available for genre" . $territory;
             }
-          
-  
-      
-            
+
             $country = $territory;
             
             
@@ -223,7 +220,7 @@ STR;
             $this->log("cache written for national top ten for $territory", 'debug');
 
 print_r(Cache::read("national" . $country));
-die;
+$this->_stop();
           
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
@@ -231,7 +228,6 @@ die;
             if (!empty($featuredVideos)) {
                 foreach($featuredVideos as $key => $featureVideo){
                     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
-                    // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
                 }                
@@ -247,7 +243,6 @@ die;
                 foreach($topDownloads as $key => $topDownload)
                 {
                      $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
-                     // print_r($featureVideo);
                      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                      $topDownloads[$key]['videoImage'] = $videoImage;
                 }                
@@ -285,8 +280,7 @@ die;
                 $ids = '';
                 $ids_provider_type = '';
                 $natTopDownloaded = $this->Album->query($sql);
-                // echo $sql;
-                // print_r($natTopDownloaded); die;
+
                 foreach ($natTopDownloaded as $natTopSong) {
                     if (empty($ids)) {
                         $ids .= $natTopSong['Download']['ProdID'];
@@ -347,7 +341,6 @@ die;
                 LIMIT 100 
 STR;
 
-                // echo $sql_national_100_v; die;
                 $data = $this->Album->query($sql_national_100_v);
                 $this->log($sql_national_100_v, "cachequery");
                 if ($ids_provider_type == "") {
@@ -375,7 +368,6 @@ STR;
             }
             $this->log("cache written for national top ten  videos for $territory", 'debug');
             // End Caching functionality for national top 10 videos
-            
             
 
             // Added caching functionality for coming soon songs
@@ -427,8 +419,6 @@ SELECT
     LIMIT 20       
 STR;
 
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
-            // echo $sql_coming_soon_s; die;
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
 
             if (!empty($coming_soon_rs)) {
@@ -488,7 +478,6 @@ STR;
     ORDER BY Country.SalesDate ASC
     LIMIT 20 	  
 STR;
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
 
             $coming_soon_rv = $this->Album->query($sql_coming_soon_v);
 
@@ -864,10 +853,7 @@ STR;
             $this->log("cache written for US top ten video for $territory", 'debug');
             //End Caching functionality for US TOP 10 Videos
             
-                  
-     
-            
-            
+
             
             //Added caching functionality for new release Songs           
             $country = $territory;
@@ -925,12 +911,6 @@ STR;
                  
                 $data = $this->Album->query($sql_song_coming_soon);
                 $this->log($sql_song_coming_soon, "cachequery");
-//                if ($ids_provider_type == "") {
-//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
-//                    echo "ids_provider_type is set blank for " . $territory;
-//                }
-                
-               
 
                 if (!empty($data)) {
                     Cache::delete("new_releases_songs" . $country);
@@ -1004,10 +984,6 @@ STR;
                  
                 $data = $this->Album->query($sql_album_new_release);
                 $this->log($sql_album_new_release, "cachequery");
-//                if ($ids_provider_type == "") {
-//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
-//                    echo "ids_provider_type is set blank for " . $territory;
-//                }
 
                 if (!empty($data)) {
                     foreach($data as $key => $value){
@@ -1081,10 +1057,6 @@ STR;
                  
                 $data = $this->Album->query($sql_video_new_release);
                 $this->log($sql_video_new_release, "cachequery");
-//                if ($ids_provider_type == "") {
-//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
-//                    echo "ids_provider_type is set blank for " . $territory;
-//                }
 
                 if (!empty($data)) {
                     foreach($data as $key => $value){
@@ -1196,7 +1168,6 @@ STR;
 
             foreach ($genres as $genre) {
                 $genre_data = array();
-                //echo $territory;
 
           if ($maintainLatestDownload) {
                     $restoregenre_query = "
@@ -1578,11 +1549,6 @@ STR;
        
        //--------------------------------set each music video in the cache end---------------------------------------------------
         
-       
-        
-        
-        
-       
 
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
 
@@ -2047,17 +2013,11 @@ STR;
            //library top 10 cache set for videos end
            
         }
-        
-    
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
         $this->requestAction('/Resetcache/genrateXML');
         exit;
-       
-   
-          
     }
-
 }

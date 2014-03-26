@@ -6,8 +6,9 @@
 */
  
 class Availability extends AppModel {
-	var $name = 'Availability';
-	var $useTable = 'Availability';
+
+	var $name 		= 'Availability';
+	var $useTable   = 'Availability';
 	var $primaryKey = 'ProdId';
 	
 	var $belongsTo = array(

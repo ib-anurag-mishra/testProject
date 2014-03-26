@@ -1,120 +1,120 @@
 <?php
 
 class VideoSongData{
-  /**
+	/**
 	 * videosongdata
 	 * @var VideoSongDataType
 	 */
-  public $videosongdata;
+	public $videosongdata;
 
-  /**
+	/**
 	 * Constructor
 	 * @param VideoSongDataType $videosongdata
 	 * @return bool
 	 */
-  public function __construct($videosongdata){
-    $this->videosongdata = $videosongdata;
-    return true;
-  }
+	public function __construct($videosongdata){
+		$this->videosongdata = $videosongdata;
+		return true;
+	}
 }
 
 class VideoSongDataType{
-  
-  /**
+
+	/**
 	 * VideoProdID
 	 * @var int
 	 */
-  public $VideoProdID;
-  
-  /**
+	public $VideoProdID;
+
+	/**
 	 * VideoReferenceID
 	 * @var string
 	 */
-  public $VideoReferenceID;
-  
-  /**
+	public $VideoReferenceID;
+
+	/**
 	 * VideoTitle
 	 * @var string
-	 */ 
-  public $VideoTitle;
-  
-  /**
+	 */
+	public $VideoTitle;
+
+	/**
 	 * VideoSongTitle
 	 * @var string
 	 */
-  public $VideoSongTitle;
-  
-  /**
+	public $VideoSongTitle;
+
+	/**
 	 * VideoArtistText
 	 * @var string
-	 */ 
-  public $VideoArtistText;
+	 */
+	public $VideoArtistText;
 
-  /**
+	/**
 	 * VideoArtist
 	 * @var string
 	 */
-  public $VideoArtist;
+	public $VideoArtist;
 
-  /**
+	/**
 	 * VideoAdvisory
 	 * @var string
 	 */
-  public $VideoAdvisory;
+	public $VideoAdvisory;
 
-  /**
+	/**
 	 * VideoISRC
 	 * @var string
 	 */
-  public $VideoISRC;
+	public $VideoISRC;
 
-  /**
+	/**
 	 * VideoComposer
 	 * @var string
 	 */
-  public $VideoComposer;
+	public $VideoComposer;
 
-  /**
+	/**
 	 * VideoGenre
 	 * @var string
 	 */
-  public $VideoGenre;
+	public $VideoGenre;
 
-  /**
+	/**
 	 * VideoDownloadStatus
 	 * @var int
 	 */
-  public $VideoDownloadStatus;
-  
-  /**
+	public $VideoDownloadStatus;
+
+	/**
 	 * VideoSalesStatus
 	 * @var int
 	 */
-  public $VideoSalesStatus;
-  
-  /**
+	public $VideoSalesStatus;
+
+	/**
 	 * VideoFullLength_Duration
 	 * @var string
 	 */
-  public $VideoFullLength_Duration;
-  
-  /**
+	public $VideoFullLength_Duration;
+
+	/**
 	 * VideoFullLength_FileURL
 	 * @var string
 	 */
-  public $VideoFullLength_FileURL;
+	public $VideoFullLength_FileURL;
 
-  /**
+	/**
 	 * VideoImage_FileURL
 	 * @var string
 	 */
-  public $VideoImage_FileURL;
+	public $VideoImage_FileURL;
 
 
-  /**
+	/**
 	 * Constructor
 	 */
-  public function __construct(){
+	public function __construct(){
 
-  }
+	}
 }

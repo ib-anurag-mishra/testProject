@@ -1,60 +1,60 @@
 <?php
 
 class VideoDownloadSuccess{
-  /**
+	/**
 	 * videodownloadsuccess
 	 * @var VideoDownloadSuccessType
 	 */
-  public $videodownloadsuccess;
+	public $videodownloadsuccess;
 
-  /**
+	/**
 	 * Constructor
 	 * @param VideoDownloadSuccessType $videodownloadsuccess
 	 * @return bool
 	 */
-  public function __construct($videodownloadsuccess){
-    $this->videodownloadsuccess = $videodownloadsuccess;
-    return true;
-  }
+	public function __construct($videodownloadsuccess){
+		$this->videodownloadsuccess = $videodownloadsuccess;
+		return true;
+	}
 }
 
 class VideoDownloadSuccessType{
-  /**
+	/**
 	 * message
 	 * @var string
 	 */
-  public $message;
-  /**
+	public $message;
+	/**
 	 * video_url
 	 * @var string
 	 */
-  public $video_url; 
-  /**
+	public $video_url;
+	/**
 	 * success
 	 * @var bool
 	 */
-  public $success;
-  /**
+	public $success;
+	/**
 	 * currentDownloadCount
 	 * @var int
 	 */
-  public $currentDownloadCount;
-  /**
+	public $currentDownloadCount;
+	/**
 	 * totalDownloadLimit
 	 * @var int
 	 */
-  public $totalDownloadLimit;
-  
-  /**
+	public $totalDownloadLimit;
+
+	/**
 	 * showWishlist
 	 * @var int
 	 */
-  public $showWishlist;
-  
-  /**
+	public $showWishlist;
+
+	/**
 	 * Constructor
 	 */
-  public function __construct(){
-  
-  }
+	public function __construct(){
+
+	}
 }

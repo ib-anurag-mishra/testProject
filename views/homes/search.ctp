@@ -55,7 +55,6 @@ if(isset($searchtype)){
 			if ($i++ % 2 == 0) {
 				$class = ' class="altrow"';
 			}
-		//	if($searchResult['Country']['Territory'] == $this->Session->read('territory')){
 	?>
       <tr style="" <?php echo $class; ?>>
       

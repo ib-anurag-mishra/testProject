@@ -7,8 +7,7 @@
 
 class Card extends AppModel
 {
-    var $name = 'card';
+    var $name 	  = 'card';
     var $useTable = false;
-
 }
 ?>

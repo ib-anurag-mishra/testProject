@@ -24,4 +24,3 @@ if (count($genres) > 0)
     }
 }
 ?>
-					

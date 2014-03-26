@@ -179,7 +179,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           if($type != 'artist'){
           ?>
-          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
+          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a>
           <?php
           } else {
             ?>
@@ -187,11 +187,12 @@ function Get_Sales_date($sales_date_array, $country){
             <?php
           }
           ?>
+          </li>
         <li >
           <?php
           if($type != 'composer'){
           ?>
-          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
+          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a>
           <?php
           } else {
             ?>
@@ -199,6 +200,7 @@ function Get_Sales_date($sales_date_array, $country){
             <?php
           }
           ?>
+          </li>
         <li >
           <?php
           if($type != 'genre'){
@@ -229,7 +231,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           if($type != 'song'){
           ?>
-            <a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
+            <a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a>
             <?php
           } else {
             ?>
@@ -237,6 +239,7 @@ function Get_Sales_date($sales_date_array, $country){
             <?php
           }
           ?>
+          </li>
 			</ul>
 		</form>
 	 </div>
@@ -281,7 +284,6 @@ STR;
 						<span class="h2Wrapper">Albums</span>
 					</h2>
 STR;
-//echo '<pre>'; print_r($albumData); echo '</pre>';
 			if(!empty($albumData)){
 				foreach($albumData as $palbum){
 					$albumDetails = $album->getImage($palbum->ReferenceID);
@@ -295,10 +297,8 @@ STR;
 					if($page->isImage($image)) {
 						//Image is a correct one
 					}
-					else {
+					else { /*Blank*/ }
 
-					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
-					}
 					if($counter%3==0){
 						$class = 'album_all_blockC1';
 					} else	if($counter%3==1){
@@ -568,20 +568,6 @@ STR;
 
 						$artist_name = str_replace('"','',$artist->ArttistText);
 						$artist_name_text = truncate_text($artist_name, 30, $this);
-            
-            /*echo '<br />=================================<br />';
-            $ArtistText = $artist->ArtistText;
-            echo 'Artist -> '; var_dump($ArtistText); echo '<br />';
-            $ArtistText = iconv(mb_detect_encoding($ArtistText), "WINDOWS-1252//IGNORE", $ArtistText);
-            $ArtistText = iconv(mb_detect_encoding($ArtistText), "UTF-8//IGNORE", $ArtistText);
-            echo 'Result -> '; var_dump($ArtistText); echo '<br /><br />';
-
-            $ArtistText = $artist->ArtistText;
-            echo 'Artist -> '; var_dump($ArtistText); echo '<br />';
-            echo 'Call -> '; var_dump($this->getTextEncode($ArtistText)); echo '<br />';
-            echo '<br />=================================<br />';*/
-
-
 
 						$tilte = urlencode($artist->ArtistText);
             $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
@@ -713,7 +699,6 @@ STR;
 	}
 
 ?>
-<!-- </div> -->
 <!-- All blocks div end-->
 <?php
 
@@ -750,10 +735,7 @@ STR;
 					if($page->isImage($image)) {
 						//Image is a correct one
 					}
-					else {
-
-					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
-					}
+					else { /*Blank*/ }
 
 					if($counter%2==0){
 						$class = 'albumblockC1';

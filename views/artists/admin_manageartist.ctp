@@ -9,8 +9,7 @@
 <script language="javascript">
 function validateForm() {
     
-       
-        document.artistAdminManageartistForm.submit();
+  document.artistAdminManageartistForm.submit();
    
 }	
 

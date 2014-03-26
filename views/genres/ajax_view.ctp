@@ -33,7 +33,6 @@ var preValue= 1;
                             },
                             async:   true,
                             error:function (XMLHttpRequest, textStatus, errorThrown) { 
-                                //alert('No artist list available')
                             }
                         });
                 }else{
@@ -45,8 +44,7 @@ var preValue= 1;
    });  
 
 </script> 
-		<!-- <div class="alphabetical-shadow-container">
-				<h3><?php __('Artist'); ?></h3> -->
+
 				<div class="alpha-artist-list-column">
                                     <ul>
                                     <li><a  href="javascript:void(0);" data-letter="All" <?php if($selectedAlpha =="All") {?>class="selected active" <?php } ?>   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/All' ,'' , '')">ALL</a></li>                                            
@@ -79,10 +77,7 @@ var preValue= 1;
                                     <li><a  href="javascript:void(0);" data-letter="Z"   <?php if($selectedAlpha =="Z") {?>class="selected active" <?php } ?>   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Z' ,'' , '')">Z</a></li>
                                     </ul>
 				</div>
-		<!--	</div> -->
-                                                            
-		<!--	<div class="artist-list-shadow-container">
-				<h3></h3> -->
+
 				<div class="artist-column" id="artistscroll">					
 					<ul id="artistlistrecord">	                                        
                                          <?php
@@ -106,4 +101,3 @@ var preValue= 1;
 					</ul>
                                 <span id="artist_loader" style="padding-left:115px;display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0"/></span>
 				</div>
-			<!-- </div> -->

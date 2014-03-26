@@ -14,7 +14,6 @@ class WishlistVideoHelper extends AppHelper
 
     function getWishlistVideoData($id)
     {
-        //echo 'prodid=>'.$id;
         $wishlistInstance = ClassRegistry::init('WishlistVideo');
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');

@@ -9,7 +9,6 @@ class WishlistHelper extends AppHelper {
     var $uses = array('Wishlist');
     
     function getWishlistData($id) {
-        //Configure::write('debug', 2);
         $wishlistInstance = ClassRegistry::init('Wishlist');
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');  
@@ -36,7 +35,6 @@ class WishlistHelper extends AppHelper {
            
             $wishlistVariArray = $this->Session->read('wishlistVariArray');  
             $wishlistVariArray= @array_unique($wishlistVariArray);
-            //print_r($wishlistVariArray);
             //comman code for check wishlist add
             if(!empty($wishlistVariArray)){
                 if (in_array($id, $wishlistVariArray)) {                                                               

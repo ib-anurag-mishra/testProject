@@ -1,39 +1,39 @@
 <?php
 /*
  File Name : sections_controller.php
- File Description : Sections controller page
- Author : m68interactive
- */
+File Description : Sections controller page
+Author : m68interactive
+*/
 
 class SectionsController extends AppController
 {
 	var $name = 'Sections';
 	var $uses = array('Language','Section');
 	var $components = array('Auth', 'Acl');
-	
+
 	/*
 	 Function Name : beforeFilter
-	 Desc : actions that needed before other functions are getting called
-        */
+	Desc : actions that needed before other functions are getting called
+	*/
 	function beforeFilter() {
-            parent::beforeFilter();
-            $this->Auth->allow('index', 'view');
+		parent::beforeFilter();
+		$this->Auth->allow('index', 'view');
 	}
-	
+
 	/*
 	 Function Name : admin_index
-	 Desc : actions for faq sections page
-        */
+	Desc : actions for faq sections page
+	*/
 	function admin_index() {
 		$this->layout = 'admin';
 		$this->Section->recursive = 0;
 		$this->set('sections', $this->paginate('Section'));
 	}
-	
+
 	/*
 	 Function Name : admin_view
-	 Desc : actions for faq sections view
-        */
+	Desc : actions for faq sections view
+	*/
 	function admin_view($id = null) {
 		$this->layout = 'admin';
 		if (!$id) {
@@ -42,11 +42,11 @@ class SectionsController extends AppController
 		}
 		$this->set('section', $this->Section->read(null, $id));
 	}
-	
+
 	/*
 	 Function Name : admin_add
-	 Desc : actions for faq sections add
-        */
+	Desc : actions for faq sections add
+	*/
 	function admin_add() {
 		$this->layout = 'admin';
 		$data = $this->Language->find('list', array('fields' => array('short_name', 'full_name')));
@@ -61,15 +61,15 @@ class SectionsController extends AppController
 			}
 		}
 	}
-	
+
 	/*
 	 Function Name : admin_edit
-	 Desc : actions for faq sections edit
-        */
+	Desc : actions for faq sections edit
+	*/
 	function admin_edit($id = null) {
 		$this->layout = 'admin';
 		$data = $this->Language->find('list', array('fields' => array('short_name', 'full_name')));
-		$this->set('languages', $data);		
+		$this->set('languages', $data);
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'section'));
 			$this->redirect(array('action' => 'index'));
@@ -86,11 +86,11 @@ class SectionsController extends AppController
 			$this->data = $this->Section->read(null, $id);
 		}
 	}
-	
+
 	/*
 	 Function Name : admin_delete
-	 Desc : actions for faq sections delete
-        */
+	Desc : actions for faq sections delete
+	*/
 	function admin_delete($id = null) {
 		$this->layout = 'admin';
 		if (!$id) {

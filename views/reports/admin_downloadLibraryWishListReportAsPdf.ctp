@@ -63,15 +63,12 @@
     // set header and footer fonts
     $tcpdf->setHeaderFont(array($textfont,'',12));
     $tcpdf->xheadertext = $displaylibraryName.' WishList Report generated on '.$displaydateRange;
-    $tcpdf->xfootertext = 'Copyright © %d FreegalMusic.com. All rights reserved.';
+    $tcpdf->xfootertext = 'Copyright ï¿½ %d FreegalMusic.com. All rights reserved.';
     
     //set margins
     $tcpdf->SetMargins("10", "15", "0");
     $tcpdf->SetHeaderMargin("10");
     $tcpdf->SetFooterMargin("10");
-    
-    //set image scale factor
-    //$tcpdf->setImageScale("1"); 
     
     // ---------------------------------------------------------
     

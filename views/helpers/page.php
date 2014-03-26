@@ -47,7 +47,7 @@ class PageHelper extends AppHelper {
 		$wrapper_data = $meta["wrapper_data"];
 		if(is_array($wrapper_data)){
 			foreach(array_keys($wrapper_data) as $hh){
-				if (substr($wrapper_data[$hh], 0, 19) == "Content-Type: image"){ // strlen("Content-Type: image") == 19 
+				if (substr($wrapper_data[$hh], 0, 19) == "Content-Type: image"){ 
 					fclose($fp);
 					return true;
 				}

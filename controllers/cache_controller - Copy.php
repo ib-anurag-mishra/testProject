@@ -248,8 +248,7 @@ STR;
                 $ids = '';
                 $ids_provider_type = '';
                 $natTopDownloaded = $this->Album->query($sql);
-                // echo $sql;
-                // print_r($natTopDownloaded); die;
+
                 foreach ($natTopDownloaded as $natTopSong) {
                     if (empty($ids)) {
                         $ids .= $natTopSong['Download']['ProdID'];
@@ -310,7 +309,6 @@ STR;
                 LIMIT 100 
 STR;
 
-                // echo $sql_national_100_v; die;
                 $data = $this->Album->query($sql_national_100_v);
                 $this->log($sql_national_100_v, "cachequery");
                 if ($ids_provider_type == "") {
@@ -381,8 +379,6 @@ SELECT
     LIMIT 20       
 STR;
 
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
-            // echo $sql_coming_soon_s; die;
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
 
             if (!empty($coming_soon_rs)) {
@@ -436,7 +432,6 @@ STR;
     ORDER BY Country.SalesDate ASC
     LIMIT 20 	  
 STR;
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
 
             $coming_soon_rv = $this->Album->query($sql_coming_soon_v);
 
@@ -980,5 +975,4 @@ STR;
         $this->requestAction('/Resetcache/genrateXML');
         exit;
     }
-
 }

@@ -1,161 +1,161 @@
 <?php
 
 class SongData{
-  /**
+	/**
 	 * songdata
 	 * @var SongDataType
 	 */
-  public $songdata;
+	public $songdata;
 
-  /**
+	/**
 	 * Constructor
 	 * @param SongDataType $songdata
 	 * @return bool
 	 */
-  public function __construct($songdata){
-    $this->songdata = $songdata;
-    return true;
-  }
+	public function __construct($songdata){
+		$this->songdata = $songdata;
+		return true;
+	}
 }
 
 class SongDataType{
-  /**
+	/**
 	 * ProdID
 	 * @var int
 	 */
-  public $ProdID;
-  /**
+	public $ProdID;
+	/**
 	 * ProductID
 	 * @var string
 	 */
-  public $ProductID;
-  /**
+	public $ProductID;
+	/**
 	 * ReferenceID
 	 * @var int
 	 */
-  public $ReferenceID;
-  /**
+	public $ReferenceID;
+	/**
 	 * Title
 	 * @var string
 	 */
-  public $Title;
-  /**
+	public $Title;
+	/**
 	 * SongTitle
 	 * @var string
 	 */
-  public $SongTitle;
-  /**
+	public $SongTitle;
+	/**
 	 * ArtistText
 	 * @var string
 	 */
-  public $ArtistText;
+	public $ArtistText;
 
-  /**
+	/**
 	 * Artist
 	 * @var string
 	 */
-  public $Artist;
+	public $Artist;
 
-  /**
+	/**
 	 * Advisory
 	 * @var string
 	 */
-  public $Advisory;
+	public $Advisory;
 
-  /**
+	/**
 	 * ISRC
 	 * @var string
 	 */
-  public $ISRC;
+	public $ISRC;
 
-  /**
+	/**
 	 * Composer
 	 * @var string
 	 */
-  public $Composer;
+	public $Composer;
 
-  /**
+	/**
 	 * Genre
 	 * @var string
 	 */
-  public $Genre;
+	public $Genre;
 
-  /**
+	/**
 	 * Territory
 	 * @var string
 	 */
-  public $Territory;
+	public $Territory;
 
-  /**
+	/**
 	 * DownloadStatus
 	 * @var int
 	 */
-  public $DownloadStatus;
+	public $DownloadStatus;
 
-  /**
+	/**
 	 * TrackBundleCount
 	 * @var int
 	 */
-  public $TrackBundleCount;
+	public $TrackBundleCount;
 
-  /**
+	/**
 	 * Sample_Duration
 	 * @var string
 	 */
-  public $Sample_Duration;
+	public $Sample_Duration;
 
-  /**
+	/**
 	 * FullLength_Duration
 	 * @var string
 	 */
-  public $FullLength_Duration;
+	public $FullLength_Duration;
 
-  /**
+	/**
 	 * Sample_FileID
 	 * @var int
 	 */
-  public $Sample_FileID;
+	public $Sample_FileID;
 
-  /**
+	/**
 	 * Sample_FileURL
 	 * @var string
 	 */
-  public $Sample_FileURL;
+	public $Sample_FileURL;
 
-  /**
+	/**
 	 * FullLength_FIleID
 	 * @var int
 	 */
-  public $FullLength_FIleID;
+	public $FullLength_FIleID;
 
-  /**
+	/**
 	 * CreatedOn
 	 * @var string
 	 */
-  public $CreatedOn;
+	public $CreatedOn;
 
-  /**
+	/**
 	 * UpdateOn
 	 * @var string
 	 */
-  public $UpdateOn;
+	public $UpdateOn;
 
-  /**
+	/**
 	 * FullLength_FIleURL
 	 * @var string
 	 */
-  public $FullLength_FIleURL;
-  
-  /**
+	public $FullLength_FIleURL;
+
+	/**
 	 * playButtonStatus
 	 * @var int
 	 */
-  public $playButtonStatus;
-  
-  /**
+	public $playButtonStatus;
+
+	/**
 	 * Constructor
 	 */
-  public function __construct(){
+	public function __construct(){
 
-  }
+	}
 }

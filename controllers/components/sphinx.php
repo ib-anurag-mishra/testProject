@@ -111,7 +111,6 @@ class SphinxComponent extends Object {
         return $result;
     }
 }
-
-        
+  
 class SphinxException extends Exception  { }
 ?>

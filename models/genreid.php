@@ -9,6 +9,5 @@ class Genreid extends AppModel
 {
   var $name = 'Genreid';
   var $usetable = 'genreids';
-  
 }
 ?>

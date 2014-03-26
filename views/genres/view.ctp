@@ -106,7 +106,6 @@
                             },
                             async: true,
                             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                //alert('No artist list available');
                             }
                         });
 
@@ -147,7 +146,6 @@ $genre_text_conversion = array(
     "World Music (Other)" => "World Music"
 );
 
-//$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
 $genre_crumb_name = $genre;
 
 $html->addCrumb(__('All Genre', true), '/genres/view/');
@@ -174,8 +172,6 @@ $totalRows = count($genresAll);
 		<div class="artist-header">Artist</div>
 							</header>
     <section class="genre-filter-container clearfix">
-       <!-- <div class="genre-shadow-container">
-            <h3>Genre</h3> -->
             <div class="genre-column">
                 <ul>
                     <li>
@@ -190,8 +186,7 @@ $totalRows = count($genresAll);
                     foreach ($genresAll as $genre_all):
 
                         if ($genre_all['Genre']['Genre'] != '')
-                        {
-                            //$genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
+                        {	
                             $genre_name = $genre_all['Genre']['Genre'];
 
                             if ($genre_name != 'Porn Groove')
@@ -231,14 +226,9 @@ $totalRows = count($genresAll);
 
                 </ul>
             </div>
-       <!-- </div>  -->
-
-      <!--  <div class="border"></div> -->
 
        <div id="ajax_artistlist_content">      
 
-           <!-- <div class="alphabetical-shadow-container"> -->
-               <!-- <h3><?php// __('Artist'); ?></h3> -->
                 <div class="alpha-artist-list-column">
                     <ul>
                         <li><a   href="javascript:void(0);" <?php
@@ -355,11 +345,7 @@ $totalRows = count($genresAll);
                                 ?>class="selected" <?php } ?>  data-letter="Z"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Z', '', '')">Z</a></li>
                     </ul>
                 </div>
-           <!-- </div> -->
 
-
-          <!--  <div class="artist-list-shadow-container">
-                <h3></h3> -->
                 <div class="artist-column" id="artistscroll">					
                     <ul id="artistlistrecord">						                                            
                         <?php
@@ -389,17 +375,10 @@ $totalRows = count($genresAll);
                         }
                         ?> 
 
-                        <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
-
                     </ul>
                     <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
                 </div>
-          <!--  </div> -->
         </div>
-
-       <!-- <div class="border"></div> -->
-
-       <!-- <span class="album-list-span"></span> -->
 
     </section>
         
@@ -410,9 +389,6 @@ $totalRows = count($genresAll);
 	<button class="artist-scroll-up"></button>
         <button class="artist-scroll-down"></button>
    </div>
-    
-
-    <!--<section class="album-detail-container clearfix" id='album_details_container'></section> -->
 
 
 </section>
@@ -530,7 +506,6 @@ elseif ($this->Session->check('calledAlbum'))
                     scrollToSelectedAlbum();
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    // alert('No album available for this artist.');
                 }
             });
             
@@ -573,7 +548,6 @@ elseif ($this->Session->check('calledAlbum'))
                 },
                 async: false,
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    //alert('No artist list available');
                 }
             });
         }

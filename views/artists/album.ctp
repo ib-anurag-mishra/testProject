@@ -136,16 +136,8 @@
                                     ?>
                                     <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>" >
                                         <?php
-                                        if (empty($album['Files']['CdnPath']))
-                                        {
-                                            if (empty($album['Files']['SourceURL']))
-                                            {
-                                                // mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
-                                            }
-                                            else
-                                            {
-                                                // mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
-                                            }
+                                        if (empty($album['Files']['CdnPath'])) {
+                                            if (empty($album['Files']['SourceURL'])) { /*Blank*/ } else { /*Blank*/ }
                                         }
                                         ?>
 
@@ -157,7 +149,7 @@
                                         }
                                         else
                                         {
-                                            //mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                            /*Blank*/
                                         }
                                         ?>
 
@@ -255,9 +247,6 @@
                                             if ($libraryDownload == '1' && $patronDownload == '1')
                                             {
                                                 $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-//                                            $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
-//                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-//                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                                 $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value["Video"]["provider_type"], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
                                                 if ($downloadsUsed > 0)
@@ -311,7 +300,6 @@
                                                     }
                                                     else
                                                     {
-                                                        //  $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
                                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
                                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value['Video']["provider_type"]);
                                                     }
@@ -345,7 +333,6 @@
                                         <?php
                                     }
                                     ?>
-                                    <!-- <a class="top-100-download-now-button" href="javascript:void(0)">Download Now</a> -->
 
 
                                     <?php
@@ -357,7 +344,6 @@
 
                                         <div class="wishlist-popover">
                                             <?php
-                                            //$wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
                                             $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
                                             echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value['Video']["provider_type"]);
                                             ?>														

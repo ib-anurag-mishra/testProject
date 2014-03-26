@@ -1,4 +1,3 @@
-
 <section class="individual-videos-page">
     <div class="breadcrumbs">                
         <?php
@@ -66,9 +65,7 @@
                     <div class="wishlist-popover">
 
                         <?php
-                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);
-                        //echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$VideosData[0]["Video"]["provider_type"]);
-                        //echo $this->Queue->getSocialNetworkinglinksMarkup();  
+                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);  
                         ?>                                                    
                     </div>
                     <?php
@@ -145,7 +142,6 @@
                         <li>
                             <div class="video-thumb-container">
                                 <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img alt="" class="lazy" src="<?php echo $value['videoAlbumImage']; ?>" data-original="" width="274" height="162" /></a>
-                                <!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
                                 if ($this->Session->read('patron'))
                                 {
@@ -154,11 +150,6 @@
 
                                         if ($libraryDownload == '1' && $patronDownload == '1')
                                         {
-                                            //$productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-                                           
-//                                            $videoUrl = shell_exec('perl files/tokengen ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
-//                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-//                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                             $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                             if ($downloadsUsed > 0)
                                             {
@@ -203,7 +194,6 @@
                                             <?php
                                             $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']['ProdID']);
                                             echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value['Video']['ProdID'], $value['Video']["provider_type"]);
-                                            //echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                             ?> 
 
                                         </div>
@@ -311,9 +301,6 @@
                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                 {
                                     $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-//                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
-//                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-//                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                     $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                     if ($downloadsUsed > 0)
                                     {
@@ -357,7 +344,6 @@
                                     <?php
                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']['ProdID']);
                                     echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value['Video']['ProdID'], $value['Video']["provider_type"]);
-                                    //echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                     ?>
 
                                 </div>

@@ -1,46 +1,46 @@
 <?php
 
 class UserCurrentDownloadData{
-  /**
+	/**
 	 * usercurrentdownloaddata
 	 * @var UserCurrentDownloadDataType
 	 */
-  public $usercurrentdownloaddata;
+	public $usercurrentdownloaddata;
 
-  /**
+	/**
 	 * Constructor
 	 * @param UserCurrentDownloadDataType $usercurrentdownloaddata
 	 * @return bool
 	 */
-  public function __construct($usercurrentdownloaddata){
-    $this->usercurrentdownloaddata = $usercurrentdownloaddata;
-    return true;
-  }
+	public function __construct($usercurrentdownloaddata){
+		$this->usercurrentdownloaddata = $usercurrentdownloaddata;
+		return true;
+	}
 }
 
 
 class UserCurrentDownloadDataType{
-  /**
+	/**
 	 * currentDownloadCount
 	 * @var int
 	 */
-  public $currentDownloadCount;
-  /**
+	public $currentDownloadCount;
+	/**
 	 * totalDownloadLimit
 	 * @var int
 	 */
-  public $totalDownloadLimit;
+	public $totalDownloadLimit;
 
-  /**
+	/**
 	 * showWishlist
 	 * @var int
 	 */
-  public $showWishlist;
-  
-  /**
+	public $showWishlist;
+
+	/**
 	 * Constructor
 	 */
-  public function __construct(){
-  
-  }
+	public function __construct(){
+
+	}
 }

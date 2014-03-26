@@ -36,7 +36,6 @@
 				   <td align="left"><div id="getArtist">
            <?php 
            
-            /*echo $form->select('artist_name', $getArtistData, $getData['Artist']['artist_name'], array('label' => false, 'div' => false, 'class' => 'select_fields'));*/
             echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['Artist']['artist_name'], 'autocomplete' => 'off'));
            
            ?>

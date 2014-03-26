@@ -101,10 +101,7 @@ class ResetcacheController extends AppController
       //Restore new_releases_videos  
       $new_releases_videos = Cache::read("new_releases_videos" . $territory);     
       $xml_data[$territory]['new_releases_videos'] = $new_releases_videos;
-      
-      
-			//Need to comment this line
-			//break;
+
 		}
 		
 		//About us page
@@ -129,7 +126,7 @@ class ResetcacheController extends AppController
 			$xml_data['librarytop10'][$libId] = $librarytop10Data;				 
     } 
       
-    echo '<pre>'; print_r($xml_data); echo '</pre>'; //exit;
+    echo '<pre>'; print_r($xml_data); echo '</pre>';
     /**
      * writes array into file (local)
     **/
@@ -403,9 +400,6 @@ class ResetcacheController extends AppController
       sort($data['library_top_10'], SORT_NUMERIC);
     
       echo '<pre>';
-      //print_r($data); 
-      //exit;
-      
       
     echo "<br />============================================================================================================<br />";
     echo "<br />============================================= Top Ten Genre  ===============================================<br />";
@@ -483,13 +477,6 @@ class ResetcacheController extends AppController
   }
   
   function printTemp($libId){
-    
-/*     echo "<br />============================================================================================================<br />";
-    echo "<br />============================================= $var =========================================================<br />";
-    echo "<br />============================================================================================================<br />";
-    echo '<pre>';
-    var_dump( Cache::read($var) );
-    echo "<br />*********************************************  END  ********************************************************<br />";  */ 
     
     echo "<br />================================================  ''  ============================================================<br />";
     Cache::write("lib".$libId, '');
@@ -610,7 +597,5 @@ class ResetcacheController extends AppController
     }
     exit;
   }
-
-  
 }
 ?>

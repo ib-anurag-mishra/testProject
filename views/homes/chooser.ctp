@@ -34,11 +34,6 @@
 		<div class="input text">
                     <label for="LibraryZipcode">State </label>
                     <input type="text" id="LibraryZipcode"  name="data[Library_details1][state]" >
-                    <!--<select name="state" id="state">
-                        <option>Tennessee</option>
-			<option>California</option>
-			<option>New York</option>
-                    </select>-->
 		</div>
 		<?php
                     //Added code for contries

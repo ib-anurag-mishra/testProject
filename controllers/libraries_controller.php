@@ -404,9 +404,7 @@ Class LibrariesController extends AppController
                 {
                     $this->data['Library']['library_download_limit'] = $this->data['Library']['library_download_limit_manual'];
                 }
-//                if($this->data['Library']['library_apikey'] == 'none') {
-//                    $this->data['Library']['library_apikey'] = $this->data['Library']['none_consortium'];
-//                }                
+
                 if ($this->data['Library']['libraryStepNum'] == '2')
                 {
                     if ($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5")
@@ -551,7 +549,6 @@ Class LibrariesController extends AppController
                                 $this->Library->setValidation('library_step4');
                                 if ($this->Library->validates())
                                 {
-                                    //    $this->Library->setValidation('library_step_date');
                                     if ($this->Library->validates())
                                     {
                                         $this->LibraryPurchase->create();
@@ -611,9 +608,6 @@ Class LibrariesController extends AppController
                                                 
                                                 if ($this->Library->save($this->data['Library']))
                                                 {                                        
-//                                                    $this->Library->id =  $this->data['Library']['id'];
-//                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
-//                                                    $this->Library->save();
                                                     
                                                     if (count($this->data['Variable']) > 0)
                                                     {
@@ -626,7 +620,6 @@ Class LibrariesController extends AppController
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
                                                                     $data[$k]['authentication_variable_index'] = empty($data[$k]['authentication_variable_index'])?'0':$data[$k]['authentication_variable_index'];
-                                                                    //$data[$k]['message_no'] = $this->Library->id;
                                                                     $data[$k]['created'] = date("Y-m-d H:i:s");
                                                                     $data[$k]['modified'] = date("Y-m-d H:i:s");                                                                
                                                                 }
@@ -1134,7 +1127,7 @@ Class LibrariesController extends AppController
             {
                 $this->Session->write("block", 'no');
             }
-          //  $redirecting = $this->Cookie->read('redirecting'); // Commented to fix login redirection issue in ocls library
+
 	    $redirecting = $_COOKIE['lastUrl'];
             if (isset($redirecting) && !empty($redirecting) && '/homes/chooser' && !strpos($redirecting, '/users/login') && !strpos($redirecting, '/homes/chooser'))
             {
@@ -1320,7 +1313,6 @@ Class LibrariesController extends AppController
                                 {
                                     //Skipping card number if card number empty
                                     $error_msg = 'Card number can not be empty! Error at Line ' . $i . ' in xls sheet.';
-                                    //$error++;
                                     continue;
                                 }
                                 else if (($data->sheets[0]['cells'][$i][2] == '') && ($this->data['Libraries']['Login Method'] == 'mdlogin'))
@@ -1374,7 +1366,6 @@ Class LibrariesController extends AppController
 STR;
 
                         $this->sendCardImoprtErrorEmail($card_error_message, $library_id, $library_name);
-                        //$this->Session->setFlash($card_error_message, 'modal', array( 'class' => 'modal problem' )  );
                     }
 
                     echo $show_msg = <<<STR
@@ -1383,9 +1374,6 @@ STR;
 						window.location = "/admin/libraries/card";
 					</script>
 STR;
-
-                    //$this->Session->setFlash( 'Credentials imported successfully!', 'modal', array( 'class' => 'modal success' ) );
-                    //$this->redirect(array('controller' => 'libraries', 'action' => 'card'));
                 }
                 else
                 {
@@ -1422,7 +1410,6 @@ STR;
         $mail->From = Configure::read('App.adminEmail');
         $mail->FromName = Configure::read('App.fromName');
         $mail->AddAddress(Configure::read('App.ImportCardReportTO'));
-        //$mail->AddCC('gupta09sandeep@gmail.com');
         $mail->ConfirmReadingTo = '';
 
         $mail->CharSet = 'UTF-8';
@@ -1471,9 +1458,6 @@ STR;
     function admin_librarytimezone()
     {
 
-
-        //Configure::write('debug', 2);        
-
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
@@ -1512,8 +1496,6 @@ STR;
 
     function admin_removelibrarytimezone($id = NULL)
     {
-
-        //Configure::write('debug', 2);  
         $this->layout = false;
 
         //redirect if user not set
@@ -1538,9 +1520,7 @@ STR;
      */
 
     function admin_librarytimezoneform($action = NULL, $id = NULL)
-    {
-
-        //Configure::write('debug', 2);     
+    {  
         //redirect if user not set
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
@@ -1614,7 +1594,6 @@ STR;
         }
 
         $timezoneResults = $this->Timezone->find('all', array('order' => array('zone_name' => 'asc')));
-        // print_r($timezoneResults);
         $this->set('timezoneResults', $timezoneResults);
 
 
@@ -1655,5 +1634,4 @@ STR;
     }
 
 }
-
 ?>

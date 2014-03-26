@@ -5,7 +5,6 @@
 
         <?php
         echo $this->Html->charset();
-        //echo $this->Html->meta(array('http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"));
 
         echo $this->Html->meta('icon');
 
@@ -43,8 +42,7 @@
        <?php 
         }
         ?>        
-<!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>-->
-<!--		<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>-->
+
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
         <!--<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
@@ -68,8 +66,6 @@
         echo $javascript->link(
                 array(                    
                     'freegal','ajaxify-html5.js', 'site.js',
-                    //'freegal40-libraries',
-                    //'html5shiv',
                     'freegal40-site'
                 )
         );
@@ -266,7 +262,8 @@
                         leftmyhistory07.removeClass('active');
                         leftnowstreaming07.removeClass('active');
                         leftsavedqueues07.removeClass('active');
-                        leftnewrelease07.removeClass('active');
+                        leftnewrelease07.removibraries',
+                        //'html5shiv',eClass('active');
                         leftmywishlist07.removeClass('active');
                         topmylib07.addClass('active');
                         leftmylib07.addClass('active');
@@ -282,7 +279,8 @@
                         leftmusicVideo07.removeClass('active');
                         leftnewrelease07.removeClass('active');
                         leftmywishlist07.removeClass('active');
-                        leftsavedqueues07.removeClass('active');
+                        leftsavedqueues07.remoibraries',
+                        //'html5shiv',veClass('active');
                         leftnowstreaming07.removeClass('active');
                         leftmylib07.removeClass('active');
                         leftmyhistory07.removeClass('active');
@@ -453,7 +451,6 @@
                                 success: function(response) {
                                     $.fn.colorbox.close();
                                     $('#noti_content').hide();
-                                    //location.reload();
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                                 }
@@ -474,10 +471,6 @@
 
                             //post the notification information
 
-
-
-
-
                             var pid = <?= $this->Session->read('patron') ?>;
                             var lid = <?= $this->Session->read('library') ?>;
                             var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
@@ -492,7 +485,6 @@
                                     sleep(2000);
                                     $.fn.colorbox.close();
                                     $('#noti_content').hide();
-                                    //location.reload();
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                                 }
