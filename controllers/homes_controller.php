@@ -49,6 +49,7 @@ class HomesController extends AppController {
      */
 
     function index() {
+        
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443) {
             $this->redirect('http://' . $_SERVER['HTTP_HOST'] . '/index');
@@ -69,13 +70,49 @@ class HomesController extends AppController {
             $this->set('patronDownload', $patronDownload);
         }
 
-        /* Top Singles Starts */  
-        if (($national = Cache::read("top_singles" . $territory)) === false) {
-            $nationalTopDownload = $this->Common->getTopSingles($territory);
-        } else {
-            $nationalTopDownload = Cache::read("top_singles" . $territory);
+        
+        // National Top 100 Songs slider and Downloads functionality
+        if (($national = Cache::read("national" . $territory)) === false)
+        {
+            if ($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ')
+            {
+                $cacheFlag = $this->MemDatas->find('count', array('conditions' => array('territory' => $territory, 'vari_info != ' => '')));
+                if ($cacheFlag > 0)
+                {
+                    $memDatasArr = $this->MemDatas->find('first', array('conditions' => array('territory' => $territory)));
+                    $unMemDatasArr = unserialize(base64_decode($memDatasArr['MemDatas']['vari_info']));
+                    Cache::write("national" . $territory, $unMemDatasArr);
+                    $nationalTopDownload = $unMemDatasArr;
+                }
+                else
+                {
+                    $nationalTopDownload = $this->Common->getNationalTop100($territory);
+                    $nationalTopDownloadSer = base64_encode(serialize($nationalTopDownload));
+                    $memQuery = "update mem_datas  set vari_info='" . $nationalTopDownloadSer . "'  where territory='" . $territory . "'";
+                    $this->MemDatas->setDataSource('master');
+                    $this->MemDatas->query($memQuery);
+                    $this->MemDatas->setDataSource('default');
+                }
+            }
+            else
+            {
+                $nationalTopDownload = $this->Common->getNationalTop100($territory);
+            }
         }
-        $this->set('top_singles', $nationalTopDownload);
+        else
+        {
+            $nationalTopDownload = Cache::read("national" . $territory);
+        }
+
+        $this->set('top_singles', $nationalTopDownload);        
+        
+        /* Top Singles Starts */  
+//        if (($national = Cache::read("top_singles" . $territory)) === false) {
+//            $nationalTopDownload = $this->Common->getTopSingles($territory);
+//        } else {
+//            $nationalTopDownload = Cache::read("top_singles" . $territory);
+//        }
+//        $this->set('top_singles', $nationalTopDownload);
         /* Top Singles Ends */ 
         
         /* National Top 100 Albums slider start */
