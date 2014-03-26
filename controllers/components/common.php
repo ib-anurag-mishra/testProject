@@ -9,7 +9,7 @@
 Class CommonComponent extends Object
 {
 
-    var $components = array('Session', 'Streaming', 'Queue', 'Token');
+    var $components = array('Session', 'Streaming', 'Queue');
     var $uses = array('Token');
 
     /*
@@ -1514,9 +1514,9 @@ STR;
         
         $songInstance = Classregistry::init('Song');
         if(!empty($flag)){
-            $cond = array('Song.ArtistText' => $artistComposer);
+            $cond = array('Song.ArtistText' => '%'.$artistComposer.'%');
         }else{
-            $cond = array('Song.Composer' => $artistComposer);
+            $cond = array('Song.Composer' => '%'.$artistComposer.'%');
         }
 
         $randomSongs = $songInstance->find('all', array(
@@ -1565,10 +1565,9 @@ STR;
                         'Sample_Files.SaveAsName'
                     )
                 )
-            ), 'group' => 'Song.ProdID, Song.provider_type', 'order' => 'rand()',
+            ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 50
         ));
-        
-        
+
         foreach ($randomSongs as $key => $value) {
             if (empty($ajax)) {
                 $filePath = $this->Token->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
