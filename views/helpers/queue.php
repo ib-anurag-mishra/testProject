@@ -359,7 +359,7 @@ EOD;
         }else if($flag == 2){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Album</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Artist</button>
 EOD;
             return $str;
             
