@@ -1438,7 +1438,8 @@ STR;
                         'type' => 'INNER',
                         'table' => 'featuredartists',
                         'alias' => 'fa',
-                        'conditions' => array('Album.ProdID = fa.album')
+                        'conditions' => array('Album.ProdID = fa.album'),
+                        'fields' => 'artist_image'
                     )
                 ),
                 'conditions' => array(
@@ -1458,7 +1459,8 @@ STR;
                     'Album.ArtistURL',
                     'Album.Label',
                     'Album.Copyright',
-                    'Album.provider_type'
+                    'Album.provider_type',
+                    'fa.artist_image'
                 ),
                 'contain' => array(
                     'Genre' => array(
@@ -1466,13 +1468,6 @@ STR;
                             'Genre.Genre'
                         )
                     ),
-                    'Files' => array(
-                        'fields' => array(
-                            'Files.CdnPath',
-                            'Files.SaveAsName',
-                            'Files.SourceURL'
-                        ),
-                    )
                 ),
                 'order' => 'fa.id DESC',
                 'limit' => $limit
@@ -1495,6 +1490,92 @@ STR;
             }
         }
         return $featured;
+    }
+    
+    
+    /**
+     * Function name : getRandomSongs
+     * Function Description This is used to get random songs related to a composer or artist.
+     *  
+     */
+    
+    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0){
+        
+        $songInstance = Classregistry::init('Song');
+        if(!empty($flag)){
+            $cond = array('Song.ArtistText' => $artistComposer);
+        }else{
+            $cond = array('Song.Composer' => $artistComposer);
+        }
+
+        $randomSongs = $songInstance->find('all', array(
+            'conditions' =>
+            array('and' =>
+                array(
+                    array('Song.provider_type = Country.provider_type'),
+                    array("Song.Sample_FileID != ''"),
+                    array("Song.FullLength_FIleID != ''"),
+                    array("Song.provider_type" => $provider),
+                    array('Country.Territory' => $country),
+                    array('Country.StreamingStatus' => 1),
+                    array('Country.StreamingSalesDate <=' => date('Y-m-d')),
+                    $cond
+                )
+            ),
+            'fields' => array(
+                'Song.ProdID',
+                'Song.Title',
+                'Song.ArtistText',
+                'Song.DownloadStatus',
+                'Song.SongTitle',
+                'Song.Artist',
+                'Song.Advisory',
+                'Song.Sample_Duration',
+                'Song.FullLength_Duration',
+                'Song.Sample_FileID',
+                'Song.FullLength_FIleID',
+                'Song.provider_type',
+                'Song.sequence_number'
+            ),
+            'contain' => array(
+                'Genre' => array(
+                    'fields' => array(
+                        'Genre.Genre'
+                    )
+                ),
+                'Country' => array(
+                    'fields' => array(
+                        'Country.StreamingStatus',
+                    )
+                ),
+                'Sample_Files' => array(
+                    'fields' => array(
+                        'Sample_Files.CdnPath',
+                        'Sample_Files.SaveAsName'
+                    )
+                )
+            ), 'group' => 'Song.ProdID, Song.provider_type', 'order' => 'rand()',
+        ));
+        
+        
+        foreach ($randomSongs as $key => $value) {
+            if (empty($ajax)) {
+                $filePath = $this->Token->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                if (!empty($filePath)) {
+                    $songPath = explode(':', $filePath);
+                    $streamUrl = trim($songPath[1]);
+                    $randomSongs[$key]['streamUrl'] = $streamUrl;
+                    $randomSongs[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                }
+            } else {
+                $randomSongs[$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
+                $randomSongs[$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
+                $randomSongs[$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
+            } 
+        }
+        
+        return $randomSongs;
+
     }
     
     
