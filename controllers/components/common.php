@@ -9,7 +9,7 @@
 Class CommonComponent extends Object
 {
 
-    var $components = array('Session', 'Streaming', 'Queue');
+    var $components = array('Session', 'Streaming', 'Queue', 'Token');
     var $uses = array('Token');
 
     /*
@@ -1499,7 +1499,18 @@ STR;
      *  
      */
     
-    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0){
+    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0, $territory = null){
+        
+        if(!empty($territory)) {
+            $country = $territory;
+            $album = $this->params['pass'][1];
+            $provider = base64_decode($this->params['pass'][2]);
+            $id = $this->params['pass'][0];
+
+            $countryPrefix = $this->Common->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
+        } else {
+            $country = $this->Session->read('territory'); 
+        }        
         
         $songInstance = Classregistry::init('Song');
         if(!empty($flag)){
