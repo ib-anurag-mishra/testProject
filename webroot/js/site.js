@@ -1817,6 +1817,19 @@ $('document').ready(function()
         $('.most-popular-sub-nav').css('width', most_popular_width);
 
     }
+
+    /* calculate width for Videos > Top Videos */
+    var totalTVLiWidth = 0;
+    $('.video-top-genres-grid li').each(function(){
+        totalTVLiWidth = totalTVLiWidth = $(this).outerWidth(true);
+
+    });
+
+    $('.video-top-genres-grid ul').width(totalTVLiWidth);
+    
+
+
+
     function computeVisibleHeight($t) {
         var top = $t.position().top;
         var windowHeight = $(window).height();
