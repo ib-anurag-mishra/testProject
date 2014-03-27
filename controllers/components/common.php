@@ -1414,7 +1414,7 @@ STR;
         if(!empty($featured)){
             foreach ($featured as $k => $v)
             {                
-                $featured[$k]['albumSongs'] = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['territory'],$v['Featuredartist']['flag'],0,$territory);
+                $featured[$k]['albumSongs'] = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag'],0,$territory);
             }
         }
         return $featured;
