@@ -64,8 +64,9 @@
                     <a class="add-to-playlist-button" href="javascript:void(0);"></a>
                     <div class="wishlist-popover">
 
-                        <?php
-                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);
+                        <?php 
+                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);                        
+                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $VideosData[0]["Video"]["ProdID"], $VideosData[0]["Video"]["provider_type"]);
                         ?>                                                    
                     </div>
                     <?php

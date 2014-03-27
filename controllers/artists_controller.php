@@ -21,7 +21,7 @@ Class ArtistsController extends AppController {
 
     function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer','newAlbum' , 'new_view');
+		$this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer','newAlbum' , 'new_view' , 'getFeaturedSongs');
     }
 
     /*
@@ -1478,6 +1478,57 @@ Class ArtistsController extends AppController {
             exit;
         }
     }
+    
+    
+    /*
+     * Function Name : getAlbumData
+     * Description   : This function is used to get songs related to an featured artist or composer
+     * 
+     */
+
+    function getFeaturedSongs() {
+        Configure::write('debug', 0);
+        $artistText = $_POST['artistText'];
+        $providerType = $_POST['providerType'];
+        $flag = $_POST['flag'];        
+        $territory = $this->Session->read('territory');
+        if (($featuredSongs = Cache::read("featured_artist_".$artistText.'_'.$flag.'_'.$territory)) === false) {
+            $featuredComposerSongs = $this->Common->getRandomSongs($artistText,$providerType,$flag,1,$territory);
+            
+            if (!empty($featuredComposerSongs)) {
+                Cache::write("featured_artist_".$artistText.'_'.$flag.'_'.$territory, $featuredComposerSongs);
+                $this->log("cache written for featured artist for $artistText with flag $flag for territory".$territory, "cache");
+            }            
+        } else {
+            $featuredComposerSongs = Cache::read("featured_artist_".$artistText.'_'.$flag.'_'.$territory);
+        }
+        if (!empty($featuredComposerSongs)) {
+            foreach ($featuredComposerSongs as $value) {
+                if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle'])) {
+                    if ($value['Song']['Advisory'] == 'T') {
+                        $value['Song']['SongTitle'] = $value['Song']['SongTitle'] . ' (Explicit)';
+                    }
+                    $playItem = array('playlistId' => 0, 'songId' => $value['Song']['ProdID'], 'providerType' => $value['Song']['provider_type'], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                    $jsonPlayItem = json_encode($playItem);
+                    $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
+                    $playListData[] = $jsonPlayItem;
+                }
+            }
+            if (!empty($playListData)) {
+                $playList = implode(',', $playListData);
+                if (!empty($playList)) {
+                    $playList = base64_encode('[' . $playList . ']');
+                }
+            }
+            $successData = array('success' => $playList);
+            echo json_encode($successData);
+            exit;
+        } else {
+            $errorData = array('error' => 'There are no songs available for streaming');
+            echo json_encode($errorData);
+            exit;
+        }
+    }    
     
     function getNationalAlbumData() {
         

@@ -1399,102 +1399,168 @@ STR;
             'conditions' => array(
                 'Featuredartist.territory' => $territory,
                 'Featuredartist.language' => Configure::read('App.LANGUAGE')),
-            'recursive' => -1,
-            'order' => array(
-                'Featuredartist.id' => 'desc'),
-            'limit' => "$offset,$limit"
+                'Featuredartist.album !=' => 0,
+                'recursive' => -1,
+                'order' => array(
+                    'Featuredartist.id' => 'desc'),
+                'limit' => "$offset,$limit"
                 )
         );
         
-        foreach ($featured as $k => $v)
-        {
-            if ($v['Featuredartist']['album'] != 0)
-            {
-                if (empty($ids))
-                {
-                    $ids .= $v['Featuredartist']['album'];
-                    $ids_provider_type .= "(" . $v['Featuredartist']['album'] . ",'" . $v['Featuredartist']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['Featuredartist']['album'];
-                    $ids_provider_type .= ',' . "(" . $v['Featuredartist']['album'] . ",'" . $v['Featuredartist']['provider_type'] . "')";
-                }
-            }
-        }
-
         if ((count($featured) < 1) || ($featured === false))
         {
             $this->log("featured artist data is not available for" . $territory, "cache");
         }
-
-        if ($ids != '')
-        {
-            $albumInstance = ClassRegistry::init('Album');
-            $albumInstance->recursive = 2;
-            $featured = $albumInstance->find('all', array(
-                'joins' => array(
-                    array(
-                        'type' => 'INNER',
-                        'table' => 'featuredartists',
-                        'alias' => 'fa',
-                        'conditions' => array('Album.ProdID = fa.album')
-                    )
-                ),
-                'conditions' => array(
-                    'and' => array(
-                        array(
-                            "(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")"
-                        ),
-                    ), 
-                    "1 = 1 GROUP BY Album.ProdID"
-                ),
-                'fields' => array(
-                    'Album.ProdID',
-                    'Album.Title',
-                    'Album.ArtistText',
-                    'Album.AlbumTitle',
-                    'Album.Artist',
-                    'Album.ArtistURL',
-                    'Album.Label',
-                    'Album.Copyright',
-                    'Album.provider_type'
-                ),
-                'contain' => array(
-                    'Genre' => array(
-                        'fields' => array(
-                            'Genre.Genre'
-                        )
-                    ),
-                    'Files' => array(
-                        'fields' => array(
-                            'Files.CdnPath',
-                            'Files.SaveAsName',
-                            'Files.SourceURL'
-                        ),
-                    )
-                ),
-                'order' => 'fa.id DESC',
-                'limit' => $limit
-                    )
-            );
-        }
-        else
-        {
-            $featured = array();
-        }
         if(!empty($featured)){
             foreach ($featured as $k => $v)
             {                
-                $albumArtwork = $tokeninstance->artworkToken($v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
-                $image = Configure::read('App.Music_Path') . $albumArtwork;
-                $featured[$k]['featuredImage'] = $image;
-                    $featured[$k]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),1,$territory))
-                    );
+                $featured[$k]['albumSongs'] = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag'],0,$territory);
             }
         }
         return $featured;
+    }
+    
+    /**
+     * Function name : writeFeaturedSongsInCache
+     * Function Description This is used to write random songs related to a composer or artist into cache.
+     *  
+     */ 
+    
+    function writeFeaturedSongsInCache($territory){
+        $featuredInstance = ClassRegistry::init('Featuredartist');
+        $featured = $featuredInstance->find('all', array(
+                        'conditions' => array(
+                            'Featuredartist.territory' => $territory,
+                            'Featuredartist.language' => Configure::read('App.LANGUAGE')),
+                            'Featuredartist.album !=' => 0,
+                            'recursive' => -1,
+                            'order' => array(
+                                'Featuredartist.id' => 'desc'
+                            ),
+                    )
+        ); 
+        
+        foreach ($featured as $k => $v)
+        {                
+            $featuredSongs = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag'],1,$territory);
+            if(!empty($featuredSongs)){
+                Cache::write("featured_artist_".$v['Featuredartist']['artist_name'].'_'.$v['Featuredartist']['flag'].'_'.$territory, $featuredSongs);
+                $this->log("cache written for featured artist for ".$v['Featuredartist']['artist_name']." with flag ".$v['Featuredartist']['flag']." for territory".$territory, "cache");                
+            }
+        }        
+    }
+    
+    /**
+     * Function name : getRandomSongs
+     * Function Description This is used to get random songs related to a composer or artist.
+     *  
+     */
+    
+    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0, $territory = null){
+        
+        if(!empty($territory)) {
+            $country = $territory;
+            $countryPrefix = $this->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
+        } else {
+            $country = $this->Session->read('territory'); 
+        }        
+        
+        $songInstance = Classregistry::init('Song');
+        if(empty($flag)){
+            $cond = array('Song.ArtistText' => $artistComposer);
+        }else{
+            $cond = array('Song.Composer' => $artistComposer);
+        }
+        if(!empty($ajax)){
+            $randomSongs = $songInstance->find('all', array(
+                'conditions' =>
+                array('and' =>
+                    array(
+                        array('Song.provider_type = Country.provider_type'),
+                        array("Song.Sample_FileID != ''"),
+                        array("Song.FullLength_FIleID != ''"),
+                        array("Song.provider_type" => $provider),
+                        array('Country.Territory' => $country),
+                        array('Country.StreamingStatus' => 1),
+                        array('Country.StreamingSalesDate <=' => date('Y-m-d')),
+                        $cond
+                    )
+                ),
+                'fields' => array(
+                    'Song.ProdID',
+                    'Song.ArtistText',
+                    'Song.SongTitle',
+                    'Song.Advisory',
+                    'Song.FullLength_Duration',
+                    'Song.provider_type',
+                ),
+                'contain' => array(
+                    'Country' => array(
+                        'fields' => array(
+                            'Country.StreamingStatus',
+                        )
+                    ),
+                    'Full_Files' => array(
+                        'fields' => array(
+                            'Full_Files.CdnPath',
+                            'Full_Files.SaveAsName'
+                        )
+                    )
+                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 50
+            ));
+        }else{
+            $randomSongs = $songInstance->find('first', array(
+                'conditions' =>
+                array('and' =>
+                    array(
+                        array('Song.provider_type = Country.provider_type'),
+                        array("Song.Sample_FileID != ''"),
+                        array("Song.FullLength_FIleID != ''"),
+                        array("Song.provider_type" => $provider),
+                        array('Country.Territory' => $country),
+                        array('Country.StreamingStatus' => 1),
+                        array('Country.StreamingSalesDate <=' => date('Y-m-d')),
+                        $cond
+                    )
+                ),
+                'fields' => array(
+                    'Song.ProdID',
+                    'Song.ArtistText',
+                    'Song.SongTitle',
+                    'Song.Advisory',
+                    'Song.FullLength_Duration',
+                    'Song.provider_type',
+                ),
+                'contain' => array(
+                    'Country' => array(
+                        'fields' => array(
+                            'Country.StreamingStatus',
+                        )
+                    ),
+                    'Full_Files' => array(
+                        'fields' => array(
+                            'Full_Files.CdnPath',
+                            'Full_Files.SaveAsName'
+                        )
+                    )
+                ), 'group' => 'Song.ProdID, Song.provider_type'
+            ));            
+        }
+        if (!empty($ajax)) {
+            foreach ($randomSongs as $key => $value) {
+                $tokeninstance = ClassRegistry::init('Token');
+                $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                if (!empty($filePath)) {
+                    $songPath = explode(':', $filePath);
+                    $streamUrl = trim($songPath[1]);
+                    $randomSongs[$key]['streamUrl'] = $streamUrl;
+                    $randomSongs[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                }
+            }
+        }
+        
+        return $randomSongs;
+
     }
     
     
@@ -2286,6 +2352,7 @@ STR;
     function getLibraryTop10Videos($territory, $libId)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $latestVideoDownloadInstance = ClassRegistry::init('LatestVideodownload');
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videoInstance = ClassRegistry::init('Video');

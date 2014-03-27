@@ -359,7 +359,7 @@ EOD;
         }else if($flag == 2){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Album</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Artist</button>
 EOD;
             return $str;
             
@@ -372,7 +372,21 @@ EOD;
             
        }
      
-    }  
+    }
+    
+    /* Function name : getfeaturedStreamLabel
+     * Description   : This function is used to get stream now mark up replacing play button 
+     */    
+    
+    function getfeaturedStreamLabel($artistName,$provider_type,$flag){
+        
+        $artistName = base64_encode($artistName);
+        $provider_type = base64_encode($provider_type);
+        $str = <<<EOD
+            <button onclick="javascript:loadfeaturedSongs('$artistName','$provider_type',$flag);" class="stream-artist">Stream Artist</button>
+EOD;
+            return $str;        
+    }
     
     /* Function name : getNationalAlbumStreamLabel
      * Description   : This function is used to get stream now mark up replacing play button 

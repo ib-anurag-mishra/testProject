@@ -907,6 +907,9 @@ function wishlistDownloadIE(prodId, id, provider)
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -954,6 +957,9 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName, type)
             {
                 alert("Your download limit has exceeded.");
                 location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1019,6 +1025,9 @@ function wishlistVideoDownloadIE(prodId, id, provider)
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1067,6 +1076,9 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName,
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1332,6 +1344,9 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1387,6 +1402,9 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1458,6 +1476,9 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1514,6 +1535,9 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -2387,6 +2411,36 @@ function loadAlbumData(albumtData) {
     return false;
 
 
+}
+
+function loadfeaturedSongs(artistText,providerType,flag){
+
+    artistText = base64_decode(artistText);
+    providerType = base64_decode(providerType);
+    var data = "artistText=" + artistText +  "&providerType=" + providerType + "&flag=" + flag ;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "artists/getFeaturedSongs", // URL to request
+        data: data, // post data
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                playlist = base64_decode(response.success);
+                playlist = JSON.parse(playlist);
+                if (playlist.length) {
+                    pushSongs(playlist);
+                }
+            } else if (response.error) {
+                console.log(response.error);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log('Ajax call to get album songs has been failed');
+        }
+    });
+    return false;
+    
+    
 }
 
 function loadNationalAlbumData(artistText, prodId, providerType) {

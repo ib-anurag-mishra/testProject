@@ -253,7 +253,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     ?>
                     <?php
                     
-                    if($count == 20){
+                    if($count == 50){
                         break;
                     }
             }
@@ -279,49 +279,36 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         $count = 1;
         foreach ($featuredArtists as $k => $v)
         {
-            if (strlen($v['Album']['AlbumTitle']) > 22)
+            if (strlen($v['Featuredartist']['artist_name']) > 22)
             {
-                $title = substr($v['Album']['AlbumTitle'], 0, 22) . "..";
+                $ArtistText = substr($v['Featuredartist']['artist_name'], 0, 22) . "..";
             }
             else
             {
-                $title = $v['Album']['AlbumTitle'];
-            }
-
-            if (strlen($v['Album']['ArtistText']) > 22)
-            {
-                $ArtistText = substr($v['Album']['ArtistText'], 0, 22) . "..";
-            }
-            else
-            {
-                $ArtistText = $v['Album']['ArtistText'];
+                $ArtistText = $v['Featuredartist']['artist_name'];
             }
             ?>
             <div class="featured-grid-item">
-                <a href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>">
-                    <?php echo $html->image($v['featuredImage'], array("height" => "77", "width" => "84", "alt" => $ArtistText . ' - ' . $v['Album']['AlbumTitle'])); ?>
+                <a href="/artists/album/<?= base64_encode($this->getTextEncode($v['Featuredartist']['artist_name'])); ?>">
+                    <?php echo $html->image(Configure::read('App.CDN') . 'featuredimg/' . $v['Featuredartist']['artist_image'], array("height" => "77", "width" => "84", "alt" => $ArtistText)); ?>
                 </a>
                 <div class="featured-grid-menu">
                     <div class="featured-artist-name">
                         <?php echo $this->getTextEncode($ArtistText); ?>
-                    </div>
-                    <div class="featured-album-name">
-                        <a  href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>">
-                               <?php echo $this->getTextEncode($title); ?>
-                        </a>
+                        
                     </div>
                     <div class="featured-artist-ctas">
                         <?php
                         if ($this->Session->read("patron"))
                         {
-                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
+                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs']))
                             {
-                                echo $this->Queue->getAlbumStreamLabel($v['albumSongs'][$v['Album']['ProdID']], 2);
+                                echo $this->Queue->getfeaturedStreamLabel($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag']);
                             }
                         }
                         ?>                     
                         <a title="More by <?php echo $this->getTextEncode($ArtistText); ?>" class="more-by-artist" 
-                           href="/artists/album/<?php echo str_replace('/', '@', base64_encode($v['Album']['ArtistText'])); ?>/<?= base64_encode($v['Genre']['Genre']) ?>">
+                           href="/artists/album/<?= base64_encode($this->getTextEncode($v['Featuredartist']['artist_name'])); ?>">
                                <?php echo $this->getTextEncode($ArtistText); ?>
                         </a>
                     </div>

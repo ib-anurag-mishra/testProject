@@ -49,6 +49,7 @@ class HomesController extends AppController {
      */
 
     function index() {
+        
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443) {
             $this->redirect('http://' . $_SERVER['HTTP_HOST'] . '/index');
@@ -69,6 +70,42 @@ class HomesController extends AppController {
             $this->set('patronDownload', $patronDownload);
         }
 
+        
+        // National Top 100 Songs slider and Downloads functionality
+//        if (($national = Cache::read("national" . $territory)) === false)
+//        {
+//            if ($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ')
+//            {
+//                $cacheFlag = $this->MemDatas->find('count', array('conditions' => array('territory' => $territory, 'vari_info != ' => '')));
+//                if ($cacheFlag > 0)
+//                {
+//                    $memDatasArr = $this->MemDatas->find('first', array('conditions' => array('territory' => $territory)));
+//                    $unMemDatasArr = unserialize(base64_decode($memDatasArr['MemDatas']['vari_info']));
+//                    Cache::write("national" . $territory, $unMemDatasArr);
+//                    $nationalTopDownload = $unMemDatasArr;
+//                }
+//                else
+//                {
+//                    $nationalTopDownload = $this->Common->getNationalTop100($territory);
+//                    $nationalTopDownloadSer = base64_encode(serialize($nationalTopDownload));
+//                    $memQuery = "update mem_datas  set vari_info='" . $nationalTopDownloadSer . "'  where territory='" . $territory . "'";
+//                    $this->MemDatas->setDataSource('master');
+//                    $this->MemDatas->query($memQuery);
+//                    $this->MemDatas->setDataSource('default');
+//                }
+//            }
+//            else
+//            {
+//                $nationalTopDownload = $this->Common->getNationalTop100($territory);
+//            }
+//        }
+//        else
+//        {
+//            $nationalTopDownload = Cache::read("national" . $territory);
+//        }
+//
+//        $this->set('top_singles', $nationalTopDownload);        
+        
         /* Top Singles Starts */  
         if (($national = Cache::read("top_singles" . $territory)) === false) {
             $nationalTopDownload = $this->Common->getTopSingles($territory);
@@ -3729,15 +3766,15 @@ STR;
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
 
             if ($maintainLatestDownload) {
-                $this->log("sonyproc_new called", 'download');
-                $procedure = 'sonyproc_new';
-                $sql = "CALL sonyproc_new('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Song']['ProductID'] . "', '" . $trackDetails['0']['Song']['ISRC'] . "', '" . addslashes($trackDetails['0']['Song']['Artist']) . "', '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
+                $this->log("downloadsong called", 'download');
+                $procedure = 'downloadsong';
+                $sql = "CALL downloadsong('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Song']['ProductID'] . "', '" . $trackDetails['0']['Song']['ISRC'] . "', '" . addslashes($trackDetails['0']['Song']['Artist']) . "', '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
             } else {
                 $this->log("sonyproc_ioda called", 'download');
                 $procedure = 'sonyproc_ioda';
                 $sql = "CALL sonyproc_ioda('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Song']['ProductID'] . "', '" . $trackDetails['0']['Song']['ISRC'] . "', '" . addslashes($trackDetails['0']['Song']['Artist']) . "', '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
             }
-
+            $storeProcedure = $sql;
             $this->Library->setDataSource('master');
 
             $this->Library->query($sql);
@@ -3819,7 +3856,8 @@ STR;
                 $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later." . $return;
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
-
+                
+                echo $storeProcedure;
                 echo "empty|Something went wrong during download.Please try again later.";
                 exit;
             }
