@@ -1458,6 +1458,9 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1514,6 +1517,9 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
