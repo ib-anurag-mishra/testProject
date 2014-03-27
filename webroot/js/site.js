@@ -1837,7 +1837,12 @@ $('document').ready(function()
 
     $('.video-top-genres-grid ul').width(totalTVLiWidth);
     
+    $hero_image_container = $('.hero-image-container');
+    $video_detail_hero_wishlist_btn = $hero_image_container.find('.wishlist-popover');
+    $hero_image_container.on('mouseleave',function(){
+        $video_detail_hero_wishlist_btn.removeClass('active');
 
+    });
 
 
     function computeVisibleHeight($t) {
