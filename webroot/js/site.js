@@ -1825,7 +1825,7 @@ $('document').ready(function()
         totalFVLiWidth = totalFVLiWidth + $(this).outerWidth(true);
 
     });
-    $('#featured-video-grid ul').width(totalTVLiWidth);
+    $('#featured-video-grid ul').width(totalFVLiWidth);
 
     $('.video-top-genres-grid ul').width(totalTVLiWidth);
     /* calculate width for Videos > Top Videos */
