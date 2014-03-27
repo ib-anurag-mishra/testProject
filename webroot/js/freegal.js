@@ -2389,6 +2389,36 @@ function loadAlbumData(albumtData) {
 
 }
 
+function loadfeaturedSongs(artistText,providerType,flag){
+
+    artistText = base64_decode(artistText);
+    providerType = base64_decode(providerType);
+    var data = "artistText=" + artistText +  "&providerType=" + providerType + "&flag=" + flag ;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "artists/getFeaturedSongs", // URL to request
+        data: data, // post data
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                playlist = base64_decode(response.success);
+                playlist = JSON.parse(playlist);
+                if (playlist.length) {
+                    pushSongs(playlist);
+                }
+            } else if (response.error) {
+                console.log(response.error);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log('Ajax call to get album songs has been failed');
+        }
+    });
+    return false;
+    
+    
+}
+
 function loadNationalAlbumData(artistText, prodId, providerType) {
 
     artistText = base64_decode(artistText);

@@ -1514,12 +1514,11 @@ STR;
                             'Full_Files.SaveAsName'
                         )
                     )
-                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 1
+                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()'
             ));            
         }
-
-        foreach ($randomSongs as $key => $value) {
-            if (!empty($ajax)) {
+        if (!empty($ajax)) {
+            foreach ($randomSongs as $key => $value) {
                 $tokeninstance = ClassRegistry::init('Token');
                 $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                 if (!empty($filePath)) {
@@ -1528,11 +1527,7 @@ STR;
                     $randomSongs[$key]['streamUrl'] = $streamUrl;
                     $randomSongs[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
                 }
-            } else {
-                $randomSongs[$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
-                $randomSongs[$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
-                $randomSongs[$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
-            } 
+            }
         }
         
         return $randomSongs;
