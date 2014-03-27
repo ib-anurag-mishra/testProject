@@ -290,7 +290,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             ?>
             <div class="featured-grid-item">
                 <a href="/artists/album/<?= base64_encode($this->getTextEncode($v['Featuredartist']['artist_name'])); ?>">
-                    <?php echo $html->image(Configure::read('App.CDN_PATH') . 'featuredimg/' . $v['Featuredartist']['artist_image'], array("height" => "77", "width" => "84", "alt" => $ArtistText)); ?>
+                    <?php echo $html->image(Configure::read('App.CDN') . 'featuredimg/' . $v['Featuredartist']['artist_image'], array("height" => "77", "width" => "84", "alt" => $ArtistText)); ?>
                 </a>
                 <div class="featured-grid-menu">
                     <div class="featured-artist-name">

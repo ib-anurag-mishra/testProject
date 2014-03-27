@@ -1431,10 +1431,6 @@ STR;
         
         if(!empty($territory)) {
             $country = $territory;
-            $album = $this->params['pass'][1];
-            $provider = base64_decode($this->params['pass'][2]);
-            $id = $this->params['pass'][0];
-
             $countryPrefix = $this->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
         } else {
             $country = $this->Session->read('territory'); 
@@ -1463,25 +1459,13 @@ STR;
             ),
             'fields' => array(
                 'Song.ProdID',
-                'Song.Title',
                 'Song.ArtistText',
-                'Song.DownloadStatus',
                 'Song.SongTitle',
-                'Song.Artist',
                 'Song.Advisory',
-                'Song.Sample_Duration',
                 'Song.FullLength_Duration',
-                'Song.Sample_FileID',
-                'Song.FullLength_FIleID',
                 'Song.provider_type',
-                'Song.sequence_number'
             ),
             'contain' => array(
-                'Genre' => array(
-                    'fields' => array(
-                        'Genre.Genre'
-                    )
-                ),
                 'Country' => array(
                     'fields' => array(
                         'Country.StreamingStatus',
