@@ -1420,6 +1420,35 @@ STR;
         return $featured;
     }
     
+    /**
+     * Function name : writeFeaturedSongsInCache
+     * Function Description This is used to write random songs related to a composer or artist into cache.
+     *  
+     */ 
+    
+    function writeFeaturedSongsInCache($territory){
+        $featuredInstance = ClassRegistry::init('Featuredartist');
+        $featured = $featuredInstance->find('all', array(
+                        'conditions' => array(
+                            'Featuredartist.territory' => $territory,
+                            'Featuredartist.language' => Configure::read('App.LANGUAGE')),
+                            'Featuredartist.album !=' => 0,
+                            'recursive' => -1,
+                            'order' => array(
+                                'Featuredartist.id' => 'desc'
+                            ),
+                    )
+        ); 
+        
+        foreach ($featured as $k => $v)
+        {                
+            $featuredSongs = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag'],1,$territory);
+            if(!empty($featuredSongs)){
+                Cache::write("featured_artist_".$v['Featuredartist']['artist_name'].'_'.$v['Featuredartist']['provider_type'].'_'.$territory, $featuredSongs);
+                $this->log("cache written for featured artist for ".$v['Featuredartist']['artist_name']." with flag ".$v['Featuredartist']['provider_type']." for territory".$territory, "cache");                
+            }
+        }        
+    }
     
     /**
      * Function name : getRandomSongs
@@ -1443,7 +1472,7 @@ STR;
             $cond = array('Song.Composer LIKE' => '%'.$artistComposer.'%');
         }
         if(!empty($ajax)){
-            $randomSongs = $songInstance->find('count', array(
+            $randomSongs = $songInstance->find('all', array(
                 'conditions' =>
                 array('and' =>
                     array(
@@ -1514,7 +1543,7 @@ STR;
                             'Full_Files.SaveAsName'
                         )
                     )
-                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()'
+                ), 'group' => 'Song.ProdID, Song.provider_type'
             ));            
         }
         if (!empty($ajax)) {
