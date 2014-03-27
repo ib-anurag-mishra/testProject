@@ -1435,16 +1435,16 @@ STR;
             $provider = base64_decode($this->params['pass'][2]);
             $id = $this->params['pass'][0];
 
-            $countryPrefix = $this->Common->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
+            $countryPrefix = $this->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
         } else {
             $country = $this->Session->read('territory'); 
         }        
         
         $songInstance = Classregistry::init('Song');
         if(empty($flag)){
-            $cond = array('Song.ArtistText' => '%'.$artistComposer.'%');
+            $cond = array('Song.ArtistText LIKE' => '%'.$artistComposer.'%');
         }else{
-            $cond = array('Song.Composer' => '%'.$artistComposer.'%');
+            $cond = array('Song.Composer LIKE' => '%'.$artistComposer.'%');
         }
 
         $randomSongs = $songInstance->find('all', array(
