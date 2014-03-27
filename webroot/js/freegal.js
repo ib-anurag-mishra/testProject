@@ -907,6 +907,9 @@ function wishlistDownloadIE(prodId, id, provider)
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -954,6 +957,9 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName, type)
             {
                 alert("Your download limit has exceeded.");
                 location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1019,6 +1025,9 @@ function wishlistVideoDownloadIE(prodId, id, provider)
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1067,6 +1076,9 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName,
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1332,6 +1344,9 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
@@ -1387,6 +1402,9 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
             {
                 alert("Your download limit has exceeded.");
                 //location.reload();
+                $('.afterClick').hide();
+                $('.beforeClick').show(); 
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 return false;
             }
             else if (msg === 'suces')
