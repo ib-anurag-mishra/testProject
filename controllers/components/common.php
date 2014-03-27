@@ -1399,94 +1399,22 @@ STR;
             'conditions' => array(
                 'Featuredartist.territory' => $territory,
                 'Featuredartist.language' => Configure::read('App.LANGUAGE')),
-            'recursive' => -1,
-            'order' => array(
-                'Featuredartist.id' => 'desc'),
-            'limit' => "$offset,$limit"
+                'Featuredartist.album !=' => 0,
+                'recursive' => -1,
+                'order' => array(
+                    'Featuredartist.id' => 'desc'),
+                'limit' => "$offset,$limit"
                 )
         );
         
-        foreach ($featured as $k => $v)
-        {
-            if ($v['Featuredartist']['album'] != 0)
-            {
-                if (empty($ids))
-                {
-                    $ids .= $v['Featuredartist']['album'];
-                    $ids_provider_type .= "(" . $v['Featuredartist']['album'] . ",'" . $v['Featuredartist']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['Featuredartist']['album'];
-                    $ids_provider_type .= ',' . "(" . $v['Featuredartist']['album'] . ",'" . $v['Featuredartist']['provider_type'] . "')";
-                }
-            }
-        }
-
         if ((count($featured) < 1) || ($featured === false))
         {
             $this->log("featured artist data is not available for" . $territory, "cache");
         }
-
-        if ($ids != '')
-        {
-            $albumInstance = ClassRegistry::init('Album');
-            $albumInstance->recursive = 2;
-            $featured = $albumInstance->find('all', array(
-                'joins' => array(
-                    array(
-                        'type' => 'INNER',
-                        'table' => 'featuredartists',
-                        'alias' => 'fa',
-                        'conditions' => array('Album.ProdID = fa.album'),
-                        'fields' => 'artist_image'
-                    )
-                ),
-                'conditions' => array(
-                    'and' => array(
-                        array(
-                            "(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")"
-                        ),
-                    ), 
-                    "1 = 1 GROUP BY Album.ProdID"
-                ),
-                'fields' => array(
-                    'Album.ProdID',
-                    'Album.Title',
-                    'Album.ArtistText',
-                    'Album.AlbumTitle',
-                    'Album.Artist',
-                    'Album.ArtistURL',
-                    'Album.Label',
-                    'Album.Copyright',
-                    'Album.provider_type',
-                    'fa.artist_image'
-                ),
-                'contain' => array(
-                    'Genre' => array(
-                        'fields' => array(
-                            'Genre.Genre'
-                        )
-                    ),
-                ),
-                'order' => 'fa.id DESC',
-                'limit' => $limit
-                    )
-            );
-        }
-        else
-        {
-            $featured = array();
-        }
         if(!empty($featured)){
             foreach ($featured as $k => $v)
             {                
-                $albumArtwork = $tokeninstance->artworkToken($v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
-                $image = Configure::read('App.Music_Path') . $albumArtwork;
-                $featured[$k]['featuredImage'] = $image;
-                    $featured[$k]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),1,$territory))
-                    );
+                $featured[$k]['albumSongs'] = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['territory'],$v['Featuredartist']['flag'],0,$territory);
             }
         }
         return $featured;
@@ -1513,7 +1441,7 @@ STR;
         }        
         
         $songInstance = Classregistry::init('Song');
-        if(!empty($flag)){
+        if(empty($flag)){
             $cond = array('Song.ArtistText' => '%'.$artistComposer.'%');
         }else{
             $cond = array('Song.Composer' => '%'.$artistComposer.'%');
