@@ -1818,6 +1818,16 @@ $('document').ready(function()
 
     }
 
+
+    /* calculate width for Videos > Featured Videos */
+    var totalFVLiWidth = 0;
+    $('#featured-video-grid li').each(function(){
+        totalFVLiWidth = totalFVLiWidth + $(this).outerWidth(true);
+
+    });
+    $('#featured-video-grid ul').width(totalFVLiWidth);
+
+    $('.video-top-genres-grid ul').width(totalTVLiWidth);
     /* calculate width for Videos > Top Videos */
     var totalTVLiWidth = 0;
     $('.video-top-genres-grid li').each(function(){
