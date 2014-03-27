@@ -2323,6 +2323,7 @@ STR;
     function getLibraryTop10Videos($territory, $libId)
     {
         set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
         $latestVideoDownloadInstance = ClassRegistry::init('LatestVideodownload');
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videoInstance = ClassRegistry::init('Video');
