@@ -1467,9 +1467,9 @@ STR;
         
         $songInstance = Classregistry::init('Song');
         if(empty($flag)){
-            $cond = array('Song.ArtistText LIKE' => '%'.$artistComposer.'%');
+            $cond = array('Song.ArtistText' => $artistComposer);
         }else{
-            $cond = array('Song.Composer LIKE' => '%'.$artistComposer.'%');
+            $cond = array('Song.Composer' => $artistComposer);
         }
         if(!empty($ajax)){
             $randomSongs = $songInstance->find('all', array(
