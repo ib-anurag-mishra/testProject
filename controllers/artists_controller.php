@@ -1,5 +1,5 @@
 <?php
-/*Here1*/
+
 /*
   File Name : artists_controller.php
   File Description : Artist controller page
