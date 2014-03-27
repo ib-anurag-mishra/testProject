@@ -106,7 +106,7 @@ $(document).ready(function() {
 
 
         var currentScrollLeft = $(this).siblings('.carousel').scrollLeft();
-        currentScrollLeft = currentScrollLeft - 660;
+        currentScrollLeft = currentScrollLeft - 654;
         $(this).siblings('.carousel').animate({scrollLeft: currentScrollLeft});        
 
     });
