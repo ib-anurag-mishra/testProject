@@ -1444,8 +1444,8 @@ STR;
         {                
             $featuredSongs = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag'],1,$territory);
             if(!empty($featuredSongs)){
-                Cache::write("featured_artist_".$v['Featuredartist']['artist_name'].'_'.$v['Featuredartist']['provider_type'].'_'.$territory, $featuredSongs);
-                $this->log("cache written for featured artist for ".$v['Featuredartist']['artist_name']." with flag ".$v['Featuredartist']['provider_type']." for territory".$territory, "cache");                
+                Cache::write("featured_artist_".$v['Featuredartist']['artist_name'].'_'.$v['Featuredartist']['flag'].'_'.$territory, $featuredSongs);
+                $this->log("cache written for featured artist for ".$v['Featuredartist']['artist_name']." with flag ".$v['Featuredartist']['flag']." for territory".$territory, "cache");                
             }
         }        
     }
