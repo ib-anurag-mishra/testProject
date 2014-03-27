@@ -16,7 +16,7 @@ class TopSingles extends AppModel
 						'territory' => $territory, ),
 				'recursive' => -1,
 				'order' => array(
-						'id' => 'desc')
+						'id' => 'asc')
 		));
 	}
 }
