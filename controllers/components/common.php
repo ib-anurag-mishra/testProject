@@ -1442,46 +1442,84 @@ STR;
         }else{
             $cond = array('Song.Composer LIKE' => '%'.$artistComposer.'%');
         }
-
-        $randomSongs = $songInstance->find('all', array(
-            'conditions' =>
-            array('and' =>
-                array(
-                    array('Song.provider_type = Country.provider_type'),
-                    array("Song.Sample_FileID != ''"),
-                    array("Song.FullLength_FIleID != ''"),
-                    array("Song.provider_type" => $provider),
-                    array('Country.Territory' => $country),
-                    array('Country.StreamingStatus' => 1),
-                    array('Country.StreamingSalesDate <=' => date('Y-m-d')),
-                    $cond
-                )
-            ),
-            'fields' => array(
-                'Song.ProdID',
-                'Song.ArtistText',
-                'Song.SongTitle',
-                'Song.Advisory',
-                'Song.FullLength_Duration',
-                'Song.provider_type',
-            ),
-            'contain' => array(
-                'Country' => array(
-                    'fields' => array(
-                        'Country.StreamingStatus',
+        if(!empty($ajax)){
+            $randomSongs = $songInstance->find('count', array(
+                'conditions' =>
+                array('and' =>
+                    array(
+                        array('Song.provider_type = Country.provider_type'),
+                        array("Song.Sample_FileID != ''"),
+                        array("Song.FullLength_FIleID != ''"),
+                        array("Song.provider_type" => $provider),
+                        array('Country.Territory' => $country),
+                        array('Country.StreamingStatus' => 1),
+                        array('Country.StreamingSalesDate <=' => date('Y-m-d')),
+                        $cond
                     )
                 ),
-                'Full_Files' => array(
-                    'fields' => array(
-                        'Full_Files.CdnPath',
-                        'Full_Files.SaveAsName'
+                'fields' => array(
+                    'Song.ProdID',
+                    'Song.ArtistText',
+                    'Song.SongTitle',
+                    'Song.Advisory',
+                    'Song.FullLength_Duration',
+                    'Song.provider_type',
+                ),
+                'contain' => array(
+                    'Country' => array(
+                        'fields' => array(
+                            'Country.StreamingStatus',
+                        )
+                    ),
+                    'Full_Files' => array(
+                        'fields' => array(
+                            'Full_Files.CdnPath',
+                            'Full_Files.SaveAsName'
+                        )
                     )
-                )
-            ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 50
-        ));
+                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 50
+            ));
+        }else{
+            $randomSongs = $songInstance->find('first', array(
+                'conditions' =>
+                array('and' =>
+                    array(
+                        array('Song.provider_type = Country.provider_type'),
+                        array("Song.Sample_FileID != ''"),
+                        array("Song.FullLength_FIleID != ''"),
+                        array("Song.provider_type" => $provider),
+                        array('Country.Territory' => $country),
+                        array('Country.StreamingStatus' => 1),
+                        array('Country.StreamingSalesDate <=' => date('Y-m-d')),
+                        $cond
+                    )
+                ),
+                'fields' => array(
+                    'Song.ProdID',
+                    'Song.ArtistText',
+                    'Song.SongTitle',
+                    'Song.Advisory',
+                    'Song.FullLength_Duration',
+                    'Song.provider_type',
+                ),
+                'contain' => array(
+                    'Country' => array(
+                        'fields' => array(
+                            'Country.StreamingStatus',
+                        )
+                    ),
+                    'Full_Files' => array(
+                        'fields' => array(
+                            'Full_Files.CdnPath',
+                            'Full_Files.SaveAsName'
+                        )
+                    )
+                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 50
+            ));            
+        }
 
         foreach ($randomSongs as $key => $value) {
-            if (empty($ajax)) {
+            if (!empty($ajax)) {
                 $tokeninstance = ClassRegistry::init('Token');
                 $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                 if (!empty($filePath)) {
