@@ -1821,7 +1821,7 @@ $('document').ready(function()
     /* calculate width for Videos > Top Videos */
     var totalTVLiWidth = 0;
     $('.video-top-genres-grid li').each(function(){
-        totalTVLiWidth = totalTVLiWidth = $(this).outerWidth(true);
+        totalTVLiWidth = totalTVLiWidth + $(this).outerWidth(true);
 
     });
 
