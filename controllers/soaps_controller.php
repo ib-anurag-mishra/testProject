@@ -421,7 +421,7 @@ class SoapsController extends AppController {
           $obj->Title          = $this->getTextUTF($albumData[$cnt]['Album']['Title']);
           $obj->Label          = $this->getTextUTF($albumData[$cnt]['Album']['Label']);
 
-          $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $albumData[$cnt]['Files']['CdnPath']."/".$albumData[$cnt]['Files']['SourceURL']);
+          $fileURL = $this->Token->regularToken( $albumData[$cnt]['Files']['CdnPath']."/".$albumData[$cnt]['Files']['SourceURL']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
           $obj->FileURL = $fileURL;
 
@@ -599,7 +599,7 @@ class SoapsController extends AppController {
       if(!(empty($featured))) {     
         foreach($featured as $k => $v){
 
-          $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+          $albumArtwork = $this->Token->artworkToken( $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
           $image =  Configure::read('App.Music_Path').$albumArtwork;
           $featured[$k]['featuredImage'] = $image;
         }
@@ -839,7 +839,7 @@ class SoapsController extends AppController {
           $this->Album->recursive = -1;
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
           $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
-          $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
+          $fileURL = $this->Token->regularToken( $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
           
           if($this->IsDownloadable($data['Song']['ProdID'], $territory, $data['Song']['provider_type'])) {
@@ -847,7 +847,7 @@ class SoapsController extends AppController {
             $obj->FullLength_FIleURL      = 'nostring';
           } else {
             $obj->fileURL                 = (string)$fileURL;
-            $obj->FullLength_FIleURL      = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Full_Files']['CdnPath']."/".$data['Full_Files']['SaveAsName']);
+            $obj->FullLength_FIleURL      = Configure::read('App.Music_Path').$this->Token->regularToken( $data['Full_Files']['CdnPath']."/".$data['Full_Files']['SaveAsName']);
           }
           
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
@@ -991,7 +991,7 @@ STR;
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
           $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
 
-          $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
+          $fileURL = $this->Token->regularToken( $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
           
           
@@ -1168,7 +1168,7 @@ STR;
       $obj->Copyright                 = (string)$data['Album']['Copyright'];
       $obj->Advisory                  = $data['Album']['Advisory'];
       $imgData = $this->Files->find('first',array('conditions' => array('FileID' => $data['Album']['FileID'])));
-      $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $imgData['Files']['CdnPath']."/".$imgData['Files']['SourceURL']);
+      $fileURL = $this->Token->regularToken( $imgData['Files']['CdnPath']."/".$imgData['Files']['SourceURL']);
       $fileURL = Configure::read('App.Music_Path').$fileURL;
       $obj->FileURL = $fileURL;
       $obj->DownloadStatus            = (int)$data['Album']['DownloadStatus'];
@@ -1213,7 +1213,7 @@ STR;
             $sobj->FullLength_Duration   = $this->getSongDurationTime($val['FullLength_Duration']);
             $sobj->Sample_FileID         = (int)$val['Sample_FileID'];
             $sampFileData = $this->Files->find('first',array('conditions' => array('FileID' => $val['Sample_FileID'])));
-            $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $sampFileData['Files']['CdnPath']."/".$sampFileData['Files']['SaveAsName']);
+            $sampleFileURL = $this->Token->regularToken( $sampFileData['Files']['CdnPath']."/".$sampFileData['Files']['SaveAsName']);
                    
             if($sobj->DownloadStatus) {
               $sobj->Sample_FileURL        = 'nostring';
@@ -1569,7 +1569,7 @@ STR;
       $obj->Sample_Duration       = (string)$val['Song']['Sample_Duration'];
       $obj->FullLength_Duration   = (string)$val['Song']['FullLength_Duration'];
 
-      $obj->SongUrl               = Configure::read('App.Music_Path') . shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $val['Files']['CdnPath'] . "/" . $val['Files']['SaveAsName']);
+      $obj->SongUrl               = Configure::read('App.Music_Path') . $this->Token->regularToken( $val['Files']['CdnPath'] . "/" . $val['Files']['SaveAsName']);
 
 
       $obj->AlbumProdID           = $this->getProductAutoID($val['Song']['ReferenceID'], $val['Wishlist']['provider_type']);
@@ -4565,7 +4565,7 @@ STR;
     $CdnPath = $data['Full_Files']['CdnPath'];
     $SaveAsName = $data['Full_Files']['SaveAsName'];
 
-    $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
+    $songUrl = $this->Token->regularToken( $CdnPath . "/" . $SaveAsName);
     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
     
     $wishlist = 0;
@@ -4612,7 +4612,7 @@ STR;
     $CdnPath = $data['Full_Files']['CdnPath'];
     $SaveAsName = $data['Full_Files']['SaveAsName'];
 
-    $songUrl = shell_exec('perl files/tokengen ' .$CdnPath . "/" . $SaveAsName);
+    $songUrl = $this->Token->regularToken($CdnPath . "/" . $SaveAsName);
     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 
     return $this->createVideoDownloadSuccessObject('Download permitted.', $finalSongUrl, true, 0, 0, 0);
@@ -4833,7 +4833,7 @@ STR;
       $CdnPath = $data['Files']['CdnPath'];
       $SaveAsName = $data['Files']['SaveAsName'];
 
-      $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
+      $songUrl = $this->Token->regularToken( $CdnPath . "/" . $SaveAsName);
       $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
       
       $wishlist = 0;
@@ -5074,7 +5074,7 @@ STR;
       $CdnPath = $data['Files']['CdnPath'];
       $SaveAsName = $data['Files']['SaveAsName'];
 
-      $songUrl = shell_exec('perl files/tokengen ' .$CdnPath . "/" . $SaveAsName);
+      $songUrl = $this->Token->regularToken($CdnPath . "/" . $SaveAsName);
       
       $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;      
       
@@ -5346,14 +5346,14 @@ STR;
           $sobj->FullLength_Duration   = $this->getSongDurationTime($arrTemp[$cnt]['Song']['FullLength_Duration']);
           $sobj->Sample_FileID         = (int)    '';
 
-          $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['Sample_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Sample_Files']['SaveAsName']);
+          $sampleFileURL = $this->Token->regularToken( $arrTemp[$cnt]['Sample_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Sample_Files']['SaveAsName']);
           
           if($sobj->DownloadStatus) {
             $sobj->Sample_FileURL        = 'nostring';
             $sobj->FullLength_FIleURL    = 'nostring';
           } else {
             $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
-            $sobj->FullLength_FIleURL    = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['Full_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Full_Files']['SaveAsName']);
+            $sobj->FullLength_FIleURL    = Configure::read('App.Music_Path').$this->Token->regularToken( $arrTemp[$cnt]['Full_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Full_Files']['SaveAsName']);
           }
           
           $sobj->playButtonStatus      = $this->getPlayButtonStatus($arrTemp[$cnt]['Song']['ProdID'], $library_territory, $arrTemp[$cnt]['Song']['provider_type']);
@@ -5463,7 +5463,7 @@ STR;
         ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 0 : $sobj->VideoSalesStatus = 1;
         $sobj->VideoFullLength_Duration   = $this->getSongDurationTime($arrTemp[$cnt]['v']['FullLength_Duration']);          
         $sobj->VideoFullLength_FileURL = '';
-        $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').shell_exec('perl files/tokengen_artwork ' . $arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
+        $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').$this->Token->artworkToken( $arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
           
         if('T' == $arrTemp[$cnt]['v']['Advisory']) {
       
@@ -5616,14 +5616,14 @@ STR;
         $sobj->FullLength_Duration   = $this->getSongDurationTime($val['Song']['FullLength_Duration']);
         $sobj->Sample_FileID         = (int)    '';
 
-        $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
+        $sampleFileURL = $this->Token->regularToken( $val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
         
         if($sobj->DownloadStatus) {
           $sobj->Sample_FileURL         = 'nostring';
           $sobj->FullLength_FIleURL     = 'nostring';
         } else {
           $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
-          $sobj->FullLength_FIleURL    = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Full_Files']['CdnPath']."/".$val['Full_Files']['SaveAsName']);
+          $sobj->FullLength_FIleURL    = Configure::read('App.Music_Path').$this->Token->regularToken( $val['Full_Files']['CdnPath']."/".$val['Full_Files']['SaveAsName']);
         }
         
         $sobj->playButtonStatus      = $this->getPlayButtonStatus($val['Song']['ProdID'], $library_territory, $val['Song']['provider_type']);
@@ -5962,12 +5962,12 @@ STR;
             $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
             $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
             $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
-            $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
+            $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').$this->Token->regularToken($data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
             $obj->QueueAlbumProdID             = $data[$cnt]['AProduct']['AlbumProdID'];
             $obj->QueueSongProdID              = $data[$cnt]['SProduct']['SongProdID'];
             $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
             $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
-            $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
+            $obj->QueueAlbumImage              = Configure::read('App.Music_Path').$this->Token->regularToken( $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
             $obj->QueueFullLength_Duration     = $data[$cnt]['Songs']['FullLength_Duration'];
           
             if( 'T' == $data[$cnt]['Songs']['Advisory']) {
@@ -6129,7 +6129,7 @@ STR;
           if($sobj->DownloadStatus){
             $sobj->fileURL              = 'nostring';
           }else{
-            $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
+            $sobj->fileURL            = Configure::read('App.Music_Path').$this->Token->regularToken($val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
           }          
            
            
@@ -6232,7 +6232,7 @@ STR;
         $sobj->fileURL            = 'nostring';
         $sobj->FullLengthFileURL  = 'nostring';
       }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+        $sobj->fileURL            = Configure::read('App.Music_Path').$this->Token->regularToken($val->CdnPath."/".$val->SaveAsName);
         $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
       }
         
@@ -6317,7 +6317,7 @@ STR;
         $sobj->fileURL            = 'nostring';
         $sobj->FullLengthFileURL  = 'nostring';
       }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+        $sobj->fileURL            = Configure::read('App.Music_Path').$this->Token->regularToken($val->CdnPath."/".$val->SaveAsName);
         $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
       }
         
@@ -6407,7 +6407,7 @@ STR;
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
       $imgData = $this->Files->find('first',array('conditions' => array('FileID' => $albumData['Album']['FileID']))); 
-      $sobj->FullLengthFileURL    = Configure::read('App.Music_Path') . shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $imgData['Files']['CdnPath']."/".$imgData['Files']['SourceURL']);;
+      $sobj->FullLengthFileURL    = Configure::read('App.Music_Path') . $this->Token->regularToken( $imgData['Files']['CdnPath']."/".$imgData['Files']['SourceURL']);;
       
             
       if('T' == $albumData['Album']['Advisory']) { $sobj->AlbumTitle = $sobj->AlbumTitle.' (Explicit)'; }
@@ -6474,7 +6474,7 @@ STR;
         $sobj->fileURL            = 'nostring';
         $sobj->FullLengthFileURL  = 'nostring';
       }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+        $sobj->fileURL            = Configure::read('App.Music_Path').$this->Token->regularToken($val->CdnPath."/".$val->SaveAsName);
         $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
       }
         
@@ -6556,7 +6556,7 @@ STR;
         $sobj->fileURL            = 'nostring';
         $sobj->FullLengthFileURL  = 'nostring';
       }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl files/tokengen_artwork ' . $val->ACdnPath."/".$val->ASourceURL);
+        $sobj->fileURL            = Configure::read('App.Music_Path').$this->Token->artworkToken( $val->ACdnPath."/".$val->ASourceURL);
         $vdata = $this->Files->find('first',
           array(
             'fields' => array(
@@ -6568,7 +6568,7 @@ STR;
             ),
             'recursive' => -1
         ));      
-        $sobj->FullLengthFileURL  = Configure::read('App.Music_Path') . shell_exec('perl files/tokengen ' . $vdata['Files']['CdnPath'] . "/" . $vdata['Files']['SaveAsName']);
+        $sobj->FullLengthFileURL  = Configure::read('App.Music_Path') . $this->Token->regularToken( $vdata['Files']['CdnPath'] . "/" . $vdata['Files']['SaveAsName']);
         
       } 
 
@@ -7054,7 +7054,7 @@ STR;
   private function getFullLengthFileURL($FullLengthFileID) {
   
     $FileData = $this->Files->find('first',array('conditions' => array('FileID' => $FullLengthFileID)));
-    return Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $FileData['Files']['CdnPath']."/".$FileData['Files']['SaveAsName']);
+    return Configure::read('App.Music_Path').$this->Token->regularToken( $FileData['Files']['CdnPath']."/".$FileData['Files']['SaveAsName']);
     
   }  
   
@@ -7164,8 +7164,8 @@ STR;
             
       if(true === $this->validateMp4FileExist($FileData['f4']['SaveAsName'], $FileData['f4']['CdnPath'])) {
         //creates mp4
-        return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
-        //return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['SaveAsName'].' '.$FileData['f4']['CdnPath']); 
+        return Configure::read('App.App_Streaming_Path').$this->Token->hlsToken($FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
+        //return Configure::read('App.App_Streaming_Path').$this->Token->hlsToken($FileData['f4']['SaveAsName'].' '.$FileData['f4']['CdnPath']); 
       }else{
         //sends mp3
         return $this->sendMp3Url($ProdID, $provider_type);
@@ -7216,7 +7216,7 @@ STR;
       'recursive' => -1,
     ));
 	
-    return Configure::read('App.Music_Path'). shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $data['f']['CdnPath'] . "/" . $data['f']['SaveAsName']);
+    return Configure::read('App.Music_Path'). $this->Token->regularToken( $data['f']['CdnPath'] . "/" . $data['f']['SaveAsName']);
   }
 
   /**
