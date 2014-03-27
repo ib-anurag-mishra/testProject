@@ -1471,10 +1471,10 @@ STR;
                         'Country.StreamingStatus',
                     )
                 ),
-                'Sample_Files' => array(
+                'Full_Files' => array(
                     'fields' => array(
-                        'Sample_Files.CdnPath',
-                        'Sample_Files.SaveAsName'
+                        'Full_Files.CdnPath',
+                        'Full_Files.SaveAsName'
                     )
                 )
             ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 50
