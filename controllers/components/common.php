@@ -1514,7 +1514,7 @@ STR;
                             'Full_Files.SaveAsName'
                         )
                     )
-                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 50
+                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'rand()','limit' => 1
             ));            
         }
 
