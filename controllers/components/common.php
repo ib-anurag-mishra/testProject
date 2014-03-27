@@ -1655,7 +1655,7 @@ STR;
                         ),
                     )
                 ),
-                'order' => 'ta.id DESC',
+                'order' => 'ta.id ASC',
                 'limit' => 25
                     )
             );
