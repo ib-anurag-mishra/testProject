@@ -1,3 +1,8 @@
+function loadURL(url) {
+
+    console.log(url);
+}
+
 
 $(document).ready(function() {
 
@@ -445,7 +450,7 @@ $(document).ready(function() {
     });
 
 
- 
+
 
 
 
