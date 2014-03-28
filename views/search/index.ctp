@@ -715,7 +715,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                 <a href="/videos/details/<?php echo $psong->ProdID; ?>"><img src="<?php echo $VideoImage; ?>"></a>
                             </div>
                             <div class="video-info">
-                                <div class="video-title"><a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $psong->VideoTitle; ?></a></div>
+                                <div class="video-title"><a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a></div>
                                 <div class="artist">
                                     by
                                     <a  href="/artists/album/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?= base64_encode($psong->Genre) ?>">
