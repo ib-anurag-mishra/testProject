@@ -76,6 +76,7 @@
                                                         <span id="vdownload_loader_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                                     </form>
                                                 </span>
+                                                <a class="element-test" href="/homes/my_history">History</a>
                                                 <?php
                                             }
                                             else
