@@ -242,7 +242,7 @@
                     }
 
                     // Add the scripts
-/*
+
                     if ($scripts.length > 1) {
                         $scripts.each(function() {
                             var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
@@ -256,7 +256,7 @@
                             contentNode.appendChild(scriptNode);
                         });
                     }
-*/
+
 
                     // Complete the change
                     if ($body.ScrollTo || false) {
