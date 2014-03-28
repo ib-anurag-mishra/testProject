@@ -80,7 +80,7 @@
                                             else
                                             {
                                                 ?>
-                                                <a class="featured-video-download-now-button " <?php /*href='/homes/my_history'*/ ?> onclick="javascript:$.Ajaxify.loadURL('/homes/my_history');"><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
+                                                <a class="featured-video-download-now-button " <?php /*href='/homes/my_history'*/ ?> onclick="loadURL('test')"><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
                                                 <?php
                                             }
                                         }

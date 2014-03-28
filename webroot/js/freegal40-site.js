@@ -442,7 +442,13 @@ $(document).ready(function() {
     $(document).on('mouseleave','.featured-grid-item',function(){
 
         $(this).find('.featured-grid-menu').removeClass('active');
-    });     
+    });
+
+
+    function loadURL(url) {
+
+        console.log(url);
+    }     
 
 
 
