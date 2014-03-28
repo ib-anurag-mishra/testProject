@@ -152,7 +152,7 @@ class HomesController extends AppController {
         echo '<br>';
         $validationResponse = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider, $userStreamedTime, $actionType, '', $songDuration, $queue_id, $token_id);
         print_r($validationResponse);
-        $this->_stop();
+        exit;
     }
 
     function get_genre_tab_content($tab_no, $genre) {
@@ -3918,7 +3918,7 @@ STR;
                     } 
                 } else {
                     echo "error|There are no songs found in this Album.";
-                    $this->_stop();
+                    exit;
                 }
 
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
@@ -3972,7 +3972,7 @@ STR;
         } else {
             echo "error|Something went wrong.Please try again.";
         }
-        $this->_stop();
+        exit;
     }
 
     /**

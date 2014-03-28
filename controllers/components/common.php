@@ -607,7 +607,7 @@ STR;
         if(empty($countryPrefix))
         {
             $this->log("Empty countryPrefix in getComingSoonSongs for : ".$territory, "cache");
-            $this->_stop();
+            exit;
         }
         $albumInstance = ClassRegistry::init('Album');
         // Added caching functionality for coming soon songs
@@ -688,7 +688,7 @@ STR;
         if(empty($countryPrefix))
         {
             $this->log("Empty countryPrefix in getComingSoonVideos for : ".$territory, "cache");
-            $this->_stop();
+            exit;
         }
 
         

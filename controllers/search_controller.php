@@ -323,7 +323,7 @@ class SearchController extends AppController
             $this->autoLayout = false;
             $this->autoRender = false;
             echo $this->render();
-            $this->_stop();
+            exit;
         }
         else
         {
