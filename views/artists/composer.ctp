@@ -166,7 +166,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 							<?php echo $explicit; ?> </a> </strong>
 				</div>
 				<div class="genre">
-					Genre: <a href="javascript:void(0)"><?php echo $album_genre; ?> </a>
+					Genre: <?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?>
 				</div>
 				<div class="label">
 					Label: <?php echo $album_label." ".$album_copyright; ?>
