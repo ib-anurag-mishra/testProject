@@ -38,7 +38,7 @@ class SoapsController extends AppController {
   private $CDN_PASS = 't837dgkZU6xCMnc';
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4'); 
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token'); 
   var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr', 'Queue'); 
 
   
@@ -421,7 +421,8 @@ class SoapsController extends AppController {
           $obj->Title          = $this->getTextUTF($albumData[$cnt]['Album']['Title']);
           $obj->Label          = $this->getTextUTF($albumData[$cnt]['Album']['Label']);
 
-          $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $albumData[$cnt]['Files']['CdnPath']."/".$albumData[$cnt]['Files']['SourceURL']);
+          //$fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $albumData[$cnt]['Files']['CdnPath']."/".$albumData[$cnt]['Files']['SourceURL']);
+	  $fileURL = $this->Token->regularToken( $albumData[$cnt]['Files']['CdnPath']."/".$albumData[$cnt]['Files']['SourceURL']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
           $obj->FileURL = $fileURL;
 
