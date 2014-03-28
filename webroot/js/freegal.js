@@ -1437,6 +1437,9 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
                     $('.afterClick').hide();
                     $('.beforeClick').show();
                 }
+
+                //debug
+                $('.content').ajaxify();
             }
             else
             {
