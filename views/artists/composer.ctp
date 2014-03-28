@@ -133,6 +133,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 				$album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
 				$album_genre = str_replace('"', '', $palbum->Genre);
 				$album_label = $palbum->Label;
+				$album_copyright = $palbum->copyright;
 				$tilte = urlencode($palbum->Title);
 				$linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
 				$linkProviderType = base64_encode($palbum->provider_type);
@@ -166,6 +167,9 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 				</div>
 				<div class="genre">
 					Genre: <a href="javascript:void(0)"><?php echo $album_genre; ?> </a>
+				</div>
+				<div class="label">
+					Label: <?php echo $album_label." ".$album_copyright; ?>
 				</div>
 				<?php
 				if ($this->Session->read("patron")) {
