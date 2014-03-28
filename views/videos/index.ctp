@@ -40,7 +40,7 @@
                                 <div class="video-thumbnail-container">
 
                                     <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" alt="" /></a>
-                                    <a class="element-test" href="/homes/my_history" style="position:absolute; display:none; left:0; top:0; color: #fff;">History</a>
+                                    
                                     <?php
                                     if ($this->Session->read('patron'))
                                     {
