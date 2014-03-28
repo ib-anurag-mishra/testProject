@@ -1,8 +1,4 @@
-function loadURL(url) {
 
-    // console.log(url);
-    $.Ajaxify.loadURL(url);
-}
 
 
 $(document).ready(function() {
