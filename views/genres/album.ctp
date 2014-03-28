@@ -184,6 +184,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         $album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
                         $album_genre = str_replace('"', '', $palbum->Genre);
                         $album_label = $palbum->Label;
+			$album_copyright = $palbum->Copyright;
                         $tilte = urlencode($palbum->Title);
                         $linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
                         $linkProviderType = base64_encode($palbum->provider_type);
@@ -216,6 +217,7 @@ function Get_Sales_date($sales_date_array, $country) {
 
                                     </div>
                                     <div class="genre">Genre: <?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?> </div>
+				    <div class="label">Label: <?php echo $album_label." ".$album_copyright; ?> </div>
                                                     <?php
                                                     if ($this->Session->read("patron")) {
                                                         if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) {
