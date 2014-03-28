@@ -38,6 +38,7 @@
                             ?><li> <?php } ?>
                             <div class="featured-video-detail">
                                 <div class="video-thumbnail-container">
+
                                     <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" alt="" /></a>
                                     <?php
                                     if ($this->Session->read('patron'))
@@ -80,7 +81,7 @@
                                             else
                                             {
                                                 ?>
-                                                <a class="featured-video-download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
+                                                <a class="featured-video-download-now-button" href="/homes/my_history"><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
                                                 <?php
                                             }
                                         }

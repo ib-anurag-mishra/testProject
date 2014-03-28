@@ -1,4 +1,6 @@
 
+
+
 $(document).ready(function() {
 
     $(document).on('mouseenter', '.ac_results ul', function() {
@@ -442,7 +444,10 @@ $(document).ready(function() {
     $(document).on('mouseleave','.featured-grid-item',function(){
 
         $(this).find('.featured-grid-menu').removeClass('active');
-    });     
+    });
+
+
+
 
 
 
