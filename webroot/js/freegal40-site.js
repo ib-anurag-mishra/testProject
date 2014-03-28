@@ -1,6 +1,7 @@
 function loadURL(url) {
 
-    console.log(url);
+    // console.log(url);
+    $.Ajaxify.loadURL(url);
 }
 
 
