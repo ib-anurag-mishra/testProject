@@ -445,10 +445,7 @@ $(document).ready(function() {
     });
 
 
-    function loadURL(url) {
-
-        console.log(url);
-    }     
+ 
 
 
 
