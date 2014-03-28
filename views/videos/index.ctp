@@ -41,7 +41,8 @@
                                     <script>
 
                                         function loadURL(url) {
-                                            console.log(url);
+                                            // console.log(url);
+                                            $.Ajaxify.loadURL(url);
                                         } 
                                     </script>
                                     <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" alt="" /></a>
