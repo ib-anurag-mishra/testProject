@@ -5614,7 +5614,7 @@ function login($library = null){
             $userType = $this->Session->read('Auth.User.type_id');
             if($userType != 1){
                 $this->redirect('/home/aboutus');
-		$this->_stop('You are not allowed to use this section.');
+		exit('You are not allowed to use this section.');
             }
             $this->Library->recursive = -1;
             $libId = 2;
@@ -5666,7 +5666,7 @@ function login($library = null){
                 echo false;
             }
             
-            $this->_stop();
+            exit;
         }
 
 }

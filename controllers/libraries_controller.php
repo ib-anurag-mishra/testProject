@@ -1630,7 +1630,7 @@ STR;
         {
             echo $row['Library']['library_name'] . "|" . $row['Library']['id'] . "\n";
         }
-        $this->_stop();
+        exit;
     }
 
 }

@@ -708,7 +708,7 @@ STR;
             
             if($prefix === '_'){
                 $this->log("Empty prefix:".$prefix." in getComingSoonSongs for : ".$territory, "cache");
-                $this->_stop();
+                exit;
             }
             
             

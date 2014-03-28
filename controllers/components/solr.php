@@ -129,7 +129,7 @@ class SolrComponent extends Object {
 					if( !$connectedToSolr ) {
 						
 						$this->log('Unable to Connect to Solr','search');
-						$this->_stop();
+						exit;
 					}
 				}
 
@@ -405,7 +405,7 @@ class SolrComponent extends Object {
 					if( !$connectedToSolr ) {
 
 						$this->log( 'Unable to Connect to Solr','search' );
-						$this->_stop();
+						exit;
 					}
 				}
 
@@ -573,7 +573,7 @@ class SolrComponent extends Object {
 
 					if( !$connectedToSolr ) {
 						$this->log( 'Unable to Connect to Solr','search' );
-						$this->_stop();
+						exit;
 					}
 				}
 
@@ -770,7 +770,7 @@ class SolrComponent extends Object {
 
 					if( !$connectedToSolr ) {
 						$this->log( 'Unable to Connect to Solr','search' );
-						$this->_stop();
+						exit;
 					}
 				}
 
@@ -959,7 +959,7 @@ class SolrComponent extends Object {
 
 					if( !$connectedToSolr ) {
 						$this->log('Unable to Connect to Solr','search');
-						$this->_stop();
+						exit;
 					}
 				}
 
@@ -1124,7 +1124,7 @@ class SolrComponent extends Object {
 
 					if( !$connectedToSolr ) {
 						$this->log( 'Unable to Connect to Solr','search' );
-						$this->_stop();
+						exit;
 					}
 				}
 

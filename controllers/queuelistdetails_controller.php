@@ -62,13 +62,13 @@ class QueueListDetailsController extends AppController
                     {
                         $this->layout = 'ajax';
                                 echo 'Playlist has been renamed successfully';
-                                $this->_stop();
+                                exit;
                     }
                     else
                     {
                         $this->layout = 'ajax';
                                 echo 'Error occured while renaming playlist';
-                                $this->_stop();
+                                exit;
                     }
                 }
             }
@@ -352,12 +352,12 @@ class QueueListDetailsController extends AppController
         if ($this->Session->read('patron') == '')
         {
             echo 'Patron Not Login';
-            $this->_stop();
+            exit;
         }
         elseif ($this->data['QueueList']['queue_name'] == '')
         {
             echo 'Playlist Name is empty';
-            $this->_stop();
+            exit;
         }
         else
         {
@@ -387,10 +387,10 @@ class QueueListDetailsController extends AppController
                 echo 'Playlist Name you entered is already present. Please try different name.';
             }
 
-            $this->_stop();
+            exit;
         }
 
-        $this->_stop();
+        exit;
     }
 
 }
