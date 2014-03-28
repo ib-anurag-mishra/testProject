@@ -133,7 +133,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 				$album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
 				$album_genre = str_replace('"', '', $palbum->Genre);
 				$album_label = $palbum->Label;
-				$album_copyright = $palbum->copyright;
+				$album_copyright = $palbum->Copyright;
 				$tilte = urlencode($palbum->Title);
 				$linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
 				$linkProviderType = base64_encode($palbum->provider_type);
