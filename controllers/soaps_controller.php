@@ -813,7 +813,7 @@ class SoapsController extends AppController {
     $libraryData = $this->Library->find('first', array('conditions' => array('AND'=>array('Library.id' => $libraryId, 'library_status' => 'active')), 'fields' => array('library_territory')));
     $territory = $libraryData['Library']['library_territory'];
 
-    $nationalTopDownloadTmp = Cache::read("national".$territory);
+    $nationalTopDownloadTmp = Cache::read("top_singles".$territory);
     $nationalTopDownload = array_splice($nationalTopDownloadTmp,0,10);
     
     
@@ -5323,9 +5323,9 @@ STR;
     $library_territory = $libraryDetails['Library']['library_territory'];
 
 
-    if ( (( Cache::read("national".$library_territory)) !== false) && (Cache::read("national".$library_territory) !== null) ) {
+    if ( (( Cache::read("top_singles".$library_territory)) !== false) && (Cache::read("top_singles".$library_territory) !== null) ) {
 
-      $arrTemp = Cache::read("national".$library_territory);
+      $arrTemp = Cache::read("top_singles".$library_territory);
 
       for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
         if(!(empty($arrTemp[$cnt]))) {
@@ -5512,12 +5512,12 @@ STR;
 
 
 
-    if ( (( Cache::read("national".$library_territory)) !== false) && (Cache::read("national".$library_territory) !== null) ) {
+    if ( (( Cache::read("top_singles".$library_territory)) !== false) && (Cache::read("top_singles".$library_territory) !== null) ) {
 
 
         $arrTmp = $arrData = $arrFinal = $arrArtist = array();
 
-        $arrTmp = Cache::read("national".$library_territory);
+        $arrTmp = Cache::read("top_singles".$library_territory);
 
         foreach($arrTmp AS $key => $val){
           $arrData[] = trim($val['Song']['ArtistText']);
