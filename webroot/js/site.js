@@ -238,6 +238,7 @@ $('document').ready(function()
     });
 
     /******* search page ***********/
+    /*
     $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
@@ -267,6 +268,7 @@ $('document').ready(function()
     $('.search-page .advanced-search-results-albums .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable .album-cover-container').on('mouseenter', '.add-to-playlist', function() {
         $(this).find('.playlist-options').addClass('active');
     });
+    */
 
     $('.add-to-queue').on('mouseenter', function() {
 
