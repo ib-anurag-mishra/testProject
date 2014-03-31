@@ -181,10 +181,11 @@ $(document).ready(function() {
 
     });
 
+    $alpha_artist_list_column_anchor = $('.alpha-artist-list-column').find('a');
 
-    $('.alpha-artist-list-column a').on('click', function(e) {
+    $alpha_artist_list_column_anchor.on('click', function(e) {
         e.preventDefault();
-        $('.alpha-artist-list-column a').removeClass('active');
+        $alpha_artist_list_column_anchor.removeClass('active');
         $(this).addClass('active');
 
     });
