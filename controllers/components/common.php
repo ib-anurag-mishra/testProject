@@ -1402,7 +1402,7 @@ STR;
                             ),
                 'recursive' => -1,
                 'order' => array(
-                    'Featuredartist.id' => 'desc'),
+                    'Featuredartist.id' => 'ASC'),
                 'limit' => "$offset,$limit"
                 )
         );        
