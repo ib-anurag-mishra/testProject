@@ -59,14 +59,21 @@ $(document).ready(function() {
         }
     });
 
+    /*
+
     $('.top-single-container ul').bindMouseWheel();
     $('.top-single-container ul').on('mouseleave', function() {
         $(this).removeClass('active');
 
     });    
 
-    $('.album-cover-container ul').bindMouseWheel();
-    $('.album-cover-container ul').on('mouseleave', function() {
+    */
+
+    $album_cover_container_ul = $('.album-cover-container').find('ul');
+
+
+    $album_cover_container_ul.bindMouseWheel();
+    $album_cover_container_ul.on('mouseleave', function() {
         $(this).removeClass('active');
 
     });
