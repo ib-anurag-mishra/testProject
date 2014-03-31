@@ -361,11 +361,12 @@ $(document).ready(function() {
     });
 
     $multi_select_icon.on('mouseleave', function(e) {
+        var $this = $(this);
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+        if (e.offsetX > $this.width() || e.offsetY < 0) {
 
             $options_menu.removeClass('active');
-            $(this).removeClass('highlighted');
+            $this.removeClass('highlighted');
         }
     });
 
