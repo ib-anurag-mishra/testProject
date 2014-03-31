@@ -79,6 +79,7 @@ $(document).ready(function() {
     });
 
 
+
     $('.album-cover-container , .album-container').on('mouseenter', function() {
 
         $(this).find('.toggleable').addClass('active');
@@ -117,7 +118,9 @@ $(document).ready(function() {
 
 
     var ulPosition;
-    $('.left-scroll-button').on('click', function() {
+    $left_scroll_button = $('.left-scroll-button');
+
+    $left_scroll_button.on('click', function() {
 
 
         var currentScrollLeft = $(this).siblings('.carousel').scrollLeft();
@@ -126,8 +129,8 @@ $(document).ready(function() {
 
     });
 
-
-    $('.right-scroll-button').on('click', function() {
+    $right_scroll_button = $('.right-scroll-button');
+    $right_scroll_button.on('click', function() {
 
 
         var currentScrollLeft = $(this).siblings('.carousel').scrollLeft();
