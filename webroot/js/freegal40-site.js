@@ -141,8 +141,8 @@ $(document).ready(function() {
     var $left_scroll_button = $('.left-scroll-button');
 
     $left_scroll_button.on('click', function() {
-        console.log('inside left scroll');
-        var $siblings_carousel = $(this).siblings('carousel');
+        c
+        var $siblings_carousel = $(this).siblings('.carousel');
         
 
         var currentScrollLeft = $siblings_carousel.scrollLeft();
