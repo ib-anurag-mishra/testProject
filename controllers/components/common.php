@@ -1767,7 +1767,9 @@ STR;
                                 LEFT JOIN
                         File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                                 LEFT JOIN
-                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)                             
+                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                LEFT JOIN
+                        Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)                        
                                 INNER JOIN
                         {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                                 LEFT JOIN
@@ -1780,7 +1782,7 @@ STR;
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) 
                 GROUP BY Song.ProdID
                 ORDER BY FIELD(Song.ProdID,$ids) ASC
-                LIMIT 75 
+                LIMIT 50 
 
 STR;
             $topSingleData = $albumInstance->query($sql_top_singles);
