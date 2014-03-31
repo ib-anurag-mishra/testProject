@@ -345,8 +345,9 @@ $(document).ready(function() {
     var $options_menu = $('.options-menu');
 
     $options_menu.on('mouseleave', function() {
-        $(this).children('.playlist-menu').removeClass('active');
-        $(this).removeClass('active');
+        var $this = $(this);
+        $this.children('.playlist-menu').removeClass('active');
+        $this.removeClass('active');
         if (!multipleRowsChecked) {
             $multi_select_icon.removeClass('highlighted');
         }
