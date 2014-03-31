@@ -13,8 +13,10 @@ $(document).ready(function() {
 
         });
     });
-    $('.playlist-menu').bindMouseWheel();
-    $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
+
+    $playlist_menu = $('.playlist-menu,.top-songs .options-menu .playlist-menu');
+    $playlist_menu.bindMouseWheel();
+    // $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
     $(document).on('mouseenter', '.top-songs .options-menu .playlist-menu', function() {
 
         $(this).bind('mousewheel', function(e) {
