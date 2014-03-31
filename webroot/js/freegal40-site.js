@@ -144,7 +144,7 @@ $(document).ready(function() {
 
     });
 
-    $('.account-menu-dropdown').on('mouseleave', function() {
+    $account_menu_dropdown.on('mouseleave', function() {
 
         $(this).removeClass('active');
     });
