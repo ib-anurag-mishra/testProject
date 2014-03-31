@@ -30,15 +30,18 @@ $(document).ready(function() {
      
     $('#LibraryZipcode').focus();
 
-    $('.music-note-icon').on('mouseenter', function() {
+    $music_note_icon = $('.music-note-icon');
+    $plays_tooltip = $('.plays-tooltip');
 
-        $('.plays-tooltip').addClass('active');
+    $music_note_icon.on('mouseenter', function() {
+
+        $plays_tooltip.addClass('active');
 
     });
 
-    $('.music-note-icon').on('mouseleave', function() {
+    $music_note_icon.on('mouseleave', function() {
 
-        $('.plays-tooltip').removeClass('active');
+        $plays_tooltip.removeClass('active');
 
     });
 
