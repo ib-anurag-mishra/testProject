@@ -79,7 +79,7 @@ $(document).ready(function() {
     });
 
 
-
+    /*
     $('.album-cover-container , .album-container').on('mouseenter', function() {
 
         $(this).find('.toggleable').addClass('active');
@@ -92,6 +92,19 @@ $(document).ready(function() {
         $(this).find('.toggleable').removeClass('active');
         $(this).find('.toggeable').removeClass('active');
     });
+    */
+
+    $album_cover_container = $('.album-cover-container');
+
+    $album_cover_container.on('mouseenter',function(){
+        $(this).find('.toggleable').addClass('active');
+
+    });
+
+    $album_cover_container.on('mouseleave',function(){
+        $(this).find('.toggleable').removeClass('active');
+
+    });    
 
     var $playlist_menu_icon = $('.playlist-menu-icon');
     $playlist_menu_icon.on('click', function() {
