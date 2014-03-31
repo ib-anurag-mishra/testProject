@@ -233,7 +233,7 @@ $(document).ready(function() {
 
     });
 
-    var $genre_scroll_down = $('.genre-scroll-down')
+    $genre_scroll_down = $('.genre-scroll-down');
 
     $(document).on('click', $genre_scroll_down, function() {
 
