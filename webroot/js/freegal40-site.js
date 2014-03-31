@@ -14,7 +14,7 @@ $(document).ready(function() {
         });
     });
 
-    $playlist_menu = $('.playlist-menu,.top-songs .options-menu .playlist-menu');
+    var $playlist_menu = $('.playlist-menu,.top-songs .options-menu .playlist-menu');
     $playlist_menu.bindMouseWheel();
     // $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
     $(document).on('mouseenter', '.top-songs .options-menu .playlist-menu', function() {
@@ -32,8 +32,8 @@ $(document).ready(function() {
      
     $('#LibraryZipcode').focus();
 
-    $music_note_icon = $('.music-note-icon');
-    $plays_tooltip = $('.plays-tooltip');
+    var $music_note_icon = $('.music-note-icon');
+    var $plays_tooltip = $('.plays-tooltip');
 
     $music_note_icon.on('mouseenter', function() {
 
@@ -47,8 +47,8 @@ $(document).ready(function() {
 
     });
 
-    $my_account_menu = $('.my-account-menu');
-    $account_menu_dropdown = $('.account-menu-dropdown');
+    var $my_account_menu = $('.my-account-menu');
+    var $account_menu_dropdown = $('.account-menu-dropdown');
 
     $my_account_menu.on('click', function() {
         $account_menu_dropdown.addClass('active');
@@ -71,7 +71,7 @@ $(document).ready(function() {
 
     */
 
-    $album_cover_container_ul = $('.album-cover-container').find('ul');
+    var $album_cover_container_ul = $('.album-cover-container').find('ul');
 
 
     $album_cover_container_ul.bindMouseWheel();
@@ -96,7 +96,7 @@ $(document).ready(function() {
     });
     */
 
-    $album_cover_container = $('.album-cover-container');
+    var $album_cover_container = $('.album-cover-container');
 
     $album_cover_container.on('mouseenter',function(){
         $(this).find('.toggleable').addClass('active');
@@ -113,27 +113,30 @@ $(document).ready(function() {
         $(this).siblings('ul').addClass('active');
     });
 
-    $('.left-scroll-button,.wishlist-icon').on('mouseenter', function() {
+    var $left_scroll_button_and_wishlist_icon = $('.left-scroll-button,.wishlist-icon');
+    $left_scroll_button_and_wishlist_icon.on('mouseenter', function() {
 
 
-        $('.album-cover-container ul').removeClass('active');
+        $album_cover_container_ul.removeClass('active');
 
 
     });
-
-    $('.top-albums-carousel>ul>li').on('mouseleave', function() {
-        $('.album-cover-container ul').removeClass('active');
+    var $top_albums_carousel_ul_li = $('.top-albums-carousel>ul>li');
+    $top_albums_carousel_ul_li.on('mouseleave', function() {
+        $album_cover_container_ul.removeClass('active');
     });
 
+    /*
     $('.top-songs-filter-icon').on('mouseleave', function(e) {
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
             $('.top-songs-filter-menu').removeClass('active');
         }
     });
+    */
 
 
     var ulPosition;
-    $left_scroll_button = $('.left-scroll-button');
+    var $left_scroll_button = $('.left-scroll-button');
 
     $left_scroll_button.on('click', function() {
 
@@ -144,7 +147,7 @@ $(document).ready(function() {
 
     });
 
-    $right_scroll_button = $('.right-scroll-button');
+    var $right_scroll_button = $('.right-scroll-button');
     $right_scroll_button.on('click', function() {
 
 
