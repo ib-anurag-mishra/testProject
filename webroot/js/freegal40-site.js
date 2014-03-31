@@ -233,9 +233,9 @@ $(document).ready(function() {
 
     });
 
-    $genre_scroll_down = $('.genre-scroll-down')
+    var $genre_scroll_down = $('.genre-scroll-down')
 
-    $(document).on('click', $genre_scroll_downs, function() {
+    $(document).on('click', $genre_scroll_down, function() {
 
         var currentScrollTop = $genre_column.scrollTop();
         var genreListHeight = $genre_column_ul.height();
