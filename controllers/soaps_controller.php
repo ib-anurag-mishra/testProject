@@ -7168,8 +7168,8 @@ STR;
             
       if(true === $this->validateMp4FileExist($FileData['f4']['SaveAsName'], $FileData['f4']['CdnPath'])) {
         //creates mp4
-        return Configure::read('App.App_Streaming_Path').$this->Token->hlsToken($FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
-        //return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['SaveAsName'].' '.$FileData['f4']['CdnPath']); 
+        return Configure::read('App.App_Streaming_Path').$this->Token->hlsToken($FileData['f4']['CdnPath'],$FileData['f4']['SaveAsName']);
+       
       }else{
         //sends mp3
         return $this->sendMp3Url($ProdID, $provider_type);
