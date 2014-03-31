@@ -166,7 +166,8 @@ $(document).ready(function() {
 
         $(this).removeClass('active');
     });
-    $('.genre-column,.alpha-artist-list-column,.artist-column').bindMouseWheel();
+    var $genre_page_columns = $('.genre-column,.alpha-artist-list-column,.artist-column');
+    $genre_page_columns.bindMouseWheel();
 
     $(document).on('mouseenter', '.artist-column', function() {
 
