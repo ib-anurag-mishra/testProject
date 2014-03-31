@@ -615,7 +615,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                         ?>
                                                 </li>
                                         <?php if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) { ?> 
-                                                    <li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
+                                                    <li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);">Add to Playlist</a></li>
                                                 </ul>
                                                 <ul class="playlist-menu">
                                                     <li><a href="#">Create New Playlist</a></li>                                                                 
