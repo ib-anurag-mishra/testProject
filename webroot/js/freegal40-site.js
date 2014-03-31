@@ -267,8 +267,8 @@ $(document).ready(function() {
     });
 
 
-    $sr_albums_prev = $('.sr-albums-prev');
-    $search_results_albums = $('.search-results-albums');
+    var $sr_albums_prev = $('.sr-albums-prev');
+    var $search_results_albums = $('.search-results-albums');
 
     $sr_albums_prev.on('click', function() {
         var currentScrollLeft = $search_results_albums.scrollLeft();
@@ -280,8 +280,8 @@ $(document).ready(function() {
 
     });
 
-    $sr_albums_next = $('.sr-albums-next');
-    $sr_albums_next.on('click', function() {
+    var $sr_albums_next = $('.sr-albums-next');
+    var $sr_albums_next.on('click', function() {
 
 
 
@@ -294,78 +294,87 @@ $(document).ready(function() {
     });
 
     var multipleRowsChecked = false;
-    $('.row-checkbox').on('click', function() {
+    var $row_checkbox = $('.row-checkbox');
+    var $multi_select_icon = $('.multi-select-icon');
+
+    $row_checkbox.on('click', function() {
         $(this).parent('.row').toggleClass('highlighted');
         var c = 0;
-        $('.row-checkbox').each(function() {
+        $row_checkbox.each(function() {
             if ($(this).is(':checked')) {
                 c++;
             }
             if (c >= 2) {
-                $('.multi-select-icon').addClass('highlighted');
+                $multi_select_icon.addClass('highlighted');
                 multipleRowsChecked = true;
             } else {
-                $('.multi-select-icon').removeClass('highlighted');
+                $multi_select_icon.removeClass('highlighted');
                 multipleRowsChecked = false;
             }
         });
     });
 
-    $('.add-to-playlist').on('mouseenter', function() {
+    var $add_to_playlist = $('.add-to-playlist')
+
+    $add_to_playlist.on('mouseenter', function() {
         $(this).parents('ul').next('.playlist-menu').addClass('active');
 
     });
 
-    $('.options-menu').on('mouseleave', function() {
+    var $options_menu = $('.options-menu');
+
+    $options_menu.on('mouseleave', function() {
         $(this).children('.playlist-menu').removeClass('active');
         $(this).removeClass('active');
         if (!multipleRowsChecked) {
-            $('.multi-select-icon').removeClass('highlighted');
+            $multi_select_icon.removeClass('highlighted');
         }
     });
 
-    $('.multi-select-icon').on('click', function() {
+    var $multi_select_icon.on('click', function() {
 
         $(this).siblings('.options-menu').addClass('active');
-        $('.multi-select-icon').addClass('highlighted');
+        $multi_select_icon.addClass('highlighted');
 
     });
 
-    $('.multi-select-icon').on('mouseleave', function(e) {
+    var $multi_select_icon.on('mouseleave', function(e) {
 
         if (e.offsetX > $(this).width() || e.offsetY < 0) {
 
-            $('.options-menu').removeClass('active');
+            $options_menu.removeClass('active');
             $(this).removeClass('highlighted');
         }
     });
 
-    $('.select-all').on('click', function(e) {
+    var $select_all = $('.select-all');
+    $select_all.on('click', function(e) {
         e.preventDefault();
-        $('.row-checkbox').each(function() {
+        $row_checkbox.each(function() {
             $(this).prop('checked', true);
         });
     });
 
-    $('.clear-all').on('click', function(e) {
+    var $clear_all = $('.clear-all'); 
+    $clear_all.on('click', function(e) {
         e.preventDefault();
-        $('.row-checkbox').each(function() {
+        $row_checkbox.each(function() {
             $(this).prop('checked', false);
         });
     });
 
     
-
-    $('.menu-btn').on('click', function() {
+    var $menu_btn = $('.menu-btn');
+    $menu_btn.on('click', function() {
 
         $(this).siblings('.options-menu').addClass('active');
     });
 
-    $('.menu-btn').on('mouseleave', function(e) {
+    $menu_btn.on('mouseleave', function(e) {
 
         if (e.offsetX > $(this).width() || e.offsetY < 0) {
 
-            $('.options-menu').removeClass('active');
+            $options_menu.removeClass('active');
         }
     });
 
