@@ -178,17 +178,20 @@ $(document).ready(function() {
 
 
     var genreScrollAmount;
+    var $genre_column = $('.genre-column');
+    var $genre_column_ul = $('.genre-column ul');
+
 
     $(document).on('click', '.genre-scroll-up', function() {
-        var currentScrollTop = $('.genre-column').scrollTop();
-        var genreListHeight = $('.genre-column ul').height();
-        var genreColumnHeight = $('.genre-column').height();
+        var currentScrollTop = $genre_column.scrollTop();
+        var genreListHeight = $genre_column_ul.height();
+        var genreColumnHeight = $genre_column.height();
 
         genreScrollAmount = currentScrollTop + genreColumnHeight;
 
 
 
-        $('.genre-column').animate({
+        $genre_column.animate({
             scrollTop: genreScrollAmount
         });
 
@@ -196,19 +199,20 @@ $(document).ready(function() {
 
     $(document).on('click', '.genre-scroll-down', function() {
 
-        var currentScrollTop = $('.genre-column').scrollTop();
-        var genreListHeight = $('.genre-column ul').height();
-        var genreColumnHeight = $('.genre-column').height();
+        var currentScrollTop = $genre_column.scrollTop();
+        var genreListHeight = $genre_column_ul.height();
+        var genreColumnHeight = $genre_column.height();
 
         genreScrollAmount = currentScrollTop - genreColumnHeight;
 
 
 
-        $('.genre-column').animate({
+        $genre_column.animate({
             scrollTop: genreScrollAmount
         });
     });
 
+    /*
 
     $('.genre-scroll-up').on('click', function() {
 
@@ -244,6 +248,7 @@ $(document).ready(function() {
 
 
     });
+    */
 
 
     var artistScollAmount;
@@ -278,7 +283,7 @@ $(document).ready(function() {
 
     });
 
-
+    /*
     $('.artist-scroll-up').on('click', function() {
 
 
@@ -314,6 +319,7 @@ $(document).ready(function() {
         });
 
     });
+    */
 
 
     $('.sr-albums-prev').on('click', function() {
