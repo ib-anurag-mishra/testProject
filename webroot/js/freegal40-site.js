@@ -141,7 +141,7 @@ $(document).ready(function() {
     var $left_scroll_button = $('.left-scroll-button');
 
     $left_scroll_button.on('click', function() {
-        c
+        
         var $siblings_carousel = $(this).siblings('.carousel');
         
 
