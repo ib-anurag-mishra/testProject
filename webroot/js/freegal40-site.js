@@ -45,14 +45,17 @@ $(document).ready(function() {
 
     });
 
-    $('.my-account-menu').on('click', function() {
-        $('.account-menu-dropdown').addClass('active');
+    $my_account_menu = $('.my-account-menu');
+    $account_menu_dropdown = $('.account-menu-dropdown');
+
+    $my_account_menu.on('click', function() {
+        $account_menu_dropdown.addClass('active');
         return false;
     });
 
-     $('.my-account-menu').on('mouseleave', function(e) {
+    $my_account_menu.on('mouseleave', function(e) {
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
-            $('.account-menu-dropdown').removeClass('active');
+            $account_menu_dropdown.removeClass('active');
         }
     });
 
