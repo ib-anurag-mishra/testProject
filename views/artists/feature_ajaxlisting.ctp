@@ -29,7 +29,8 @@ if(!empty($featuredArtists))
                     {
                         if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs']))
                         {
-                            echo $this->Queue->getfeaturedStreamLabel($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag']);
+                            //echo $this->Queue->getfeaturedStreamLabel($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag']);
+                            echo $this->Queue->getfeaturedStreamLabel($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],0);
                         }
                     }
                     ?>                     
