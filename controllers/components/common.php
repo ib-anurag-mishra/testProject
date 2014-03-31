@@ -1397,15 +1397,15 @@ STR;
         $featuredInstance = ClassRegistry::init('Featuredartist');
         $featured = $featuredInstance->find('all', array(
             'conditions' => array(
-                'Featuredartist.territory' => $territory,
-                'Featuredartist.language' => Configure::read('App.LANGUAGE')),
-                'Featuredartist.album !=' => 0,
+                                'Featuredartist.territory' => $territory,
+                                'Featuredartist.language' => Configure::read('App.LANGUAGE')
+                            ),
                 'recursive' => -1,
                 'order' => array(
                     'Featuredartist.id' => 'desc'),
                 'limit' => "$offset,$limit"
                 )
-        );
+        );        
         
         if ((count($featured) < 1) || ($featured === false))
         {
