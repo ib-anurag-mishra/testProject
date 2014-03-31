@@ -267,25 +267,27 @@ $(document).ready(function() {
     });
 
 
+    $sr_albums_prev = $('.sr-albums-prev');
+    $search_results_albums = $('.search-results-albums');
 
-
-    $('.sr-albums-prev').on('click', function() {
-        var currentScrollLeft = $('.search-results-albums').scrollLeft();
+    $sr_albums_prev.on('click', function() {
+        var currentScrollLeft = $search_results_albums.scrollLeft();
         currentScrollLeft = currentScrollLeft - 660;
-        $('.search-results-albums').animate({
+        $search_results_albums.animate({
             scrollLeft: currentScrollLeft
         });
 
 
     });
 
-    $('.sr-albums-next').on('click', function() {
+    $sr_albums_next = $('.sr-albums-next');
+    $sr_albums_next.on('click', function() {
 
 
 
-        var currentScrollLeft = $('.search-results-albums').scrollLeft();
+        var currentScrollLeft = $search_results_albums.scrollLeft();
         currentScrollLeft = currentScrollLeft + 660;
-        $('.search-results-albums').animate({
+        $search_results_albums.animate({
             scrollLeft: currentScrollLeft
         });
 
