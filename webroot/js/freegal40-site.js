@@ -93,8 +93,8 @@ $(document).ready(function() {
         $(this).find('.toggeable').removeClass('active');
     });
 
-
-    $('.playlist-menu-icon').on('click', function() {
+    var $playlist_menu_icon = $('.playlist-menu-icon');
+    $playlist_menu_icon.on('click', function() {
         $(this).siblings('ul').addClass('active');
     });
 
