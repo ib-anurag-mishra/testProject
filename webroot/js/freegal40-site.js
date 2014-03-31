@@ -379,7 +379,7 @@ $(document).ready(function() {
     });
 
 
-
+    /*
     $('.top-songs-filter-icon').on('click', function() {
         $(this).siblings('.top-songs-filter-menu').toggleClass('active');
 
@@ -389,7 +389,8 @@ $(document).ready(function() {
         $(this).removeClass('active');
 
     });
-
+    */
+    /*
     $('.featured-grid-item').on('mouseenter', function() {
         $(this).find('.featured-grid-menu').addClass('active');
 
@@ -399,7 +400,7 @@ $(document).ready(function() {
         $(this).find('.featured-grid-menu').removeClass('active');
 
     });
-
+    */
     $(document).on('mouseenter','.featured-grid-item',function(){
 
         $(this).find('.featured-grid-menu').addClass('active');
