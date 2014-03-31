@@ -5,9 +5,11 @@ $(document).ready(function() {
 
     $(document).on('mouseenter', '.ac_results ul', function() {
 
-        $(this).bind('mousewheel', function(e) {
+        var $this = $(this);
 
-            $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+        $this.bind('mousewheel', function(e) {
+
+            $this.scrollTop($this.scrollTop() - e.originalEvent.wheelDeltaY);
             //prevent page fom scrolling
             return false;
 
