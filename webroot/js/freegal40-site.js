@@ -179,7 +179,7 @@ $(document).ready(function() {
 
     var genreScrollAmount;
     var $genre_column = $('.genre-column');
-    var $genre_column_ul = $('.genre-column ul');
+    var $genre_column_ul = $genre_column.find('ul');
 
 
     $(document).on('click', '.genre-scroll-up', function() {
@@ -212,114 +212,44 @@ $(document).ready(function() {
         });
     });
 
-    /*
 
-    $('.genre-scroll-up').on('click', function() {
-
-        var currentScrollTop = $('.genre-column').scrollTop();
-        var genreListHeight = $('.genre-column ul').height();
-        var genreColumnHeight = $('.genre-column').height();
-
-        genreScrollAmount = currentScrollTop + genreColumnHeight;
-
-
-
-        $('.genre-column').animate({
-            scrollTop: genreScrollAmount
-        });
-
-
-    });
-
-    $('.genre-scroll-down').on('click', function() {
-        var currentScrollTop = $('.genre-column').scrollTop();
-        var genreListHeight = $('.genre-column ul').height();
-        var genreColumnHeight = $('.genre-column').height();
-
-        genreScrollAmount = currentScrollTop - genreColumnHeight;
-
-
-
-        $('.genre-column').animate({
-            scrollTop: genreScrollAmount
-        });
-
-
-
-
-    });
-    */
 
 
     var artistScollAmount;
+    var $artist_column = $('.artist-column');
+    var $artist_column_ul = $artist_column.find('ul');
 
     $(document).on('click', '.artist-scroll-up', function() {
 
-        var currentScrollTop = $('.artist-column').scrollTop();
-        var artistListHeight = $('.artist-column ul').height();
-        var artistColumnHeight = $('.artist-column').height();
+        var currentScrollTop = $artist_column.scrollTop();
+        var artistListHeight = $artist_column_ul.height();
+        var artistColumnHeight = $artist_column.height();
 
         artistScrollAmount = currentScrollTop + artistColumnHeight;
 
 
 
-        $('.artist-column').animate({
+        $artist_column.animate({
             scrollTop: artistScrollAmount
         });
     });
 
     $(document).on('click', '.artist-scroll-down', function() {
-        var currentScrollTop = $('.artist-column').scrollTop();
-        var artistListHeight = $('.artist-column ul').height();
-        var artistColumnHeight = $('.artist-column').height();
+        var currentScrollTop = $artist_column.scrollTop();
+        var artistListHeight = $artist_column_ul.height();
+        var artistColumnHeight = $artist_column.height();
 
         artistScrollAmount = currentScrollTop - artistColumnHeight;
 
 
 
-        $('.artist-column').animate({
+        $artist_column.animate({
             scrollTop: artistScrollAmount
         });
 
     });
 
-    /*
-    $('.artist-scroll-up').on('click', function() {
 
-
-
-        var currentScrollTop = $('.artist-column').scrollTop();
-        var artistListHeight = $('.artist-column ul').height();
-        var artistColumnHeight = $('.artist-column').height();
-
-        artistScrollAmount = currentScrollTop + artistColumnHeight;
-
-
-
-        $('.artist-column').animate({
-            scrollTop: artistScrollAmount
-        });
-
-
-
-    });
-
-    $('.artist-scroll-down').on('click', function() {
-
-        var currentScrollTop = $('.artist-column').scrollTop();
-        var artistListHeight = $('.artist-column ul').height();
-        var artistColumnHeight = $('.artist-column').height();
-
-        artistScrollAmount = currentScrollTop - artistColumnHeight;
-
-
-
-        $('.artist-column').animate({
-            scrollTop: artistScrollAmount
-        });
-
-    });
-    */
 
 
     $('.sr-albums-prev').on('click', function() {
