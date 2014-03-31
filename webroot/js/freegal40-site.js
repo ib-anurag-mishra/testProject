@@ -63,10 +63,10 @@ $(document).ready(function() {
         }
     });
 
-    
+    $top_single_container_list = $('.top-single-container').find('ul');
 
-    $('.top-single-container ul').bindMouseWheel();
-    $('.top-single-container ul').on('mouseleave', function() {
+    $top_single_container_list.bindMouseWheel();
+    $top_single_container_list.on('mouseleave', function() {
         $(this).removeClass('active');
 
     });    
