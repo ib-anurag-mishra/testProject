@@ -20,10 +20,10 @@ $(document).ready(function() {
     $playlist_menu.bindMouseWheel();
     // $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
     $(document).on('mouseenter', '.top-songs .options-menu .playlist-menu', function() {
+        var $this = $(this);
+        $this.bind('mousewheel', function(e) {
 
-        $(this).bind('mousewheel', function(e) {
-
-            $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+            $this.scrollTop($this.scrollTop() - e.originalEvent.wheelDeltaY);
             //prevent page fom scrolling
             return false;
 
@@ -141,21 +141,22 @@ $(document).ready(function() {
     var $left_scroll_button = $('.left-scroll-button');
 
     $left_scroll_button.on('click', function() {
+        var $siblings_carousel = $(this).siblings('carousel');
+        
 
-
-        var currentScrollLeft = $(this).siblings('.carousel').scrollLeft();
+        var currentScrollLeft = $siblings_carousel.scrollLeft();
         currentScrollLeft = currentScrollLeft - 654;
-        $(this).siblings('.carousel').animate({scrollLeft: currentScrollLeft});        
+        $siblings_carousel.animate({scrollLeft: currentScrollLeft});        
 
     });
 
     var $right_scroll_button = $('.right-scroll-button');
     $right_scroll_button.on('click', function() {
+        var $siblings_carousel = $(this).siblings('.carousel');
 
-
-        var currentScrollLeft = $(this).siblings('.carousel').scrollLeft();
+        var currentScrollLeft = $siblings_carousel.scrollLeft();
         currentScrollLeft = currentScrollLeft + 654;
-        $(this).siblings('.carousel').animate({scrollLeft: currentScrollLeft});
+        $siblings_carousel.animate({scrollLeft: currentScrollLeft});
 
 
 
@@ -172,10 +173,11 @@ $(document).ready(function() {
     $genre_page_columns.bindMouseWheel();
 
     $(document).on('mouseenter', '.artist-column', function() {
+        var $this = $(this);
 
-        $(this).bind('mousewheel', function(e) {
+        $this.bind('mousewheel', function(e) {
 
-            $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+            $this.scrollTop($this.scrollTop() - e.originalEvent.wheelDeltaY);
             //prevent page fom scrolling
             return false;
 
@@ -183,10 +185,10 @@ $(document).ready(function() {
     });
 
     $(document).on('mouseenter', '.genre-column', function() {
+        var $this = $(this);
+        $this.bind('mousewheel', function(e) {
 
-        $(this).bind('mousewheel', function(e) {
-
-            $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+            $this.scrollTop($this.scrollTop() - e.originalEvent.wheelDeltaY);
             //prevent page fom scrolling
             return false;
 
@@ -321,10 +323,11 @@ $(document).ready(function() {
     var $multi_select_icon = $('.multi-select-icon');
 
     $row_checkbox.on('click', function() {
-        $(this).parent('.row').toggleClass('highlighted');
+        var $this = $(this);
+        $this.parent('.row').toggleClass('highlighted');
         var c = 0;
         $row_checkbox.each(function() {
-            if ($(this).is(':checked')) {
+            if ($this.is(':checked')) {
                 c++;
             }
             if (c >= 2) {
