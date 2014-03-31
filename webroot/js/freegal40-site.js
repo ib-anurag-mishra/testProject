@@ -63,7 +63,7 @@ $(document).ready(function() {
         }
     });
 
-    /*
+    
 
     $('.top-single-container ul').bindMouseWheel();
     $('.top-single-container ul').on('mouseleave', function() {
@@ -71,7 +71,7 @@ $(document).ready(function() {
 
     });    
 
-    */
+    
 
     var $album_cover_container_ul = $('.album-cover-container').find('ul');
 
