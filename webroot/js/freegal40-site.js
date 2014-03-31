@@ -281,7 +281,7 @@ $(document).ready(function() {
     });
 
     var $sr_albums_next = $('.sr-albums-next');
-    var $sr_albums_next.on('click', function() {
+    $sr_albums_next.on('click', function() {
 
 
 
