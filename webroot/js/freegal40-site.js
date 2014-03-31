@@ -281,7 +281,7 @@ $(document).ready(function() {
     });
 
     var $sr_albums_next = $('.sr-albums-next');
-    var $sr_albums_next.on('click', function() {
+    $sr_albums_next.on('click', function() {
 
 
 
@@ -331,14 +331,14 @@ $(document).ready(function() {
         }
     });
 
-    var $multi_select_icon.on('click', function() {
+    $multi_select_icon.on('click', function() {
 
         $(this).siblings('.options-menu').addClass('active');
         $multi_select_icon.addClass('highlighted');
 
     });
 
-    var $multi_select_icon.on('mouseleave', function(e) {
+    $multi_select_icon.on('mouseleave', function(e) {
 
         if (e.offsetX > $(this).width() || e.offsetY < 0) {
 
