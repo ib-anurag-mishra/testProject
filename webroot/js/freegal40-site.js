@@ -433,7 +433,22 @@ $(document).ready(function() {
     });
 
 
+    /* FAQ page */
+    var $faq_container_anchor = $('.faq-container').find('li').find('a');
 
+    // $('.faq-container').on('click', 'li a', function(e) {
+    $faq_container_anchor.on('click', function(e) {
+        e.preventDefault();
+
+
+        if ($(this).siblings('p').hasClass('active')) {
+            $(this).siblings('p').slideUp(500).removeClass('active');
+        } else {
+            $('.faq-container p').slideUp(500).removeClass('active');
+            $(this).siblings('p').slideDown(500).addClass('active');
+        }
+
+    });
 
 
 

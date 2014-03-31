@@ -644,44 +644,7 @@ $('document').ready(function()
     });
     /* end clickoffs */
 
-    /* FAQ page */
-    $('.faq-container').on('click', 'li a', function(e) {
-        e.preventDefault();
-        /* modified 080913
-         if($(this).siblings('p').hasClass('active')) {
-         
-         $(this).siblings('p').slideUp(500).removeClass('active');
-         } else {
-         
-         $(this).siblings('p').slideDown(500).addClass('active');
-         
-         if($(this).siblings('p').offset().top + 20 > $(window).height()) {
-         
-         
-         $('html, body').animate({
-         scrollTop: $(this).offset().top-10
-         }, 1000);
-         }
-         
-         }
-         */
 
-        /* commented out 081413 */
-        /*
-         $('p').slideUp(500).removeClass('active');
-         $(this).siblings('p').slideDown(500).addClass('active');
-         */
-
-        /* added 081413 */
-
-        if ($(this).siblings('p').hasClass('active')) {
-            $(this).siblings('p').slideUp(500).removeClass('active');
-        } else {
-            $('.faq-container p').slideUp(500).removeClass('active');
-            $(this).siblings('p').slideDown(500).addClass('active');
-        }
-
-    });
 
     $('.site-nav .most-popular a').on('mouseenter', function(e) {
         e.preventDefault();
