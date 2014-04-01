@@ -411,7 +411,7 @@ STR;
             foreach ($featuredVideos as $key => $featureVideo)
             {
                 $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['File']['SourceURL']);
-                // print_r($featureVideo); die;
+
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $featuredVideos[$key]['videoImage'] = $videoImage;
             }
@@ -521,8 +521,7 @@ STR;
             $ids = '';
             $ids_provider_type = '';
             $natTopDownloaded = $albumInstance->query($sql);
-            // echo $sql;
-            // print_r($natTopDownloaded); die;
+
             foreach ($natTopDownloaded as $natTopSong)
             {
                 if (empty($ids))
@@ -587,7 +586,6 @@ STR;
             LIMIT 100 
 STR;
 
-            // echo $sql_national_100_v; die;
             $data = $albumInstance->query($sql_national_100_v);
             $this->log("national top 100 videos second query for $territory", "cachequery");
             $this->log($sql_national_100_v, "cachequery");
@@ -636,7 +634,7 @@ STR;
         if(empty($countryPrefix))
         {
             $this->log("Empty countryPrefix in getComingSoonSongs for : ".$territory, "cache");
-            die;
+            exit;
         }
         $albumInstance = ClassRegistry::init('Album');
         // Added caching functionality for coming soon songs
@@ -717,7 +715,7 @@ STR;
         if(empty($countryPrefix))
         {
             $this->log("Empty countryPrefix in getComingSoonVideos for : ".$territory, "cache");
-            die;
+            exit;
         }
 
         
@@ -2384,7 +2382,6 @@ STR;
             {
                 $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory returns null ", "cache");
             }
-            //echo "<pre>"; print_r($TopVideoGenreData); die;
         }
     }
 
@@ -2453,7 +2450,6 @@ STR;
                 ORDER BY Country.SalesDate desc  
 STR;
 
-            //echo $sql_national_100_v; die;
             $artistVideoList = $videoInstance->query($sql_us_10_v);
             foreach ($artistVideoList as $key => $value)
             {

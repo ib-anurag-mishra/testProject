@@ -26,7 +26,6 @@ class QueuesController extends AppController
         {
             $this->Auth->allow('');
         }
-        // $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue', 'my_streaming_history');
     }
 
     /**
@@ -77,20 +76,16 @@ class QueuesController extends AppController
                     $this->QueueList->setDataSource('master');
                     if ($this->QueueList->save($this->data['QueueList']))
                     {
-                        //$this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
                         $this->QueueList->setDataSource('default');
                         $this->layout = 'ajax';
                         echo "Playlist has been Added successfully.&" . $this->QueueList->getLastInsertID() . "&" . $this->data['QueueList']['queue_name'];
-                        die;
-                        //$this->redirect($this->referer());						
+                        exit;
                     }
                     else
                     {
-                        //$this->Session ->setFlash('Error occured while adding queue', 'modal', array( 'class' => 'queue problem' ));
                         $this->QueueList->setDataSource('default');
                         $this->layout = 'ajax';
                         echo "Error occured while adding playlist";
-                        //$this->redirect($this->referer());					
                     }
                 }
             }
@@ -110,15 +105,9 @@ class QueuesController extends AppController
         {
 
             $song_details = $this->Streaming->getStreamingDetails($_REQUEST['songProdId'], $_REQUEST['songProviderType']); // Fetch Information related to Streaming
-//            echo "<pre>";
-//            print_r($song_details);
-
 
             if ($this->Session->read('library_type') == 2 && $song_details['Country']['StreamingSalesDate'] <= date('Y-m-d') && $song_details['Country']['StreamingStatus'] == 1)
             {
-//                    $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
-//                    if(!$queuesongsCount)
-//                    {
                 $insertArr = Array();
                 $insertArr['queue_id'] = $_REQUEST['queueId'];
                 $insertArr['song_prodid'] = $_REQUEST['songProdId'];
@@ -130,14 +119,7 @@ class QueuesController extends AppController
                 $this->QueueDetail->save($insertArr);
                 $this->QueueDetail->setDataSource('default');
                 echo "Success";
-                exit;
-
-//                    }
-//                    else
-//                    {
-//                            echo 'error1';
-//                            exit; 
-//                    }     
+                exit; 
             }
             else    // Song is not allowed for streaming
             {
@@ -164,19 +146,6 @@ class QueuesController extends AppController
         {
             if ($this->Session->read('library_type') == 2)
             {
-//                    foreach($albumSongs as $key => $value){
-//                        $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $value['queue_id'],'song_prodid' => $value['song_prodid'],'song_providertype' => $value['song_providertype'],'album_prodid' => $value['album_prodid'],'album_providertype' => $value['album_providertype'])));
-//                        if($queuesongsCount)
-//                        {
-//                            $del[] =  $key;    
-//                        }
-//
-//                    }
-//                    if(!empty($del)){
-//                        foreach($del as $value){
-//                            unset($albumSongs[$value]);
-//                        }
-//                    }
                 if (!empty($albumSongs))
                 {
                     $this->QueueDetail->setDataSource('master');
@@ -185,10 +154,6 @@ class QueuesController extends AppController
                     echo "Success";
                     exit;
                 }
-//                    if(!empty($del)){
-//                        echo 'error1';
-//                        exit;                         
-//                    }
             }
             else    // Song is not allowed for streaming
             {
@@ -240,9 +205,6 @@ class QueuesController extends AppController
 
     function my_streaming_history()
     {
-
-        //  Configure::write('debug', 2);
-
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
@@ -257,9 +219,6 @@ class QueuesController extends AppController
             $sort = $_POST['sort'];
             $sortOrder = $_POST['sortOrder'];
         }
-
-//        echo "<br>sort: ".$sort;
-//        echo "<br>sortOrder: ".$sortOrder;
 
         if (!in_array($sort, $sortArray))
         {
@@ -285,12 +244,6 @@ class QueuesController extends AppController
                 $songSortBy = 'Album.AlbumTitle';
                 $sortType = $sortOrder;
                 break;
-            /* case 'song':
-              $songSortBy = 'Download.track_title';
-              $videoSortBy = 'Videodownload.track_title';
-              $sortType = $sortOrder;
-              break;
-             */
         }
 
         $countryTableName = $countryPrefix . 'countries';
@@ -331,11 +284,6 @@ class QueuesController extends AppController
             'fields' => array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name', 'QueueList.queue_type', 'Song.Advisory', 'Song.FullLength_Duration', 'Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Song.provider_type', 'StreamingHistory.ProdID', 'StreamingHistory.provider_type', 'StreamingHistory.patron_id', 'StreamingHistory.library_id', 'StreamingHistory.consumed_time', 'StreamingHistory.createdOn', 'Song.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'Full_Files.CdnPath', 'Full_Files.SaveAsName'),
             'order' => "$songSortBy $sortType"));
 
-
-
-//        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
-        //  echo '<pre>'; print_r($streamingResults);
-
         $this->set('streamingData', $streamingResults);
 
         $this->set('sort', $sort);
@@ -350,7 +298,6 @@ class QueuesController extends AppController
     function queueListAlbums()
     {
         $this->layout = 'ajax';
-        //Configure::write('debug', 2);
 
         $prodID = $_POST["prodID"];
         $type = $_POST["type"];
@@ -409,8 +356,6 @@ class QueuesController extends AppController
         {
             $songDetails = array_pop($this->Common->getSongsDetails($prodID));
 
-           // print_r($songDetails);
-
             if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) 
                     && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
             {
@@ -441,7 +386,7 @@ class QueuesController extends AppController
                 exit;
             }
         }
-        die;
+        exit;
     }
     
     
@@ -451,7 +396,6 @@ class QueuesController extends AppController
      */
     function ajaxSavedQueuesList()
     {
-        //Configure::write('debug', 2);
         $patron_id = $this->Session->read("patron");
         $this->layout = 'ajax';
         $queueData = $this->Queue->getQueueList($patron_id);
@@ -459,5 +403,4 @@ class QueuesController extends AppController
     }
 
 }
-
 ?>

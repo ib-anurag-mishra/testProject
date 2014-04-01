@@ -67,10 +67,6 @@ class ServicesController extends AppController {
                 } else {
                     $genre = null;
 				}
-				// $composer = $this->params['named']['composer'];
-				// $song =  $this->params['named']['song'];
-				// $album =  $this->params['named']['album'];
-				// $genre =  $this->params['named']['genre'];
 
 				$artist = str_replace("^", " ", $artist);
 				$composer = str_replace("^", " ", $composer);
@@ -146,16 +142,6 @@ class ServicesController extends AppController {
 					$solrGenreSearch = '';
 				}
 				
-				/* if($country != '') {
-					$operator = '&';
-					$territorySearch = array('match(Song.Territory) against ("+'.$country.'*" in boolean mode)'); 
-					$solrTerritorySearch = 'Territory:'.addslashes($country).' '.$operator.' ';
-				}
-				else {
-					$territorySearch = '';
-					$solrTerritorySearch = '';
-				}*/				
-				
                 $solrTempCondition = "(".$solrArtistSearch.''.$solrComposerSearch.''.$solrSongSearch.''.$solrAlbumSearch.''.$solrGenreSearch.'';
 				
                 if($solrCheckCondition == "OR"){
@@ -168,13 +154,9 @@ class ServicesController extends AppController {
 				
 				$solrFinalCondition = $solrFinalCondition.' AND (TerritoryDownloadStatus:'.$country.'_1 OR TerritoryStreamingStatus:'.$country.'_1) AND '.$condSolr;
 				
-                // print $solrFinalCondition;exit;
-				
                 if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -5);
 				}
-
-				// App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				
 				if (isset($this->passedArgs['sort'])){
 					$solrSort = $this->passedArgs['sort'];
@@ -188,24 +170,12 @@ class ServicesController extends AppController {
 					$solrDirection = "";
 				}
 
-				/*$this->paginate = array('Song' => array(
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'webservice' => 1
-						));
-				
-				$searchResults = $this->paginate('Song');*/
-                
 				$reference = '';
-
-                // echo $solrFinalCondition; die;
                 
                 $response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 
                 if ($response->getHttpStatus() == 200) {
-                    // echo "here";
-                    // print_r($response);
-                    // print_r($response);
-                    // echo $response->response->numFound;
-                    // die;
+
                     if ($response->response->numFound > 0) {
                         foreach ($response->response->docs as $doc) {
                             $docs[] = $doc;
@@ -216,9 +186,6 @@ class ServicesController extends AppController {
                 } else {
                     $docs = array();
                 }
-                
-                // print_r($docs); 
-                // die;
                 
 				foreach($docs as $k=>$v){
                     if(!empty($v->ProdID)){
@@ -277,26 +244,9 @@ class ServicesController extends AppController {
 										),                             
 								)
 						)));
-                        /*
-                        $data = array(
-							'conditions'=>array('Album.ProdID' => $v->ReferenceID, 'Album.provider_type' => $v->provider_type),
-							'fields' => array(
-								'Album.ProdID',
-							),
-							'contain' => array(										
-								'Files' => array(
-									'fields' => array(
-										'Files.CdnPath',
-										'Files.SaveAsName',
-										'Files.SourceURL',
-										),                             
-								)
-						));
-                        print_r($data); die; 
-                        */
+                        
 						$reference = $v->ReferenceID;
-                        // echo $this->Album->lastQuery();
-                        // print_r($albumData); die;
+                        
                         if(!empty($albumData)){
 						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
                         } else {
@@ -427,7 +377,7 @@ class ServicesController extends AppController {
 				}else{
 					$genre = $this->params['pass'][3];
 				}
-	//			print $genre;exit;
+
 				$searchString =  base64_decode($genre);	
                 $searchString =  str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $searchString);
 				$searchString = str_replace("^", " ", $searchString);					
@@ -445,8 +395,7 @@ class ServicesController extends AppController {
 				if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -5);
 				}
-			
-				// App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
+
 				if (isset($this->passedArgs['sort'])){
 					$solrSort = $this->passedArgs['sort'];
 				} else {
@@ -458,15 +407,7 @@ class ServicesController extends AppController {
 					$solrDirection = "";
 				}
 				
-				/*$this->paginate = array('Song' => array(
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'webservice' => 1
-						));
-				
-				$searchResults = $this->paginate('Song');*/
-                // echo $solrFinalCondition; die;
 				$response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
-                
-                // print_r($response);
                 
                 if ($response->getHttpStatus() == 200) {
                     if ($response->response->numFound > 0) {
@@ -479,8 +420,6 @@ class ServicesController extends AppController {
                 } else {
                     $docs = array();
                 }
-                
-                // print_r($docs); die;
                 
 				$reference = '';
 				foreach($docs as $k=>$v){
@@ -543,7 +482,7 @@ class ServicesController extends AppController {
 						$reference = $v->ReferenceID;
                         if(!empty($albumData)){
 						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
-					//	print_r($result);exit;
+
                         } else {
                             $albumArtWork = null;
                         }
@@ -619,8 +558,6 @@ class ServicesController extends AppController {
 				if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -5);
 				}
-			
-				// App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				
 				if (isset($this->passedArgs['sort'])){
 					$solrSort = $this->passedArgs['sort'];
@@ -633,18 +570,9 @@ class ServicesController extends AppController {
 					$solrDirection = "";
 				}
 				
-				/*$this->paginate = array('Song' => array(
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'webservice' => 1
-						));
-				
-				$searchResults = $this->paginate('Song');*/
 				$reference = '';
                 
-                // echo $solrFinalCondition; die;
-                
                 $response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
-                
-                // print_r($response);
                 
                 if ($response->getHttpStatus() == 200) {
                     if ($response->response->numFound > 0) {
@@ -720,7 +648,7 @@ class ServicesController extends AppController {
                         if(!empty($albumData)){
 						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
                         } else {
-					//	print_r($result);exit;
+
                             $albumArtWork = null;
 					}
                         }
@@ -873,8 +801,7 @@ class ServicesController extends AppController {
 					// tell it not to validate ssl cert
 					curl_setopt($ch, CURLOPT_SSLVERSION, 3);
 					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-					//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-					//curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/CAcerts/BuiltinObjectToken-EquifaxSecureCA.crt"); 
+
 					// tell it where to get POST variables from
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -904,29 +831,7 @@ class ServicesController extends AppController {
 					$this->Currentpatron->save($insertArr);						
 				}
 				Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
-				/*if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
-					$date = time();
-					$values = array(0 => $date, 1 => session_id());			
-					Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-				} else {
-					$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
-					$date = time();
-					$modifiedTime = $userCache[0];
-					if(!($this->Session->read('patron'))){
-						if(($date-$modifiedTime) > 60){
-							$values = array(0 => $date, 1 => session_id());	
-							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-						}
-						else{
-							$this->Session->destroy('user');
-							$this -> Session -> setFlash("This account is already active.");                              
-							$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-						}
-					} else {
-						//nothing needs to be done
-					}
-					
-				}*/
+
 				$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 				$this->Session->write("patron", $patronId);
 				$this->Session->write("consortium", $consortium[0]['Consortium']['consortium_name']);
@@ -989,9 +894,7 @@ class ServicesController extends AppController {
 				if(isset($nopin)){
                                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/artists/view/'.$this->params['pass'][4].'/'.$this->params['pass'][3].'/'.$this->params['pass']['5']); 
                                    exit;                                     
-					//$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3], $this->params['pass']['5']));
-				}else{
-					//$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][5], $this->params['pass'][4], $this->params['pass']['6']));				
+				}else{				
                                     $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/artists/view/'.$this->params['pass'][5].'/'.$this->params['pass'][4].'/'.$this->params['pass']['6']); 
                                     exit;
 				}

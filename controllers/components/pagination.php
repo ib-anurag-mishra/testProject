@@ -483,7 +483,7 @@ class PaginationComponent extends Object
             else
             {
                 echo ("parameter error");
-                die;
+                exit;
             }
         }
     }

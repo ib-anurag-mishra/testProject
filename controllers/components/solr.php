@@ -101,8 +101,6 @@ class SolrComponent extends Object {
                 $searchkeyword = strtolower($this->escapeSpace($keyword));
             
                 $searchkeyword = $this->checkSearchKeyword($searchkeyword);
-            	
-		// echo $searchkeyword; die;
             
                 if (!isset(self::$solr))
                 {
@@ -121,7 +119,7 @@ class SolrComponent extends Object {
                     
                     if(!$connectedToSolr) {
                         $this->log('Unable to Connect to Solr','search');
-                        die;
+                        exit;
                     }    
                 }
                 
@@ -374,7 +372,7 @@ class SolrComponent extends Object {
                     
                     if(!$connectedToSolr) {
                         $this->log('Unable to Connect to Solr','search');
-                        die;
+                        exit;
                     }
                 }
     
@@ -414,7 +412,6 @@ class SolrComponent extends Object {
                 }
     
                 $query = $query . ' AND Territory:' . $country;
-                //echo $query; die;
     
                 if ($page == 1) {
                     $start = 0;
@@ -513,7 +510,7 @@ class SolrComponent extends Object {
                 
                 if(!$connectedToSolr) {
                     $this->log('Unable to Connect to Solr','search');
-                    die;
+                    exit;
                 }
             }
 
@@ -660,7 +657,7 @@ class SolrComponent extends Object {
                     
                     if(!$connectedToSolr) {
                         $this->log('Unable to Connect to Solr','search');
-                        die;
+                        exit;
                     }
             }
 
@@ -817,7 +814,7 @@ class SolrComponent extends Object {
                     if(!$connectedToSolr)
                     {
                         $this->log('Unable to Connect to Solr','search');
-                        die;
+                        exit;
                     }
                 }
     
@@ -985,7 +982,7 @@ class SolrComponent extends Object {
                 
                 if(!$connectedToSolr) {
                     $this->log('Unable to Connect to Solr','search');
-                    die;
+                    exit;
                 }
             }
             
@@ -1155,16 +1152,10 @@ class SolrComponent extends Object {
     {
 	$synonymsInstance = ClassRegistry::init('Synonym');
         
-	$data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>$searchkeyword)));
-
-	// echo $synonymsInstance->lastQuery();
-	
-	// print_r($data); die;        
+	$data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>$searchkeyword)));  
 
         if(!empty($data)) {
-            //$searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
             $searchkeyword = "(".$searchkeyword." ".$data['Synonym']['replacement_text'].")";
-            //echo $searchkeyword; die;
         }
         return $searchkeyword;
     }

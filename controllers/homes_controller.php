@@ -23,21 +23,6 @@ class HomesController extends AppController
     {
 
         parent::beforeFilter();
-        // comenting this code for showing this page before login
-        //        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
-        //            $validPatron = $this->ValidatePatron->validatepatron();
-        //			if($validPatron == '0') {
-        //				//$this->Session->destroy();
-        //				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-        //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-        //			}
-        //			else if($validPatron == '2') {
-        //				//$this->Session->destroy();
-        //				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-        //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-        //			}
-        //        }           
-
 
         if ($this->params['action'] == 'convertString' && ($this->Session->read('Auth.User.type_id') == 1)) // For super Admin while accesing convertString action
         {
@@ -63,7 +48,6 @@ class HomesController extends AppController
         $this->Cookie->time = 3600; // or '1 hour'
         $this->Cookie->path = '/';
         $this->Cookie->domain = 'freegalmusic.com';
-        //$this->Cookie->key = 'qSI232qs*&sXOw!';
     }
 
     /* Function Name    : index
@@ -74,8 +58,6 @@ class HomesController extends AppController
 
     function index()
     {
-
-        //Configure::write('debug', 3);
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443)
         {
@@ -103,7 +85,6 @@ class HomesController extends AppController
 
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national" . $territory)) === false)
-        //if(1)
         {
             if($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ')
             {
@@ -155,7 +136,7 @@ class HomesController extends AppController
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
-        //if(1){
+
         if (($artists = Cache::read("featured" . $country)) === false)
         {
             $featured = $this->Common->getFeaturedArtists($territory);
@@ -240,24 +221,11 @@ class HomesController extends AppController
         /*
          * Code For Coming Soon --- END
          */
-
-        //print_r( $this->element('sql_dump') );
-        //print_r($this->Session->read('downloadVariArray'));
     }
 
     //this is just for streaming component test
     function checkStreamingComponent()
     {
-//        Configure::write('debug', 0);
-//         $query='select * from streaming_histories where id="3007"';
-//         $obj = mysql_query($query);
-//         
-//         $result = mysql_fetch_array($obj);
-//         $result = $this->StreamingHistory->find('first',array('conditions'=>array('id'=>'3007')));
-//         print_r( $result);
-//         
-//         
-//         die;
 
         echo 'libid=> ' . $libId = $this->Session->read('library');
         echo '<br>patid=> ' . $patId = $this->Session->read('patron');
@@ -272,7 +240,7 @@ class HomesController extends AppController
         echo '<br>';
         $validationResponse = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider, $userStreamedTime, $actionType, '', $songDuration, $queue_id, $token_id);
         print_r($validationResponse);
-        die;
+        exit;
     }
 
     function get_genre_tab_content($tab_no, $genre)
@@ -483,9 +451,6 @@ class HomesController extends AppController
 
     function us_top_10()
     {
-
-        // Configure::write('debug', 2);
-
         $this->layout = 'home';
 
         $libId = $this->Session->read('library');
@@ -556,8 +521,6 @@ class HomesController extends AppController
 
     function national_top_download()
     {
-        //$this -> layout = 'ajax';
-
         $libId = $this->Session->read('library');
         $territory = $this->Session->read('territory');
 
@@ -593,7 +556,7 @@ class HomesController extends AppController
                             ORDER BY `countProduct` DESC 
                             LIMIT 110";
             }
-            //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
+
             $ids = '';
             $natTopDownloaded = $this->Album->query($sql);
             foreach ($natTopDownloaded as $natTopSong)
@@ -666,15 +629,7 @@ STR;
 
 
         $nationalTopDownload = Cache::read("national" . $territory);
-        /* 		$this->Download->recursive = -1;
-          foreach($nationalTopDownload as $key => $value){
-          $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-          if(count($downloadsUsed) > 0){
-          $nationalTopDownload[$key]['Song']['status'] = 'avail';
-          } else{
-          $nationalTopDownload[$key]['Song']['status'] = 'not';
-          }
-          } */
+
         $this->set('nationalTopDownload', $nationalTopDownload);
     }
 
@@ -685,7 +640,6 @@ STR;
 
     function autoComplete()
     {
-        // Configure::write('debug', 0);
         $country = $this->Session->read('territory');
         $searchKey = '';
         if (isset($_REQUEST['q']) && $_REQUEST['q'] != '')
@@ -715,7 +669,7 @@ STR;
             $searchParam = "@SongTitle " . $searchKey;
         }
         $sphinxFinalCondition = $searchParam . " & " . "@Territory '" . $country . "' & @DownloadStatus 1";
-//		print $sphinxFinalCondition;exit;
+
         $condSphinx = '';
         $sphinxSort = "";
         $sphinxDirection = "";
@@ -724,7 +678,7 @@ STR;
         ));
 
         $searchResults = $this->paginate('Song');
-//		$output = array_slice($searchResults, 0, 6);
+
         $this->set('output', $searchResults);
         $this->set('type', $_REQUEST['type']);
         $this->layout = 'ajax';
@@ -756,7 +710,6 @@ STR;
                     array(
                         $cond,
                         array('Country.Territory' => $country),
-                        //array('Song.provider_type = Genre.provider_type'),
                         array('Song.provider_type = Country.provider_type'),
                         array('DownloadStatus' => 1),
                         array("Song.Sample_FileID != ''")
@@ -778,7 +731,6 @@ STR;
             Cache::write("artist" . $search . $country, $artistAll);
         }
         $artistAll = Cache::read("artist" . $search . $country);
-        //$this->Song->recursive = -1;
         $this->set('distinctArtists', $artistAll);
         $this->layout = 'ajax';
     }
@@ -970,9 +922,7 @@ STR;
                     $sphinxTempCondition = substr($sphinxTempCondition, 0, -2);
                     $sphinxTempCondition = $sphinxTempCondition . ' & ' . $sphinxTerritorySearch;
                 }
-                //$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
                 $sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-                //$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory !'.$nonMatchCountry.' & @Territory '.$country.' & '.$condSphinx;
                 $sphinxFinalCondition = $sphinxFinalCondition . ' & @DownloadStatus 1 & ' . $condSphinx;
                 if ($condSphinx == "")
                 {
@@ -1129,10 +1079,9 @@ STR;
                     $searchKey = $this->data['Home']['search'];
                 }
                 $searchText = $searchKey;
-                //$searchKey = '"'.addslashes($searchKey).'"';
+
                 $this->set('searchKey', 'search=' . urlencode($searchText) . '&auto=' . $auto);
 
-                //$spValue = "";
                 if ($_REQUEST['search_type'] == 'composer')
                 {
                     $searchtype = 'composer';
@@ -1156,11 +1105,6 @@ STR;
                     $expSearchKeys = explode(" ", $searchKey);
                     foreach ($expSearchKeys as $value)
                     {
-                        /* if ($spValue == '') {
-                          $spValue = ''.addslashes($value).'|';
-                          } else {
-                          $spValue = $spValue.''.addslashes($value).'|';
-                          } */
                         $value = str_replace("^", " ", $value);
                         $value = str_replace("$", " ", $value);
                         $value = str_replace("-", " ", $value);
@@ -1183,16 +1127,13 @@ STR;
                     $searchKey = '"' . addslashes($searchKey) . '"';
                     $searchParam = "@" . $searchtype . " " . $searchKey;
                 }
-                //	echo $searchParam;exit;
-                /* $spValue = substr($spValue, 0, -1);
-                  $spValue = '"'.$spValue.'"';
-                  $searchParam = "@Artist ".$spValue." | "."@ArtistText ".$spValue." | "."@Title ".$spValue." | "."@SongTitle ".$spValue; */
+
                 if (!isset($_REQUEST['composer']))
                 {
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 }
                 App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-                //$sphinxFinalCondition = $searchParam." & "."@TrackBundleCount 0 & @DownloadStatus 1 & @Territory !".$nonMatchCountry." & @Territory ".$country." & ".$condSphinx;
+
                 $sphinxFinalCondition = $searchParam . " & " . "@Territory " . $country . " & @DownloadStatus 1 & " . $condSphinx;
                 if ($condSphinx == "")
                 {
@@ -1222,7 +1163,7 @@ STR;
                 ));
 
                 $searchResults = $this->paginate('Song');
-//				print "<pre>";print_r($searchResults);exit;
+
                 $this->Download->recursive = -1;
                 foreach ($searchResults as $key => $value)
                 {
@@ -1316,7 +1257,6 @@ STR;
 
     function userDownload()
     {
-        //Configure::write('debug', 0);
         $this->layout = false;
         $prodId = $_POST['ProdID'];
         $provider = $_POST['ProviderType'];
@@ -1353,7 +1293,7 @@ STR;
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
-        //$user = $this->Auth->user();
+
         $user = $this->Session->read('Auth.User.id');
         if (empty($user))
         {
@@ -1371,19 +1311,6 @@ STR;
                 $this->redirect(array('controller' => 'homes', 'action' => 'index'));
             }
             $downloadsDetail = array();
-            /*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-              $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-
-              if($libraryDownload != '1' || $patronDownload != '1') {
-              echo "error";
-              exit;
-              }
-              $this->Download->recursive = -1;
-              $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $prodId,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-              if(count($downloadsUsed) > 0) {
-              echo "incld";
-              exit;
-              } */
 
             $provider = $_POST['ProviderType'];
             $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
@@ -1594,20 +1521,6 @@ STR;
                 }
             }
 
-            /* 		if($this->Download->save($insertArr)){
-              $this->Library->setDataSource('master');
-              $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;
-              $this->Library->query($sql);
-              $this->Library->setDataSource('default');
-              $this->Download->recursive = -1;
-              $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-              echo "suces|".$downloadsUsed;
-              exit;
-              }
-              else{
-              echo "error";
-              exit;
-              } */
         }
         else
         {
@@ -1693,7 +1606,6 @@ STR;
 
     function checkPatron()
     {
-        //Configure::write('debug', 0);
         $this->layout = false;
         $libid = $_REQUEST['libid'];
         $patronid = $_REQUEST['patronid'];
@@ -1705,13 +1617,7 @@ STR;
         $sql = mysql_query("SELECT id FROM `sessions` Where id='" . session_id() . "'");
         $count = mysql_num_rows($sql);
         $values = array(0 => $date, 1 => session_id());
-        /* 		if(($date-$modifiedTime) > 60 && $count == 0){
-          //deleting sessions and memcache key
-          $this->Session->destroy();
-          Cache::delete("login_".$libid.$patronid);
-          echo "Error";
-          exit;
-          } else { */
+
         $date = time();
         $name = $_SERVER['SERVER_ADDR'];
         $values = array(0 => $date, 1 => session_id());
@@ -1719,7 +1625,6 @@ STR;
         Cache::write("login_" . $this->Session->read('territory') . "_" . $libid . "_" . $patronid, $values);
         echo "success" . $name;
         exit;
-        //}
     }
 
     /*
@@ -1729,7 +1634,6 @@ STR;
 
     function approvePatron()
     {
-        //Configure::write('debug', 0);
         $this->layout = false;
         $libid = $_REQUEST['libid'];
         $patronid = base64_decode($_REQUEST['patronid']);
@@ -2346,8 +2250,7 @@ STR;
             $this->Session->setFlash("This account is already active");
             $this->Cookie->delete('msg');
         }
-        //echo '+++++'.$this->Cookie->read('msg').'asfsdaf';
-        //exit;
+
         $this->layout = 'home';
     }
 
@@ -2410,7 +2313,6 @@ STR;
 
     function _sendForgotPasswordMail($id, $password)
     {
-        // Configure::write('debug', 0);
         $this->Email->template = 'email/forgotPasswordEmail';
         $this->User->recursive = -1;
         $Patron = $this->User->read(null, $id);
@@ -2441,7 +2343,6 @@ STR;
         }
         else
         {
-            //$this->layout = 'login';
             $this->layout = 'home';
         }
         $errorMsg = '';
@@ -2457,10 +2358,6 @@ STR;
         }
         if ($_POST['hid_action'] == 1)
         {
-
-//            echo '<pre>';
-//            print_r($_POST);
-//            die;
 
             $email = $_POST['email'];
             if ($email == '')
@@ -2478,11 +2375,10 @@ STR;
                 {
                     $errorMsg = "This is not a valid patron email.";
                 }
-            } //echo $errorMsg; die;
+            }
             if ($errorMsg != '')
             {
                 $this->Session->setFlash($errorMsg);
-                // $this->redirect($this->webroot.'homes/forgot_password');
             }
             else
             {
@@ -2511,7 +2407,6 @@ STR;
 
     function addToWishlist()
     {
-        //Configure::write('debug', 2);
         //creates log for Add to wishlist method when it is called
 
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
@@ -2767,7 +2662,6 @@ STR;
         $this->set('patronDownload', $patronDownload);
 
         $wishlistResults = Array();
-        //$wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
 
         $wishlistQuery = <<<STR
                     SELECT 
@@ -2896,8 +2790,6 @@ STR;
 
     function removeWishlistSong()
     {
-
-        //Configure::write('debug', 2);
         $this->layout = false;
         if (isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete'] != '')
         {
@@ -2940,8 +2832,6 @@ STR;
 
     function removeWishlistVideo()
     {
-
-        //Configure::write('debug', 0);
         $this->layout = false;
         if (isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete'] != '')
         {
@@ -2956,7 +2846,7 @@ STR;
                 if ($this->Session->check('wishlistVideoArray'))
                 {
                     $wishlistVariArray = $this->Session->read('wishlistVideoArray');
-                    // print_r($wishlistVariArray);
+
                     if (!empty($wishlistVariArray))
                     {
                         foreach ($wishlistVariArray as $key => $value)
@@ -2967,7 +2857,6 @@ STR;
                             }
                         }
                         $this->Session->write('wishlistVideoArray', $wishlistarryTemp);
-                        //   print_r($this->Session->read('wishlistVideoArray'));
                     }
                 }
 
@@ -2986,7 +2875,6 @@ STR;
 
     function wishlistDownload()
     {
-        // Configure::write('debug', 0);
         $this->layout = false;
 
         $libId = $this->Session->read('library');
@@ -3050,7 +2938,6 @@ STR;
             $validationMessage = '';
         }
 
-        //$user = $this->Auth->user();
         $user = $this->Session->read('Auth.User.id');
         if (empty($user))
         {
@@ -3256,7 +3143,6 @@ STR;
 
     function wishlistVideoDownload()
     {
-        //Configure::write('debug', 0);
         $this->layout = false;
 
         $libId = $this->Session->read('library');
@@ -3321,7 +3207,6 @@ STR;
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
-        //$user = $this->Auth->user();
         $user = $this->Session->read('Auth.User.id');
         if (empty($user))
         {
@@ -3512,7 +3397,7 @@ STR;
 
     function wishlistVideoDownloadToken()
     {
-        //Configure::write('debug', 0);
+
         $this->layout = false;
 
         $libId = $this->Session->read('library');
@@ -3588,7 +3473,7 @@ STR;
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
-        //$user = $this->Auth->user();
+
         $user = $this->Session->read('Auth.User.id');
         if (empty($user))
         {
@@ -3788,7 +3673,6 @@ STR;
 
     function historyDownload()
     {
-        // Configure::write('debug', 0);
         $this->layout = false;
 
         $id = $_REQUEST['id'];
@@ -3834,7 +3718,6 @@ STR;
 
     function historyDownloadVideo()
     {
-        //Configure::write('debug', 0);
         $this->layout = false;
 
         $id = $_REQUEST['id'];
@@ -3961,7 +3844,6 @@ STR;
 
     function music_box()
     {
-        //Configure::write('debug', 0);
         $this->layout = false;
         $callType = $_POST['type'];
         if ($callType == 'top')
@@ -3970,8 +3852,6 @@ STR;
             $libId = $this->Session->read('library');
             $this->Download->recursive = -1;
             $wk = date('W') - 10;
-            // $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
-            // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
             $startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d') - date('w')) - 70, date('Y'))) . ' 00:00:00';
             $endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d') - date('w')) + 7, date('Y'))) . ' 23:59:59';
             $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit' => '8'));
@@ -3986,8 +3866,6 @@ STR;
             // FreegalMusic Downloads functionality
             $this->Download->recursive = -1;
             $wk = date('W') - 10;
-            // $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
-            // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
             $startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d') - date('w')) - 70, date('Y'))) . ' 00:00:00';
             $endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d') - date('w')) + 7, date('Y'))) . ' 23:59:59';
             $topDownloaded = $this->Download->find('all', array('conditions' => array('created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit' => '8'));
@@ -4055,8 +3933,6 @@ STR;
 
     function language()
     {
-
-        // Configure::write('debug', 0);
         $this->layout = false;
         $language = $_POST['lang'];
         $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -4197,7 +4073,6 @@ STR;
 
     function convertString()
     {
-        // Configure::write('debug', 0);
         $this->layout = false;
         $str = $_POST['str'];
         echo sha1($str);
@@ -4207,7 +4082,6 @@ STR;
     //Used to get Sample Song url
     function userSample()
     {
-        // Configure::write('debug', 0);
         $this->layout = false;
         $prodId = $_POST['prodId'];
         $pt = base64_decode($_POST['pt']);
@@ -4420,8 +4294,6 @@ STR;
 
     function new_releases()
     {
-        //Configure::write('debug', 0);
-
         $this->layout = 'home';
 
         //fetch the session variables
@@ -4437,8 +4309,7 @@ STR;
         }
 
         $territory = $this->Session->read('territory');
-        //get Advisory condition
-        //$advisory_status = $this->getLibraryExplicitStatus($libraryId);
+
         //////////////////////////////////Videos/////////////////////////////////////////////////////////            
 
         if (($coming_soon = Cache::read("new_releases_videos" . $territory)) === false)
@@ -4452,12 +4323,10 @@ STR;
 
         $this->set('new_releases_videos', $coming_soon_videos);
 
-        //print_r($coming_soon_videos);
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
 
         if (($coming_soon = Cache::read("new_releases_albums" . $territory)) === false)
         {
-            //if(1){
 
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
         }
@@ -4467,7 +4336,6 @@ STR;
         }
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
-        //print_r($new_releases_albums_rs);
     }
     
     
@@ -4486,8 +4354,6 @@ STR;
      */
     function wishlistDownloadHome()
     {
-        // Configure::write('debug', 0);
-        
         //set the layout fales because this is ajax call
         $this->layout = false;
         
@@ -4585,7 +4451,6 @@ STR;
             $validationMessage = '';
         }
 
-        //$user = $this->Auth->user();
         $user = $this->Session->read('Auth.User.id');
         if (empty($user))
         {
@@ -4776,12 +4641,6 @@ STR;
                     $downloadVariArray[] = $prodId . '~' . $provider;
                     $this->Session->write('downloadVariArray', $downloadVariArray);
                 }
-
-//                //update library table
-//                $this->Library->setDataSource('master');
-//                $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
-//                $this->Library->query($sql);
-//                $this->Library->setDataSource('default'); 
                 
                 if ($id > 0)
                 {
@@ -4838,9 +4697,5 @@ STR;
             exit;
         }
     }
-
-    
-
 }
-
 ?>
