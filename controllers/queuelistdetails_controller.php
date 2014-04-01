@@ -13,7 +13,7 @@ class QueueListDetailsController extends AppController
     var $layout = 'home';
     var $helpers = array( 'Html', 'Form', 'Session', 'Wishlist','Queue','Song');
     var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Downloads','Streaming');
-    var $uses = array( 'QueueDetail','User','Album','Song', 'Wishlist','QueueList','Download');
+    var $uses = array( 'QueueDetail','User','Album','Song', 'Wishlist','QueueList','Download', 'Token');
     
     function beforeFilter(){
            
@@ -163,8 +163,8 @@ class QueueListDetailsController extends AppController
                 $temp_arr = explode(":", $full_length);
                 $minutes = $temp_arr[0];
                 $seconds = $temp_arr[1];
-                $total_seconds += $minutes * 60 + $seconds;
-                $filePath = shell_exec('perl files/tokengen_streaming ' . $v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+                $total_seconds += $minutes * 60 + $seconds;                
+                $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
                 if (!empty($filePath))
                 {
                     $songPath = explode(':', $filePath);
@@ -186,8 +186,8 @@ class QueueListDetailsController extends AppController
         {
             $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'], $songPlaying['providerType'], $territory);
             foreach ($trackDetails as $k => $v)
-            {
-                $filePath = shell_exec('perl files/tokengen_streaming ' . $v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+            {                
+                $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
                 if (!empty($filePath))
                 {
                     $songPath = explode(':', $filePath);
@@ -248,8 +248,8 @@ class QueueListDetailsController extends AppController
             $temp_arr = explode(":", $full_length);
             $minutes = $temp_arr[0];
             $seconds = $temp_arr[1];
-            $total_seconds += $minutes * 60 + $seconds;
-            $filePath = shell_exec('perl files/tokengen_streaming ' . $v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+            $total_seconds += $minutes * 60 + $seconds;            
+            $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
             if (!empty($filePath))
             {
                 $songPath = explode(':', $filePath);
