@@ -729,7 +729,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                                 echo date("M d, Y", strtotime($sales_date));
                                                 ?>
                                 </div>
-                                <div class="video-size">Size: 67.2 MB</div>
+                               <!-- <div class="video-size">Size: 67.2 MB</div> -->
                                                 <?php
                                                 if ($this->Session->read("patron")) {
                                                     ?>
