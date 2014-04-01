@@ -1575,6 +1575,9 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
                     $('.beforeClick').show();                    
                     
                 }
+
+                //rerun ajaxify
+                $('.content').ajaxify();
             }
             else
             {
