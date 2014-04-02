@@ -134,13 +134,13 @@ Class CommonComponent extends Object
         $startLimit = ($pageNo * 120) - 120;
         
         //create query that fetch all artist according to selected Genre
-         $artistQuery = "SELECT distinct `Song`.`ArtistText`
+     echo    $artistQuery = "SELECT distinct `Song`.`ArtistText`
             FROM `Songs` AS `Song` 
             LEFT JOIN `".$territory."_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID`) 
             LEFT JOIN `Albums` AS `album` ON (`Song`.`ReferenceID` = `album`.`ProdID`) 
             WHERE `Country`.`DownloadStatus` = '1' AND `Country`.`Territory` = '".strtoupper($territory)."' 
             $GenreFilterCondition $artisFilterCondition $orderByCond LIMIT $startLimit,$endLimit";
-    
+    die;
               
          $artistListResults = $songInstance->query($artistQuery);       
         

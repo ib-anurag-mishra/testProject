@@ -284,7 +284,7 @@ class CacheController extends AppController {
                 for( $i=1;$i<=$totalPages;$i++ ){             
                     
                     $this->Common->getArtistText($genreEach,$territory,$artistFilter,$i);                   
-                    $cacheVariableName = base64_encode($genreEach).$territory.strtolower($artistFilter).$i;                   
+                                      
                 }                
              }      
          }       
