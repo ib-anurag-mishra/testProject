@@ -871,6 +871,7 @@ class SolrComponent extends Object {
 							foreach ( $response->grouped->$field->groups as $group ) {
 								
 								$group->doclist->docs[0]->numFound = $group->doclist->numFound;
+								$group->doclist->docs[0]->numAlbumCount = $this->getFacetSearchTotal('"'.$group->doclist->docs[0]->TComposer.'"', 'album',1);
 								$docs[] = $group->doclist->docs[0];
 							}
 							return $docs;
@@ -892,6 +893,7 @@ class SolrComponent extends Object {
 							$docs = array();
 							foreach ( $response->grouped->$field->groups as $group ) {
 								$group->doclist->docs[0]->numFound = $group->doclist->numFound;
+								$group->doclist->docs[0]->numAlbumCount = $this->getFacetSearchTotal('"'.$group->doclist->docs[0]->TComposer.'"', 'album',1);
 								$docs[] = $group->doclist->docs[0];
 							}
 							return $docs;
