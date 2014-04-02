@@ -211,9 +211,9 @@ class CacheController extends AppController {
      
         $this->autoRender = false;
         //set the aritst cache for specific Genre
-        //$genreAll = $this->Common->getGenres($territory);
-        // $genreAll = array_unshift($genreAll, "All");       
-        $genreAll= array('All');
+        $genreAll = $this->Common->getGenres($territory);
+        $genreAll = array_unshift($genreAll, "All");       
+        //$genreAll= array('All');
         
          foreach($genreAll as $genreEach){
             
