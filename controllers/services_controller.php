@@ -2,8 +2,8 @@
 class ServicesController extends AppController {
     var $name = 'Services';
     var $autoLayout = false;
-    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files', 'Album','Currentpatron', 'Download','Variable','Url','Language','Consortium');
-	var $components = array('Solr', 'RequestHandler','Token');
+    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files', 'Album','Currentpatron', 'Download','Variable','Url','Language','Consortium','Token');
+	var $components = array('Solr', 'RequestHandler');
 	var $helpers = array('Xml'); // helpers used	
 	
     function textEncode($text){
