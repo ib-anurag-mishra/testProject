@@ -56,29 +56,14 @@ Class GenresController extends AppController
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
 
-        if (($genre = Cache::read("genre" . $country)) === false)
-        {
-            $genreAll = $this->Genre->find('all', array(
-                'conditions' =>
-                array('and' =>
-                    array(
-                        array('Country.Territory' => $country)
-                    )
-                ),
-                'fields' => array(
-                    'Genre.Genre'
-                ),
-                'contain' => array(
-                    'Country' => array(
-                        'fields' => array(
-                            'Country.Territory'
-                        )
-                    ),
-                ), 'group' => 'Genre.Genre'
-            ));
-            Cache::write("genre" . $country, $genreAll);
-        }
-        $genreAll = Cache::read("genre" . $country);
+        if (($genreAll = Cache::read("genre" . $country)) === false) {
+        //if(1){ 
+            
+            $genreAll = $this->Common->getGenres($country);
+        } else {
+            
+            $genreAll = Cache::read("genre" . $country);
+        }      
 
         $this->set('genresAll', $genreAll);
 
@@ -278,8 +263,7 @@ Class GenresController extends AppController
         } else {
             
             $genreAll = Cache::read("genre" . $country);
-        } 
-        print_r($genreAll);die;
+        }         
         $this->set('genresAll', $genreAll);   
                  
         $genre = base64_decode($Genre);

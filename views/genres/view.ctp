@@ -189,6 +189,7 @@ $totalRows = count($genresAll);
 
                     <?php
                     $genre_count = 1;
+                    print_r($genresAll);die;
                     foreach ($genresAll as $genre_name):
 
                         if ($genre_name != '')
