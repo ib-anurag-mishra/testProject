@@ -189,8 +189,9 @@ $totalRows = count($genresAll);
 
                     <?php
                     $genre_count = 1;
-                    print_r($genresAll);die;
+                    
                     foreach ($genresAll as $genre_name):
+                       $genre_name= $this->getTextEncode($genre_name);
 
                         if ($genre_name != '')
                         {	
@@ -202,10 +203,10 @@ $totalRows = count($genresAll);
                                     ?>
                                     <li> 
                                         <a  class="genre_list_item_all selected" 
-                                            href="javascript:void(0);" data-genre="<?php echo addslashes($this->getTextEncode($genre_name)); ?>" 
+                                            href="javascript:void(0);" data-genre="<?php echo addslashes($genre_name); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>" 
-                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($this->getTextEncode($genre_name)); ?>')" >
-                                                <?php echo $this->getTextEncode($genre_name); ?>
+                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name); ?>')" >
+                                                <?php echo $genre_name; ?>
                                         </a>
                                     </li>
                                     <?php
@@ -215,10 +216,10 @@ $totalRows = count($genresAll);
                                     ?>
                                     <li> 
                                         <a  class="genre_list_item_all" href="javascript:void(0);" 
-                                            data-genre="<?php echo addslashes($this->getTextEncode($genre_name)); ?>" 
+                                            data-genre="<?php echo addslashes($genre_name); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>"  
-                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($this->getTextEncode($genre_name)); ?>')" >
-                                                <?php echo $this->getTextEncode($genre_name); ?>
+                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name); ?>')" >
+                                                <?php echo $genre_name; ?>
                                         </a>
                                     </li>
                                     <?php
