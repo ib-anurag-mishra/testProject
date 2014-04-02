@@ -88,16 +88,19 @@ var preValue= 1;
                                          <?php
                                                            
                                             if(count($artistList) > 0){                                                    
-                                                for ($i = 0; $i < count($artistList); $i++) {
-                                                        echo " <li>";
-                                                        $ArtistName = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);                                                       
+                                                for ($i = 0; $i < count($artistList); $i++) {                                                    
+                                                    $artistTextValue = $this->getTextEncode($artistList[$i]['Song']['ArtistText'])
+                                                       
+                                                    if($artistTextValue){
+                                                        echo " <li>";                                                                                                              
                                                         $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($artistList[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
                                                        ?>
-                                                        <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($ArtistName)); ?>/<?= base64_encode($genre) ?>">
+                                                        <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($artistTextValue)); ?>/<?= base64_encode($genre) ?>">
                                                        <?php
-                                                        echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
+                                                        echo wordwrap($artistTextValue, 35, "<br />\n", TRUE);
                                                         echo '</a>';
-                                                        echo '</li>';                                                                    
+                                                        echo '</li>';
+                                                    }                                                                    
                                                 }
                                             }else{
                                                     echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";

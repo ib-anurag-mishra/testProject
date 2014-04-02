@@ -214,20 +214,21 @@ class CacheController extends AppController {
         $genreAll = $this->Common->getGenres($territory);
         $genreAll = array_unshift($genreAll, "All");       
         //$genreAll= array('All');
-        
+        print_r($genreAll);die;
          foreach($genreAll as $genreEach){
             
-             for($k = 63;$k < 91;$k++){
+             for($k = 65;$k < 91;$k++){
                  
-                $artistFilter = chr($k);
+              echo  $artistFilter = chr($k);
+              die;
                 
-                if($k==63){
-                    $artistFilter = 'All';
-                }
-                
-                if($k==64){
-                    $artistFilter = 'spl';
-                }             
+//                if($k==63){
+//                    $artistFilter = 'All';
+//                }
+//                
+//                if($k==64){
+//                    $artistFilter = 'spl';
+//                }             
                 
                 if($genreEach != 'All')
                 {
