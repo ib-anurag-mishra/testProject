@@ -26,12 +26,12 @@ class TopAlbum extends AppModel
 	Desc : gets all the artists
 	*/
 	function getallartists() {
-
-		$getArtists = $this->find('all');
-		Cache::write("featured", $getArtists);
-
-		$getArtists = Cache::read("featured");
-		return $getArtists;
+            $getArtists = Cache::read("artists");
+            if ($getArtists === false) {
+            $getArtists = $this->find('all');
+            Cache::write("artists", $getArtists);
+            }                
+            return $getArtists;
 	}
 
 	/*

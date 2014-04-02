@@ -27,10 +27,12 @@ class Newartist extends AppModel
 	Desc : gets all the artists
 	*/
 	function getallnewartists() {
-		$getArtists = $this->find('all');
-		Cache::write("newartists", $getArtists);
-		$getArtists = Cache::read("newartists");
-		return $getArtists;
+            $getArtists = Cache::read("artists");
+            if ($getArtists === false) {
+            $getArtists = $this->find('all');
+            Cache::write("artists", $getArtists);
+            }                
+            return $getArtists;
 	}
 
 	/*
