@@ -89,7 +89,7 @@ var preValue= 1;
                                                            
                                             if(count($artistList) > 0){                                                    
                                                 for ($i = 0; $i < count($artistList); $i++) {                                                    
-                                                    $artistTextValue = $this->getTextEncode($artistList[$i]['Song']['ArtistText'])
+                                                    $artistTextValue = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);
                                                        
                                                     if($artistTextValue){
                                                         echo " <li>";                                                                                                              
