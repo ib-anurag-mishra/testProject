@@ -19,11 +19,14 @@ Class CommonComponent extends Object
 
     function getGenres($territory)
     {
-        set_time_limit(0);
+        
         $countryPrefix = $this->getCountryPrefix($territory);
         $genreInstance = ClassRegistry::init('Genre');
+        $songInstance = ClassRegistry::init('Song');
         $genreInstance->Behaviors->attach('Containable');
         $genreInstance->recursive = 2;
+        $genreList = array();
+        
         $genreAll = $genreInstance->find('all', array(
             'conditions' =>
             array('and' =>
@@ -42,13 +45,40 @@ Class CommonComponent extends Object
                 ),
             ), 'group' => 'Genre.Genre'
         ));
+        $this->log("All Genre list fetched for $territory", "genreLogs");
+        
+        foreach($genreAll as $genreEach){
+            
+            $genreValue = addslashes($genreEach['Genre']['Genre']);
+            $territoryValue = addslashes($genreEach['Country']['Territory']);           
 
-        $this->log("cache written for genre for $territory", 'debug');
+            $genreCheckResults = $songInstance->find('first', array(
+            'conditions' => array(
+                'Song.DownloadStatus' => 1,                    
+                'Country.Territory' => $territoryValue,
+                'Song.Genre LIKE' => "%$genreValue%"
+                ),
+            'fields' => array('ProdID'),
+            'limit' => 1,
+            'contain' => array(
+                'Country' => array(
+                    'fields' => array(
+                        'Country.Territory'
+                    )
+            ))));
 
-        if ((count($genreAll) > 0) && ($genreAll !== false))
+            if( count($genreCheckResults) > 0 ){
+                $genreList[] = stripslashes($genreValue);
+            }            
+         }
+
+        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");       
+       
+
+        if ((count($genreList) > 0) && ($genreList !== false))
         {
-            Cache::delete("genre" . $territory);
-            Cache::write("genre" . $territory, $genreAll);
+            
+            Cache::write("genre" . $territory, $genreList);
             $this->log("cache written for genre for $territory", "cache");
         }
         else
@@ -56,7 +86,86 @@ Class CommonComponent extends Object
             Cache::write("genre" . $territory, Cache::read("genre" . $territory));
             $this->log("no data available for genre" . $territory, "cache");
         }
+        $genreList = array_unique($genreList);
+        
+        return $genreList;
+         
     }
+    
+     /*
+     * Function Name : getArtistText
+     * Function Description : get first 120 artist for selected Genre
+     */
+     function getArtistText($genreValue,$territory,$artistFilter='',$pageNo=1){
+         
+        //add the Song table model
+        $songInstance = ClassRegistry::init('Song');
+        //set the territory value
+        $territory = strtolower($territory);
+         
+        //make condition according to Genre value
+        if ($genreValue != 'All')
+        {
+            $GenreFilterCondition = " AND `Song`.`Genre` LIKE '%".addslashes($genreValue)."%'";            
+        }else
+        {            
+            $GenreFilterCondition ='';            
+        }        
+        
+        
+        //make condition according to Genre value
+        if ($artistFilter == 'spl')
+        {
+            $artisFilterCondition = " AND Song.ArtistText REGEXP '^[^A-Za-z]'";
+        }
+        elseif ($artistFilter != '' && $artistFilter != 'All')
+        {
+            $artisFilterCondition = " AND Song.ArtistText LIKE '".$artistFilter."%'";
+        }
+        else
+        {
+            $artisFilterCondition = "";
+        }
+        
+        $orderByCond = ' order by Song.ArtistText ASC ';
+         
+        //create the pagination
+        $endLimit = $pageNo * 120;
+        $startLimit = ($pageNo * 120) - 120;
+        
+        //create query that fetch all artist according to selected Genre
+         $artistQuery = "SELECT distinct `Song`.`ArtistText`
+            FROM `Songs` AS `Song` 
+            LEFT JOIN `".$territory."_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID`) 
+            LEFT JOIN `Albums` AS `album` ON (`Song`.`ReferenceID` = `album`.`ProdID`) 
+            WHERE `Country`.`DownloadStatus` = '1' AND `Country`.`Territory` = '".strtoupper($territory)."' 
+            $GenreFilterCondition $artisFilterCondition $orderByCond LIMIT $startLimit,$endLimit";
+    
+              
+         $artistListResults = $songInstance->query($artistQuery);       
+        
+         //create cache variable name
+         $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;     
+   
+        //set artist list in the cache
+        if (!empty($artistListResults))
+        {             
+            Cache::write($cacheVariableName, $artistListResults);                
+        }
+        else
+        {            
+            Cache::write($cacheVariableName, Cache::read($cacheVariableName));            
+        }
+        
+        $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
+                           
+        return $artistListResults;
+         
+     }
+     
+    
+     
+     
 
     /*
      * Function Name : getNationalTop100

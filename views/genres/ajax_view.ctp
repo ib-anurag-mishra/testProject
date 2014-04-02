@@ -87,11 +87,11 @@ var preValue= 1;
 					<ul id="artistlistrecord">	                                        
                                          <?php
                                                            
-                                            if(count($genres) > 0){                                                    
-                                                for ($i = 0; $i < count($genres); $i++) {
+                                            if(count($artistList) > 0){                                                    
+                                                for ($i = 0; $i < count($artistList); $i++) {
                                                         echo " <li>";
-                                                        $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
-                                                        $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
+                                                        $ArtistName = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);                                                       
+                                                        $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($artistList[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
                                                        ?>
                                                         <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($ArtistName)); ?>/<?= base64_encode($genre) ?>">
                                                        <?php
