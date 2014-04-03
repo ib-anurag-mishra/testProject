@@ -2,7 +2,7 @@
 class ServicesController extends AppController {
     var $name = 'Services';
     var $autoLayout = false;
-    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files', 'Album','Currentpatron', 'Download','Variable','Url','Language','Consortium');
+    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files', 'Album','Currentpatron', 'Download','Variable','Url','Language','Consortium','Token');
 	var $components = array('Solr', 'RequestHandler');
 	var $helpers = array('Xml'); // helpers used	
 	
@@ -248,7 +248,7 @@ class ServicesController extends AppController {
 						$reference = $v->ReferenceID;
                         
                         if(!empty($albumData)){
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+						$albumArtWork = Configure::read('App.Music_Path').$this->Token->regularToken( $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
                         } else {
                             $albumArtWork = null;
                         }
@@ -481,7 +481,7 @@ class ServicesController extends AppController {
 						)));
 						$reference = $v->ReferenceID;
                         if(!empty($albumData)){
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+						$albumArtWork = Configure::read('App.Music_Path').$this->Token->regularToken( $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
 
                         } else {
                             $albumArtWork = null;
@@ -646,7 +646,7 @@ class ServicesController extends AppController {
 						$reference = $v->ReferenceID;
                         
                         if(!empty($albumData)){
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+						$albumArtWork = Configure::read('App.Music_Path').$this->Token->regularToken( $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
                         } else {
 
                             $albumArtWork = null;
