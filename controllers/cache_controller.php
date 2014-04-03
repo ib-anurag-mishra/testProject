@@ -88,7 +88,8 @@ class CacheController extends AppController {
     function runCache(){
         set_time_limit(0);
        
-        $territoriesList = $this->Common->getTerritories();       
+        $territoriesList = $this->Common->getTerritories();   
+        
         foreach($territoriesList as $territory){            
             
               $this->setArtistText($territory);
@@ -211,24 +212,25 @@ class CacheController extends AppController {
      
         $this->autoRender = false;
         //set the aritst cache for specific Genre
-        $genreAll = $this->Common->getGenres($territory);
-        $genreAll = array_unshift($genreAll, "All");       
+       // $genreAll = $this->Common->getGenres($territory);
+        $genreAll = Cache::read("genre" . $territory);
+        array_unshift($genreAll, "All");       
         //$genreAll= array('All');
-        print_r($genreAll);die;
+       
          foreach($genreAll as $genreEach){
             
-             for($k = 65;$k < 91;$k++){
+             for($k = 63;$k < 91;$k++){
                  
-              echo  $artistFilter = chr($k);
-              die;
+                $artistFilter = chr($k);
+             
                 
-//                if($k==63){
-//                    $artistFilter = 'All';
-//                }
-//                
-//                if($k==64){
-//                    $artistFilter = 'spl';
-//                }             
+                if($k==63){
+                    $artistFilter = 'All';
+                }
+                
+                if($k==64){
+                    $artistFilter = 'spl';
+                }             
                 
                 if($genreEach != 'All')
                 {
@@ -283,8 +285,10 @@ class CacheController extends AppController {
                 
                 for( $i=1;$i<=$totalPages;$i++ ){             
                     
-                    $this->Common->getArtistText($genreEach,$territory,$artistFilter,$i);                   
-                                      
+                   $this->Common->getArtistText($genreEach,$territory,$artistFilter,$i);                 
+                    // echo $name= $genreEach.'_'.$territory.'_'.$artistFilter.'_'.$i ;
+                    // echo '<br>';
+                    // $this->log($name.' '. $territory, "genreLogs");
                 }                
              }      
          }       

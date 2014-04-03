@@ -69,7 +69,7 @@ Class CommonComponent extends Object
 
             if( count($genreCheckResults) > 0 ){
                 $genreList[] = stripslashes($genreValue);
-            }            
+            }          
          }
 
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");       
@@ -134,14 +134,16 @@ Class CommonComponent extends Object
         $startLimit = ($pageNo * 120) - 120;
         
         //create query that fetch all artist according to selected Genre
-         $artistQuery = "SELECT distinct `Song`.`ArtistText`
-            FROM `Songs` AS `Song` 
-            LEFT JOIN `".$territory."_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID`) 
-            LEFT JOIN `Albums` AS `album` ON (`Song`.`ReferenceID` = `album`.`ProdID`) 
-            WHERE `Country`.`DownloadStatus` = '1' AND `Country`.`Territory` = '".strtoupper($territory)."' 
-            $GenreFilterCondition $artisFilterCondition $orderByCond LIMIT $startLimit,$endLimit";
+       $artistQuery = "SELECT distinct `Song`.`ArtistText`
+           FROM `Songs` AS `Song` 
+           LEFT JOIN `".$territory."_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID`) 
+           LEFT JOIN `Albums` AS `album` ON (`Song`.`ReferenceID` = `album`.`ProdID`) 
+           WHERE `Country`.`DownloadStatus` = '1' AND `Country`.`Territory` = '".strtoupper($territory)."' 
+           $GenreFilterCondition $artisFilterCondition $orderByCond LIMIT $startLimit,$endLimit";
+      
+      
 
-              
+             
          $artistListResults = $songInstance->query($artistQuery);       
         
          //create cache variable name
@@ -157,7 +159,7 @@ Class CommonComponent extends Object
             Cache::write($cacheVariableName, Cache::read($cacheVariableName));            
         }
         
-        $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
+        $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs1");
                            
         return $artistListResults;
          

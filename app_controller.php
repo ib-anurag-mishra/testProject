@@ -1,5 +1,5 @@
 <?php
-
+ini_set('max_execution_time', 50000); //300 seconds = 5 minutes
 class AppController extends Controller
 {
 

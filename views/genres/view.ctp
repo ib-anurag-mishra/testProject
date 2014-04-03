@@ -191,11 +191,14 @@ $totalRows = count($genresAll);
                     $genre_count = 1;
                     
                     foreach ($genresAll as $genre_name):
+                       $genreNnameWithoutEncode = $genre_name;
                        $genre_name= $this->getTextEncode($genre_name);
+                       
 
                         if ($genre_name != '')
                         {	
-                            
+                          
+                           
                             if ($genre_name != 'Porn Groove')
                             {
                                 if ($genre_name == $genre)
@@ -203,9 +206,9 @@ $totalRows = count($genresAll);
                                     ?>
                                     <li> 
                                         <a  class="genre_list_item_all selected" 
-                                            href="javascript:void(0);" data-genre="<?php echo addslashes($genre_name); ?>" 
+                                            href="javascript:void(0);" data-genre="<?php echo addslashes($genreNnameWithoutEncode); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>" 
-                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name); ?>')" >
+                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genreNnameWithoutEncode); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name); ?>')" >
                                                 <?php echo $genre_name; ?>
                                         </a>
                                     </li>
@@ -216,9 +219,9 @@ $totalRows = count($genresAll);
                                     ?>
                                     <li> 
                                         <a  class="genre_list_item_all" href="javascript:void(0);" 
-                                            data-genre="<?php echo addslashes($genre_name); ?>" 
+                                            data-genre="<?php echo addslashes($genreNnameWithoutEncode); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>"  
-                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name); ?>')" >
+                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genreNnameWithoutEncode); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name); ?>')" >
                                                 <?php echo $genre_name; ?>
                                         </a>
                                     </li>
@@ -442,20 +445,20 @@ $totalRows = count($genresAll);
                         {
                             for ($i = 0; $i < count($artistList); $i++)
                             {
-                                $ArtistName = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);
-                                if ($ArtistName != "")
+                                $artistName = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);
+                                
+                                if ($artistName != "")
                                 {
                                     echo " <li>";
                                     $selected = (str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) == $this->Session->read('calledArtist')) ? "class='selected'" : "";
-                                    $ArtistName = str_replace("'", '', ($ArtistName));
+                                    $artistName = str_replace("'", '', ($artistName));
                                     $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
                                     ?>
-                                    <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($ArtistName)); ?>/<?= base64_encode($genre) ?>">
+                                    <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])); ?>/<?= base64_encode($genre) ?>">
                                         <?php
-                                    echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
+                                    echo wordwrap($artistName, 35, "<br />\n", TRUE);
                                     echo '</a>';
-                                    echo '</li>';
-                                    
+                                    echo '</li>';                                    
                                 }
                             }
                         }
