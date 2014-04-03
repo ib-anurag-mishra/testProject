@@ -16,8 +16,12 @@ $arr_dates = array();
 //$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0,0,0,(date(m)-1), 1, date(Y))); //'2012-10-01 00:00:00';
 //$arr_dates['month']['to_date'] =  date("Y-m-t 23:59:59", mktime(0,0,0,(date(m)-1), 1, date(Y))); //'2012-10-31 23:59:59';
 
-$arr_dates['month']['from_date'] = '2013-10-01 00:00:00';
-$arr_dates['month']['to_date'] = '2013-10-31 23:59:59';
+$arr_dates['month']['from_date'] = date('2013-10-01 00:00:00');
+$arr_dates['month']['to_date'] = date('2013-10-31 23:59:59');
+
+
+//$fetchRecordsFromTable = 'latest_downloads';
+$fetchRecordsFromTable = 'downloads';
 
 $libraryType = array('ALC' => '0', 'Unlimited' => '1');
 
