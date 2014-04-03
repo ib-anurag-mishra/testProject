@@ -78,7 +78,8 @@
         var selectedAlpha = '<? echo ($this->Session->read('selectedAlpha') != '') ? $this->Session->read('selectedAlpha') : 'All' ?>';
 	
 	var split = location.search.replace('?', '').split('=');
-        if(split){
+       
+        if(split!=''){
             split[1]= split[1].replace('%20',' ');
             var genre = 'li a[data-genre="'+split[1]+'"]';
             $(genre).click();
