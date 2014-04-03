@@ -16,8 +16,8 @@ $arr_dates = array();
 //$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0,0,0,(date(m)-1), 1, date(Y))); //'2012-10-01 00:00:00';
 //$arr_dates['month']['to_date'] =  date("Y-m-t 23:59:59", mktime(0,0,0,(date(m)-1), 1, date(Y))); //'2012-10-31 23:59:59';
 
-$arr_dates['month']['from_date'] = '2012-10-01 00:00:00';
-$arr_dates['month']['to_date'] = '2012-10-31 23:59:59';
+$arr_dates['month']['from_date'] = '2013-10-01 00:00:00';
+$arr_dates['month']['to_date'] = '2013-10-31 23:59:59';
 
 $libraryType = array('ALC' => '0', 'Unlimited' => '1');
 
@@ -36,7 +36,8 @@ foreach ($arr_dates AS $key => $value)
         {
             $unit_sales_rate = 0;
         }
-        $country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
+        //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
+         $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD');
         // $country_curency = array('US' => 'USD');
 
         $query_country = "Select distinct libraries.library_territory from libraries";
@@ -119,13 +120,14 @@ foreach ($arr_dates AS $key => $value)
                     $total_sales += $sales;
                     $artistText = trim($row['ArtistText']);
                     //$royalty_content[1][] = array("D" , $row['ProdID'] ,$row['ISRC'] , $row['ReferenceID'] , $row['UPC' ], $row['SongTitle'] , $row['AlbumTitle'] , $row['ArtistText'] , 'S' , 1 , 't' , $unit_count ,  0.65 ,  $sales , $row['library_territory'] , 'Library Ideas ' , '10753' , $row['ProdID'] ,$row['ProductID'] ,  1.30 , $country_curency[$row_country['library_territory']] , '0.00', '0.00', '0.00', '0.00' , '' ,'' , ''   );
-                    $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $artistText, 'S', 1, 't', $unit_count, $unit_sales_rate, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], 0.50, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', $row['created'], '', '');
+                    $retail_price = ($libTypeKey == 'ALC') ?  '0.5' : '   ';
+                    $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $artistText, 'S', 1, 't', $unit_count, $unit_sales_rate, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], $retail_price, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', $row['created'], '', '');
                     $total_records++;
                     $total_sold += $unit_count;
                 }
             }
             $version = 1;
-            $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
+            echo $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
             while (1)
             {
                 if (file_exists($reportsFolder . "/" . $file_name))
