@@ -87,6 +87,7 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
+        ini_set('max_execution_time', 50000); //300 seconds = 5 minutes
        
         $territoriesList = $this->Common->getTerritories();   
         
