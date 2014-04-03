@@ -86,37 +86,50 @@ class CacheController extends AppController {
      * @desc This function is used to call all functions for setting cache variables
      */    
     function runCache(){
-        set_time_limit(0);
-        ini_set('max_execution_time', 50000); //300 seconds = 5 minutes
+        set_time_limit(0);       
        
         $territoriesList = $this->Common->getTerritories();   
         
         foreach($territoriesList as $territory){            
             
-              $this->setArtistText($territory);
-//            $this->setNewsCache($territory);
-//            $this->Common->getTopSingles($territory);
-//            $this->Common->getFeaturedVideos($territory);
-//            $this->Common->getTopVideoDownloads($territory);
-//            $this->Common->getTopAlbums($territory);
-//            $this->Common->getComingSoonSongs($territory);
-//            $this->Common->getComingSoonVideos($territory);
-//            $this->Common->getUsTop10Songs($territory);
-//            $this->Common->getUsTop10Albums($territory);
-//            $this->Common->getUsTop10Videos($territory);
-//            $this->Common->getNewReleaseAlbums($territory);
-//            $this->Common->getNewReleaseVideos($territory);
-//            //$this->Common->getDifferentGenreData($territory);            
-//            $this->Common->getDefaultQueues($territory);  
-//            $this->getArtistText($territory);
-//            $this->setFeaturedArtists($territory);
-//            $this->Common->writeFeaturedSongsInCache($territory);
+            $this->setArtistText($territory);
+            $this->setNewsCache($territory);
+            $this->Common->getTopSingles($territory);
+            $this->Common->getFeaturedVideos($territory);
+            $this->Common->getTopVideoDownloads($territory);
+            $this->Common->getTopAlbums($territory);
+            $this->Common->getComingSoonSongs($territory);
+            $this->Common->getComingSoonVideos($territory);
+            $this->Common->getUsTop10Songs($territory);
+            $this->Common->getUsTop10Albums($territory);
+            $this->Common->getUsTop10Videos($territory);
+            $this->Common->getNewReleaseAlbums($territory);
+            $this->Common->getNewReleaseVideos($territory);
+            //$this->Common->getDifferentGenreData($territory);            
+            $this->Common->getDefaultQueues($territory);  
+            $this->getArtistText($territory);
+            $this->setFeaturedArtists($territory);
+            $this->Common->writeFeaturedSongsInCache($territory);
         }
-//       $this->Common->setLibraryTopTenCache();
-//       $this->Common->setVideoCacheVar();    
-//       $this->setAppMyMusicVideoList(); 
-//       $this->setAnnouncementCache();
-//       $this->setTopArtist();
+       $this->Common->setLibraryTopTenCache();
+       $this->Common->setVideoCacheVar();    
+       $this->setAppMyMusicVideoList(); 
+       $this->setAnnouncementCache();
+       $this->setTopArtist();
+    }
+    
+    /*
+     * @func runCache
+     * @desc This function is used to call all functions for setting cache variables
+     */    
+    function runGenreCache(){
+        set_time_limit(0);     
+       
+        $territoriesList = $this->Common->getTerritories();       
+        foreach($territoriesList as $territory){           
+            $this->setArtistText($territory);            
+        }
+       
     }
     
     /*
@@ -208,6 +221,9 @@ class CacheController extends AppController {
      * Function Name : setArtistText
      * Function Description : This function is used to setArtistText.
      * all this function create the cache variable for Genre and run from the cache cron
+     * 
+     * @paran $territory varChar 'territory value'
+     * 
      */
     function setArtistText($territory){
      
@@ -266,7 +282,7 @@ class CacheController extends AppController {
                         $GenreFilterCondition $artisFilterCondition ";
 
 
-                    $artistCount = $this->Song->query($artistCountQuery);               
+                    $artistCount = $this->Song->query($artistCountQuery);                   
                     $artistCountValue =  $artistCount[0][0]['total'];
 
 
@@ -275,120 +291,28 @@ class CacheController extends AppController {
                     }else{
                         $totalPages =1;
                     }
-
+                    
+                    //value less then one then set default 1
                     if( $totalPages < 1){
                         $totalPages =1;
                     }
                     
                 }else{
                     $totalPages =5;
-                }                
+                } 
+                //currently we are setting only 5 pages info for each Genre with corresponding artist filter
+                if($totalPages>5){
+                    $totalPages=5;
+                }
                 
-                for( $i=1;$i<=$totalPages;$i++ ){             
-                    
-                   $this->Common->getArtistText($genreEach,$territory,$artistFilter,$i);                 
-                    // echo $name= $genreEach.'_'.$territory.'_'.$artistFilter.'_'.$i ;
-                    // echo '<br>';
-                    // $this->log($name.' '. $territory, "genreLogs");
+                //set cache variable one by one
+                for( $i=1;$i<=$totalPages;$i++ ){                     
+                   $this->Common->getArtistText($genreEach,$territory,$artistFilter,$i);                  
                 }                
              }      
          }       
-    }
+    }   
     
-    /*
-     * Function Name : setArtistText
-     * Function Description : This function is used to setArtistText.
-     * all this function create the cache variable for Genre and run from the cache cron
-     */
-    function setArtistText1($territory){
-     
-        $this->autoRender = false;
-        //set the aritst cache for specific Genre
-         $genreAll = $this->Common->getGenres($territory);
-       //  $genreAll = array_unshift($genreAll, "All");       
-       //  $genreAll= array('All');
-        
-         foreach($genreAll as $genreEach){
-            
-             for($k = 63;$k < 91;$k++){
-                 
-                $artistFilter = chr($k);
-                if($k==63){
-                    $artistFilter = 'All';
-                }
-                
-                if($k==64){
-                    $artistFilter = 'spl';
-                }             
-                
-                if($genreEach != 'All')
-                {
-                         
-                    //Genre filter
-                    if ($genreEach != '' && $genreEach != 'All')
-                    {
-                        $GenreFilterCondition = " AND `Song`.`Genre` LIKE '%".addslashes($genreEach)."%'";            
-                    }else
-                    {            
-                        $GenreFilterCondition ='';            
-                    }        
-
-
-                    //Artist filter
-                    if ($artistFilter == 'spl')
-                    {
-                        $artisFilterCondition = " AND Song.ArtistText REGEXP '^[^A-Za-z]'";
-                    }
-                    elseif ($artistFilter != '' && $artistFilter != 'All')
-                    {
-                        $artisFilterCondition = " AND Song.ArtistText LIKE '".$artistFilter."%'";
-                    }
-                    else
-                    {
-                        $artisFilterCondition = "";
-                    }
-
-                     $artistCountQuery = "SELECT count(distinct `Song`.`ArtistText`) as total
-                        FROM `Songs` AS `Song` 
-                        LEFT JOIN `".strtolower($territory)."_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID`) 
-                        LEFT JOIN `Albums` AS `album` ON (`Song`.`ReferenceID` = `album`.`ProdID`) 
-                        WHERE `Country`.`DownloadStatus` = '1' AND `Country`.`Territory` = '".$territory."' 
-                        $GenreFilterCondition $artisFilterCondition ";
-
-
-                    $artistCount = $this->Song->query($artistCountQuery);               
-                    $artistCountValue =  $artistCount[0][0]['total'];
-
-
-                    if(count($artistCountValue)> 0){                    
-                        $totalPages = ceil($artistCountValue/120);                    
-                    }else{
-                        $totalPages =1;
-                    }
-
-                    if( $totalPages < 1){
-                        $totalPages =1;
-                    }
-                    
-                }else{
-                    $totalPages =5;
-                }
-                echo $genreEach;
-                echo '<br>';
-                echo $totalPages;
-                echo '<br>';
-                
-                for( $i=1;$i<=$totalPages;$i++ ){ 
-                    echo $i;
-                    echo '<br>';
-                    $this->Common->getArtistText($genreEach,$territory,$artistFilter,$i);                   
-                }
-                
-             }      
-         }
-         
-        
-    }
     
     /*
      * Function Name : getArtistText

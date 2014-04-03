@@ -95,6 +95,12 @@ Class CommonComponent extends Object
      /*
      * Function Name : getArtistText
      * Function Description : get first 120 artist for selected Genre
+     * @paran $genreValue varChar 'genre value'
+     * @paran $territory varChar 'territory value'
+     * @paran $artistFilter varChar 'artist filter value'
+     * @paran $pageNo int 'page number value'
+     * 
+     * @return  $artistListResults array
      */
      function getArtistText($genreValue,$territory,$artistFilter='',$pageNo=1){
          
@@ -110,8 +116,7 @@ Class CommonComponent extends Object
         }else
         {            
             $GenreFilterCondition ='';            
-        }        
-        
+        }       
         
         //make condition according to Genre value
         if ($artistFilter == 'spl')
@@ -127,6 +132,7 @@ Class CommonComponent extends Object
             $artisFilterCondition = "";
         }
         
+        //set order by condition
         $orderByCond = ' order by Song.ArtistText ASC ';
          
         //create the pagination
@@ -134,32 +140,34 @@ Class CommonComponent extends Object
         $startLimit = ($pageNo * 120) - 120;
         
         //create query that fetch all artist according to selected Genre
-       $artistQuery = "SELECT distinct `Song`.`ArtistText`
+        $artistQuery = "SELECT distinct `Song`.`ArtistText`
            FROM `Songs` AS `Song` 
            LEFT JOIN `".$territory."_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID`) 
            LEFT JOIN `Albums` AS `album` ON (`Song`.`ReferenceID` = `album`.`ProdID`) 
            WHERE `Country`.`DownloadStatus` = '1' AND `Country`.`Territory` = '".strtoupper($territory)."' 
            $GenreFilterCondition $artisFilterCondition $orderByCond LIMIT $startLimit,$endLimit";
       
-      
-
-             
+                   
          $artistListResults = $songInstance->query($artistQuery);       
         
          //create cache variable name
          $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;     
    
-        //set artist list in the cache
-        if (!empty($artistListResults))
-        {             
+         //set artist list in the cache
+         if (!empty($artistListResults))
+         {             
             Cache::write($cacheVariableName, $artistListResults);                
-        }
-        else
-        {            
-            Cache::write($cacheVariableName, Cache::read($cacheVariableName));            
-        }
+         }
+//         else
+//         {            
+//             if($artistListResults = Cache::read($cacheVariableName)){
+//                if(!empty($artistListResults) && $artistListResults != false){
+//                    Cache::write($cacheVariableName, Cache::read($cacheVariableName)); 
+//                }
+//            }                       
+//         }
         
-        $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs1");
+        $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
                            
         return $artistListResults;
          
