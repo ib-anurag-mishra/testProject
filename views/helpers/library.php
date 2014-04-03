@@ -10,11 +10,12 @@ class LibraryHelper extends AppHelper {
 	function getLibraryDetails($id) {
 		$libraryInstance = ClassRegistry::init('Library');
 		$libraryInstance->recursive = -1;
-		if (($library = Cache::read("library".$id)) === false) {
+		$library = Cache::read("library".$id);
+		if ($library === false) {
 			$libraryDetails = $libraryInstance->find('first', array('conditions' => array('id' => $id)));
 			Cache::write("library".$id, $libraryDetails);
 		}
-		$libraryDetails = Cache::read("library".$id);
+		$libraryDetails = $library;
 		return $libraryDetails;
 	}
 
