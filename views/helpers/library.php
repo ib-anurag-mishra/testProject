@@ -15,7 +15,9 @@ class LibraryHelper extends AppHelper {
 			$libraryDetails = $libraryInstance->find('first', array('conditions' => array('id' => $id)));
 			Cache::write("library".$id, $libraryDetails);
 		}
-		$libraryDetails = $library;
+		else {
+			$libraryDetails = $library;
+		}
 		return $libraryDetails;
 	}
 
