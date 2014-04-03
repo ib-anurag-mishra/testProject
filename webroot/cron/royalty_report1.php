@@ -125,7 +125,7 @@ foreach ($arr_dates AS $key => $value)
                     $artistText = trim($row['ArtistText']);
                     //$royalty_content[1][] = array("D" , $row['ProdID'] ,$row['ISRC'] , $row['ReferenceID'] , $row['UPC' ], $row['SongTitle'] , $row['AlbumTitle'] , $row['ArtistText'] , 'S' , 1 , 't' , $unit_count ,  0.65 ,  $sales , $row['library_territory'] , 'Library Ideas ' , '10753' , $row['ProdID'] ,$row['ProductID'] ,  1.30 , $country_curency[$row_country['library_territory']] , '0.00', '0.00', '0.00', '0.00' , '' ,'' , ''   );
                     $retail_price = ($libTypeKey == 'ALC') ? '0.5' : '   ';
-                    $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $artistText, 'S', 1, 't', $unit_count, $unit_sales_rate, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], $retail_price, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', $row['created'], '', '');
+                    $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $artistText, 'S', 1, 't', $unit_count, $unit_sales_rate, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], $retail_price, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', date('Y-m-d' , $row['CreatedOn']), '', '');
                     $total_records++;
                     $total_sold += $unit_count;
                 }
