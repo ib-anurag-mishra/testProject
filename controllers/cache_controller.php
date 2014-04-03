@@ -120,7 +120,7 @@ class CacheController extends AppController {
     
     /*
      * @func runCache
-     * @desc This function is used to call all functions for setting cache variables
+     * @desc This function is used to call all functions for setting Genre page cache variables
      */    
     function runGenreCache(){
         set_time_limit(0);     
