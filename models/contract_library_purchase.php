@@ -16,4 +16,3 @@ class ContractLibraryPurchase extends AppModel
       )
     );
 }
-?>

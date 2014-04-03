@@ -51,7 +51,6 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory,$reportCond=NULL) {
-//        Configure::write('debug',0);
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -83,17 +82,12 @@ class StreamingHistory extends AppModel {
             while ($row = mysql_fetch_assoc($result)) {
                 $all_Ids[] = $row["id"];
             }
-//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+
             $lib_condition = $all_Ids;
         } else {
-//            $lib_condition = "and library_id = " . $libraryID;
-//            $lib_condition = "StreamingHistory.library_id=$libraryID";
             $lib_condition = $libraryID;
         }
         
-        /*$conditions = array(
-            'StreamingHistory.provider_type=countries.provider_type and StreamingHistory.ProdID=countries.ProdID and createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
-        );*/
         if ($libraryID != "all") {
             $qryArr=array(
             'joins' => array(
@@ -136,7 +130,7 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedByPetronInformation($libraryID, $date, $territory,$reportCond=NULL) {
-//                Configure::write('debug',0);
+
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -168,7 +162,7 @@ class StreamingHistory extends AppModel {
             while ($row = mysql_fetch_assoc($result)) {
                 $all_Ids[] = $row["id"];
             }
-//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+
             $lib_condition = $all_Ids;
             $arr_all_library_streaming = array();
             $qryArr=array(
@@ -211,7 +205,7 @@ class StreamingHistory extends AppModel {
     }
     
     function getDayStreamingReportingPeriod($libraryID, $date, $territory,$reportCond=NULL) {
-//        Configure::write('debug',0);
+
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -243,7 +237,7 @@ class StreamingHistory extends AppModel {
             while ($row = mysql_fetch_assoc($result)) {
                 $all_Ids[] = $row["id"];
             }
-//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+
             $lib_condition = $all_Ids;
             $arr_all_library_streaming = array();
             $qryArr=array(
@@ -274,7 +268,7 @@ class StreamingHistory extends AppModel {
             return $this->find('all', $qryArr);
         }else{
             $lib_condition = "StreamingHistory.library_id=$libraryID";
-            //$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id  ORDER BY created ASC");
+
             return $this->find('all', array(
                 'joins' => array(
                     array(
@@ -302,7 +296,7 @@ class StreamingHistory extends AppModel {
         }
     }
     function getPatronStreamingDay($libraryID, $date, $territory,$reportCond=NULL) {
-//        Configure::write('debug',0);
+
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -334,7 +328,7 @@ class StreamingHistory extends AppModel {
             while ($row = mysql_fetch_assoc($result)) {
                 $all_Ids[] = $row["id"];
             }
-//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+
             $lib_condition = $all_Ids;
             return $this->find('all', array(
                 'joins' => array(
@@ -357,7 +351,7 @@ class StreamingHistory extends AppModel {
                 'recursive' => -1));
         }else{
             $lib_condition = "StreamingHistory.library_id=$libraryID";
-            //$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id  ORDER BY created ASC");
+
             return $this->find('all', array(
                 'joins' => array(
                     array(
@@ -382,7 +376,7 @@ class StreamingHistory extends AppModel {
     }
     
     function getDaysGenreStramedInformation($libraryID, $date, $territory,$reportCond=NULL) {
-//        Configure::write('debug',0);
+
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -413,7 +407,7 @@ class StreamingHistory extends AppModel {
             while ($row = mysql_fetch_assoc($result)) {
                 $all_Ids[] = $row["id"];
             }
-//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+
             $lib_condition = $all_Ids;
             return $this->find('all', array(
                 'joins' => array(

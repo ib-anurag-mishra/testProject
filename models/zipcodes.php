@@ -9,6 +9,4 @@ class Zipcode extends AppModel {
   
   var $name = 'Zipcode';
   var $useTable = 'zipcodes';
-  
- 
 }

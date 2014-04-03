@@ -239,8 +239,7 @@ class DownloadVideoPatron extends AppModel
     }
     $date_arr = explode("/", $date);
     $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
-    //$startDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 00:00:00";
-    //$endDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 23:59:59";
+
     $conditions = array(
       'download_date = "'.$downloadDate.'" '.$lib_condition." ORDER BY download_date DESC"
     );

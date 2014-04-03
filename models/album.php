@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  File Name : album.php
  File Description : Models page for the  Songs table.
@@ -8,7 +8,6 @@
 class Album extends AppModel
 {
 	var $name = 'Albums';
-//	var $useDbConfig = 'freegal';
 	var $useTable = 'Albums';
 	var $primaryKey = 'ProdID';
 	var $actsAs = array('Containable');
@@ -37,11 +36,4 @@ class Album extends AppModel
 			'foreignKey' => 'FileID'
 		)
 	);
-	
-	/*function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
-		$group = array('Album.ProdID');
-	    $results = $this->find('count', compact('conditions','recursive', 'group'));
-	    return $results;
-	}*/
 }
-?>

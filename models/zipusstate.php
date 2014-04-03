@@ -9,6 +9,4 @@ class Zipusstate extends AppModel {
   
   var $name = 'Zipusstate';
   var $useTable = 'zipusstates';
-  
- 
 }

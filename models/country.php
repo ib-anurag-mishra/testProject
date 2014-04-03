@@ -18,4 +18,3 @@ class Country extends AppModel
     $this->tablePrefix = $prefix;
   }
 }
-?>

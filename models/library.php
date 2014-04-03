@@ -415,4 +415,3 @@ class Library extends AppModel
 	    return $results;
 	}	
 }
-?>

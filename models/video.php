@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  File Name : video.php
  File Description : Models page for the  videos table.

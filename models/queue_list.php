@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  File Name : video.php
  File Description : Models page for the  videos table.
@@ -25,9 +25,4 @@ class QueueList extends AppModel
 		    'foreignKey' => 'patron_id'
 		)
 	);        
-
-  
-
-  	
-  
 }

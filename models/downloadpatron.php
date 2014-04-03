@@ -40,39 +40,6 @@ class Downloadpatron extends AppModel
         $arr_all_patron_downloads[$libraryName] = $count;
     }
     return $arr_all_patron_downloads;
-   /*
-    $arr_all_patron_downloads = array();
-    $all_Ids = '';
-		$sql = "SELECT id, library_name FROM libraries WHERE library_territory = '".$territory."'  ORDER BY library_name ASC";
-		$result = mysql_query($sql);
-       
-		while ($row = mysql_fetch_assoc($result)) {    
-  
-      $date_arr = explode("/", $date);
-      $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
-      
-      $libraryID = $row["id"]; 
-      $libraryName = $row["library_name"]; 
-      
-      $lib_condition = "and library_id = '".$libraryID."'";
-      $conditions = array(
-        'download_date = "'.$downloadDate.'" '.$lib_condition
-      );
-      
-      $count = $this->find(
-        'count', 
-        array(
-          'conditions'  =>  $conditions,
-        )
-      );    
-    
-      $arr_all_patron_downloads[$libraryName] = $count;
-
-		}
-    
-    return $arr_all_patron_downloads;
-  
-   */
  }
   
   /*
@@ -249,8 +216,6 @@ class Downloadpatron extends AppModel
     }
     $date_arr = explode("/", $date);
     $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
-    //$startDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 00:00:00";
-    //$endDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 23:59:59";
     $conditions = array(
       'download_date = "'.$downloadDate.'" '.$lib_condition." ORDER BY download_date DESC"
     );
