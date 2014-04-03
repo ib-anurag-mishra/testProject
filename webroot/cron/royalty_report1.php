@@ -37,7 +37,7 @@ foreach ($arr_dates AS $key => $value)
             $unit_sales_rate = 0;
         }
         //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
-         $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD');
+        $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD');
         // $country_curency = array('US' => 'USD');
 
         $query_country = "Select distinct libraries.library_territory from libraries";
@@ -120,14 +120,14 @@ foreach ($arr_dates AS $key => $value)
                     $total_sales += $sales;
                     $artistText = trim($row['ArtistText']);
                     //$royalty_content[1][] = array("D" , $row['ProdID'] ,$row['ISRC'] , $row['ReferenceID'] , $row['UPC' ], $row['SongTitle'] , $row['AlbumTitle'] , $row['ArtistText'] , 'S' , 1 , 't' , $unit_count ,  0.65 ,  $sales , $row['library_territory'] , 'Library Ideas ' , '10753' , $row['ProdID'] ,$row['ProductID'] ,  1.30 , $country_curency[$row_country['library_territory']] , '0.00', '0.00', '0.00', '0.00' , '' ,'' , ''   );
-                    $retail_price = ($libTypeKey == 'ALC') ?  '0.5' : '   ';
+                    $retail_price = ($libTypeKey == 'ALC') ? '0.5' : '   ';
                     $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $artistText, 'S', 1, 't', $unit_count, $unit_sales_rate, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], $retail_price, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', $row['created'], '', '');
                     $total_records++;
                     $total_sold += $unit_count;
                 }
             }
             $version = 1;
-            echo $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
+            $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
             while (1)
             {
                 if (file_exists($reportsFolder . "/" . $file_name))
@@ -165,9 +165,10 @@ function write_file($content, $file_name, $folder)
 {
     if (count($content[1]) > 1)
     {
-        $outputFile = "iodareports_output_" . date('Y_m_d_h_i_s') . ".txt";
-        $logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the file!");
-        $fh = fopen($folder . $file_name, 'w') or die("can't open file");
+        //$outputFile = "iodareports_output_" . date('Y_m_d_h_i_s') . ".txt";
+        //$logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the file!");
+        echo $file = $folder . "test_".$file_name;
+        $fh = fopen($file, 'w') or die("can't open file");
         foreach ($content as $data)
         {
             $delimiter = "\t";
