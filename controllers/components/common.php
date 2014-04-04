@@ -320,7 +320,7 @@ STR;
             else
             {
                 $data = Cache::read("national" . $country, "cache2");
-                Cache::write("national" . $country, Cache::read("national" . $country, "cache2"), "cache2");
+                Cache::write("national" . $country, $data, "cache2");
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
         }
@@ -480,7 +480,7 @@ STR;
             else
             {
                 $data = Cache::read("nationaltop100albums" . $country);
-                Cache::write("nationaltop100albums" . $country, Cache::read("nationaltop100albums" . $country));
+                Cache::write("nationaltop100albums" . $country, $data);
                 $this->log("Unable to update national 100 albums for " . $territory, "cache");
             }
         }
@@ -528,7 +528,7 @@ STR;
         else
         {
             $featuredVideos = Cache::read("featured_videos" . $territory);
-            Cache::write("featured_videos" . $territory, Cache::read("featured_videos" . $territory));
+            Cache::write("featured_videos" . $territory, $featuredVideos);
             $this->log("Unable to update featured videos cache for " . $territory, "cache");
         }
 
@@ -575,7 +575,7 @@ STR;
         else
         {
             $topDownloads = Cache::read("top_download_videos" . $territory);
-            Cache::write("top_download_videos" . $territory, Cache::read("top_download_videos" . $territory));
+            Cache::write("top_download_videos" . $territory, $topDownloads);
             $this->log("Unable to update top download  videos cache for " . $territory, "cache");
         }
         // End Caching functionality for top video downloads
@@ -720,7 +720,7 @@ STR;
             else
             {
                 $data = Cache::read("nationalvideos" . $country);
-                Cache::write("nationalvideos" . $country, Cache::read("nationalvideos" . $country));
+                Cache::write("nationalvideos" . $country, $data);
                 $this->log("Unable to update national 100  videos for " . $territory, "cache");
             }
         }
@@ -801,7 +801,7 @@ STR;
         else
         {
             $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
-            Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));
+            Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
             $this->log("Unable to update coming soon songs for " . $territory, "cache");
         }
 
@@ -881,7 +881,7 @@ STR;
         else
         {
             $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
-            Cache::write("coming_soon_videos" . $territory, Cache::read("coming_soon_videos" . $territory));
+            Cache::write("coming_soon_videos" . $territory, $coming_soon_rv);
             $this->log("Unable to update coming soon videos for " . $territory, "cache");
         }
 
@@ -1027,7 +1027,7 @@ STR;
             else
             {
                 $data = Cache::read("national_us_top10_songs" . $country);
-                Cache::write("national_us_top10_songs" . $country, Cache::read("national_us_top10_songs" . $country));
+                Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("Unable to update US top ten for " . $territory, "cache");
             }
         }
@@ -1167,7 +1167,7 @@ STR;
             else
             {
                 $data = Cache::read("national_us_top10_albums" . $country);
-                Cache::write("national_us_top10_albums" . $country, Cache::read("national_us_top10_albums" . $country));
+                Cache::write("national_us_top10_albums" . $country, $data);
                 $this->log("Unable to update US top ten Album for " . $territory, "cache");
             }
         }
@@ -1298,7 +1298,7 @@ STR;
             else
             {
                 $data = Cache::read("national_us_top10_videos" . $country);
-                Cache::write("national_us_top10_videos" . $country, Cache::read("national_us_top10_videos" . $country));
+                Cache::write("national_us_top10_videos" . $country, $data);
                 $this->log("Unable to update US top ten video for " . $territory, "cache");
             }
         }
@@ -1417,7 +1417,7 @@ STR;
             else
             {
                 $data = Cache::read("new_releases_albums" . $country);
-                Cache::write("new_releases_albums" . $country, Cache::read("new_releases_albums" . $country));
+                Cache::write("new_releases_albums" . $country, $data);
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
 
@@ -1501,7 +1501,7 @@ STR;
             else
             {
                 $data = Cache::read("new_releases_videos" . $country);
-                Cache::write("new_releases_videos" . $country, Cache::read("new_releases_videos" . $country));
+                Cache::write("new_releases_videos" . $country, $data);
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
         }
@@ -2668,7 +2668,8 @@ STR;
      */
     function getCountryPrefix($territory)
     {
-        if ((Cache::read('multipleCountries')) === false)
+	$multipleCountries = Cache::read('multipleCountries');
+        if (($multipleCountries) === false)
         {
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
             $albumInstance = ClassRegistry::init('Album');
@@ -2678,7 +2679,7 @@ STR;
         }
         else
         {
-            $multiple_countries = Cache::read('multipleCountries');
+            $multiple_countries = $multipleCountries;
         }
         $countryInstance = ClassRegistry::init('Country');
         if (0 == $multiple_countries)
@@ -2984,7 +2985,8 @@ STR;
 
     function getTerritories()
     {
-        if ((Cache::read('territoryList')) === false)
+	$territoryList = Cache::read('territoryList');
+        if (($territoryList) === false)
         {
             $territoryInstance = ClassRegistry::init('Territory');
             $territories = $territoryInstance->find("all");
@@ -2996,7 +2998,7 @@ STR;
         }
         else
         {
-            $territoryNames = Cache::read('territoryList');
+            $territoryNames = $territoryList;
         }
         return $territoryNames;
     }
