@@ -103,35 +103,35 @@ Class CommonComponent extends Object
      * @return  $artistListResults array
      */
      function getArtistText($genreValue,$territory,$artistFilter='',$pageNo=1){
-         
+        
         //add the Song table model
         $songInstance = ClassRegistry::init('Song');
         //set the territory value
         $territory = strtolower($territory);
+        
+        //create conditions 
+        $conditionArray = array(
+                'Country.DownloadStatus' => 1,                    
+                'Country.Territory' => strtoupper($territory)                
+                );
          
         //make condition according to Genre value
         if ($genreValue != 'All')
         {
-            $GenreFilterCondition = " AND `Song`.`Genre` LIKE '%".addslashes($genreValue)."%'";            
-        }else
-        {            
-            $GenreFilterCondition ='';            
+            $conditionArray[] = " `Song`.`Genre` LIKE '%".$genreValue."%'";
+            
         }       
         
         //make condition according to Genre value
         if ($artistFilter == 'spl')
         {
-            $artisFilterCondition = " AND Song.ArtistText REGEXP '^[^A-Za-z]'";
+            $conditionArray[] = "Song.ArtistText REGEXP '^[^A-Za-z]'";
         }
         elseif ($artistFilter != '' && $artistFilter != 'All')
         {
-            $artisFilterCondition = " AND Song.ArtistText LIKE '".$artistFilter."%'";
+            $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
         }
-        else
-        {
-            $artisFilterCondition = "";
-        }
-        
+                
         //set order by condition
         $orderByCond = ' order by Song.ArtistText ASC ';
          
@@ -139,16 +139,35 @@ Class CommonComponent extends Object
         $endLimit = $pageNo * 120;
         $startLimit = ($pageNo * 120) - 120;
         
+        $songInstance->unbindModel(array('hasOne' => array('Participant')));
+        $songInstance->unbindModel(array('hasOne' => array('Country')));
+        $songInstance->unbindModel(array('hasOne' => array('Genre')));
+        $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+        $songInstance->recursive = 0;
         //create query that fetch all artist according to selected Genre
-        $artistQuery = "SELECT distinct `Song`.`ArtistText`
-           FROM `Songs` AS `Song` 
-           LEFT JOIN `".$territory."_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID`) 
-           LEFT JOIN `Albums` AS `album` ON (`Song`.`ReferenceID` = `album`.`ProdID`) 
-           WHERE `Country`.`DownloadStatus` = '1' AND `Country`.`Territory` = '".strtoupper($territory)."' 
-           $GenreFilterCondition $artisFilterCondition $orderByCond LIMIT $startLimit,$endLimit";
+        $artistListResults = $songInstance->find('all', array(
+            'conditions' => $conditionArray,
+            'fields' => array('DISTINCT Song.ArtistText'),
+            'limit'=> $endLimit, 'offset'=> $startLimit,
+            'joins' => array(
+                array(
+                    'table' => $territory.'_countries',
+                    'alias' => 'Country',
+                    'type' => 'left',
+                    'foreignKey' => false,
+                    'conditions'=> array('Country.ProdID = Song.ProdID')
+                ),
+                array(
+                    'table' => 'Albums',
+                    'alias' => 'Albums',
+                    'type' => 'left',
+                    'foreignKey' => false,
+                    'conditions'=> array('Song.ReferenceID = Albums.ProdID')
+                )
+            )
+         ));           
       
-                   
-         $artistListResults = $songInstance->query($artistQuery);       
+                      
         
          //create cache variable name
          $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;     

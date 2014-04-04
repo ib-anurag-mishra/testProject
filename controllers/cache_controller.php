@@ -124,7 +124,7 @@ class CacheController extends AppController {
      */    
     function runGenreCache(){
         set_time_limit(0);     
-       
+       echo 147;die;
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){           
             $this->setArtistText($territory);            
@@ -254,7 +254,7 @@ class CacheController extends AppController {
                     //Genre filter
                     if ($genreEach != '' && $genreEach != 'All')
                     {
-                        $GenreFilterCondition = " AND `Song`.`Genre` LIKE '%".addslashes($genreEach)."%'";             
+                        $GenreFilterCondition = " AND `Song`.`Genre` LIKE '%".mysql_escape_string($genreEach)."%'";             
                     }else
                     {            
                         $GenreFilterCondition ='';            

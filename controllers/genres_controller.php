@@ -257,14 +257,13 @@ Class GenresController extends AppController
         }
               
         if (($genreAll = Cache::read("genre" . $country)) === false) {
-        //if(1){ 
-            
+        //if(1){             
             $genreAll = $this->Common->getGenres($country);
         } else {
             
             $genreAll = Cache::read("genre" . $country);
         }          
-       
+       print_r($genreAll);die;
           
         //check the genre value         
         $genre = base64_decode($Genre);
@@ -276,7 +275,8 @@ Class GenresController extends AppController
        
         
         //check cache variable are set or not
-        if (($artistList = Cache::read($cacheVariableName)) === false)
+        //if (($artistList = Cache::read($cacheVariableName)) === false)
+        if(1)
         {             
                $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
         } else {             
@@ -285,20 +285,7 @@ Class GenresController extends AppController
         
         //prepare the array that contains all alphabets which have no any artist value for the selected changes
         $artistsNoAlpha = array();
-        for($k = 63;$k < 91;$k++){
-            $alphabet = chr($k);
-            if($k==63){
-                $alphabet = 'All';
-            }
-            if($k==64){
-                $alphabet = 'spl';
-            }
-            $filterCacheVariableName = base64_encode($genre).strtolower($country).strtolower($alphabet).$pageNo; 
-            
-            if(($genreAll = Cache::read($filterCacheVariableName)) === false){
-                $artistsNoAlpha[]= $alphabet;
-            }           
-        } 
+        $artistsNoAlph = $this->checkArtistFilter($genre, $country ,$pageNo);  
         
         //set the value for generating view
         $this->set('totalPages', 150);
@@ -364,7 +351,9 @@ Class GenresController extends AppController
        
         
         //check cache variable are set or not
-        if (($artistList = Cache::read($cacheVariableName)) === false) { 
+        //if (($artistList = Cache::read($cacheVariableName)) === false) {
+        if(1)
+        {
             echo 'Not Exist';
                 $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);                
         } else {
@@ -375,21 +364,8 @@ Class GenresController extends AppController
       
        //prepare the array that contains all alphabets which have no any artist value
         $artistsNoAlpha = array();
-        for($k = 63;$k < 91;$k++){
-            $alphabet = chr($k);
-            if($k==63){
-                $alphabet = 'All';
-            }
-            if($k==64){
-                $alphabet = 'spl';
-            }
-            $filterCacheVariableName = base64_encode($genre).strtolower($country).strtolower($alphabet).$pageNo;
-          
-            
-            if(($genreAll = Cache::read($filterCacheVariableName)) === false){
-                $artistsNoAlpha[]= $alphabet;
-            }           
-        } 
+        $artistsNoAlph = $this->checkArtistFilter($genre, $country ,$pageNo);
+        
        // print_r($artistsNoAlpha);
         //set the value for generating view
         $this->set('totalPages', 150);
@@ -464,6 +440,32 @@ Class GenresController extends AppController
             
         //prepare the array that contains all alphabets which have no any artist value
         $artistsNoAlpha = array();
+        $artistsNoAlph = $this->checkArtistFilter($genre, $country ,$pageNo);    
+        
+        //set the value for generating view
+        $this->set('totalPages', 150);
+        $this->set('artistsNoAlpha', $artistsNoAlpha);
+        $this->set('selectedAlpha', $Artist);
+        $this->set('artistList', $artistList);
+        
+        //app\views\genres\ajax_view_pagination.ctp
+    }
+    
+    /*
+    Function Name : checkArtistFilter
+    Desc : check the artist list filter list
+    *
+    *
+    * @param $genre VarChar  'Genre value'
+    * @param $country VarChar  'territory value'
+    * @param $alphabet VarChar  'alphabets value'
+    * @param $pageNo int  'page value'
+    *
+    * @return $artistsNoAlpha array
+    */
+    function checkArtistFilter($genre, $country,$pageNo)
+    {
+        $artistsNoAlpha = array();
         for($k = 63;$k < 91;$k++){
             $alphabet = chr($k);
             if($k==63){
@@ -479,14 +481,7 @@ Class GenresController extends AppController
                 $artistsNoAlpha[]= $alphabet;
             }           
         } 
-        
-        //set the value for generating view
-        $this->set('totalPages', 150);
-        $this->set('artistsNoAlpha', $artistsNoAlpha);
-        $this->set('selectedAlpha', $Artist);
-        $this->set('artistList', $artistList);
-        
-        //app\views\genres\ajax_view_pagination.ctp
+        return $artistsNoAlpha;
     }
     
     /*
