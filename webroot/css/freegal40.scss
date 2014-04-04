@@ -2170,10 +2170,12 @@ sub { top: 0.4em; }
 				text-overflow: ellipsis;				
 				
 
+
 				&:before {
 					
 					content: "";
 					position: absolute;
+					
 					width: 158px;
 					height: 3px;
 					left: 4px;
