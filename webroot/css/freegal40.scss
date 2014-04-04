@@ -2153,7 +2153,16 @@ sub { top: 0.4em; }
 				overflow: hidden;
 				text-overflow: ellipsis;
 				width: 160px;				
-				
+				&:before {
+					
+					content: "";
+					position: absolute;
+					width: 158px;
+					height: 3px;
+					left: 4px;
+					bottom:0;
+					background: url(../img/featured-menu-border-rpt.png) repeat;
+				}				
 
 			}
 
@@ -2168,20 +2177,7 @@ sub { top: 0.4em; }
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;				
-				
 
-
-				&:before {
-					
-					content: "";
-					position: absolute;
-					
-					width: 158px;
-					height: 3px;
-					left: 4px;
-					bottom:0;
-					background: url(../img/featured-menu-border-rpt.png) repeat;
-				}
 
                 a {
                     color:#ffffff;
