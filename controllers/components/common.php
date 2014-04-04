@@ -132,9 +132,7 @@ Class CommonComponent extends Object
             $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
         }
                 
-        //set order by condition
-        $orderByCond = ' order by Song.ArtistText ASC ';
-         
+                
         //create the pagination
         $endLimit = $pageNo * 120;
         $startLimit = ($pageNo * 120) - 120;
@@ -149,6 +147,7 @@ Class CommonComponent extends Object
             'conditions' => $conditionArray,
             'fields' => array('DISTINCT Song.ArtistText'),
             'limit'=> $endLimit, 'offset'=> $startLimit,
+            'order' => array('Song.ArtistText ASC'),
             'joins' => array(
                 array(
                     'table' => $territory.'_countries',
@@ -168,8 +167,8 @@ Class CommonComponent extends Object
          ));          
         
          //create cache variable name
-         $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;     
-   
+         $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;  
+        
          //set artist list in the cache
          if (!empty($artistListResults))
          {             
