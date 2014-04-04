@@ -263,7 +263,7 @@ Class GenresController extends AppController
             
             $genreAll = Cache::read("genre" . $country);
         }          
-       print_r($genreAll);die;
+       
           
         //check the genre value         
         $genre = base64_decode($Genre);
