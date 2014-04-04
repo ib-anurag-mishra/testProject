@@ -2127,11 +2127,13 @@ sub { top: 0.4em; }
 			
 			color: #fff;
 			position: absolute;
-			bottom:-53px;
+			// bottom:-53px;
+			bottom:-22px;
 			
 			left: 0;
 			width: 100%;
-			height: 76px;
+			// height: 76px;
+			height: 54px;
 
 			@include single-transition(bottom,500ms);
 			
