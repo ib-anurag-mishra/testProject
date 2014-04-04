@@ -87,7 +87,7 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);       
-       
+       echo 147;die;
         $territoriesList = $this->Common->getTerritories();   
         
         foreach($territoriesList as $territory){            
