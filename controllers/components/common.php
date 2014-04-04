@@ -165,9 +165,7 @@ Class CommonComponent extends Object
                     'conditions'=> array('Song.ReferenceID = Albums.ProdID')
                 )
             )
-         ));           
-      
-                      
+         ));          
         
          //create cache variable name
          $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;     

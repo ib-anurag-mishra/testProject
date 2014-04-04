@@ -275,8 +275,8 @@ Class GenresController extends AppController
        
         
         //check cache variable are set or not
-        //if (($artistList = Cache::read($cacheVariableName)) === false)
-        if(1)
+        if (($artistList = Cache::read($cacheVariableName)) === false)
+       // if(1)
         {             
                $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
         } else {             

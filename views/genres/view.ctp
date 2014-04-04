@@ -160,6 +160,7 @@ $genre_crumb_name = $genre;
 $html->addCrumb(__('All Genre', true), '/genres/view/');
 $html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/' . base64_encode($genre_crumb_name));
 $totalRows = count($genresAll);
+print_r($genresAll);
 ?>
 
 
