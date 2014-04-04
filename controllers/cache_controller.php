@@ -123,8 +123,8 @@ class CacheController extends AppController {
      * @desc This function is used to call all functions for setting Genre page cache variables
      */    
     function runGenreCache(){
-        set_time_limit(0);     
-       echo 147;die;
+        set_time_limit(0);    
+      
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){           
             $this->setArtistText($territory);            
@@ -229,7 +229,7 @@ class CacheController extends AppController {
      
         $this->autoRender = false;
         //set the aritst cache for specific Genre
-       // $genreAll = $this->Common->getGenres($territory);
+        //$genreAll = $this->Common->getGenres($territory);
         $genreAll = Cache::read("genre" . $territory);
         array_unshift($genreAll, "All");       
         //$genreAll= array('All');
@@ -251,40 +251,58 @@ class CacheController extends AppController {
                 
                 if($genreEach != 'All')
                 {
+                    
+                    //create conditions array
+                    $conditionArray = array(
+                            'Country.DownloadStatus' => 1,                    
+                            'Country.Territory' => strtoupper($territory)                
+                            );
+
                     //Genre filter
                     if ($genreEach != '' && $genreEach != 'All')
                     {
-                        $GenreFilterCondition = " AND `Song`.`Genre` LIKE '%".mysql_escape_string($genreEach)."%'";             
-                    }else
-                    {            
-                        $GenreFilterCondition ='';            
+                        $conditionArray[] = " Song.Genre LIKE '%".mysql_escape_string($genreEach)."%'";
                     }
 
                     //Artist filter
                     if ($artistFilter == 'spl')
-                    {
-                        $artisFilterCondition = " AND Song.ArtistText REGEXP '^[^A-Za-z]'";
+                    {                       
+                        $conditionArray[] = " Song.ArtistText REGEXP '^[^A-Za-z]'";
                     }
                     elseif ($artistFilter != '' && $artistFilter != 'All')
                     {
-                        $artisFilterCondition = " AND Song.ArtistText LIKE '".$artistFilter."%'";
+                        $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
                     }
-                    else
-                    {
-                        $artisFilterCondition = "";
-                    }
-
-                    $artistCountQuery = "SELECT count(distinct `Song`.`ArtistText`) as total
-                        FROM `Songs` AS `Song` 
-                        LEFT JOIN `".strtolower($territory)."_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID`) 
-                        LEFT JOIN `Albums` AS `album` ON (`Song`.`ReferenceID` = `album`.`ProdID`) 
-                        WHERE `Country`.`DownloadStatus` = '1' AND `Country`.`Territory` = '".$territory."' 
-                        $GenreFilterCondition $artisFilterCondition ";
-
-
-                    $artistCount = $this->Song->query($artistCountQuery);                   
-                    $artistCountValue =  $artistCount[0][0]['total'];
-
+                                     
+                    $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                    $this->Song->unbindModel(array('hasOne' => array('Country')));
+                    $this->Song->unbindModel(array('hasOne' => array('Genre')));
+                    $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+                    $this->Song->recursive = 0;
+                    
+                    //query that fetch  artist count according to Genre
+                    $artistCount = $this->Song->find('all', array(
+                        'conditions' => $conditionArray,
+                        'fields' => array('count(DISTINCT Song.ArtistText) as total'),                       
+                        'joins' => array(
+                            array(
+                                'table' => strtolower($territory).'_countries',
+                                'alias' => 'Country',
+                                'type' => 'left',
+                                'foreignKey' => false,
+                                'conditions'=> array('Country.ProdID = Song.ProdID')
+                            ),
+                            array(
+                                'table' => 'Albums',
+                                'alias' => 'Albums',
+                                'type' => 'left',
+                                'foreignKey' => false,
+                                'conditions'=> array('Song.ReferenceID = Albums.ProdID')
+                            )
+                        )
+                     ));
+                                                          
+                    $artistCountValue =  $artistCount[0][0]['total'];            
 
                     if(count($artistCountValue)> 0){                    
                         $totalPages = ceil($artistCountValue/120);                    
@@ -300,9 +318,10 @@ class CacheController extends AppController {
                 }else{
                     $totalPages =5;
                 } 
+                
                 //currently we are setting only 5 pages info for each Genre with corresponding artist filter
-                if($totalPages>5){
-                    $totalPages=5;
+                if($totalPages > 5){
+                    $totalPages = 5;
                 }
                 
                 //set cache variable one by one
