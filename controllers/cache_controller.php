@@ -283,7 +283,8 @@ class CacheController extends AppController {
                     //query that fetch  artist count according to Genre
                     $artistCount = $this->Song->find('all', array(
                         'conditions' => $conditionArray,
-                        'fields' => array('count(DISTINCT Song.ArtistText) as total'),                       
+                        'fields' => array('count(DISTINCT Song.ArtistText) as total'),
+                        
                         'joins' => array(
                             array(
                                 'table' => strtolower($territory).'_countries',
