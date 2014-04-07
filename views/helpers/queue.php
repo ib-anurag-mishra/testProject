@@ -351,8 +351,14 @@ EOD;
 EOD;
             return $str;
         }else if ($flag == 1){
+            /*
             $str = <<<EOD
                 <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable"></button>
+EOD;
+            */
+
+            $str = <<<EOD
+                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable">Stream Now</button>
 EOD;
             return $str;            
             
