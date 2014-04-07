@@ -1565,6 +1565,16 @@ sub { top: 0.4em; }
 							margin-left: -50px;
 							margin-top: -11px;
 							font-size: 12px;
+
+							&:hover {
+							
+								// background: url(../img/freegal_sprite.png) -435px -20px;
+							}
+
+							&:active {
+							
+								// background: url(../img/freegal_sprite.png) -470px -20px;
+							}							
 						}
 
 
