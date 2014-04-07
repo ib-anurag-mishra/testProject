@@ -848,7 +848,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         $composer_name = truncate_text($composer_name, 125, $this);
                         $tilte = urlencode($composer->Composer);
                         $name = $composer->Composer;
-                        $count = $composer->numAlbumCount;
+                        $count = $composer->numFound;
                         $name = $this->getTextEncode($name);
                         if ( "" !=  $this->getTextEncode($composer_name) && true == is_numeric($count) ) {
                             ?>
