@@ -664,7 +664,7 @@
     <body><!-- test comment -->
         <!--[if lt IE 9]>
         <div class="browser-update">
-            <a href="#" id="bu-close"></a>
+            <a href="#" id="bu-close" class="no-ajaxy"></a>
             <a href="http://www.google.com/chrome" class="chrome"></a>
             <a href="http://www.mozilla.org/en-US/firefox/new/" class="ff"></a>
             <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" class="ie"></a>

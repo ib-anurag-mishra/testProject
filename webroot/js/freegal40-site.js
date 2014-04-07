@@ -407,6 +407,11 @@ $(document).ready(function() {
         }
     });
 
+    $('#bu-close').on('click',function(e){
+        e.preventDefault();
+        $('.browser-update').addClass('closed');
+
+    });
 
     /*
     $('.top-songs-filter-icon').on('click', function() {
