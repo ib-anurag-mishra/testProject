@@ -51,31 +51,7 @@ $('document').ready(function()
 
 
 
-    $('#top-100-albums-grid .lazy').lazyload({
-        effect: 'fadeIn',
-        container: $('#top-100-albums-grid')
-    });
-
-    $('#top-100-songs-grid .lazy').lazyload({
-        effect: 'fadeIn',
-        container: $('#top-100-songs-grid')
-    });
-
-    $('#top-100-videos-grid .lazy').lazyload({
-        effect: 'fadeIn',
-        container: $('#top-100-videos-grid')
-    });
-
-    $('#coming-soon-singles-grid .lazy').lazyload({
-        effect: 'fadeIn',
-        container: $('#coming-soon-singles-grid')
-    });
-
-    $('#coming-soon-videos-grid .lazy').lazyload({
-        effect: 'fadeIn',
-        container: $('#coming-soon-videos-grid')
-    });
-
+    /*
     $('#featured-video-grid .lazy').lazyload({
         effect: 'fadeIn',
         container: $('#featured-video-grid .lazy')
@@ -85,6 +61,7 @@ $('document').ready(function()
         effect: 'fadeIn',
         container: $('.video-top-genres-grid')
     });
+    */
 
 
     $(document).on('click', '.announcements h4 a', function(e) {
