@@ -24,7 +24,7 @@
 
 }(jQuery));
 
-/* end lazyload initalizations */
+
 
 $('document').ready(function()
 {
@@ -34,13 +34,13 @@ $('document').ready(function()
     var footer_pos;
     var music_search_results = $('.master-music-search-results');
 
-    var sidebar_anchor = $('.sidebar-anchor');
-    var sidebar_a = $('.left-sidebar li a');
+    
+    
 
     var poll = $('.poll');
-    var announcements = $('.announcements h4 a');
 
-    var tooltip_a = $('.tooltip a');
+
+
     var plays_tooltip = $('.plays-tooltip');
     var filter_text = $('.filter-text');
     var filter_results = $('.filter-results');
@@ -49,21 +49,21 @@ $('document').ready(function()
     var whats_happening_filter_results = $('.whats-happening-filter-results');
     var coming_soon_singles_grid = $('#coming-soon-singles-grid');
     var site_nav_a = $('.site-nav a');
-    var add_to_playlist = $('.add-to-playlist');
-    var add_to_queue = $('.add-to-queue');
-    var add_to_wishlist = $('.add-to-wishlist');
-    var playlist_list = $('.playlist-options');
+
+    
+    
+    
     var preview = $('.preview');
-    //top_100_albums_grid.addClass('active');
+    
     var top_100_songs_grid = $('#top-100-songs-grid');
     var grid_view_button = $('.grid-view-button');
     var grids = $('.grids');
-    var artwork_container = $('.artwork-container');
-    var video_thumbnail_container = $('.video-thumbnail-container');
-    var library_list_scrollable = $('.library-list-scrollable');
+    
+    
+    
     var most_popular_sub_nav = $('.most-popular-sub-nav');
     var footer = $('.site-footer');
-    var wishlist_popover = $('.wishlist-popover');
+    
     var footer_height = footer.height();
 
 
