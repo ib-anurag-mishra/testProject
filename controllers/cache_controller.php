@@ -502,12 +502,12 @@ class CacheController extends AppController {
     foreach ($libraryDetails AS $key => $libval){  
     
       $library_territory = $libval['Library']['library_territory'];
-      
-      if ( (( Cache::read("top_singles".$library_territory)) !== false) && (Cache::read("top_singles".$library_territory) !== null) ) { // checks if nationalTop100 is set
+       $topSinglesCache = Cache::read("top_singles".$library_territory);
+      if ( (($topSinglesCache) !== false) && ($topSinglesCache !== null) ) { // checks if nationalTop100 is set
     
         //fetches top artist from nationTop100----Start
         $arrTmp = $arrData = $arrFinal = $arrArtist = array();
-        $arrTmp = Cache::read("top_singles".$library_territory);
+        $arrTmp = $topSinglesCache;
     
         foreach($arrTmp AS $key => $val){
           $arrData[] = trim($val['Song']['ArtistText']);
