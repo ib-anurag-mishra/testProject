@@ -303,7 +303,7 @@ $('document').ready(function()
         }
     });
 
-    $(document).on('mouseleave', '.account-options-menu', function(e) {
+    $(document).on('mouseleave', '.account-options-menu', function() {
 
         $('.account-options-menu').removeClass('active');
     });
@@ -318,7 +318,7 @@ $('document').ready(function()
     });
 
     $('.tracklist-shadow-container .tracklist-scrollable').on('mouseleave', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: .5});
+        $(this).find('.add-to-playlist-button').css({opacity: 0.5});
 
     });
 
@@ -473,7 +473,7 @@ $('document').ready(function()
 
         if ($(this).next('.wishlist-popover').hasClass('active')) {
             $(this).next('.wishlist-popover').removeClass('active');
-            $(this).find('.add-to-playlist-button').css({opacity: .5});
+            $(this).find('.add-to-playlist-button').css({opacity: 0.5});
         } else {
 
             $(this).next('.wishlist-popover').addClass('active');
