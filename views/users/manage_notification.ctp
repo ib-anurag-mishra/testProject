@@ -54,16 +54,18 @@ $ieVersion = ieversion();
                     if ($notificationAlreadySave == true)
                     {
                         $notificationAlreadySaveFlag = 1;
+                        $showEmailID = "display:block;";
                     }
                     else
                     {
                         $notificationAlreadySaveFlag = 0;
+                        $showEmailID = "display:none;";
                     }
                     ?>
                     <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave)); ?>
                     Add your email address here to receive twice-weekly email reminders of your available downloads.
                 </div>
-                <div id="show_newsletterboxField" style="display:none;">
+                <div id="show_newsletterboxField" style="<?php echo $showEmailID; ?>">
                     <?php echo $this->Form->label('Notification Email'); ?>
                     <?php echo $this->Form->input('NewsletterEmail', array('label' => false, 'value' => $notificationEmail, 'div' => false, 'class' => 'form_fields')); ?>
                 </div>    
@@ -74,16 +76,7 @@ $ieVersion = ieversion();
             </div>
         </div>
         <script type="text/javascript">
-                        $(function() {
-    <?php
-    if ($notificationAlreadySave === 'true')
-    {
-        ?>
-                                $('#show_newsletterboxField').show();
-        <?php
-    }
-    ?>
-                        });
+                        
                         function checkEmailValue() {
 
 
