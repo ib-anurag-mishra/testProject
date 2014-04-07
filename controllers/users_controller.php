@@ -3071,6 +3071,25 @@ function login($library = null){
 
 								$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                                 $this->Session->write("loginchk", 'Yes');
+                                                                
+                                                                //check this library exist is in the library timezone table
+                                                                $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                                                $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                                                if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                                                $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                                                }else{
+                                                                $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                                                }        
+
+                                                                //check if the notification entry is already there in the notification_subscription table
+                                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                                                $this->Session->write("showNotificationPopup", 'yes');                               
+                                                                }else{
+                                                                $this->Session->write("showNotificationPopup", 'no');                               
+                                                                }
+                                                                
 								$this->Session->write("patron", $patronId);
 								$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 								$this->Session->write("sip2","sip2");
