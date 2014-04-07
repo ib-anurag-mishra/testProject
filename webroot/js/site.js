@@ -34,7 +34,7 @@ $('document').ready(function() {
     var music_search_results = $('.master-music-search-results');
     var poll = $('.poll');
     var music_player_container = $('.music-player-container');
-    var preview = $('.preview');
+    var $preview = $('.preview');
     var most_popular_sub_nav = $('.most-popular-sub-nav');
     var footer = $('.site-footer');
     var footer_height = footer.height();
@@ -121,20 +121,20 @@ $('document').ready(function() {
 
 
 
-    preview.on('mousedown', function(e) {
+    $preview.on('mousedown', function(e) {
         e.preventDefault();
 
         $(this).addClass('active');
     });
-    preview.on('mouseup', function(e) {
+    $preview.on('mouseup', function(e) {
         e.preventDefault();
 
         $(this).removeClass('active');
     });
 
+    $video_thumbnail_container = $('.video-thumbnail-container');
 
-
-    $('.video-thumbnail-container').on('mouseenter', function() {
+    $video_thumbnail_container.on('mouseenter', function() {
 
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.featured-video-download-now-button').css({opacity: 1});
@@ -142,7 +142,7 @@ $('document').ready(function() {
 
     });
 
-    $('.video-thumbnail-container').on('mouseleave', function() {
+    $video_thumbnail_container.on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.featured-video-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
