@@ -554,7 +554,7 @@ $('document').ready(function()
     });
     /* albums page */
 
-    $(document).on('click', '.albums-page .tracklist .preview', function(e) {
+    $(document).on('click', '.albums-page .tracklist .preview', function() {
 
 
 
@@ -579,10 +579,10 @@ $('document').ready(function()
 
     $('.artist-page .tracklist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
 
-    $(document).on('scroll', '.artist-page .tracklist-scrollable', function(e) {
+    $(document).on('scroll', '.artist-page .tracklist-scrollable', function() {
 
         $('.artist-page .tracklist-scrollable .wishlist-popover').removeClass('top');
-        $('.artist-page .tracklist-scrollable .tracklist').each(function(e) {
+        $('.artist-page .tracklist-scrollable .tracklist').each(function() {
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
                 $(this).find('.wishlist-popover').addClass('top');
             }
@@ -607,7 +607,7 @@ $('document').ready(function()
 
     $('.artist-page .videos-scrollable ul').css({width: totalVSLiWidth + 5});
 
-    $(document).on('click', '.artist-page .tracklist-scrollable .tracklist .preview', function(e) {
+    $(document).on('click', '.artist-page .tracklist-scrollable .tracklist .preview', function() {
 
         if ($(this).hasClass('playing')) {
 
@@ -694,7 +694,7 @@ $('document').ready(function()
         //getQueueList();
     });
 
-    $(document).on('click', '.genre-list a', function(e) {
+    $(document).on('click', '.genre-list a', function() {
         var genre_type = $(this).data('genre');
         $('.genre-list a').removeClass('selected');
         $('.alphabetical-filter a').removeClass('selected');
@@ -704,7 +704,7 @@ $('document').ready(function()
 
     });
 
-    $(document).on('click', '.alphabetical-filter a', function(e) {
+    $(document).on('click', '.alphabetical-filter a', function() {
 
         var letter = $(this).data('letter');
         $('.alphabetical-filter a').removeClass('selected');
@@ -712,25 +712,25 @@ $('document').ready(function()
         $(this).addClass('selected');
     });
 
-    $(document).on('click', '.artist-list a', function(e) {
+    $(document).on('click', '.artist-list a', function() {
         var artist = $(this).data('artist');
         $('.artist-list a').removeClass('selected');
         $(this).addClass('selected');
     });
 
-    $(document).on('mousedown', '.more-by', function(e) {
+    $(document).on('mousedown', '.more-by', function() {
 
-        $(this).css('background', 'url(images/genres/more-by-click.jpg)')
+        $(this).css('background', 'url(images/genres/more-by-click.jpg)');
 
     });
 
-    $(document).on('click', '.album-image a', function(e) {
+    $(document).on('click', '.album-image a', function() {
 
         $('.album-image').removeClass('selected');
         $(this).parent('.album-image').addClass('selected');
     });
 
-    $(document).on('click', '.genres-page .tracklist .preview', function(e) {
+    $(document).on('click', '.genres-page .tracklist .preview', function() {
         $('.tracklist').removeClass('playing');
         $('.preview').removeClass('playing');
         $('.song').removeClass('playing');
@@ -771,19 +771,19 @@ $('document').ready(function()
         $(this).siblings('.wishlist-popover').addClass('active');
     });
 
-    $(document).on('mouseleave', '.history-page .wishlist-popover', function(e) {
+    $(document).on('mouseleave', '.history-page .wishlist-popover', function() {
 
         $(this).removeClass('active');
     });
 
     $('.history-page .history-scrollable .wishlist-popover').slice(0, 3).addClass('top');
 
-    $(document).on('scroll', '.history-page .history-scrollable', function(e) {
+    $(document).on('scroll', '.history-page .history-scrollable', function() {
 
         $('.history-page .history-scrollable .wishlist-popover').removeClass('top');
 
 
-        $('.history-page .history-scrollable .row').each(function(e) {
+        $('.history-page .history-scrollable .row').each(function() {
 
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
                 $(this).find('.wishlist-popover').addClass('top');
@@ -834,7 +834,7 @@ $('document').ready(function()
 
     });
 
-    $(document).on('click', '.history-page .history-scrollable .row .preview', function(e) {
+    $(document).on('click', '.history-page .history-scrollable .row .preview', function() {
 
         if ($(this).hasClass('playing')) {
 
@@ -880,11 +880,11 @@ $('document').ready(function()
     /* end history page */
 
     /* my account page */
-    $('.my-account-page input[type="submit"]').on('mousedown', function(e) {
+    $('.my-account-page input[type="submit"]').on('mousedown', function() {
         $(this).addClass('clicked');
     });
 
-    $('.my-account-page input[type="submit"]').on('mouseup', function(e) {
+    $('.my-account-page input[type="submit"]').on('mouseup', function() {
         $(this).removeClass('clicked');
     });
     /* end my account page */
@@ -952,7 +952,7 @@ $('document').ready(function()
         $(this).siblings('.wishlist-popover').addClass('active');
     });
 
-    $(document).on('mouseleave', '.my-wishlist-page .wishlist-popover', function(e) {
+    $(document).on('mouseleave', '.my-wishlist-page .wishlist-popover', function() {
 
         $(this).removeClass('active');
     });
@@ -960,9 +960,9 @@ $('document').ready(function()
 
     $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
 
-    $('.my-wishlist-page .my-wishlist-scrollable').on('scroll', function(e) {
+    $('.my-wishlist-page .my-wishlist-scrollable').on('scroll', function() {
         $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').removeClass('top');
-        $('.my-wishlist-page .my-wishlist-scrollable .row').each(function(e) {
+        $('.my-wishlist-page .my-wishlist-scrollable .row').each(function() {
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
                 $(this).find('.wishlist-popover').addClass('top');
             }
@@ -1032,7 +1032,7 @@ $('document').ready(function()
 
     });
 
-    $(document).on('click', '.my-wishlist-page .my-wishlist-scrollable .row .preview', function(e) {
+    $(document).on('click', '.my-wishlist-page .my-wishlist-scrollable .row .preview', function() {
 
         if ($(this).hasClass('playing')) {
 
@@ -1090,11 +1090,11 @@ $('document').ready(function()
 
     /* notifications page */
 
-    $('.notifications-page input[type="submit"]').on('mousedown', function(e) {
+    $('.notifications-page input[type="submit"]').on('mousedown', function() {
         $(this).addClass('clicked');
     });
 
-    $('.notifications-page input[type="submit"]').on('mouseup', function(e) {
+    $('.notifications-page input[type="submit"]').on('mouseup', function() {
         $(this).removeClass('clicked');
     });
     /* end notifications page */
@@ -1133,12 +1133,12 @@ $('document').ready(function()
     $('.recent-downloads-page .recent-downloads-scrollable .wishlist-popover').slice(0, 3).addClass('top');
 
 
-    $('.recent-downloads-page .recent-downloads-scrollable').on('scroll', function(e) {
+    $('.recent-downloads-page .recent-downloads-scrollable').on('scroll', function() {
 
         $('.recent-downloads-page .recent-downloads-scrollable .wishlist-popover').removeClass('top');
 
 
-        $('.recent-downloads-page .recent-downloads-scrollable .row').each(function(e) {
+        $('.recent-downloads-page .recent-downloads-scrollable .row').each(function() {
 
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
                 $(this).find('.wishlist-popover').addClass('top');
@@ -1214,7 +1214,7 @@ $('document').ready(function()
 
     });
 
-    $(document).on('click', '.recent-downloads-page .recent-downloads-scrollable .row .preview', function(e) {
+    $(document).on('click', '.recent-downloads-page .recent-downloads-scrollable .row .preview', function() {
 
         if ($(this).hasClass('playing')) {
 
@@ -1265,17 +1265,17 @@ $('document').ready(function()
     /* saved queues page */
     $('.saved-queues-page .playlist-filter-container .playlist-filter-button').addClass('active');
 
-    $(document).on('mousedown', '.saved-queues-page .playlist-filter-container .create-playlist-button', function(e) {
+    $(document).on('mousedown', '.saved-queues-page .playlist-filter-container .create-playlist-button', function() {
         $(this).addClass('pressed');
     });
 
 
-    $(document).on('mouseup', '.saved-queues-page .playlist-filter-container .create-playlist-button', function(e) {
+    $(document).on('mouseup', '.saved-queues-page .playlist-filter-container .create-playlist-button', function() {
         $(this).removeClass('pressed');
     });
 
 
-    $(document).on('click', '.saved-queues-page .filter-button', function(e) {
+    $(document).on('click', '.saved-queues-page .filter-button', function() {
         if ($(this).hasClass('active')) {
 
             if ($(this).hasClass('toggled')) {
@@ -1301,7 +1301,7 @@ $('document').ready(function()
 
     $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
 
-    $(document).on('click', '.saved-queues-page .add-to-playlist-button', function(e) {
+    $(document).on('click', '.saved-queues-page .add-to-playlist-button', function() {
 
         $(this).siblings('.wishlist-popover').addClass('active');
     });
@@ -1318,7 +1318,7 @@ $('document').ready(function()
 
     /* search results page */
 
-    $('.search-page .tracklist .preview').on('click', function(e) {
+    $('.search-page .tracklist .preview').on('click', function() {
         $('.tracklist').removeClass('playing');
         $('.preview').removeClass('playing');
         $('.song').removeClass('playing');
@@ -1352,7 +1352,7 @@ $('document').ready(function()
 
 
 
-    $(document).on('click', '.tracklist-header span', function(e) {
+    $(document).on('click', '.tracklist-header span', function() {
         if ($(this).hasClass('active')) {
 
             if ($(this).hasClass('toggled')) {
@@ -1375,12 +1375,12 @@ $('document').ready(function()
     $('.search-page .wishlist-popover').slice(0, 3).addClass('top');
     $('.search-page .tracklist').slice(0, 3).addClass('current');
 
-    $('.search-page .tracklist-scrollable').on('scroll', function(e) {
+    $('.search-page .tracklist-scrollable').on('scroll', function() {
 
         $('.search-page .wishlist-popover').removeClass('top');
         $('.search-page .tracklist').removeClass('current');
 
-        $('.search-page .tracklist').each(function(e) {
+        $('.search-page .tracklist').each(function() {
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
                 $(this).addClass('current');
                 $(this).find('.wishlist-popover').addClass('top');
@@ -1389,33 +1389,33 @@ $('document').ready(function()
     });
 
 
-    $('.search-page .advanced-search #submit').on('mousedown', function(e) {
+    $('.search-page .advanced-search #submit').on('mousedown', function() {
         $(this).addClass('clicked');
     });
 
-    $('.search-page .advanced-search #submit').on('mouseup', function(e) {
+    $('.search-page .advanced-search #submit').on('mouseup', function() {
         $(this).removeClass('clicked');
     });
 
-    $(document).on('click', '.pagination a', function(e) {
+    $(document).on('click', '.pagination a', function() {
         var target = $(this).attr('href');
     });
     /* end search results page */
 
 
     /* site login page */
-    $(document).on('mousedown', '.site-login input[type="submit"]', function(e) {
+    $(document).on('mousedown', '.site-login input[type="submit"]', function() {
         $(this).addClass('selected');
     });
 
-    $(document).on('mouseup', '.site-login input[type="submit"]', function(e) {
+    $(document).on('mouseup', '.site-login input[type="submit"]', function() {
         $(this).removeClass('selected');
     });
     /* end site login page */
 
 
     /* now streaming/queue detail page */
-    $(document).on('click', '.gear-icon', function(e) {
+    $(document).on('click', '.gear-icon', function() {
         $('.queue-options').addClass('active');
 
     });
@@ -1451,7 +1451,7 @@ $('document').ready(function()
 
         if ($(this).siblings('.wishlist-popover').hasClass('active')) {
             $(this).siblings('.wishlist-popover').removeClass('active');
-            $(this).find('.add-to-playlist-button').css({opacity: .5});
+            $(this).find('.add-to-playlist-button').css({opacity: 0.5});
         } else {
 
             $(this).siblings('.wishlist-popover').addClass('active');
@@ -1467,12 +1467,12 @@ $('document').ready(function()
 
     $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
 
-    $(document).on('scroll', '.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable', function(e) {
+    $(document).on('scroll', '.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable', function() {
 
         $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').removeClass('top');
 
 
-        $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').each(function(e) {
+        $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').each(function() {
             if ($(this).position().top >= -22 && $(this).position().top <= 130) {
                 $(this).find('.wishlist-popover').addClass('top');
             }
@@ -1517,7 +1517,7 @@ $('document').ready(function()
         $(this).removeClass('blue-bkg').addClass('hovered');
     });
 
-    $(document).on('click', '.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview', function(e) {
+    $(document).on('click', '.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview', function() {
 
         if ($(this).hasClass('playing')) {
 
