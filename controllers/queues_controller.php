@@ -180,8 +180,8 @@ class QueuesController extends AppController
         $this->QueueList->unbindModel(
                 array('belongsTo' => array('User'), 'hasMany' => array('QueueDetail'))
         );
-
-        if (((Cache::read('defaultqueuelist')) === false) || (Cache::read('defaultqueuelist') === null))
+        $queueData = Cache::read("defaultqueuelist");
+        if ($queueData === false)
         {
             $queueData = $this->QueueList->find('all', array(
                 'conditions' => $cond,
@@ -190,10 +190,6 @@ class QueuesController extends AppController
                 'limit' => 100
             ));
             Cache::write("defaultqueuelist", $queueData);
-        }
-        else
-        {
-            $queueData = Cache::read("defaultqueuelist");
         }
         return $queueData;
     }
