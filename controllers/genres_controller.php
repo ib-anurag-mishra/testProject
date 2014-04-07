@@ -55,16 +55,11 @@ Class GenresController extends AppController
         $this->set('patronDownload', $patronDownload);
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
-
-        if (($genreAll = Cache::read("genre" . $country)) === false) {
+        $genreAll = Cache::read("genre" . $country);
+        if ($genreAll === false) {
         //if(1){ 
-            
             $genreAll = $this->Common->getGenres($country);
-        } else {
-            
-            $genreAll = Cache::read("genre" . $country);
-        }      
-
+        }
         $this->set('genresAll', $genreAll);
 
         $category_ids = $this->Category->find('list', array('conditions' => array('Language' => Configure::read('App.LANGUAGE')), 'fields' => 'id'));
@@ -88,7 +83,8 @@ Class GenresController extends AppController
                 $cond = "";
                 $block = 'no';
             }
-            if (($genres = Cache::read($genreName . $block)) === false)
+            $genreDetails = Cache::read($genreName . $block);
+            if ($genreDetails === false)
             {
                 $this->Song->recursive = 2;
                 $this->Song->Behaviors->attach('Containable');
@@ -146,7 +142,6 @@ Class GenresController extends AppController
                     ), 'limit' => '50'));
                 Cache::write($genreName . $block, $genreDetails);
             }
-            $genreDetails = Cache::read($genreName . $block);
             $finalArr = Array();
             $songArr = Array();
             if (count($genreDetails) > 3)
@@ -255,13 +250,11 @@ Class GenresController extends AppController
             $Artist = "All";
             $slectedArtistFilter =$Artist;
         }
-              
-        if (($genreAll = Cache::read("genre" . $country)) === false) {
+        
+        $genreAll = Cache::read("genre" . $country);      
+        if ($genreAll === false) {
         //if(1){             
             $genreAll = $this->Common->getGenres($country);
-        } else {
-            
-            $genreAll = Cache::read("genre" . $country);
         }          
        
           
@@ -275,12 +268,11 @@ Class GenresController extends AppController
        
         
         //check cache variable are set or not
-        if (($artistList = Cache::read($cacheVariableName)) === false)
+        $artistList = Cache::read($cacheVariableName);
+        if ($artistList === false)
        // if(1)
         {             
                $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
-        } else {             
-               $artistList = Cache::read($cacheVariableName);
         } 
         
         //prepare the array that contains all alphabets which have no any artist value for the selected changes
@@ -349,15 +341,12 @@ Class GenresController extends AppController
         //create the cache variable name
         $cacheVariableName = base64_encode($genre).strtolower($country).strtolower($Artist).$pageNo;     
        
-        
+        $artistList = Cache::read($cacheVariableName);
         //check cache variable are set or not
-        if (($artistList = Cache::read($cacheVariableName)) === false)         
+        if ($artistList === false)         
         {
             echo 'Not Exist';
                 $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);                
-        } else {
-            echo 'Exist';
-                $artistList = Cache::read($cacheVariableName);
         } 
       
       
@@ -425,15 +414,11 @@ Class GenresController extends AppController
         
         $cacheVariableName = base64_encode($genre).strtolower($country).strtolower($Artist).$pageNo;       
        
-        
-        if (($artistList = Cache::read($cacheVariableName)) === false) { 
+        $artistList = Cache::read($cacheVariableName);
+        if ($artistList === false) { 
             echo 'Not Exist';
               $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
-        } else {
-            echo 'Exist';
-              $artistList = Cache::read($cacheVariableName);
-        } 
-        
+        }
         //$this->getSortArtistList($artistList);      
       
             
