@@ -186,20 +186,7 @@ $('document').ready(function() {
 
     });
 
-    $('.top-music-video-cover-container').on('mouseenter', function() {
 
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.top-video-login-button').css({opacity: 1});
-        $(this).find('.preview').css({opacity: 1});
-
-    });
-
-    $('.top-music-video-cover-container').on('mouseleave', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.top-video-login-button').css({opacity: 0});
-        $(this).find('.preview').css({opacity: 0});
-
-    });
 
     $('.album-cover-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
