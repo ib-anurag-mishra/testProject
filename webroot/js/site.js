@@ -166,36 +166,6 @@ $('document').ready(function() {
         }
     });
 
-    $(document).on('scroll', function() {
-
-        var st = $(this).scrollTop();
-        if (st > lastScrollTop) {
-            // downscroll code
-            scrollingDown = true;
-        } else {
-            // upscroll code
-            scrollingDown = false;
-        }
-        lastScrollTop = st;
-
-        if ((st + $(window).height()) >= (doc_height - footer_height)) {
-
-
-            if (scrollingDown) {
-                footer_pos = computeVisibleHeight(footer);
-                music_player_container.css({bottom: footer_pos});
-            } else {
-
-                footer_pos = computeVisibleHeight(footer);
-                music_player_container.css({bottom: footer_pos - 1});
-            }
-
-        } else {
-
-            music_player_container.css({bottom: 0});
-
-        }
-    });
 
     $(document).on('mouseleave', '.account-options-menu', function() {
 
