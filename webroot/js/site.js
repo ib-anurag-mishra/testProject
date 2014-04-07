@@ -64,7 +64,7 @@ $('document').ready(function() {
 
     // });
 
-    $add_to_playlist).on('mouseenter', function() {
+    $add_to_playlist.on('mouseenter', function() {
             
         $playlist_options.addClass('active');
 
