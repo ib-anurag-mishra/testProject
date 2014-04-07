@@ -35,9 +35,6 @@ $('document').ready(function() {
     var poll = $('.poll');
     var music_player_container = $('.music-player-container');
     var preview = $('.preview');
-    var top_100_songs_grid = $('#top-100-songs-grid');
-    var grid_view_button = $('.grid-view-button');
-    var grids = $('.grids');
     var most_popular_sub_nav = $('.most-popular-sub-nav');
     var footer = $('.site-footer');
     var footer_height = footer.height();
@@ -135,9 +132,7 @@ $('document').ready(function() {
         $(this).removeClass('active');
     });
 
-    top_100_songs_grid.addClass('active');
-    grid_view_button.addClass('active');
-    grids.addClass('active');
+
 
     $('.video-thumbnail-container').on('mouseenter', function() {
 
