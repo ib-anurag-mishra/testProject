@@ -197,11 +197,11 @@ function write_file($content, $file_name, $folder)
             $delimiter = "\t";
             $titleString = implode($delimiter, $data[0]);
             unset($data[0]);
-            fwrite($fh, $titleString . "\r\n");
+            fwrite($fh, $titleString . "\n");
             foreach ($data as $subArray)
             {
                 $dataRowString = implode($delimiter, $subArray);
-                fwrite($fh, $dataRowString . "\r\n");
+                fwrite($fh, $dataRowString . "\n");
             }
             //fwrite($fh ,"\r\n"); 
         }
