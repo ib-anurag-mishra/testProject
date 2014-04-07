@@ -88,7 +88,9 @@ class AppController extends Controller
             }
         }
         $this->switchCpuntriesTable();
-        if ((Cache::read('maintainLatestDownload')) === false)
+        
+        $maintainDownload = Cache::read('maintainLatestDownload');
+        if ($maintainDownload === false)
         {
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
             $siteConfigData = $this->Album->query($siteConfigSQL);
@@ -98,7 +100,7 @@ class AppController extends Controller
         }
         else
         {
-            $maintainLatestDownload = Cache::read('maintainLatestDownload');
+            $maintainLatestDownload = $maintainDownload;
             $this->Session->write('maintainLatestDownload', $maintainLatestDownload);
         }
         $this->Auth->authorize = 'actions';
@@ -124,16 +126,12 @@ class AppController extends Controller
         header('Pragma: no-cache');
         //$this->checkOnlinePatron();
         // add announcement in the cache
-        if (($announceInfo = Cache::read("announcementCache")) === false)
+        $announcment_rs = Cache::read("announcementCache");
+        if ($announcment_rs === false)
         {
             $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
             $announcment_rs = $this->Album->query($announcment_query);
             Cache::write("announcementCache", $announcment_rs);
-        }
-        else
-        {
-            //get announcement from the cache
-            $announcment_rs = Cache::read("announcementCache");
         }
 
         if (isset($announcment_rs[0]['pages']['page_content']))
