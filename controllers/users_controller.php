@@ -1254,11 +1254,16 @@ function login($library = null){
                         $this->NotificationSubscriptions->setDataSource('master');       
 
 
-                        if($this->NotificationSubscriptions->save()){                                
+                        if($this->NotificationSubscriptions->save() && $notificationEmail!=''){                                
                             $this->Session->setFlash('Notification information has been updated successfully!');
                             $this->NotificationSubscriptions->setDataSource('default');
                             $this->redirect($this->webroot.'users/manage_notification');
-                        }  
+                        }
+                        else
+                        {
+                            $this->Session->setFlash('Email ID is Empty');                            
+                            $this->redirect($this->webroot.'users/manage_notification');
+                        }
                        
                        
                    }else{
