@@ -336,7 +336,7 @@ class ResetcacheController extends AppController
                     "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
 			foreach($genresArray as $topgenrekey=>$topgenrevalue){
         $set = Cache::read($topgenrevalue.$territory);  
-				if( (true === empty($set)) || (( Cache::read($topgenrevalue.$territory)) === false) || (Cache::read($topgenrevalue.$territory) === null) ) {
+				if( (true === empty($set)) || (($set) === false) || ($set === null) ) {
           $data['top_ten_genre'][] = $topgenrevalue.$territory;
         }
 				
@@ -344,14 +344,14 @@ class ResetcacheController extends AppController
       
 			//Restore all Genre
       $set = Cache::read('genre'.$territory);
-      if( (true === empty($set)) || (( Cache::read('genre'.$territory)) === false) || (Cache::read('genre'.$territory) === null) ) {
+      if( (true === empty($set)) || (($set) === false) || ($set === null) ) {
         $data['all_genre'][] = 'genre'.$territory;
       }
       
       
 			//Restore National top 100
 			$set = Cache::read('national'.$territory);
-      if( (true === empty($set)) || (( Cache::read('national'.$territory)) === false) || (Cache::read('national'.$territory) === null) ) {
+      if( (true === empty($set)) || (($set) === false) || ($set === null) ) {
         $data['national_top_100'][] = 'national'.$territory;
       }
       
@@ -367,7 +367,7 @@ class ResetcacheController extends AppController
 			foreach($libraryDetails AS $key => $val ) {
         $libId = $val['Library']['id'];
         $set = Cache::read("lib".$libId);
-        if( (true === empty($set)) || (( Cache::read("lib".$libId)) === false) || (Cache::read("lib".$libId) === null) ) {
+        if( (true === empty($set)) || (($set) === false) || ($set === null) ) {
           $data['library_top_10'][] = $libId;
         }				 
 			}
@@ -377,7 +377,7 @@ class ResetcacheController extends AppController
 			$languageArray = array('EN', 'ES', 'IT', 'FR');
 			foreach($languageArray as $languagekey=>$languagevalue){
         $set = Cache::read('ssartists_'.$territory.'_'.$languagevalue);
-        if( (true === empty($set)) || (( Cache::read('ssartists_'.$territory.'_'.$languagevalue)) === false) || (Cache::read('ssartists_'.$territory.'_'.$languagevalue) === null) ) {
+        if( (true === empty($set)) || (( $set) === false) || ($set === null) ) {
           $data['featured_artist'][] = 'ssartists_'.$territory.'_'.$languagevalue;
         }  	
 			}
@@ -386,7 +386,7 @@ class ResetcacheController extends AppController
   
 			//Restore featured albums
       $set = Cache::read('featured'.$territory);
-      if( (true === empty($set)) || (( Cache::read('featured'.$territory)) === false) || (Cache::read('featured'.$territory) === null) ) {
+      if( (true === empty($set)) || (( $set) === false) || ($set === null) ) {
         $data['featured_album'][] = 'featured'.$territory;
       }   
 		}
@@ -395,7 +395,7 @@ class ResetcacheController extends AppController
 		$languageArray = array('en', 'es', 'it', 'fr');
 		foreach($languageArray as $languagekey=>$languagevalue){
       $set = Cache::read("page".$languagevalue.'aboutus');
-			if( (true === empty($set)) || (( Cache::read("page".$languagevalue.'aboutus')) === false) || (Cache::read("page".$languagevalue.'aboutus') === null) ) {
+			if( (true === empty($set)) || (( $set) === false) || ($set === null) ) {
         $data['page'][] = "page".$languagevalue.'aboutus';
       }  
 		}
@@ -472,9 +472,10 @@ class ResetcacheController extends AppController
     echo "<br />============================================= $var ================================================<br />";
     echo "<br />============================================================================================================<br />";
     echo '<pre>';
-    print_r( Cache::read($var) );
+    $cacheValue = Cache::read($var);
+    print_r( $cacheValue );
     echo "<br />============================================================================================================<br />";
-    print_r( unserialize(Cache::read($var)) );
+    print_r( unserialize($cacheValue) );
     echo "<br />*********************************************  END  ********************************************************<br />";  
     exit;
   }
@@ -483,8 +484,9 @@ class ResetcacheController extends AppController
     
     echo "<br />================================================  ''  ============================================================<br />";
     Cache::write("lib".$libId, '');
-    var_dump( Cache::read("lib".$libId) );
-    if (($libDownload = Cache::read("lib".$libId)) === false){
+    $temp = Cache::read("lib".$libId);
+    var_dump( $temp );
+    if (($libDownload = $temp) === false){
       echo 'query fired';
     } else {
       echo 'query do not fired';
@@ -492,8 +494,9 @@ class ResetcacheController extends AppController
     
     echo "<br />================================================  null  ============================================================<br />";
     Cache::write("lib".$libId, null);
-    var_dump( Cache::read("lib".$libId) );
-    if (($libDownload = Cache::read("lib".$libId)) === false){
+    $temp = Cache::read("lib".$libId);
+    var_dump( $temp );
+    if (($libDownload = $temp) === false){
       echo 'query fired';
     } else {
       echo 'query do not fired';
@@ -501,8 +504,9 @@ class ResetcacheController extends AppController
     
     echo "<br />================================================  false  ============================================================<br />";
     Cache::write("lib".$libId, false);
-    var_dump( Cache::read("lib".$libId) );
-    if (($libDownload = Cache::read("lib".$libId)) === false){
+    $temp = Cache::read("lib".$libId);
+    var_dump( $temp );
+    if (($libDownload = $temp) === false){
       echo 'query fired';
     } else {
       echo 'query do not fired';
@@ -510,8 +514,9 @@ class ResetcacheController extends AppController
     
     echo "<br />================================================  array()  ============================================================<br />";
     Cache::write("lib".$libId, array());
-    var_dump( Cache::read("lib".$libId) );
-    if (($libDownload = Cache::read("lib".$libId)) === false){
+    $temp = Cache::read("lib".$libId);
+    var_dump( $temp );
+    if (($libDownload = $temp) === false){
       echo 'query fired';
     } else {
       echo 'query do not fired';
@@ -520,8 +525,9 @@ class ResetcacheController extends AppController
     echo "<br />================================================  array(content)  ========================================================<br />";
     $arrTmp = array('a', 'b');
     Cache::write("lib".$libId, $arrTmp);
-    var_dump( Cache::read("lib".$libId) );
-    if (($libDownload = Cache::read("lib".$libId)) === false){
+    $temp = Cache::read("lib".$libId);
+    var_dump( $temp );
+    if (($libDownload = $temp) === false){
       echo 'query fired';
     } else {
       echo 'query do not fired';
@@ -530,8 +536,9 @@ class ResetcacheController extends AppController
     echo "<br />================================================  Cache::delete  ========================================================<br />";
 
     Cache::delete("lib".$libId);
-    var_dump( Cache::read("lib".$libId) );
-    if (($libDownload = Cache::read("lib".$libId)) === false){
+    $temp = Cache::read("lib".$libId);
+    var_dump( $temp );
+    if (($libDownload = $temp) === false){
       echo 'query fired';
     } else {
       echo 'query do not fired';
