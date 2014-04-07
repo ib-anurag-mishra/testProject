@@ -161,7 +161,7 @@
 ?> 
                 </head>
                 <body class="<?php echo $body_class; ?>">
-                    <!--[if lt IE 8]>
+                    <!--[if lt IE 9]>
                     <div class="browser-update">
                         <a href="#" class="bu-close"></a>
                         <a href="http://www.google.com/chrome" class="chrome"></a>
