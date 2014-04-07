@@ -70,30 +70,27 @@ class HomesController extends AppController {
             $this->set('patronDownload', $patronDownload);
         }
 
-        /* Top Singles Starts */  
-        if (($national = Cache::read("top_singles" . $territory)) === false) {
+        /* Top Singles Starts */ 
+        $nationalTopDownload = Cache::read("top_singles" . $territory);
+        if ($nationalTopDownload === false) {
             $nationalTopDownload = $this->Common->getTopSingles($territory);
-        } else {
-            $nationalTopDownload = Cache::read("top_singles" . $territory);
         }
         $this->set('top_singles', $nationalTopDownload);
         /* Top Singles Ends */ 
         
         /* National Top 100 Albums slider start */
-        if (($national = Cache::read("topAlbums" . $territory)) === false) {
+        $TopAlbums = Cache::read("topAlbums" . $territory);
+        if ($TopAlbums === false) {
             $TopAlbums = $this->Common->getTopAlbums($territory);
-        } else {
-            $TopAlbums = Cache::read("topAlbums" . $territory);
         }
         $this->set('nationalTopAlbums', $TopAlbums);
         /* National Top 100 Albums slider Ends */
 
         /* featured artist slideshow code start */
-        if (Cache::read("featured_artists_" . $territory.'_'.'1') === false) {
+        $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.'1');
+        if ($featuresArtists === false) {
             $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
             Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
-        } else {
-            $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.'1');
         }        
         $this->set('featuredArtists', $featuresArtists);
         /* featured artist slideshow code Ends */
@@ -130,8 +127,8 @@ class HomesController extends AppController {
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('patronDownload', $patronDownload);
         $this->set('tab_no', $tab_no);
-
-        if (($artists = Cache::read($genre . $territory)) === false) {
+        $genre_info = Cache::read($genre . $territory);
+        if ($genre_info === false) {
             $SiteMaintainLDT = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'maintain_ldt')));
             if ($SiteMaintainLDT['Siteconfig']['svalue'] == 1) {
                 $restoregenre_query = "
@@ -235,12 +232,11 @@ class HomesController extends AppController {
                         ";
             }
 
-            $data = $this->Album->query($restoregenre_query);
+            $genre_info = $this->Album->query($restoregenre_query);
             if (!empty($data)) {
-                Cache::write($genre . $territory, $data);
+                Cache::write($genre . $territory, $genre_info);
             }
         }
-        $genre_info = Cache::read($genre . $territory);
         // Checking for download status
         $this->set('genre_info', $genre_info);
     }
@@ -270,32 +266,26 @@ class HomesController extends AppController {
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
-        if (($libDownload = Cache::read("lib" . $libId)) === false) {
+        $topDownload_songs = Cache::read("lib" . $libId);
+        if ($topDownload_songs === false) {
             $topDownload_songs = $this->Common->getLibraryTopTenSongs($country, $libId);
-        } else {
-            $topDownload_songs = Cache::read("lib" . $libId);
         }
-
         $this->set('top_10_songs', $topDownload_songs);
 
         ////////////////////////////////////////////////Albums///////////////////////////////////////////////////
 
         $ids_provider_type_album = '';
-
-        if (($libDownload = Cache::read("lib_album" . $libId)) === false) {
+        $topDownload_albums = Cache::read("lib_album" . $libId);
+        if ($topDownload_albums === false) {
             $topDownload_albums = $this->Common->getLibraryTop10Albums($country, $libId);
-        } else {
-            $topDownload_albums = Cache::read("lib_album" . $libId);
         }
         $this->set('topDownload_albums', $topDownload_albums);
 
 
         ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
-
-        if (($libDownload = Cache::read("lib_video" . $libId)) === false) {
+        $topDownload_videos_data = Cache::read("lib_video" . $libId);
+        if ($topDownload_videos_data === false) {
             $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country, $libId);
-        } else {
-            $topDownload_videos_data = Cache::read("lib_video" . $libId);
         }
         $this->set('topDownload_videos_data', $topDownload_videos_data);
     }
@@ -320,11 +310,10 @@ class HomesController extends AppController {
         //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
         // National Top Downloads functionality
         if (!empty($territory)) {
-            if (($national = Cache::read("national_us_top10_songs" . $territory)) === false) {
+            $national_us_top10_record = Cache::read("national_us_top10_songs" . $territory);
+            if ($national_us_top10_record === false) {
                 $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
-            } else {
-                $national_us_top10_record = Cache::read("national_us_top10_songs" . $territory);
-            }
+            } 
         }
         $this->set('nationalTopDownload', $national_us_top10_record);
 
@@ -333,11 +322,10 @@ class HomesController extends AppController {
         $country = $this->Session->read('territory');
 
         if (!empty($country)) {
-            if (($national = Cache::read("national_us_top10_albums" . $territory)) === false) {
+            $ustop10Albums = Cache::read("national_us_top10_albums" . $territory);
+            if ($ustop10Albums === false) {
                 $ustop10Albums = $this->Common->getUsTop10Albums($territory);
-            } else {
-                $ustop10Albums = Cache::read("national_us_top10_albums" . $territory);
-            }
+            } 
         }
         $this->set('ustop10Albums', $ustop10Albums);
 
@@ -346,10 +334,9 @@ class HomesController extends AppController {
         $country = $this->Session->read('territory');
 
         if (!empty($country)) {
-            if (($national = Cache::read("national_us_top10_videos" . $territory)) === false) {
+            $usTop10VideoDownload = Cache::read("national_us_top10_videos" . $territory);
+            if ($usTop10VideoDownload === false) {
                 $usTop10VideoDownload = $this->Common->getUsTop10Videos($territory);
-            } else {
-                $usTop10VideoDownload = Cache::read("national_us_top10_videos" . $territory);
             }
         }
         $this->set('usTop10VideoDownload', $usTop10VideoDownload);
@@ -361,7 +348,8 @@ class HomesController extends AppController {
         $territory = $this->Session->read('territory');
 
         // National Top Downloads functionality
-        if (($national = Cache::read("national" . $territory)) === false) {
+        $nationalTopDownload = Cache::read("national" . $territory);
+        if ($nationalTopDownload === false) {
 
             $country = $territory;
 
@@ -453,8 +441,6 @@ STR;
             Cache::write("national" . $territory, $nationalTopDownload);
         }
 
-        $nationalTopDownload = Cache::read("national" . $territory);
-
         $this->set('nationalTopDownload', $nationalTopDownload);
     }
 
@@ -513,7 +499,8 @@ STR;
         } else {
             $cond = array('ArtistText LIKE' => $search . '%');
         }
-        if (($artist = Cache::read("artist" . $search . $country)) === false) {
+        $artistAll = Cache::read("artist" . $search . $country);
+        if ($artistAll === false) {
             $artistAll = $this->Song->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -540,7 +527,6 @@ STR;
             ));
             Cache::write("artist" . $search . $country, $artistAll);
         }
-        $artistAll = Cache::read("artist" . $search . $country);
         $this->set('distinctArtists', $artistAll);
         $this->layout = 'ajax';
     }
@@ -1178,7 +1164,8 @@ STR;
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
         $this->Song->recursive = 2;
-        if (($genre = Cache::read("genre" . $country)) === false) {
+        $genreAll = Cache::read("genre" . $country);
+        if ($genreAll === false) {
             $results = $this->Song->find('all', array(
                 'conditions' => array(
                     'Song.DownloadStatus' => 1,
@@ -1217,7 +1204,6 @@ STR;
             ));
             Cache::write("genre" . $country, $genreAll);
         }
-        $genreAll = Cache::read("genre" . $country);
         $resultArr = array();
         foreach ($genreAll as $genre) {
             $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
@@ -3523,22 +3509,17 @@ STR;
         $territory = $this->Session->read('territory');
         //get Advisory condition
         //////////////////////////////////Videos/////////////////////////////////////////////////////////            
-
-        if (($coming_soon = Cache::read("new_releases_videos" . $territory)) === false) {
+        $coming_soon_videos = Cache::read("new_releases_videos" . $territory);
+        if ($coming_soon_videos === false) {
             $coming_soon_videos = $this->Common->getNewReleaseVideos($territory);
-        } else {
-            $coming_soon_videos = Cache::read("new_releases_videos" . $territory);
         }
 
         $this->set('new_releases_videos', $coming_soon_videos);
 
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
-
-        if (($coming_soon = Cache::read("new_releases_albums" . $territory)) === false) {
-
+        $new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
+        if ($new_releases_albums_rs === false) {
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
-        } else {   //  Show From Cache
-            $new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
         }
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
