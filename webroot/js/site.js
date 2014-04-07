@@ -92,17 +92,6 @@ $('document').ready(function() {
 
 
 
-    $('.news .featured .featured-grid .featured-album-detail').on('mouseenter', '.album-cover-container', function() {
-        $('.album-preview').css({opacity: 0});
-        $(this).find('.album-preview').css({opacity: 1});
-    });
-
-    $('.news .featured .featured-grid .featured-album-detail').on('mouseleave', '.album-cover-container', function() {
-        $(this).find('.album-preview').css({opacity: 0});
-        $('.album-preview').css({opacity: 0});
-        $(this).find('.wishlist-popover').removeClass('active');
-    });
-
 
     $('.add-to-queue').on('mouseenter', function() {
 
