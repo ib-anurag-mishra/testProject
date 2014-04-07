@@ -441,10 +441,6 @@ $('document').ready(function() {
             container3.hide();
         }
 
-        if (container4.has(e.target).length === 0)
-        {
-            container4.hide();
-        }
 
         if (container5.has(e.target).length === 0)
         {
