@@ -422,7 +422,6 @@ $('document').ready(function() {
         var container = $('.wishlist-popover');
         var container2 = $('.mejs-playlist.mejs-layer');
         var container3 = music_search_results;
-        var container4 = whats_happening_filter_results;
         var container5 = $('.playlist-options');
         var container6 = most_popular_sub_nav;
         var container7 = $('.queue-overlay');
