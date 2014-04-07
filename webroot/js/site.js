@@ -34,7 +34,7 @@ $('document').ready(function()
     var footer_pos;
     var music_search_results = $('.master-music-search-results');
     var poll = $('.poll');
-    var plays_tooltip = $('.plays-tooltip');
+    var $plays_tooltip = $('.plays-tooltip');
     var filter_text = $('.filter-text');
     var filter_results = $('.filter-results');
     var music_player_container = $('.music-player-container');
@@ -50,30 +50,15 @@ $('document').ready(function()
     var footer_height = footer.height();
 
 
-    
 
+    // $('.tooltip a').hover(
+    //     function() {
+    //         $plays_tooltip.show();
+    //     },
+    //     function() {
+    //         $plays_tooltip.hide();
 
-    $(document).on('click', '.announcements h4 a', function(e) {
-        e.preventDefault();
-        if ($(poll).hasClass('active')) {
-            $(poll).removeClass('active');
-        } else {
-            $(poll).addClass('active');
-
-        }
-    });
-
-
-
-
-    $('.tooltip a').hover(
-            function() {
-                plays_tooltip.show();
-            },
-            function() {
-                plays_tooltip.hide();
-
-            });
+    // });
 
     coming_soon_singles_grid.addClass('active');
     filter_text.on('keyup', function() {
