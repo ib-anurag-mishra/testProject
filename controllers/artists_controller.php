@@ -625,14 +625,13 @@ Class ArtistsController extends AppController {
             $page = $this->params['form']['page'];
             if (!empty($page)) {
                 $territory = $this->Session->read('territory');
-                if (Cache::read("featured_artists_" . $territory . '_' . $page) === false) {
+                $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);
+                if ($featuresArtists === false) {
                     $featuresArtists = $this->Common->getFeaturedArtists($territory, $page);
                     if(!empty($featuresArtists)) {
                         Cache::write("featured_artists_" . $territory . '_' . $page, $featuresArtists);
                     }
-                } else {   
-                    $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);
-                }
+                } 
                 
                 $this->set('featuredArtists', $featuresArtists);
                 echo $this->render('/artists/feature_ajaxlisting');
@@ -1492,16 +1491,15 @@ Class ArtistsController extends AppController {
         $providerType = $_POST['providerType'];
         $flag = $_POST['flag'];        
         $territory = $this->Session->read('territory');
-        if (($featuredSongs = Cache::read("featured_artist_".$artistText.'_'.$flag.'_'.$territory)) === false) {
+        $featuredComposerSongs = Cache::read("featured_artist_".$artistText.'_'.$flag.'_'.$territory);
+        if ($featuredComposerSongs === false) {
             $featuredComposerSongs = $this->Common->getRandomSongs($artistText,$providerType,$flag,1,$territory);
             
             if (!empty($featuredComposerSongs)) {
                 Cache::write("featured_artist_".$artistText.'_'.$flag.'_'.$territory, $featuredComposerSongs);
                 $this->log("cache written for featured artist for $artistText with flag $flag for territory".$territory, "cache");
             }            
-        } else {
-            $featuredComposerSongs = Cache::read("featured_artist_".$artistText.'_'.$flag.'_'.$territory);
-        }
+        } 
         if (!empty($featuredComposerSongs)) {
             foreach ($featuredComposerSongs as $value) {
                 if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle'])) {
@@ -1537,7 +1535,8 @@ Class ArtistsController extends AppController {
         $prodId = $_POST['prodId'];
         $providerType = $_POST['providerType'];
         $territory = $this->Session->read('territory');
-        if (($national = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId)) === false) {
+        $nationalAlbumSongs = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId);
+        if ($nationalAlbumSongs === false) {
             $nationalAlbumSongs = $this->requestAction(
                     array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($artistText), $prodId, base64_encode($providerType)))
             );
@@ -1546,9 +1545,7 @@ Class ArtistsController extends AppController {
                 Cache::write("nationaltopalbum_" . $territory.'_'.$prodId, $nationalAlbumSongs);
                 $this->log("cache written for national top album for $territory".$prodId, "cache");
             }            
-        } else {
-            $nationalAlbumSongs = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId);
-        }                
+        }                 
         
         if (!empty($nationalAlbumSongs[$prodId])) {
             
@@ -2062,17 +2059,15 @@ Class ArtistsController extends AppController {
 
         // Videos Section
         $decodedId = trim(base64_decode($id));
-
+        $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
         if (!empty($country)) {
-            if (((Cache::read("videolist_" . $country . "_" . $decodedId)) === false) || (Cache::read("videolist_" . $country . "_" . $decodedId) === null)) {
+            if ($artistVideoList === false) {
 
                 if (!empty($decodedId)) {
                     $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
                     Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
                 }
-            } else {
-                $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
-            }
+            } 
             $this->set('artistVideoList', $artistVideoList);
         }
     }
@@ -2196,21 +2191,17 @@ Class ArtistsController extends AppController {
 
         // Videos Section
         $decodedId = trim(base64_decode($id));
-
+        
         if (!empty($this->patron_country))
         {
-            if (((Cache::read("videolist_" . $this->patron_country . "_" . $decodedId)) === false) || (Cache::read("videolist_" . $this->patron_country . "_" . $decodedId) === null))
+            $artistVideoList = Cache::read("videolist_" . $this->patron_country . "_" . $decodedId);
+            if ($artistVideoList === false)
             {
-
                 if (!empty($decodedId))
                 {
                     $artistVideoList = $this->Common->getAllVideoByArtist($this->patron_country, $decodedId);
                     Cache::write("videolist_" . $this->patron_country . "_" . $decodedId, $artistVideoList);
                 }
-            }
-            else
-            {
-                $artistVideoList = Cache::read("videolist_" . $this->patron_country . "_" . $decodedId);
             }
             $this->set('artistVideoList', $artistVideoList);
         }
