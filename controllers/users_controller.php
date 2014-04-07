@@ -1253,7 +1253,9 @@ function login($library = null){
                         ));
                         $this->NotificationSubscriptions->setDataSource('master');       
 
-                        if($notificationEmail!='')
+                        $regex = "/([a-z0-9_]+|[a-z0-9_]+\.[a-z0-9_]+)@(([a-z0-9]|[a-z0-9]+\.[a-z0-9]+)+\.([a-z]{2,4}))/i"; 
+                        
+                        if($notificationEmail!='' || !preg_match($regex, $notificationEmail))
                         {
                             if($this->NotificationSubscriptions->save()){                                
                                 $this->Session->setFlash('Notification information has been updated successfully!');
@@ -1269,7 +1271,7 @@ function login($library = null){
                         }
                         else
                         {
-                                $this->Session->setFlash('Email ID is Empty');                                
+                                $this->Session->setFlash('Invalid Email ID');                                
                                 $this->redirect($this->webroot.'users/manage_notification');
                         }
                        

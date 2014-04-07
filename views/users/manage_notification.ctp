@@ -70,26 +70,12 @@ $ieVersion = ieversion();
                     <?php echo $this->Form->input('NewsletterEmail', array('label' => false, 'value' => $notificationEmail, 'div' => false, 'class' => 'form_fields')); ?>
                 </div>    
                 <div>
-                    <button id="btnNotification" type="button" onclick="return checkEmailValue()" ><?php echo __('Save') ?></button>
+                    <button id="btnNotification" type="button"  ><?php echo __('Save') ?></button>
                 </div>
                 <?php echo $this->Form->end(); ?>
             </div>
         </div>
         <script type="text/javascript">
-                        
-                        function checkEmailValue() {
-
-                            if (!$('#UserNewsletterEmail').val()) {
-                                alert('Please enter the valid notification email address.');
-                                return false;
-                            }
-                            if (!validateEmail($('#UserNewsletterEmail').val())) {
-                                alert('Please enter the valid notification email address.');
-                                return false;
-                            }
-                            return true;
-                        }
-
 
 
                         function validateEmail(email) {
