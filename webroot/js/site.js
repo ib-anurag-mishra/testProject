@@ -81,20 +81,7 @@ $('document').ready(function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });   
 
-    // $('.albums-page .album-detail-container').on('mouseenter', '.album-cover-image', function() {
-    //     $(this).find('.album-preview').css({opacity: 1});
-    //     $(this).find('.add-to-playlist-button').css({opacity: 1});
-    // });
 
-    // $('.albums-page .album-detail-container').on('mouseleave', '.album-cover-image', function() {
-    //     $(this).find('.album-preview').css({opacity: 0});
-    //     $(this).find('.add-to-playlist-button').css({opacity: 0});
-    //     $(this).find('.wishlist-popover').removeClass('active');
-    // });
-
-    // $('.albums-page .album-detail-container .tracklist-container').on('mouseleave', '.tracklist', function() {
-    //     $(this).find('.wishlist-popover').removeClass('active');
-    // });
 
 
     
@@ -103,13 +90,7 @@ $('document').ready(function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
-    $(document).on('mouseleave', '.genres-page .album-detail-container .album-detail .album-cover-image', function() {
-        $(this).find('.wishlist-popover').removeClass('active');
-    });
 
-    $(document).on('mouseleave', '.genres-page .album-detail-container .tracklist-container .tracklist', function() {
-        $(this).find('.wishlist-popover').removeClass('active');
-    });
 
     $('.news .featured .featured-grid .featured-album-detail').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
