@@ -1560,6 +1560,8 @@ sub { top: 0.4em; }
 							/* background: url(../img/freegal_sprite.png) -400px -20px; */
 							font-family: Arial, Helvetica;
 							background: #fff;
+							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
 							box-shadow: 0 0 4px rgba(0,0,0,.5);
 							font-weight: bold;
 							margin-left: -50px;
