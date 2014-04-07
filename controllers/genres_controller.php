@@ -277,7 +277,7 @@ Class GenresController extends AppController
         
         //prepare the array that contains all alphabets which have no any artist value for the selected changes
         $artistsNoAlpha = array();
-        $artistsNoAlph = $this->checkArtistFilter($genre, $country ,$pageNo);  
+        $artistsNoAlpha = $this->checkArtistFilter($genre, $country ,$pageNo);  
         
         //set the value for generating view
         $this->set('totalPages', 150);
@@ -352,7 +352,7 @@ Class GenresController extends AppController
       
        //prepare the array that contains all alphabets which have no any artist value
         $artistsNoAlpha = array();
-        $artistsNoAlph = $this->checkArtistFilter($genre, $country ,$pageNo);
+        $artistsNoAlpha = $this->checkArtistFilter($genre, $country ,$pageNo);
         
        // print_r($artistsNoAlpha);
         //set the value for generating view
@@ -423,8 +423,9 @@ Class GenresController extends AppController
       
             
         //prepare the array that contains all alphabets which have no any artist value
-        $artistsNoAlpha = array();
-        $artistsNoAlph = $this->checkArtistFilter($genre, $country ,$pageNo);    
+         $artistsNoAlpha = array();
+         $artistsNoAlpha = $this->checkArtistFilter($genre, $country ,$pageNo);
+        
         
         //set the value for generating view
         $this->set('totalPages', 150);
