@@ -160,7 +160,7 @@
             
 ?> 
                 </head>
-                <body class="<?php echo $body_class; ?>">
+                <body class="<?php echo $body_class; ?>"><!-- test comment -->
                     <!--[if lt IE 9]>
                     <div class="browser-update">
                         <a href="#" class="bu-close"></a>
