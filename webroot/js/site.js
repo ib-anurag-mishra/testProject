@@ -174,7 +174,7 @@ $('document').ready(function() {
 
 
 
-    $('.news .whats-happening #whats-happening-grid .post-excerpt').bindMouseWheel();
+    
 
     $('.tracklist-shadow-container .tracklist-scrollable').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
