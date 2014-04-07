@@ -302,7 +302,8 @@ class ServicesController extends AppController {
 				$country = $existingLibraries['0']['Library']['library_territory'];
 				$this->Genre->Behaviors->attach('Containable');
 				$this->Genre->recursive = 2;
-				if (($genre = Cache::read("genre".$country)) === false) {
+				$genreCache = Cache::read("genre".$country);
+				if (($genreCache ) === false) {
 						$genreAll = $this->Genre->find('all',array(
 								'conditions' =>
 									array('and' =>
@@ -323,7 +324,7 @@ class ServicesController extends AppController {
 						));
 					Cache::write("genre".$country, $genreAll);
 				}
-				$genreAll = Cache::read("genre".$country);
+				$genreAll = $genreCache;
 				foreach($genreAll as $k=>$v){
 					$result[$k]['Genre'] = $v['Genre']['Genre'];
 				}
