@@ -42,33 +42,33 @@ $('document').ready(function() {
     var footer = $('.site-footer');
     var footer_height = footer.height();
 
-
+    /*
     var $wishlist_popover = $('.wishlist-popover');
     var $playlist_options = $('.playlist-options');
     var $add_to_playlist =  $('.add-to-playlist');
+    */
 
-
-    // $('.wishlist-popover').on('mouseleave', '.playlist-options', function() {
-    //     $('.playlist-options').removeClass('active');
-    // });
-
-    $wishlist_popover.on('mouseleave', '.playlist-options', function() {
-        $playlist_options.removeClass('active');
+    $('.wishlist-popover').on('mouseleave', '.playlist-options', function() {
+        $('.playlist-options').removeClass('active');
     });
 
-
-
-    // $('.add-to-playlist').on('mouseenter', function() {
-    //     //console.log('add to playlist entered');		
-    //     $('.playlist-options').addClass('active');
-
+    // $wishlist_popover.on('mouseleave', '.playlist-options', function() {
+    //     $playlist_options.removeClass('active');
     // });
 
-    $add_to_playlist.on('mouseenter', function() {
-            
-        $playlist_options.addClass('active');
 
-    });    
+
+    $('.add-to-playlist').on('mouseenter', function() {
+        //console.log('add to playlist entered');		
+        $('.playlist-options').addClass('active');
+
+    });
+
+    // $add_to_playlist.on('mouseenter', function() {
+            
+    //     $playlist_options.addClass('active');
+
+    // });    
 
     $('.genres-page .album-detail-container').on('mouseenter', '.add-to-playlist', function() {
 
