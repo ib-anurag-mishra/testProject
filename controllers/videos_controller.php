@@ -50,7 +50,8 @@ class VideosController extends AppController
             $this->set('patronDownload', $patronDownload);
         }
 
-        if (($featuredVideos = Cache::read("featured_videos" . $territory)) === false)
+	$featuredVideosCache = Cache::read("featured_videos" . $territory);
+        if (($featuredVideosCache) === false)
         {
             $featuredVideosSql = "SELECT 
                                     `FeaturedVideo`.`id`,
@@ -87,12 +88,13 @@ class VideosController extends AppController
         }
         else
         {
-            $featuredVideos = Cache::read("featured_videos" . $territory);
+            $featuredVideos = $featuredVideosCache;
         }
         
         $this->set('featuredVideos', $featuredVideos);
-        
-        if ( ($topDownloads = Cache::read("top_download_videos" . $territory)) === false)       
+	
+        $topDownloadsCache = Cache::read("top_download_videos" . $territory);
+        if ( ($topDownloadsCache) === false)       
         {
             $topDownloadSQL = "SELECT 
                                     Videodownloads.ProdID, 
@@ -127,7 +129,7 @@ class VideosController extends AppController
         }
         else
         {
-            $topDownloads = Cache::read("top_download_videos" . $territory) ;
+            $topDownloads = $topDownloadsCache ;
         }
         
         $this->set('topVideoDownloads',  $topDownloads);
@@ -452,7 +454,8 @@ class VideosController extends AppController
 
         $ids_provider_type_video = '';
 
-        if (($libDownload = Cache::read("lib_videos" . $libId)) === false)
+	$libDownloadCache = Cache::read("lib_videos" . $libId);
+        if (($libDownloadCache) === false)
         {
             $SiteMaintainLDT = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'maintain_ldt')));
 
@@ -600,7 +603,7 @@ STR;
         }
         else
         {
-            $topDownload_video = Cache::read("lib_video" . $libId);
+            $topDownload_video = $libDownloadCache;
         }
 
         return $topDownload_video;
@@ -677,6 +680,7 @@ STR;
 
         //  More Videos By Artist            
         $MoreVideosData = array();
+	$MoreVideosDataCache = Cache::read("videolist_" . $country . "_" . $decodedId);
         if (count($VideosData) > 0)
         {
 
@@ -689,11 +693,11 @@ STR;
 
                 $MoreVideosData = $this->Common->getAllVideoByArtist($country, $decodedId);
                 Cache::write("videolist_" . $country . "_" . $decodedId, $MoreVideosData);
-                $MoreVideosData = Cache::read("videolist_" . $country . "_" . $decodedId);
+                $MoreVideosData = $MoreVideosDataCache;
             }
             else
             {
-                $MoreVideosData = Cache::read("videolist_" . $country . "_" . $decodedId);
+                $MoreVideosData = $MoreVideosDataCache;
             }
         }
         else
@@ -711,8 +715,8 @@ STR;
                 exit;
             }
             
-            
-            if ($TopVideoGenreData = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']) === false)
+            $TopVideoGenreDataCache = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']);
+            if ($TopVideoGenreDataCache === false)
             {
                 $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID,Video.Advisory, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
                             `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
@@ -731,7 +735,7 @@ STR;
             }
             else
             {
-                $TopVideoGenreData = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']);
+                $TopVideoGenreData = $TopVideoGenreDataCache ;
             }
         }
         else
