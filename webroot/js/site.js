@@ -64,6 +64,7 @@ $('document').ready(function() {
 
     //album-page js
     $album_page_album_detail_container = $('.albums-page').find('.album-detail-container');
+    $album_page_album_detail_container_tracklist_container = $album_page_album_detail_container.find('.tracklist-container');
 
     $album_page_album_detail_container.on('mouseenter', '.album-cover-image', function() {
         $(this).find('.album-preview').css({opacity: 1});
@@ -76,6 +77,10 @@ $('document').ready(function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
+    $album_page_album_detail_container_tracklist_container.on('mouseleave', '.tracklist', function() {
+        $(this).find('.wishlist-popover').removeClass('active');
+    });   
+
     // $('.albums-page .album-detail-container').on('mouseenter', '.album-cover-image', function() {
     //     $(this).find('.album-preview').css({opacity: 1});
     //     $(this).find('.add-to-playlist-button').css({opacity: 1});
@@ -87,9 +92,9 @@ $('document').ready(function() {
     //     $(this).find('.wishlist-popover').removeClass('active');
     // });
 
-    $('.albums-page .album-detail-container .tracklist-container').on('mouseleave', '.tracklist', function() {
-        $(this).find('.wishlist-popover').removeClass('active');
-    });
+    // $('.albums-page .album-detail-container .tracklist-container').on('mouseleave', '.tracklist', function() {
+    //     $(this).find('.wishlist-popover').removeClass('active');
+    // });
 
 
     
