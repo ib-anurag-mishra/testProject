@@ -50,18 +50,7 @@ $('document').ready(function()
     var footer_height = footer.height();
 
 
-
-    /*
-    $('#featured-video-grid .lazy').lazyload({
-        effect: 'fadeIn',
-        container: $('#featured-video-grid .lazy')
-    });
-
-    $('.video-top-genres-grid .lazy').lazyload({
-        effect: 'fadeIn',
-        container: $('.video-top-genres-grid')
-    });
-    */
+    
 
 
     $(document).on('click', '.announcements h4 a', function(e) {
