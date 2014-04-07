@@ -26,21 +26,14 @@
 
 
 
-$('document').ready(function()
-{
+$('document').ready(function() {
     var doc_height = $(document).height();
     var lastScrollTop = 0;
     var scrollingDown;
     var footer_pos;
     var music_search_results = $('.master-music-search-results');
     var poll = $('.poll');
-    var $plays_tooltip = $('.plays-tooltip');
-    var filter_text = $('.filter-text');
-    var filter_results = $('.filter-results');
     var music_player_container = $('.music-player-container');
-    var whats_happening_filter_text = $('#whats-happening-filter-text');
-    var whats_happening_filter_results = $('.whats-happening-filter-results');
-    var coming_soon_singles_grid = $('#coming-soon-singles-grid');
     var preview = $('.preview');
     var top_100_songs_grid = $('#top-100-songs-grid');
     var grid_view_button = $('.grid-view-button');
@@ -50,29 +43,6 @@ $('document').ready(function()
     var footer_height = footer.height();
 
 
-
-    // $('.tooltip a').hover(
-    //     function() {
-    //         $plays_tooltip.show();
-    //     },
-    //     function() {
-    //         $plays_tooltip.hide();
-
-    // });
-
-    coming_soon_singles_grid.addClass('active');
-    filter_text.on('keyup', function() {
-        filter_results.show();
-    });
-    filter_text.on('blur', function() {
-        filter_results.hide();
-    });
-
-
-    whats_happening_filter_text.on('keyup', function() {
-        whats_happening_filter_results.show();
-
-    });
 
 
     $('.wishlist-popover').on('mouseleave', '.playlist-options', function() {
