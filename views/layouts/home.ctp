@@ -661,7 +661,7 @@
 
     </head>
 
-    <body><!-- test comment -->
+    <body>
         <!--[if lt IE 9]>
         <div class="browser-update">
             <a href="#" id="bu-close" class="no-ajaxy"></a>
