@@ -401,6 +401,7 @@ $('document').ready(function() {
     });
 
 
+
     /* albums page */
 
     $(document).on('click', '.albums-page .tracklist .preview', function() {
@@ -1166,7 +1167,7 @@ $('document').ready(function() {
 
 
     /* search results page */
-
+    /*
     $('.search-page .tracklist .preview').on('click', function() {
         $('.tracklist').removeClass('playing');
         $('.preview').removeClass('playing');
@@ -1198,7 +1199,7 @@ $('document').ready(function() {
     $('.search-page .advanced-genres-scrollable').bindMouseWheel();
 
     $('.search-page .advanced-labels-scrollable').bindMouseWheel();
-
+    */
 
 
     $(document).on('click', '.tracklist-header span', function() {
@@ -1221,6 +1222,7 @@ $('document').ready(function() {
 
     });
 
+    /*
     $('.search-page .wishlist-popover').slice(0, 3).addClass('top');
     $('.search-page .tracklist').slice(0, 3).addClass('current');
 
