@@ -5361,6 +5361,521 @@ img {
   background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999999;
 }
 /* end artist page */
+/* start of composer page */
+.composer-page .breadcrumbs {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.3);
+}
+.composer-page .breadcrumbs span {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.composer-page .breadcrumbs span:first-child {
+  padding-left: 0;
+}
+.composer-page header h2 {
+  font-size: 24px;
+  letter-spacing: 1px;
+  float: left;
+}
+.composer-page header .faq-link {
+  float: right;
+  font-size: 12px;
+  margin-top: 21px;
+}
+.composer-page header .faq-link a {
+  text-decoration: none;
+  color: #52c6ec;
+}
+.composer-page .album-shadow-container {
+  position: relative;
+  height: 330px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.composer-page .album-shadow-container:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: url(../img/artist/vert-tapered-shadow.png);
+  width: 11px;
+  height: 226px;
+}
+.composer-page .album-shadow-container .album-scrollable {
+  height: 340px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-left: 1px;
+  padding-top: 1px;
+}
+.composer-page .album-shadow-container .album-scrollable:hover {
+  overflow-x: scroll;
+}
+.composer-page .album-shadow-container .album-scrollable ul {
+  width: 5000px;
+  height: 341px;
+}
+.composer-page .album-shadow-container .album-scrollable ul li {
+  display: block;
+  float: left;
+  width: 164px;
+  margin-right: 15px;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container {
+  position: relative;
+  margin-bottom: 10px;
+  height: 157px;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container img {
+  border: 1px solid #fff;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .album-preview {
+  background: none repeat scroll 0 0 #FFFFFF;
+  bottom: 65px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  height: 25px;
+  line-height: 25px;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 124px;
+  left: 20px;
+  top: 70px;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .add-to-playlist-button {
+  background: url(../img/add-to-playlist-button.png);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 9px;
+  width: 26px;
+  height: 25px;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  opacity: 0;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .add-to-playlist-button:hover {
+  opacity: 1;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover {
+  display: none;
+  position: absolute;
+  right: 6px;
+  bottom: 26px;
+  /* changed 080313 , top removed */
+  font-size: 12px;
+  z-index: 100;
+  width: 120px;
+  border-right: 5px solid transparent;
+  margin-right: -5px;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover.active {
+  display: block;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover a {
+  background: #fff;
+  display: block;
+  color: #000;
+  padding: 5px 5px 5px 10px;
+  line-height: 20px;
+  text-decoration: none;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover a:hover {
+  background: #999;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options {
+  position: absolute;
+  right: -146px;
+  top: 0;
+  display: none;
+  background: #fff;
+  width: 145px;
+  height: 205px;
+  z-index: 100;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options.active {
+  display: block;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options ul {
+  height: auto;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options ul li {
+  float: none;
+  padding: 0;
+  width: 145px;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options ul li a {
+  padding: 5px 5px 5px 10px;
+  text-decoration: none;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options ul li a:hover {
+  text-decoration: none;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .add-to-playlist {
+  background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #ffffff;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .add-to-playlist:hover {
+  color: #000000;
+  background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999999;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-title {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 15px;
+  margin-bottom: 5px;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-title a {
+  color: #000;
+  text-decoration: none;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .album-title a:hover {
+  text-decoration: underline;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .genre {
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(0, 0, 0, 0.5);
+  word-wrap: break-word;
+  width: 160px;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .genre a {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .genre a:hover {
+  text-decoration: underline;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .label {
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.composer-page .album-shadow-container .album-scrollable ul li .label a {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+.composer-page .album-shadow-container .album-scrollable ul li .label a:hover {
+  text-decoration: underline;
+}
+.composer-page .artist-downloads-filter-container {
+  margin-top: 20px;
+}
+.composer-page .artist-downloads-filter-container div {
+  float: left;
+}
+.composer-page .artist-downloads-filter-container div.song-filter-button {
+  width: 336px;
+  height: 39px;
+  background: url(../img/artist/song-off.jpg);
+}
+.composer-page .artist-downloads-filter-container div.song-filter-button.active {
+  background: url(../img/artist/song-up.jpg);
+}
+.composer-page .artist-downloads-filter-container div.song-filter-button.active.toggled {
+  background: url(../img/artist/song-down.jpg);
+}
+.composer-page .artist-downloads-filter-container div.artist-filter-button {
+  width: 212px;
+  height: 39px;
+  background: url(../img/artist/artist-off.jpg);
+}
+.composer-page .artist-downloads-filter-container div.artist-filter-button.active {
+  background: url(../img/artist/artist-up.jpg);
+}
+.composer-page .artist-downloads-filter-container div.artist-filter-button.active.toggled {
+  background: url(../img/artist/artist-down.jpg);
+}
+.composer-page .artist-downloads-filter-container div.album-filter-button {
+  width: 215px;
+  height: 39px;
+  background: url(../img/artist/album-off.jpg);
+}
+.composer-page .artist-downloads-filter-container div.album-filter-button.active {
+  background: url(../img/artist/album-up.jpg);
+}
+.composer-page .artist-downloads-filter-container div.album-filter-button.active.toggled {
+  background: url(../img/artist/album-down.jpg);
+}
+.composer-page .artist-downloads-filter-container div.download-button {
+  width: 86px;
+  height: 39px;
+  background: url(../img/artist/download.jpg);
+}
+.composer-page .artist-downloads-shadow-container {
+  position: relative;
+  width: 850px;
+  height: 481px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.composer-page .artist-downloads-shadow-container:after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  background: url(../img/artist/horiz-tapered-shadow.png);
+  width: 850px;
+  height: 11px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 481px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable:hover {
+  overflow-y: scroll;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .album-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .album-title span {
+  font-weight: normal;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .artist-name {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist-header {
+  position: relative;
+  height: 39px;
+  background: url(../img/albums-page/tracklist-header-bkg.jpg) repeat;
+  width: 100%;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist-header span {
+  display: block;
+  position: absolute;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 39px;
+  top: 0;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist-header span.song {
+  left: 15px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist-header span.artist {
+  left: 331px;
+  background: url(../img/albums-page/borders.jpg) no-repeat;
+  width: 100px;
+  padding-left: 14px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist-header span.time {
+  left: 503px;
+  background: url(../img/albums-page/borders.jpg) no-repeat;
+  width: 100px;
+  padding-left: 13px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist {
+  position: relative;
+  height: 44px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist:nth-child(odd) {
+  background: #f1f1f1;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist:nth-child(even) {
+  background: #e9e9e9;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist:hover {
+  background: #c3e6f1;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist.playing {
+  background: #c3e6f1;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .preview {
+  display: block;
+  position: absolute;
+  left: 13px;
+  top: 12px;
+  width: 19px;
+  height: 19px;
+  background: url(../img/artist/preview-off.png);
+  opacity: .7;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .preview:hover {
+  background: url(../img/artist/preview-hover.png);
+  opacity: 1;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .preview.active {
+  background: url(../img/artist/preview-click.png);
+  opacity: 1;
+  width: 17px;
+  height: 17px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .preview.playing {
+  background: url(../img/artist/preview-click.png);
+  opacity: 1;
+  width: 17px;
+  height: 17px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div {
+  display: block;
+  position: absolute;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 44px;
+  color: rgba(0, 0, 0, 0.7);
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.song {
+  left: 53px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.song.playing {
+  font-weight: bold;
+  color: #000000;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.artist {
+  left: 347px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.artist a {
+  color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.artist.playing {
+  font-weight: bold;
+  color: #000000;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.download {
+  left: 781px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.download a {
+  color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.download a:hover {
+  text-decoration: underline;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.download.playing {
+  font-weight: bold;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.download.playing a {
+  color: #000000;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.album {
+  left: 602px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.album a {
+  color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.album a:hover {
+  text-decoration: underline;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.album.playing {
+  font-weight: bold;
+  color: #000000;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.album.playing a {
+  color: #000000;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist div.image-container {
+  left: 562px;
+  top: 8px;
+  position: absolute;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  border: 1px solid #fff;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .add-to-playlist-button {
+  background: url(../img/add-to-playlist-button.png);
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 295px;
+  width: 26px;
+  height: 25px;
+  opacity: .6;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .add-to-playlist-button:hover {
+  opacity: 1;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover {
+  display: none;
+  position: absolute;
+  left: 295px;
+  top: -91px;
+  font-size: 12px;
+  z-index: 100;
+  width: 120px;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover.top {
+  top: 10px;
+  left: 295px;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover.active {
+  display: block;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover a {
+  background: #fff;
+  display: block;
+  color: #000;
+  padding: 5px 5px 5px 10px;
+  line-height: 20px;
+  text-decoration: none;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover a:hover {
+  background: #999;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover .playlist-options {
+  position: absolute;
+  right: -144px;
+  top: 30px;
+  display: none;
+  background: #fff;
+  width: 145px;
+  height: 186px;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  overflow-x: hidden;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover .playlist-options.active {
+  display: block;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover .playlist-options ul li {
+  float: none;
+  padding: 0;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover .playlist-options ul li a {
+  padding: 5px 5px 5px 10px;
+  text-decoration: none;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover .playlist-options ul li a:hover {
+  text-decoration: none;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover .add-to-playlist {
+  background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #ffffff;
+}
+.composer-page .artist-downloads-shadow-container .tracklist-scrollable .tracklist-container .tracklist .wishlist-popover .add-to-playlist:hover {
+  color: #000000;
+  background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999999;
+}
+/* End of composer page */
 /* history page */
 .history-page {
   margin-left: 20px;
@@ -6516,9 +7031,7 @@ img {
 /* end video details page */
 /* site login */
 .login-container {
-  margin-top: 10px;
-  margin-left: 15px;
-  width: 850px;
+  width: 847px;
   padding-bottom: 20px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -6526,21 +7039,21 @@ img {
 }
 .login-container header {
   background: url(../img/login/border.gif) no-repeat center bottom;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding-bottom: 10px;
+  position: relative;
 }
 .login-container header h3 {
-  float: left;
   font-size: 26px;
   letter-spacing: 1px;
   line-height: 33px;
-  margin-top: 20px;
 }
 .login-container header .more-info {
-  float: right;
+  position: absolute;
   color: rgba(0, 0, 0, 0.4);
   font-size: 13px;
-  margin-top: 35px;
+  top: 14px;
+  right: 0;
 }
 .login-container header .more-info a {
   color: #52c6ec;
@@ -6553,7 +7066,7 @@ img {
 .login-container .login-library-container .form-wrapper {
   background: url(../img/login/divider.gif) no-repeat right center;
   float: left;
-  width: 423px;
+  width: 422px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -6564,6 +7077,7 @@ img {
 .login-container .login-library-container .form-wrapper p {
   margin-bottom: 20px;
   font-size: 14px;
+  line-height: 16px;
   font-weight: normal;
 }
 .login-container .login-library-container .form-wrapper div {
@@ -6583,6 +7097,7 @@ img {
   width: 295px;
   height: 24px;
   padding-left: 5px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .login-container .login-library-container .form-wrapper div input[type="submit"] {
   background: url(../img/login/submit-bkg.gif) no-repeat;
@@ -6594,6 +7109,7 @@ img {
   font-weight: bold;
   -webkit-appearance: none;
   border: 0;
+  cursor: pointer;
 }
 .login-container .login-library-container .form-wrapper div select {
   background: url(../img/login/select-bkg.gif);
@@ -6644,7 +7160,7 @@ img {
   width: 100%;
   height: 195px;
   overflow-y: hidden;
-  overflow-x: hidden;
+  overflow-y: auto;
 }
 .login-container .login-library-container .library-list-container .library-list-scrollable:hover {
   overflow-y: auto;
@@ -7548,7 +8064,7 @@ img {
   content: "";
   background: url(../img/news/top-100/top-100-tapered-shadow.png);
   position: absolute;
-  right: -3px;
+  right: 0;
   top: 66px;
   width: 11px;
   height: 336px;
@@ -8590,7 +9106,7 @@ img {
 .news .coming-soon:after {
   content: "";
   position: absolute;
-  right: -3px;
+  right: 0;
   background: url(../img/news/right-tapered-shadow.png) transparent;
   width: 10px;
   height: 449px;
@@ -9026,7 +9542,7 @@ img {
 .news .whats-happening:after {
   content: "";
   position: absolute;
-  right: -3px;
+  right: 0;
   background: url(../img/whats-happening-tapered-shadow.png) transparent;
   width: 7px;
   height: 390px;
@@ -11754,7 +12270,7 @@ img {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0d111111', endColorstr='#0d000000', GradientType=0);
 }
 .search-page .video-tracklist-header span.download {
-  width: 79px;
+  width: 76px;
 }
 .search-page .video-tracklist-shadow-container {
   position: relative;
@@ -12060,12 +12576,12 @@ img {
 }
 .site-login .login-form-wrapper form .card-number-container {
   position: absolute;
-  left: 0;
+  right: 202px;
   top: 0;
 }
 .site-login .login-form-wrapper form .pin-number-container {
   position: absolute;
-  left: 66px;
+  right: 202px;
   top: 49px;
 }
 .site-login .login-form-wrapper form .divider {
@@ -12105,6 +12621,7 @@ img {
   position: absolute;
   left: 350px;
   top: 27px;
+  cursor: pointer;
 }
 .site-login .login-form-wrapper form input[type="submit"].selected {
   background: url(../img/site-login/login-btn-clicked.jpg);

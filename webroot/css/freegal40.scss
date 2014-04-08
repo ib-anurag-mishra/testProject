@@ -151,6 +151,7 @@ button::-moz-focus-inner {
 		border:1px solid #bdbdbd;
 		background:#fff;
 		overflow-y: scroll;
+		overflow-x: hidden;
 	
 		&:nth-child(2) {
 
@@ -219,6 +220,7 @@ button::-moz-focus-inner {
 		height: 23px;
 		text-indent: -9999px;
 		background:url(../img/freegal_sprite.png) 0 -40px;
+		cursor: pointer;
 		&:hover {
 			background:url(../img/freegal_sprite.png) -25px -40px;
 
@@ -431,7 +433,7 @@ button::-moz-focus-inner {
 	.search-results-list {
 
 		position: relative;
-		margin-top: 30px;
+		margin-top: 25px;
 		font-size: 12px;
 		font-family: Helvetica,Arial,sans-serif;
 
@@ -467,7 +469,7 @@ button::-moz-focus-inner {
 			padding-left:36px;
 			border-left:1px solid #d0d0d0;
 			border-right:1px solid #d0d0d0;
-
+			background: #f9f9f9;
 
 
 			&:nth-child(even) {
@@ -484,6 +486,7 @@ button::-moz-focus-inner {
 
 				text-decoration: none;
 				color:#000;
+
 
 				&:hover {
 
@@ -551,7 +554,7 @@ sub { top: 0.4em; }
 		display: none;
 	}
 
-	.bu-close {
+	#bu-close {
 		position: absolute;
 		right: 12px;
 		top: 10px;
@@ -674,10 +677,10 @@ sub { top: 0.4em; }
 		
 		
 		width: 350px;
-		height: 72px;
+		height: 108px;
 		position: absolute;
 		left: 0;
-		top:20px;
+		top:0;
 
 		
 
@@ -803,7 +806,6 @@ sub { top: 0.4em; }
 				height: 30px;
 				margin-left: 6px;
 				margin-top: -1px;
-				// width: 57px;
 				width: 85px;
 
 				&.logged-in {
@@ -1338,9 +1340,9 @@ sub { top: 0.4em; }
 				margin-left: 20px;
 				margin-top: 10px;
 				display: none;
-				
+
 				&.active {
-					
+
 					display: block;
 				}
 				
@@ -1415,6 +1417,7 @@ sub { top: 0.4em; }
 	padding-top:20px;
 	
 	min-height:1300px;
+
 	
 	.breadcrumbs {
 
@@ -1521,7 +1524,12 @@ sub { top: 0.4em; }
 						
 						@extend %toggleable;
 
+						.wishlist-icon,.playlist-menu-icon {
 
+							text-indent: -9999px;
+							text-decoration: none;
+							cursor: pointer;
+						}
 						.ranking {
 
 							position: absolute;
@@ -1541,6 +1549,37 @@ sub { top: 0.4em; }
 						}
 
 						@extend %album-cover-menu-and-icons;
+
+						.play-btn-icon {
+
+							position: absolute;
+							left: 50%;
+							top: 50%;
+							width: 100px;
+							height: 22px;
+							/* background: url(../img/freegal_sprite.png) -400px -20px; */
+							font-family: Arial, Helvetica;
+							background: #fff;
+							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							box-shadow: 0 0 4px rgba(0,0,0,.5);
+							font-weight: bold;
+							margin-left: -50px;
+							margin-top: -11px;
+							font-size: 12px;
+
+							&:hover {
+							
+								// background: url(../img/freegal_sprite.png) -435px -20px;
+								background: #fff;
+							}
+
+							&:active {
+							
+								// background: url(../img/freegal_sprite.png) -470px -20px;
+								background: #fff;
+							}							
+						}
 
 
 						img {
@@ -1629,537 +1668,441 @@ sub { top: 0.4em; }
 	
 	@extend %gray-container-style;
 
-	.top-songs-container {
-
-		margin-top: 20px;
-	}
-
-	.top-songs-filter-icon {
-
-		position: absolute;
-		left: 10px;
-		top:6px;
-		width: 21px;
-		height: 20px;
-		background:url(../img/freegal_sprite.png) -400px -55px;
-
-		&:hover {
-			background:url(../img/freegal_sprite.png) -421px -55px;
-
-		}
-
-		&:active {
-			background:url(../img/freegal_sprite.png) -442px -55px;
-
-		}
-	}
 
 
-	.header-container {
-
-		position: relative;
-		overflow: visible;
+	margin-top:20px;
+	.top-singles-carousel-container {
 		
-		div {
-
+		position: relative;
+		margin-top: 20px;
+		
+		.left-scroll-button {
+			
+			width: 25px;
+			height: 162px;
 			position: absolute;
-			font-weight:bold;
-			font-size: 12px;
-			top:12px;
-
-			
-		}
-
-
-		.top-songs-filter-menu {
-			
-			@extend %options-menu-style;
-			z-index: 1;
-			left:10px;
-			top:27px;
-			display: none;
-			a {
-
-				font-weight: normal;
-			}
-			&.active {
-
-				display: block;
-			}
-			
-		}
-
-		.artist-header {
-
-			
-			left:275px;
-			
-
-			
-		}
-
-
-
-		.album-header {
-
-			left:496px;
-			
-			
-		}
-
-		.song-header {
-
-			left:53px;
-			
-			
-		}
-
-		.time-header {
-
-			left:755px;
-			
-			
-		}		
-
-		.header-border {
-
-			width: 1px;
-			height: 35px;
-			background:#d2d2d2;
+			left: 0;
 			top:0;
-			position: absolute;
-
-			&.artist-border {
-
-				left:487px;
-
-			}
-
-			&.song-border {
-
-				left:260px;
-
-			}
-
-			&.album-border {
-
-				left:740px;
-
-			}
-
-
-		}
-
-		.multi-select-icon {
-
-			position: absolute;
-			right:8px;
-			top:9px;
-			width: 17px;
-			height: 17px;
-			background:url(../img/freegal_sprite.png) -10px -20px;
-			@include opacity(.5);
-
-			&.highlighted {
-				background:url(../img/freegal_sprite.png) -30px -20px;
-				@include opacity(1);
-				
-				&:hover {
-					background:url(../img/freegal_sprite.png) -50px -20px;
-
-				}
-
-				&:active {
-					background:url(../img/freegal_sprite.png) -70px -20px;
-
-				}
-
-			}
-
-
-		}
-
-		.options-menu {
-
+			background: url(../img/freegal_sprite.png) -200px 0;
 			
-			@extend %options-menu-style;
-			position: absolute;
-			z-index: 1;
-			right: 8px;
-			top:28px;
-			display: none;
-
-			&.active {
-
-				display: block;
+			&:hover {
+				background: url(../img/freegal_sprite.png) -230px 0;
+				
+			}
+			
+			&:active {
+				background: url(../img/freegal_sprite.png) -260px 0;
+				
 			}
 
-			.playlist-menu {
+		}
+		
+		.right-scroll-button {
+			
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			right: 0;
+			top:0;
+			
+			
+			background: url(../img/freegal_sprite.png) -300px 0;
+			
+			&:hover {
+				
+				background: url(../img/freegal_sprite.png) -330px 0;
+			}
+			
+			&:active {
+				
+				background: url(../img/freegal_sprite.png) -360px 0;
+			}
+		}
+		
+		.top-singles-carousel {
+			
+			margin-top: 10px;
+			margin-left: 28px;
+			margin-right: 28px;
+			height: 162px;
+			overflow:hidden;
+			position: relative;
 
-				display: none;
-				height: 312px;
-				overflow-y: scroll;
+			ul {
 
-				&.active {
+				overflow-y: hidden;
+				height: 162px;
+				width: 8175px;
+
+				li {
 
 					display: block;
+					float: left;
+					margin-right: 3px;
+
+					.top-single-container {
+
+
+
+						position: relative;
+						border: 1px solid #dcdcdc;
+						width: 324px;
+						height: 80px;
+
+						&:nth-child(2) {
+
+							margin-top: 2px;
+						}
+						
+						.single-bar {
+
+							background: #ececec;
+							width: 323px;
+							height: 24px;
+							position: absolute;
+							left:0;
+							top:0;
+
+						}
+						.ranking {
+
+							position: absolute;
+							left:0;
+							top:0;
+							width: 36px;
+							height: 24px;
+							background: #008fbd;
+							color: #fff;
+							font-family: Helvetica, Arial, sans-serif;
+							
+							font-size: 16px;
+							text-align: center;
+							line-height: 24px;
+							font-style: italic;
+						}
+
+						.download-icon {
+							display: block;
+							cursor:pointer;
+							text-indent: -9999px;
+							text-decoration: none;
+							position: absolute;
+							right: 64px;
+							top: -1px;
+							width: 34px;
+							height: 25px;
+							background: url(../img/freegal_sprite.png) 0 -200px;
+
+							&:hover {
+
+								background: url(../img/freegal_sprite.png) -35px -200px;
+							}
+
+							&:active {
+
+								background: url(../img/freegal_sprite.png) -70px -200px;
+							}
+                            &.download-limit-met {
+                                    background: url(../img/freegal_sprite.png) -115px -200px;
+
+                                    &:hover {
+
+                                            background: url(../img/freegal_sprite.png) -150px -200px;
+                                    }
+
+                                    &:active {
+
+                                            background: url(../img/freegal_sprite.png) -185px -200px;
+                                    }					
+
+                            }
+
+                            &.song-downloaded {
+                                    background: url(../img/freegal_sprite.png) -115px -225px;
+
+                                    &:hover {
+                                            background: url(../img/freegal_sprite.png) -150px -225px;	
+                                    }
+
+                                    &:active {
+                                            background: url(../img/freegal_sprite.png) -185px -225px;	
+                                    }
+
+                            }							
+
+						}
+
+						.wishlist-icon {
+							display: block;
+							cursor: pointer;
+							text-indent: -9999px;
+							text-decoration: none;
+							position: absolute;
+							right: 31px;
+							top: -1px;
+							width: 34px;
+							height: 25px;
+							background: url(../img/freegal_sprite.png) 0 -225px;
+
+							&:hover {
+
+								background: url(../img/freegal_sprite.png) -35px -225px;
+							}
+
+							&:active {
+
+								background: url(../img/freegal_sprite.png) -70px -225px;
+							}	
+
+
+						}
+
+						.playlist-menu-icon {
+							display: block;
+							cursor: pointer;
+							text-indent: -9999px;
+							text-decoration: none;
+							position: absolute;
+							right:-1px;
+							top:-1px;
+							width: 34px;
+							height: 25px;
+							background: url(../img/freegal_sprite.png) 0 -250px;
+							&:hover {
+
+								background: url(../img/freegal_sprite.png) -35px -250px;
+							}
+
+							&:active {
+
+								background: url(../img/freegal_sprite.png) -70px -250px;
+							}								
+	
+						}
+
+						.play-btn-icon {
+
+							position: absolute;
+							left: 6px;
+							top: 39px;
+							width: 24px;
+							height: 24px;
+							background: url(../img/freegal_sprite.png) 0 -275px;
+
+							&:hover {
+								background: url(../img/freegal_sprite.png) -25px -275px;
+
+							}
+							&:active {
+								background: url(../img/freegal_sprite.png) -50px -275px;
+
+							}							
+
+						}
+
+                                                .play-btn {
+                                                        position: absolute;
+                                                        left:9px;
+                                                        top: 36px;
+                                                        width: 24px;
+                                                        height: 24px;
+                                                        @include border-radius(20px);
+                                                        border:1px solid #cacaca;
+                                                        @include background-image(radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px));
+
+                                                        &:hover {
+
+                                                                @include background-image(radial-gradient(45px 45px, #fdfdfd 10px, #fff 30px));
+                                                        }
+
+                                                        &:active {
+
+                                                                @include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
+                                                        }		
+
+                                                        &:before {
+
+                                                                content: "";
+                                                                position: absolute;
+                                                                left:9px;
+                                                                top:7px;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-left:6px solid #000;
+                                                                border-top:4px solid transparent;
+                                                                border-bottom:4px solid transparent;
+                                                        }
+
+                                                }
+
+						.song-title {
+
+							position: absolute;
+							left: 45px;
+							top: 37px;
+							color: #008fbd;
+							font-family: Helvetica, Arial, sans-serif;
+							font-size: 13px;
+							font-weight: bold;
+							width: 266px;
+							a {
+
+								text-decoration: none;
+								color: #008fbd;
+
+								&:hover {
+
+									text-decoration: underline;
+								}
+							}
+						}
+
+						.artist-name {
+
+							position: absolute;
+							left: 45px;
+							top: 54px;
+							color: #666666;
+							font-family: Helvetica, Arial, sans-serif;
+							font-size: 13px;
+							width: 266px;
+
+							a {
+
+								text-decoration: none;
+								color: #666;
+
+								&:hover {
+
+									text-decoration: underline;
+								}
+							}							
+						}
+
+
+
+						> ul {
+							
+							position: absolute;
+							right: 0;
+							top:26px;
+							width: 177px;
+							max-height: 50px;
+							overflow-y: scroll;
+							display: none;
+							@include border-radius(5px);
+							border:1px solid #999;
+							z-index: 1;
+							background: #fff;
+							&.active {
+								
+								display: block;
+							}
+							> li {
+								display: block;
+								background: #fff;
+								float: none;
+								margin-bottom: 0;
+								width: 100%;
+								a {
+									display: block;
+									padding:5px 10px;
+									
+									text-decoration: none;
+									color:#000;
+									font-size: 11px;
+									
+									&:hover {
+										
+										background:#cfeff9;
+										
+										color: #000;
+										
+									}
+									
+									&.create-new-playlist {
+										
+										font-weight: bold;
+									}
+								}
+
+							}
+						}	
+
+
+					}
+
 				}
 			}
-		}
+			
+			
+			/*
+			ul {
+				overflow-y: hidden;
+				height: 216px;
+				width: 4125px;
+				
+				li {
+					
+					float: left;
+					display: block;
+					margin-right: 3px;
+					margin-bottom: 10px;
+					width: 162px;
+					
+					.album-cover-container {
+						
+						width: 162px;
+						height: 162px;
+						
+						position: relative;
+						
+						@extend %toggleable;
 
 
-	}
+						.ranking {
+
+							position: absolute;
+							right: 6px;
+							top:6px;;
+							text-align: center;
+							width: 40px;
+							height: 20px;
+							@include opacity(.75);
+							color:#000;
+							font-size: 16px;
+							font-family: Helvetica, Arial, sans-serif;
+							font-weight: bold;
+							background:#fff;
+							font-style: italic;
+							line-height: 20px;
+						}
+
+						@extend %album-cover-menu-and-icons;
 
 
-
-
-
-	.row {
-
-		position: relative;
-		height: 40px;
-		font-size: 12px;
-
-		font-family: Helvetica, Arial, sans-serif;
-		color:#707070;
-		overflow:visible;
-		border-left:1px solid #d0d0d0;
-		border-right:1px solid #d0d0d0;
-
-		a {
-
-			color:#707070;
-			text-decoration: none;
-
-			&:hover {
-
-				text-decoration: underline;
+						img {
+							
+							width: 162px;
+							height: 162px;
+							
+							
+						}
+					}
+				}
 			}
-		}
-
-
-		&:nth-child(even) {
-
-			background:#f4f4f4;
-		}
-		&:hover,&.highlighted {
-
-			background: #bbe4f1;
-
-			color:#000;
-
-			a {
-				color:#000;
-
-			}
-		}
-	}
-	
-	.play-btn {
-		position: absolute;
-		left:10px;
-		top:8px;
-		width: 24px;
-		height: 24px;
-		@include border-radius(20px);
-		border:1px solid #cacaca;
-		@include background-image(radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px));
-
-		&:hover {
-
-			@include background-image(radial-gradient(45px 45px, #fdfdfd 10px, #fff 30px));
-		}
-
-		&:active {
-
-			@include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
-		}		
-
-		&:before {
-
-			content: "";
-			position: absolute;
-			left:9px;
-			top:7px;
-			width: 0;
-			height: 0;
-			border-left:6px solid #000;
-			border-top:4px solid transparent;
-			border-bottom:4px solid transparent;
-		}
-
-	}
-
-	.ranking {
-
-		position: absolute;
-		top:15px;
-		left: 51px;
-	}
-	.song-name {
-
-		position: absolute;
-		left: 74px;
-		top:15px;
-	}
-	.artist-name {
-
-		position: absolute;
-		left:274px;
-		top:15px;
-
-
-
-	}
-	.album-name {
-
-		position: absolute;
-		left:496px;
-		top:15px;
-	}
-
-	.time {
-
-		position: absolute;
-		left:756px;
-		top:15px;
-
-	}
-
-
-
-
-
-	.menu-btn {
-
-		position: absolute;
-		left: 792px;
-		top:11px;
-		width: 19px;
-		height: 19px;
-		border:1px solid #cacaca;
-		@include background-image(linear-gradient(#f9f9f9, #eaeaea));
-
-		&:before {
+			*/
+			
+			
+				
 
 			
-			content: "";
-			background:url(../img/freegal_sprite.png) 0 -20px;
-			position: absolute;
-			left:4px;
-			top:6px;
-			width: 10px;
-			height: 5px;
-
 		}
-
-
-
-
-
-		&:hover {
-
-			@include background-image(linear-gradient(#fff, #f6f6f6));
-		}
-
-		&:active {
-
-			@include background-image(linear-gradient(#eaeaea, #f3f3f3));
-		}
-	}
-
-	.row-checkbox {
-		-webkit-appearance: none;
-		margin: 0;
-		padding:0;
-		border:0;
-		position: absolute;
-		right: 13px;
-		top:17px;
-		width: 9px;
-		height: 9px;
-		outline:0;
-		background:url(../img/freegal_sprite.png) -90px -20px;
-		&:checked {
-
-			background:url(../img/freegal_sprite.png) -100px -20px;
-		}
-	}
-
-	.options-menu {
-
 		
-		@extend %options-menu-style;
-
-		position: absolute;
-		z-index: 1;
-		right: 33px;
-		top:31px;
-		display: none;
-
-		&.active {
-
-			display: block;
-		}
-
-		.playlist-menu {
-
-			display: none;
-			height: 312px;
-			overflow-y: scroll;
-
-			&.active {
-
-				display: block;
-			}
-		}
-	}
-
-
-
-
-
-	.pagination-container {
-
-		position: relative;
-
-		button {
-
-			position: absolute;
-			width: 18px;
-			height:18px;
-			top:8px;	
-			border:1px solid #d2d2d4;
-			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
-			font-weight: normal;
-			font-family: Helvetica, Arial, sans-serif;
-			font-size: 11px;
-
-			&:hover {
-
-				@include background-image(linear-gradient(#fff,#f5f5f5));
-			}
-
-			&:active {
-
-				@include background-image(linear-gradient(#eaeaea,#f4f4f4));
-			}
-			&.beginning {
-
-				right:221px;
-
-				&:before {
-
-					content: "";
-					position: absolute;
-					left:6px;
-					top:5px;
-					border-left:1px solid #000;
-					width: 0;
-					height:6px;
-				}
-
-				&:after {
-
-					content: "";
-					position: absolute;
-					width: 0;
-					height: 0;
-					border-right:4px solid #000;
-					border-top:3px solid transparent;
-					border-bottom:3px solid transparent;
-					left: 7px;
-					top:5px;
-				}
-			}
-			&.prev {
-
-				right:195px;
-				&:after {
-
-					content: "";
-					position: absolute;
-					width: 0;
-					height: 0;
-					border-right:4px solid #000;
-					border-top:3px solid transparent;
-					border-bottom:3px solid transparent;
-					left: 6px;
-					top:5px;
-				}
-
-			}
-			&.page-1 {
-
-				right:169px;
-			}
-			&.page-2 {
-
-				right:143px;
-			}
-			&.page-3 {
-
-				right:117px;
-			}
-
-			&.page-4 {
-
-				right:91px;
-			}
-
-			&.page-5 {
-
-				right: 65px;
-			}
-
-			&.next {
-
-				right:39px;
-				&:after {
-
-					content: "";
-					position: absolute;
-					width: 0;
-					height: 0;
-					border-left:4px solid #000;
-					border-top:3px solid transparent;
-					border-bottom:3px solid transparent;
-					left: 6px;
-					top:5px;
-				}
-			}
-
-			&.last {
-
-				right: 13px;
-
-				&:before {
-
-					content: "";
-					position: absolute;
-					left:10px;
-					top:5px;
-					border-right:1px solid #000;
-					width: 0;
-					height:6px;
-				}
-
-				&:after {
-
-					content: "";
-					position: absolute;
-					width: 0;
-					height: 0;
-					border-left:4px solid #000;
-					border-top:3px solid transparent;
-					border-bottom:3px solid transparent;
-					left: 6px;
-					top:5px;
-				}
-			}
-
-		}
+		
 	}	
+
+
 
 	
 
@@ -2215,11 +2158,13 @@ sub { top: 0.4em; }
 			
 			color: #fff;
 			position: absolute;
-			bottom:-53px;
+			// bottom:-53px;
+			bottom:-31px;
 			
 			left: 0;
 			width: 100%;
-			height: 76px;
+			// height: 76px;
+			height: 54px;
 
 			@include single-transition(bottom,500ms);
 			
@@ -2233,25 +2178,14 @@ sub { top: 0.4em; }
 			.featured-artist-name {
 				
 				font-size: 14px;
+				line-height: 16px;
 				font-weight: bold;
 				padding: 5px;
-				
-				
 				position: relative;
-				
-
-			}
-
-			.featured-album-name {
-
-				font-size: 12px;
-				font-style: italic;
-				position:relative;
-				padding-left:5px;
-				padding-right:5px;
-				padding-bottom:10px;
-				
-
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 160px;				
 				&:before {
 					
 					content: "";
@@ -2261,7 +2195,30 @@ sub { top: 0.4em; }
 					left: 4px;
 					bottom:0;
 					background: url(../img/featured-menu-border-rpt.png) repeat;
-				}
+				}				
+
+			}
+
+			.featured-album-name {
+
+				font-size: 12px;
+				position:relative;
+				padding-left:5px;
+				padding-right:5px;
+				padding-bottom:10px;
+				width: 160px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;				
+
+
+                a {
+                    color:#ffffff;
+                }				
+                                
+
+
+
 
 			}
 			
@@ -2645,8 +2602,25 @@ sub { top: 0.4em; }
 		font-weight: bold;
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
+		@include border-radius(20px);
 
 	}
+
+    #query {
+		@extend %form-reset;
+		height: 30px;
+		margin-left: 50px;
+		width: 234px;
+		border: 0 none;
+        outline: 0 none;
+        padding: 0;
+		font-weight: bold;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		@include border-radius(20px);
+		padding-right: 60px;
+
+    }
 
 	#search-page-go {
 		
@@ -2655,6 +2629,7 @@ sub { top: 0.4em; }
 		height: 30px;
 		width: 55px;
 		color:#fff;
+		background: #63c9eb;
 		@include background-image(linear-gradient(#63c9eb, #58bee0));
 		@include border-radius(20px);
 		position:absolute;
@@ -2665,11 +2640,13 @@ sub { top: 0.4em; }
 		font-size: 12px;
 
 		&:hover {
+			background: #7ed6f4;
 			@include background-image(linear-gradient(#7ed6f4, #62c4e4));
 
 		}
 
 		&:active {
+			background: #46b2d5;
 			@include background-image(linear-gradient(#46b2d5, #62c4e4));
 
 		}
@@ -2699,85 +2676,21 @@ sub { top: 0.4em; }
 }
 
 .category-results {
-	margin-top: 40px;
+	margin-top: 25px;
 
 	header {
 
 		position: relative;
 		height: 25px;
+
+		@extend %see-more;
 		
 		h3 {
 			font-weight: normal;
 			font-size: 16px;
 			font-family: Helvetica,Arial,sans-serif;
-			margin-left: 36px;
 			position: relative;
 			padding-top:5px;
-
-			&.albums-header:before {
-
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) 0 -70px;
-			}
-			&.artists-header:before {
-
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -30px -70px;
-			}
-
-			&.composers-header:before {
-
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -60px -70px;
-			}
-
-			&.videos-header:before {
-
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -90px -70px;
-			}
-
-			&.genres-header:before {
-
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -120px -70px;
-			}
-
-			&.songs-header:before {
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -150px -70px;
-
-			}
 
 		}
 
@@ -2794,6 +2707,8 @@ sub { top: 0.4em; }
 
 		
 		@extend %gray-container-style;
+
+
 
 
 	}
@@ -2875,7 +2790,9 @@ sub { top: 0.4em; }
 		}
 
 		.multi-select-icon {
-
+			display: block;
+			text-indent: -9999px;
+			text-decoration: none;
 			position: absolute;
 			right:8px;
 			top:9px;
@@ -2922,6 +2839,11 @@ sub { top: 0.4em; }
 			&.active {
 
 				display: block;
+			}
+
+			ul:first-child {
+
+				height: 126px;
 			}
 
 			.playlist-menu {
@@ -3015,6 +2937,16 @@ sub { top: 0.4em; }
 		}
 
 	}
+
+	.sample-icon {
+
+		position: absolute;
+		right:13px;
+		top:17px;
+		width: 9px;
+		height: 9px;
+		background: url(../img/freegal_sprite.png) -115px -150px;
+	}	
 
 	.artist-name {
 
@@ -3293,20 +3225,11 @@ sub { top: 0.4em; }
 			font-weight: normal;
 			font-size: 16px;
 			font-family: Helvetica,Arial,sans-serif;
-			margin-left: 36px;
+
 			position: relative;
 			padding-top:5px;
 
-			&.albums-header:before {
 
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) 0 -70px;
-			}
 		}
 
 
@@ -3315,21 +3238,25 @@ sub { top: 0.4em; }
 	.album-detail-container {
 
 		position: relative;
+		
+		margin-left: 25px;
+		width: 822px;
+		height: 108px;
+
 		margin-top: 25px;
-		width: 847px;
-		height: 180px;
+
 		.cover-image {
 
 			position: absolute;
 			left: 0;
 			top: 0;
-			width: 180px;
-			height: 180px;
+			width: 108px;
+			height: 108px;
 
 			img {
 
-				width: 180px;
-				height: 180px;
+				width: 108px;
+				height: 108px;
 			}
 
 		}
@@ -3337,13 +3264,14 @@ sub { top: 0.4em; }
 		.album-info {
 
 			position: absolute;
-			left: 191px;
+			left: 120px;
 			top: 0;
-			width: 656px;
-			height: 180px;
+			width: 700px;
+			height: 108px;
 			border: 1px solid #dcdcdc;
 			padding: 10px;
 			font-family: Helvetica, Arial, sans-serif;
+			background: #f9f9f9;
 			strong {
 
 				font-weight: bold;
@@ -3352,14 +3280,36 @@ sub { top: 0.4em; }
 			.album-title {
 
 				
-				font-size: 18px;
+				font-size: 16px;
+
+				a {
+
+					color: #000;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
 				
 
 			}
 
 			.artist {
-				font-size: 14px;
-				margin-top: 2px;
+				font-size: 13px;
+				margin-top: 4px;
+
+				a {
+
+					color:#008fbd;
+					text-decoration: none;
+					
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
 
 			}
 
@@ -3372,6 +3322,7 @@ sub { top: 0.4em; }
 
 			.genre {
 				margin-bottom: 8px;
+				margin-top: 4px;
 				font-size: 12px;
 
 
@@ -3394,23 +3345,23 @@ sub { top: 0.4em; }
 				position: absolute;
 				right: -1px;
 				top: -1px;
-				background: url(../img/freegal_sprite.png) -105px -40px;
-				width: 25px;
+				background: url(../img/freegal_sprite.png) -115px -170px;
+				width: 34px;
 				height: 25px;
-
+				
 				&:hover {
-					background: url(../img/freegal_sprite.png) -130px -40px;
+					background: url(../img/freegal_sprite.png) -150px -170px;
 
 				}
 				&:active {
-					background: url(../img/freegal_sprite.png) -155px -40px;
+					background: url(../img/freegal_sprite.png) -185px -170px;
 
 				}
 			}
 
 			.stream-now-btn {
 				position: absolute;
-				right: 23px;
+				right: 32px;
 				top: -1px;
 				font-size: 12px;
 				font-weight: bold;
@@ -3419,6 +3370,7 @@ sub { top: 0.4em; }
 				border: 1px solid #ccc;
 				font-family: Helvetica, Arial, sans-serif;
 				@include background-image(linear-gradient(#fff,#eaeaea));
+				@include box-shadow(inset 1px 1px 0 1px #fff);
 
 				&:hover {
 					@include background-image(linear-gradient(#fff,#f5f5f5));
@@ -3469,6 +3421,150 @@ sub { top: 0.4em; }
 	}
 
 
+
+	.search-results-pagination-container {
+
+		position: relative;
+
+		button {
+
+			position: absolute;
+			width: 18px;
+			height:18px;
+			top:8px;	
+			border:1px solid #d2d2d4;
+			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
+			font-weight: normal;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 11px;
+
+			&:hover {
+
+				@include background-image(linear-gradient(#fff,#f5f5f5));
+			}
+
+			&:active {
+
+				@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+			}
+			&.beginning {
+
+				right:221px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:6px;
+					top:5px;
+					border-left:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 7px;
+					top:5px;
+				}
+			}
+			&.prev {
+
+				right:195px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+
+			}
+			&.page-1 {
+
+				right:169px;
+			}
+			&.page-2 {
+
+				right:143px;
+			}
+			&.page-3 {
+
+				right:117px;
+			}
+
+			&.page-4 {
+
+				right:91px;
+			}
+
+			&.page-5 {
+
+				right: 65px;
+			}
+
+			&.next {
+
+				right:39px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+			&.last {
+
+				right: 13px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:10px;
+					top:5px;
+					border-right:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+		}
+	}		
+
+
 }
 
 .search-results-artists-page {
@@ -3487,20 +3583,11 @@ sub { top: 0.4em; }
 			font-weight: normal;
 			font-size: 16px;
 			font-family: Helvetica,Arial,sans-serif;
-			margin-left: 36px;
+
 			position: relative;
 			padding-top:5px;
 
-			&.artists-header:before {
 
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -30px -70px;
-			}
 		}
 
 
@@ -3529,20 +3616,10 @@ sub { top: 0.4em; }
 			font-weight: normal;
 			font-size: 16px;
 			font-family: Helvetica,Arial,sans-serif;
-			margin-left: 36px;
 			position: relative;
 			padding-top:5px;
 
-			&.composers-header:before {
 
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -60px -70px;
-			}
 		}
 
 
@@ -3572,20 +3649,10 @@ sub { top: 0.4em; }
 			font-weight: normal;
 			font-size: 16px;
 			font-family: Helvetica,Arial,sans-serif;
-			margin-left: 36px;
 			position: relative;
 			padding-top:5px;
 
-			&.videos-header:before {
 
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -90px -70px;
-			}
 		}
 
 
@@ -3595,20 +3662,21 @@ sub { top: 0.4em; }
 
 		position: relative;
 		margin-top: 25px;
+		margin-left: 25px;
 		width: 847px;
-		height: 180px;
+		height: 108px;
 		.video-thumb {
 
 			position: absolute;
 			left: 0;
 			top: 0;
-			width: 276px;
-			height: 159px;
+			width: 188px;
+			height: 108px;
 
 			img {
 
-				width: 276px;
-				height: 159px;
+				width: 188px;
+				height: 108px;
 			}
 
 		}
@@ -3616,13 +3684,14 @@ sub { top: 0.4em; }
 		.video-info {
 
 			position: absolute;
-			left: 286px;
+			left: 200px;
 			top: 0;
-			width: 561px;
-			height: 159px;
+			width: 620px;
+			height: 108px;
 			border: 1px solid #dcdcdc;
-			padding: 6px;
+			padding: 10px;
 			font-family: Helvetica, Arial, sans-serif;
+			background: #fff;
 			strong {
 
 				font-weight: bold;
@@ -3631,15 +3700,38 @@ sub { top: 0.4em; }
 			.video-title {
 
 				
-				font-size: 18px;
+				font-size: 16px;
+				font-weight: bold;
+
+				a {
+
+					color: #000;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+
+				}
 				
 
 			}
 
 			.artist {
-				font-size: 14px;
-				margin-top: 2px;
+				font-size: 12px;
+				margin-top: 4px;
+				
+				a {
 
+					color:#008fbd;
+					text-decoration: none;
+					
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
 			}
 
 			.release-information {
@@ -3650,8 +3742,9 @@ sub { top: 0.4em; }
 			}
 
 			.release-date {
-				margin-bottom: 8px;
+				
 				font-size: 12px;
+				margin-top: 4px;
 
 
 
@@ -3665,43 +3758,40 @@ sub { top: 0.4em; }
 			.video-size {
 				
 				font-size: 12px;
+				margin-top: 4px;
 
 			}
 
 			.wishlist-btn {
+				display: block;
+				text-decoration: none;
+				text-indent: -9999px;
+				cursor: pointer;
 				position: absolute;
 				right:-1px;
 				top:-1px;
 				width: 34px;
 				height: 25px;
-				background: url(../img/freegal_sprite.png) 0 -150px;
+				background: url(../img/freegal_sprite.png) -230px -200px;
 
 				&:hover {
-					background: url(../img/freegal_sprite.png) -35px -150px;	
+					background: url(../img/freegal_sprite.png) -265px -200px;	
 				}
 
 				&:active {
-					background: url(../img/freegal_sprite.png) -70px -150px;	
+					background: url(../img/freegal_sprite.png) -300px -200px;	
 				}
 
-				&.added-to-wishlist {
 
-					background: url(../img/freegal_sprite.png) 0 -175px;
-
-					&:hover {
-						background: url(../img/freegal_sprite.png) -35px -175px;	
-					}
-
-					&:active {
-						background: url(../img/freegal_sprite.png) -70px -175px;	
-					}
-
-				}
 
 			}
 
 			.download-btn {
-
+				display: block;
+				text-decoration: none;
+				text-indent: -9999px;
+				cursor: pointer;
+	
 				position: absolute;
 				right: 32px;
 				top: -1px;
@@ -3716,6 +3806,34 @@ sub { top: 0.4em; }
 
 				&:active {
 					background: url(../img/freegal_sprite.png) -70px -125px;	
+				}
+
+				&.download-limit-met {
+					background: url(../img/freegal_sprite.png) -115px -250px;
+
+					&:hover {
+
+						background: url(../img/freegal_sprite.png) -150px -250px;
+					}
+
+					&:active {
+
+						background: url(../img/freegal_sprite.png) -185px -250px;
+					}					
+
+				}
+
+				&.video-downloaded {
+					background: url(../img/freegal_sprite.png) -115px -275px;
+
+					&:hover {
+						background: url(../img/freegal_sprite.png) -150px -275px;	
+					}
+
+					&:active {
+						background: url(../img/freegal_sprite.png) -185px -275px;	
+					}
+
 				}
 
 			}
@@ -3748,20 +3866,10 @@ sub { top: 0.4em; }
 			font-weight: normal;
 			font-size: 16px;
 			font-family: Helvetica,Arial,sans-serif;
-			margin-left: 36px;
 			position: relative;
 			padding-top:5px;
 
-			&.genres-header:before {
 
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -120px -70px;
-			}
 		}
 
 
@@ -3790,20 +3898,10 @@ sub { top: 0.4em; }
 			font-weight: normal;
 			font-size: 16px;
 			font-family: Helvetica,Arial,sans-serif;
-			margin-left: 36px;
 			position: relative;
 			padding-top:5px;
 
-			&.songs-header:before {
 
-				content: "";
-				left: -36px;
-				top:0;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				background:url(../img/freegal_sprite.png) -150px -70px;
-			}
 		}
 
 
@@ -3933,7 +4031,9 @@ sub { top: 0.4em; }
 		}
 
 		.multi-select-icon {
-
+			display: block;
+			text-decoration: none;
+			text-indent: -9999px;
 			position: absolute;
 			right:8px;
 			top:9px;
@@ -4034,7 +4134,25 @@ sub { top: 0.4em; }
 	}
 
 
+	.preview {
+		position: absolute;
+		left: 9px;
+		top: 8px;
+		width: 24px;
+		height: 24px;
+		
+	}
 
+
+	.sample-icon {
+
+		position: absolute;
+		right:13px;
+		top:17px;
+		width: 9px;
+		height: 9px;
+		background: url(../img/freegal_sprite.png) -115px -150px;
+	}	
 
 	.play-btn {
 		position: absolute;
@@ -4104,7 +4222,9 @@ sub { top: 0.4em; }
 	}
 
 	.menu-btn {
-
+		display: block;
+		text-decoration: none;
+		text-indent: -9999px;
 		position: absolute;
 		left: 795px;
 		top:11px;
@@ -4339,8 +4459,8 @@ sub { top: 0.4em; }
 
 .filter-container {
 	margin-top:20px;
-	button {
-
+	a {
+		display: block;
 		float: left;
 		border:1px solid #bbbbbb;
 		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
@@ -4352,6 +4472,9 @@ sub { top: 0.4em; }
 		height: 32px;
 		margin-right: 12px;
 		display: block;
+		text-decoration: none;
+		line-height: 32px;
+		color:#000;
 
 		&.last {
 
@@ -4360,8 +4483,9 @@ sub { top: 0.4em; }
 		
 
 		&:hover {
-
+			
 			@include background-image(linear-gradient(#ffffff, #f4f4f4));
+			text-decoration: none;
 		}
 
 		&:active {
@@ -4372,7 +4496,7 @@ sub { top: 0.4em; }
 		&.active {
 
 			color: #fff;
-			
+			background: #37a1c3;
 			@include background-image(linear-gradient(#37a1c3, #4ebfe3 25%));
 			border:1px solid #008fbd;
 			
@@ -4386,7 +4510,7 @@ sub { top: 0.4em; }
 .search-results-all-page {
 
 	position: relative;
-
+	padding-bottom: 40px;
 
 }
 .search-results-all-albums-carousel	{
@@ -4452,6 +4576,14 @@ sub { top: 0.4em; }
 			@extend %toggleable;
 			@extend %album-cover-menu-and-icons;
 
+			.playlist-menu-icon,.wishlist-icon {
+
+				display: block;
+				cursor: pointer;
+				text-decoration:none;
+				text-indent: -9999px;
+			}
+
 
 
 		}
@@ -4459,10 +4591,11 @@ sub { top: 0.4em; }
 		.album-info {
 
 			margin-top: 5px;
+			width: 162px;
 		}
 		ul {
 
-			width: 1650px;
+			width: 2475px;
 		}
 
 		li {
@@ -4980,3 +5113,417 @@ footer {
 }
 
 .filler { height: 100px; }
+
+.composer-albums{
+
+	position: relative;
+
+	
+
+	
+
+	header {
+
+		position: relative;
+		height: 25px;
+		margin-top: 20px;
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+
+			position: relative;
+			padding-top:5px;
+
+
+		}
+
+
+	}	
+
+	.album-detail-container {
+
+		position: relative;
+		
+		margin-left: 25px;
+		width: 822px;
+		height: 108px;
+
+		margin-top: 25px;
+
+		.cover-image {
+
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 108px;
+			height: 108px;
+
+			img {
+
+				width: 108px;
+				height: 108px;
+			}
+
+		}
+
+		.album-info {
+
+			position: absolute;
+			left: 120px;
+			top: 0;
+			width: 700px;
+			height: 108px;
+			border: 1px solid #dcdcdc;
+			padding: 10px;
+			font-family: Helvetica, Arial, sans-serif;
+			background: #f9f9f9;
+			strong {
+
+				font-weight: bold;
+			}
+
+			.album-title {
+
+				
+				font-size: 16px;
+
+				a {
+
+					color: #000;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
+				
+
+			}
+
+			.artist {
+				font-size: 13px;
+				margin-top: 4px;
+
+				a {
+
+					color:#008fbd;
+					text-decoration: none;
+					
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
+
+			}
+
+			.release-information {
+				margin-top: 44px;
+				margin-bottom: 8px;
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			.genre {
+				margin-bottom: 8px;
+				margin-top: 4px;
+				font-size: 12px;
+
+
+
+			}
+
+			.label {
+				margin-bottom: 8px;
+				font-size: 12px;
+			}
+
+			.distributor {
+				
+				font-size: 12px;
+
+			}
+
+			.menu-btn {
+
+				position: absolute;
+				right: -1px;
+				top: -1px;
+				background: url(../img/freegal_sprite.png) -115px -170px;
+				width: 34px;
+				height: 25px;
+				
+				&:hover {
+					background: url(../img/freegal_sprite.png) -150px -170px;
+
+				}
+				&:active {
+					background: url(../img/freegal_sprite.png) -185px -170px;
+
+				}
+			}
+
+			.stream-now-btn {
+				position: absolute;
+				right: 32px;
+				top: -1px;
+				font-size: 12px;
+				font-weight: bold;
+				width: 87px;
+				height: 25px;
+				border: 1px solid #ccc;
+				font-family: Helvetica, Arial, sans-serif;
+				@include background-image(linear-gradient(#fff,#eaeaea));
+				@include box-shadow(inset 1px 1px 0 1px #fff);
+
+				&:hover {
+					@include background-image(linear-gradient(#fff,#f5f5f5));
+
+				}
+
+				&:active {
+					@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+
+				}
+
+			}
+			.options-menu {
+				@extend %options-menu-style;
+
+
+			
+				position: absolute;
+				z-index: 1;
+				right: -1px;
+				top:26px;
+				display: none;
+
+				&.active {
+
+					display: block;
+				}
+
+
+
+		
+			}
+
+			.playlist-menu {
+
+				display: none;
+				height: 312px;
+				overflow-y: scroll;
+
+				&.active {
+
+					display: block;
+				}
+			}
+
+
+		}
+	}
+
+
+
+	.search-results-pagination-container {
+
+		position: relative;
+
+		button {
+
+			position: absolute;
+			width: 18px;
+			height:18px;
+			top:8px;	
+			border:1px solid #d2d2d4;
+			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
+			font-weight: normal;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 11px;
+
+			&:hover {
+
+				@include background-image(linear-gradient(#fff,#f5f5f5));
+			}
+
+			&:active {
+
+				@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+			}
+			&.beginning {
+
+				right:221px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:6px;
+					top:5px;
+					border-left:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 7px;
+					top:5px;
+				}
+			}
+			&.prev {
+
+				right:195px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+
+			}
+			&.page-1 {
+
+				right:169px;
+			}
+			&.page-2 {
+
+				right:143px;
+			}
+			&.page-3 {
+
+				right:117px;
+			}
+
+			&.page-4 {
+
+				right:91px;
+			}
+
+			&.page-5 {
+
+				right: 65px;
+			}
+
+			&.next {
+
+				right:39px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+			&.last {
+
+				right: 13px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:10px;
+					top:5px;
+					border-right:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+		}
+	}		
+
+
+}
+
+.composer-page{ 
+
+    .faq-link {
+        float: right;
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+}
+
+.album-container {
+        @extend %toggeable;
+	.wishlist-icon {
+
+		position: absolute;
+		right: 122px;
+		top: 132px;
+		width: 34px;
+		height: 25px;
+		background: url(../img/freegal_sprite.png) 0 -225px;
+
+		&:hover {
+
+			background: url(../img/freegal_sprite.png) -35px -225px;
+		}
+
+		&:active {
+
+			background: url(../img/freegal_sprite.png) -70px -225px;
+		}	
+
+
+	}
+}
+
+%toggeable {
+	.toggeable {
+
+		display: block;
+		@include opacity(0);
+
+		&.active {
+			
+			display: block;
+			@include opacity(1);
+		}
+
+		&:hover {
+
+			@include opacity(1);
+		}	
+	}
+
+}

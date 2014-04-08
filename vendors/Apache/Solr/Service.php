@@ -721,7 +721,7 @@ class Apache_Solr_Service
 	 *
 	 * @throws Exception If an error occurs during the service call
 	 */
-	public function search($query, $offset = 0, $limit = 10, $params = array())
+	public function search($query, $offset = 0, $limit = 10, $params = array(),$check = 0)
 	{
 		if (!is_array($params))
 		{
@@ -734,7 +734,11 @@ class Apache_Solr_Service
 
 		//common parameters in this interface
 		$params['wt'] = self::SOLR_WRITER;
-		$params['q'] = $query;
+                if(!empty($check)){
+                    $params['q'] = stripslashes($query);
+                }else{
+                    $params['q'] = $query;                    
+                }
 		$params['start'] = $offset;
 		$params['rows'] = $limit;
 
@@ -765,7 +769,11 @@ class Apache_Solr_Service
 				else
 				{
 					//simple, single value case
-					$escapedParams[] = urlencode($key) . '=' . urlencode($value);
+                                        if(!empty($check)){
+                                            $escapedParams[] = urlencode($key) . '=' . urlencode(stripslashes($value));
+                                        }else{
+                                            $escapedParams[] = urlencode($key) . '=' . urlencode($value);
+                                        }
 					unset($params[$key]);
 				}
 			}

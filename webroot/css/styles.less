@@ -2,6 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+
 html, body {
    overflow-x: hidden;
 }
@@ -7674,6 +7675,809 @@ img {
 /* end artist page */
 
 
+/* start of composer page */
+
+
+.composer-page {
+	
+	
+	// margin-left: 20px;
+	// margin-top: 20px;
+	
+	
+	.breadcrumbs {
+		
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.3);
+		
+		
+		span {
+			
+			padding-left: 5px;
+			padding-right: 5px;
+			
+			&:first-child {
+				
+				padding-left: 0;
+			}
+		}
+
+
+	}
+	
+	header {
+
+		h2 {
+			
+			font-size: 24px;
+			letter-spacing: 1px;
+			float: left;
+			
+		}
+		
+		.faq-link {
+			
+			float: right;
+			font-size: 12px;
+			margin-top: 21px;
+			
+			a {
+				
+				text-decoration: none;
+				color: #52c6ec;
+			}
+		}
+		
+		
+	}
+	
+	.album-shadow-container {
+		
+		position: relative;
+		height: 330px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		&:after {
+			
+			content: "";
+			position: absolute;
+			right: 0;
+			top:0;
+			background: url(../img/artist/vert-tapered-shadow.png);
+			width: 11px;
+			height: 226px;
+		}
+		
+		.album-scrollable {
+			
+			height: 340px;
+			overflow-x: hidden;
+			overflow-y: hidden;
+			padding-left: 1px;
+			padding-top: 1px;
+			
+			&:hover {
+				
+				overflow-x: scroll;
+			}
+			
+			ul {
+				
+				width: 5000px;
+				height: 341px;
+				
+				li {
+					
+					display: block;
+					float: left;
+					width: 164px;
+					margin-right: 15px;
+					
+					.album-container {
+					
+						position: relative;
+						margin-bottom: 10px;
+                                                height: 157px;
+                                                
+						img {
+							
+							border: 1px solid #fff;
+							.box-shadow(0 0 4px rgba(0,0,0,.5));
+							
+						}
+						
+						
+                                                .album-preview {							
+                                                        background: none repeat scroll 0 0 #FFFFFF;
+                                                        bottom: 65px;
+                                                        box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+                                                        color: #000000;
+                                                        display: block;
+                                                        font-size: 12px;
+                                                        font-weight: bold;
+                                                        height: 25px;
+                                                        line-height: 25px;
+                                                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+                                                        opacity: 0;
+                                                        position: absolute;
+                                                        
+                                                        text-align: center;
+                                                        text-decoration: none;
+                                                        text-transform: uppercase;
+                                                        width: 124px;
+                                                        left: 20px;
+                                                        top:70px;
+                                                }
+						
+                                                .add-to-playlist-button {
+							background: url(../img/add-to-playlist-button.png);
+							display: block;
+							position: absolute;
+							bottom:0;
+							right:9px;
+							width: 26px;
+							height: 25px;
+							-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+							opacity: 0;
+							
+							&:hover {
+								opacity: 1;
+							}					
+							
+						}
+
+                                                .wishlist-popover {
+				
+                                                        display: none;
+                                                        position: absolute;
+                                                        right: 6px;
+                                                        bottom:26px; /* changed 080313 , top removed */
+                                                        font-size: 12px;
+                                                        z-index: 100;
+                                                        width: 120px;
+														border-right: 5px solid transparent;
+														margin-right: -5px;
+
+
+                                                        .box-shadow(0 0 2px rgba(0,0,0,.5));
+
+                                                        &.active {
+
+                                                                display: block;
+                                                        }
+
+                                                        a {
+                                                                background: #fff;
+
+                                                                display: block;
+                                                                color: #000;
+                                                                padding: 5px 5px 5px 10px;
+
+                                                                line-height: 20px;
+                                                                text-decoration: none;
+
+                                                                &:hover {
+
+                                                                        background: #999;
+                                                                }
+
+
+                                                        }
+
+                                                        .playlist-options {
+                                                                position: absolute;
+                                                                right: -146px;
+                                                                top:0;
+                                                                display: none;
+                                                                background: #fff;
+                                                                width: 145px;
+                                                                height: 205px;
+                                                                z-index: 100;
+                                                                .box-shadow(0 0 2px rgba(0,0,0,.5));
+
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
+
+                                                                &.active {
+
+                                                                        display: block;
+                                                                }
+
+                                                                ul {
+                                                                	height: auto;
+
+                                                                        li {
+
+                                                                                float: none;
+                                                                                padding: 0;
+                                                                                width: 145px;
+                                                                                a {
+
+                                                                                        padding: 5px 5px 5px 10px;
+                                                                                        text-decoration: none;
+
+                                                                                        &:hover {
+
+                                                                                                text-decoration: none;
+                                                                                        }
+                                                                                }
+                                                                        }
+                                                                }
+
+                                                        }
+
+
+
+                                                        .add-to-playlist {
+
+                                                                background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+
+                                                                &:hover {
+
+                                                                        color: rgba(0,0,0,1);
+                                                                        background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+                                                                }
+                                                        }
+                                                }
+						
+					}
+					
+					.album-title {
+						font-weight: bold;
+						font-size: 14px;
+						line-height: 15px;
+						margin-bottom: 5px;
+						
+						a {
+							
+							color: #000;
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+						
+					}
+					
+					.genre {
+						
+						font-size: 12px;
+						line-height: 15px;
+						color: rgba(0,0,0,.5);
+						word-wrap:break-word;
+                                                width: 160px;
+						a {
+							color: rgba(0,0,0,.5);
+							text-decoration: none;
+                                                        
+                                                        &:hover {
+                                                            text-decoration: underline;
+							}
+							
+						}
+					}
+					.label {
+						
+						font-size: 12px;
+						line-height: 15px;
+						color: rgba(0,0,0,.5);
+						
+						a {
+							color: rgba(0,0,0,.5);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+							
+						}
+					}
+					
+				}
+			}
+		}
+	}
+
+	.artist-downloads-filter-container {
+	
+		margin-top: 20px;
+	
+		div {
+			
+			float: left;
+			
+
+			
+			&.song-filter-button {
+				width: 336px;
+				height: 39px;
+				background: url(../img/artist/song-off.jpg);
+				
+				&.active {
+					background: url(../img/artist/song-up.jpg);
+					
+					&.toggled {
+						
+						background: url(../img/artist/song-down.jpg);
+					}
+				}
+				
+			}
+			
+			
+			&.artist-filter-button {
+				
+				width: 212px;
+				height: 39px;
+				background: url(../img/artist/artist-off.jpg);
+				
+				&.active {
+					background: url(../img/artist/artist-up.jpg);
+					
+					&.toggled {
+						
+						background: url(../img/artist/artist-down.jpg);
+					}
+					
+				}
+			}
+			
+			&.album-filter-button {
+				
+				width: 215px;
+				height: 39px;
+				background: url(../img/artist/album-off.jpg);
+				
+				&.active {
+					background: url(../img/artist/album-up.jpg);
+					
+					&.toggled {
+						
+						background: url(../img/artist/album-down.jpg);
+					}
+					
+				}
+			}
+			
+			&.download-button {
+				width: 86px;
+				height: 39px;
+				background: url(../img/artist/download.jpg)
+			}
+		}
+		
+		
+	}
+
+
+
+
+	.artist-downloads-shadow-container {
+			
+		position: relative;
+		width: 850px;
+		height: 481px;
+		overflow-x: hidden;
+		overflow-y: hidden;
+		
+		&:after {
+			
+			position: absolute;
+			content: "";
+			bottom: 0;
+			left: 0;
+			background: url(../img/artist/horiz-tapered-shadow.png);
+			width: 850px;
+			height: 11px;
+		}
+		
+		.tracklist-scrollable {
+		
+		
+			overflow-x: hidden;
+			overflow-y: hidden;
+			height: 481px;
+			
+			&:hover {
+				overflow-y: scroll;
+				
+			}
+			
+			.tracklist-container {
+				
+				
+				
+				
+				.album-title {
+					
+					font-size: 24px;
+					
+					margin-bottom: 10px;
+					margin-top: 10px;
+					
+					span {
+						
+						font-weight: normal;
+					}
+				}
+				
+				.artist-name {
+					
+					font-size: 16px;
+					color: rgba(0,0,0,.5);
+					margin-bottom: 10px;
+					
+					
+				}
+				
+				
+				.tracklist-header {
+							
+					position: relative;
+					height: 39px;
+					background: url(../img/albums-page/tracklist-header-bkg.jpg) repeat;
+					width: 100%;
+					
+					span {
+						display: block;
+						position: absolute;
+						
+						font-weight: bold;
+						font-size: 12px;
+						line-height: 39px;
+						top:0;
+						
+						&.song {
+							
+							left: 15px;
+							
+						}
+						
+						&.artist {
+							
+							left: 331px;
+							background: url(../img/albums-page/borders.jpg) no-repeat;
+							width: 100px;
+							padding-left: 14px;
+							
+							
+							
+						}
+						
+						&.time {
+							left: 503px;
+							background: url(../img/albums-page/borders.jpg) no-repeat;
+							width: 100px;
+							padding-left: 13px;
+						}
+						
+						
+					}
+			
+				}
+				
+				.tracklist {
+					
+					position: relative;
+					height: 44px;
+					
+					&:nth-child(odd) {
+						
+						background: #f1f1f1;
+					}
+					
+					&:nth-child(even) {
+						
+						background: #e9e9e9;
+					}
+					
+					&:hover {
+						
+						background: #c3e6f1;
+					}
+					
+					&.playing {
+						background: #c3e6f1;
+						
+					}
+					
+					.preview {
+						
+						display: block;
+						position: absolute;
+						left: 13px;
+						top:12px;
+						width: 19px;
+						height: 19px;
+						background: url(../img/artist/preview-off.png);
+						opacity: .7;
+						
+						
+						&:hover {
+							
+							background: url(../img/artist/preview-hover.png);
+							opacity: 1;
+						}
+						
+						&.active {
+							
+							background: url(../img/artist/preview-click.png);
+							opacity: 1;
+							width: 17px;
+							height: 17px;
+						
+						}
+						
+						&.playing {
+							background: url(../img/artist/preview-click.png);
+							opacity: 1;
+							width: 17px;
+							height: 17px;
+							
+						}
+					
+					
+					}
+					
+					div {
+						display: block;
+						position: absolute;
+						
+						font-weight: normal;
+						font-size: 12px;
+						line-height: 44px;
+						
+						
+						
+						color: rgba(0,0,0,.7);
+						
+						&.song {
+							
+							left: 53px;
+							
+							&.playing {
+								
+								font-weight: bold;
+								color: rgba(0,0,0,1);
+
+								
+							}
+							
+							
+						}
+						
+						&.artist {
+							
+							left: 347px;
+							
+							a {
+								
+								color: rgba(0,0,0,.7);
+								text-decoration: none;
+							}
+							
+							&.playing {
+								
+								font-weight: bold;
+								color: rgba(0,0,0,1);
+							}
+							
+						}
+						
+						&.download {
+							left: 781px;
+							
+							a {
+								
+								color: rgba(0,0,0,.7);
+								text-decoration: none;
+								
+								&:hover {
+									
+									text-decoration: underline;
+								}
+							}
+							
+							&.playing {
+								
+								font-weight: bold;
+
+								
+								
+								
+								a {
+									
+									color: rgba(0,0,0,1);
+								}
+							}
+							
+						}
+						
+						&.album {
+							
+							left: 602px;
+							
+							a {
+								
+								color: rgba(0,0,0,.7);
+								text-decoration: none;
+								
+								&:hover {
+									
+									text-decoration: underline;
+								}
+							}
+							
+							&.playing {
+								
+								font-weight: bold;
+								color: rgba(0,0,0,1);
+								
+								a {
+									
+									color: rgba(0,0,0,1);
+								}
+							}
+						}
+						
+						&.image-container {
+						
+							left: 562px;
+							top:8px;
+							position: absolute;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+							border: 1px solid #fff;
+							
+							
+							
+						}
+						
+						
+					}
+					
+					.add-to-playlist-button {
+						background: url(../img/add-to-playlist-button.png);
+						display: block;
+						position: absolute;
+						top:10px;
+						left: 295px;
+						width: 26px;
+						height: 25px;
+						opacity: .6;
+						.box-shadow(0 0 3px rgba(0,0,0,.5));
+						
+						&:hover {
+							opacity: 1;
+						}
+						
+						
+					}
+					
+					
+					.wishlist-popover {
+					
+						display: none;
+						position: absolute;
+						left: 295px;
+						top:-91px;
+						font-size: 12px;
+						z-index: 100;
+						width: 120px;
+						
+						
+						
+						.box-shadow(0 0 3px rgba(0,0,0,.5));
+						
+						&.top {
+							
+							top:10px;
+							left: 295px;
+						}
+						
+						&.active {
+							
+							display: block;
+						}
+						
+						a {
+							background: #fff;
+							
+							display: block;
+							color: #000;
+							padding: 5px 5px 5px 10px;
+						
+							line-height: 20px;
+							text-decoration: none;
+							
+							&:hover {
+								
+								background: #999;
+							}
+							
+						}
+						
+						.playlist-options {
+							position: absolute;
+							right: -144px;
+							top:30px;
+							display: none;
+							background: #fff;
+							width: 145px;
+							height: 186px;
+							.box-shadow(0 0 3px rgba(0,0,0,.5));
+							
+							overflow-x: hidden;
+							
+							&.active {
+								
+								display: block;
+							}
+							
+							
+							
+							ul {
+								
+								li {
+									
+									float: none;
+									padding: 0;
+									
+									a {
+										
+										padding: 5px 5px 5px 10px;
+										text-decoration: none;
+										
+										&:hover {
+											
+											text-decoration: none;
+										}
+									}
+								}
+							}
+								
+						}
+						
+
+						
+						.add-to-playlist {
+								
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+							
+							&:hover {
+								
+								color: rgba(0,0,0,1);
+								background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							}
+						}
+					}
+	
+					
+					
+					
+					
+					
+					
+					
+				}
+				
+				
+			}
+		}
+	}
+
+
+
+
+
+	
+}
+
+
+/* End of composer page */
+
 /* history page */
 .history-page {
 	
@@ -9438,9 +10242,10 @@ img {
 .login-container {
 	
 	
-	margin-top: 10px;
-	margin-left: 15px;
-	width: 850px;
+	// margin-top: 10px;
+	// margin-left: 15px;
+	// width: 850px;
+	width: 847px;
 	padding-bottom: 20px;
 	.box-sizing;
 	
@@ -9448,25 +10253,30 @@ img {
 	
 	header {
 		background: url(../img/login/border.gif) no-repeat center bottom;
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 		padding-bottom: 10px;
+		position: relative;
+
 	
 		h3 {
 			
-			float: left;
+			// float: left;
 			font-size: 26px;
 			letter-spacing: 1px;
 			line-height: 33px;
 			
-			margin-top: 20px;
+			// margin-top: 20px;
 		}
 		
 		.more-info {
 			
-			float: right;
+			// float: right;
+			position: absolute;
 			color: rgba(0,0,0,.4);
 			font-size: 13px;
-			margin-top: 35px;
+			// margin-top: 35px;
+			top: 14px;
+			right: 0;
 			
 			
 			a {
@@ -9490,7 +10300,7 @@ img {
 		.form-wrapper {
 			background: url(../img/login/divider.gif) no-repeat right center;
 			float: left;
-			width: 423px;
+			width: 422px;
 			.box-sizing;
 			//padding: 10px 20px 10px 10px;
 			padding-right: 30px;
@@ -9500,6 +10310,7 @@ img {
 				
 				margin-bottom: 20px;
 				font-size: 14px;
+				line-height: 16px;
 				font-weight: normal;
 			}
 			div {
@@ -9522,6 +10333,7 @@ img {
 					width: 295px;
 					height: 24px;
 					padding-left: 5px;
+					font-family: Arial, Helvetica, sans-serif;
 				}
 				
 				input[type="submit"] {
@@ -9533,12 +10345,24 @@ img {
 					font-weight: bold;
 					-webkit-appearance: none;
 					border: 0;
+					cursor: pointer;
 				}
+
+				// .select-wrapper {
+
+				// 	width: 295px;
+				// 	height: 23px;
+    // 				background: #fafafa url(../img/country-select-arrow.png) no-repeat;
+				// 	display: inline-block;
+				// 	overflow-x: hidden;
+				// }
 				
 				select {
 					
 					background: url(../img/login/select-bkg.gif);
+
 					width: 301px;
+					// width: 320px;
 					height: 23px;
 					-webkit-appearance: none;
 					border: none;
@@ -9595,7 +10419,8 @@ img {
 				width: 100%;
 				height: 195px;
 				overflow-y: hidden;
-				overflow-x: hidden;
+				// overflow-x: hidden;
+				overflow-y: auto;
                                 
 				&:hover {
 						
@@ -11020,7 +11845,7 @@ img {
 			content: "";
 			background: url(../img/news/top-100/top-100-tapered-shadow.png);
 			position: absolute;
-			right: -3px;
+			right: 0;
 			top:66px;
 			width: 11px;
 			height: 336px;
@@ -12404,7 +13229,7 @@ img {
 		&:after {
 			content: "";
 			position: absolute;
-			right: -3px;
+			right: 0;
 			background: url(../img/news/right-tapered-shadow.png) transparent;
 			width: 10px;
 			height: 449px;
@@ -13100,7 +13925,7 @@ img {
 		&:after {
 			content: "";
 			position: absolute;
-			right: -3px;
+			right: 0;
 			background: url(../img/whats-happening-tapered-shadow.png) transparent;
 			width: 7px;
 			height: 390px;
@@ -13763,7 +14588,7 @@ img {
 							
 							color: rgba(0,0,0,1);
 						}
-
+						
 						a {
 
 							cursor: default;
@@ -13772,7 +14597,7 @@ img {
 
 								text-decoration: none;
 							}
-						}					
+						}
 						
 					}
 					
@@ -17153,7 +17978,7 @@ img {
 			
 			&.download {
 				
-				width: 79px;
+				width: 76px;
 	}
 	
 	
@@ -17650,14 +18475,14 @@ img {
 			.card-number-container {
 				
 				position: absolute;
-				left: 0;
+				right: 202px;
 				top:0;
 			}
 			
 			.pin-number-container {
 				
 				position: absolute;
-				left: 66px;
+				right: 202px;
 				top:49px;
 				
 			}
@@ -17703,6 +18528,7 @@ img {
 				position: absolute;
 				left: 350px;
 				top: 27px;
+				cursor: pointer;
 				
 				&.selected {
 					background: url(../img/site-login/login-btn-clicked.jpg);

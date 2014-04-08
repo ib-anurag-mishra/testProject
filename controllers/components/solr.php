@@ -136,7 +136,7 @@ class SolrComponent extends Object {
                             break;
                         case 'album':
                             $query = $searchkeyword;
-                            $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer"; // CArtistText^80
+							$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
                             break;
                         case 'artist':
                             $query = $searchkeyword;
@@ -152,12 +152,16 @@ class SolrComponent extends Object {
                             break;
                         case 'composer':
                             $query = $searchkeyword;
-                            $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
+							$queryFields = "CComposer^100";
                             break;
                         case 'all':
                             $query = $searchkeyword;
                             $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
                             break;
+						case 'genreAlbum':
+							$query 		 = $searchkeyword;
+							$queryFields = "CGenre^60";
+							break;
                         default:
                             $query = $searchkeyword;
                             $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
@@ -196,8 +200,9 @@ class SolrComponent extends Object {
                     else
                     {
                         $response = self::$solr2->search($query . $provider_query, 0, 1, $additionalParams);
+						$num_found = $response->response->numFound;
                     }
-                    $num_found = $response->response->numFound;
+
                     
                     if (0 == $num_found)
                     {
@@ -299,7 +304,6 @@ class SolrComponent extends Object {
                         $response = self::$solr2->search($query . $provider_query, $tmp_start, $limit, $additionalParams);
                     }
                     
-                    $response->response->numFound = $response->response->numFound + $_SESSION['sony_total'];
                 }//ioda
                 
                 //---------------------------------------------------------------------------------------------------------------------------------------//
@@ -405,6 +409,10 @@ class SolrComponent extends Object {
                         $query = '(CComposer:(' . $searchkeyword . '))';
                         $field = 'Composer';
                         break;
+				   case 'album':
+					   	$query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:(' . $searchkeyword . '))';
+		   				$field = 'Title';
+		   				break;
                     default:
                         $query = '(CSongTitle:(' . $searchkeyword . '))';
                         $field = 'SongTitle';
@@ -465,241 +473,318 @@ class SolrComponent extends Object {
         }
     }
 
-    function getFacetSearchTotal($keyword, $type='song') {
-        $query = '';
-        $country = $this->Session->read('territory');
-//        
-//        echo 'keyword->' .$keyword;
-//        echo "<br/>";
-//        echo 'type->' .$type;
-//        echo "<br/>";
-//        echo 'country->' .$country;
-        
-        if (!empty($keyword)){
-        if (!empty($country)) {
-            
-            if($type == 'video'){
-                    $cond = " AND DownloadStatus:1";
-            } else {
-                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-            }
-            
-            if ($this->Session->read('block') == 'yes') {
-                $cond .= " AND Advisory:F";
-                if($type != 'video'){
-                    $cond .= " AND AAdvisory:F";
-                }
-            }
-            $searchkeyword = strtolower($this->escapeSpace($keyword));
-            
-            $searchkeyword = $this->checkSearchKeyword($searchkeyword);
-        
-            if (!isset(self::$solr)) {
-                $connectedToSolr = false;
-                $retryCount = 1;
-                while (!$connectedToSolr &&  $retryCount < 3) {
-                    try {
-                        self::initialize(null);
-                        $connectedToSolr = true;
-                    }
-                    catch(Exception $e) {
-                        
-                    }
-                    ++$retryCount; 
-                }
-                
-                if(!$connectedToSolr) {
-                    $this->log('Unable to Connect to Solr','search');
-                    exit;
-                }
-            }
+	function getFacetSearchTotal( $keyword, $type='song',$check=0, $filter = null ) {
 
-            switch ($type) {
-                case 'song':
-                    $query = '(CSongTitle:(' . $searchkeyword . '))';
-                    $field = 'SongTitle';
-                    break;
-                case 'genre':
-                    $query = '(CGenre:(' . $searchkeyword . '))';
-                    $field = 'Genre';
-                    break;
-                case 'album':
-                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') CComposer:(' . $searchkeyword . '))';
-                    $field = 'Title';
-                    break;
-                case 'artist':
-                    $query = '(CArtistText:(' . $searchkeyword . '))';
-                    $field = 'ArtistText';
-                    break;
-                case 'label':
-                    $query = '(CLabel:(' . $searchkeyword . '))';
-                    $field = 'Label';
-                    break;
-                case 'video':
-                    $query = '(CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
-                    $field = 'VideoTitle';
-                    break;
-                case 'composer':
-                    $query = '(CComposer:(' . $searchkeyword . '))';
-                    $field = 'Composer';
-                    break;
-                default:
-                    $query = '(CSongTitle:(' . $searchkeyword . '))';
-                    $field = 'SongTitle';
-                    break;
-            }
+		$query 	 = '';
+		$country = $this->Session->read( 'territory' );
 
-            $query = $query . ' AND Territory:' . $country . $cond;
+		if ( !empty( $keyword ) ) {
 
-            if ($page == 1) {
-                $start = 0;
-            } else {
-                $start = (($page - 1) * $limit);
-            }
+			if ( !empty( $country ) ) {
 
-            $additionalParams = array(
-                'facet' => 'true',
-                'facet.field' => array(
-                    $field
-                ),
-                'facet.query' => $query,
-                'facet.mincount' => 1,
-                'facet.limit' => 5000
-            );
+				if ( $type == 'video' ) {
+					$cond = " AND DownloadStatus:1";
+				} else {
 
-            if ($type != 'video') {
-                $response = self::$solr->search($query, $start, $limit, $additionalParams);
-                if ($response->getHttpStatus() == 200) {
-                    if (!empty($response->facet_counts->facet_fields->$field)) {
-                        return count($response->facet_counts->facet_fields->$field);
-                    } else {
-                        return array();
-                    }
-                } else {
-                    return array();
-                }
-                return array();
-            } else {
-                $response = self::$solr2->search($query, $start, $limit, $additionalParams);
-                if ($response->getHttpStatus() == 200) {
-                    if (!empty($response->facet_counts->facet_fields->$field)) {
-                        return count($response->facet_counts->facet_fields->$field);
-                    } else {
-                        return array();
-                    }
-                } else {
-                    return array();
-                }
-                return array();
-            }
-        } else {
-            $this->log('Country was not set in the facet search total function for keyword : '.$keyword,'search');
-            return array();
-        }
-        } else {
-            $this->log('Keyword was empty in the facet search total function','search');
-            return array();
-        }
-    }
+					if ( !empty( $filter ) ) {
 
-    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null)
-    {
-    
-        set_time_limit(0);
-        $query = '';
-        
-        if((empty($country)))
-        {
-            $country = $this->Session->read('territory');
-        }
-        
-        if (!empty($keyword)){
-            if (!empty($country))
-            {
-          
-                if($type == 'video'){
-                    $cond = " AND DownloadStatus:1";
-                } else {
-                    $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-                }
-    
-                if(1 == $mobileExplicitStatus)
-                {
-                    $cond .= " AND Advisory:F";
-                }
-                else
-                {        
-                    if ($this->Session->read('block') == 'yes') {
-                        $cond .= " AND Advisory:F";
-                        if($type != 'video'){
-                            $cond .= " AND AAdvisory:F";
-                        }
-                    }            
-                }
-                
-                $searchkeyword = strtolower($this->escapeSpace($keyword));
-                
-                $searchkeyword = $this->checkSearchKeyword($searchkeyword);
-                
-                if (!isset(self::$solr)) {
-                    $connectedToSolr = false;
-                    $retryCount = 1;
-                    while (!$connectedToSolr &&  $retryCount < 3) {
-                        try {
-                            self::initialize(null);
-                            $connectedToSolr = true;
-                        }
-                        catch(Exception $e) {
-                            
-                        }
-                        ++$retryCount; 
-                    }
-                    
-                    if(!$connectedToSolr) {
-                        $this->log('Unable to Connect to Solr','search');
-                        exit;
-                    }
-            }
+						$filter = str_replace( ' ', '*', $filter );
+						$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1) AND Genre:".$filter;
 
-            switch ($type) {
-                case 'song':
-                    $query = $searchkeyword;
-                    $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-                    $field = 'SongTitle';
-                    break;
-                case 'genre':
-                    $queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
-                    $query = $searchkeyword;
-                    $field = 'Genre';
-                    break;
-                case 'album':
-                    $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
-                    $query = $searchkeyword;
-                    $field = 'rpjoin';
-                    break;
-                case 'artist':
-                        $queryFields = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
+					} else {
+						$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+					}
+				}
+
+				if ( $this->Session->read( 'block' ) == 'yes' ) {
+
+					$cond .= " AND Advisory:F";
+
+					if( $type != 'video' ) {
+						$cond .= " AND AAdvisory:F";
+					}
+				}
+
+				$searchkeyword = strtolower( $this->escapeSpace( $keyword ) );
+				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
+
+				if ( !isset( self::$solr ) ) {
+
+					$connectedToSolr = false;
+					$retryCount 	 = 1;
+
+					while ( !$connectedToSolr &&  $retryCount < 3 ) {
+
+						try {
+							self::initialize( null );
+							$connectedToSolr = true;
+
+						} catch( Exception $e ) {
+
+						}
+						++$retryCount;
+					}
+
+					if( !$connectedToSolr ) {
+						$this->log( 'Unable to Connect to Solr','search' );
+						exit;
+					}
+				}
+
+				switch ( $type ) {						
+
+					case 'song':
+						$query 		 = $searchkeyword;
+						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+						$field 		 = 'SongTitle';
+						break;
+
+					case 'genre':
+						$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
+						$query 		 = $searchkeyword;
+						$field 		 = 'Genre';
+						break;
+
+					case 'album':
+
+						if( !empty( $check ) ) {
+							$queryFields = "CComposer";
+						} else {
+							$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+						}
+
+						$query = $searchkeyword;
+						$field = 'rpjoin';
+						break;
+
+					case 'artist':
+						$queryFields = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
+						$query 		 = $searchkeyword;
+						$field 		 = 'ArtistText';
+						break;
+
+					case 'label':
+						$queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+						$query 		 = $searchkeyword;
+						$field 		 = 'Label';
+						break;
+
+					case 'video':
+						$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
+						$query 		 = $searchkeyword;
+						$field 		 = 'VideoTitle';
+						break;
+
+					case 'composer':
+						$queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
+						$query 		 = $searchkeyword;
+						$field 		 = 'Composer';
+						break;
+
+					case 'genreAlbum':
+						$queryFields = "CGenre^60";
+						$query 		 = $searchkeyword;
+						$field 		 = 'rpjoin';
+						break;
+
+					default:
+						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+						$query 		 = $searchkeyword;
+						$field 		 = 'SongTitle';
+						break;
+				}
+
+				$query = $query . ' AND Territory:' . $country . $cond;
+
+				if ( $page == 1 ) {
+					$start = 0;
+				} else {
+					$start = ( ( $page - 1 ) * $limit );
+				}
+
+				$additionalParams = array(
+						'defType' => 'edismax',
+						'qf' => $queryFields,
+						'facet' => 'true',
+						'facet.field' => array(
+								$field
+						),
+						'facet.query' => $query,
+						'facet.mincount' => 1,
+						'facet.limit' => 5000
+				);
+
+				if ( $type != 'video' ) {
+
+					if( !empty( $check ) ) {
+						$response = self::$solr->search( $query, $start, $limit, $additionalParams, 1 );
+					} else {
+						$response = self::$solr->search( $query, $start, $limit, $additionalParams );
+					}
+
+					if ( $response->getHttpStatus() == 200 ) {
+
+						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
+
+							return count( $response->facet_counts->facet_fields->$field );
+
+						} else {
+							return array();
+						}
+					} else {
+						return array();
+					}
+					return array();
+				} else {
+					$response = self::$solr2->search( $query, $start, $limit, $additionalParams );
+					
+					if ( $response->getHttpStatus() == 200 ) {
+						
+						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
+							return count( $response->facet_counts->facet_fields->$field );
+						} else {
+							return array();
+						}
+					} else {
+						return array();
+					}
+					return array();
+				}
+			} else {
+				$this->log( 'Country was not set in the facet search total function for keyword : '.$keyword,'search' );
+				return array();
+			}
+		} else {
+			$this->log( 'Keyword was empty in the facet search total function','search' );
+			return array();
+		}
+	}
+
+	function groupSearch( $keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null, $check = 0, $filter = null ) {
+
+		set_time_limit(0);
+		$query = '';
+
+		if( empty( $country ) ) {
+			$country = $this->Session->read( 'territory' );
+		}
+
+		if ( !empty( $keyword ) ) {
+
+			if ( !empty( $country ) ) {
+
+				if( $type == 'video' ) {
+					$cond = " AND DownloadStatus:1";
+
+				} else {
+
+					if( !empty( $filter ) ) {
+
+		    			$filter = str_replace(' ', '*', $filter);
+		    			$cond   = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1) AND Genre:".$filter;
+
+					} else {
+						$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+					}
+				}
+
+				if( 1 == $mobileExplicitStatus ) {
+					$cond .= " AND Advisory:F";
+
+				} else {
+
+					if ( $this->Session->read( 'block' ) == 'yes' ) {
+
+						$cond .= " AND Advisory:F";
+
+						if( $type != 'video' ) {
+							$cond .= " AND AAdvisory:F";
+						}
+					}
+				}
+
+				$searchkeyword = strtolower( $this->escapeSpace( $keyword ) );
+				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
+
+				if ( !isset( self::$solr ) ) {
+					
+					$connectedToSolr = false;
+					$retryCount 	 = 1;
+
+					while ( !$connectedToSolr &&  $retryCount < 3 ) {
+						try {
+							self::initialize( null );
+							$connectedToSolr = true;
+
+						} catch(Exception $e) {
+
+						}
+						++$retryCount;
+					}
+
+					if( !$connectedToSolr ) {
+						$this->log( 'Unable to Connect to Solr','search' );
+						exit;
+					}
+				}
+
+				switch ( $type ) {
+					
+					case 'song':
+						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+						$query 		 = $searchkeyword;
+						$field 		 = 'SongTitle';
+						break;
+
+					case 'genre':
+						$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
+						$query 		 = $searchkeyword;
+						$field 		 = 'Genre';
+						break;
+
+					case 'album':
+
+						if( !empty( $check ) ) {
+							$queryFields = "CComposer";
+						} else {
+							$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+						}
+						
+						$query = $searchkeyword;
+						$field = 'rpjoin';
+						break;
+
+					case 'artist':
+						$queryFields = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
+						$query 		 = $searchkeyword;
+						$field 		 = 'ArtistText';
+						break;
+
+					case 'label':
+						$queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+						$query 		 = $searchkeyword;
+						$field 		 = 'Label';
+						break;
+
+					case 'video':
+						$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $query = $searchkeyword;
-                        $field = 'ArtistText';
-                        break;
-                    case 'label':
-                        $queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-                        $query = $searchkeyword;
-                        $field = 'Label';
-                        break;
-                    case 'video':
-                        $query = $searchkeyword;
-                        $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $field = 'VideoTitle';
                         break;
                     case 'composer':
+						$queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                         $query = $searchkeyword;
-                        $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                         $field = 'Composer';
                         break;
-                    default:
+
+					case 'genreAlbum':
+						$queryFields = "CGenre^60";
                         $query = $searchkeyword;
+						$field 		 = 'rpjoin';
+						break;
+					default:
                         $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+						$query 		 = $searchkeyword;
                         $field = 'SongTitle';
                         break;
                 }
@@ -722,29 +807,43 @@ class SolrComponent extends Object {
                 );
                 
                 if ($type != 'video') {
-                    $response = self::$solr->search($query, $start, $limit, $additionalParams);
-                    if ($response->getHttpStatus() == 200) {
-                        if (!empty($response->grouped->$field->groups)) {
-                            $docs = array();
-                            foreach ($response->grouped->$field->groups as $group) {
-                                $group->doclist->docs[0]->numFound = $group->doclist->numFound;
-                                $docs[] = $group->doclist->docs[0];
-                            }
-                            return $docs;
-                        } else {
-                            return array();
-                        }
-                    } else {
-                        return array();
-                    }
-                    return array();
-                } else {
-                    $response = self::$solr2->search($query, $start, $limit, $additionalParams);
-                    if ($response->getHttpStatus() == 200) {
-                        if (!empty($response->grouped->$field->groups)) {
-                            $docs = array();
-                            foreach ($response->grouped->$field->groups as $group) {
-                                $group->doclist->docs[0]->numFound = $group->doclist->numFound;
+					if( !empty( $check ) ) {
+						$response = self::$solr->search( $query, $start, $limit, $additionalParams, 1 );
+					} else {
+						$response = self::$solr->search( $query, $start, $limit, $additionalParams );
+					}
+
+					if ( $response->getHttpStatus() == 200 ) {
+						
+						if ( !empty( $response->grouped->$field->groups ) ) {
+							
+							$docs = array();
+							
+							foreach ( $response->grouped->$field->groups as $group ) {
+								
+								$group->doclist->docs[0]->numFound = $group->doclist->numFound;
+								$docs[] = $group->doclist->docs[0];
+							}
+							return $docs;
+						} else {
+							return array();
+						}
+					} else {
+						return array();
+					}
+					return array();
+				} else {
+
+					$response = self::$solr2->search( $query, $start, $limit, $additionalParams );
+
+					if ( $response->getHttpStatus() == 200 ) {
+
+						if ( !empty( $response->grouped->$field->groups ) ) {
+
+							$docs = array();
+							foreach ( $response->grouped->$field->groups as $group ) {
+								$group->doclist->docs[0]->numFound = $group->doclist->numFound;
+								$group->doclist->docs[0]->numAlbumCount = $this->getFacetSearchTotal('"'.$group->doclist->docs[0]->TComposer.'"', 'album',1);
                                 $docs[] = $group->doclist->docs[0];
                             }
                             
@@ -821,13 +920,13 @@ class SolrComponent extends Object {
                 switch ($type)
                 {
                     case 'song':
+						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                         $query = $searchkeyword;
-                        $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                         $field = 'SongTitle';
                         break;
                     case 'genre':
+						$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
                         $query = $searchkeyword;
-                        $queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
                         $field = 'Genre';
                         break;
                     case 'album':
@@ -846,18 +945,24 @@ class SolrComponent extends Object {
                         $field = 'Label';
                         break;
                     case 'video':
+						$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $query = $searchkeyword;
-                        $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $field = 'VideoTitle';
                         break;
                     case 'composer':
+						$queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                         $query = $searchkeyword;
-                        $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                         $field = 'Composer';
                         break;
-                    default:
+
+					case 'genreAlbum':
+						$queryFields = "CGenre^60";
                         $query = $searchkeyword;
+						$field 		 = 'rpjoin';
+						break;
+					default:
                         $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+						$query 		 = $searchkeyword;
                         $field = 'SongTitle';
                         break;
                 }
@@ -989,38 +1094,44 @@ class SolrComponent extends Object {
             if ($type != 'all') {
                 switch ($type) {
                     case 'song':
+							$queryFields = "CSongTitle";
                         $query = $searchkeyword;
-                        $queryFields = "CSongTitle";
                         $field = 'SongTitle';
                         break;
                     case 'genre':
+							$queryFields = "CGenre";
                         $query = $searchkeyword;
-                        $queryFields = "CGenre";
                         $field = 'Genre';
                         break;
                     case 'album':
+							$queryFields = "CTitle";
                         $query = $searchkeyword;
-                        $queryFields = "CTitle";
                         $field = 'Title';
                         break;
                     case 'artist':
+							$queryFields = "CArtistText";
                         $query = $searchkeyword;
-                        $queryFields = "CArtistText";
                         $field = 'ArtistText';
                         break;
                     case 'video':
+							$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $query = $searchkeyword;
-                        $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $field = 'VideoTitle';
                         break;
                     case 'composer':
+							$queryFields = "CComposer";
                         $query = $searchkeyword;
-                        $queryFields = "CComposer";
                         $field = 'Composer';
                         break;
-                    default:
+
+					    case 'genreAlbum':
+					    	$queryFields = "CGenre";
                         $query = $searchkeyword;
+		    				$field 		 = 'Genre';
+		    				break;
+					    default:
                         $queryFields = "CSongTitle";
+					    	$query 		 = $searchkeyword;
                         $field = 'SongTitle';
                         break;
                 }

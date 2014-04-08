@@ -273,9 +273,7 @@ class SearchController extends AppController
             else
             {
 
-
-                $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
-
+                $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 15);
                 $queryArr = null;
                 $albumData = array();
                 $albumsCheck = array_keys($albums);
