@@ -35,7 +35,7 @@ $('document').ready(function() {
     var poll = $('.poll');
     var music_player_container = $('.music-player-container');
     var $preview = $('.preview');
-    var most_popular_sub_nav = $('.most-popular-sub-nav');
+    var $most_popular_sub_nav = $('.most-popular-sub-nav');
     var footer = $('.site-footer');
     var footer_height = footer.height();
 
@@ -340,7 +340,7 @@ $('document').ready(function() {
         var container2 = $('.mejs-playlist.mejs-layer');
         var container3 = music_search_results;
         var container5 = $('.playlist-options');
-        var container6 = most_popular_sub_nav;
+        var container6 = $most_popular_sub_nav;
         var container7 = $('.queue-overlay');
 
         if (container.has(e.target).length === 0)
@@ -381,23 +381,41 @@ $('document').ready(function() {
     });
     /* end clickoffs */
 
-
-
-    $('.site-nav .most-popular a').on('mouseenter', function(e) {
+    var $site_nav_most_popular_anchor = $('.site-nav').find('.most-popular').find('a');
+    var $site_nav_regular = $('.site-nav').find('.regular');
+    
+    $site_nav_most_popular_anchor.on('mouseenter', function(e) {
         e.preventDefault();
 
-        $('.most-popular-sub-nav').addClass('active');
+        $most_popular_sub_nav.addClass('active');
     });
 
-    $('.most-popular-sub-nav').on('mouseleave', function() {
-        $('.most-popular-sub-nav').removeClass('active');
+    $most_popular_sub_nav.on('mouseleave', function() {
+        $most_popular_sub_nav.removeClass('active');
 
     });
 
-    $('.site-nav .regular').on('mouseenter', function() {
-        $('.most-popular-sub-nav').removeClass('active');
+    $site_nav_regular.on('mouseenter', function() {
+        $most_popular_sub_nav.removeClass('active');
 
     });
+
+
+    // $('.site-nav .most-popular a').on('mouseenter', function(e) {
+    //     e.preventDefault();
+
+    //     $('.most-popular-sub-nav').addClass('active');
+    // });
+
+    // $('.most-popular-sub-nav').on('mouseleave', function() {
+    //     $('.most-popular-sub-nav').removeClass('active');
+
+    // });
+
+    // $('.site-nav .regular').on('mouseenter', function() {
+    //     $('.most-popular-sub-nav').removeClass('active');
+
+    // });
     /* albums page */
 
     $(document).on('click', '.albums-page .tracklist .preview', function() {
