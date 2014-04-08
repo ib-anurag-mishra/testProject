@@ -686,24 +686,27 @@ $('document').ready(function() {
 
     /* my top 10 page */
 
+    $song_scrollable_song_container = $('.songs-scrollable').find('.song-container');
 
-    $('.songs-scrollable .song-container').on('mouseleave', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.top-10-download-now-button').css({opacity: 0});
-        $(this).find('.top-100-download-now-button').css({opacity: 0});
-        $(this).find('.album-preview').css({opacity: 0});
-        $(this).find('.preview').css({opacity: 0});
-        $(this).find('.wishlist-popover').removeClass('active');
+    $song_scrollable_song_container.on('mouseleave', function() {
+        $this = $(this);
+        $this.find('.add-to-playlist-button').css({opacity: 0});
+        $this.find('.top-10-download-now-button').css({opacity: 0});
+        $this.find('.top-100-download-now-button').css({opacity: 0});
+        $this.find('.album-preview').css({opacity: 0});
+        $this.find('.preview').css({opacity: 0});
+        $this.find('.wishlist-popover').removeClass('active');
     });
 
-    $('.songs-scrollable .song-container').on('mouseenter', function() {
+    $song_scrollable_song_container.on('mouseenter', function() {
+        $this = $(this);
         $('.album-preview').css({opacity: 0});
         $('.preview').css({opacity: 0});
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.top-10-download-now-button').css({opacity: 1});
-        $(this).find('.top-100-download-now-button').css({opacity: 1});
-        $(this).find('.album-preview').css({opacity: 1});
-        $(this).find('.preview').css({opacity: 1});
+        $this.find('.add-to-playlist-button').css({opacity: 1});
+        $this.find('.top-10-download-now-button').css({opacity: 1});
+        $this.find('.top-100-download-now-button').css({opacity: 1});
+        $this.find('.album-preview').css({opacity: 1});
+        $this.find('.preview').css({opacity: 1});
     });
 
 
