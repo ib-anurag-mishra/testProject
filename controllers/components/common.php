@@ -116,7 +116,8 @@ Class CommonComponent extends Object
      * 
      */
     function setArtistText($territory){
-     
+        set_time_limit(0); 
+        
         //$this->autoRender = false;
         //add the Song table model
         $songInstance = ClassRegistry::init('Song');
@@ -240,7 +241,7 @@ Class CommonComponent extends Object
      * @return  $artistListResults array
      */
      function getArtistText($genreValue,$territory,$artistFilter='',$pageNo=1){
-        
+        set_time_limit(0);    
         //add the Song table model
         $songInstance = ClassRegistry::init('Song');
         //set the territory value
