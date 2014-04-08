@@ -311,7 +311,8 @@ class SoapsController extends AppController {
       
     $mem_artistText = strtolower(str_replace(' ', '_', $artistText));
     
-    if ( (( Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory)) === false) || (Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory) === null) ) {
+    $albumDataCache = Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory);
+    if ( (($albumDataCache) === false) || ($albumDataCache === null) ) {
     
     
       if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
@@ -404,7 +405,7 @@ class SoapsController extends AppController {
       }
     } 
     
-    $albumData = Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory);
+    $albumData = $albumDataCache;
     
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
@@ -455,8 +456,8 @@ class SoapsController extends AppController {
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     $library_terriotry = $this->getLibraryTerritory($libraryId);
 
-
-    if ( ((Cache::read("ssartists_".$library_terriotry.'_EN')) === false)  || (Cache::read("ssartists_".$library_terriotry.'_EN') === null) ) {
+    $artistCache = Cache::read("ssartists_".$library_terriotry.'_EN');
+    if ( (($artistCache) === false)  || ($artistCache === null) ) {
 
       $Artist = $this->Artist->find('all',
         array(
@@ -478,7 +479,7 @@ class SoapsController extends AppController {
       Cache::write("ssartists_".$library_terriotry.'_EN', $Artist);
 
     } else {
-      $Artist = Cache::read("ssartists_".$library_terriotry.'_EN');
+      $Artist = $artistCache;
     }
 
 
@@ -535,7 +536,8 @@ class SoapsController extends AppController {
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     $library_terriotry = $this->getLibraryTerritory($libraryId);
  
-    if (($artists = Cache::read("featured".$library_terriotry)) === false) {
+    $featuredCache = Cache::read("featured".$library_terriotry);
+    if (($artists = $featuredCache) === false) {
       
       //get all featured artist and make array
      $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $library_terriotry,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
@@ -607,8 +609,9 @@ class SoapsController extends AppController {
                      
       Cache::write("featured".$library_terriotry, $featured);
     }
-        
-    $featured = Cache::read("featured".$library_terriotry);
+    else {    
+    $featured = $featuredCache;
+	}
     
     if(empty($featured)){
       throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
@@ -648,7 +651,8 @@ class SoapsController extends AppController {
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     $library_terriotry = $this->getLibraryTerritory($libraryId);
 
-    if ( ((Cache::read("ssartists_".$library_terriotry.'_EN')) === false)  || (Cache::read("ssartists_".$library_terriotry.'_EN') === null) ) {
+    $artistCache = Cache::read("ssartists_".$library_terriotry.'_EN');
+    if ( (($artistCache) === false)  || ($artistCache === null) ) {
 
       $Artist = $this->Artist->find('all',
         array(
@@ -670,12 +674,12 @@ class SoapsController extends AppController {
       Cache::write("ssartists_".$library_terriotry.'_EN', $Artist);
 
     } else {
-      $Artist = Cache::read("ssartists_".$library_terriotry.'_EN');
+      $Artist = $artistCache;
     }
 
 
-
-    if ( ((Cache::read('update_ssdate_mobile')) === false)  || (Cache::read('update_ssdate_mobile') === null) ) {
+    $updateSsdateMobile = Cache::read('update_ssdate_mobile');
+    if ( (($updateSsdateMobile) === false)  || ($updateSsdateMobile === null) ) {
 
       Cache::write('update_ssdate_mobile', date('d/m/Y/H/i/s',time()));
     }
@@ -894,7 +898,8 @@ class SoapsController extends AppController {
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
 
-    if (($libDownload = Cache::read("lib".$libraryId)) === false) {
+    $topDownloadCache = Cache::read("lib".$libraryId);
+    if (($libDownload = $topDownloadCache ) === false) {
       
       $this->Session->write('territory', $library_territory); 
       $this->switchCpuntriesTable();
@@ -966,8 +971,9 @@ STR;
 			}
 			Cache::write("lib".$libraryId, $topDownload);
 		}
-		$topDownload = Cache::read("lib".$libraryId);
-
+		else {
+		$topDownload = $topDownloadCache;
+		}
 
     if(!(empty($topDownload))) {
 
@@ -5114,7 +5120,8 @@ STR;
 
     $language = 'en';
 
-    if ( ((Cache::read("getPageContentWebService")) === false) || (Cache::read("getPageContentWebService") === null) ) {
+    $pageDetailsCache = Cache::read("getPageContentWebService");
+    if ( (($pageDetailsCache) === false) || ($pageDetailsCache === null) ) {
 
       $pageInstance = ClassRegistry::init('Page');
       $pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type, 'language' => $language)));
@@ -5124,7 +5131,7 @@ STR;
 
     } else {
 
-      $pageDetails = Cache::read("getPageContentWebService");
+      $pageDetails = $pageDetailsCache;
     }
 
 
@@ -5221,8 +5228,8 @@ STR;
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
 
-
-    if ( ((Cache::read("genre_".$library_territory.'_'.$startfrom.'_'.$count . '_WebService')) === false) || (Cache::read("genre_".$library_territory.'_'.$startfrom.'_'.$count . '_WebService') === null) )  {
+	$genreAllCache = Cache::read("genre_".$library_territory.'_'.$startfrom.'_'.$count . '_WebService');
+    if ( (($genreAllCache) === false) || ($genreAllCache === null) )  {
 
       $this->Genre->Behaviors->attach('Containable');
       $this->Genre->recursive = 2;
@@ -5252,7 +5259,7 @@ STR;
 
     } else {
 
-      $genreAll = Cache::read("genre_".$library_territory.'_'.$startfrom.'_'.$count . '_WebService');
+      $genreAll = $genreAllCache;
     }
 
     foreach($genreAll AS $key => $val){
@@ -5322,10 +5329,10 @@ STR;
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
 
+	$topSinglesCache = Cache::read("top_singles".$library_territory);
+    if ( (($topSinglesCache) !== false) && ($topSinglesCache !== null) ) {
 
-    if ( (( Cache::read("top_singles".$library_territory)) !== false) && (Cache::read("top_singles".$library_territory) !== null) ) {
-
-      $arrTemp = Cache::read("top_singles".$library_territory);
+      $arrTemp = $topSinglesCache;
 
       for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
         if(!(empty($arrTemp[$cnt]))) {
@@ -5417,8 +5424,8 @@ STR;
 		}
     
     
-    
-    if ( ((Cache::read("AppMyMusicVideosList_".$library_territory)) === false) || (Cache::read("AppMyMusicVideosList_".$library_territory) === null) ) {
+ 	$myMusicCache = Cache::read("AppMyMusicVideosList_".$library_territory);   
+    if ( (($myMusicCache) === false) || ($myMusicCache === null) ) {
       
       $this->Session->write('territory', $library_territory); 
       $this->switchCpuntriesTable();
@@ -5448,7 +5455,7 @@ STR;
    
     }
     
-    $arrTemp = Cache::read("AppMyMusicVideosList_".$library_territory);
+    $arrTemp = $myMusicCache;
 
     for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
       if(!(empty($arrTemp[$cnt]))) {
@@ -5511,13 +5518,13 @@ STR;
     $library_territory = $libraryDetails['Library']['library_territory'];
 
 
-
-    if ( (( Cache::read("top_singles".$library_territory)) !== false) && (Cache::read("top_singles".$library_territory) !== null) ) {
+	$topSinglesCache = Cache::read("top_singles".$library_territory);
+    if ( (( $topSinglesCache) !== false) && ($topSinglesCache !== null) ) {
 
 
         $arrTmp = $arrData = $arrFinal = $arrArtist = array();
 
-        $arrTmp = Cache::read("top_singles".$library_territory);
+        $arrTmp = $topSinglesCache;
 
         foreach($arrTmp AS $key => $val){
           $arrData[] = trim($val['Song']['ArtistText']);
@@ -5595,9 +5602,10 @@ STR;
     );
     $library_territory = $libraryDetails['Library']['library_territory'];   
 
-    if ( (( Cache::read($genreTitle.$library_territory)) !== false) && (Cache::read($genreTitle.$library_territory) !== null) ) {
+	$genreSongsCache = Cache::read($genreTitle.$library_territory);
+    if ( (($genreSongsCache ) !== false) && ($genreSongsCache !== null) ) {
 
-      foreach(Cache::read($genreTitle.$library_territory) AS $key => $val) {
+      foreach($genreSongsCache AS $key => $val) {
 
         $sobj = new SongDataType;
         $sobj->ProdID                = (int)    $val['PRODUCT']['pid'];
@@ -5920,7 +5928,8 @@ STR;
     
     if(1 == $isDefault) {
     
-      if ($data = Cache::read("defaultqueuelistdetails" . $queueID) === false) {
+	  $queueDetailsCache = Cache::read("defaultqueuelistdetails" . $queueID);
+      if ($data = $queueDetailsCache === false) {
         $data   =   $this->Queue->getQueueDetails($queueID, $lib_territory);
         if (!empty($data)) {                   
           Cache::write("defaultqueuelistdetails" . $queueID, $data);
@@ -5928,7 +5937,7 @@ STR;
           throw new SOAPFault('Soap:EmptyQueue', 'You do not have any song in this Queue.');
         }
       }else {
-        $data = Cache::read("defaultqueuelistdetails" . $queueID);
+        $data = $queueDetailsCache;
       }
       
     } else {
