@@ -11,9 +11,9 @@ ini_set('memory_limit', '2048M');
 Class GenresController extends AppController
 {
 
-    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download');
-    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming');
-    var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue');
+    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download','Searchrecord','LatestVideodownload','LatestDownload','Page', 'Token');    
+    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming','Solr');
+    var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue','Session','Album','Html','Session','Queue','Wishlist', 'Token');
 
     /*
       Function Name : beforeFilter
@@ -756,6 +756,203 @@ Class GenresController extends AppController
         }
         $this->set('selectedGenres', $selArray);
         $this->layout = 'admin';
+    }
+
+	 /*
+      Function Name : album
+      Desc : actions for genre albums 
+    */
+	
+	function album($page = 1, $facetPage = 1)
+    {
+        $layout = $_GET['layout'];
+
+        if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
+        {
+            unset($_SESSION['SearchReq']);
+        }// unset session when no params
+        if ((isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type'])))
+        {
+            unset($_SESSION['SearchReq']);
+            $this->redirect(array('controller' => 'search', 'action' => 'index?q=' . $_GET['q'] . '&type=' . $_GET['type']));
+        }//reset session & redirect to 1st page
+        if (('' != trim($_GET['q'])) && ('' != trim($_GET['type'])))
+        {
+            $_SESSION['SearchReq']['word'] = $_GET['q'];
+            $_SESSION['SearchReq']['type'] = $_GET['type'];
+        }//sets values in session
+
+        $queryVar = null;
+        $check_all = null;
+        $sortVar = 'ArtistText';
+        $sortOrder = 'asc';
+
+        if (isset($_GET['q']))
+        {
+            $queryVar = $_GET['q']; 
+        }
+        if (isset($_GET['type']))
+        {
+            $type = $_GET['type'];
+            $typeVar = $_GET['type'];
+        }
+        else
+        {
+            $typeVar = 'album';
+        }
+        $this->set('type', $typeVar);
+		
+		if(isset($_GET['filter']))
+		{
+			$filter = $_GET['filter'];
+		}
+		$this->set('filter',$filter);
+
+        if (isset($_GET['sort']))
+        {
+            $sort = $_GET['sort'];
+			$sortVar = 'Title';
+            
+        }
+        else
+        {
+            $sort = 'artist';
+        }
+
+        $this->set('sort', $sort);
+
+        if (isset($_GET['sortOrder']))
+        {
+            $sortOrder = $_GET['sortOrder'];
+            $sortOrder = (($sortOrder == 'asc' || $sortOrder == 'desc') ? $sortOrder : 'asc');
+        }
+        else
+        {
+            $sortOrder = 'asc';
+        }
+
+        $this->set('sortOrder', $sortOrder);
+
+        if (!empty($queryVar))
+        {
+            //Added code for log search data
+            $insertArr[] = $this->searchrecords($typeVar, $queryVar);
+            $this->Searchrecord->saveAll($insertArr);
+            //End Added code for log search data
+            $patId = $this->Session->read('patron');
+            $libId = $this->Session->read('library');
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $docs = array();
+            $total = 0;
+            $limit = 10;
+
+            if (!isset($page) || $page < 1)
+            {
+                $page = 1;
+            }
+            else
+            {
+                $page = $page;
+            }
+
+            if (!isset($facetPage) || $facetPage < 1)
+            {
+                $facetPage = 1;
+            }
+            else
+            {
+                $facetPage = $facetPage;
+            }
+
+            $country = $this->Session->read('territory');
+            $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
+
+            $total = $this->Solr->total;
+            $totalPages = ceil($total / $limit);
+
+            if ($total != 0)
+            { }
+    
+            $songArray = array();
+            foreach ($songs as $key => $song)
+            {
+                $songArray[] = $song->ProdID;
+            }
+            
+      
+            $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+   
+            foreach ($songs as $key => $song)
+            {
+                $set = 0;
+                foreach ($downloadsUsed as $downloadKey => $downloadData)
+                {
+                   if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
+                    {
+                        $songs[$key]->status = 'avail';
+                        $set = 1;
+                        break;
+                    }
+                   
+                }
+                if ($set == 0)
+                {
+                    $songs[$key]->status = 'not';
+                }
+            }
+            
+            $this->set('songs', $songs);
+
+            if (!empty($type))
+            {
+             	$limit = 12;
+                $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album', 0, $filter);
+                       
+                $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit, 0, null, 0, $filter);
+                      
+                $arr_albumStream = array();
+                foreach ($albums as $objKey => $objAlbum) {
+                	$arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                    	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                    );
+                }
+                        
+                $this->set('albumData', $albums);
+                $this->set('arr_albumStream', $arr_albumStream);
+                $this->set('totalFacetFound', $totalFacetCount);
+                if (!empty($totalFacetCount))
+                {
+                    $this->set('totalFacetPages', ceil($totalFacetCount / $limit));
+                }
+                else
+                {
+                    $this->set('totalFacetPages', 0);
+                }
+            }
+          
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+            $this->set('total', $total);
+            $this->set('totalPages', $totalPages);
+            $this->set('currentPage', $page);
+            $this->set('facetPage', $facetPage);
+	  
+        }
+        $this->set('keyword', htmlspecialchars($queryVar));
+        
+        if (isset($this->params['isAjax']) && $this->params['isAjax'] && $layout == 'ajax')
+        {
+            $this->layout = 'ajax';
+            $this->autoLayout = false;
+            $this->autoRender = false;
+            echo $this->render();
+            die;
+        }
+        else
+        {
+            $this->layout = 'home';
+        }
     }
 
 }
