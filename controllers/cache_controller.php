@@ -85,9 +85,8 @@ class CacheController extends AppController {
      * @func runCache
      * @desc This function is used to call all functions for setting cache variables
      */    
-    function runCache(){
-        set_time_limit(0);       
-       echo 147;die;
+    function runCache(){        
+      
         $territoriesList = $this->Common->getTerritories();   
         
         foreach($territoriesList as $territory){            
@@ -107,7 +106,7 @@ class CacheController extends AppController {
             $this->Common->getNewReleaseVideos($territory);
             //$this->Common->getDifferentGenreData($territory);            
             $this->Common->getDefaultQueues($territory);  
-            $this->getArtistText($territory);
+           // $this->getArtistText($territory);
             $this->setFeaturedArtists($territory);
             $this->Common->writeFeaturedSongsInCache($territory);
         }
@@ -119,7 +118,7 @@ class CacheController extends AppController {
     }
     
     /*
-     * @func runCache
+     * @func runGenreCache
      * @desc This function is used to call all functions for setting Genre page cache variables
      */    
     function runGenreCache(){
