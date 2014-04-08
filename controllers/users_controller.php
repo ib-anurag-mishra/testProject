@@ -1255,7 +1255,7 @@ function login($library = null){
 
                         $regex = "/([a-z0-9_]+|[a-z0-9_]+\.[a-z0-9_]+)@(([a-z0-9]|[a-z0-9]+\.[a-z0-9]+)+\.([a-z]{2,4}))/i"; 
                         
-                        if($notificationEmail!='' || !preg_match($regex, $notificationEmail))
+                        if($notificationEmail!='' || preg_match($regex, $notificationEmail))
                         {
                             if($this->NotificationSubscriptions->save()){                                
                                 $this->Session->setFlash('Notification information has been updated successfully!');
@@ -2063,6 +2063,25 @@ function login($library = null){
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                 $this->Session->write("loginchk", 'Yes');
+                                                
+                                                //check this library exist is in the library timezone table
+                                                $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                                $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                                if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                                }else{
+                                                $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                                }        
+
+                                                //check if the notification entry is already there in the notification_subscription table
+                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("showNotificationPopup", 'yes');                               
+                                                }else{
+                                                $this->Session->write("showNotificationPopup", 'no');                               
+                                                }
+                                                
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("mdlogin_reference","mdlogin_reference");
@@ -2267,6 +2286,25 @@ function login($library = null){
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                 $this->Session->write("loginchk", 'Yes');
+                                                
+                                                //check this library exist is in the library timezone table
+                                                $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                                $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                                if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                                }else{
+                                                $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                                }        
+
+                                                //check if the notification entry is already there in the notification_subscription table
+                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("showNotificationPopup", 'yes');                               
+                                                }else{
+                                                $this->Session->write("showNotificationPopup", 'no');                               
+                                                }
+                                                
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("mndlogin_reference","mndlogin_reference");
@@ -4453,6 +4491,25 @@ function login($library = null){
 					
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                 $this->Session->write("loginchk", 'Yes');
+                                                
+                                                //check this library exist is in the library timezone table
+                                                $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                                $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                                if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                                }else{
+                                                $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                                }        
+
+                                                //check if the notification entry is already there in the notification_subscription table
+                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("showNotificationPopup", 'yes');                               
+                                                }else{
+                                                $this->Session->write("showNotificationPopup", 'no');                               
+                                                }
+                                                
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("capita","capita");
@@ -4676,6 +4733,25 @@ function login($library = null){
 					
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                 $this->Session->write("loginchk", 'Yes');
+                                                
+                                                //check this library exist is in the library timezone table
+                                                $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                                $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                                if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                                }else{
+                                                $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                                }        
+
+                                                //check if the notification entry is already there in the notification_subscription table
+                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("showNotificationPopup", 'yes');                               
+                                                }else{
+                                                $this->Session->write("showNotificationPopup", 'no');                               
+                                                }
+                                                
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("symws","symws");
@@ -4903,6 +4979,25 @@ function login($library = null){
 
 					   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                            $this->Session->write("loginchk", 'Yes');
+                                           
+                                           //check this library exist is in the library timezone table
+                                            $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                            $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                            if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                            $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                            }else{
+                                            $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                            }        
+
+                                            //check if the notification entry is already there in the notification_subscription table
+                                            $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                            $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                            if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                            $this->Session->write("showNotificationPopup", 'yes');                               
+                                            }else{
+                                            $this->Session->write("showNotificationPopup", 'no');                               
+                                            }
+                                           
 					   $this->Session->write("patron", $patronId);
 					   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 					   $this->Session->write("innovative_var_https","innovative_var_https");
@@ -5106,6 +5201,25 @@ function login($library = null){
 
 					   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                            $this->Session->write("loginchk", 'Yes');
+                                           
+                                           //check this library exist is in the library timezone table
+                                            $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                            $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                            if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                            $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                            }else{
+                                            $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                            }        
+
+                                            //check if the notification entry is already there in the notification_subscription table
+                                            $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                            $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                            if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                            $this->Session->write("showNotificationPopup", 'yes');                               
+                                            }else{
+                                            $this->Session->write("showNotificationPopup", 'no');                               
+                                            }
+                                           
 					   $this->Session->write("patron", $patronId);
 					   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 					   $this->Session->write("innovative_var_https_wo_pin","innovative_var_https_wo_pin");
@@ -5324,6 +5438,25 @@ function login($library = null){
 
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                 $this->Session->write("loginchk", 'Yes');
+                                                
+                                                //check this library exist is in the library timezone table
+                                                $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                                $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                                if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                                }else{
+                                                $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                                }        
+
+                                                //check if the notification entry is already there in the notification_subscription table
+                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("showNotificationPopup", 'yes');                               
+                                                }else{
+                                                $this->Session->write("showNotificationPopup", 'no');                               
+                                                }
+                                                
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("soap","soap");
@@ -5782,6 +5915,25 @@ function login($library = null){
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                 $this->Session->write("loginchk", 'Yes');
+                                                
+                                                //check this library exist is in the library timezone table
+                                                $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                                $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                                if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                                }else{
+                                                $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                                }        
+
+                                                //check if the notification entry is already there in the notification_subscription table
+                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                                $this->Session->write("showNotificationPopup", 'yes');                               
+                                                }else{
+                                                $this->Session->write("showNotificationPopup", 'no');                               
+                                                }
+                                                
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("curl_method","curl_method");
