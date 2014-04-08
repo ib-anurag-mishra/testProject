@@ -6,12 +6,12 @@ class GenreCronShell extends Shell {
  * @return void
  * @access public
  */
-	function main() {
-		
-             App::import('Component', 'Common');
-             $this->common = &new CommonComponent();
-             $result= $this->common->runGenreCacheFromShell(); 
-	}
+    function main() {
+
+         App::import('Component', 'Common');
+         $this->common = &new CommonComponent();
+         $result= $this->common->runGenreCacheFromShell(); 
+    }
 
 }
 

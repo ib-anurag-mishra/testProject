@@ -90,8 +90,7 @@ class CacheController extends AppController {
         $territoriesList = $this->Common->getTerritories();   
         
         foreach($territoriesList as $territory){            
-            
-            $this->setArtistText($territory);
+           
             $this->setNewsCache($territory);
             $this->Common->getTopSingles($territory);
             $this->Common->getFeaturedVideos($territory);
