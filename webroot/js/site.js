@@ -1452,26 +1452,6 @@ $('document').ready(function() {
     });
 
 
-    function computeVisibleHeight($t) {
-        var top = $t.position().top;
-        var windowHeight = $(window).height();
-        var scrollTop = $(window).scrollTop();
-        var height = $t.height();
-
-        if (top < scrollTop && height - scrollTop >= windowHeight) {
-            // first case: the top and the bottom of the element is outside of the window
-            return windowHeight;
-        } else if (top < scrollTop) {
-            // second: the top is outside of the viewport but the bottom is visible
-            return height - (scrollTop - top);
-        } else if (top > scrollTop && top + height < windowHeight) {
-            // the whole element is visible
-            return height;
-        } else {
-            // the top is visible but the bottom is outside of the viewport
-            return windowHeight - (top - scrollTop);
-        }
-    }
 
     $('.content').on('click', '.hp-tabs', function(e) {
 
