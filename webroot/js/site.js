@@ -425,20 +425,7 @@ $('document').ready(function() {
 
     /* artist page */
 
-    $('.artist-page .tracklist-scrollable').bindMouseWheel();
 
-    $('.artist-page .tracklist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
-
-    $(document).on('scroll', '.artist-page .tracklist-scrollable', function() {
-
-        $('.artist-page .tracklist-scrollable .wishlist-popover').removeClass('top');
-        $('.artist-page .tracklist-scrollable .tracklist').each(function() {
-            if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-                $(this).find('.wishlist-popover').addClass('top');
-            }
-        });
-
-    });
 
     var totalASLiWidth = 0;
     $('.artist-page .album-scrollable ul li').each(function() {
