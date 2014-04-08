@@ -401,21 +401,6 @@ $('document').ready(function() {
     });
 
 
-    // $('.site-nav .most-popular a').on('mouseenter', function(e) {
-    //     e.preventDefault();
-
-    //     $('.most-popular-sub-nav').addClass('active');
-    // });
-
-    // $('.most-popular-sub-nav').on('mouseleave', function() {
-    //     $('.most-popular-sub-nav').removeClass('active');
-
-    // });
-
-    // $('.site-nav .regular').on('mouseenter', function() {
-    //     $('.most-popular-sub-nav').removeClass('active');
-
-    // });
     /* albums page */
 
     $(document).on('click', '.albums-page .tracklist .preview', function() {
