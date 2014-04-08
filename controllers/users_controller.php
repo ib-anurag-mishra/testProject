@@ -1253,16 +1253,26 @@ function login($library = null){
                         ));
                         $this->NotificationSubscriptions->setDataSource('master');       
 
-
-                        if($this->NotificationSubscriptions->save() && $notificationEmail!=''){                                
-                            $this->Session->setFlash('Notification information has been updated successfully!');
-                            $this->NotificationSubscriptions->setDataSource('default');
-                            $this->redirect($this->webroot.'users/manage_notification');
+                        $regex = "/([a-z0-9_]+|[a-z0-9_]+\.[a-z0-9_]+)@(([a-z0-9]|[a-z0-9]+\.[a-z0-9]+)+\.([a-z]{2,4}))/i"; 
+                        
+                        if($notificationEmail!='' || !preg_match($regex, $notificationEmail))
+                        {
+                            if($this->NotificationSubscriptions->save()){                                
+                                $this->Session->setFlash('Notification information has been updated successfully!');
+                                $this->NotificationSubscriptions->setDataSource('default');
+                                $this->redirect($this->webroot.'users/manage_notification');
+                            }
+                            else
+                            {
+                                $this->Session->setFlash('There was problem saving Notification information');
+                                $this->NotificationSubscriptions->setDataSource('default');
+                                $this->redirect($this->webroot.'users/manage_notification');
+                            }
                         }
                         else
                         {
-                            $this->Session->setFlash('Email ID is Empty');                            
-                            $this->redirect($this->webroot.'users/manage_notification');
+                                $this->Session->setFlash('Invalid Email ID');                                
+                                $this->redirect($this->webroot.'users/manage_notification');
                         }
                        
                        

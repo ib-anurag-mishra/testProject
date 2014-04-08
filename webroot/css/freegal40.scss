@@ -1550,6 +1550,37 @@ sub { top: 0.4em; }
 
 						@extend %album-cover-menu-and-icons;
 
+						.play-btn-icon {
+
+							position: absolute;
+							left: 50%;
+							top: 50%;
+							width: 100px;
+							height: 22px;
+							/* background: url(../img/freegal_sprite.png) -400px -20px; */
+							font-family: Arial, Helvetica;
+							background: #fff;
+							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							box-shadow: 0 0 4px rgba(0,0,0,.5);
+							font-weight: bold;
+							margin-left: -50px;
+							margin-top: -11px;
+							font-size: 12px;
+
+							&:hover {
+							
+								// background: url(../img/freegal_sprite.png) -435px -20px;
+								background: #fff;
+							}
+
+							&:active {
+							
+								// background: url(../img/freegal_sprite.png) -470px -20px;
+								background: #fff;
+							}							
+						}
+
 
 						img {
 							
