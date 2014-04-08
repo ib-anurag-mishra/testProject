@@ -717,17 +717,19 @@ $('document').ready(function() {
 
     /****** Search page ******/
 
-
-    $('.videos-scrollable .video-container').on('mouseenter', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.top-10-download-now-button').css({opacity: 1});
+    $videos_scrollable_video_container = $('.videos-scrollable').find('.video-container');
+    $videos_scrollable_video_container.on('mouseenter', function() {
+        $this = $(this);
+        $this.find('.add-to-playlist-button').css({opacity: 1});
+        $this.find('.top-10-download-now-button').css({opacity: 1});
 
     });
 
-    $('.videos-scrollable .video-container').on('mouseleave', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.top-10-download-now-button').css({opacity: 0});
-        $(this).find('.wishlist-popover').removeClass('active');
+    $videos_scrollable_video_container.on('mouseleave', function() {
+        $this = $(this);
+        $this.find('.add-to-playlist-button').css({opacity: 0});
+        $this.find('.top-10-download-now-button').css({opacity: 0});
+        $this.find('.wishlist-popover').removeClass('active');
     });
 
 
