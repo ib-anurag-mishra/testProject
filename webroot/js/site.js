@@ -1166,40 +1166,7 @@ $('document').ready(function() {
     /* end saved queues page */
 
 
-    /* search results page */
-    /*
-    $('.search-page .tracklist .preview').on('click', function() {
-        $('.tracklist').removeClass('playing');
-        $('.preview').removeClass('playing');
-        $('.song').removeClass('playing');
-        $('.artist').removeClass('playing');
-        $('.time').removeClass('playing');
-        $('.album').removeClass('playing');
-        $('.download').removeClass('playing');
-        $('.composer').removeClass('playing');
 
-        $(this).parent('.tracklist').addClass('playing');
-        $(this).addClass('playing');
-        $(this).siblings('.song').addClass('playing');
-        $(this).siblings('.artist').addClass('playing');
-        $(this).siblings('.time').addClass('playing');
-        $(this).siblings('.album').addClass('playing');
-        $(this).siblings('.download').addClass('playing');
-        $(this).siblings('.composer').addClass('playing');
-    });
-
-
-
-    $('.search-page .tracklist-scrollable').bindMouseWheel();
-
-    $('.search-page .advanced-artists-scrollable').bindMouseWheel();
-
-    $('.search-page .advanced-composers-scrollable').bindMouseWheel();
-
-    $('.search-page .advanced-genres-scrollable').bindMouseWheel();
-
-    $('.search-page .advanced-labels-scrollable').bindMouseWheel();
-    */
 
 
     $(document).on('click', '.tracklist-header span', function() {
@@ -1222,36 +1189,6 @@ $('document').ready(function() {
 
     });
 
-    /*
-    $('.search-page .wishlist-popover').slice(0, 3).addClass('top');
-    $('.search-page .tracklist').slice(0, 3).addClass('current');
-
-    $('.search-page .tracklist-scrollable').on('scroll', function() {
-
-        $('.search-page .wishlist-popover').removeClass('top');
-        $('.search-page .tracklist').removeClass('current');
-
-        $('.search-page .tracklist').each(function() {
-            if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-                $(this).addClass('current');
-                $(this).find('.wishlist-popover').addClass('top');
-            }
-        });
-    });
-
-
-    $('.search-page .advanced-search #submit').on('mousedown', function() {
-        $(this).addClass('clicked');
-    });
-
-    $('.search-page .advanced-search #submit').on('mouseup', function() {
-        $(this).removeClass('clicked');
-    });
-
-    $(document).on('click', '.pagination a', function() {
-        var target = $(this).attr('href');
-    });
-    /* end search results page */
 
 
     /* site login page */
