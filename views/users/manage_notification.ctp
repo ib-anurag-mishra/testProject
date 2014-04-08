@@ -51,7 +51,7 @@ $ieVersion = ieversion();
                 <?php echo $this->Form->create('User', array('controller' => 'User', 'action' => 'manage_notification')); ?>
                 <div>
                     <?php
-                    if ($notificationAlreadySave == true)
+                    if ($notificationAlreadySave=="true")
                     {
                         $notificationAlreadySaveFlag = 1;
                         $showEmailID = "display:block;";
