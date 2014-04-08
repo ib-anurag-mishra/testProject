@@ -1253,9 +1253,9 @@ function login($library = null){
                         ));
                         $this->NotificationSubscriptions->setDataSource('master');       
 
-                        $regex = "/([a-z0-9_]+|[a-z0-9_]+\.[a-z0-9_]+)@(([a-z0-9]|[a-z0-9]+\.[a-z0-9]+)+\.([a-z]{2,4}))/i"; 
+                        $regex = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/"; 
                         
-                        if($notificationEmail!='' || preg_match($regex, $notificationEmail))
+                        if($notificationEmail!='' && preg_match($regex, $notificationEmail))
                         {
                             if($this->NotificationSubscriptions->save()){                                
                                 $this->Session->setFlash('Notification information has been updated successfully!');
