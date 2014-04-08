@@ -23,7 +23,7 @@ Class ArtistsController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl');
+        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','composer');
     }
 
     /*
@@ -2436,6 +2436,40 @@ Class ArtistsController extends AppController
         print $html;
         exit;
     }
-
+    
+    /**
+     * Function Name : composer
+     * Description   : This function is used to liast all albums related to a composer
+     * 
+     */
+    
+    function composer($composer_text,$facetPage = 1) {
+        
+        $this->layout = 'home';
+        $composer_text = base64_decode($this->params['pass'][0]); 
+        if(!empty($this->params['pass'][1])) {
+            $facetPage = $this->params['pass'][1];
+        }
+        if(isset($composer_text)){
+            $totalFacetCount = $this->Solr->getFacetSearchTotal('"'.$composer_text.'"', 'album',1);
+            $limit = 12;
+            $albums = $this->Solr->groupSearch('"'.$composer_text.'"', 'album', $facetPage, $limit , 0, null, 1);
+            $arr_albumStream = array();
+            foreach ($albums as $objKey => $objAlbum) {
+                $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                        array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                );
+            }
+            if (!empty($totalFacetCount)) {
+                $this->set('totalFacetPages', ceil($totalFacetCount / $limit));
+            } else {
+                $this->set('totalFacetPages', 0);
+            }            
+            $this->set('albumData', $albums);
+            $this->set('arr_albumStream', $arr_albumStream);
+            $this->set('composertext', $composer_text);
+            $this->set('facetPage',$facetPage);
+        }
+    }
 }
 ?>
