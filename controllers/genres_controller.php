@@ -338,7 +338,7 @@ Class GenresController extends AppController
         $genre = mysql_escape_string($genre);
         $this->set('genre', $genre); 
         
-        //create the cache variable name
+        //create the cache variable name for checking the variable already exist or not
         $cacheVariableName = base64_encode($genre).strtolower($country).strtolower($Artist).$pageNo;     
        
         $artistList = Cache::read($cacheVariableName);
@@ -346,9 +346,8 @@ Class GenresController extends AppController
         if ($artistList === false)         
         {
             echo 'Not Exist';
-                $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);                
-        } 
-      
+            $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);                
+        }      
       
        //prepare the array that contains all alphabets which have no any artist value
         $artistsNoAlpha = array();
@@ -461,9 +460,13 @@ Class GenresController extends AppController
             }
             $filterCacheVariableName = base64_encode($genre).strtolower($country).strtolower($alphabet).$pageNo;
           
-            
-            if(($artistAll = Cache::read($filterCacheVariableName)) === false){
+            $artistAll = Cache::read($filterCacheVariableName);
+            if($artistAll === false){
                 $artistsNoAlpha[]= $alphabet;
+            }else{
+                if(empty($artistAll)){
+                    $artistsNoAlpha[]= $alphabet;
+                }
             }           
         } 
         return $artistsNoAlpha;

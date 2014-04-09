@@ -124,11 +124,10 @@ Class CommonComponent extends Object
         
         
         //set the aritst cache for specific Genre
-       // $genreAll = $this->getGenres($territory);
+        // $genreAll = $this->getGenres($territory);
         $genreAll = Cache::read("genre" . $territory);
         array_unshift($genreAll, "All");       
-        //$genreAll= array('All');
-        
+        //$genreAll= array('All');       
        
          foreach($genreAll as $genreEach){
             
@@ -149,9 +148,9 @@ Class CommonComponent extends Object
                     
                     //create conditions array
                     $conditionArray = array(
-                            'Country.DownloadStatus' => 1,                    
-                            'Country.Territory' => strtoupper($territory)                
-                            );
+                        'Country.DownloadStatus' => 1,                    
+                        'Country.Territory' => strtoupper($territory)                
+                    );
 
                     //Genre filter
                     if ($genreEach != '' && $genreEach != 'All')
