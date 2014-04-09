@@ -249,9 +249,9 @@ $totalRows = count($genresAll);
                             {
                                 ?>class=" selected active" <?php } ?> data-letter="All"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/All', '', '')">ALL</a></li>                                            
                         
-                       <?php  if(!in_array('[',$artistsNoAlpha)){ ?>
+                       <?php  if(!in_array('spl',$artistsNoAlpha)){ ?>
                         <li><a   href="javascript:void(0);" <?php
-                            if ($selectedAlpha == "#")
+                            if ($selectedAlpha == "spl")
                             {
                                 ?>class="selected active" <?php } ?>  data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl', '', '')">#</a>
                         </li>
