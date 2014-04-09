@@ -99,7 +99,7 @@
 
             <h2 class="song-title">
                 <?php
-                echo wordwrap($VideosData[0]['Video']['VideoTitle'], 15, "<br />");
+                echo $this->getTextEncode(wordwrap($VideosData[0]['Video']['VideoTitle'], 15, "<br />"));
                 ;
                 ?>
 
@@ -275,7 +275,7 @@
 
     <section class="top-videos">
         <header>
-            <h2>Top <span><?php echo $VideoGenre; ?></span> Videos</h2>
+            <h2>Top <span><?php echo $this->getTextEncode($VideoGenre); ?></span> Videos</h2>
         </header>
         <div class="top-videos-scrollable horiz-scroll">
             <ul>
