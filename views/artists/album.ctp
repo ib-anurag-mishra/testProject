@@ -380,9 +380,9 @@
 						<a title="<?php echo $title_song_replace; ?>"
 							href="javascript:void(0);"> <?php
 							if (strlen($value['Video']['VideoTitle']) > 25)
-								echo substr($value['Video']['VideoTitle'], 0, 25) . "...";
+								echo $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 25) . "...");
 							else
-								echo $value['Video']['VideoTitle'];
+								echo $this->getTextEncode($value['Video']['VideoTitle']);
 							?>
 						</a>
 						<?php
