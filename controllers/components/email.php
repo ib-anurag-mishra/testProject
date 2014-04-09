@@ -109,4 +109,3 @@ class EmailComponent
       return $result;
     }
 }
-?>

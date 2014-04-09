@@ -35,4 +35,3 @@ Class SuggestionSongComponent extends Object
 	return $new;
     }
 }
-?>

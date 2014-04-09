@@ -67,8 +67,7 @@ Class DownloadsvideosComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-  
-        //if($uid > 0){ 
+
             if($this->checkSongExistsVideos($prodId, $providerType)){
                 if($this->checkAllowedCountryVideos($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
                     if($this->checkLibraryDownloadVideos($libId)){
@@ -90,10 +89,6 @@ Class DownloadsvideosComponent extends Object
                 $this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table");
                 return array(false,'The song requested for download does not exist', 5);
             }
-        //} else {
-            //$this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from IP:".$ip." as user was not authenticated.");
-            //return array(false, 'User is not Authenticated', 6);
-        //}
     }
     
     function checkSongExistsVideos($prodId, $providerType){
@@ -124,4 +119,3 @@ Class DownloadsvideosComponent extends Object
         }
     }
 }
-?>

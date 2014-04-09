@@ -52,4 +52,3 @@ class PasswordHelperComponent extends Object
         return $password;
     }
 }
-?>

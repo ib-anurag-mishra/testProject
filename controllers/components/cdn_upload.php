@@ -49,9 +49,7 @@ Class CdnUploadComponent extends Object
           }
                 }
                 else
-                {
-                    //echo "FILE Sucessfully sent\n";
-                }
+                { }
             }
         }
     }
@@ -94,11 +92,8 @@ Class CdnUploadComponent extends Object
           }
                 }
                 else
-                {
-                    //echo "FILE Sucessfully sent\n";
-                }
+                { }
             }
         }	
    }
 }
-?>

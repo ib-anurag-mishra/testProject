@@ -29,8 +29,7 @@ Class AuthRequestComponent extends Object
 		// tell it not to validate ssl cert
 		curl_setopt($ch, CURLOPT_SSLVERSION, 3);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		//curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/CAcerts/BuiltinObjectToken-EquifaxSecureCA.crt"); 
+
 		// tell it where to get POST variables from
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -78,4 +77,3 @@ Class AuthRequestComponent extends Object
 		return $parsed_xml;
 	}
 }
-?>

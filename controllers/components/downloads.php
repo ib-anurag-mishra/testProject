@@ -59,7 +59,6 @@ Class DownloadsComponent extends Object
           if(empty($uid)){
           	$uid = $this->Session->read('patron');
           }
-          //$uid = (int)$user['User']['id'];
           $ip = $_SERVER['REMOTE_ADDR'];
           $channel = 'Website';
           $libId = $this->Session->read('library');
@@ -131,10 +130,5 @@ Class DownloadsComponent extends Object
         } else {            
             return false;
         }
-    }
-    
-
-    
-    
+    }   
 }
-?>

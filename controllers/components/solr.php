@@ -136,7 +136,7 @@ class SolrComponent extends Object {
                             break;
                         case 'album':
                             $query = $searchkeyword;
-                            $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer"; // CArtistText^80
+                            $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
                             break;
                         case 'artist':
                             $query = $searchkeyword;
@@ -223,7 +223,7 @@ class SolrComponent extends Object {
                 }
                 
                 
-                if ($page < $_SESSION['pagebreak']) { //echo '<br />SONY<br />';
+                if ($page < $_SESSION['pagebreak']) {
                     $provider_query = ' AND provider_type:sony';
                     $tmp_start = ($page - 1) * $limit;
                     $start = $tmp_start;
@@ -233,7 +233,7 @@ class SolrComponent extends Object {
                         $response = self::$solr2->search($query . $provider_query, $tmp_start, $limit, $additionalParams);
                     }
                 }//sony
-                if ($page == $_SESSION['pagebreak']) { //echo '<br />SONY & IODA<br />';
+                if ($page == $_SESSION['pagebreak']) {
                     $provider_query = ' AND provider_type:sony';
                     $tmp_start = ($page - 1) * $limit;
                     $start = $tmp_start;
@@ -285,7 +285,7 @@ class SolrComponent extends Object {
                         }
                     }
                 }//sony & ioda
-                if ($page > $_SESSION['pagebreak']) { //echo '<br />IODA<br />';
+                if ($page > $_SESSION['pagebreak']) {
                     $provider_query = ' AND provider_type:ioda';
                     $tmp_start = ((($page - $_SESSION['pagebreak']) - 1) * $limit) + $_SESSION['ioda_cons'];
                     $start = $tmp_start;
@@ -468,13 +468,7 @@ class SolrComponent extends Object {
     function getFacetSearchTotal($keyword, $type='song') {
         $query = '';
         $country = $this->Session->read('territory');
-//        
-//        echo 'keyword->' .$keyword;
-//        echo "<br/>";
-//        echo 'type->' .$type;
-//        echo "<br/>";
-//        echo 'country->' .$country;
-        
+
         if (!empty($keyword)){
         if (!empty($country)) {
             
@@ -1109,9 +1103,6 @@ class SolrComponent extends Object {
             
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
-            /*if($type != 'video'){
-                $cond .= " AND AAdvisory:F";
-            }*/
             }
         
             $query = $query . ' AND Territory:' . $country . $cond;
@@ -1165,5 +1156,3 @@ class SolrComponent extends Object {
 class SolrException extends Exception {
     
 }
-
-?>

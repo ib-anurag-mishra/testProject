@@ -115,9 +115,6 @@ Class QueueComponent extends Object
                     array('Countries.StreamingSalesDate <=' => date('Y-m-d')),
                     array('Countries.DownloadStatus' => 1)
                 ),
-               /* 'or' => array(array('and' => array('Countries.StreamingStatus' => 1, 'Countries.StreamingSalesDate <=' => date('Y-m-d')))
-                    , array('and' => array('Countries.DownloadStatus' => 1))
-                )*/     // Commented to show only songs which are available for (Streaming and Downloading)
             )
                 )
         );
@@ -240,5 +237,3 @@ Class QueueComponent extends Object
     }
 
 }
-
-?>

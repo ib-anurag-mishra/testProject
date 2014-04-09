@@ -62,7 +62,6 @@ Class StreamingComponent extends Object
         
         //if ProdID and Provider type is not set then
         if(($prodId === '' || $prodId === 0) && ($provider === '' || $provider === 0)){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
             
             //return the final result array
@@ -72,7 +71,6 @@ Class StreamingComponent extends Object
         
         //if patron is set null than then
         if(($patId === '' || $patId === 0)){           
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
             return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 2 ,$timerCallTime,$this->timerCallDuration);            
@@ -81,7 +79,6 @@ Class StreamingComponent extends Object
         
         //if library id set null then
         if(($libId === '' || $libId === 0)){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
             return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 3 ,$timerCallTime,$this->timerCallDuration);  
@@ -90,7 +87,6 @@ Class StreamingComponent extends Object
         
          //if $songDuration  not set then
         if(($songDuration === '' || $songDuration === 0)){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,song duration is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
             return array(0,'Not able to stream this song.',$currentTimeDuration, 4 ,$timerCallTime,$this->timerCallDuration);  
@@ -99,7 +95,6 @@ Class StreamingComponent extends Object
         
          //if $songDuration  not set then
         if(($token_id === '' || $token_id === 0)){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,token is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;token id : ".$token_id,'streaming');            
              //return the final result array
             return array(0,'An error has occurred. Please reload the page.',$currentTimeDuration, 44 ,$timerCallTime,$this->timerCallDuration);  
@@ -108,10 +103,8 @@ Class StreamingComponent extends Object
         
          //if $songDuration  not set then
         if(($userStreamedTime === '' || $userStreamedTime < 0 ||  $userStreamedTime ==='NaN')){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,stream time is negetive;songDuration :".$songDuration." ;ConsumedTime : ".$userStreamedTime." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;token id : ".$token_id,'streaming');            
-             //return the final result array
-            //return array(0,'Not able to process.Stream time is negetive or NaN.',$currentTimeDuration, 45 ,$timerCallTime,$this->timerCallDuration);  
+             //return the final result array 
               return array(0,'An error has occurred. Please reload the page.',$currentTimeDuration, 45 ,$timerCallTime,$this->timerCallDuration);  
             exit;
         }
@@ -531,9 +524,6 @@ Class StreamingComponent extends Object
         }
     }
     
- 
-    
-    
     /*
      Function Name : checkLibraryStreaming
      Desc : function used for checking library information for streaming
@@ -555,10 +545,7 @@ Class StreamingComponent extends Object
         }
      
     }
-    
-    
-    
-    
+
     /*
      Function Name : checkStreamingInfoExist
      Desc : function used for checking library and patron details are stored in the streaming records table or not
@@ -573,7 +560,6 @@ Class StreamingComponent extends Object
         $streamingRecordsInstance->recursive = -1;
         $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId)));
         if(!empty($results) && isset($results['StreamingRecords']['id']) && $results['StreamingRecords']['id']!='') {
-            //return $results['StreamingRecords']['id'];
             return $results;
         } else {
             return false;
@@ -752,10 +738,7 @@ Class StreamingComponent extends Object
                             'Country.StreamingSalesDate < NOW()',
                             'Country.StreamingStatus'=> 1
                             ),
-        'fields' => array('Country.StreamingSalesDate', 'Country.StreamingStatus'))); 
-        
-       // echo "<br>Query: ".$this->$songInstance->lastQuery();
-        //echo "<pre>"; print_r($song);
+        'fields' => array('Country.StreamingSalesDate', 'Country.StreamingStatus')));
         return $song;
         
     }
@@ -792,7 +775,6 @@ Class StreamingComponent extends Object
          
              $var = $LibraryInstance->find('list', array(
                 'conditions' => array(
-                   // 'Library.library_territory' => $territory, 
                     'Library.library_type =2'), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
@@ -806,4 +788,3 @@ Class StreamingComponent extends Object
     }
 
 }
-?>
