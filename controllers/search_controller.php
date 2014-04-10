@@ -157,6 +157,7 @@ class SearchController extends AppController
             $total = $this->Solr->total;
 	    $lastPage = $songs['lastPage'];
             $totalPages = ceil($total / $limit);
+	    $lastPage = ceil($lastPage / $limit);
 
             if ($total != 0)
             { }

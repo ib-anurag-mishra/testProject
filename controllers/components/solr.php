@@ -342,7 +342,7 @@ class SolrComponent extends Object {
 						foreach ( $response->response->docs as $doc ) {
 							$docs[] = $doc;
 						}
-						$docs[] = $lastPage;
+						$docs['lastPage'] = $lastPage;
 					} else {
 						return array();
 					}
