@@ -17,11 +17,14 @@ class PageHelper extends AppHelper {
 		}
         $pageInstance = ClassRegistry::init('Page');
         $pageInstance = ClassRegistry::init('Page');
-		if (($pageData = Cache::read("page".$page.$type)) === false) {
+	$pageDetailsCache = Cache::read("page".$page.$type);
+		if (($pageData = $pageDetailsCache) === false) {
 			$pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type, 'language' => $page)));
 			Cache::write("page".$page.$type, $pageDetails);
 		}
-        $pageDetails = Cache::read("page".$page.$type);
+		else {
+        		$pageDetails = $pageDetailsCache;
+		}
 		if(count($pageDetails) != 0) {
             return $pageDetails[0]['Page']['page_content'];
         }
