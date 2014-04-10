@@ -120,6 +120,20 @@ class CacheController extends AppController {
     }
     
     /*
+     * @func runGenreCache
+     * @desc This function is used to call all functions for setting Genre page cache variables
+     */    
+    function runGenreCache(){
+        set_time_limit(0);  
+     
+        $territoriesList = $this->Common->getTerritories();       
+        foreach($territoriesList as $territory){           
+            $this->Common->setArtistText($territory);            
+        }
+       
+    }
+    
+    /*
      * Function Name : setAnnouncementCache
      * Function Description : This function is used to set announcment Cache.
      * all this function query must be same as queries written in app controller for announcement.
@@ -210,6 +224,7 @@ class CacheController extends AppController {
            
             $allArtists = $this->paginate('Song');
             //this code is running for every alphabets
+            $allArtistsNoAlphabits =  array();
             for($j = 65;$j < 93;$j++){
 
                 $alphabet = chr($j);
@@ -245,9 +260,18 @@ class CacheController extends AppController {
                     'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
                 );
                 $allArtists = $this->paginate('Song');
+                $allArtistsCount = count($allArtists);
+                if(empty($allArtistsCount)){
+                    $allArtistsNoAlphabits[] = $alphabet;
+                    $this->log("There is no artist with the alphabet".$alphabet."for territory".$territory, "cache");
+                }
                 $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
                 $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
                 
+            }
+            
+            if(!empty($allArtistsNoAlphabits)){
+                Cache::write("all_Artist_No_Alphabet" . $territory, $allArtistsNoAlphabits);
             }
     
 
@@ -289,7 +313,7 @@ class CacheController extends AppController {
             ));
            
            
-            
+            $noArtistGenre = array();
             foreach($genreAll as $genreRow){
                 
                 $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
@@ -316,9 +340,14 @@ class CacheController extends AppController {
                 );
              
                 $allArtists = $this->paginate('Song');
-             
+                $artsistCount = count($allArtists);
+                if(empty($artsistCount)){
+                    $noArtistGenre[] = $genre;
+                    $this->log("There are no artists associated with this genre".$genre."for territory".$territory, "cache");
+                }             
                 $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
                 $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
+                $genreNoAlphabits = array();
                 for($k = 65;$k < 93;$k++){
                     $alphabet = chr($k);
                     if($alphabet == '[') {
@@ -354,10 +383,41 @@ class CacheController extends AppController {
                     );
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $allArtists = $this->paginate('Song');
+                    $genreartsistCount = count($allArtists);
+                    if(empty($genreartsistCount)){
+                        $genreNoAlphabits[] = $alphabet;
+                        $this->log("There is no artist with the alphabet".$alphabet."in genre".$genre."for territory".$territory, "cache");
+                    }                    
                     $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
                     $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
                 }
+                
+                if(!empty($genreNoAlphabits)){
+                    Cache::write("genre_Artist_No_Alphabet_" .$genre."_". $territory, $genreNoAlphabits);
+                    $this->log("cache written for artists with no alphabits data for genre ".$genre."for territory".$territory, "cache");
+                }else{
+                    $this->log("There is data for all alphabets for".$genre."for territory".$territory, "cache");
+                }
             }
+            
+            foreach($genreAll as $index => $genrevalue){
+                if(in_array($genrevalue['Genre']['Genre'], $noArtistGenre)){
+                    unset($genreAll[$index]) ;                   
+                }
+            }
+            
+            if ((count($genreAll) > 0) && ($genreAll !== false))
+            {
+                Cache::delete("genre" . $territory);
+                Cache::write("genre" . $territory, $genreAll);
+                $this->log("cache written for genre for $territory", "cache");
+            }
+            else
+            {
+                Cache::write("genre" . $territory, Cache::read("genre" . $territory));
+                $this->log("no data available for genre" . $territory, "cache");
+            }            
+            
             $this->Song->bindmodel(array('hasOne'=>array(
                     'Genre' => array(
                     'className' => 'Genre',
