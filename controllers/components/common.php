@@ -175,36 +175,36 @@ Class CommonComponent extends Object
                     $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                     $songInstance->recursive = 0;
                     
-                    //query that fetch  artist count according to Genre
-                    $artistCount = $songInstance->find('all', array(
-                        'conditions' => $conditionArray,
-                        'fields' => array('count(DISTINCT Song.ArtistText) as total'),
-                        
-                        'joins' => array(
-                            array(
-                                'table' => strtolower($territory).'_countries',
-                                'alias' => 'Country',
-                                'type' => 'left',
-                                'foreignKey' => false,
-                                'conditions'=> array('Country.ProdID = Song.ProdID')
-                            ),
-                            array(
-                                'table' => 'Albums',
-                                'alias' => 'Albums',
-                                'type' => 'left',
-                                'foreignKey' => false,
-                                'conditions'=> array('Song.ReferenceID = Albums.ProdID')
-                            )
-                        )
-                     ));
-                                                          
-                    $artistCountValue =  $artistCount[0][0]['total'];            
-
-                    if(count($artistCountValue)> 0){                    
-                        $totalPages = ceil($artistCountValue/120);                    
-                    }else{
-                        $totalPages =1;
-                    }
+//                    //query that fetch  artist count according to Genre
+//                    $artistCount = $songInstance->find('all', array(
+//                        'conditions' => $conditionArray,
+//                        'fields' => array('count(DISTINCT Song.ArtistText) as total'),
+//                        
+//                        'joins' => array(
+//                            array(
+//                                'table' => strtolower($territory).'_countries',
+//                                'alias' => 'Country',
+//                                'type' => 'left',
+//                                'foreignKey' => false,
+//                                'conditions'=> array('Country.ProdID = Song.ProdID')
+//                            ),
+//                            array(
+//                                'table' => 'Albums',
+//                                'alias' => 'Albums',
+//                                'type' => 'left',
+//                                'foreignKey' => false,
+//                                'conditions'=> array('Song.ReferenceID = Albums.ProdID')
+//                            )
+//                        )
+//                     ));
+//                                                          
+//                    $artistCountValue =  $artistCount[0][0]['total'];            
+//
+//                    if(count($artistCountValue)> 0){                    
+//                        $totalPages = ceil($artistCountValue/120);                    
+//                    }else{
+//                        $totalPages =1;
+//                    }
                     
                     //value less then one then set default 1
                     if( $totalPages < 1){
@@ -214,6 +214,7 @@ Class CommonComponent extends Object
                 }else{
                     $totalPages =5;
                 } 
+                $totalPages = 5;
                 
                 //currently we are setting only 5 pages info for each Genre with corresponding artist filter
                 if($totalPages > 5){
