@@ -153,8 +153,9 @@ class SearchController extends AppController
 
             $country = $this->Session->read('territory');
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
-
+             
             $total = $this->Solr->total;
+	    $lastPage = $songs['lastPage'];
             $totalPages = ceil($total / $limit);
 
             if ($total != 0)
@@ -314,6 +315,7 @@ class SearchController extends AppController
             $this->set('totalPages', $totalPages);
             $this->set('currentPage', $page);
             $this->set('facetPage', $facetPage);
+	    $this->set('lastPage', $lastPage);
         }
         $this->set('keyword', htmlspecialchars($queryVar));
 

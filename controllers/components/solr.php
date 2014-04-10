@@ -209,6 +209,10 @@ class SolrComponent extends Object {
 					unset( $_SESSION['ioda_cons'] );
 					unset( $_SESSION['sony_total'] );
 				}
+		
+				$provider_query_lastpage = ' AND (provider_type:sony OR provider_type:ioda)';
+				$lastPageResponse = self::$solr->search( $query . $provider_query_lastpage, 0, 1, $additionalParams );
+				$lastPage = $lastPageResponse->response->numFound;
 
 				if ( !( isset( $_SESSION['pagebreak'] ) ) ) {
 
@@ -338,6 +342,7 @@ class SolrComponent extends Object {
 						foreach ( $response->response->docs as $doc ) {
 							$docs[] = $doc;
 						}
+						$docs[] = $lastPage;
 					} else {
 						return array();
 					}
