@@ -186,8 +186,7 @@ $totalRows = count($genresAll);
                     </li>
 
                     <?php
-                    $genre_count = 1;
-                    print_r($genresAll);
+                    $genre_count = 1;                    
                     foreach ($genresAll as $genre_all):
 
                         if ($genre_all['Genre']['Genre'] != '')
