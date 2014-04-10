@@ -1175,9 +1175,7 @@ function login($library = null){
 		$this->layout = 'home';
 		$patronId = $this->Session->read('patron');
                
-                $this->Library->recursive = -1;  
-                
-                //unset($this->data['User']['sendNewsLetterCheck']);
+                $this->Library->recursive = -1;
                 
                 //check the library data and library authentication method
                 $library_data = $this->Library->find('first', array('conditions' => array('id' => $this->Session->read('library')),'fields' => array('Library.library_authentication_method')));              
@@ -1222,8 +1220,6 @@ function login($library = null){
 
                   $notidataRecord = $this->NotificationSubscriptions->find('first', array('conditions' => array('patron_id' => $patronId,'library_id' => $this->Session->read('library')),'fields'=>array('email_id')));                          
 
-
-                  //count($notidataRecord);
                   if(count($notidataRecord) > 0) {
 
 
@@ -5672,6 +5668,4 @@ function login($library = null){
             
             exit;
         }
-
 }
-?>

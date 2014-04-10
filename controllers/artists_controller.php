@@ -2431,11 +2431,7 @@ Class ArtistsController extends AppController
         }
         $html .= '</ul>';
 
-
-
         print $html;
         exit;
     }
-
 }
-?>

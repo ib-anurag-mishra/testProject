@@ -972,4 +972,3 @@ class ServicesController extends AppController {
 		}	
 	}
 }
-?>

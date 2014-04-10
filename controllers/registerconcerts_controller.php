@@ -32,7 +32,6 @@ class RegisterConcertsController extends AppController{
     function ajax_submit_register_concert() 
     {        
        $this -> layout = 'ajax';
-       //Configure::write('debug', 2);
              
             if(empty($this->data['first_name']) || empty($this->data['last_name']) || empty($this->data['phone_no']))
             {                
@@ -65,9 +64,7 @@ class RegisterConcertsController extends AppController{
             }
        
     }
-    
-    
-    
+
      /*
      Function Name : aboutus
      Desc : CMS Page for Great Fall Concert
@@ -76,11 +73,4 @@ class RegisterConcertsController extends AppController{
     {		
 		$this->layout = 'home';
     }
-    
-    
-    
-    
 }
-
-
-?>
