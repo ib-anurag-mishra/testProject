@@ -2729,6 +2729,7 @@ function getFeaturedArtist()
             }
             
              $(document).find('#artist_loader').css('display', 'none');
+             $('.content').ajaxify(); 
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
