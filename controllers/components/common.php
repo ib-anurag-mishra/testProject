@@ -1749,10 +1749,9 @@ STR;
                 'conditions' =>
                 array('and' =>
                     array(
-                        array('Song.provider_type = Country.provider_type'),
+                        array('Song.ProdID = Country.ProdID'),
                         array("Song.Sample_FileID != ''"),
                         array("Song.FullLength_FIleID != ''"),
-                        array("Song.provider_type" => $provider),
                         array('Country.Territory' => $country),
                         array('Country.StreamingStatus' => 1),
                         array('Country.StreamingSalesDate <=' => date('Y-m-d')),
@@ -1786,7 +1785,7 @@ STR;
                 'conditions' =>
                 array('and' =>
                     array(
-                        array('Song.provider_type = Country.provider_type'),
+                        array('Song.ProdID = Country.ProdID'),
                         array("Song.Sample_FileID != ''"),
                         array("Song.FullLength_FIleID != ''"),
                         array("Song.provider_type" => $provider),
