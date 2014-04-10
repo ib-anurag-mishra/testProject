@@ -2739,7 +2739,7 @@ function getFeaturedArtist()
         }
     });
     
-    //$.getScript(webroot + 'js/ajaxify-html5.js');
+    $.getScript(webroot + 'js/ajaxify-html5.js');
     $.getScript(webroot + 'js/freegal40-site.js');
   
 }
