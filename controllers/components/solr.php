@@ -221,8 +221,9 @@ class SolrComponent extends Object {
 					} else {
 						
 						$response = self::$solr2->search( $query . $provider_query, 0, 1, $additionalParams );
-						$num_found = $response->response->numFound;
+						
 					}
+					$num_found = $response->response->numFound;
 
 					if ( 0 == $num_found ) {
 						
@@ -309,7 +310,7 @@ class SolrComponent extends Object {
 						}
 
 						if ( $sec_response->response->numFound > 0 ) {
-							//   $response->response->numFound = $sec_response->response->numFound;
+							   $response->response->numFound = $sec_response->response->numFound;
 						}
 					}
 				}//sony & ioda
@@ -326,6 +327,7 @@ class SolrComponent extends Object {
 					} else {
 						$response = self::$solr2->search( $query . $provider_query, $tmp_start, $limit, $additionalParams );
 					}
+					 $response->response->numFound = $response->response->numFound + $_SESSION['sony_total'];
 				}//ioda
 
 				if ( $response->getHttpStatus() == 200 ) {
