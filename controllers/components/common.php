@@ -1515,7 +1515,7 @@ STR;
                             'Full_Files.SaveAsName'
                         )
                     )
-                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'Song.UpdateOn DESC','limit' => 50
+                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'Song.CreatedOn DESC','limit' => 50
             ));
         }else{
             $randomSongs = $songInstance->find('first', array(
