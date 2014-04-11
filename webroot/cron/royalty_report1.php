@@ -13,12 +13,12 @@ $arr_dates = array();
 
 //$arr_dates['month']['from_date'] = date('Y-m-01 00:00:00',strtotime('-31 days'));
 //$arr_dates['month']['to_date'] = date('Y-m-t 23:59:59',strtotime('-31 days'));
-//$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0,0,0,(date(m)-1), 1, date(Y))); //'2012-10-01 00:00:00';
-//$arr_dates['month']['to_date'] =  date("Y-m-t 23:59:59", mktime(0,0,0,(date(m)-1), 1, date(Y))); //'2012-10-31 23:59:59';
 
-$arr_dates['month']['from_date'] = date('2013-10-01 00:00:00');
-$arr_dates['month']['to_date'] = date('2013-10-31 23:59:59');
+//$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 1), 1, date(Y))); //'2012-10-01 00:00:00';
+//$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 1), 1, date(Y))); //'2012-10-31 23:59:59';
 
+$arr_dates['month']['from_date'] =  '2012-10-01 00:00:00';
+$arr_dates['month']['to_date'] = '2012-10-31 23:59:59';
 
 //$fetchRecordsFromTable = 'latest_downloads';
 $fetchRecordsFromTable = 'downloads';
@@ -60,27 +60,9 @@ foreach ($arr_dates AS $key => $value)
                     array('RECORD_TYPE', 'DETAIL_ROWS', 'TOTAL_SOLD', 'TOTAL_FREE', 'TOTAL_PROMO', 'TOTAL_SUB', 'TOTAL_UPGRADE', 'TOTAL_REFUND')
                 ),
             );
-            $query = "SELECT clp.library_id,     clp.library_contract_start_date,          clp.library_contract_end_date, 
-                clp.library_unlimited,        sum(lp.purchased_tracks) as total_tracks_purchase ,   sum(lp.purchased_amount) as total_amount, 
-                l.library_territory, lp.library_id,         clp.id as contract_id,         clp.id_library_purchases, 
-                l.library_name, l.library_user_download_limit, l.library_download_type, l.library_download_limit, 
-                l.library_current_downloads, l.library_total_downloads, l.library_available_downloads, 
-                l.library_territory, l.library_status 
-                
-                FROM library_purchases lp 
-                INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases 
-                INNER JOIN libraries l ON clp.library_id = l.id 
-                
-                WHERE ( (clp.library_contract_start_date <= '" . $value['from_date'] . "' AND clp.library_contract_end_date >= '" . $value['to_date'] . "')  
-                    OR (clp.library_contract_start_date <= '" . $value['from_date'] . "' AND clp.library_contract_end_date BETWEEN '" . $value['from_date'] . "' 
-                        AND '" . $value['to_date'] . "') OR (clp.library_contract_start_date BETWEEN '" . $value['from_date'] . "' AND '" . $value['to_date']
-                    . "' AND clp.library_contract_end_date >= '" . $value['to_date'] . "') OR (clp.library_contract_start_date >= '" . $value['from_date']
-                    . "' AND clp.library_contract_end_date <= '" . $value['to_date'] . "') ) AND clp.library_unlimited = '" . $libTypeValue . "' AND l.library_territory='"
-                    . $row_country['library_territory'] . "' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',clp.library_id),
-                        clp.library_unlimited,clp.library_id ORDER BY clp.library_id;";
+            $query = "SELECT clp.library_id, clp.library_contract_start_date, clp.library_contract_end_date, clp.library_unlimited, sum(lp.purchased_tracks) as total_tracks_purchase ,  sum(lp.purchased_amount) as total_amount, l.library_territory, lp.library_id, clp.id as contract_id, clp.id_library_purchases, l.library_name, l.library_user_download_limit, l.library_download_type, l.library_download_limit, l.library_current_downloads, l.library_total_downloads, l.library_available_downloads, l.library_territory, l.library_status FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases INNER JOIN libraries l ON clp.library_id = l.id WHERE ( (clp.library_contract_start_date <= '" . $value['from_date'] . "' AND clp.library_contract_end_date >= '" . $value['to_date'] . "')  OR (clp.library_contract_start_date <= '" . $value['from_date'] . "' AND clp.library_contract_end_date BETWEEN '" . $value['from_date'] . "' AND '" . $value['to_date'] . "') OR (clp.library_contract_start_date BETWEEN '" . $value['from_date'] . "' AND '" . $value['to_date'] . "' AND clp.library_contract_end_date >= '" . $value['to_date'] . "') OR (clp.library_contract_start_date >= '" . $value['from_date'] . "' AND clp.library_contract_end_date <= '" . $value['to_date'] . "') ) AND clp.library_unlimited = '" . $libTypeValue . "' AND l.library_territory='" . $row_country['library_territory'] . "' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',clp.library_id),clp.library_unlimited,clp.library_id ORDER BY clp.library_id;";
 
-            //$query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory 
-            //From downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$value['from_date']."' AND downloads.created <= '".$value['to_date']."' AND downloads.provider_type='ioda' AND libraries.library_territory = '$row_country[library_territory]' GROUP BY Songs.ProdID ";
+            //$query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$value['from_date']."' AND downloads.created <= '".$value['to_date']."' AND downloads.provider_type='ioda' AND libraries.library_territory = '$row_country[library_territory]' GROUP BY Songs.ProdID ";
 
             $result = mysql_query($query, $freegal);
             $file_name = $reportsFolder . '/tmp_debug_data.txt';
@@ -93,8 +75,8 @@ foreach ($arr_dates AS $key => $value)
             while ($q = mysql_fetch_assoc($result))
             {
                 $dates_query = "SELECT contract_library_purchases.library_contract_start_date from contract_library_purchases where contract_library_purchases.id > '$q[contract_id]' and library_id = '$q[library_id]' order by id ;";
-                $least_date = $to_date < ($q['library_contract_end_date'] . " 23:59:59") ? $to_date : ($q['library_contract_end_date'] . " 23:59:59");
-                $dates_query_result = mysql_query($dates_query);
+               // $least_date = $to_date < ($q['library_contract_end_date'] . " 23:59:59") ? $to_date : ($q['library_contract_end_date'] . " 23:59:59");
+                //$dates_query_result = mysql_query($dates_query);
                 if (strtotime($q['library_contract_start_date']) <= strtotime($value['from_date']))
                 {
                     if (strtotime($q['library_contract_end_date']) >= strtotime($value['to_date']))
@@ -112,7 +94,7 @@ foreach ($arr_dates AS $key => $value)
                     if (strtotime($q['library_contract_end_date']) >= strtotime($value['to_date']))
                     {
                         //echo "3";
-                        $total_download_query = "SELECT library_id, count(*) as total_count From $fetchRecordsFromTable as downloads WHERE provider_type='ioda' and downloads.created between '" . $q['library_contract_start_date'] . " 00:00:00' and '" . $to_date . "' and library_id = " . $q['library_id'];
+                        //$total_download_query = "SELECT library_id, count(*) as total_count From $fetchRecordsFromTable as downloads WHERE provider_type='ioda' and downloads.created between '" . $q['library_contract_start_date'] . " 00:00:00' and '" . $to_date . "' and library_id = " . $q['library_id'];
                         $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory, downloads.created From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '" . $q['library_contract_start_date'] . " 00:00:00' AND downloads.created <= '" . $value['to_date'] . "' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
                     }
                     else
@@ -136,7 +118,6 @@ foreach ($arr_dates AS $key => $value)
 
                 while ($row = mysql_fetch_assoc($song_download_result))
                 {
-                    print_r($row);exit;
                     $unit_count = $row['unit_count'];
                     //$sales = $unit_count * 0.65;
                     $sales = $unit_count * $unit_sales_rate;

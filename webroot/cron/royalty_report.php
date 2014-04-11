@@ -7,7 +7,8 @@ error_reporting(1);
 set_time_limit(0);
 include_once "config_ioda.php";
 include_once "functions_ioda.php";
-unlink('ioda_reports2/tmp_debug_data.txt');
+$reportsFolder = 'ioda_reports2';
+unlink($reportsFolder . '/tmp_debug_data.txt');
 $arr_dates = array();
 
 //$arr_dates['month']['from_date'] = date('Y-m-01 00:00:00',strtotime('-31 days'));
@@ -19,15 +20,30 @@ $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m)
 //$arr_dates['month']['from_date'] =  '2012-10-01 00:00:00';
 //$arr_dates['month']['to_date'] = '2012-10-31 23:59:59';
 
-$fetchRecordsFromTable = 'latest_downloads';
-//$fetchRecordsFromTable = 'downloads';
+//$fetchRecordsFromTable = 'latest_downloads';
+$fetchRecordsFromTable = 'downloads';
 
 $libraryType = array('ALC' => '0', 'Unlimited' => '1');
+
+// $libraryType = array('ALC'=>'0');
+
+$unit_sales_rate = null;
 foreach ($arr_dates AS $key => $value)
 {
     foreach ($libraryType as $libTypeKey => $libTypeValue)
     {
-        $country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
+        if ($libTypeKey == 'ALC')
+        {
+            $unit_sales_rate = 0.25;
+        }
+        else
+        {
+            $unit_sales_rate = 0;
+        }
+        //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
+        $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD');
+        // $country_curency = array('US' => 'USD');
+
         $query_country = "Select distinct libraries.library_territory from libraries";
         $result_country = mysql_query($query_country, $freegal);
 
@@ -49,7 +65,7 @@ foreach ($arr_dates AS $key => $value)
             //$query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$value['from_date']."' AND downloads.created <= '".$value['to_date']."' AND downloads.provider_type='ioda' AND libraries.library_territory = '$row_country[library_territory]' GROUP BY Songs.ProdID ";
 
             $result = mysql_query($query, $freegal);
-            $file_name = 'ioda_reports2/tmp_debug_data.txt';
+            $file_name = $reportsFolder . '/tmp_debug_data.txt';
             $tmp_cont = $query . '//' . mysql_num_rows($result) . '////\r\n';
             $fh = fopen($file_name, 'a') or die("can't open file");
             fwrite($fh, $tmp_cont);
@@ -59,18 +75,18 @@ foreach ($arr_dates AS $key => $value)
             while ($q = mysql_fetch_assoc($result))
             {
                 $dates_query = "SELECT contract_library_purchases.library_contract_start_date from contract_library_purchases where contract_library_purchases.id > '$q[contract_id]' and library_id = '$q[library_id]' order by id ;";
-                $least_date = $to_date < ($q['library_contract_end_date'] . " 23:59:59") ? $to_date : ($q['library_contract_end_date'] . " 23:59:59");
-                $dates_query_result = mysql_query($dates_query);
+                //$least_date = $to_date < ($q['library_contract_end_date'] . " 23:59:59") ? $to_date : ($q['library_contract_end_date'] . " 23:59:59");
+                //$dates_query_result = mysql_query($dates_query);
                 if (strtotime($q['library_contract_start_date']) <= strtotime($value['from_date']))
                 {
                     if (strtotime($q['library_contract_end_date']) >= strtotime($value['to_date']))
                     {
-                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '" . $value['from_date'] . "' AND downloads.created <= '" . $value['to_date'] . "' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory, downloads.created From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '" . $value['from_date'] . "' AND downloads.created <= '" . $value['to_date'] . "' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
                     }
                     else
                     {
                         //echo "2";
-                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '" . $value['from_date'] . "' AND downloads.created <= '" . $q['library_contract_end_date'] . " 23:59:59' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory, downloads.created From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '" . $value['from_date'] . "' AND downloads.created <= '" . $q['library_contract_end_date'] . " 23:59:59' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
                     }
                 }
                 else
@@ -78,13 +94,13 @@ foreach ($arr_dates AS $key => $value)
                     if (strtotime($q['library_contract_end_date']) >= strtotime($value['to_date']))
                     {
                         //echo "3";
-                        $total_download_query = "SELECT library_id, count(*) as total_count From $fetchRecordsFromTable as downloads WHERE provider_type='ioda' and downloads.created between '" . $q['library_contract_start_date'] . " 00:00:00' and '" . $to_date . "' and library_id = " . $q['library_id'];
-                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '" . $q['library_contract_start_date'] . " 00:00:00' AND downloads.created <= '" . $value['to_date'] . "' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
+                        //$total_download_query = "SELECT library_id, count(*) as total_count From $fetchRecordsFromTable as downloads WHERE provider_type='ioda' and downloads.created between '" . $q['library_contract_start_date'] . " 00:00:00' and '" . $to_date . "' and library_id = " . $q['library_id'];
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory, downloads.created From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '" . $q['library_contract_start_date'] . " 00:00:00' AND downloads.created <= '" . $value['to_date'] . "' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
                     }
                     else
                     {
                         //echo "4";
-                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created between '" . $q['library_contract_start_date'] . " 00:00:00' and '" . $q['library_contract_end_date'] . " 23:59:59' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory, downloads.created From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created between '" . $q['library_contract_start_date'] . " 00:00:00' and '" . $q['library_contract_end_date'] . " 23:59:59' AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country[library_territory] . "' AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
                     }
                 }
 
@@ -103,9 +119,13 @@ foreach ($arr_dates AS $key => $value)
                 while ($row = mysql_fetch_assoc($song_download_result))
                 {
                     $unit_count = $row['unit_count'];
-                    $sales = $unit_count * 0.65;
+                    //$sales = $unit_count * 0.65;
+                    $sales = $unit_count * $unit_sales_rate;
                     $total_sales += $sales;
-                    $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $row['ArtistText'], 'S', 1, 't', $unit_count, 0.65, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], 1.30, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', '', '', '');
+                    $artistText = trim($row['ArtistText']);
+                    //$royalty_content[1][] = array("D" , $row['ProdID'] ,$row['ISRC'] , $row['ReferenceID'] , $row['UPC' ], $row['SongTitle'] , $row['AlbumTitle'] , $row['ArtistText'] , 'S' , 1 , 't' , $unit_count ,  0.65 ,  $sales , $row['library_territory'] , 'Library Ideas ' , '10753' , $row['ProdID'] ,$row['ProductID'] ,  1.30 , $country_curency[$row_country['library_territory']] , '0.00', '0.00', '0.00', '0.00' , '' ,'' , ''   );
+                    $retail_price = ($libTypeKey == 'ALC') ? '0.5' : '   ';
+                    $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $artistText, 'S', 1, 't', $unit_count, $unit_sales_rate, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], $retail_price, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', date('Y-m-d', strtotime($row['created'])), '', '');
                     $total_records++;
                     $total_sold += $unit_count;
                 }
@@ -114,7 +134,7 @@ foreach ($arr_dates AS $key => $value)
             $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
             while (1)
             {
-                if (file_exists("ioda_reports2/" . $file_name))
+                if (file_exists($reportsFolder . "/" . $file_name))
                 {
                     $version++;
                     $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
@@ -140,7 +160,7 @@ foreach ($arr_dates AS $key => $value)
 
             $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
             $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
-            write_file($royalty_content, $file_name, "ioda_reports2/");
+            write_file($royalty_content, $file_name, $reportsFolder . "/");
         }
     }
 }
@@ -149,19 +169,20 @@ function write_file($content, $file_name, $folder)
 {
     if (count($content[1]) > 1)
     {
-        $outputFile = "iodareports_output_" . date('Y_m_d_h_i_s') . ".txt";
-        $logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the file!");
-        $fh = fopen($folder . $file_name, 'a') or die("can't open file");
+        //$outputFile = "iodareports_output_" . date('Y_m_d_h_i_s') . ".txt";
+        //$logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the file!");
+        echo $file = $folder . $file_name;
+        $fh = fopen($file, 'w') or die("can't open file");
         foreach ($content as $data)
         {
             $delimiter = "\t";
             $titleString = implode($delimiter, $data[0]);
             unset($data[0]);
-            fwrite($fh, $titleString . "\r\n");
+            fwrite($fh, $titleString . "\n");
             foreach ($data as $subArray)
             {
                 $dataRowString = implode($delimiter, $subArray);
-                fwrite($fh, $dataRowString . "\r\n");
+                fwrite($fh, $dataRowString . "\n");
             }
             //fwrite($fh ,"\r\n"); 
         }
