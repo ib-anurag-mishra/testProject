@@ -123,10 +123,10 @@ Class CommonComponent extends Object
         
         
         //set the aritst cache for specific Genre
-        // $genreAll = $this->getGenres($territory);
+        $genreAll = $this->getGenres($territory);
         $genreAll = Cache::read("genre" . $territory);
         array_unshift($genreAll, "All");       
-        //$genreAll= array('All');       
+        
        
          foreach($genreAll as $genreEach){
             
@@ -141,39 +141,40 @@ Class CommonComponent extends Object
                 if($k==64){
                     $artistFilter = 'spl';
                 }             
-                
-                if($genreEach != 'All')
-                {
                     
-                    //create conditions array
-                    $conditionArray = array(
-                        'Country.DownloadStatus' => 1,                    
-                        'Country.Territory' => strtoupper($territory)                
-                    );
-
-                    //Genre filter
-                    if ($genreEach != '' && $genreEach != 'All')
-                    {
-                        $conditionArray[] = " Song.Genre LIKE '%".mysql_escape_string($genreEach)."%'";
-                    }
-
-                    //Artist filter
-                    if ($artistFilter == 'spl')
-                    {                       
-                        $conditionArray[] = " Song.ArtistText REGEXP '^[^A-Za-z]'";
-                    }
-                    elseif ($artistFilter != '' && $artistFilter != 'All')
-                    {
-                        $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
-                    }
-                    
-                    
-                    $songInstance->unbindModel(array('hasOne' => array('Participant')));
-                    $songInstance->unbindModel(array('hasOne' => array('Country')));
-                    $songInstance->unbindModel(array('hasOne' => array('Genre')));
-                    $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-                    $songInstance->recursive = 0;
-                    
+// comment code for future use after debugging
+//                 
+//                if($genreEach != 'All')
+//                {
+//                    
+//                    //create conditions array
+//                    $conditionArray = array(
+//                        'Country.DownloadStatus' => 1,                    
+//                        'Country.Territory' => strtoupper($territory)                
+//                    );
+//
+//                    //Genre filter
+//                    if ($genreEach != '' && $genreEach != 'All')
+//                    {
+//                        $conditionArray[] = " Song.Genre LIKE '%".mysql_escape_string($genreEach)."%'";
+//                    }
+//
+//                    //Artist filter
+//                    if ($artistFilter == 'spl')
+//                    {                       
+//                        $conditionArray[] = " Song.ArtistText REGEXP '^[^A-Za-z]'";
+//                    }
+//                    elseif ($artistFilter != '' && $artistFilter != 'All')
+//                    {
+//                        $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
+//                    }
+//                    
+//                    $songInstance->unbindModel(array('hasOne' => array('Participant')));
+//                    $songInstance->unbindModel(array('hasOne' => array('Country')));
+//                    $songInstance->unbindModel(array('hasOne' => array('Genre')));
+//                    $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+//                    $songInstance->recursive = 0;
+//                    
 //                    //query that fetch  artist count according to Genre
 //                    $artistCount = $songInstance->find('all', array(
 //                        'conditions' => $conditionArray,
@@ -204,21 +205,23 @@ Class CommonComponent extends Object
 //                    }else{
 //                        $totalPages =1;
 //                    }
-                    
-                    //value less then one then set default 1
-                    if( $totalPages < 1){
-                        $totalPages =1;
-                    }
-                    
-                }else{
-                    $totalPages =5;
-                } 
-                $totalPages = 5;
+//                    
+//                    //value less then one then set default 1
+//                    if( $totalPages < 1){
+//                        $totalPages =1;
+//                    }
+//                    
+//                }else{
+//                    $totalPages =5;
+//                } 
+//                $totalPages = 5;
+//                
+//                //currently we are setting only 5 pages info for each Genre with corresponding artist filter
+//                if($totalPages > 5){
+//                    $totalPages = 5;
+//                }
                 
-                //currently we are setting only 5 pages info for each Genre with corresponding artist filter
-                if($totalPages > 5){
-                    $totalPages = 5;
-                }
+                 $totalPages = 2;
                 
                 //set cache variable one by one
                 for( $i=1;$i<=$totalPages;$i++ ){                     
@@ -311,14 +314,7 @@ Class CommonComponent extends Object
          {             
             Cache::write($cacheVariableName, $artistListResults);                
          }
-//         else
-//         {            
-//             if($artistListResults = Cache::read($cacheVariableName)){
-//                if(!empty($artistListResults) && $artistListResults != false){
-//                    Cache::write($cacheVariableName, Cache::read($cacheVariableName)); 
-//                }
-//            }                       
-//         }
+
         
         $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
                            
