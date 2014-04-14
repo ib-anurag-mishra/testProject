@@ -243,7 +243,7 @@ Class CommonComponent extends Object
             $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
             $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
-         }      
+         }     
         
                            
         return $artistListResults;
