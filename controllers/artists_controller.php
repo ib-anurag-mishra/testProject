@@ -1487,8 +1487,8 @@ Class ArtistsController extends AppController {
 
     function getFeaturedSongs() {
         Configure::write('debug', 0);
-        $artistText = $_POST['artistText'];
-        $providerType = $_POST['providerType'];
+        $artistText = base64_decode($_POST['artistText']);
+        $providerType = base64_decode($_POST['providerType']);
         $flag = $_POST['flag'];        
         $territory = $this->Session->read('territory');
         $featuredComposerSongs = Cache::read("featured_artist_".$artistText.'_'.$flag.'_'.$territory);

@@ -2421,8 +2421,6 @@ function loadAlbumData(albumtData) {
 
 function loadfeaturedSongs(artistText,providerType,flag){
 
-    artistText = base64_decode(artistText);
-    providerType = base64_decode(providerType);
     var data = "artistText=" + artistText +  "&providerType=" + providerType + "&flag=" + flag ;
     jQuery.ajax({
         type: "post", // Request method: post, get
