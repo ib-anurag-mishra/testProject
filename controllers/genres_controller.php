@@ -252,9 +252,9 @@ Class GenresController extends AppController
         }
         
         $genreAll = Cache::read("genre" . $country,'GenreCache');      
-        if ($genreAll === false) {              
+      //  if ($genreAll === false) {              
             $genreAll = $this->Common->getGenres($country);
-        }          
+     //   }          
        
           
         //check the genre value         
