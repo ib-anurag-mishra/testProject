@@ -119,7 +119,8 @@ Class CommonComponent extends Object
         
         //set the aritst cache for specific Genre
         $genreAll = $this->getGenres($territory);
-        $genreAll = Cache::read("genre" . $territory);
+        //$genreAll = Cache::read("genre" . $territory);
+        sleep(3);
         array_unshift($genreAll, "All");       
         
        
@@ -146,7 +147,7 @@ Class CommonComponent extends Object
                 //set cache variable one by one
                 for( $i=1;$i<=$totalPages;$i++ ){                     
                    $this->getArtistText($genreEach,$territory,$artistFilter,$i); 
-                   sleep(1);
+                   
                 }                
              }      
          }       
