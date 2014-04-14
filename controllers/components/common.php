@@ -117,11 +117,6 @@ Class CommonComponent extends Object
     function setArtistText($territory){
         set_time_limit(0); 
         
-        //$this->autoRender = false;
-        //add the Song table model
-        $songInstance = ClassRegistry::init('Song');
-        
-        
         //set the aritst cache for specific Genre
         $genreAll = $this->getGenres($territory);
         $genreAll = Cache::read("genre" . $territory);
@@ -142,90 +137,16 @@ Class CommonComponent extends Object
                     $artistFilter = 'spl';
                 }             
                     
-// comment code for future use after debugging
-//                 
-//                if($genreEach != 'All')
-//                {
-//                    
-//                    //create conditions array
-//                    $conditionArray = array(
-//                        'Country.DownloadStatus' => 1,                    
-//                        'Country.Territory' => strtoupper($territory)                
-//                    );
-//
-//                    //Genre filter
-//                    if ($genreEach != '' && $genreEach != 'All')
-//                    {
-//                        $conditionArray[] = " Song.Genre LIKE '%".mysql_escape_string($genreEach)."%'";
-//                    }
-//
-//                    //Artist filter
-//                    if ($artistFilter == 'spl')
-//                    {                       
-//                        $conditionArray[] = " Song.ArtistText REGEXP '^[^A-Za-z]'";
-//                    }
-//                    elseif ($artistFilter != '' && $artistFilter != 'All')
-//                    {
-//                        $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
-//                    }
-//                    
-//                    $songInstance->unbindModel(array('hasOne' => array('Participant')));
-//                    $songInstance->unbindModel(array('hasOne' => array('Country')));
-//                    $songInstance->unbindModel(array('hasOne' => array('Genre')));
-//                    $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-//                    $songInstance->recursive = 0;
-//                    
-//                    //query that fetch  artist count according to Genre
-//                    $artistCount = $songInstance->find('all', array(
-//                        'conditions' => $conditionArray,
-//                        'fields' => array('count(DISTINCT Song.ArtistText) as total'),
-//                        
-//                        'joins' => array(
-//                            array(
-//                                'table' => strtolower($territory).'_countries',
-//                                'alias' => 'Country',
-//                                'type' => 'left',
-//                                'foreignKey' => false,
-//                                'conditions'=> array('Country.ProdID = Song.ProdID')
-//                            ),
-//                            array(
-//                                'table' => 'Albums',
-//                                'alias' => 'Albums',
-//                                'type' => 'left',
-//                                'foreignKey' => false,
-//                                'conditions'=> array('Song.ReferenceID = Albums.ProdID')
-//                            )
-//                        )
-//                     ));
-//                                                          
-//                    $artistCountValue =  $artistCount[0][0]['total'];            
-//
-//                    if(count($artistCountValue)> 0){                    
-//                        $totalPages = ceil($artistCountValue/120);                    
-//                    }else{
-//                        $totalPages =1;
-//                    }
-//                    
-//                    //value less then one then set default 1
-//                    if( $totalPages < 1){
-//                        $totalPages =1;
-//                    }
-//                    
-//                }else{
-//                    $totalPages =5;
-//                } 
-//                $totalPages = 5;
-//                
-//                //currently we are setting only 5 pages info for each Genre with corresponding artist filter
-//                if($totalPages > 5){
-//                    $totalPages = 5;
-//                }
+                //this code is commented for some testing                
+                //$totalPages = $this->checkGenrepagesCount($territory,$genreEach,$artistFilter);
                 
-                 $totalPages = 2;
+                //for fetching two pages for per Genre with per Artist filter
+                $totalPages = 2;
                 
                 //set cache variable one by one
                 for( $i=1;$i<=$totalPages;$i++ ){                     
-                   $this->getArtistText($genreEach,$territory,$artistFilter,$i);                  
+                   $this->getArtistText($genreEach,$territory,$artistFilter,$i); 
+                   sleep(1);
                 }                
              }      
          }       
@@ -312,13 +233,105 @@ Class CommonComponent extends Object
          //set artist list in the cache
          if (!empty($artistListResults))
          {             
-            Cache::write($cacheVariableName, $artistListResults);                
+            Cache::write($cacheVariableName, $artistListResults,'GenreCache');                
          }
 
         
         $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
                            
         return $artistListResults;
+         
+     }
+     
+     /*
+     * Function Name : checkGenrepagesCount
+     * Function Description : it check how many pages with perticuler Genere with artist
+     
+     * @paran $territory varChar 'territory value'
+     * @paran $genreEach varChar 'genre value'
+     * @paran $artistFilter varChar 'artist filter value'
+     * 
+     * @return  $totalPages int
+     */
+     
+     function checkGenrepagesCount($territory,$genreEach,$artistFilter){
+         
+        set_time_limit(0);    
+        //add the Song table model
+        $songInstance = ClassRegistry::init('Song');
+                 
+        if($genreEach != 'All')
+        {
+
+            //create conditions array
+            $conditionArray = array(
+                'Country.DownloadStatus' => 1,                    
+                'Country.Territory' => strtoupper($territory)                
+            );
+
+            //Genre filter
+            if ($genreEach != '' && $genreEach != 'All')
+            {
+                $conditionArray[] = " Song.Genre LIKE '%".mysql_escape_string($genreEach)."%'";
+            }
+
+            //Artist filter
+            if ($artistFilter == 'spl')
+            {                       
+                $conditionArray[] = " Song.ArtistText REGEXP '^[^A-Za-z]'";
+            }
+            elseif ($artistFilter != '' && $artistFilter != 'All')
+            {
+                $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
+            }
+
+            $songInstance->unbindModel(array('hasOne' => array('Participant')));
+            $songInstance->unbindModel(array('hasOne' => array('Country')));
+            $songInstance->unbindModel(array('hasOne' => array('Genre')));
+            $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+            $songInstance->recursive = 0;
+
+            //query that fetch  artist count according to Genre
+            $artistCount = $songInstance->find('all', array(
+                'conditions' => $conditionArray,
+                'fields' => array('count(DISTINCT Song.ArtistText) as total'),
+
+                'joins' => array(
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'Country',
+                        'type' => 'left',
+                        'foreignKey' => false,
+                        'conditions'=> array('Country.ProdID = Song.ProdID')
+                    ),
+                    array(
+                        'table' => 'Albums',
+                        'alias' => 'Albums',
+                        'type' => 'left',
+                        'foreignKey' => false,
+                        'conditions'=> array('Song.ReferenceID = Albums.ProdID')
+                    )
+                )
+             ));
+
+            $artistCountValue =  $artistCount[0][0]['total'];            
+
+            if(count($artistCountValue)> 0){                    
+                $totalPages = ceil($artistCountValue/120);                    
+            }else{
+                $totalPages =1;
+            }
+
+            //value less then one then set default 1
+            if( $totalPages < 1){
+                $totalPages =1;
+            }
+
+        }else{
+            $totalPages =5;
+        }       
+
+        return $totalPages;
          
      }
      

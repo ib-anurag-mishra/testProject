@@ -268,7 +268,7 @@ Class GenresController extends AppController
        
         
         //check cache variable are set or not
-        $artistList = Cache::read($cacheVariableName);
+        $artistList = Cache::read($cacheVariableName,'GenreCache');
         if ($artistList === false)
        // if(1)
         {             
@@ -341,11 +341,10 @@ Class GenresController extends AppController
         //create the cache variable name for checking the variable already exist or not
         $cacheVariableName = base64_encode($genre).strtolower($country).strtolower($Artist).$pageNo;     
        
-        $artistList = Cache::read($cacheVariableName);
+        $artistList = Cache::read($cacheVariableName,'GenreCache');
         //check cache variable are set or not
         if ($artistList === false)         
         {
-            echo 'Not Exist';
             $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);                
         }      
       
@@ -413,9 +412,8 @@ Class GenresController extends AppController
         
         $cacheVariableName = base64_encode($genre).strtolower($country).strtolower($Artist).$pageNo;       
        
-        $artistList = Cache::read($cacheVariableName);
-        if ($artistList === false) { 
-            echo 'Not Exist';
+        $artistList = Cache::read($cacheVariableName,'GenreCache');
+        if ($artistList === false) {             
               $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
         }
         //$this->getSortArtistList($artistList);      
