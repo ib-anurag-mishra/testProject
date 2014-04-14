@@ -7,7 +7,7 @@ if (count($artistList) > 0)
 	{
 
 		//$ArtistName = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);
-                $ArtistName = $artistList[$i]['Song']['ArtistText'];
+                $ArtistName = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);
 		if ($ArtistName != "")
 		{
 			echo " <li>";
