@@ -192,17 +192,14 @@ $totalRows = count($genresAll);
 
                     <?php
                     $genre_count = 1;
-                   
+                   if(count($genresAll) > 0){
                     foreach ($genresAll as $genre_name):
                        $genreNnameWithoutEncode = $genre_name;
-                       $genre_name= $this->getTextEncode($genre_name);
-                       
+                       $genre_name= $this->getTextEncode($genre_name);                       
 
                         if ($genre_name != '')
                         {	
-                          
-                           
-                            if ($genre_name != 'Porn Groove')
+                          if ($genre_name != 'Porn Groove')
                             {
                                 if ($genre_name == $genre)
                                 {
@@ -234,6 +231,7 @@ $totalRows = count($genresAll);
                         }
                         $genre_count++;
                     endforeach;
+                   }
                     ?>    
 
 

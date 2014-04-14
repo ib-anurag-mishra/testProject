@@ -457,7 +457,7 @@ Class GenresController extends AppController
             }
             $filterCacheVariableName = base64_encode($genre).strtolower($country).strtolower($alphabet).$pageNo;
           
-            $artistAll = Cache::read($filterCacheVariableName);
+            $artistAll = Cache::read($filterCacheVariableName,'GenreCache');
             if($artistAll === false){
                 $artistsNoAlpha[]= $alphabet;
             }else{

@@ -16,7 +16,7 @@ if (count($artistList) > 0)
 			$url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
 			?>
 
-<a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($ArtistName)); ?>/<?= base64_encode($genre) ?>">
+<a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])); ?>/<?= base64_encode($genre) ?>">
 	<?php
 	echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
 	echo '</a>';

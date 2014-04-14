@@ -1962,7 +1962,7 @@ Class ArtistsController extends AppController
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array(
-                'DISTINCT Song.ReferenceID1',
+                'DISTINCT Song.ReferenceID',
                 'Song.provider_type',
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => base64_decode(mysql_real_escape_string($id)),

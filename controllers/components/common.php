@@ -216,19 +216,19 @@ Class CommonComponent extends Object
             'conditions' => $conditionArray,
             'fields' => array('DISTINCT Song.ArtistText'),
             'limit'=> $endLimit, 'offset'=> $startLimit,
-            'order' => array('Song.ArtistText ASC'),
+           // 'order' => array('Song.ArtistText ASC'),
             'joins' => array(
                 array(
                     'table' => $territory.'_countries',
                     'alias' => 'Country',
-                    'type' => 'left',
+                    'type' => 'inner',
                     'foreignKey' => false,
                     'conditions'=> array('Country.ProdID = Song.ProdID')
                 ),
                 array(
                     'table' => 'Albums',
                     'alias' => 'Albums',
-                    'type' => 'left',
+                    'type' => 'inner',
                     'foreignKey' => false,
                     'conditions'=> array('Song.ReferenceID = Albums.ProdID')
                 )
