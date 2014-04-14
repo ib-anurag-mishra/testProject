@@ -75,8 +75,7 @@ Class CommonComponent extends Object
        
 
         if ((count($genreList) > 0) && ($genreList !== false))
-        {
-            
+        {            
             Cache::write("genre" . $territory, $genreList,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
         }
@@ -85,6 +84,7 @@ Class CommonComponent extends Object
             Cache::write("genre" . $territory, Cache::read("genre" . $territory,'GenreCache'),'GenreCache');
             $this->log("no data available for genre" . $territory, "cache");
         }
+        
         $genreList = array_unique($genreList);
         
         return $genreList;
@@ -97,11 +97,11 @@ Class CommonComponent extends Object
      */    
     function runGenreCacheFromShell(){
         set_time_limit(0); 
-        $this->log("shel cron log genreated" . $territory, "shellCronLog");
-      echo 123;
-      die;
+        $this->log("shel cron log genreated", "shellCronLog");        
         $territoriesList = $this->getTerritories();       
-        foreach($territoriesList as $territory){           
+        foreach($territoriesList as $territory){    
+            print_r($territoriesList);
+            die;
             $this->setArtistText($territory);            
         }
        
@@ -166,7 +166,13 @@ Class CommonComponent extends Object
      * @return  $artistListResults array
      */
      function getArtistText($genreValue,$territory,$artistFilter='',$pageNo=1){
-        set_time_limit(0);    
+        set_time_limit(0);  
+        
+        //check the page no must be grater than 0
+        if($pageNo < 1){
+            $pageNo=1;
+        }
+        
         //add the Song table model
         $songInstance = ClassRegistry::init('Song');
         //set the territory value
@@ -229,17 +235,16 @@ Class CommonComponent extends Object
             )
          ));          
         
-         //create cache variable name
-         $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;  
-        
+                
          //set artist list in the cache
          if (!empty($artistListResults))
          {             
-            Cache::write($cacheVariableName, $artistListResults,'GenreCache');                
-         }
-
+            //create cache variable name
+            $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
+            Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
+            $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
+         }      
         
-        $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
                            
         return $artistListResults;
          

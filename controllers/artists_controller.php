@@ -1962,10 +1962,10 @@ Class ArtistsController extends AppController
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array(
-                'DISTINCT Song.ReferenceID',
+                'DISTINCT Song.ReferenceID1',
                 'Song.provider_type',
                 'Country.SalesDate'),
-            'conditions' => array('Song.ArtistText' => base64_decode($id),
+            'conditions' => array('Song.ArtistText' => base64_decode(mysql_real_escape_string($id)),
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
