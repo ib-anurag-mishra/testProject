@@ -96,8 +96,9 @@ Class CommonComponent extends Object
      * @desc This function is used to call all functions for setting Genre page cache variables and run from shell
      */    
     function runGenreCacheFromShell(){
-        set_time_limit(0);    
-      return 123;
+        set_time_limit(0); 
+        $this->log("shel cron log genreated" . $territory, "shellCronLog");
+      echo 123;
       die;
         $territoriesList = $this->getTerritories();       
         foreach($territoriesList as $territory){           
