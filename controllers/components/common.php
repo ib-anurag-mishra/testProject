@@ -77,12 +77,12 @@ Class CommonComponent extends Object
         if ((count($genreList) > 0) && ($genreList !== false))
         {
             
-            Cache::write("genre" . $territory, $genreList);
+            Cache::write("genre" . $territory, $genreList,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
         }
         else
         {
-            Cache::write("genre" . $territory, Cache::read("genre" . $territory));
+            Cache::write("genre" . $territory, Cache::read("genre" . $territory,'GenreCache'),'GenreCache');
             $this->log("no data available for genre" . $territory, "cache");
         }
         $genreList = array_unique($genreList);
