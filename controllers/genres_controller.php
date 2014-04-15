@@ -6,7 +6,7 @@
   Author : m68interactive
  */
 
-ini_set('memory_limit', '2048M');
+
 
 Class GenresController extends AppController
 {
@@ -220,7 +220,7 @@ Class GenresController extends AppController
     */
     function view($Genre = null, $Artist = null)
     {
-                
+       set_time_limit(0);       
         $this->layout = 'home';
        //set the default page value
         $pageNo =1;
@@ -254,9 +254,9 @@ Class GenresController extends AppController
         
        // $genreAll = Cache::read("genre" . $country,'GenreCache');      
        // if ($genreAll === false  && empty($genreAll)) {              
-            $genreAll = $this->Common->getGenres($country);
+         //   $genreAll = $this->Common->getGenres($country);
        // }          
-       die;
+       
           
         //check the genre value         
         $genre = base64_decode($Genre);
