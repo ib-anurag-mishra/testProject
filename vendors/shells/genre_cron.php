@@ -7,10 +7,10 @@ class GenreCronShell extends Shell {
  * @access public
  */
     function main() {
-		 set_time_limit(0); 
-         App::import('Component', 'Common');
-         $this->common = &new CommonComponent();
-         $result= $this->common->runGenreCacheFromShell(); 
+	set_time_limit(0); 
+        App::import('Component', 'Common');
+        $this->common = &new CommonComponent();
+        $result= $this->common->runGenreCacheFromShell(); 
     }
 
 }

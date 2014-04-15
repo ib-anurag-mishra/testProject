@@ -99,9 +99,7 @@ Class CommonComponent extends Object
         set_time_limit(0); 
         $this->log("shel cron log genreated", "shellCronLog");        
         $territoriesList = $this->getTerritories();       
-        foreach($territoriesList as $territory){    
-            print_r($territoriesList);
-            die;
+        foreach($territoriesList as $territory){           
             $this->setArtistText($territory);            
         }
        
@@ -2831,7 +2829,8 @@ STR;
 
     function getTerritories()
     {
-        if ((Cache::read('territoryList')) === false)
+        //if ((Cache::read('territoryList')) === false)
+        if(1)
         {
             $territoryInstance = ClassRegistry::init('Territory');
             $territories = $territoryInstance->find("all");
