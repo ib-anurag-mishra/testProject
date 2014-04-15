@@ -18,6 +18,7 @@ Class CommonComponent extends Object
 
     function getGenres($territory)
     {
+        
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
         $genreInstance = ClassRegistry::init('Genre');
@@ -46,16 +47,10 @@ Class CommonComponent extends Object
         ));
         $this->log("All Genre list fetched for $territory", "genreLogs");
         
-         foreach($genreAll as $genreEach){
+        foreach($genreAll as $genreEach){
             
             $genreValue = addslashes($genreEach['Genre']['Genre']);
-            $territoryValue = addslashes($genreEach['Country']['Territory']);
-            
-            $songInstance->unbindModel(array('hasOne' => array('Participant')));
-            $songInstance->unbindModel(array('hasOne' => array('Country')));
-            $songInstance->unbindModel(array('hasOne' => array('Genre')));
-            $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-            $songInstance->recursive = 0;
+            $territoryValue = addslashes($genreEach['Country']['Territory']);           
 
             $genreCheckResults = $songInstance->find('first', array(
             'conditions' => array(
@@ -65,29 +60,19 @@ Class CommonComponent extends Object
                 ),
             'fields' => array('ProdID'),
             'limit' => 1,
-            'joins' => array(
-                 array(
-                     'table' => strtolower($territoryValue).'_countries',
-                     'alias' => 'Country',
-                     'type' => 'inner',
-                     'foreignKey' => false,
-                     'conditions'=> array('Country.ProdID = Song.ProdID')
-                 ),
-                 array(
-                     'table' => 'Albums',
-                     'alias' => 'Albums',
-                     'type' => 'inner',
-                     'foreignKey' => false,
-                     'conditions'=> array('Song.ReferenceID = Albums.ProdID')
-                 )
-             ) 
-            ));
+            'contain' => array(
+                'Country' => array(
+                    'fields' => array(
+                        'Country.Territory'
+                    )
+            ))));
 
-            if( count($genreCheckResults) > 0 ){
+            if( count($genreCheckResults) > 0 && !empty($genreCheckResults) ){
                 $genreList[] = stripslashes($genreValue);
             }          
          }
-
+print_r($genreList);
+die;
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");       
        
 
