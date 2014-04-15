@@ -250,12 +250,13 @@ Class GenresController extends AppController
             $Artist = "All";
             $slectedArtistFilter =$Artist;
         }
-        
-        $genreAll = Cache::read("genre" . $country,'GenreCache');      
-        if ($genreAll === false  && empty($genreAll)) {              
-            $genreAll = $this->Common->getGenres($country);
-        }          
        
+        
+       // $genreAll = Cache::read("genre" . $country,'GenreCache');      
+       // if ($genreAll === false  && empty($genreAll)) {              
+            $genreAll = $this->Common->getGenres($country);
+       // }          
+       die;
           
         //check the genre value         
         $genre = base64_decode($Genre);
