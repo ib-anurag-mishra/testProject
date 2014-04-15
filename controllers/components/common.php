@@ -71,8 +71,7 @@ Class CommonComponent extends Object
                 $genreList[] = stripslashes($genreValue);
             }          
          }
-print_r($genreList);
-die;
+         
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");       
        
 
