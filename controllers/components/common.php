@@ -119,7 +119,7 @@ Class CommonComponent extends Object
         //set the aritst cache for specific Genre
         $genreAll = $this->getGenres($territory);
         //$genreAll = Cache::read("genre" . $territory);
-        sleep(3);
+        sleep(1);
         array_unshift($genreAll, "All");       
         
        
