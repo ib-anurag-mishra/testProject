@@ -24,7 +24,7 @@ Class GenresController extends AppController
     {
         parent::beforeFilter();
 
-        $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions');
+        $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions', 'setGenres');
         $libraryCheckArr = array("view", "index");
     }
 
@@ -206,6 +206,13 @@ Class GenresController extends AppController
             $j++;
         }
         $this->set('categories', $finalArray);
+    }
+    
+    //just for test only
+    function setGenres(){
+        $country = $this->Session->read('territory');
+        $genreAll = $this->Common->getGenres($country);
+        die;
     }
 
     /*
