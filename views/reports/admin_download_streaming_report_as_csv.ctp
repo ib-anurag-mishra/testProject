@@ -1,35 +1,9 @@
 <?php
-//echo $testing;exit;
 /*
  File Name : admin_download_streaming_report_as_csv.ctp
  File Description : View page for streaming csv
  Author : m68interactive
  */
-?>
-<?php
-
-/*$line = array('Library Remaining Downloads');
-$csv->addRow($line);
-
-$line = array('', 'Library Name', 'Number of Remaining Downloads');
-$csv->addRow($line);
-$key=1;
-foreach($libraries_download as $LibraryName => $DownloadCount) {
-	if($DownloadCount['Library']['library_unlimited'] == 1){
-		$text = "Unlimited";
-	} else {
-		$text = $DownloadCount['Library']['library_available_downloads'];
-	}
-    $line = array($key, $DownloadCount['Library']['library_name'], $text);
-    $csv->addRow($line);
-	$key++;
-}
-$line = array('', '', '', '', '', '');
-$csv->addRow($line);*/
-
-
-// start - Total Straming during Reporting Period
-
 
 if(!is_array($streamingHours)) {
   
@@ -124,9 +98,7 @@ $csv->addRow($line);
 if($this->data['Report']['library_id'] == "all") {
     foreach($dayStreamingInfo as $key => $stream) {
             if($stream['StreamingHistory']['patron_id']!=''){
-                    /*$patron = $stream['users']['email'];
-            }
-            else{*/
+
                     $patron = $stream['StreamingHistory']['patron_id'];
             }
         $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
@@ -136,12 +108,10 @@ if($this->data['Report']['library_id'] == "all") {
 }else{
     foreach($dayStreamingInfo as $key => $stream) {
             if($stream['StreamingHistory']['patron_id']!=''){
-                    /*$patron = $stream['users']['email'];
-            }
-            else{*/
+
                     $patron = $stream['StreamingHistory']['patron_id'];
             }
-//        $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+
         $line = array($key+1,  $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['StreamingHistory']['createdOn'])));
         $csv->addRow($line);
     }
@@ -163,9 +133,7 @@ $csv->addRow($line);
 if($this->data['Report']['library_id'] == "all") {
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
             if($patronStreamed['StreamingHistory']['patron_id']!=''){
-                    /*$patron_id = $patronStreamed['users']['email'];
-            }
-            else{*/
+
                     $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
             }
 
@@ -175,9 +143,7 @@ if($this->data['Report']['library_id'] == "all") {
 }else{
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
             if($patronStreamed['StreamingHistory']['patron_id']!=''){
-                    /*$patron_id = $patronStreamed['users']['email'];
-            }
-            else{*/
+
                     $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
             }
 
@@ -205,7 +171,7 @@ if($this->data['Report']['library_id'] == "all") {
     $libraryName = "All_Libraries";
 }
 else {
-    //$libraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
+
     $libraryName = str_replace(" ", "_", $library->getLibraryName($library_id));
 }
 $date_arr = explode("/", $this->data['Report']['date']);
@@ -235,4 +201,3 @@ elseif($this->data['Report']['reports_daterange'] == 'manual') {
 }
 echo $csv->render('StreamingReport_'.$libraryName.$dateRange.'.csv');
 ?>
-

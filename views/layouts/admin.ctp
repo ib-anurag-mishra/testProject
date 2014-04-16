@@ -15,21 +15,8 @@
 	</title>
    	<?php
 		echo $this->Html->meta('icon');
-		/*echo $this->Html->css('freegal_admin_styles');
-		echo $this->Html->css('superfish');
-		echo $this->Html->css('colorbox');
-		echo $this->Html->css('colorpicker');*/
-		/*echo $javascript->link('jquery-1.3.2.min');
-		echo $javascript->link('jquery.tools.min');
-		echo $javascript->link('admin_functions');
-		echo $javascript->link('jquery.colorbox');
-		echo $javascript->link('jquery.hoverIntent.min');
-		echo $javascript->link('superfish');
-		echo $javascript->link('supersubs');
-		echo $javascript->link('colorpicker');*/
 		?>
 		<link type="text/css" rel="stylesheet" href="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=superfish.css,freegal_admin_styles.css,colorbox.css,colorpicker.css" />
-                <!--<script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery-1.3.2.min.js,jquery.tools.min.js,admin_functions.js,jquery.colorbox.js,jquery.hoverIntent.min.js,superfish.js,supersubs.js,colorpicker.js"></script>-->
 		<script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js,jquery.hoverIntent.min.js,superfish.js,supersubs.js,colorpicker.js,admin_functions.js,jquery.colorbox.js"></script>
         <?php
 		echo $scripts_for_layout;
