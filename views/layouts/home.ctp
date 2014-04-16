@@ -667,7 +667,80 @@
     </head>
 
     <body>
+        <!--[if lt IE 9]>
+        <style type="text/css">
+        .browser-update {
 
+
+            background: url(img/browser-update-v2.jpg);
+            width: 640px;
+            height: 460px;
+            margin: 10px auto;
+            border:1px solid #ddd;
+            position: relative;
+        }
+
+        .browser-update.closed {
+
+            display: none;
+        }
+
+        .browser-update #bu-close {
+            position: absolute;
+            right: 12px;
+            top: 10px;
+            display: block;
+            width: 11px;
+            height: 13px;
+
+        }
+
+        .browser-update .chrome {
+            position: absolute;
+            left: 40px;
+            top: 204px;
+            width: 136px;
+            height: 186px;
+        }
+
+        .browser-update .ff {
+            position: absolute;
+            left: 180px;
+            top: 204px;
+            width: 136px;
+            height: 186px;
+
+        }
+
+        .browser-update .ie {
+            position: absolute;
+            left: 324px;
+            top: 204px;
+            width: 136px;
+            height: 186px;
+
+        }
+
+        .browser-update .safari {
+            position: absolute;
+            left: 468px;
+            top: 204px;
+            width: 136px;
+            height: 186px;
+
+        }
+
+
+                    
+        </style>
+        <div class="browser-update">
+            <a href="#" id="bu-close" class="no-ajaxy"></a>
+            <a href="http://www.google.com/chrome" class="chrome"></a>
+            <a href="http://www.mozilla.org/en-US/firefox/new/" class="ff"></a>
+            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" class="ie"></a>
+            <a href="http://www.apple.com/downloads/" class="safari"></a>
+        </div>
+        <![endif]-->
 
         <div id="audioPixel"><div id="audioflash"></div></div>
         <?php $session->flash(); ?>
