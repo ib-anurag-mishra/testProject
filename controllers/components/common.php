@@ -213,7 +213,7 @@ Class CommonComponent extends Object
         //create query that fetch all artist according to selected Genre
         $artistListResults = $songInstance->find('all', array(
             'conditions' => $conditionArray,
-            'fields' => array('DISTINCT Song.ArtistText1'),
+            'fields' => array('DISTINCT Song.ArtistText'),
             'limit'=> $endLimit, 'offset'=> $startLimit,
            // 'order' => array('Song.ArtistText ASC'),
             'joins' => array(
