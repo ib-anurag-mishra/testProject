@@ -120,7 +120,7 @@
                 <p><?php echo __('Release Information', true); ?> </p>
                 <div class="release-date">Date: <?php echo date("M d, Y", strtotime($VideosData[0]['Country']['SalesDate'])); ?></div>
                 <div class="video-duration">Duration: <?php echo $duration_arr[0] . " min " . $duration_arr[1] . " sec"; ?></div>
-                <div class="video-size">Size: 67.2 MB</div>
+                <!-- <div class="video-size">Size: 67.2 MB</div> -->
             </div>
         </div>
 
