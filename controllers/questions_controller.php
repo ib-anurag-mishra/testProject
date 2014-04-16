@@ -18,19 +18,6 @@ class QuestionsController extends AppController
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('index', 'view');
-//		if(($this->action != 'admin_reorder') && ($this->action != 'admin_index') && ($this->action != 'admin_view') && ($this->action != 'admin_add') && ($this->action != 'admin_edit') && ($this->action != 'admin_delete')) {
-//			$validPatron = $this->ValidatePatron->validatepatron();
-//			if($validPatron == '0') {
-//				//$this->Session->destroy();
-//				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-//				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-//			}
-//			else if($validPatron == '2') {
-//				//$this->Session->destroy();
-//				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-//				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
-//			}
-//		}
 	}
 	
 	/*
@@ -70,7 +57,6 @@ class QuestionsController extends AppController
         */
 	function admin_index() {
 		$this->layout = 'admin';
-//		$this->Question->recursive = -2;
 		$this->paginate = array('conditions' => array(),		     
 		      'order' => 'Question.section_id ASC,Question.sort_id ASC'		     
 		);
@@ -162,4 +148,3 @@ class QuestionsController extends AppController
 		$this->Question->setDataSource('default'); 
 	}
 }
-?>

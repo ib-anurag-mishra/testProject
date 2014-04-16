@@ -217,7 +217,7 @@ $ieVersion = ieversion();
                                         echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
                                     }
                                     ?></a></div>
-                            <!-- <a class="add-to-wishlist-button" href="#"></a> -->
+
                             <div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['album'])); ?>" href="/artists/view/<?= base64_encode($wishlistResults[$i]['Song']['ArtistText']); ?>/<?= $wishlistResults[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($wishlistResults[$i]['Song']['provider_type']); ?>">
                                     <?php
                                     if (strlen($wishlistResults[$i]['wishlists']['album']) >= 15)
@@ -244,25 +244,12 @@ $ieVersion = ieversion();
                                     ?>
                                 </a></div>
 
-                            <!-- <div class="wishlist-popover">
-                            <?php
-                            if ($this->Session->read('library_type') == 2)
-                            {
-                                echo $this->Queue->getQueuesList($this->Session->read('patron'), $wishlistResults[$i]["Song"]["ProdID"], $wishlistResults[$i]["Song"]["provider_type"], $wishlistResults[$i]["Albums"]["ProdID"], $wishlistResults[$i]["Albums"]["provider_type"]);
-                                ?>
-                                                                                                                    <a class="add-to-playlist" href="#">Add To Playlist</a>
-                            <?php } ?>
-                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>            
-                            </div> -->
                             <div class="download">
 
                                 <?php
                                 $productInfo = $song->getDownloadData($wishlistResults[$i]['wishlists']['ProdID'], $wishlistResults[$i]['wishlists']['provider_type']);
                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                 {
-//                                    $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
-//                                    $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-//                                    $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                     ?>
                                     <p>
                                         <span class="beforeClick" id="wishlist_song_<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>">
@@ -323,12 +310,7 @@ $ieVersion = ieversion();
                 <?php
                 if (count($wishlistResultsVideos) != 0)
                 {
-                    //$i = 1;
                     foreach ($wishlistResultsVideos as $key => $wishlistResultsVideo):
-                        /* $class = null;
-                          if ($i++ % 2 == 0) {
-                          $class = ' class="altrow"';
-                          } */
                         ?>
 
                         <div class="row clearfix" id="wishlistvideo-<?php echo $wishlistResultsVideo['WishlistVideo']['id'] . '-' . $wishlistResultsVideo['WishlistVideo']['ProdID'] ?>">
@@ -339,7 +321,6 @@ $ieVersion = ieversion();
                                 $videoImageUrl = Configure::read('App.Music_Path') . $videoImage;
                                 ?>
                                 <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
-                                <!-- <a class="preview" href="javascript:void(0)"></a> -->
                             </div>
                             <div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>" href="javascript:void(0)">
                                     <?php
@@ -353,7 +334,7 @@ $ieVersion = ieversion();
                                     }
                                     ?>
                                 </a></div>
-                            <!--<a class="add-to-wishlist-button" href="javascript:void(0)"></a>-->
+
                             <div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['Video']['Title'])); ?>" href="javascript:void(0)"><?php echo $this->getTextEncode(substr($wishlistResultsVideo['Video']['Title'], 0, 15)); ?>...</a></div>
                             <div class="artist-name"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['WishlistVideo']['artist'])); ?>" href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>">
                                     <?php
@@ -368,15 +349,6 @@ $ieVersion = ieversion();
                                     }
                                     ?></a></div>
 
-                            <!--<div class="wishlist-popover">
-                                    
-                                    <div class="share clearfix">
-                                            <p>Share via</p>
-                                            <a class="facebook" href="#"></a>
-                                            <a class="twitter" href="#"></a>
-                                    </div>
-                                    
-                            </div>-->
                             <div class="download">
                                 <p>
                                     <?php

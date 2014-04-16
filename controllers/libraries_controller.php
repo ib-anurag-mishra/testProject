@@ -1590,7 +1590,7 @@ STR;
         }
 
         $timezoneResults = $this->Timezone->find('all', array('order' => array('zone_name' => 'asc')));
-        // print_r($timezoneResults);
+
         $this->set('timezoneResults', $timezoneResults);
 
 
@@ -1631,4 +1631,3 @@ STR;
     }
 
 }
-?>

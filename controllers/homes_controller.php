@@ -423,7 +423,6 @@ class HomesController extends AppController
 
         $ids_provider_type_album = '';
 
-        //if(1)
         if (($libDownload = Cache::read("lib_album" . $libId)) === false)
         {
 
@@ -437,7 +436,7 @@ class HomesController extends AppController
 
 
 ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
-        //if (1)
+
         if (($libDownload = Cache::read("lib_video" . $libId)) === false)
         {
             $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country, $libId);
@@ -472,7 +471,6 @@ class HomesController extends AppController
         {
             if (($national = Cache::read("national_us_top10_songs" . $territory)) === false)
             {
-                //if(1) {
                 $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
             }
             else
@@ -4698,4 +4696,3 @@ STR;
         }
     }
 }
-?>

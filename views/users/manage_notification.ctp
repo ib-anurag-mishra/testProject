@@ -51,25 +51,26 @@ $ieVersion = ieversion();
                 <?php echo $this->Form->create('User', array('controller' => 'User', 'action' => 'manage_notification')); ?>
                 <div>
                     <?php
-                    if ($notificationAlreadySave == true)
+                    if ($notificationAlreadySave=="true")
                     {
                         $notificationAlreadySaveFlag = 1;
+                        $showEmailID = "display:block;";
                     }
                     else
                     {
                         $notificationAlreadySaveFlag = 0;
+                        $showEmailID = "display:none;";
                     }
                     ?>
                     <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave)); ?>
                     Add your email address here to receive twice-weekly email reminders of your available downloads.
                 </div>
-                <div id="show_newsletterboxField" style="display:none;">
+                <div id="show_newsletterboxField" style="<?php echo $showEmailID; ?>">
                     <?php echo $this->Form->label('Notification Email'); ?>
                     <?php echo $this->Form->input('NewsletterEmail', array('label' => false, 'value' => $notificationEmail, 'div' => false, 'class' => 'form_fields')); ?>
                 </div>    
                 <div>
-                <!--<input type="submit" name="notification_submit" onclick="return checkEmailValue()" value="<?php __('Save') ?>" />-->
-                    <button id="btnNotification" type="button" onclick="return checkEmailValue()" ><?php echo __('Save') ?></button>
+                    <button id="btnNotification" type="button"  ><?php echo __('Save') ?></button>
                 </div>
                 <?php echo $this->Form->end(); ?>
             </div>

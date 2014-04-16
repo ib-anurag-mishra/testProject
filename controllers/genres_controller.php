@@ -26,19 +26,6 @@ Class GenresController extends AppController
 
         $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions');
         $libraryCheckArr = array("view", "index");
-//		if(in_array($this->action,$libraryCheckArr)) {
-//		  $validPatron = $this->ValidatePatron->validatepatron();
-//			if($validPatron == '0') {
-//				//$this->Session->destroy();
-//				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-//				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-//			}
-//			else if($validPatron == '2') {
-//				//$this->Session->destroy();
-//				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-//				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-//			}
-//		}
     }
 
     /*
@@ -52,8 +39,7 @@ Class GenresController extends AppController
          * Fix for Genre page other than view() method is called
          * 
          */
-        
-        //echo '<pre>';
+
         $url = explode('/', $this->params['url']['url']);
         if ($url[1] != 'view')
         {
@@ -63,7 +49,6 @@ Class GenresController extends AppController
 
         $country = $this->Session->read('territory');
 
-        //$country = "'".$country."'";
         $this->layout = 'home';
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
@@ -131,7 +116,6 @@ Class GenresController extends AppController
                             array('Genre.Genre' => $genreName),
                             array("Song.ReferenceID <> Song.ProdID"),
                             array('Song.DownloadStatus' => 1),
-                            //	array('Song.TrackBundleCount' => 0),
                             array("Song.Sample_FileID != ''"),
                             array("Song.FullLength_FIleID != ''"),
                             array('Song.provider_type = Genre.provider_type'),
@@ -244,7 +228,6 @@ Class GenresController extends AppController
             $j++;
         }
 
-        // print_r($finalArray);
         $this->set('categories', $finalArray);
     }
 
@@ -255,7 +238,6 @@ Class GenresController extends AppController
 
     function view($Genre = null, $Artist = null)
     {
-//        /Configure::write('debug' ,2 );
         //login redirect issue fix        
         if (!base64_decode($this->Session->read('calledGenre')))
         {
@@ -759,5 +741,3 @@ Class GenresController extends AppController
     }
 
 }
-
-?>

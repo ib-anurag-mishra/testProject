@@ -14,12 +14,7 @@ foreach ($albumData as $album_key => $album):
 
                 <div class="wishlist-popover">
                     <input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album"/>
-                    <?php
-                    //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
-                    ?>
                     <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-
-                    <?php //echo $this->Queue->getSocialNetworkinglinksMarkup();  ?>
                 </div>
                 <?php
             }
@@ -29,11 +24,6 @@ foreach ($albumData as $album_key => $album):
             if ($page->isImage($image))
             {
                 //Image is a correct one
-            }
-            else
-            {
-
-                //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
             }
             ?>
 
@@ -46,9 +36,6 @@ foreach ($albumData as $album_key => $album):
             ?>
             <?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>
         </div>                      
-
-
-
 
         <div class="album-genre"><?php echo __('Genre') . ": "; ?><span><?php
                 echo $this->getTextEncode($album['Genre']['Genre']);
@@ -64,12 +51,7 @@ foreach ($albumData as $album_key => $album):
                     echo $this->getTextEncode($album['Album']['Label']);
                 }
                 ?></span></div>
-
-
     </section>
-
-
-
 
     <section class="tracklist-container">		
 
@@ -143,8 +125,6 @@ foreach ($albumData as $album_key => $album):
                 }
                 ?>
 
-
-
                 <div class="song" style="width:200px;"><?php
                     if (strlen($albumSong['Song']['SongTitle']) >= 20)
                     {
@@ -190,9 +170,6 @@ foreach ($albumData as $album_key => $album):
                             $productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'], $albumSong["Song"]['provider_type']);
                             if ($libraryDownload == '1' && $patronDownload == '1')
                             {
-//                                                                                            $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
-//                                                                                            $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-//                                                                                            $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
                                 if ($albumSong['Song']['status'] != 'avail')
                                 {
                                     ?>
@@ -238,18 +215,15 @@ foreach ($albumData as $album_key => $album):
                         <?php ?>
                         <?php
                         if ($streamingFlag == 1)
-                        {
-                            //echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); 
+                        { 
                             ?>
                             <a class="add-to-playlist" href="javascript:void(0);">Add To Playlist</a>
                         <?php } ?>
-                        <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
                         <?php
                         $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
 
                         echo $wishlist->getWishListMarkup($wishlistInfo, $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"]);
-                        ?>
-                        <?php //echo $this->Queue->getSocialNetworkinglinksMarkup();   ?>                                                                                 
+                        ?>                                                                                 
                     </div> 
                     <?php
                 }
@@ -267,11 +241,7 @@ foreach ($albumData as $album_key => $album):
             <?php
         endforeach;
         ?>
-
-
-
     </section>
     <?php
 endforeach;
 ?>
-		
