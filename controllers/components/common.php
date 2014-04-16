@@ -72,8 +72,7 @@ Class CommonComponent extends Object
             }          
          }
          
-        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");       
-       
+        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
 
         if ((count($genreList) > 0) && ($genreList !== false))
         {            
@@ -200,9 +199,10 @@ Class CommonComponent extends Object
             $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
         }
                 
-                
-        //create the pagination
-        $endLimit = $pageNo * 120;
+  
+        
+        
+        $endLimit =  120;
         $startLimit = ($pageNo * 120) - 120;
         
         $songInstance->unbindModel(array('hasOne' => array('Participant')));
@@ -213,7 +213,7 @@ Class CommonComponent extends Object
         //create query that fetch all artist according to selected Genre
         $artistListResults = $songInstance->find('all', array(
             'conditions' => $conditionArray,
-            'fields' => array('DISTINCT Song.ArtistText'),
+            'fields' => array('DISTINCT Song.ArtistText1'),
             'limit'=> $endLimit, 'offset'=> $startLimit,
            // 'order' => array('Song.ArtistText ASC'),
             'joins' => array(
