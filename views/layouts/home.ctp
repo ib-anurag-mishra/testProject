@@ -672,7 +672,7 @@
         .browser-update {
 
 
-            background: url(img/browser-update-v2.jpg);
+            background: url(../img/browser-update-v2.jpg);
             width: 640px;
             height: 460px;
             margin: 10px auto;
