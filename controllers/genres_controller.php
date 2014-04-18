@@ -579,6 +579,7 @@ Class GenresController extends AppController
                     }
                     
         }
+        return $resulting_arr;
       
     }
     
