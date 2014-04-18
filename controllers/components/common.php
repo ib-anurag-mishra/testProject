@@ -1487,6 +1487,7 @@ STR;
                 array('and' =>
                     array(
                         array('Song.ProdID = Country.ProdID'),
+                        array('Song.provider_type = Country.provider_type'),
                         array("Song.provider_type" => $provider),
                         array("Song.Sample_FileID != ''"),
                         array("Song.FullLength_FIleID != ''"),
@@ -1524,6 +1525,7 @@ STR;
                 array('and' =>
                     array(
                         array('Song.ProdID = Country.ProdID'),
+                        array('Song.provider_type = Country.provider_type'),
                         array("Song.Sample_FileID != ''"),
                         array("Song.FullLength_FIleID != ''"),
                         array("Song.provider_type" => $provider),
