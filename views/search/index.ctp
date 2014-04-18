@@ -352,7 +352,7 @@ function Get_Sales_date($sales_date_array, $country)
                                             {
 
 
-                                                $albumDetails = $album->getImage($palbum->ReferenceID);
+                                                $albumDetails = $album->getImage($palbum->ReferenceID,$palbum->provider_type);
 
                                                 if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL']))
                                                 {
@@ -745,8 +745,7 @@ function Get_Sales_date($sales_date_array, $country)
                                     ?>
                                     <li>
                                         <?php
-                                        $albumDetails = $album->getImage($palbum->ReferenceID);
-
+					$albumDetails = $album->getImage($palbum->ReferenceID,$palbum->provider_type);
                                         if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL']))
                                         {
                                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);

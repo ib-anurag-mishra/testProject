@@ -17,11 +17,16 @@ class AlbumHelper extends AppHelper {
         return  $details;
     }
     
-    function getImage($id) {
-        
+    function getImage($id, $provider = null) {
+        if($provider == null) {
+        	$conditions = array('Album.ProdID' => $id);
+ 		}
+         else {
+         	$conditions = array('Album.ProdID' => $id,'Album.provider_type'=>$provider);
+ 		}
         $songInstance = ClassRegistry::init('Album');
         $details = $songInstance->find('all', array(
-            'conditions'=>array('Album.ProdID' => $id),
+           'conditions'=>$conditions,
           )
         );       
         return  $details;
