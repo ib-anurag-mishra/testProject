@@ -573,7 +573,9 @@ Class GenresController extends AppController
                             continue;
                         }
                         elseif(!(strstr($all_genres[$i], $genresArrComb[$j]) && (strlen($all_genres[$i])>$genresArrComb[$j]))){ // similiar genres are found skip them
-                                array_push($resulting_arr, $all_genres[$i]);
+                                if(!in_array($resulting_arr, $all_genres[$i])){
+                                    array_push($resulting_arr, $all_genres[$i]);
+                                }
                         }    
                         
                     }
