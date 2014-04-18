@@ -333,6 +333,9 @@
                                             <?php
                                         }
                                     }
+				    elseif (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 0)){?>
+                                	<a id="not-allowed">Not Allowed</a>
+                                    <?php  }
                                     else
                                     {
                                         ?>
