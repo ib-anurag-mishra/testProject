@@ -227,7 +227,7 @@
 
                     </div>
                     <div class="album-title">
-                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                        <a title="<?php echo $this->getValidText($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                             <?php
                             if (strlen($value['Video']['VideoTitle']) > 20)
                                 echo substr($this->getTextEncode($value['Video']['VideoTitle']), 0, 20) . "...";
@@ -240,7 +240,7 @@
                             ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                     </div>
                     <div class="artist-name">
-                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
+                        <a title="<?php echo $this->getValidText($value['Video']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
                             <?php
                             if (strlen($value['Video']['Artist']) > 32)
                                 echo substr($this->getTextEncode($value['Video']['Artist']), 0, 32) . "...";
