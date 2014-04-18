@@ -117,13 +117,12 @@ Class CommonComponent extends Object
         set_time_limit(0); 
         
         //set the aritst cache for specific Genre
-        $genreAll = $this->getGenres($territory);
-        //$genreAll = Cache::read("genre" . $territory);
+        //$genreAll = $this->getGenres($territory);
+        $genreAll = Cache::read("genre" . $territory);
         sleep(1);
-        array_unshift($genreAll, "All");       
-        
+        array_unshift($genreAll, "All");      
        
-         foreach($genreAll as $genreEach){
+        foreach($genreAll as $genreEach){
             
              for($k = 63;$k < 91;$k++){
                  
@@ -137,19 +136,18 @@ Class CommonComponent extends Object
                     $artistFilter = 'spl';
                 }             
                     
-                //this code is commented for some testing                
+                //this code is commented for some testing               
                 //$totalPages = $this->checkGenrepagesCount($territory,$genreEach,$artistFilter);
                 
                 //for fetching two pages for per Genre with per Artist filter
-                $totalPages = 2;
+                $totalPages = 1;
                 
                 //set cache variable one by one
                 for( $i=1;$i<=$totalPages;$i++ ){                     
-                   $this->getArtistText($genreEach,$territory,$artistFilter,$i); 
-                   
+                   $this->getArtistText($genreEach,$territory,$artistFilter,$i);                    
                 }                
-             }      
-         }       
+            }      
+        }       
     }   
     
     
@@ -198,9 +196,7 @@ Class CommonComponent extends Object
         {
             $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
         }
-                
-  
-        
+      
         
         $endLimit =  120;
         $startLimit = ($pageNo * 120) - 120;
@@ -215,7 +211,7 @@ Class CommonComponent extends Object
             'conditions' => $conditionArray,
             'fields' => array('DISTINCT Song.ArtistText'),
             'limit'=> $endLimit, 'offset'=> $startLimit,
-           // 'order' => array('Song.ArtistText ASC'),
+            //'order' => array('Song.ArtistText ASC'),
             'joins' => array(
                 array(
                     'table' => $territory.'_countries',
@@ -242,9 +238,8 @@ Class CommonComponent extends Object
             $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
             $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
-         }     
-        
-                           
+         } 
+         
         return $artistListResults;
          
      }
