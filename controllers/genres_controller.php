@@ -579,6 +579,7 @@ Class GenresController extends AppController
                         }
                         elseif(!in_array($all_genres[$i], $resulting_arr)){
                                     array_push($resulting_arr, $all_genres[$i]);
+                                    break;
                         }
                         
                     }
