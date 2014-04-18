@@ -259,7 +259,9 @@ Class GenresController extends AppController
         }
        
         
-        $genreAll = Cache::read("genre" . $country,'GenreCache');      
+        $genreAll = Cache::read("genre" . $country,'GenreCache');  
+        $genreAll = $this->combine_genres($genreAll); 
+        
        // if ($genreAll === false  && empty($genreAll)) {              
          //   $genreAll = $this->Common->getGenres($country);
        // }          
@@ -552,6 +554,36 @@ Class GenresController extends AppController
         $this->set('selectedGenres', $selArray);
         $this->layout = 'admin';
     }
+    
+    /*
+      Function Name : combine_genres
+      Desc : Combining similiar Genres
+     */
+    
+    function combine_genres($all_genres)
+    {
+        $genresArrComb = array('Acid', 'Alternative','Audio Books','Children’s Music','Chinese','Christian','Comedy','Country','Dance','Deutschrock','Easy Listening','Electronic','Euro','Gospel  Christion','Hip Hop','Indian Pop / Indie Pop','J-Pop','Latin Music','Miscellaneous','MPB','New Age','Pop Rock','Rap Hip Hop','R & B / RB','Rock','Rock Espanol','Sound Tracks','Spoken Word','World Music'); 
+        $resulting_arr = array();
+        for($i=0; $i<count($all_genres);$i++){
+            
+                    for($j=0; $j<count($genresArrComb);$j++){
+
+                        if(in_array($all_genres[$i], $genresArrComb)){      // genre is found from $genresArrComb array                        
+                            array_push($resulting_arr, $all_genres[$i]);
+                            continue;
+                        }
+                        elseif(!(strstr($all_genres[$i], $genresArrComb[$j]) && (strlen($all_genres[$i])>$genresArrComb[$j]))){ // similiar genres are found skip them
+                                array_push($resulting_arr, $all_genres[$i]);
+                        }    
+                        
+                    }
+                    
+        }
+      
+    }
+    
+    
+    
 
 }
 
