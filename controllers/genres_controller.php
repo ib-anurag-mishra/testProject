@@ -568,13 +568,13 @@ Class GenresController extends AppController
             
                     for($j=0; $j<count($genresArrComb);$j++){
 
-                        if(in_array($all_genres[$i], $genresArrComb)){      // genre is found from $genresArrComb array  
+                        if(in_array($all_genres[$i], $genresArrComb[$j]) && strlen($all_genres[$i])===strlen($genresArrComb[$j])){      // genre is found from $genresArrComb array  
                             if(!in_array($all_genres[$i], $resulting_arr)){
                                     array_push($resulting_arr, $all_genres[$i]);
                                     continue;
                                 }                                                        
                         }
-                        elseif(!(strstr($all_genres[$i], $genresArrComb[$j]) && (strlen($all_genres[$i])>$genresArrComb[$j]))){ // similiar genres are found skip them
+                        elseif(!(stristr($all_genres[$i], $genresArrComb[$j]) && (strlen($all_genres[$i])>$genresArrComb[$j]))){ // similiar genres are found skip them
                                 if(!in_array($all_genres[$i], $resulting_arr)){
                                     array_push($resulting_arr, $all_genres[$i]);
                                 }
