@@ -260,7 +260,7 @@ Class GenresController extends AppController
        
         
         $genreAll = Cache::read("genre" . $country,'GenreCache');  
-        $genreAll = $this->combine_genres($genreAll); 
+       // $genreAll = $this->combine_genres($genreAll); 
         
        // if ($genreAll === false  && empty($genreAll)) {              
          //   $genreAll = $this->Common->getGenres($country);
@@ -560,7 +560,9 @@ Class GenresController extends AppController
       Desc : Combining similiar Genres
      */
     
-    function combine_genres($all_genres)
+    
+    
+     /*function combine_genres($all_genres)
     {
         $genresArrComb = array('Acid', 'Alternative','Audio Books','Children’s Music','Chinese','Christian','Comedy','Country','Dance','Deutschrock','Easy Listening','Electronic','Euro','Gospel  Christion','Hip Hop','Indian Pop / Indie Pop','J-Pop','Latin Music','Miscellaneous','MPB','New Age','Pop Rock','Rap Hip Hop','R & B / RB','Rock','Rock Espanol','Sound Tracks','Spoken Word','World Music'); 
         $resulting_arr = array();
@@ -568,7 +570,7 @@ Class GenresController extends AppController
             
                     for($j=0; $j<count($genresArrComb);$j++){
 
-                        if(in_array($all_genres[$i], $genresArrComb[$j]) && strlen($all_genres[$i])===strlen($genresArrComb[$j])){      // genre is found from $genresArrComb array  
+                        if(in_array($all_genres[$i], $genresArrComb) && strlen($all_genres[$i])===strlen($genresArrComb[$j])){      // genre is found from $genresArrComb array  
                             if(!in_array($all_genres[$i], $resulting_arr)){
                                     array_push($resulting_arr, $all_genres[$i]);
                                     break;
@@ -577,7 +579,7 @@ Class GenresController extends AppController
                         elseif((stristr($all_genres[$i], $genresArrComb[$j]) && (strlen($all_genres[$i])>$genresArrComb[$j]))){ // similiar genres are found skip them
                             break;
                         }
-                        elseif(!in_array($all_genres[$i], $resulting_arr)){
+                        elseif(!in_array($all_genres[$i], $resulting_arr) && !in_array($all_genres[$i], $resulting_arr)){
                                     array_push($resulting_arr, $all_genres[$i]);
                                     break;
                         }
@@ -587,7 +589,7 @@ Class GenresController extends AppController
         }
         return $resulting_arr;
       
-    }
+    }*/
     
     
     
