@@ -117,13 +117,16 @@ Class CommonComponent extends Object
         set_time_limit(0); 
         
         //set the aritst cache for specific Genre
-        //$genreAll = $this->getGenres($territory);
-        $genreAll = Cache::read("genre" . $territory);
-        sleep(1);
-        array_unshift($genreAll, "All");      
+        $genreAll = $this->getGenres($territory);
+        //commented but need sometime for testing perpuse
+        //$genreAll = Cache::read("genre" . $territory);
        
+        sleep(1);
+        //add All filter
+        array_unshift($genreAll, "All");      
+        // create cache one by one for each Genre
         foreach($genreAll as $genreEach){
-            
+             //fetch the alphabets
              for($k = 63;$k < 91;$k++){
                  
                 $artistFilter = chr($k);             
@@ -164,7 +167,7 @@ Class CommonComponent extends Object
      function getArtistText($genreValue,$territory,$artistFilter='',$pageNo=1){
         set_time_limit(0);  
         
-        //check the page no must be grater than 0
+        //check the page no. must be greater than 0
         if($pageNo < 1){
             $pageNo=1;
         }
@@ -181,19 +184,15 @@ Class CommonComponent extends Object
                 );
          
         //make condition according to Genre value
-        if ($genreValue != 'All')
-        {
-            $conditionArray[] = " `Song`.`Genre` LIKE '%".$genreValue."%'";
-            
+        if ($genreValue != 'All') {
+            $conditionArray[] = " `Song`.`Genre` LIKE '%".$genreValue."%'";            
         }       
         
         //make condition according to Genre value
-        if ($artistFilter == 'spl')
-        {
+        if ($artistFilter == 'spl'){
             $conditionArray[] = "Song.ArtistText REGEXP '^[^A-Za-z]'";
         }
-        elseif ($artistFilter != '' && $artistFilter != 'All')
-        {
+        elseif ($artistFilter != '' && $artistFilter != 'All') {
             $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
         }
       
@@ -228,12 +227,10 @@ Class CommonComponent extends Object
                     'conditions'=> array('Song.ReferenceID = Albums.ProdID')
                 )
             )
-         ));          
-        
+         ));
                 
          //set artist list in the cache
-         if (!empty($artistListResults))
-         {             
+         if (!empty($artistListResults)) {             
             //create cache variable name
             $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
@@ -246,7 +243,8 @@ Class CommonComponent extends Object
      
      /*
      * Function Name : checkGenrepagesCount
-     * Function Description : it check how many pages with perticuler Genere with artist
+     * Function Description : This get count of particular Genre and pages.
+     * this currenty not using anyware 
      
      * @paran $territory varChar 'territory value'
      * @paran $genreEach varChar 'genre value'
@@ -260,10 +258,10 @@ Class CommonComponent extends Object
         set_time_limit(0);    
         //add the Song table model
         $songInstance = ClassRegistry::init('Song');
-                 
+        
+        //check if artist filter is All or not
         if($genreEach != 'All')
         {
-
             //create conditions array
             $conditionArray = array(
                 'Country.DownloadStatus' => 1,                    
@@ -314,15 +312,13 @@ Class CommonComponent extends Object
                     )
                 )
              ));
-
-            $artistCountValue =  $artistCount[0][0]['total'];            
-
-            if(count($artistCountValue)> 0){                    
-                $totalPages = ceil($artistCountValue/120);                    
+            
+            if( isset($artistCount[0][0]['total']) && ($artistCount[0][0]['total'] > 0 ) ){                    
+                $totalPages = ceil( $artistCount[0][0]['total'] / 120 );                    
             }else{
                 $totalPages =1;
             }
-
+            
             //value less then one then set default 1
             if( $totalPages < 1){
                 $totalPages =1;
@@ -330,10 +326,8 @@ Class CommonComponent extends Object
 
         }else{
             $totalPages =5;
-        }       
-
-        return $totalPages;
-         
+        }
+        return $totalPages;         
      }
      
     
