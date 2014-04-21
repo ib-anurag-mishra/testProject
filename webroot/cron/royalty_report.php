@@ -76,9 +76,9 @@ foreach ($arr_dates AS $key => $value)
             $total_sold = 0;
             while ($q = mysql_fetch_assoc($result))
             {
-                $dates_query = "SELECT contract_library_purchases.library_contract_start_date from contract_library_purchases where contract_library_purchases.id > '$q[contract_id]' and library_id = '$q[library_id]' order by id ;";
-                $least_date = $to_date < ($q['library_contract_end_date'] . " 23:59:59") ? $to_date : ($q['library_contract_end_date'] . " 23:59:59");
-                $dates_query_result = mysql_query($dates_query);
+                //$dates_query = "SELECT contract_library_purchases.library_contract_start_date from contract_library_purchases where contract_library_purchases.id > '$q[contract_id]' and library_id = '$q[library_id]' order by id ;";
+                //$least_date = $to_date < ($q['library_contract_end_date'] . " 23:59:59") ? $to_date : ($q['library_contract_end_date'] . " 23:59:59");
+                //$dates_query_result = mysql_query($dates_query);
                 if (strtotime($q['library_contract_start_date']) <= strtotime($value['from_date']))
                 {
                     if (strtotime($q['library_contract_end_date']) >= strtotime($value['to_date']))

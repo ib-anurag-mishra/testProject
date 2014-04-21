@@ -12,6 +12,9 @@ include 'functions.php';
 $count = '';
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
+//set timezone
+date_default_timezone_set('America/New_York');
+ini_set('memory_limit', '-1');
 
 $countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
 //$countrys = array('CA' => 'CAD');
