@@ -83,7 +83,8 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $condStartDate = date('Y-m-d', strtotime($currentDate . " -$StartOfLastWeek day")) . " 00:00:00";
                 $condEndDate = date('Y-m-d', strtotime($currentDate . " last sunday")) . " 23:59:59";
 //                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
-
+                
+                $count = 1;
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = '/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt'";
                 $result3 = mysql_query($sql);
                 if ($result3)
