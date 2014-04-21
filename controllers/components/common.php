@@ -1477,7 +1477,7 @@ STR;
         
         $songInstance = Classregistry::init('Song');
         if(empty($flag)){
-            $cond = array('Song.ArtistText' => $artistComposer);
+            $cond = array('Song.ArtistText' => $artistComposer , 'Song.provider_type = Country.provider_type' , 'Song.provider_type' => $provider);
         }else{
             $cond = array('Song.Composer' => $artistComposer);
         }
@@ -1487,8 +1487,6 @@ STR;
                 array('and' =>
                     array(
                         array('Song.ProdID = Country.ProdID'),
-                        array('Song.provider_type = Country.provider_type'),
-                        array("Song.provider_type" => $provider),
                         array("Song.Sample_FileID != ''"),
                         array("Song.FullLength_FIleID != ''"),
                         array('Country.Territory' => $country),
@@ -1525,10 +1523,8 @@ STR;
                 array('and' =>
                     array(
                         array('Song.ProdID = Country.ProdID'),
-                        array('Song.provider_type = Country.provider_type'),
                         array("Song.Sample_FileID != ''"),
                         array("Song.FullLength_FIleID != ''"),
-                        array("Song.provider_type" => $provider),
                         array('Country.Territory' => $country),
                         array('Country.StreamingStatus' => 1),
                         array('Country.StreamingSalesDate <=' => date('Y-m-d')),
