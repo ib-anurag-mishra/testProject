@@ -259,11 +259,11 @@ Class GenresController extends AppController
         }
        
         
-        $genreAll = Cache::read("genre" . $country,'GenreCache');  
+        //$genreAll = Cache::read("genre" . $country,'GenreCache');  
        // $genreAll = $this->combine_genres($genreAll); 
         
        // if ($genreAll === false  && empty($genreAll)) {              
-         //   $genreAll = $this->Common->getGenres($country);
+            $genreAll = $this->Common->getGenres($country);
        // }          
        
           
