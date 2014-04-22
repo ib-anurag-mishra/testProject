@@ -17,22 +17,7 @@ Class CommonComponent extends Object
      */
 
     function getGenres($territory)
-    {        
-        $genreList = Cache::read("genre" . $territory,'GenreCache');
-        $tempArray = array();
-        
-        for($i=0;$i<count($genreList);$i++){
-            
-            for($j=$i+1;$i<count($genreList);$j++){
-                
-                if(strstr($genreList[$j],$genreList[$i])){                    
-                    array_push($tempArray,$genreList[$j]);
-                }
-            }
-        } 
-        $combGenre = array_diff($genreList, $tempArray);
-        print_r($combGenre); die;
-        /////////////////
+    {
         
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
@@ -87,9 +72,7 @@ Class CommonComponent extends Object
             }          
          }
          
-        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs"); 
-        
-       
+        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
 
         if ((count($genreList) > 0) && ($genreList !== false))
         {            
