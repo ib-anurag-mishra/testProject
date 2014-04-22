@@ -257,7 +257,8 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $trailer .= "0"; // Total Quantity Returned
                     fwrite($file, $trailer);
                     fclose($file);
-
+                  
+                    /*
                     $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . "_STREAMING.txt','PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . "_STREAMING.txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
 
                     $result6 = mysql_query($sql);
@@ -291,6 +292,8 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         }
                         // }
                     }
+                    
+                    */
                 }
             }
 
