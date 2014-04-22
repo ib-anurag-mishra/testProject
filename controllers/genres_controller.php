@@ -260,6 +260,20 @@ Class GenresController extends AppController
        
         
         $genreAll = Cache::read("genre" . $country,'GenreCache');  
+        
+        $tempArray = array();
+        for($i=0;$i<count($genreAll);$i++){
+            
+            for($j=$i+1;$j<count($genreList);$j++){
+                
+                if(strstr($genreList[$j],$genreList[$i])){
+                    $tempArray[] = $genreList[$j];
+                }
+            }
+        } 
+        $combineGenre = array_diff($genreList, $tempArray);
+        print_r($combineGenre);
+        
        // $genreAll = $this->combine_genres($genreAll); 
         
        // if ($genreAll === false  && empty($genreAll)) {              
