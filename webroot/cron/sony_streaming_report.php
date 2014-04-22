@@ -84,7 +84,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $condStartDate = date('Y-m-d', strtotime($currentDate . " -$StartOfLastWeek day")) . " 00:00:00";
                 $condEndDate = date('Y-m-d', strtotime($currentDate . " last sunday")) . " 23:59:59";
 //                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
-                
+
                 $count = 1;
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = '/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt'";
                 $result3 = mysql_query($sql);
@@ -235,29 +235,19 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $libSales = 0;
                             foreach ($lib as $line)
                             {
-                                $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#" . ($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte") . "#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
+                                $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#Library Ideas Stream#*#PEP6#*#$country#*#SA#*##*##*#";
                                 $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                                 $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                                 $sales .= "#*#"; // GRID/Official Digital Identifier
                                 $sales .= "11#*#"; // Product Type Key
                                 $sales .= $line['TrkCount'] . "#*#"; // Quantity
                                 $sales .= "0#*#"; // Quantity Returned
-                                if ($lib_type_int)
-                                {
-                                    $sales .= "0#*#"; // WPU
-                                    $sales .= "0#*#"; // Wholesale Value (WPU * Quantity)
-                                    $sales .= "0#*#"; // Net Invoice Price (same as WPU)
-                                    $sales .= "0#*#"; // Net Invoice Value (same as Wholesale Value)
-                                    $sales .= "0#*#"; // Retail Value
-                                }
-                                else
-                                {
-                                    $sales .= ".65#*#"; // WPU
-                                    $sales .= ("0.65" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
-                                    $sales .= ".65#*#"; // Net Invoice Price (same as WPU)
-                                    $sales .= ("0.65" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                    $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
-                                }
+
+                                $sales .= "0#*#"; // WPU
+                                $sales .= "0#*#"; // Wholesale Value (WPU * Quantity)
+                                $sales .= "0#*#"; // Net Invoice Price (same as WPU)
+                                $sales .= "0#*#"; // Net Invoice Value (same as Wholesale Value)
+                                $sales .= "0#*#"; // Retail Value
 
                                 $sales .= "0#*#"; // Charity Amount
                                 $sales .= "$currency#*#"; // Currency Key
@@ -357,7 +347,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "PEP6#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
-                    $market .= "$country#*#10#*#100";
+                    $market .= "$country#*#11#*#100";
                     fwrite($file, $market . "\n");
 
                     // Change: This Query is no longer is used.
@@ -433,7 +423,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $condEndDate = date("Y-m-d", strtotime('-1 second', strtotime('+1 month', strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00'))))) . " 23:59:59";
 
 //                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
-                
+
                 $count = 1;
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt'";
                 $result3 = mysql_query($sql);
@@ -469,7 +459,15 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                   $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE l.library_user_download_limit <= 3 and clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' and l.library_type = 2 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
 
                   } */
-                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE $lib_type_cond AND ( (clp.library_contract_start_date <= '" . $condStartDate . "' AND clp.library_contract_end_date >= '" . $condEndDate . "')  OR (clp.library_contract_start_date <= '" . $condStartDate . "' AND clp.library_contract_end_date BETWEEN '" . $condStartDate . "' AND '" . $condEndDate . "') OR (clp.library_contract_start_date BETWEEN '" . $condStartDate . "' AND '" . $condEndDate . "' AND clp.library_contract_end_date >= '" . $condEndDate . "') OR (clp.library_contract_start_date >= '" . $condStartDate . "' AND clp.library_contract_end_date <= '" . $condEndDate . "') ) AND l.library_territory = '$country' and l.library_type = 2 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
+                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory "
+                        . "FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id "
+                        . "INNER JOIN libraries l ON clp.library_id = l.id WHERE $lib_type_cond AND ( (clp.library_contract_start_date <= '" . $condStartDate
+                        . "' AND clp.library_contract_end_date >= '" . $condEndDate . "')  OR (clp.library_contract_start_date <= '" . $condStartDate
+                        . "' AND clp.library_contract_end_date BETWEEN '" . $condStartDate . "' AND '" . $condEndDate . "') OR (clp.library_contract_start_date BETWEEN '"
+                        . $condStartDate . "' AND '" . $condEndDate . "' AND clp.library_contract_end_date >= '" . $condEndDate . "') "
+                        . "OR (clp.library_contract_start_date >= '" . $condStartDate . "' AND clp.library_contract_end_date <= '" . $condEndDate . "') ) "
+                        . "AND l.library_territory = '$country' and l.library_type = 2 "
+                        . "GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                 $result = mysql_query($sql);
 
                 if ($result)
@@ -774,7 +772,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     }
 
                     // FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if (sendReportFilesftp($report_name,"/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
+                    if (sendReportFilesftp($report_name, "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
