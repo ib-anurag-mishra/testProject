@@ -16,8 +16,8 @@ set_time_limit(0);
 date_default_timezone_set('America/New_York');
 ini_set('memory_limit', '-1');
 
-//$countrys = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
-$countrys = array('GB' => 'GBP');
+$countrys = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
+//$countrys = array('GB' => 'GBP');
 
 $lib_types = array('Unlimited');
 //$lib_types = array('ALC');
@@ -526,7 +526,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $trailer .= "0"; // Total Quantity Returned
                     fwrite($file, $trailer);
                     fclose($file);
-/*
+
                     $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . "_STREAMING.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . "_STREAMING.txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
                     $result6 = mysql_query($sql);
 
@@ -558,9 +558,8 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             sendalert("Query failed: " . $sql);
                             die("Query failed: " . $sql . " Error: " . mysql_error());
                         }
-                    }
+                    }                   
                     
-                    */
                 }
             }
         }
