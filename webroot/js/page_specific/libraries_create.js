@@ -111,6 +111,21 @@ $(function() {
 			upgrade = 1;			
 		}
 	});
+        
+	var strupgrade = 1;
+	$('#strupgrade').click(function(){
+		if(strupgrade == 1){
+			$("#str_order").show();
+			$("#str_amount").show();
+			$("#str_track").show();
+			strupgrade = 0;	
+		} else {
+			$("#str_order").hide();
+			$("#str_amount").hide();
+			$("#str_track").hide();
+			strupgrade = 1;			
+		}
+	});        
 	
 	$('#LibraryLibraryDownloadLimit').change(function(){
 		if($(this).val() == 'manual') {
@@ -513,6 +528,33 @@ function get_purFields(val){
 		}
 	}	
 }
+
+function get_strFields(val){
+	if(document.getElementById("ShowContract").checked==true){
+		if(val == 1){
+			$("#sur_order").show();
+			$("#sur_amount").show();
+			$("#sur_track").show();
+			$("#LibraryPurchasesStreamingPurchasedHours").val(Unlimited);
+		} else {
+			$("#sur_order").show();
+			$("#sur_amount").show();
+			$("#sur_track").show();
+			$("#LibraryPurchasesStreamingPurchasedHours").val($( "select#LibraryLibraryStreamingHours" ).val());
+		}
+	} else{
+		if(val ==1){
+			$("#strupgrd").hide();
+		} else {
+                        $( "select#LibraryLibraryStreamingHours" ).val();
+			if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != ''){
+				$("#strupgrd").show();
+			}
+		}
+	}	
+}
+    
+
 function showContract(){
 		if(document.getElementById("LibraryShowContract").checked==true){
 			$("#contract_start").show();
@@ -544,6 +586,42 @@ function showContract(){
 			$("#upgrd").hide();
 			if($("#LibraryLibraryContractStartDate").val() != '' && document.getElementById("redio2").checked==true){
 				$("#upgrd").show();
+			}			
+		}
+}
+
+function showStreamContract(){
+		if(document.getElementById("ShowContract").checked==true){
+			$("#stream_contract_start").show();
+			$("#stream_contract_end").show(); 
+                        
+			if($("#redio2").is(":checked")){ 
+                            $("#str_order").show();
+                            $("#str_amount").show();
+                            $("#str_track").show();
+                            $("#LibraryPurchasesStreamingPurchasedHours").val('Unlimited');
+			} else {
+                            $("#str_order").show();
+                            $("#str_amount").show();
+                            $("#str_track").show();
+                            $("#LibraryPurchasesStreamingPurchasedHours").val($( "select#LibraryLibraryStreamingHours" ).val());
+			}
+			$("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val('');
+			$("#ContractLibraryStreamingPurchaseLibraryContractEndDate").val('');
+			$("#strupgrd").hide();			
+		} else {
+			var start = $("#stream_contract_start").val();
+			var end = $("#stream_contract_end").val();
+			$("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val(start);
+			$("#ContractLibraryStreamingPurchaseLibraryContractEndDate").val(end);
+			$("#stream_contract_start").show();
+			$("#stream_contract_end").show();
+			$("#str_order").hide();
+			$("#str_amount").hide();
+			$("#str_track").hide();
+			$("#strupgrd").hide();
+			if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != '' && document.getElementById("redio2").checked==true){
+				$("#strupgrd").show();
 			}			
 		}
 }

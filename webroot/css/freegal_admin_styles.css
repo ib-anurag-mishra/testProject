@@ -652,3 +652,77 @@ td.actions a:hover {
 	text-decoration: underline;
 	color:#666;
 }
+
+	#content table {width:98%;}
+
+.purchaseWrapper h1{
+    color: #000000;
+    font-size: 20px;
+    font-weight: normal;
+    margin: 5px 20px;    
+}
+
+.purchaseWrapper {
+    float:left;
+    width:100%
+}
+
+.purchase_download{
+    float:left;
+    width:50%;
+}
+.purchase_streaming{
+    float:left;
+    width:50%;
+}
+
+.purchase_streaming label {
+    float: left;
+    min-width: 200px;
+    text-align: right;
+}
+
+.purchase_download label {
+    float: left;
+    min-width: 200px;
+    text-align: right;
+}
+.purchase_div input {
+    float: left;
+    width: 200px;
+}
+.purchase_div {
+    clear: both;
+    float: left;
+    margin: 0 0 10px;
+    width: 500px;    
+}
+
+.lib_type {
+    margin: 10px;
+}
+
+#LibraryShowContract {
+    left: -93px;
+    position: relative;
+}
+
+.unlmtd {
+    left: 9px;
+    position: relative;
+}
+
+.clr{
+    clear:both !important;
+}
+
+#ShowContract {
+    left: -93px;
+    position: relative;
+}
+
+.purchase_div > button {
+    left: 9px;
+    position: relative;
+}
+
