@@ -259,7 +259,7 @@ Class LibrariesController extends AppController
                 $this->set('allPurchases', $allPurchases);
                 if ($getData['Library']['library_type'] == 2) {
                     $this->ContractLibraryStreamingPurchase->recursive = -1;
-                    $contractDates = $this->ContractLibraryStreamingPurchase->find('one', array('conditions' => array('library_id' => $libraryId), 'fields' => array('library_contract_start_date', 'library_contract_end_date'),'order' => array('created' => 'desc')));
+                    $contractDates = $this->ContractLibraryStreamingPurchase->find('first', array('conditions' => array('library_id' => $libraryId), 'fields' => array('library_contract_start_date', 'library_contract_end_date'),'order' => array('id' => 'desc')));
                     $this->set('contractDates', $contractDates);
                     $this->LibraryPurchasesStreaming->recursive = -1;
                     $streamPurchases = $this->LibraryPurchasesStreaming->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('created' => 'asc')));
@@ -547,7 +547,7 @@ Class LibrariesController extends AppController
                                 } else {             
                                     $this->Library->setValidation('library_step4');
                                 }                                    
-                                if ($this->Library->validates()){
+                                if ($this->Library->validates()){ 
                                     if ($this->Library->validates()) {
                                         $this->LibraryPurchase->create();
                                         $this->LibraryPurchase->set($this->data['LibraryPurchase']);
@@ -670,15 +670,14 @@ Class LibrariesController extends AppController
                                                             $this->ContractLibraryPurchase->setDataSource('default');
                                                         }
 
-                                                        /* Not sure whether we need this or not as we are implementing purchase streaming same as purchase downloads we have implemented this code for any future references*/
-//                                                        if ($this->data['Library']['id'] != '' && $this->data['LibraryPurchasesStreaming']['purchased_order_num'] == "" && $this->data['LibraryPurchasesStreaming']['purchased_amount'] == "")
-//                                                        {
-//
-//                                                            $this->ContractLibraryStreamingPurchase->setDataSource('master');
-//                                                            $sql = "UPDATE contract_library_streaming_purchases SET library_contract_start_date = '" . $this->data['Library']['library_contract_start_date'] . "' , library_contract_end_date = '" . $this->data['Library']['library_contract_end_date'] . "' where library_id = '" . $this->Library->id . "' ORDER BY id DESC LIMIT 1";
-//                                                            $this->ContractLibraryStreamingPurchase->query($sql);
-//                                                            $this->ContractLibraryStreamingPurchase->setDataSource('default');
-//                                                        }
+                                                        if ($this->data['Library']['id'] != '' && $this->data['LibraryPurchasesStreaming']['purchased_order_num'] == "" && $this->data['LibraryPurchasesStreaming']['purchased_amount'] == "")
+                                                        {
+
+                                                            $this->ContractLibraryStreamingPurchase->setDataSource('master');
+                                                            $sql = "UPDATE contract_library_streaming_purchases SET library_contract_start_date = '" . $this->data['ContractLibraryStreamingPurchase']['library_contract_start_date'] . "' , library_contract_end_date = '" . $this->data['ContractLibraryStreamingPurchase']['library_contract_end_date'] . "' where library_id = '" . $this->Library->id . "' ORDER BY id DESC LIMIT 1";
+                                                            $this->ContractLibraryStreamingPurchase->query($sql);
+                                                            $this->ContractLibraryStreamingPurchase->setDataSource('default');
+                                                        }
                                                         if ($this->data['Libraryurl'][0]['domain_name'])
                                                         {
                                                             if ($this->data['Library']['library_authentication_method'] != 'referral_url' || $this->data['Library']['library_authentication_method'] != 'user_account')
@@ -719,33 +718,7 @@ Class LibrariesController extends AppController
                                                                 $contract['id_library_purchases'] = $this->LibraryPurchase->id;
                                                                 $contract['library_id'] = $this->Library->id;
                                                                 $this->ContractLibraryPurchase->save($contract);
-                                                                if($this->data['Library']['library_type'] == 2) {
-                                                                    if ($this->data['Library']['library_unlimited'] == 1)
-                                                                    {
-                                                                        $this->data['LibraryPurchasesStreaming']['purchased_hours'] = Configure::read('unlimited');
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        $this->data['LibraryPurchasesStreaming']['purchased_hours'] = $this->data['LibraryPurchasesStreaming']['purchased_hours'];
-                                                                    }
-                                                                    $this->data['LibraryPurchasesStreaming']['library_id'] = $this->Library->id;
-                                                                    if ($this->LibraryPurchasesStreaming->save($this->data['LibraryPurchasesStreaming'])) {
-                                                                        $finalValid = 0;
-                                                                        $streamContract['library_contract_start_date'] = $this->data['Library']['library_contract_start_date'];
-                                                                        $streamContract['library_contract_end_date'] = $this->data['Library']['library_contract_end_date'];
-                                                                        $streamContract['library_unlimited'] = $this->data['Library']['library_unlimited'];
-                                                                        $streamContract['id_library_purchases_streaming'] = $this->LibraryPurchasesStreaming->id;
-                                                                        $streamContract['library_id'] = $this->Library->id;
-                                                                        $this->ContractLibraryStreamingPurchase->save($streamContract);
-                                                                    } else {
-                                                                        $finalValid = 1;
-                                                                        $message = __('To proceed further please enter the data correctly.|5', true);
-                                                                        $LibraryPurchasesStreaming = $this->LibraryPurchasesStreaming->invalidFields();
-                                                                        $data = compact('LibraryPurchasesStreaming');
-                                                                        $this->set('errors', compact('message', 'data'));                                                                        
-                                                                    }  
-                                                                }
-                                                                if($finalValid != 1){
+                                                                if ($this->data['Library']['library_type'] != 2 && $this->data['LibraryPurchasesStreaming']['purchased_order_num'] == "" && $this->data['LibraryPurchasesStreaming']['purchased_amount'] == "") {
                                                                     $message = __('You will be redirected to the next step shortly...', true);
                                                                     $data = $this->data;
                                                                     $this->set('success', compact('message', 'data'));
@@ -761,10 +734,44 @@ Class LibrariesController extends AppController
                                                         }
                                                         else
                                                         {
+                                                            if ($this->data['Library']['library_type'] != 2 && $this->data['LibraryPurchasesStreaming']['purchased_order_num'] == "" && $this->data['LibraryPurchasesStreaming']['purchased_amount'] == "") {
+                                                                $message = __('You will be redirected to the next step shortly...', true);
+                                                                $data = $this->data;
+                                                                $this->set('success', compact('message', 'data'));
+                                                            }
+                                                        }
+                                                        if($this->data['Library']['library_type'] == 2 && $this->data['LibraryPurchasesStreaming']['purchased_order_num'] != "" && $this->data['LibraryPurchasesStreaming']['purchased_amount'] != "") {
+                                                            if ($this->data['Library']['library_unlimited'] == 1)
+                                                            {
+                                                                $this->data['LibraryPurchasesStreaming']['purchased_hours'] = Configure::read('unlimited');
+                                                            }
+                                                            else
+                                                            {
+                                                                $this->data['LibraryPurchasesStreaming']['purchased_hours'] = $this->data['LibraryPurchasesStreaming']['purchased_hours'];
+                                                            }
+                                                            $this->data['LibraryPurchasesStreaming']['library_id'] = $this->Library->id;
+                                                            if ($this->LibraryPurchasesStreaming->save($this->data['LibraryPurchasesStreaming'])) {
+                                                                $finalValid = 0;
+                                                                $streamContract['library_contract_start_date'] = $this->data['ContractLibraryStreamingPurchase']['library_contract_start_date'];
+                                                                $streamContract['library_contract_end_date'] = $this->data['ContractLibraryStreamingPurchase']['library_contract_end_date'];
+                                                                $streamContract['library_unlimited'] = $this->data['Library']['library_unlimited'];
+                                                                $streamContract['id_library_purchases_streaming'] = $this->LibraryPurchasesStreaming->id;
+                                                                $streamContract['library_id'] = $this->Library->id;
+                                                                $this->ContractLibraryStreamingPurchase->save($streamContract);
+                                                                $message = __('You will be redirected to the next step shortly...', true);
+                                                                $data = $this->data;
+                                                                $this->set('success', compact('message', 'data'));                                                                
+                                                            } else {
+                                                                $message = __('To proceed further please enter the data correctly.|5', true);
+                                                                $LibraryPurchasesStreaming = $this->LibraryPurchasesStreaming->invalidFields();
+                                                                $data = compact('LibraryPurchasesStreaming');
+                                                                $this->set('errors', compact('message', 'data'));                                                                        
+                                                            }  
+                                                        } else {
                                                             $message = __('You will be redirected to the next step shortly...', true);
                                                             $data = $this->data;
-                                                            $this->set('success', compact('message', 'data'));
-                                                        }
+                                                            $this->set('success', compact('message', 'data'));                                                            
+                                                        }                                                        
                                                     }
                                                     else
                                                     {

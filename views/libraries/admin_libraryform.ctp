@@ -1388,15 +1388,16 @@ if (empty($getData))
                                 <th><label><b>Purchase Entry Date</b></lable></th>
                             </tr>
                             <?php
-                            foreach ($streamPurchases as $key => $purchases)
-                            {
+                            
+                            foreach ($streamPurchases as $key => $spurchases)
+                            {  
                                 ?>
                                 <tr>
                                     <td><label><?php echo $key + 1; ?></label></td>
-                                    <td><label><?php echo $purchases['LibraryPurchasesStreaming']['purchased_order_num']; ?></label></td>
-                                    <td><label><?php echo $purchases['LibraryPurchasesStreaming']['purchased_tracks']; ?></label></td>
-                                    <td><label>$<?php echo $purchases['LibraryPurchasesStreaming']['purchased_amount']; ?></label></td>
-                                    <td><label><?php echo $purchases['LibraryPurchasesStreaming']['created']; ?></label></td>
+                                    <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_order_num']; ?></label></td>
+                                    <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_hours']; ?></label></td>
+                                    <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_amount']; ?></label></td>
+                                    <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['created']; ?></label></td>
                                 </tr>
                                 <?php
                             }
