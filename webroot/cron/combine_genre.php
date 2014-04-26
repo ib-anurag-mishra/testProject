@@ -21,6 +21,17 @@ mysql_select_db("freegal", $conn);
 ////$memcache->addServer('10.178.4.51', 11211);
 //$memcache->connect('10.178.4.51', 11211) or die ("Could not connect to memcache server");
 
+$syngenre_query    = "SELECT genre, expected_genre from combine_genre";
+$rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysql_error());
+$total_syngenres   = mysql_num_rows($rs_syngenre);
+
+echo "<br>Total Syn Genres: ". mysql_num_rows($rs_syngenre);
+
+for($count=0;$count<$total_syngenres; $count++)
+{
+    $row_data    =   mysql_fetch_array($rs_syngenre,MYSQLI_ASSOC);
+    print_r($row_data);    
+}
 
 $genre_query    = "SELECT distinct Genre from Genre";
 $rs_genre       = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
