@@ -12,24 +12,26 @@
 
 error_reporting(E_ALL);
 set_time_limit(0);
-include 'functions.php';
+
+$conn = mysql_connect("10.208.19.162","freegal_test","c45X^E1X7:TQ");
+mysql_select_db("freegal", $conn);
 
 //$memcache = new Memcache;
 ////$memcache->addServer('10.178.4.51', 11211);
 //$memcache->connect('10.178.4.51', 11211) or die ("Could not connect to memcache server");
 
 
-$query_count = "SELECT count(*) from Genre";
-$result_count = mysqli_query($query_count) or die('Query failed: ' . mysql_error());
+$genre_query = "SELECT distinct Genre from Genre";
+$rs_genre = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
+$distinct_genre = mysql_fetch_array($rs_genre, MYSQL_ASSOC);
 
+print_r($distinct_genre); die;
 
-if($total_genre = mysqli_fetch_array($result_count, MYSQL_ASSOC))
-{
-    echo "Total: ".$total_genre; die;
-    $Total_records      = $AlbumDataCount['count(*)'];
-    $Total_iterations   = $Total_records / 10000;
+if($total_genre['count(*)']>0)      // if count of Genres > 0
+{    
+    $total_iternations   = $total_genre['count(*)'] / 10000;
 
-        for($i=0;$i<$Total_iterations;$i++)
+        for($i=0;$i<$total_iternations;$i++)
         {
                 $temp  =   $i*10000;
                 $query = "SELECT  Album.ProdID, Album.FileID,  FileInfo.SourceURL, FileInfo.CdnPath 
