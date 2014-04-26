@@ -45,34 +45,7 @@ Class CommonComponent extends Object
             ), 'group' => 'Genre.Genre'
         ));
         
-
-       
-            
-//        foreach($genreAll as $genreEach){
-//            
-//            $genreValue = addslashes($genreEach['Genre']['Genre']);
-//            $territoryValue = addslashes($genreEach['Country']['Territory']);           
-//
-//            $genreCheckResults = $songInstance->find('first', array(
-//            'conditions' => array(
-//                'Country.DownloadStatus' => 1,                    
-//                'Country.Territory' => $territoryValue,
-//                'Song.Genre LIKE' => "%$genreValue%"
-//                ),
-//            'fields' => array('ProdID'),
-//            'limit' => 1,
-//            'contain' => array(
-//                'Country' => array(
-//                    'fields' => array(
-//                        'Country.Territory'
-//                    )
-//            ))));
-//
-//            if( count($genreCheckResults) > 0 && !empty($genreCheckResults) ){
-//                $genreList[] = stripslashes($genreValue);
-//            }          
-//         }
-         
+ 
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
         
         if ((count($genreAll) > 0) && ($genreAll !== false))
