@@ -11,6 +11,7 @@
  **/
 
 error_reporting(E_ALL);
+ini_set('display_errors', 2);
 set_time_limit(0);
 
 $conn = mysql_connect("10.208.19.162","freegal_test","c45X^E1X7:TQ");
@@ -21,11 +22,18 @@ mysql_select_db("freegal", $conn);
 //$memcache->connect('10.178.4.51', 11211) or die ("Could not connect to memcache server");
 
 
-$genre_query = "SELECT distinct Genre from Genre";
-$rs_genre    = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
-$distinct_genre = mysql_fetch_all($rs_genre, MYSQL_ASSOC);
+$genre_query    = "SELECT distinct Genre from Genre";
+$rs_genre       = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
+$total_genres   = mysql_num_rows($rs_genre);
 
-print_r($distinct_genre); die;
+echo "<br>Total Genres: ". mysql_num_rows($rs_genre);
+
+for($count=0;$count<$total_genres; $count++)
+{
+    $row_data    =   mysql_fetch_array($rs_genre,MYSQLI_ASSOC);
+    print_r($row_data);    
+}
+die;
 
 if($total_genre['count(*)']>0)      // if count of Genres > 0
 {    
