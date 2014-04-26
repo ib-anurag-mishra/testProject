@@ -26,12 +26,16 @@ $rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysq
 $total_syngenres   = mysql_num_rows($rs_syngenre);
 
 echo "<br>Total Syn Genres: ". mysql_num_rows($rs_syngenre);
+$combine_genre_arr = array();
 
 for($count=0;$count<$total_syngenres; $count++)
 {
     $row_data    =   mysql_fetch_array($rs_syngenre,MYSQLI_ASSOC);
-    print_r($row_data);    
+    $combine_genre_arr[$row_data['genre']] = $row_data['expected_genre'];
+    //print_r($row_data);    
 }
+
+print_r($combine_genre_arr); die;  
 
 $genre_query    = "SELECT distinct Genre from Genre";
 $rs_genre       = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
@@ -42,7 +46,7 @@ echo "<br>Total Genres: ". mysql_num_rows($rs_genre);
 for($count=0;$count<$total_genres; $count++)
 {
     $row_data    =   mysql_fetch_array($rs_genre,MYSQLI_ASSOC);
-    print_r($row_data);    
+    //print_r($row_data);    
 }
 die;
 
