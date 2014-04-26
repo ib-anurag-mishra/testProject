@@ -22,8 +22,8 @@ mysql_select_db("freegal", $conn);
 
 
 $genre_query = "SELECT distinct Genre from Genre";
-$rs_genre = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
-$distinct_genre = mysql_fetch_array($rs_genre, MYSQL_ASSOC);
+$rs_genre    = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
+$distinct_genre = mysql_fetch_all($rs_genre, MYSQL_ASSOC);
 
 print_r($distinct_genre); die;
 
