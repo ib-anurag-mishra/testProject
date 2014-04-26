@@ -30,7 +30,7 @@ Class CommonComponent extends Object
             'conditions' =>
             array('and' =>
                 array(
-                    array('Country.Territory' => $territory, "Genre.Genre NOT IN('Porn Groove')")
+                    array('Country.Territory' => $territory,'Country.DownloadStatus' => 1, "Genre.Genre NOT IN('Porn Groove')")
                 )
             ),
             'fields' => array(
@@ -44,49 +44,49 @@ Class CommonComponent extends Object
                 ),
             ), 'group' => 'Genre.Genre'
         ));
-        $this->log("All Genre list fetched for $territory", "genreLogs");
         
-        foreach($genreAll as $genreEach){
+
+       
             
-            $genreValue = addslashes($genreEach['Genre']['Genre']);
-            $territoryValue = addslashes($genreEach['Country']['Territory']);           
-
-            $genreCheckResults = $songInstance->find('first', array(
-            'conditions' => array(
-                'Song.DownloadStatus' => 1,                    
-                'Country.Territory' => $territoryValue,
-                'Song.Genre LIKE' => "%$genreValue%"
-                ),
-            'fields' => array('ProdID'),
-            'limit' => 1,
-            'contain' => array(
-                'Country' => array(
-                    'fields' => array(
-                        'Country.Territory'
-                    )
-            ))));
-
-            if( count($genreCheckResults) > 0 && !empty($genreCheckResults) ){
-                $genreList[] = stripslashes($genreValue);
-            }          
-         }
+//        foreach($genreAll as $genreEach){
+//            
+//            $genreValue = addslashes($genreEach['Genre']['Genre']);
+//            $territoryValue = addslashes($genreEach['Country']['Territory']);           
+//
+//            $genreCheckResults = $songInstance->find('first', array(
+//            'conditions' => array(
+//                'Country.DownloadStatus' => 1,                    
+//                'Country.Territory' => $territoryValue,
+//                'Song.Genre LIKE' => "%$genreValue%"
+//                ),
+//            'fields' => array('ProdID'),
+//            'limit' => 1,
+//            'contain' => array(
+//                'Country' => array(
+//                    'fields' => array(
+//                        'Country.Territory'
+//                    )
+//            ))));
+//
+//            if( count($genreCheckResults) > 0 && !empty($genreCheckResults) ){
+//                $genreList[] = stripslashes($genreValue);
+//            }          
+//         }
          
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
-
-        if ((count($genreList) > 0) && ($genreList !== false))
+        
+        if ((count($genreAll) > 0) && ($genreAll !== false))
         {            
-            Cache::write("genre" . $territory, $genreList,'GenreCache');
+            Cache::write("genre" . $territory, $genreAll,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
         }
         else
         {
             Cache::write("genre" . $territory, Cache::read("genre" . $territory,'GenreCache'),'GenreCache');
             $this->log("no data available for genre" . $territory, "cache");
-        }
+        }    
         
-        $genreList = array_unique($genreList);
-        
-        return $genreList;
+        return $genreAll;
          
     }
     
