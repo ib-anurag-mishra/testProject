@@ -210,6 +210,7 @@ Class GenresController extends AppController
     
     //just for test only
     function setGenres(){
+         set_time_limit(0);   
         $country = $this->Session->read('territory');
         $genreAll = $this->Common->getGenres($country);
         die;
@@ -259,7 +260,7 @@ Class GenresController extends AppController
         }
        
         
-       // $genreAll = Cache::read("genre" . $country,'GenreCache');  
+        $genreAll = Cache::read("genre" . $country,'GenreCache');  
        // $genreAll = $this->combine_genres($genreAll); 
         
         if ($genreAll === false  && empty($genreAll)) {              
