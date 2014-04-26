@@ -231,7 +231,7 @@ Class GenresController extends AppController
         $this->layout = 'home';
        //set the default page value
         $pageNo =1;
-        echo 147;die;
+       
         //set the selected artist value
         $slectedArtistFilter = $Artist;
         
@@ -262,9 +262,9 @@ Class GenresController extends AppController
        // $genreAll = Cache::read("genre" . $country,'GenreCache');  
        // $genreAll = $this->combine_genres($genreAll); 
         
-       // if ($genreAll === false  && empty($genreAll)) {              
+        if ($genreAll === false  && empty($genreAll)) {              
             $genreAll = $this->Common->getGenres($country);
-       // }          
+        }          
        
         /*$tempArray = array();
         for($i=0;$i<count($genreAll);$i++){

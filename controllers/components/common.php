@@ -18,7 +18,6 @@ Class CommonComponent extends Object
 
     function getGenres($territory)
     {
-        
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
         $genreInstance = ClassRegistry::init('Genre');
