@@ -231,7 +231,7 @@ Class GenresController extends AppController
         $this->layout = 'home';
        //set the default page value
         $pageNo =1;
-        
+        echo 147;die;
         //set the selected artist value
         $slectedArtistFilter = $Artist;
         
