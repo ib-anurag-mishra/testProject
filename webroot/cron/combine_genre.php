@@ -59,7 +59,7 @@ for($count=0;$count<$total_syngenres; $count++)
             
             //echo "<br>Start Limit: ".$start_limit.", End Limit: ".$end_limit;
             
-            $genre_query    = "SELECT ProdID, Genre from Genre Limit ".$start_limit." ".$end_limit;
+            $genre_query    = "SELECT ProdID, Genre from Genre Limit '".$start_limit."' '".$end_limit."'";
             $rs_genre       = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
             $tot_count      = mysql_num_rows($rs_genre);
             
