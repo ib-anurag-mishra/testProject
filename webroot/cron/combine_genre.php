@@ -28,7 +28,7 @@ $rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysq
 $total_syngenres   = mysql_num_rows($rs_syngenre);
 
 echo "<br>Total Syn Genres: ". $total_syngenres;
-$lf->write("Total Syn Genres: ". $total_syngenres);
+$lf->write("<br>Total Genres from combine_genre Table: ". $total_syngenres);
 
 $combine_genre_arr = array();
 
@@ -47,7 +47,7 @@ for($count=0;$count<$total_syngenres; $count++)
         $count_data         = mysql_fetch_array($rs_count, MYSQL_ASSOC);
         $total_genres       = $count_data['count(*)'];
         echo "<br>Total records in Genre Table: ". $total_genres;
-        $lf->write("Total records in Genre Table: ". $total_genres);
+        $lf->write("<br>Total records in Genre Table: ". $total_genres);
 
 
 // Read distinct genres from Genre table and do processing of array
