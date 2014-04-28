@@ -16,26 +16,11 @@
                 $libId = $this->Session->read('library');
                 $patId = $this->Session->read('patron');
                 $count = 1;
-                $arr_all_albums =   array();
+
                 foreach ($new_releases_albums as $key => $value)
                 {
                     if($count==101) break;
-                    if(in_array($value['Albums']['AlbumTitle'], $arr_all_albums))
-                    {
-                       continue;
-                    }
-                    else
-                    {
-                        $arr_all_albums[$key] = $value['Albums']['AlbumTitle'];
-                    }
-                    
-                    
-                    
-                    //hide song if library block the explicit content
-                    if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T'))
-                    {
-                        continue;
-                    }
+
                     ?>					
                     <li>
                         <div class="album-container">

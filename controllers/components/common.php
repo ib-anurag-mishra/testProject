@@ -1436,7 +1436,7 @@ STR;
      * Function Description : This function is used to getNewReleaseAlbums.
      */
 
-    function getNewReleaseAlbums($territory)
+    function getNewReleaseAlbums($territory, $explicitContent = false)
     {
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
@@ -1472,6 +1472,14 @@ STR;
             if ((count($newReleaseSongsRec) < 1) || ($newReleaseSongsRec === false))
             {
                 $this->log("new release data not recevied for " . $territory, "cache");
+            }
+
+            $albumAdvisory 	   = '';
+            $cacheVariableName = 'new_releases_albums';
+            
+            if(true === $explicitContent) {
+            	$albumAdvisory 	   = " AND Albums.Advisory = 'T'";
+            	$cacheVariableName = 'new_releases_albums_none_explicit';
             }
 
             $data = array();
@@ -1510,10 +1518,10 @@ STR;
                     INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                     INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE ( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)))
-                        AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
+                        AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $albumAdvisory                   
                     group by Song.ReferenceID
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 200
+                    LIMIT 100
 STR;
 
 
@@ -1533,14 +1541,14 @@ STR;
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
                 }
-                Cache::delete("new_releases_albums" . $country);
-                Cache::write("new_releases_albums" . $country, $data);
+                Cache::delete($cacheVariableName . $country);
+                Cache::write($cacheVariableName . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
             }
             else
             {
-                $data = Cache::read("new_releases_albums" . $country);
-                Cache::write("new_releases_albums" . $country, Cache::read("new_releases_albums" . $country));
+                $data = Cache::read($cacheVariableName . $country);
+                Cache::write($cacheVariableName . $country, $data);
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
 
