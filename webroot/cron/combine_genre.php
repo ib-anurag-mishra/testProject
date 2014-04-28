@@ -21,72 +21,66 @@ mysql_select_db("freegal", $conn);
 ////$memcache->addServer('10.178.4.51', 11211);
 //$memcache->connect('10.178.4.51', 11211) or die ("Could not connect to memcache server");
 
+// Read values from combine_genre table and store in associative array.
+
 $syngenre_query    = "SELECT genre, expected_genre from combine_genre";
 $rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysql_error());
 $total_syngenres   = mysql_num_rows($rs_syngenre);
 
 echo "<br>Total Syn Genres: ". mysql_num_rows($rs_syngenre);
+
 $combine_genre_arr = array();
 
 for($count=0;$count<$total_syngenres; $count++)
 {
-    $row_data    =   mysql_fetch_array($rs_syngenre,MYSQLI_ASSOC);
+    $row_data    =   mysql_fetch_array($rs_syngenre,MYSQL_ASSOC);
     $combine_genre_arr[$row_data['genre']] = $row_data['expected_genre'];
     //print_r($row_data);    
 }
 
-print_r($combine_genre_arr); die;  
 
+// Find Total number of records in Genre Table
+
+        $count_query        = "SELECT count(*) from Genre";
+        $rs_count           = mysql_query($count_query) or die('Query failed: ' . mysql_error());
+        $tot_genres        =  mysql_num_rows($rs_count);
+
+        echo "<br>Total records in Genre Table: ". $tot_genres;
+
+
+// Read distinct genres from Genre table and do processing of array
+/*
 $genre_query    = "SELECT distinct Genre from Genre";
 $rs_genre       = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
 $total_genres   = mysql_num_rows($rs_genre);
 
-echo "<br>Total Genres: ". mysql_num_rows($rs_genre);
+echo "<br>Total Distinct Genres: ". mysql_num_rows($rs_genre);
 
 for($count=0;$count<$total_genres; $count++)
 {
-    $row_data    =   mysql_fetch_array($rs_genre,MYSQLI_ASSOC);
-    //print_r($row_data);    
-}
-die;
-
-if($total_genre['count(*)']>0)      // if count of Genres > 0
-{    
-    $total_iternations   = $total_genre['count(*)'] / 10000;
-
-        for($i=0;$i<$total_iternations;$i++)
+    $row_data               =   mysql_fetch_array($rs_genre, MYSQL_ASSOC);
+    //print_r($row_data);  
+    if(!empty($row_data['Genre']))
+    {
+        $count_query        = "SELECT count(*) from Genre where Genre='".$row_data['Genre']."'";
+        $rs_count           = mysql_query($count_query) or die('Query failed: ' . mysql_error());
+        $tot_dgenres        = mysql_num_rows($rs_count);
+        
+        if($tot_dgenres>10000)
         {
-                $temp  =   $i*10000;
-                $query = "SELECT  Album.ProdID, Album.FileID,  FileInfo.SourceURL, FileInfo.CdnPath 
-                from Albums as Album LEFT JOIN File AS FileInfo on Album.FileID=FileInfo.FileID where FileInfo.SourceURL!='' LIMIT ".$temp.", 10000";
+            $total_iterations = ceil($tot_dgenres/10000);
+            
+            for($count=0;$count<$total_iterations; $count++)
+            {
                 
-                //echo "<br>Queyr: ".$query;
-
-                $result = mysql_query($query) or die('Query failed: ' . mysql_error());
-
-                while ($AlbumData = mysql_fetch_array($result, MYSQL_ASSOC)) 
-                { 
-                        //echo "<pre>"; print_r($line);    
-
-                        $album_img =  shell_exec('perl ../files/tokengen_artwork ' . $AlbumData['CdnPath']."/".$AlbumData['SourceURL']);
-                        $album_img =  "http://music.libraryideas.com/".$album_img;         
-
-                        echo "<br>album_img: ".$album_img; 
-                        echo "<BR>ProdID: album_image_path".$AlbumData['ProdID'].$memcache->delete("album_image_path" .$AlbumData['ProdID']);
-                        echo "<br>SET: ".$memcache->set("album_image_path" .$AlbumData['ProdID'],$album_img,false,86400);		
-
-                }     
+            }
         }
-        
-        echo "<br><br>Done with Updation";
-        
-  }
-else
-{
-                 echo "<br><br>No Records";
-}
-
-   
+        else
+        {
+            
+        }
+    }
+}*/
 
 
 
