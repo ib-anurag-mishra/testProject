@@ -37,7 +37,7 @@ for($count=0;$count<$total_syngenres; $count++)
     $combine_genre_arr[$row_data['genre']] = $row_data['expected_genre'];
     //print_r($row_data);    
 }
-
+print_r($combine_genre_arr); die;
 
         //Find Total number of records in Genre Table
         $count_query        = "SELECT count(*) from Genre";
