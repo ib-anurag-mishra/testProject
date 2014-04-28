@@ -517,5 +517,150 @@ class Videodownload extends AppModel
                 'group' => 'ProdID',
             ));
         }
+
+	public function fetchVideodownloadTopDownloadedVideosBySalesDateAndDownloadStatus($prefix) {
+		
+		$this->unBindModel(array('belongsTo' => array('Genre')));
+		
+		$options = array(
+					'conditions' => array(
+								'`Country`.`SalesDate` <=' => 'NOW()',
+								'`Video`.`DownloadStatus`' => '1'
+							),
+					'group' => array('`Videodownload`.`ProdID`'),
+					'order' => array('COUNT DESC'),
+					'limit' => 100,
+					'joins' => array(
+								array(
+										'table' => '`video`',
+										'alias' => '`Video`',
+										'type' 	=> 'LEFT',
+										'conditions' => array(
+													'`Videodownload`.`ProdID` = `Video`.`ProdID`',
+													'`Videodownload`.`provider_type` = `Video`.`provider_type`'
+												)
+										),
+									array(
+											'table' => '`File`',
+											'alias' => '`File`',
+											'type'  => 'LEFT',
+											'conditions' => array('`Video`.`Image_FileID` = `File`.`FileID`')
+											),
+									array(
+											'table' => '`File`',
+											'alias' => '`Video_file`',
+											'type'	=> 'LEFT',
+											'conditions' => array('`Video_file`.`FileID` = `Video`.`FullLength_FileID`')
+											),
+									array(
+											'table' => '`' . $prefix . 'countries`',
+											'alias' => '`Country`',
+											'type'	=> 'LEFT',
+											'conditions' => array(
+														'`Video`.`ProdId` = `Country`.`ProdId`',
+														'`Video`.`provider_type` = `Country`.`provider_type`'
+													)
+											)
+							),
+					'fields' => array(
+									'`Videodownload`.`ProdID`',
+									'`Video`.`ProdID`',
+									'`Video`.`provider_type`',
+									'`Video`.`VideoTitle`',
+									'`Video`.`ArtistText`',
+									'`Video`.`Advisory`',
+									'`File`.`CdnPath`',
+									'`File`.`SourceURL`',
+									'`Video_file`.`SaveAsName`',
+									'COUNT(DISTINCT(`Videodownload`.`id`)) AS COUNT',
+									'`Country`.`SalesDate`'
+							)
+				);
+		
+		return $this->find('all', $options);
+	}
+
+	public function fetchVideodownloadTopDownloadedVideosByLibraryIdAndCreated($libraryId) {
+
+		$options = array(
+				'conditions' => array('library_id' => $libraryId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))),
+				'group' => array('ProdID'),
+				'fields' => array(
+						'ProdID',
+						'COUNT(DISTINCT id) AS countProduct',
+						'provider_type'
+				),
+				'order' => 'countProduct DESC',
+				'limit' => 15
+			);
+		 
+		$this->find('all', $options);
+	}
+
+	public function fetchVideodownloadTopVideoGenreByLibraryIdAndLibraryTerritoryAndSaleDateAndGenreAndProviderType($prefix, $territory, $genre) {
+
+		$this->unBindModel(array('belongsTo' => array('Genre')));
+
+		$options = array(
+					'fields' => array(
+							'Videodownload.ProdID', 
+							'Video.ProdID',
+							'Video.Advisory', 
+							'Video.ReferenceID', 
+							'Video.provider_type', 
+							'Video.VideoTitle', 
+							'Video.Genre', 
+							'Video.ArtistText', 
+							'File.CdnPath', 
+							'File.SourceURL',  
+							'COUNT(DISTINCT(Videodownload.id)) AS COUNT',
+							'Country.SalesDate'
+							),
+					'conditions' => array(
+								'Videodownload.library_id' => 1,
+								'Library.library_territory' => $territory,
+								'Country.SalesDate <=' => 'NOW()',
+								'Video.Genre' => $genre,
+								'Video.provider_type' => 'Genre.provider_type'
+							),
+					'group' => 'Videodownload.ProdID',
+					'order' => 'COUNT DESC',
+					'limit' => '0, 10',
+					'joins' => array(
+								array(
+										'table' => 'video',
+										'alias' => 'Video',
+										'type'  => 'LEFT',
+										'conditions' => array('Videodownload.ProdID = Video.ProdID', 'Videodownload.provider_type = Video.provider_type')	
+									),
+								array(
+										'table' => 'File',
+										'alias' => 'File',
+										'type'  => 'LEFT',
+										'conditions' => array('Video.Image_FileID = File.FileID')
+									),
+								array(
+										'table' => 'Genre',
+										'alias' => 'Genre',
+										'type'  => 'LEFT',
+										'conditions' => array('Genre.ProdID = Video.ProdID')	
+									),
+								array(
+										'table' => $prefix . 'countries',
+										'alias' => 'Country',
+										'type'  => 'LEFT',
+										'conditions' => array('Video.ProdID = Country.ProdID', 'Video.provider_type = Country.provider_type')
+									),
+								array(
+										'table' => 'libraries',
+										'alias' => 'Library',
+										'type'  => 'LEFT',
+										'conditions' => array('Library.id=Videodownload.library_id')	
+									)
+							)
+				);
+
+		return $this->find('all', $options);
+	}
 }
 ?>

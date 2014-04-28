@@ -178,7 +178,7 @@
                         {
                             ?><li> <?php } ?>
                             <div class="video-cover-container">
-                                <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img alt="" src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
+                                <a href="/videos/details/<?php echo $topDownload["Videodownload"]["ProdID"]; ?>"><img alt="" src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
 
 
                                 <?php
@@ -264,7 +264,7 @@
                                 </div>
                             </div>
                             <div class="video-title">
-                                <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>">
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $topDownload["Videodownload"]["ProdID"]; ?>">
 
                                     <?php
                                     if (strlen($topDownload['Video']['VideoTitle']) >= 20)
@@ -309,3 +309,4 @@
         </div>
     </section> <!-- end .video-top-genres -->
 </section> <!-- end .videos -->
+                <?php echo $this->element('sql_dump'); ?>

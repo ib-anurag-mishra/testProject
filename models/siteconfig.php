@@ -8,5 +8,14 @@ Author : m68interactive
 class Siteconfig extends AppModel
 {
 	var $name = 'Siteconfig';
+	
+	public function fetchSiteconfigDataBySoption() {
+		
+		$options = array(
+					'conditions' => array('`Siteconfig`.`soption`' => 'maintain_ldt')
+				);
+		
+		return $this->find('first', $options);
+	}
 }
 ?>
