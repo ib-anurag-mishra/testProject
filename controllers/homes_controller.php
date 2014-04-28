@@ -6,7 +6,7 @@
  * Modified: 21-06-2013
  */
 
-class HomesController extends AppController {
+class HomesController1 extends AppController {
 
     var $name = 'Homes';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'WishlistVideo', 'Song', 'Language', 'Session', 'Mvideo', 'Download', 'Videodownload', 'Queue', 'Token');
