@@ -1,1 +1,1 @@
-Hello Dear
+<?php echo $new_homes;?>
