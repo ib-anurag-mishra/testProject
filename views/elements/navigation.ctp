@@ -393,7 +393,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     ?>
                                     <h1 class="logo" style="width: 350px; height: 108px; position: absolute; left: 0; top:0;"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108" /></a></h1>
                                     <?php } ?>					
-                                    <div class="header-right-col">
+                                    <div class="header-right-col" style="right:10px;">
                                         <div class="row-1 clearfix">
                                                 <?php if(!$this->Session->read("patron")){ 
                                                             if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
