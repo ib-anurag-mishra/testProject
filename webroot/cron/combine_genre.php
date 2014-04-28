@@ -52,13 +52,12 @@ for($count=0;$count<$total_syngenres; $count++)
         $total_iterations   =   ceil($total_genres/10000);
         
         
-        for($count=0;$count<$total_iterations;$i++)
+        for($count=0; $count<$total_iterations; $count++)
         {
             $start_limit    =   10000*$count;
             $end_limit      =   $start_limit+10000;
             
-            echo "<br>Start Limit: ".$start_limit;
-            echo "<br>End Limit: ".$end_limit;
+            echo "<br>Start Limit: ".$start_limit.", End Limit: ".$end_limit;
             
         }
         
