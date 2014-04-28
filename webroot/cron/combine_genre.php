@@ -14,12 +14,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 2);
 set_time_limit(0);
 
+require "logfile.php";
+
 $conn = mysql_connect("10.208.19.162","freegal_test","c45X^E1X7:TQ");
 mysql_select_db("freegal", $conn);
 
-//$memcache = new Memcache;
-////$memcache->addServer('10.178.4.51', 11211);
-//$memcache->connect('10.178.4.51', 11211) or die ("Could not connect to memcache server");
+$lf = new logfile();
 
 // Read values from combine_genre table and store in associative array.
 
@@ -28,7 +28,7 @@ $rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysq
 $total_syngenres   = mysql_num_rows($rs_syngenre);
 
 echo "<br>Total Syn Genres: ". $total_syngenres;
-error_log("Total Syn Genres:".$total_syngenres, 3, "tmp/logs/genre_combine.log");
+$lf->write("Total Syn Genres: ". $total_syngenres);
 
 $combine_genre_arr = array();
 
@@ -47,7 +47,7 @@ for($count=0;$count<$total_syngenres; $count++)
         $count_data         = mysql_fetch_array($rs_count, MYSQL_ASSOC);
         $total_genres       = $count_data['count(*)'];
         echo "<br>Total records in Genre Table: ". $total_genres;
-        error_log("Total records in Genre Table:".$total_genres, 3, "../../tmp/logs/genre_combine.log");
+        $lf->write("Total records in Genre Table: ". $total_genres);
 
 
 // Read distinct genres from Genre table and do processing of array
