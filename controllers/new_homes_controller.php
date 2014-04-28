@@ -9454,8 +9454,12 @@ class NewHomesController extends AppController {
         </div>
 </div></section> <!-- end .news -->
 STR;
-		Cache::write("new_homes", $newHomesCache);
 		$new_homes = Cache::read("new_homes");
+		
+		if($new_homes === false) {
+			Cache::write("new_homes", $newHomesCache);
+			$new_homes = $newHomesCache;
+		} 
 		$this->set('new_homes', $new_homes);
 	}
 }
