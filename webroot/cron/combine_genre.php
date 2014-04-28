@@ -49,7 +49,20 @@ for($count=0;$count<$total_syngenres; $count++)
         echo "<br>Total records in Genre Table: ". $total_genres;
         $lf->write("\nTotal records in Genre Table: ". $total_genres);
 
-
+        $total_iterations   =   ceil($total_genres/10000);
+        
+        
+        for($count=0;$count<$total_iterations;$i++)
+        {
+            $start_limit    =   10000*$count;
+            $end_limit      =   $start_limit+10000;
+            
+            echo "<br>Start Limit: ".$start_limit;
+            echo "<br>End Limit: ".$end_limit;
+            
+        }
+        
+        
 // Read distinct genres from Genre table and do processing of array
 /*
 $genre_query    = "SELECT distinct Genre from Genre";
