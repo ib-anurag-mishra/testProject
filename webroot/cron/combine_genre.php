@@ -43,9 +43,9 @@ for($count=0;$count<$total_syngenres; $count++)
 
         $count_query        = "SELECT count(*) from Genre";
         $rs_count           = mysql_query($count_query) or die('Query failed: ' . mysql_error());
-        $tot_genres        =  mysql_num_rows($rs_count);
+        $count_data           =   mysql_fetch_array($rs_count, MYSQL_ASSOC);
 
-        echo "<br>Total records in Genre Table: ". $tot_genres;
+        echo "<br>Total records in Genre Table: ". $count_data['count(*)'];
 
 
 // Read distinct genres from Genre table and do processing of array
