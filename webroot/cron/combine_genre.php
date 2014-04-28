@@ -55,7 +55,7 @@ for($count=0;$count<$total_syngenres; $count++)
         for($count=0; $count<$total_iterations; $count++)
         {
             $start_limit    =   10000*$count;
-            $end_limit      =   $start_limit+10000;
+            $end_limit      =   ($start_limit+10000)-1;
             
             echo "<br>Start Limit: ".$start_limit.", End Limit: ".$end_limit;
             
