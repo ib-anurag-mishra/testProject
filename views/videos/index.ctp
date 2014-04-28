@@ -309,4 +309,3 @@
         </div>
     </section> <!-- end .video-top-genres -->
 </section> <!-- end .videos -->
-                <?php echo $this->element('sql_dump'); ?>
