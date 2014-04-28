@@ -47,7 +47,7 @@ for($count=0;$count<$total_syngenres; $count++)
         $count_data         = mysql_fetch_array($rs_count, MYSQL_ASSOC);
         $total_genres       = $count_data['count(*)'];
         echo "<br>Total records in Genre Table: ". $total_genres;
-        error_log("Total records in Genre Table:".$total_genres, 3, "tmp/logs/genre_combine.log");
+        error_log("Total records in Genre Table:".$total_genres, 3, "../../tmp/logs/genre_combine.log");
 
 
 // Read distinct genres from Genre table and do processing of array
