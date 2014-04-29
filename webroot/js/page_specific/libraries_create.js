@@ -1,6 +1,12 @@
 // Page Specific JavaScript Document
 $(function() {
 	var _loadingDiv = $("#loadingDiv");
+
+	$('#ContractLibraryStreamingPurchaseLibraryContractStartDate , #ContractLibraryStreamingPurchaseLibraryContractEndDate').click(function(){
+		$('#ui-datepicker-div').css('left','363px');
+
+	});
+	
 	$('#next_btn1').click(function(){
 		$('#next_btn1').attr('disabled', 'disabled');
 		_loadingDiv.show();
