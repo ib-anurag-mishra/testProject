@@ -44,7 +44,8 @@ Class CommonComponent extends Object
                 ),
             ), 'group' => 'Genre.Genre'
         ));
-        print_r($genreAll);die;
+       
+        
  
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
         
