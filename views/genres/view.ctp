@@ -192,6 +192,7 @@ $totalRows = count($genresAll);
 
                     <?php
                     $genre_count = 1;
+                    print_r($genresAll);
                    if(count($genresAll) > 0){
                     foreach ($genresAll as $genre_name):
                        $genreNnameWithoutEncode = $genre_name;

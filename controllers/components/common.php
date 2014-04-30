@@ -46,7 +46,6 @@ Class CommonComponent extends Object
         ));
        
         
- 
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
         
         if ((count($genreAll) > 0) && ($genreAll !== false))
