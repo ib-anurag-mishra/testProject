@@ -44,7 +44,7 @@ Class CommonComponent extends Object
                 ),
             ), 'group' => 'Genre.Genre'
         ));
-        
+        print_r($genreAll);die;
  
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
         
@@ -52,12 +52,7 @@ Class CommonComponent extends Object
         {            
             Cache::write("genre" . $territory, $genreAll,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
-        }
-        else
-        {
-            Cache::write("genre" . $territory, Cache::read("genre" . $territory,'GenreCache'),'GenreCache');
-            $this->log("no data available for genre" . $territory, "cache");
-        }    
+        }      
         
         return $genreAll;
          
