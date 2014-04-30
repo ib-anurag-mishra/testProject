@@ -195,8 +195,8 @@ $totalRows = count($genresAll);
                     print_r($genresAll);
                    if(count($genresAll) > 0){
                     foreach ($genresAll as $genre_name):
-                       $genreNnameWithoutEncode = $genre_name;
-                       $genre_name= $this->getTextEncode($genre_name);                       
+                       $genreNnameWithoutEncode = $genre_name['Genre']['Genre'];;
+                       $genre_name= $this->getTextEncode($genre_name['Genre']['Genre']);                       
 
                         if ($genre_name != '')
                         {	
