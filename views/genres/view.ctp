@@ -191,8 +191,7 @@ $totalRows = count($genresAll);
                     </li>
 
                     <?php
-                    $genre_count = 1;
-                    print_r($genresAll);
+                    $genre_count = 1;                    
                    if(count($genresAll) > 0){
                     foreach ($genresAll as $genre_name):
                        $genreNnameWithoutEncode = $genre_name['Genre']['Genre'];;
