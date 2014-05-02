@@ -262,7 +262,7 @@ Class LibrariesController extends AppController
                     $contractDates = $this->ContractLibraryStreamingPurchase->find('first', array('conditions' => array('library_id' => $libraryId), 'fields' => array('library_contract_start_date', 'library_contract_end_date'),'order' => array('id' => 'desc')));
                     $this->set('contractDates', $contractDates);
                     $this->LibraryPurchasesStreaming->recursive = -1;
-                    $streamPurchases = $this->LibraryPurchasesStreaming->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('created' => 'desc')));
+                    $streamPurchases = $this->LibraryPurchasesStreaming->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('created' => 'asc')));
                     $this->set('streamPurchases', $streamPurchases);
                 }
                 $allVariables = $this->Variable->find('all', array('conditions' => array('library_id' => $libraryId), 'order' => array('id')));
