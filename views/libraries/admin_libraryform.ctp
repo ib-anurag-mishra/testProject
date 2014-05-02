@@ -1301,15 +1301,15 @@ if (empty($getData))
                         </div>
                     <div id="str_order" class="purchase_div" style="display:none;">
                         <?php echo $this->Form->label('Purchase Order #'); ?>
-                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_order_num', array('label' => false, 'value' => $streamPurchases['LibraryPurchasesStreaming']['library_contract_end_date'], 'div' => false, 'class' => 'form_fields')); ?>
+                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_order_num', array('label' => false, 'value' => $streamPurchases['LibraryPurchasesStreaming']['purchased_order_num'], 'div' => false, 'class' => 'form_fields')); ?>
                     </div>
                     <div id="str_track"  class="purchase_div" style="display:none;">
                         <?php echo $this->Form->label('# of Hours Purchased'); ?>
-                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_hours', array('label' => false, 'value' => $streamPurchases['LibraryPurchasesStreaming']['purchased_order_num'], 'div' => false, 'class' => 'form_fields')); ?>
+                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_hours', array('label' => false, 'value' => $streamPurchases[0]['LibraryPurchasesStreaming']['purchased_hours'], 'div' => false, 'class' => 'form_fields')); ?>
                     </div>
                     <div id="str_amount" class="purchase_div" style="display:none;">
                         <?php echo $this->Form->label('Purchased Amount in $'); ?>
-                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_amount', array('label' => false, 'value' => $streamPurchases['LibraryPurchasesStreaming']['purchased_amount'], 'div' => false, 'class' => 'form_fields')); ?>
+                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_amount', array('label' => false, 'value' => $streamPurchases[0]['LibraryPurchasesStreaming']['purchased_amount'], 'div' => false, 'class' => 'form_fields')); ?>
                     </div>
                     </div> 
                     <div class="clr">
