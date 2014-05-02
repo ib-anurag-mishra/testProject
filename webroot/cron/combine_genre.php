@@ -62,7 +62,7 @@ for($count=0;$count<$total_syngenres; $count++)
             $rs_genre       = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
             $tot_count      = mysql_num_rows($rs_genre);
             
-            while ($rowData = mysql_fetch_row($rs_genre)) 
+            while ($rowData = mysql_fetch_array($rs_genre, MYSQL_ASSOC))
             {
                 $value_to_be_updated    =  mysql_real_escape_string($combine_genre_arr[$rowData['Genre']]); // value from expected_genre field in combine_genre table
                 $rowData['Genre']       =  mysql_real_escape_string($combine_genre_arr[$rowData['Genre']]);
