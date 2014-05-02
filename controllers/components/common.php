@@ -86,7 +86,7 @@ Class CommonComponent extends Object
         //set the aritst cache for specific Genre
         $genreAll = $this->getGenres($territory);
         //commented but need sometime for testing perpuse
-        //$genreAll = Cache::read("genre" . $territory);
+        $genreAll = Cache::read("genre" . $territory);
        
         sleep(1);
         //add All filter
@@ -177,7 +177,7 @@ Class CommonComponent extends Object
             'conditions' => $conditionArray,
             'fields' => array('DISTINCT Song.ArtistText'),
             'limit'=> $endLimit, 'offset'=> $startLimit,
-            //'order' => array('Song.ArtistText ASC'),
+            'order' => array('Song.ArtistText ASC'),
             'joins' => array(
                 array(
                     'table' => $territory.'_countries',
