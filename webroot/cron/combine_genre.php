@@ -65,7 +65,7 @@ for($count=0;$count<$total_syngenres; $count++)
             while ($rowData = mysql_fetch_row($rs_genre)) 
             {
                 $value_to_be_updated    =  $combine_genre_arr[$rowData['Genre']]; // value from expected_genre field in combine_genre table
-                $genreUpdate_query      =  "Update Genre set expected_genre='".mysql_real_escape_string($value_to_be_updated)."' where ProdID=".$rowData['ProdID']." and Genre='".mysql_real_escape_string($rowData['Genre'])."'";
+                $genreUpdate_query      =  "Update Genre set expected_genre='mysql_real_escape_string(".$value_to_be_updated.")' where ProdID=".$rowData['ProdID']." and Genre='mysql_real_escape_string(".$rowData['Genre'].")'";
                 $rs_ugenre               =  mysql_query($genreUpdate_query) or die('Query failed: ' . mysql_error());
                 echo "<br>Genre updated: From ". $rowData['Genre']." to ".$value_to_be_updated." having ProdID ".$rowData['ProdID'];
                 $lf->write("\nGenre updated: From ". $rowData['Genre']." to ".$value_to_be_updated." having ProdID ".$rowData['ProdID']);
