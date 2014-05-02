@@ -72,10 +72,10 @@ for($count=0;$count<$total_syngenres; $count++)
                 $lf->write("\nGenre updated: From ". $rowData['Genre']." to ".$value_to_be_updated." having ProdID ".$rowData['ProdID']);
             }
             
-            if($count==1)
+            /*if($count==1)
             {
                 die;
-            }
+            }*/
         }
         
         echo "<br>Done With Updation";
