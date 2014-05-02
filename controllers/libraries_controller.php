@@ -744,7 +744,7 @@ Class LibrariesController extends AppController
                                                             if ($this->data['Library']['library_unlimited'] == 1)
                                                             {
                                                                 //$this->data['LibraryPurchasesStreaming']['purchased_hours'] = Configure::read('unlimited');
-                                                                $this->data['LibraryPurchasesStreaming']['purchased_hours'] = 24;
+                                                                $this->data['LibraryPurchasesStreaming']['purchased_hours'] = $this->data['LibraryPurchasesStreaming']['purchased_hours'];
                                                             }
                                                             else
                                                             {
