@@ -605,7 +605,7 @@ function showStreamContract(){
                             $("#str_order").show();
                             $("#str_amount").show();
                             $("#str_track").show();
-                            $("#LibraryPurchasesStreamingPurchasedHours").val('Unlimited');
+                            $("#LibraryPurchasesStreamingPurchasedHours").val('24');
 			} else {
                             $("#str_order").show();
                             $("#str_amount").show();
