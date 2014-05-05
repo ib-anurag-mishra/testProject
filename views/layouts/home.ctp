@@ -819,7 +819,7 @@
                 author: 'Library Ideas, LLC',
                 daysHidden: 0, 
                 daysReminder: 0,
-                icon: '<?php echo $this->webroot; ?>app/webroot/img/Android80x80.png'
+                icon: '<?php echo $this->webroot; ?>app/webroot/img/Android120x120.png'
             });
         }
     </script>
