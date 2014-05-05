@@ -703,7 +703,7 @@ td.actions a:hover {
 }
 
 #LibraryShowContract {
-    left: -93px;
+    width: 20px;
     position: relative;
 }
 
@@ -717,7 +717,7 @@ td.actions a:hover {
 }
 
 #ShowContract {
-    left: -93px;
+    width: 20px;
     position: relative;
 }
 
