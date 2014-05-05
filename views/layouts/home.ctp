@@ -79,17 +79,6 @@
         
         ?>
 
-        <script type="text/javascript">
-            if ( !(/(iPad|iPhone|iPod).*OS [6-7].*AppleWebKit.*Mobile.*Safari/.test(navigator.userAgent)) ) {
-                $.smartbanner({
-                    title: 'Freegal Music',
-                    author: 'Library Ideas, LLC',
-                    daysHidden: 0, 
-                    daysReminder: 0,
-                    icon: '<?php echo $this->webroot; ?>app/webroot/img/Android80x80.png'
-                });
-            }
-        </script>
         <!--[if IE 8]>
         <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
         <![endif]-->        
@@ -823,5 +812,16 @@
 
         </div>
     </div> <!-- body - background -->
+    <script type="text/javascript">
+        if ( !(/(iPad|iPhone|iPod).*OS [6-7].*AppleWebKit.*Mobile.*Safari/.test(navigator.userAgent)) ) {
+            $.smartbanner({
+                title: 'Freegal Music',
+                author: 'Library Ideas, LLC',
+                daysHidden: 0, 
+                daysReminder: 0,
+                icon: '<?php echo $this->webroot; ?>app/webroot/img/Android80x80.png'
+            });
+        }
+    </script>
 </body>
 </html>
