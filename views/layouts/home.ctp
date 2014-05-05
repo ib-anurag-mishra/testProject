@@ -14,6 +14,7 @@
             header('X-UA-Compatible: IE=edge,chrome=1');
         }
         ?>
+        <meta name="apple-itunes-app" content="app-id=508036345" >
 
         <title>
             <?php __('Freegal Music : Your New Music Library :'); ?>
