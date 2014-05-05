@@ -1479,7 +1479,7 @@ STR;
         if(empty($flag)){
             $cond = array('Song.ArtistText' => $artistComposer , 'Song.provider_type = Country.provider_type' , 'Song.provider_type' => $provider);
         }else{
-            $cond = array('Song.Composer' => $artistComposer);
+            $cond = array('Song.Composer' => $artistComposer, 'Song.provider_type = Country.provider_type');
         }
         if(!empty($ajax)){
             $randomSongs = $songInstance->find('all', array(
