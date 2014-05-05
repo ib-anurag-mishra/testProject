@@ -1349,7 +1349,7 @@ if (empty($getData))
                                     <td><label><?php echo $key + 1; ?></label></td>
                                     <td><label><?php echo $purchases['LibraryPurchase']['purchased_order_num']; ?></label></td>
                                     <td><label><?php echo $purchases['LibraryPurchase']['purchased_tracks']; ?></label></td>
-                                    <td><label>$<?php echo $purchases['LibraryPurchase']['purchased_hours']; ?></label></td>
+                                    <td><label>$<?php echo $purchases['LibraryPurchase']['purchased_amount']; ?></label></td>
                                     <td><label><?php echo $purchases['LibraryPurchase']['created']; ?></label></td>
                                 </tr>
                                 <?php
@@ -1396,7 +1396,7 @@ if (empty($getData))
                                     <td><label><?php echo $key + 1; ?></label></td>
                                     <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_order_num']; ?></label></td>
                                     <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_hours']; ?></label></td>
-                                    <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_amount']; ?></label></td>
+                                    <td><label>$<?php echo $spurchases['LibraryPurchasesStreaming']['purchased_amount']; ?></label></td>
                                     <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['created']; ?></label></td>
                                 </tr>
                                 <?php

@@ -743,7 +743,8 @@ Class LibrariesController extends AppController
                                                         if($this->data['Library']['library_type'] == 2 && $this->data['LibraryPurchasesStreaming']['purchased_order_num'] != "" && $this->data['LibraryPurchasesStreaming']['purchased_amount'] != "") {
                                                             if ($this->data['Library']['library_unlimited'] == 1)
                                                             {
-                                                                $this->data['LibraryPurchasesStreaming']['purchased_hours'] = Configure::read('unlimited');
+                                                                //$this->data['LibraryPurchasesStreaming']['purchased_hours'] = Configure::read('unlimited');
+                                                                $this->data['LibraryPurchasesStreaming']['purchased_hours'] = $this->data['LibraryPurchasesStreaming']['purchased_hours'];
                                                             }
                                                             else
                                                             {

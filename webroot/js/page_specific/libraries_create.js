@@ -590,7 +590,7 @@ function showContract(){
 			$("#pur_amount").hide();
 			$("#pur_track").hide();
 			$("#upgrd").hide();
-			if($("#LibraryLibraryContractStartDate").val() != '' && document.getElementById("redio2").checked==true){
+			if($("#LibraryLibraryContractStartDate").val() != '' && document.getElementById("redio1").checked==true){
 				$("#upgrd").show();
 			}			
 		}
@@ -605,7 +605,7 @@ function showStreamContract(){
                             $("#str_order").show();
                             $("#str_amount").show();
                             $("#str_track").show();
-                            $("#LibraryPurchasesStreamingPurchasedHours").val('Unlimited');
+                            $("#LibraryPurchasesStreamingPurchasedHours").val('24');
 			} else {
                             $("#str_order").show();
                             $("#str_amount").show();
@@ -626,7 +626,7 @@ function showStreamContract(){
 			$("#str_amount").hide();
 			$("#str_track").hide();
 			$("#strupgrd").hide();
-			if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != '' && document.getElementById("redio2").checked==true){
+			if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != '' && document.getElementById("redio1").checked==true){
 				$("#strupgrd").show();
 			}			
 		}

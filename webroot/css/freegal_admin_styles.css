@@ -726,3 +726,8 @@ td.actions a:hover {
     position: relative;
 }
 
+#next_btn5{
+    float: right;
+    left: -30px;
+    position: relative;        
+}
