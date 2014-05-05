@@ -1473,7 +1473,7 @@ STR;
             $cacheVariableName = 'new_releases_albums';
             
             if(true === $explicitContent) {
-            	$albumAdvisory 	   = " AND Albums.Advisory = 'T'";
+            	$albumAdvisory 	   = " AND Albums.Advisory != 'T'";
             	$cacheVariableName = 'new_releases_albums_none_explicit';
             }
 
