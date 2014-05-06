@@ -64,7 +64,7 @@ Class CommonComponent extends Object
      */    
     function runGenreCacheFromShell(){
         set_time_limit(0); 
-        $this->log("shel cron log genreated", "shellCronLog");        
+        $this->log("shel cron log genreated", "shellCronLog");    
         $territoriesList = $this->getTerritories();       
         foreach($territoriesList as $territory){           
             $this->setArtistText($territory);            
@@ -86,7 +86,7 @@ Class CommonComponent extends Object
         //set the aritst cache for specific Genre
         $genreAll = $this->getGenres($territory);
         //commented but need sometime for testing perpuse
-        $genreAll = Cache::read("genre" . $territory);
+        //$genreAll = Cache::read("genre" . $territory);
        
         sleep(1);
         //add All filter
