@@ -1,3 +1,15 @@
+<?php
+$str = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+if(substr($str, -1)== "/") {
+        $str = substr_replace($str ,"",-1);
+	$slash_on = "";
+}
+else { 
+	$slash_on = "/";
+}
+?>
+<div id = "refresh" style="display:none"><a href= <?php echo $str.$slash_on; ?> ></a></div>
+
 <section class="queue-detail-page <?php echo ($default_queue != 1) ? '' : 'fq'; ?>">
     <?php
 //    if (!empty($queue_list_array))
