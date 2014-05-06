@@ -2089,7 +2089,7 @@ function removeSong(pdId, divId) {
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     $('.clearfix' + divId).remove();
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Playlist';
-
+		    $('#refresh a').click();
                 }
                 else
                 {
