@@ -8,6 +8,6 @@
 class CombineGenre extends AppModel
 {
     var $name = 'CombineGenre';
-    var $usetable = 'combine_genre';
+    var $usetable = 'combine_genres';
 }
 ?>
