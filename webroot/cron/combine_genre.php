@@ -31,14 +31,22 @@ $lf->write("\nTotal Genres from combine_genre Table: ". $total_syngenres);
 
 $combine_genre_arr = array();
 
+
 for($count=0;$count<$total_syngenres; $count++)
 {
     $row_data    =   mysql_fetch_array($rs_syngenre,MYSQL_ASSOC);
-    $combine_genre_arr[$row_data['genre']] = $row_data['expected_genre'];
-    //print_r($row_data);    
+    //$combine_genre_arr[$row_data['genre']] = $row_data['expected_genre'];
+    $current_genre_value    =  mysql_real_escape_string($row_data['genre']);
+    $updated_genre_value    =  mysql_real_escape_string($row_data['expected_genre']);
+    echo "<br>current_genre_value: ".$current_genre_value.", updated_genre_value: ".$updated_genre_value;  
+    
+    $genreUpdate_query       =  "Update Genre set expected_genre='".$updated_genre_value."' where Genre='".$current_genre_value."'";
+    $rs_ugenre               =  mysql_query($genreUpdate_query) or die('Query failed: ' . mysql_error());
+    echo "<br><br>Genre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows();
+    $lf->write("\nGenre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows());
 }
 
-
+/*
         //Find Total number of records in Genre Table
         $count_query        = "SELECT count(*) from Genre";
         $rs_count           = mysql_query($count_query) or die('Query failed: ' . mysql_error());
@@ -72,13 +80,13 @@ for($count=0;$count<$total_syngenres; $count++)
                 $lf->write("\nGenre updated: From ". $rowData['Genre']." to ".$value_to_be_updated." having ProdID ".$rowData['ProdID']);
             }
             
-            /*if($count==1)
+            if($count==1)
             {
                 die;
-            }*/
+            }
         }
         
         echo "<br>Done With Updation";
         $lf->write("\nDone with Updation");
-
+*/
 ?>
