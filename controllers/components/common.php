@@ -45,7 +45,7 @@ Class CommonComponent extends Object
                 ),
             ), 'group' => 'Genre.Genre'
         ));
-       
+      
         
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
         
@@ -88,7 +88,8 @@ Class CommonComponent extends Object
      */
     function setArtistText($territory){
         set_time_limit(0); 
-        
+    
+              
         //set the aritst cache for specific Genre
         $genreAll = $this->getGenres($territory);
         //commented but need sometime for testing perpuse

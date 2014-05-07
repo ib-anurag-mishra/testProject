@@ -210,10 +210,10 @@ Class GenresController extends AppController
     
     //just for test only
     function setGenres(){
-         set_time_limit(0);   
+        set_time_limit(0);   
         $country = $this->Session->read('territory');
-        $genreAll = $this->Common->getGenres($country);
-        die;
+        $this->Common->getGenres($country);
+       
     }
 
     /*
@@ -280,9 +280,10 @@ Class GenresController extends AppController
         if ($artistList === false)
        // if(1)
         {             
-               $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
+          
+            $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
         } 
-        
+     
         //prepare the array that contains all alphabets which have no any artist value for the selected changes
         $artistsNoAlpha = array();
         $artistsNoAlpha = $this->checkArtistFilter($genre, $country ,$pageNo);  

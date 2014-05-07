@@ -126,9 +126,10 @@ class CacheController extends AppController {
      */    
     function runGenreCache(){
         set_time_limit(0);  
-     
+    
         $territoriesList = $this->Common->getTerritories();       
-        foreach($territoriesList as $territory){           
+        foreach($territoriesList as $territory){
+            
             $this->Common->setArtistText($territory);            
         }
        
