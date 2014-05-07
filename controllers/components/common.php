@@ -2978,7 +2978,7 @@ STR;
             {
                 if($combineGenreData[$cnt]['CombineGenre']['expected_genre']==$genre_name)       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
                 {
-                    $synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['expected_genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['expected_genre'];
+                    $synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['genre'];
                 }
             }
         }
