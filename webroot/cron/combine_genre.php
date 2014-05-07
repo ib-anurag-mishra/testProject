@@ -40,7 +40,7 @@ for($count=0;$count<$total_syngenres; $count++)
     $updated_genre_value    =  $row_data['expected_genre'];
     echo "<br>current_genre_value: ".$current_genre_value.", updated_genre_value: ".$updated_genre_value;  
     
-    $genreUpdate_query       =  "Update Genre set expected_genre='".$updated_genre_value."' where Genre='".$current_genre_value."'";
+    $genreUpdate_query       =  "Update Genre set expected_genre='".mysql_real_escape_string($updated_genre_value)."' where Genre='".$updated_genre_value($current_genre_value)."'";
     $rs_ugenre               =  mysql_query($genreUpdate_query) or die('Query failed: ' . mysql_error());
     echo "<br><br>Genre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows();
     $lf->write("\nGenre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows());
