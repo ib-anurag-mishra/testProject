@@ -34,7 +34,8 @@ Class CommonComponent extends Object
                 )
             ),
             'fields' => array(
-                'Genre.Genre'
+                'Genre.Genre',
+                'Genre.expected_genre'
             ),
             'contain' => array(
                 'Country' => array(
@@ -49,7 +50,12 @@ Class CommonComponent extends Object
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
         
         if ((count($genreAll) > 0) && ($genreAll !== false))
-        {            
+        {                
+            for($count=0; $count<count($genreAll);$count++)
+            {
+               $genreAll[$count]['Genre']['synonyms']   =   $this->getGenreSynonyms($genreAll[$count]['Genre']['Genre']);
+            }
+            
             Cache::write("genre" . $territory, $genreAll,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
         }      
@@ -2945,6 +2951,32 @@ STR;
             }
             $this->Session->write('videodownloadCountArray', $videodownloadCountArray);
         }
+    }
+    
+    
+    /*
+     * @func getGenreSynonyms
+     * @desc This is used to get synonyms list
+     */
+
+    function getGenreSynonyms($genre_name)
+    {
+        $combineGenreData = Cache::read("combine_genre");
+        
+        if ($combineGenreData === false)
+        {
+            $combineGenreInstance = ClassRegistry::init('CombineGenre');
+            $combineGenreData     = $combineGenreInstance->find("all");
+                        
+            Cache::write("combine_genre", $combineGenreData);
+        }
+        
+        if($genre_name!='')
+        {
+            
+        }
+        
+        return $territoryNames;
     }
 
 }
