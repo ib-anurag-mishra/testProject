@@ -34,7 +34,6 @@ Class CommonComponent extends Object
                 )
             ),
             'fields' => array(
-                'Genre.Genre',
                 'Genre.expected_genre'
             ),
             'contain' => array(
@@ -53,17 +52,20 @@ Class CommonComponent extends Object
         if ((count($genreAll) > 0) && ($genreAll !== false))
         {                
             for($count=0; $count<count($genreAll);$count++)
-            {
-               //$genreAll[$count]['Genre']['synonyms']   =   $this->getGenreSynonyms($genreAll[$count]['Genre']['Genre']);
+            {               
                 array_push($combine_genre, $genreAll[$count]['Genre']['expected_genre']);
             }
-            array_unique($combine_genre);
+            $combine_genre  = array_unique($combine_genre);
+            sort($combine_genre);
             
-            Cache::write("genre" . $territory, $genreAll,'GenreCache');
+            Cache::write("genre" . $territory, $combine_genre,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
+            
+            /*Cache::write("genre" . $territory, $genreAll,'GenreCache');
+            $this->log("cache written for genre for $territory", "cache");*/
         }      
         
-        return $genreAll;
+        return $combine_genre;
          
     }
     

@@ -191,11 +191,32 @@ $totalRows = count($genresAll);
                     </li>
 
                     <?php
-                    $genre_count = 1;                    
+                    $genre_count = 1;   
+                    $temp_array = array();
                    if(count($genresAll) > 0){
                     foreach ($genresAll as $genre_name):
-                       $genreNnameWithoutEncode = $genre_name['Genre']['Genre'];;
-                       $genre_name= $this->getTextEncode($genre_name['Genre']['Genre']);                       
+                        
+                        /*if($genre_name['Genre']['Genre']==$genre_name['Genre']['expected_genre'])
+                        {
+                            if(!in_array($genre_name['Genre']['expected_genre'], $temp_array) && !empty($genre_name['Genre']['synonyms'])) 
+                            {                            
+                                array_push($temp_array,$genre_name['Genre']['expected_genre']);
+                            }                                                    
+                        }
+                        else
+                        {
+                            if(in_array($genre_name['Genre']['expected_genre'], $temp_array)) 
+                            {                            
+                                continue;
+                            } 
+                            elseif(!in_array($genre_name['Genre']['expected_genre'], $temp_array) && empty($genre_name['Genre']['synonyms'])) 
+                            {
+                                array_push($temp_array,$genre_name['Genre']['expected_genre']);
+                                //$all_snonym =   
+                            }
+                        }*/
+                       $genreNnameWithoutEncode = $genre_name['expected_genre'];
+                       $genre_name= $this->getTextEncode($genre_name['expected_genre']);                       
 
                         if ($genre_name != '')
                         {	
