@@ -49,12 +49,15 @@ Class CommonComponent extends Object
         
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
         
+        $combine_genre  =   array();
         if ((count($genreAll) > 0) && ($genreAll !== false))
         {                
             for($count=0; $count<count($genreAll);$count++)
             {
-               $genreAll[$count]['Genre']['synonyms']   =   $this->getGenreSynonyms($genreAll[$count]['Genre']['Genre']);
+               //$genreAll[$count]['Genre']['synonyms']   =   $this->getGenreSynonyms($genreAll[$count]['Genre']['Genre']);
+                array_push($combine_genre, $genreAll[$count]['Genre']['expected_genre']);
             }
+            array_unique($combine_genre);
             
             Cache::write("genre" . $territory, $genreAll,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
