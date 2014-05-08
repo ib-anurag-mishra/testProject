@@ -164,13 +164,11 @@ Class CommonComponent extends Object
          
         //make condition according to Genre value
         if ($genreValue != 'All') {
-            $conditionArray[] = " `Song`.`Genre` LIKE '%".$genreValue."%'";            
+            $synonym_list   =   $this->getGenreSynonyms($genreValue);
+            foreach($synonym_list as $single_synGenre){
+                $conditionArray[] = " `Song`.`Genre` LIKE '%".$single_synGenre."%'";            
+            }
         }
-        else{
-            $synonym_list   =   $this->getGenreSynonyms();
-        }
-        
-        
         
         
         //make condition according to Genre value
@@ -2983,9 +2981,10 @@ STR;
             Cache::write("combine_genre", $combineGenreData);
         }
         
+        $synGenres = array();
+        
         if($genre_name!='')
-        {
-            $synGenres = array();
+        {            
             for($cnt=0; $cnt<count($combineGenreData); $cnt++)
             {
                 if($combineGenreData[$cnt]['CombineGenre']['expected_genre']==$genre_name)       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
