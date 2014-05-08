@@ -191,7 +191,7 @@ $totalRows = count($genresAll);
                     </li>
 
                     <?php
-                    $genre_count = 1;   
+                    $genre_count = 0;   
                     $temp_array = array();
                    if(count($genresAll) > 0){
                     foreach ($genresAll as $genre_name):
@@ -215,8 +215,8 @@ $totalRows = count($genresAll);
                                 //$all_snonym =   
                             }
                         }*/
-                       $genreNnameWithoutEncode = $genre_name['expected_genre'];
-                       $genre_name= $this->getTextEncode($genre_name['expected_genre']);                       
+                       $genreNnameWithoutEncode = $genre_name[$genre_count];
+                       $genre_name= $this->getTextEncode($genre_name[$genre_count]);                       
 
                         if ($genre_name != '')
                         {	

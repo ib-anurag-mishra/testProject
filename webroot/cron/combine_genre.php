@@ -21,13 +21,13 @@ mysql_select_db("freegal", $conn);
 
 $lf = new logfile();
 
-// Read values from combine_genre table and store in associative array.
-$syngenre_query    = "SELECT genre, expected_genre from combine_genre";
+// Read values from combine_genres table and store in associative array.
+$syngenre_query    = "SELECT genre, expected_genre from combine_genres";
 $rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysql_error());
 $total_syngenres   = mysql_num_rows($rs_syngenre);
 
 echo "<br>Total Syn Genres: ". $total_syngenres;
-$lf->write("\nTotal Genres from combine_genre Table: ". $total_syngenres);
+$lf->write("\nTotal Genres from combine_genres Table: ". $total_syngenres);
 
 $combine_genre_arr = array();
 
