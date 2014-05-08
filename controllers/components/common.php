@@ -165,9 +165,11 @@ Class CommonComponent extends Object
         //make condition according to Genre value
         if ($genreValue != 'All') {
             $synonym_list   =   $this->getGenreSynonyms($genreValue);
+            $conditionORArray = '';
             foreach($synonym_list as $single_synGenre){
-                $conditionArray[] = " `Song`.`Genre` LIKE '%".$single_synGenre."%'";            
-            }
+                $conditionORArray = empty($conditionORArray)?" `Song`.`Genre` LIKE '%".$single_synGenre."%'":$conditionORArray." OR "." `Song`.`Genre` LIKE '%".$single_synGenre."%'";            
+            }            
+            $conditionArray[] = array("OR" => $conditionORArray);
         }
         
         
