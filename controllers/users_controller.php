@@ -1851,7 +1851,7 @@ function login($library = null){
                                                 }else{
                                                 $this->Session->write("isLibaryExistInTimzone", 0);                               
                                                 }        
- echo 123;die;
+
                                                 //check if the notification entry is already there in the notification_subscription table
                                                 $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
                                                 $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
@@ -1872,6 +1872,9 @@ function login($library = null){
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+                                                echo $existingLibraries['0']['Library']['library_type'];
+                                                 echo 123;die;
+                                                
 						if($existingLibraries['0']['Library']['library_type'] == 2){
                                                    
                                                     $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
