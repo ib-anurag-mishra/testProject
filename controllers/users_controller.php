@@ -1808,7 +1808,7 @@ function login($library = null){
 				}
 				else{
                                     
-                                    echo 123;die;
+                                   
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
@@ -1851,7 +1851,7 @@ function login($library = null){
                                                 }else{
                                                 $this->Session->write("isLibaryExistInTimzone", 0);                               
                                                 }        
-
+ echo 123;die;
                                                 //check if the notification entry is already there in the notification_subscription table
                                                 $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
                                                 $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
