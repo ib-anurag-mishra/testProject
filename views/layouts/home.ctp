@@ -748,6 +748,9 @@
 
         <?php
         $userLogin = $this->Session->read("userlogin");
+        echo $userLogin;
+        echo $this->Session->read('streamPopupShow');
+        die;
         if($userLogin == 'yes') {
         if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
         {
