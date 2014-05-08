@@ -1789,7 +1789,7 @@ STR;
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) 
                 GROUP BY Song.ProdID
-                ORDER BY FIELD(Song.ProdID,$ids) ASC
+                ORDER BY FIELD(Song.ProdID,$ids) DESC
                 LIMIT 50 
 
 STR;
