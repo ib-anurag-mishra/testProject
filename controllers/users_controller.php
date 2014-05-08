@@ -1807,6 +1807,8 @@ function login($library = null){
 				   $this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
 				}
 				else{
+                                    
+                                    echo 123;die;
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
