@@ -1872,14 +1872,14 @@ function login($library = null){
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-                                                echo $existingLibraries['0']['Library']['library_type'];
-                                                 echo 123;die;
+                                              
+                                                 
                                                 
 						if($existingLibraries['0']['Library']['library_type'] == 2){
                                                    
                                                     $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
                                                     $this->Session->write("userlogin", 'no'); 
-                                            echo    $this->Session->read('streamPopupShow');die;
+                                              
 						}
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 						$this->Download->recursive = -1;
