@@ -165,7 +165,13 @@ Class CommonComponent extends Object
         //make condition according to Genre value
         if ($genreValue != 'All') {
             $conditionArray[] = " `Song`.`Genre` LIKE '%".$genreValue."%'";            
-        }       
+        }
+        else{
+            $synonym_list   =   $this->getGenreSynonyms();
+        }
+        
+        
+        
         
         //make condition according to Genre value
         if ($artistFilter == 'spl'){
@@ -2979,12 +2985,13 @@ STR;
         
         if($genre_name!='')
         {
-            $synGenres = '';
+            $synGenres = array();
             for($cnt=0; $cnt<count($combineGenreData); $cnt++)
             {
                 if($combineGenreData[$cnt]['CombineGenre']['expected_genre']==$genre_name)       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
                 {
-                    $synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['genre'];
+                    //$synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['genre'];
+                    array_push($synGenres, $combineGenreData[$cnt]['CombineGenre']['genre']);
                 }
             }
         }
