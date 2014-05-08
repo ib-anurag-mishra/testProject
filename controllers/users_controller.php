@@ -1807,8 +1807,6 @@ function login($library = null){
 				   $this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
 				}
 				else{
-                                    
-                                   
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
@@ -1872,14 +1870,9 @@ function login($library = null){
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-                                              
-                                                 
-                                                
 						if($existingLibraries['0']['Library']['library_type'] == 2){
-                                                   
-                                                    $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
-                                                    $this->Session->write("userlogin", 'no'); 
-                                              
+							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
+							$this->Session->write("userlogin", 'no');
 						}
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 						$this->Download->recursive = -1;
