@@ -215,8 +215,8 @@ $totalRows = count($genresAll);
                                 //$all_snonym =   
                             }
                         }*/
-                       $genreNnameWithoutEncode = $genre_name[$genre_count];
-                       $genre_name= $this->getTextEncode($genre_name[$genre_count]);                       
+                       $genreNnameWithoutEncode = $genre_name;
+                       $genre_name= $this->getTextEncode($genre_name);                       
 
                         if ($genre_name != '')
                         {	
