@@ -46,6 +46,10 @@ for($count=0;$count<$total_syngenres; $count++)
     $lf->write("\nGenre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows());
 }
 
+echo "<br>Done With Updation";
+$lf->write("\nDone with Updation");
+
+
 /*
         //Find Total number of records in Genre Table
         $count_query        = "SELECT count(*) from Genre";
