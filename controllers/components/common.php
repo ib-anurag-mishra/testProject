@@ -198,7 +198,7 @@ Class CommonComponent extends Object
             'conditions' => $conditionArray,
             'fields' => array('DISTINCT Song.ArtistText'),
             'limit'=> $endLimit, 'offset'=> $startLimit,
-            /*'order' => array('Song.ArtistText ASC'),*/
+            'order' => array('Song.ArtistText ASC'),
             'joins' => array(
                 array(
                     'table' => $territory.'_countries',
