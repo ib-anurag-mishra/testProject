@@ -10,7 +10,7 @@
     {
         $url = "http://10.181.60.3/".$script_name[$cnt];
         
-        echo "<br>".$url;
+        echo "\n".$url;
         $ch=curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSLVERSION, 3);
