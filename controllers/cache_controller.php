@@ -192,7 +192,7 @@ class CacheController extends AppController {
      * Function Description : This function is used to getArtistText.
      * all this function query must be same as queries written in the Genere code.
      */
-    function getArtistText($territory){
+    /*function getArtistText($territory){
         
         //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
         try {
@@ -449,7 +449,7 @@ class CacheController extends AppController {
 
             }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
-        }
+        }*/
         
         
 /**
