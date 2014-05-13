@@ -38,7 +38,7 @@ class SoapsController extends AppController {
   private $CDN_PASS = 't837dgkZU6xCMnc';
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token'); 
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token','TopAlbum'); 
   var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr', 'Queue'); 
 
   
@@ -540,16 +540,16 @@ class SoapsController extends AppController {
     if (($artists = $featuredCache) === false) {
       
       //get all featured artist and make array
-     $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $library_terriotry,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+     $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_terriotry,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
 
       foreach($featured as $k => $v){
-        if($v['Featuredartist']['album'] != 0){
+        if($v['TopAlbum']['album'] != 0){
           if(empty($ids)){
-            $ids .= $v['Featuredartist']['album'];
-            $ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+            $ids .= $v['TopAlbum']['album'];
+            $ids_provider_type .= "(" . $v['TopAlbum']['album'] .",'" . $v['TopAlbum']['provider_type'] ."')";
           } else {
-            $ids .= ','.$v['Featuredartist']['album'];
-            $ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+            $ids .= ','.$v['TopAlbum']['album'];
+            $ids_provider_type .= ','. "(" . $v['TopAlbum']['album'] .",'" . $v['TopAlbum']['provider_type'] ."')";
           }	
         }
       }
