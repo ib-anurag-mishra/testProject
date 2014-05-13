@@ -83,7 +83,7 @@ class IncrementalIndexShell extends Shell {
 			$logData .= date('Y-m-d h:i:s').' > End Time: '.date('Y-m-d h:i:s').PHP_EOL;
 			$logData .= PHP_EOL."---------Request (".$logId.") End----------------";
 			$msg = 'Indexing Failed To Start: Valid response XML not sent ('.$response.')';
-			mail($emailList, 'Apache Solr Indexer ' . $this->core1 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
+			mail($this->emailList, 'Apache Solr Indexer ' . $this->core1 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
 			writeToLog($logData);
 		}//for invalid xml response
 
@@ -142,7 +142,7 @@ class IncrementalIndexShell extends Shell {
 			$logData .= date('Y-m-d h:i:s').' > End Time: '.date('Y-m-d h:i:s').PHP_EOL;
 			$logData .= PHP_EOL."---------Request (".$logId.") End----------------";
 			$msg = 'Indexing Failed To Start: Valid response XML not sent ('.$response.')';
-			mail($emailList, 'Apache Solr Indexer ' . $this->core2 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
+			mail($this->emailList, 'Apache Solr Indexer ' . $this->core2 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
 			writeToLog($logData);
 		}
 	}
@@ -172,10 +172,10 @@ class IncrementalIndexShell extends Shell {
 	
 			if( (!empty($total_documents_processed)) && (!empty($total_time)) ) {
 				$msg = 'Indexer processed '.$total_documents_processed. ' documents in '.$total_time.' hours.';
-				mail($emailList, 'Apache Solr Indexer ' . $this->core2 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
+				mail($this->emailList, 'Apache Solr Indexer ' . $this->core2 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
 			} else {
 				$msg = 'Indexer failed to complete ('.$response.')';
-				mail($emailList, 'Apache Solr Indexer ' . $this->core2 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
+				mail($this->emailList, 'Apache Solr Indexer ' . $this->core2 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
 			}
 	
 			return 0;
@@ -208,10 +208,10 @@ class IncrementalIndexShell extends Shell {
 				
 			if( (!empty($total_documents_processed)) && (!empty($total_time)) ) {
 				$msg = 'Indexer processed '.$total_documents_processed. ' documents in '.$total_time.' hours.';
-				mail($emailList, 'Apache Solr Indexer ' . $this->core1 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
+				mail($this->emailList, 'Apache Solr Indexer ' . $this->core1 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
 			} else {
 				$msg = 'Indexer failed to complete ('.$response.')';
-				mail($emailList, 'Apache Solr Indexer ' . $this->core1 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
+				mail($this->emailList, 'Apache Solr Indexer ' . $this->core1 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
 			}
 				
 			return 0;
