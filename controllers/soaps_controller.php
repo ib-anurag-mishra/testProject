@@ -537,7 +537,7 @@ class SoapsController extends AppController {
     $library_terriotry = $this->getLibraryTerritory($libraryId);
  
     $featuredCache = Cache::read("featured".$library_terriotry);
-    if (($artists = $featuredCache) === false) {
+    if (($artists = $featuredCache) === false || $featuredCache == null) {
       
       //get all featured artist and make array
      $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_terriotry,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
