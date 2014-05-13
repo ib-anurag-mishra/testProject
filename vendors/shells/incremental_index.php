@@ -63,7 +63,7 @@ class IncrementalIndexShell extends Shell {
 				while($status){
 					sleep ( $this->sleepTime );
 					$response = $httpSocket->get($this->songsIndexUrl,$this->statusQuery);
-					$status   = $this->getOperationStatus($response, $logId);
+					$status   = $this->getOperationStatus($response, $logId, $this->core1);
 				}
 
 			} else {
@@ -122,7 +122,7 @@ class IncrementalIndexShell extends Shell {
 				while($status){
 					sleep ( $this->sleepTime );
 					$response = $httpSocket->get($this->videosIndexUrl,$this->statusQuery);
-					$status   = $this->parseStatusResponse($response, $logId);
+					$status   = $this->getOperationStatus($response, $logId, $this->core2);
 				}
 			
 			} else {
@@ -146,43 +146,8 @@ class IncrementalIndexShell extends Shell {
 			writeToLog($logData);
 		}
 	}
-	
-	function parseStatusResponse($response, $logId) {
-		$objXmlResponse = simplexml_load_string($response);
-	
-		// type-casted to array format
-		$arrData = (array)$objXmlResponse;
-	
-		if('busy' == strtolower($arrData['str'][1])) {
-			return 1;
-		} else {
-			//Total Documents Processed
-			$total_documents_processed = null;
-			if(isset($arrData['lst'][2]->str[8])) {
-				$test = (array)$arrData['lst'][2]->str[8];
-				$total_documents_processed = $test[0];
-			}
-	
-			//Total Time taken to process documents
-			$total_time = null;
-			if(isset($arrData['lst'][2]->str[9])) {
-				$test = (array)$arrData['lst'][2]->str[9];
-				$total_time = $test[0];
-			}
-	
-			if( (!empty($total_documents_processed)) && (!empty($total_time)) ) {
-				$msg = 'Indexer processed '.$total_documents_processed. ' documents in '.$total_time.' hours.';
-				mail($this->emailList, 'Apache Solr Indexer ' . $this->core2 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
-			} else {
-				$msg = 'Indexer failed to complete ('.$response.')';
-				mail($this->emailList, 'Apache Solr Indexer ' . $this->core2 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
-			}
-	
-			return 0;
-		}
-	}
-	
-	function getOperationStatus($response, $logId) {
+
+	function getOperationStatus($response, $logId, $core) {
 	
 		$objXmlResponse = simplexml_load_string($response);
 			
@@ -208,10 +173,10 @@ class IncrementalIndexShell extends Shell {
 				
 			if( (!empty($total_documents_processed)) && (!empty($total_time)) ) {
 				$msg = 'Indexer processed '.$total_documents_processed. ' documents in '.$total_time.' hours.';
-				mail($this->emailList, 'Apache Solr Indexer ' . $this->core1 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
+				mail($this->emailList, 'Apache Solr Indexer ' . $core . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
 			} else {
 				$msg = 'Indexer failed to complete ('.$response.')';
-				mail($this->emailList, 'Apache Solr Indexer ' . $this->core1 . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
+				mail($this->emailList, 'Apache Solr Indexer ' . $core . ' ('.date('Y-m-d h:i').'-'.$logId.') Status', 'Status :- "'.$msg.'"');
 			}
 				
 			return 0;
