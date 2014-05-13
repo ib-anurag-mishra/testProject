@@ -15,7 +15,7 @@ class IncrementalIndexShell extends Shell {
 
 	var $statusQuery = "command=status";
 
-	var $sleepTime = 5;
+	var $sleepTime = 300;
 
 	var $emailList = 'ghanshyam.agrawal@infobeans.com';
 
