@@ -184,32 +184,34 @@ $totalRows = count($genresAll);
             <div class="genre-column">
                 <ul>
                     <li>
-                        <a class="genre_list_item_all <?php echo ($genre == 'All') ? 'active' : '' ?>" href="javascript:void(0)" data-genre="All Artists" id="genre_list_item_0" 
-                           onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/', '0', '<?php echo addslashes('All'); ?>')">
+                        <a class="genre_list_item_all <?php echo ($genre == 'All') ? 'active' : '' ?>" href="javascript:void(0)" data-genre="All Artists" id="genre_list_item_all" 
+                           onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/', 'all', '<?php echo addslashes('All'); ?>')">
                                <?php echo __('All Artists'); ?>
                         </a>
                     </li>
 
                     <?php
-                    $genre_count = 1;                    
+                    $genre_count = 0;   
+                    
                    if(count($genresAll) > 0){
                     foreach ($genresAll as $genre_name):
-                       $genreNnameWithoutEncode = $genre_name['Genre']['Genre'];;
-                       $genre_name= $this->getTextEncode($genre_name['Genre']['Genre']);                       
 
-                        if ($genre_name != '')
+                        $genreNnameWithoutEncode = $genre_name;
+                        $genre_name_encoded = $this->getTextEncode($genre_name);                       
+
+                        if ($genre_name_encoded != '')
                         {	
-                          if ($genre_name != 'Porn Groove')
+                          if ($genre_name_encoded != 'Porn Groove')
                             {
-                                if ($genre_name == $genre)
+                                if ($genre_name_encoded == $genre)
                                 {
                                     ?>
                                     <li> 
                                         <a  class="genre_list_item_all selected" 
                                             href="javascript:void(0);" data-genre="<?php echo addslashes($genreNnameWithoutEncode); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>" 
-                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genreNnameWithoutEncode); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name); ?>')" >
-                                                <?php echo $genre_name; ?>
+                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genreNnameWithoutEncode); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name_encoded); ?>')" >
+                                                <?php echo $genre_name_encoded; ?>
                                         </a>
                                     </li>
                                     <?php
@@ -221,8 +223,8 @@ $totalRows = count($genresAll);
                                         <a  class="genre_list_item_all" href="javascript:void(0);" 
                                             data-genre="<?php echo addslashes($genreNnameWithoutEncode); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>"  
-                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genreNnameWithoutEncode); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name); ?>')" >
-                                                <?php echo $genre_name; ?>
+                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genreNnameWithoutEncode); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name_encoded); ?>')" >
+                                                <?php echo $genre_name_encoded; ?>
                                         </a>
                                     </li>
                                     <?php

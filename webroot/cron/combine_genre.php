@@ -21,13 +21,13 @@ mysql_select_db("freegal", $conn);
 
 $lf = new logfile();
 
-// Read values from combine_genre table and store in associative array.
-$syngenre_query    = "SELECT genre, expected_genre from combine_genre";
+// Read values from combine_genres table and store in associative array.
+$syngenre_query    = "SELECT genre, expected_genre from combine_genres";
 $rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysql_error());
 $total_syngenres   = mysql_num_rows($rs_syngenre);
 
 echo "<br>Total Syn Genres: ". $total_syngenres;
-$lf->write("\nTotal Genres from combine_genre Table: ". $total_syngenres);
+$lf->write("\nTotal Genres from combine_genres Table: ". $total_syngenres);
 
 $combine_genre_arr = array();
 
@@ -38,13 +38,17 @@ for($count=0;$count<$total_syngenres; $count++)
     //$combine_genre_arr[$row_data['genre']] = $row_data['expected_genre'];
     $current_genre_value    =  mysql_real_escape_string($row_data['genre']);
     $updated_genre_value    =  mysql_real_escape_string($row_data['expected_genre']);
-    echo "<br>current_genre_value: ".$current_genre_value.", updated_genre_value: ".$updated_genre_value;  
+   // echo "<br>current_genre_value: ".$current_genre_value.", updated_genre_value: ".$updated_genre_value;  
     
     $genreUpdate_query       =  "Update Genre set expected_genre='".$updated_genre_value."' where Genre='".$current_genre_value."'";
     $rs_ugenre               =  mysql_query($genreUpdate_query) or die('Query failed: ' . mysql_error());
-    echo "<br><br>Genre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows();
+   // echo "<br><br>Genre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows();
     $lf->write("\nGenre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows());
 }
+
+//echo "<br>Done With Updation";
+$lf->write("\nDone with Updation");
+
 
 /*
         //Find Total number of records in Genre Table

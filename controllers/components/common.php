@@ -34,7 +34,6 @@ Class CommonComponent extends Object
                 )
             ),
             'fields' => array(
-                'Genre.Genre',
                 'Genre.expected_genre'
             ),
             'contain' => array(
@@ -53,17 +52,20 @@ Class CommonComponent extends Object
         if ((count($genreAll) > 0) && ($genreAll !== false))
         {                
             for($count=0; $count<count($genreAll);$count++)
-            {
-               //$genreAll[$count]['Genre']['synonyms']   =   $this->getGenreSynonyms($genreAll[$count]['Genre']['Genre']);
+            {               
                 array_push($combine_genre, $genreAll[$count]['Genre']['expected_genre']);
             }
-            array_unique($combine_genre);
+            $combine_genre  = array_unique($combine_genre);
+            sort($combine_genre);
             
-            Cache::write("genre" . $territory, $genreAll,'GenreCache');
+            Cache::write("genre" . $territory, $combine_genre,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
+            
+            /*Cache::write("genre" . $territory, $genreAll,'GenreCache');
+            $this->log("cache written for genre for $territory", "cache");*/
         }      
         
-        return $genreAll;
+        return $combine_genre;
          
     }
     
@@ -162,8 +164,17 @@ Class CommonComponent extends Object
          
         //make condition according to Genre value
         if ($genreValue != 'All') {
-            $conditionArray[] = " `Song`.`Genre` LIKE '%".$genreValue."%'";            
-        }       
+            $synonym_list   =   $this->getGenreSynonyms($genreValue);
+            $conditionOR = '';
+            foreach($synonym_list as $single_synGenre){
+                $conditionOR = empty($conditionOR)? "(`Song`.`Genre` LIKE '%".$single_synGenre."%'" : $conditionOR." OR `Song`.`Genre` LIKE '%".$single_synGenre."%'";            
+            }            
+            if(!empty($conditionOR))
+            {
+                $conditionArray[] = $conditionOR.")";
+            }
+        }
+        
         
         //make condition according to Genre value
         if ($artistFilter == 'spl'){
@@ -2975,14 +2986,16 @@ STR;
             Cache::write("combine_genre", $combineGenreData);
         }
         
+        $synGenres = array();
+        
         if($genre_name!='')
-        {
-            $synGenres = '';
+        {            
             for($cnt=0; $cnt<count($combineGenreData); $cnt++)
             {
                 if($combineGenreData[$cnt]['CombineGenre']['expected_genre']==$genre_name)       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
                 {
-                    $synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['genre'];
+                    //$synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['genre'];
+                    array_push($synGenres, $combineGenreData[$cnt]['CombineGenre']['genre']);
                 }
             }
         }
