@@ -2319,11 +2319,11 @@ STR;
             if (!empty($MoreVideosData))
             {
                 Cache::write("musicVideoMoreDetails_" . $territory . '_' . $EachVideosData[0]['Video']['ArtistText'], $MoreVideosData);
-                $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] cache set", "cache");
+                $this->log("Music video more details of artist - ".$EachVideosData[0]['Video']['ArtistText']."cache set", "cache");
             }
             else
             {
-                $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] returns null ", "cache");
+                $this->log("Music video more details of artist - ".$EachVideosData[0]['Video']['ArtistText']."returns null ", "cache");
             }
         }
         if (count($EachVideosData) > 0)
@@ -2344,11 +2344,11 @@ STR;
             if (!empty($TopVideoGenreData))
             {
                 Cache::write("top_videos_genre_" . $territory . '_' . $EachVideosData[0]['Video']['Genre'], $TopVideoGenreData);
-                $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory cache set", "cache");
+                $this->log("Top videos  of genre - ".$EachVideosData[0]['Video']['Genre']." for territory -".$territory." cache set", "cache");
             }
             else
             {
-                $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory returns null ", "cache");
+                $this->log("Top videos  of genre - ".$EachVideosData[0]['Video']['Genre']." for territory -".$territory." returns null ", "cache");
             }
         }
     }
