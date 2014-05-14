@@ -76,8 +76,10 @@ class CacheController extends AppController {
                 WHERE c.Territory = "'.$territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
                 ORDER BY cnt DESC LIMIT 100';
             $arr_video = $this->Video->query($str_query);
-
-            $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
+            if(!empty($arr_video)) {
+                $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
+                $this->log("cache wrritten for mobile music videos list for territory_".$territory, "cache");
+            }
         }
     }   
     
@@ -165,7 +167,7 @@ class CacheController extends AppController {
         $this->Common->getFeaturedArtists($territory);
     }
     
-    function setDifferentGenreData($territory) {
+    function setDifferentGenreData($territory) { 
         $this->Common->getDifferentGenreData($territory);
     }
     
@@ -177,7 +179,7 @@ class CacheController extends AppController {
         $this->Common->setLibraryTopTenCache();
     }
     
-    function setVideoCacheVar() {
+    function setVideoCacheVar() {   
         $this->Common->setVideoCacheVar(); 
     }
     
@@ -190,7 +192,10 @@ class CacheController extends AppController {
     function setAnnouncementCache(){
         $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
         $announcment_rs = $this->Album->query($announcment_query);
-        Cache::write("announcementCache",$announcment_rs);
+        if(!empty($announcment_rs)){
+            Cache::write("announcementCache",$announcment_rs);
+            $this->log("cache wrritten for announcements", "cache");
+        }    
    
     }
     
