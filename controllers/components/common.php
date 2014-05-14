@@ -2523,7 +2523,7 @@ STR;
     {
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         $videoInstance = ClassRegistry::init('Video');
-        $musicVideoRecs = $videoInstance->find('all', array('conditions' => array('DownloadStatus' => 1), 'fields' => 'Video.ProdID'));
+        $musicVideoRecs = $videoInstance->find('all', array('conditions' => array('Video.DownloadStatus' => 1), 'fields' => 'Video.ProdID'));
         $territoryNames = $this->getTerritories();
         for ($i = 0; $i < count($territoryNames); $i++)
         {
