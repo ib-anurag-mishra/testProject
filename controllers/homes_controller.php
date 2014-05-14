@@ -3392,7 +3392,11 @@ STR;
             exit;
         }
     }
-
+    
+    /*
+      Function Name : wishlistVideoDownloadToken
+      Desc : For downloading a video from website 
+     */
     function wishlistVideoDownloadToken()
     {
 
@@ -3422,10 +3426,15 @@ STR;
             echo "error";
             exit;
         }
-
-        $id = $_REQUEST['id'];
-        $provider = $_REQUEST['provider'];
-
+        
+        //check id comming from request
+        //if comming then this request will also remove records from wishlist
+        $id =0;
+        if(isset($_REQUEST['id'])){
+             $id = $_REQUEST['id'];
+        }
+        $provider = $_REQUEST['provider'];        
+        
         //get details for this song
         $trackDetails = $this->Video->getVideoData($prodId, $provider);
         $insertArr = Array();
@@ -3440,7 +3449,7 @@ STR;
 
         /**
           creates log file name
-         */
+        */
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
@@ -3451,9 +3460,7 @@ STR;
         {
 
             $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider);
-
-
-
+            
             /**
               records download component request & response
              */
@@ -3587,69 +3594,96 @@ STR;
                 $insertArr['user_login_type'] = 'user_account';
             }
 
-            $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+           $insertArr['user_agent'] = str_replace(";", "", $_SERVER['HTTP_USER_AGENT']);
             $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
-            $downloadStatus = $latestdownloadStatus = 0;
-            //save to downloads table
-            $this->Videodownload->setDataSource('master');
-            if ($this->Videodownload->save($insertArr))
+            //on/off latest-download functionality
+            $this->Library->setDataSource('master');
+            $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+            $siteConfigData = $this->Album->query($siteConfigSQL);
+            $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
+            $this->Library->setDataSource('master');
+            if ($maintainLatestDownload)
             {
-                $this->Videodownload->setDataSource('default');
-                $downloadStatus = 1;
-                $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-                $siteConfigData = $this->Album->query($siteConfigSQL);
-                $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
-                if ($maintainLatestDownload)
+                //logs in downloadvideos.log
+                $this->log("videos_proc_d_ld called", 'downloadvideos');
+                $procedure = 'videos_proc_d_ld';
+                //calls procedure
+                $sql = "CALL videos_proc_d_ld('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Video']['ProductID'] . "', '" . $trackDetails['0']['Video']['ISRC'] . "', '" . addslashes($trackDetails['0']['Video']['Artist']) . "', '" . addslashes($trackDetails['0']['Video']['VideoTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
+            }
+            else
+            {
+                $procedure = 'videos_proc_d';
+                //calls procedure
+                $sql = "CALL videos_proc_d('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Video']['ProductID'] . "', '" . $trackDetails['0']['Video']['ISRC'] . "', '" . addslashes($trackDetails['0']['Video']['Artist']) . "', '" . addslashes($trackDetails['0']['Video']['VideoTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
+            }
+
+            //get procedure response
+            $this->Library->query($sql);
+            $sql = "SELECT @ret";
+            $data = $this->Library->query($sql);
+            $return = $data[0][0]['@ret'];
+
+            //logs in downloadvideos.log
+            $log_data .= ":StoredProcedureParameters-LibID='" . $libId . "':StoredProcedureParameters-Patron='" . $patId . "':StoredProcedureParameters-ProdID='" . $prodId . "':StoredProcedureParameters-ProductID='" . $trackDetails['0']['Video']['ProductID'] . "':StoredProcedureParameters-ISRC='" . $trackDetails['0']['Video']['ISRC'] . "':StoredProcedureParameters-Artist='" . addslashes($trackDetails['0']['Video']['Artist']) . "':StoredProcedureParameters-SongTitle='" . addslashes($trackDetails['0']['Video']['VideoTitle']) . "':StoredProcedureParameters-UserLoginType='" . $insertArr['user_login_type'] . "':StoredProcedureParameters-ProviderType='" . $insertArr['provider_type'] . "':StoredProcedureParameters-Email='" . $insertArr['email'] . "':StoredProcedureParameters-UserAgent='" . addslashes($insertArr['user_agent']) . "':StoredProcedureParameters-IP='" . $insertArr['ip'] . "':StoredProcedureParameters-CurWeekStartDate='" . Configure::read('App.curWeekStartDate') . "':StoredProcedureParameters-CurWeekEndDate='" . Configure::read('App.curWeekEndDate') . "':StoredProcedureParameters-Name='" . $procedure . "':StoredProcedureParameters-@ret='" . $return . "'";
+
+            //executes IF on success
+            if (is_numeric($return))
+            {
+                //make in LatestDownloadVideo entry
+                $this->LatestVideodownload->setDataSource('master');
+                $data = $this->LatestVideodownload->find('count', array(
+                    'conditions' => array(
+                        "LatestDownloadVideo.library_id " => $libId,
+                        "LatestDownloadVideo.patron_id " => $patId,
+                        "LatestDownloadVideo.ProdID " => $prodId,
+                        "LatestDownloadVideo.provider_type " => $insertArr['provider_type'],
+                        "DATE(LatestDownloadVideo.created) " => date('Y-m-d'),
+                    ),
+                    'recursive' => -1,
+                ));
+
+                // logs data
+                if (0 === $data)
                 {
-                    $this->LatestVideodownload->setDataSource('master');
-                    if ($this->LatestVideodownload->save($insertArr))
-                    {
-                        $latestdownloadStatus = 1;
-                    }
-                    $this->LatestVideodownload->setDataSource('default');
+                    $log_data .= ":NotInLD";
                 }
-                //update library table
-                $this->Library->setDataSource('master');
-                $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
-                $this->Library->query($sql);
-                $this->Library->setDataSource('default');
+                // logs data
+                if (false === $data)
+                {
+                    $log_data .= ":SelectLDFail";
+                }                
             }
-            $this->Videodownload->setDataSource('default');
-
-
-
-            $log_data .= ":SaveParameters-LibID='" . $insertArr['library_id'] . "':SaveParameters-Patron='" . $insertArr['patron_id'] . "':SaveParameters-ProdID='" . $insertArr['ProdID'] . "':SaveParameters-ProductID='" . $insertArr['ProductID'] . "':SaveParameters-ISRC='" . $insertArr['ISRC'] . "':SaveParameters-Artist='" . $insertArr['artist'] . "':SaveParameters-SongTitle='" . $insertArr['track_title'] . "':SaveParameters-UserLoginType='" . $insertArr['user_login_type'] . "':SaveParameters-ProviderType='" . $provider . "':SaveParameters-Email='" . $insertArr['email'] . "':SaveParameters-UserAgent='" . $insertArr['user_agent'] . "':SaveParameters-IP='" . $insertArr['ip'] . "':SaveParametersStatus-Download='" . $downloadStatus . "':SaveParametersStatus-LatestDownload='" . $latestdownloadStatus . "'";
-
-            if ($downloadStatus != $latestdownloadStatus)
-            {
-                $log_data .= ":NotInBothTable";
-            }
-
+            
+            // logs data
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
 
+            //writes in log
             $this->log($log_data, $log_name);
-
+            
             if ($id > 0)
             {
-                //delete from wishlist table
-                $deleteVideoId = $id;
-                $this->WishlistVideo->delete($deleteVideoId);
+                //delete from wishlist table              
+                $this->WishlistVideo->delete($id);
                 //get no of downloads for this week
             }
+            
+            $this->Library->setDataSource('default');
+            if (is_numeric($return))
+            {                
+                $this->Videodownload->recursive = -1;
+                $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+                $this->Download->recursive = -1;
+                $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+                $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
+                //updating session for VideoDown load status
+                $this->Common->getVideodownloadStatus($libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'), true);
 
-            $this->Videodownload->recursive = -1;
-            $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $this->Download->recursive = -1;
-            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
-
-            //updating session for VideoDown load status
-            $this->Common->getVideodownloadStatus($libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'), true);
-
-
-            echo "suces|" . $downloadsUsed . "|" . $finalURL;
-            exit;
+                 //updating session for VideoDownload status                
+                echo "suces|" . $downloadsUsed . "|" . $finalURL;
+                exit;
+            }
+            
         }
         else
         {
@@ -3662,6 +3696,8 @@ STR;
             echo "invalid|" . $validationResult[1];
             exit;
         }
+       
+     
     }
 
     /*
@@ -4620,8 +4656,7 @@ STR;
                 if (false === $data)
                 {
                     $log_data .= ":SelectLDFail";
-                }
-                
+                }                
                 
                 $this->LatestDownload->setDataSource('default');
             }     
