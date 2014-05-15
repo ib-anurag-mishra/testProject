@@ -558,7 +558,16 @@ class SoapsController extends AppController {
       $featured = array();
       if($ids != ''){     
         $this->Album->recursive = 2;
-        $featured =  $this->Album->find('all',array('conditions' =>
+        $featured =  $this->Album->find('all',array(
+	'joins' => array(
+                    array(
+                        'type' => 'INNER',
+                        'table' => 'top_albums',
+                        'alias' => 'ta',
+                        'conditions' => array('Album.ProdID = ta.album')
+                    )
+                ),	
+	'conditions' =>
           array('and' =>
             array(
               array("Country.Territory" => $library_terriotry, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
