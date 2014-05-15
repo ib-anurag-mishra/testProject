@@ -594,7 +594,7 @@ class SoapsController extends AppController {
                 'Files.SourceURL'
               ),
             )
-          ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit' => 20
+          ), 'order' => 'ta.id ASC', 'limit' => 20
         ));
                     
       }
