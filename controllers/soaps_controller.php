@@ -540,7 +540,8 @@ class SoapsController extends AppController {
     if (($artists = $featuredCache) === false || $featuredCache == null) {
       
       //get all featured artist and make array
-     $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_terriotry,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+     $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_terriotry,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1,'order' => array(
+                'TopAlbum.id' => 'ASC')));
 
       foreach($featured as $k => $v){
         if($v['TopAlbum']['album'] != 0){
