@@ -8,7 +8,7 @@
 class Featuredartist extends AppModel
 {
     var $name = 'Featuredartist';
-    
+    var $useTable = 'featured_artists_composers';
     /*
     Function Name : insert
     Desc : updatesa admin user data
