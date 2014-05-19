@@ -26,11 +26,11 @@ class IncrementalIndexShell extends Shell {
 		$logData = PHP_EOL."----------Request (".$logId.") Start----------------".PHP_EOL;
 		$logData .= date('Y-m-d h:i:s').' > Start Time: '.date('Y-m-d h:i:s').PHP_EOL;
 
-		$this->processing( $this->songsIndexUrl, $this->core1, $logId );
-		$this->processing( $this->videosIndexUrl, $this->core2, $logId );
+		$this->processing( $this->songsIndexUrl,  $this->core1, $logId, $logData );
+		$this->processing( $this->videosIndexUrl, $this->core2, $logId, $logData );
 	}
 
-	public function processing( $url, $coreName, $logId  ) {
+	public function processing( $url, $coreName, $logId, $logData  ) {
 
 		$httpSocket = new HttpSocket();
 
