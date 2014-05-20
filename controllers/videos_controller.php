@@ -4,7 +4,7 @@ class VideosController extends AppController
 {
 
     var $uses = array('Album', 'Genre', 'Siteconfig', 'Country', 'Video', 'LatestVideodownload', 'Videodownload', 'Library', 'WishlistVideo', 'Download', 'Language', 'Token');
-    var $helpers = array('WishlistVideo', 'Language', 'Videodownload', 'Mvideo', 'Token');
+    var $helpers = array('WishlistVideo', 'Language', 'Videodownload', 'Mvideo', 'Token', 'Page');
     var $components = array('Downloadsvideos', 'Session', 'Downloads', 'Common');
     var $layout = 'home';
 
