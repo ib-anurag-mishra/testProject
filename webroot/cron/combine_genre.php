@@ -62,5 +62,6 @@ for($count=0;$count<$total_syngenres; $count++)
 
 $lf->write("\nDone with Updation");
 
+mysql_close($conn);
 
 ?>
