@@ -2319,11 +2319,11 @@ STR;
             if (!empty($MoreVideosData))
             {
                 Cache::write("musicVideoMoreDetails_" . $territory . '_' . $EachVideosData[0]['Video']['ArtistText'], $MoreVideosData);
-                $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] cache set", "cache");
+                $this->log("Music video more details of artist - ".$EachVideosData[0]['Video']['ArtistText']."cache set", "cache");
             }
             else
             {
-                $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] returns null ", "cache");
+                $this->log("Music video more details of artist - ".$EachVideosData[0]['Video']['ArtistText']."returns null ", "cache");
             }
         }
         if (count($EachVideosData) > 0)
@@ -2344,11 +2344,11 @@ STR;
             if (!empty($TopVideoGenreData))
             {
                 Cache::write("top_videos_genre_" . $territory . '_' . $EachVideosData[0]['Video']['Genre'], $TopVideoGenreData);
-                $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory cache set", "cache");
+                $this->log("Top videos  of genre - ".$EachVideosData[0]['Video']['Genre']." for territory -".$territory." cache set", "cache");
             }
             else
             {
-                $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory returns null ", "cache");
+                $this->log("Top videos  of genre - ".$EachVideosData[0]['Video']['Genre']." for territory -".$territory." returns null ", "cache");
             }
         }
     }
@@ -2523,7 +2523,7 @@ STR;
     {
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         $videoInstance = ClassRegistry::init('Video');
-        $musicVideoRecs = $videoInstance->find('all', array('conditions' => array('DownloadStatus' => 1), 'fields' => 'Video.ProdID'));
+        $musicVideoRecs = $videoInstance->find('all', array('conditions' => array('Video.DownloadStatus' => 1), 'fields' => 'Video.ProdID'));
         $territoryNames = $this->getTerritories();
         for ($i = 0; $i < count($territoryNames); $i++)
         {

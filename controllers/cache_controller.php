@@ -76,8 +76,10 @@ class CacheController extends AppController {
                 WHERE c.Territory = "'.$territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
                 ORDER BY cnt DESC LIMIT 100';
             $arr_video = $this->Video->query($str_query);
-
-            $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
+            if(!empty($arr_video)) {
+                $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
+                $this->log("cache wrritten for mobile music videos list for territory_".$territory, "cache");
+            }
         }
     }   
     
@@ -87,35 +89,100 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
-       
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){            
-            
             $this->setNewsCache($territory);
-            $this->Common->getGenres($territory);
-            $this->Common->getNationalTop100($territory);
-            $this->Common->getFeaturedVideos($territory);
-            $this->Common->getTopVideoDownloads($territory);
-            $this->Common->getNationalTop100Albums($territory);
-            $this->Common->getComingSoonSongs($territory);
-            $this->Common->getComingSoonVideos($territory);
-            $this->Common->getUsTop10Songs($territory);
-            $this->Common->getUsTop10Albums($territory);
-            $this->Common->getUsTop10Videos($territory);
-            $this->Common->getNewReleaseAlbums($territory);
-            $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);
+            $this->setGenre($territory);
+            $this->setNationalTop100($territory);
+            $this->setFeaturedVideos($territory);
+            $this->setTopVideoDownloads($territory);
+            $this->setNationalTop100Albums($territory);
+            $this->setComingSoonSongs($territory);
+            $this->setComingSoonVideos($territory);
+            $this->setUsTop10Songs($territory);
+            $this->setUsTop10Albums($territory);
+            $this->setUsTop10Videos($territory);
+            $this->setNewReleaseAlbums($territory);
+            $this->setNewReleaseVideos($territory);
+            $this->setFeaturedArtists($territory);
+            $this->setDifferentGenreData($territory);
             $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);   
+            $this->setDefaultQueues($territory);   
             
         }
-       $this->Common->setLibraryTopTenCache();
-       $this->Common->setVideoCacheVar();    
+       $this->setLibraryTopTenCache();
+       $this->setVideoCacheVar();    
        $this->setAppMyMusicVideoList(); 
        $this->setAnnouncementCache();
        $this->setTopArtist();
     }
+    
+    function setGenre($territory){ 
+        $this->Common->getGenres($territory);
+    }
+    
+    function setNationalTop100($territory){
+       $this->Common->getNationalTop100($territory); 
+    }
+    function setFeaturedVideos($territory){
+        $this->Common->getFeaturedVideos($territory);
+    }
+    
+    function setTopVideoDownloads($territory){
+        $this->Common->getTopVideoDownloads($territory);
+    }
+    
+    function setNationalTop100Albums($territory) {
+        $this->Common->getNationalTop100Albums($territory);
+    }
+    function setComingSoonSongs($territory) {
+        $this->Common->getComingSoonSongs($territory);
+    }
+    
+    function setComingSoonVideos($territory) {
+        $this->Common->getComingSoonVideos($territory);
+    }
+    
+    function setUsTop10Songs($territory) {
+        $this->Common->getUsTop10Songs($territory);
+    }
+    
+    function setUsTop10Albums($territory) {
+        $this->Common->getUsTop10Albums($territory);
+    }
+    
+    function setUsTop10Videos($territory) {
+        $this->Common->getUsTop10Videos($territory);
+    } 
+    
+    function setNewReleaseAlbums($territory) {
+        $this->Common->getNewReleaseAlbums($territory);
+    }
+    
+    function setNewReleaseVideos($territory) {
+        $this->Common->getNewReleaseVideos($territory);
+    } 
+    
+    function setFeaturedArtists($territory) {
+        $this->Common->getFeaturedArtists($territory);
+    }
+    
+    function setDifferentGenreData($territory) { 
+        $this->Common->getDifferentGenreData($territory);
+    }
+    
+    function setDefaultQueues($territory) {
+        $this->Common->getDefaultQueues($territory);
+    }
+    
+    function  setLibraryTopTenCache() { 
+        $this->Common->setLibraryTopTenCache();
+    }
+    
+    function setVideoCacheVar() {   
+        $this->Common->setVideoCacheVar(); 
+    }
+    
     
     /*
      * Function Name : setAnnouncementCache
@@ -125,7 +192,10 @@ class CacheController extends AppController {
     function setAnnouncementCache(){
         $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
         $announcment_rs = $this->Album->query($announcment_query);
-        Cache::write("announcementCache",$announcment_rs);
+        if(!empty($announcment_rs)){
+            Cache::write("announcementCache",$announcment_rs);
+            $this->log("cache wrritten for announcements", "cache");
+        }    
    
     }
     
