@@ -53,7 +53,7 @@ for($count=0;$count<$total_syngenres; $count++)
     if($total_affected_rows>0)
     {
         $cGenreUpdate_query       =  "Update combine_genres set update_genre='1' where id='".$id."'";
-        $rs_ugenre                =  mysql_query($genreUpdate_query) or die('Query failed: ' . mysql_error());
+        $rs_ugenre                =  mysql_query($cGenreUpdate_query) or die('Query failed: ' . mysql_error());
         
         $lf->write("\nupdate_genre in combine_genres set to 1 for id: ". $id);
     }
