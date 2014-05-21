@@ -22,7 +22,7 @@
 
                                         if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 
-                                            $downloadsUsed = $this->Videodownload->getVideodownloadfind( $featureVideo['FeaturedVideo']['ProdID'], $featureVideo['Video']['provider_type'], $libraryId, $patronId, Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) );
+                                            $downloadsUsed = $videoDownloadStatus[$featureVideo['FeaturedVideo']['ProdID']][$featureVideo['Video']['provider_type']];
 
                                             if ( $downloadsUsed > 0 ):
                                                 $featureVideo['Video']['status'] = 'avail';

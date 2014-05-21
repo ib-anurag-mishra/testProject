@@ -52,13 +52,14 @@ class VideosController extends AppController {
             $this->set( 'patronDownload',  $patronDownload );
         }
 
-        $featuredVideos = $this->featuredVideos( $prefix, $territory );
-        $topDownloads   = $this->topDownloadVideos( $prefix, $territory );
+        $featuredVideos 	 = $this->featuredVideos( $prefix, $territory );
+        $topDownloads   	 = $this->topDownloadVideos( $prefix, $territory );
+        $videoDownloadStatus = $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId );
 
-        $this->set( 'featuredVideos', $featuredVideos );
-        $this->set( 'topVideoDownloads',  $topDownloads );
+        $this->set( 'featuredVideos', 	   $featuredVideos );
+        $this->set( 'topVideoDownloads',   $topDownloads );
+        $this->set( 'videoDownloadStatus', $videoDownloadStatus );
 
-        $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId );
         /**
          * As per my understanding
          * we need to remove this function call here 
@@ -590,7 +591,11 @@ class VideosController extends AppController {
     			}
     		}
     		$resultSet = $this->Videodownload->getDownloadStatusOfVideos( $idsProviderType, $libraryId , $patronId, Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) );
+    		
+    		foreach ( $resultSet as $key => $result ) {
+    			$videoDownloadStatus[$result['Videodownload']['ProdID']][$result['Videodownload']['provider_type']] = $result[0]['totalProds'];
+    		}
     	}
-    	
+    	return $videoDownloadStatus;
     }
 }
