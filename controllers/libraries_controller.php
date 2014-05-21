@@ -583,6 +583,7 @@ Class LibrariesController extends AppController
                                                     }
                                                     else
                                                     {
+                                                        $this->data['LibraryPurchase']['previously_available_downloads'] = $getData['Library']['library_available_downloads'] ;
                                                         $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads'] + $this->data['LibraryPurchase']['purchased_tracks'];
                                                     }
                                                     $this->data['Library']['library_current_downloads'] = $getData['Library']['library_current_downloads'];
