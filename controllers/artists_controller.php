@@ -1160,14 +1160,6 @@ Class ArtistsController extends AppController
                 }
             }
         }
-	
-	$albumSongsFilter =array();
-        foreach($albumSongs[$albumData[0]['Album']['ProdID']] as $songs){
-	       if( $songs['Genre']['Genre']== $albumData[0]['Genre']['Genre']){
-               		$albumSongsFilter[$albumData[0]['Album']['ProdID']][]  = $songs;
-               }
-        }
-        $albumSongs = $albumSongsFilter;
         
         $this->set('albumSongs', $albumSongs);
 
