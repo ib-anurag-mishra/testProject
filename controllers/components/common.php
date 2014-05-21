@@ -1591,7 +1591,7 @@ STR;
                 'TopAlbum.language' => Configure::read('App.LANGUAGE')),
             'recursive' => -1,
             'order' => array(
-                'TopAlbum.id' => 'ASC')
+                'TopAlbum.id' => 'DESC')
                 )
         );
         
