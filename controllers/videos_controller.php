@@ -607,6 +607,8 @@ class VideosController extends AppController {
     
     public function getWishlistVideosData( $arrayVideos, $libraryId, $patronId, $arrayIndex ) {
 
+    	$videoWishlistDetails = array();
+    	
     	//create common structure for add to wishlist functionality
     	//first check if session variable not set
     	if ( !$this->Session->check( 'wishlistVideoArray' ) ) {
