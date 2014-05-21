@@ -1,7 +1,7 @@
 <?php
 class VideosController extends AppController {
 
-    var $uses 		= array('Siteconfig', 'Video', 'LatestVideodownload', 'Videodownload', 'Library', 'Token', 'FeaturedVideo');
+    var $uses 		= array('Siteconfig', 'Video', 'LatestVideodownload', 'Videodownload', 'Library', 'Token', 'FeaturedVideo', 'WishlistVideo');
     var $helpers 	= array('WishlistVideo', 'Language', 'Videodownload', 'Mvideo', 'Token');
     var $components = array('Downloadsvideos', 'Session', 'Downloads', 'Common', 'Checkloginusers');
     var $layout 	= 'home';
@@ -54,8 +54,8 @@ class VideosController extends AppController {
 
         $featuredVideos 	 		 = $this->featuredVideos( $prefix, $territory );
         $topDownloads   	 		 = $this->topDownloadVideos( $prefix, $territory );
-        $featuredVideoDownloadStatus = $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId );
-        $topVideoDownloadStatus 	 = $this->getVideosDownloadStatus( $topDownloads, $libraryId, $patronId );
+        $featuredVideoDownloadStatus = $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId, 'FeaturedVideo' );
+        $topVideoDownloadStatus 	 = $this->getVideosDownloadStatus( $topDownloads, $libraryId, $patronId, 'Video' );
 
         $this->set( 'featuredVideos', 				$featuredVideos );
         $this->set( 'topVideoDownloads', 			$topDownloads );
@@ -562,19 +562,19 @@ class VideosController extends AppController {
     	$this->set( 'moreVideosData', $moreVideosData );
     }
     
-    public function getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId ) {
+    public function getVideosDownloadStatus( $arrayVideos, $libraryId, $patronId, $arrayIndex ) {
 
     	$videoDownloadStatus = array();
     	
     	if ( $this->Session->check( 'videodownloadCountArray' ) ) {
 
     		$videodownloadCountArray = $this->Session->read( 'videodownloadCountArray' );
-    		foreach ( $featuredVideos as $key => $featureVideo ) {
+    		foreach ( $arrayVideos as $key => $arrayVideo ) {
     			
-    			if ( isset( $videodownloadCountArray[$featureVideo['FeaturedVideo']['ProdID']] ) && $videodownloadCountArray[$featureVideo['FeaturedVideo']['ProdID']]['provider_type'] == $featureVideo['Video']['provider_type'] ) {
-    				$videoDownloadStatus[$featureVideo['FeaturedVideo']['ProdID']][$featureVideo['Video']['provider_type']] = $videodownloadCountArray[$featureVideo['FeaturedVideo']['ProdID']]['totalProds'];
+    			if ( isset( $videodownloadCountArray[$arrayVideo[$arrayIndex]['ProdID']] ) && $videodownloadCountArray[$arrayVideo[$arrayIndex]['ProdID']]['provider_type'] == $arrayVideo['Video']['provider_type'] ) {
+    				$videoDownloadStatus[$arrayVideo[$arrayIndex]['ProdID']][$arrayVideo['Video']['provider_type']] = $videodownloadCountArray[$arrayVideo[$arrayIndex]['ProdID']]['totalProds'];
     			} else {
-    				$videoDownloadStatus[$featureVideo['FeaturedVideo']['ProdID']][$featureVideo['Video']['provider_type']] = 0;
+    				$videoDownloadStatus[$arrayVideo[$arrayIndex]['ProdID']][$arrayVideo['Video']['provider_type']] = 0;
     			}
     		}
 
@@ -582,14 +582,14 @@ class VideosController extends AppController {
 
     		$idsProviderType = '';
 
-    		foreach ( $featuredVideos as $key => $featureVideo ) {
+    		foreach ( $arrayVideos as $key => $arrayVideo ) {
 
     			if ( empty( $idsProviderType ) ) {
 
-    				$idsProviderType .= "(" . $featureVideo['FeaturedVideo']['ProdID'] . ",'" . $featureVideo['Video']['provider_type'] . "')";
+    				$idsProviderType .= "(" . $arrayVideo[$arrayIndex]['ProdID'] . ",'" . $arrayVideo['Video']['provider_type'] . "')";
     			} else {
     				
-    				$idsProviderType .= ',' . "(" . $featureVideo['FeaturedVideo']['ProdID'] . ",'" . $featureVideo['Video']['provider_type'] . "')";
+    				$idsProviderType .= ',' . "(" . $arrayVideo[$arrayIndex]['ProdID'] . ",'" . $arrayVideo['Video']['provider_type'] . "')";
     			}
     		}
     		$resultSet = $this->Videodownload->getDownloadStatusOfVideos( $idsProviderType, $libraryId , $patronId, Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) );
