@@ -1545,7 +1545,10 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
             }
             else if (msg === 'suces')
             {
+                
                 var downloadUsedArr = response.split('|');
+                alert(JSON.stringify(downloadUsedArr));
+                alert(type);
                 if(type == 1){
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 if (languageSet === 'en') {
@@ -1575,7 +1578,6 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
                     $('.beforeClick').show();                    
                     
                 }
-
                 //rerun ajaxify
                 $('.content').ajaxify();
             }

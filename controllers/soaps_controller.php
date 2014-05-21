@@ -38,7 +38,7 @@ class SoapsController extends AppController {
   private $CDN_PASS = 't837dgkZU6xCMnc';
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token'); 
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token','TopAlbum'); 
   var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr', 'Queue'); 
 
   
@@ -537,19 +537,20 @@ class SoapsController extends AppController {
     $library_terriotry = $this->getLibraryTerritory($libraryId);
  
     $featuredCache = Cache::read("featured".$library_terriotry);
-    if (($artists = $featuredCache) === false) {
+    if (($artists = $featuredCache) === false || $featuredCache == null) {
       
       //get all featured artist and make array
-     $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $library_terriotry,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+     $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_terriotry,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1,'order' => array(
+                'TopAlbum.id' => 'ASC')));
 
       foreach($featured as $k => $v){
-        if($v['Featuredartist']['album'] != 0){
+        if($v['TopAlbum']['album'] != 0){
           if(empty($ids)){
-            $ids .= $v['Featuredartist']['album'];
-            $ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+            $ids .= $v['TopAlbum']['album'];
+            $ids_provider_type .= "(" . $v['TopAlbum']['album'] .",'" . $v['TopAlbum']['provider_type'] ."')";
           } else {
-            $ids .= ','.$v['Featuredartist']['album'];
-            $ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+            $ids .= ','.$v['TopAlbum']['album'];
+            $ids_provider_type .= ','. "(" . $v['TopAlbum']['album'] .",'" . $v['TopAlbum']['provider_type'] ."')";
           }	
         }
       }
@@ -557,7 +558,16 @@ class SoapsController extends AppController {
       $featured = array();
       if($ids != ''){     
         $this->Album->recursive = 2;
-        $featured =  $this->Album->find('all',array('conditions' =>
+        $featured =  $this->Album->find('all',array(
+	'joins' => array(
+                    array(
+                        'type' => 'INNER',
+                        'table' => 'top_albums',
+                        'alias' => 'ta',
+                        'conditions' => array('Album.ProdID = ta.album')
+                    )
+                ),	
+	'conditions' =>
           array('and' =>
             array(
               array("Country.Territory" => $library_terriotry, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
@@ -593,7 +603,7 @@ class SoapsController extends AppController {
                 'Files.SourceURL'
               ),
             )
-          ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit' => 20
+          ), 'order' => 'ta.id ASC', 'limit' => 20
         ));
                     
       }

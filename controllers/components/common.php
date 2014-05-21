@@ -1412,7 +1412,7 @@ STR;
                             ),
                 'recursive' => -1,
                 'order' => array(
-                    'Featuredartist.id' => 'ASC'),
+                    'Featuredartist.id' => 'DESC'),
                 'limit' => "$offset,$limit"
                 )
         );        
@@ -1479,7 +1479,7 @@ STR;
         if(empty($flag)){
             $cond = array('Song.ArtistText' => $artistComposer , 'Song.provider_type = Country.provider_type' , 'Song.provider_type' => $provider);
         }else{
-            $cond = array('Song.Composer' => $artistComposer);
+            $cond = array('Song.Composer' => $artistComposer, 'Song.provider_type = Country.provider_type');
         }
         if(!empty($ajax)){
             $randomSongs = $songInstance->find('all', array(
@@ -1789,7 +1789,7 @@ STR;
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) 
                 GROUP BY Song.ProdID
-                ORDER BY FIELD(Song.ProdID,$ids) ASC
+                ORDER BY FIELD(Song.ProdID,$ids) DESC
                 LIMIT 50 
 
 STR;

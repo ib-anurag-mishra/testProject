@@ -852,7 +852,7 @@ function Get_Sales_date($sales_date_array, $country) {
                         $name = $this->getTextEncode($name);
                         if ( "" !=  $this->getTextEncode($composer_name) && true == is_numeric($count) ) {
                             ?>
-                                    <li><a href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1" title="<?php echo $this->getTextEncode($full_composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></li>
+                                    <li><a href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1" title="<?php echo $this->getTextEncode($full_composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?></a></li>
                                     <?php
                                 }
                                 $i++;
@@ -1057,8 +1057,8 @@ function Get_Sales_date($sales_date_array, $country) {
                                 if (!empty($composer_name)) {
                                     ?>
                                 <li>
-                                    <a href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1" title="<?php echo $this->getTextEncode($composer->Composer) ?>"><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span>
-                                </li>
+                                    <a href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1" title="<?php echo $this->getTextEncode($composer->Composer) ?>"><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a>
+				</li>
                                         <?php
                                     }
                                 }

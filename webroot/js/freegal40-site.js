@@ -713,7 +713,7 @@ $(document).ready(function() {
     {
         var path = window.location.pathname;
         if (path === '/homes/index' || path === '/index' || 
-                path === '/homes/index/' || path === '/index/')
+                path === '/homes/index/' || path === '/index/' || path === '/')
         {
             if (!complete && !results_completed)
             {
