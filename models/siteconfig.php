@@ -9,10 +9,10 @@ class Siteconfig extends AppModel
 {
 	var $name = 'Siteconfig';
 	
-	public function fetchSiteconfigDataBySoption() {
+	public function fetchSiteconfigDataBySoption( $soption ) {
 		
 		$options = array(
-					'conditions' => array('`Siteconfig`.`soption`' => 'maintain_ldt')
+					'conditions' => array('`Siteconfig`.`soption`' => $soption )
 				);
 		
 		return $this->find('first', $options);

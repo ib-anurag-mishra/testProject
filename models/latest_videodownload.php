@@ -10,7 +10,7 @@ class LatestVideodownload extends AppModel
   var $name = 'LatestVideodownload';
   var $usetable = 'latest_videodownloads';
   
-  public function fetchLatestVideoDownloadCountByLibraryIdAndPatronIdAndProdIdAndProviderTypeAndDate($libraryId, $patronId, $productId, $providerType) {
+  public function fetchLatestVideoDownloadCount($libraryId, $patronId, $productId, $providerType) {
 
   	$options = array(
   				'conditions' => array(
@@ -26,7 +26,7 @@ class LatestVideodownload extends AppModel
   	return $this->find('count', $options);
   }
   
-  public function fetchLatestVideodownloadTopDownloadedVideosByLibraryIdAndCreated($libraryId) {
+  public function fetchLatestVideodownloadTopDownloadedVideos($libraryId) {
   	
   	$options = array(
   				'conditions' => array('library_id' => $libraryId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 

@@ -501,7 +501,7 @@ class Videodownload extends AppModel
          * @param datetime $end_date
          * @return array
          */
-        function checkVideoDownloadStatus($prodId, $provider_type,$library_id , $patron_id , $start_date , $end_date)
+        function checkVideoDownloadStatus($prodId, $provider_type, $library_id , $patron_id , $start_date , $end_date)
         {
              return $this->find(
                     'all', array(
@@ -518,7 +518,7 @@ class Videodownload extends AppModel
             ));
         }
 
-	public function fetchVideodownloadTopDownloadedVideosBySalesDateAndDownloadStatus($prefix) {
+	public function fetchVideodownloadTopDownloadedVideos($prefix) {
 		
 		$this->unBindModel(array('belongsTo' => array('Genre')));
 		
@@ -597,7 +597,7 @@ class Videodownload extends AppModel
 		$this->find('all', $options);
 	}
 
-	public function fetchVideodownloadTopVideoGenreByLibraryIdAndLibraryTerritoryAndSaleDateAndGenreAndProviderType($prefix, $territory, $genre) {
+	public function fetchVideodownloadTopVideoGenre( $prefix, $territory, $genre, $explicitContent = true ) {
 
 		$this->unBindModel(array('belongsTo' => array('Genre')));
 
@@ -615,13 +615,6 @@ class Videodownload extends AppModel
 							'File.SourceURL',  
 							'COUNT(DISTINCT(Videodownload.id)) AS COUNT',
 							'Country.SalesDate'
-							),
-					'conditions' => array(
-								'Videodownload.library_id' => 1,
-								'Library.library_territory' => $territory,
-								'Country.SalesDate <=' => 'NOW()',
-								'Video.Genre' => $genre,
-								'Video.provider_type' => 'Genre.provider_type'
 							),
 					'group' => 'Videodownload.ProdID',
 					'order' => 'COUNT DESC',
@@ -660,7 +653,42 @@ class Videodownload extends AppModel
 							)
 				);
 
+		if ( $explicitContent === false ) {
+			$options['conditions'] = array(
+										'Videodownload.library_id' => 1,
+										'Library.library_territory' => $territory,
+										'Country.SalesDate <=' => 'NOW()',
+										'Video.Genre' => $genre,
+										'Video.provider_type' => 'Genre.provider_type',
+										'Video.Advisory !=' => 'T'
+									 );
+		} else {
+			$options['conditions'] = array(
+										'Videodownload.library_id' => 1,
+										'Library.library_territory' => $territory,
+										'Country.SalesDate <=' => 'NOW()',
+										'Video.Genre' => $genre,
+										'Video.provider_type' => 'Genre.provider_type'
+									 );
+		}
+
 		return $this->find('all', $options);
 	}
+	
+	public function getDownloadStatusOfVideos( $idsProviderType, $libraryId , $patronId, $startDate, $endDate ) {
+
+		$options = array(
+						'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+						'conditions' => array(
+								'(ProdID, provider_type) IN ' => $idsProviderType,
+								'library_id' => $libraryId,
+								'patron_id' => $patronId,
+								'history < 2',
+								'created BETWEEN ? AND ?' => array($startDate, $endDate)
+						),
+						'group' => 'ProdID',
+				);
+		
+		return $this->find( 'all', $options );
+	}
 }
-?>

@@ -73,7 +73,7 @@ class Video extends AppModel
 		return $data;
 	}
 	 
- 	public function fetchVideoTopDownloaedVideosByProdIdAndProviderTypeAndTerritoryAndDownloadStatus($countryPrefix, $country, $ids, $arrIntSonyIds = array(), $arrIntIodaIds = array()) {
+ 	public function fetchVideoTopDownloaedVideos($countryPrefix, $country, $ids, $arrIntSonyIds = array(), $arrIntIodaIds = array()) {
  		
  		$this->unBindModel(array('belongsTo' => array('Sample_Files', 'Full_Files'), 'hasOne' => array('Participant', 'Genre', 'Country')));
  		

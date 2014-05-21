@@ -2,13 +2,9 @@
 
 class FeaturedVideo extends AppModel {
 
-	public function fetchFeaturedVideoByTerritoryAndSalesDate( $prefix, $territory ) {
+	public function fetchFeaturedVideo( $prefix, $territory, $explicitContent = true ) {
 
 		$options = array(
-				'conditions' => array(
-						'FeaturedVideo.territory' => $territory,
-						'Country.SalesDate <=' => 'NOW()'
-				),
 				'fields'	 => array(
 						'FeaturedVideo.id',
 						'FeaturedVideo.ProdID',
@@ -56,6 +52,12 @@ class FeaturedVideo extends AppModel {
 						)
 				)
 		);
+
+		if ( $explicitContent === false ) {
+			$options['conditions'] = array( 'FeaturedVideo.territory' => $territory, 'Country.SalesDate <=' => 'NOW()', 'Video.Advisory !=' => 'T' );
+		} else {
+			$options['conditions'] = array( 'FeaturedVideo.territory' => $territory, 'Country.SalesDate <=' => 'NOW()' );
+		}
 
 		return $this->find('all', $options);
 	}
