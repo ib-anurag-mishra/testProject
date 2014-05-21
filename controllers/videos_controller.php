@@ -56,11 +56,15 @@ class VideosController extends AppController {
         $topDownloads   	 		 = $this->topDownloadVideos( $prefix, $territory );
         $featuredVideoDownloadStatus = $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId, 'FeaturedVideo' );
         $topVideoDownloadStatus 	 = $this->getVideosDownloadStatus( $topDownloads, $libraryId, $patronId, 'Video' );
+        $featuredWishlistDetails	 = $this->getWishlistVideosData( $featuredVideos, $libraryId, $patronId, 'FeaturedVideo' );
+        $topVideoWishlistDetails	 = $this->getWishlistVideosData( $topDownloads, $libraryId, $patronId, 'Video' );
 
         $this->set( 'featuredVideos', 				$featuredVideos );
         $this->set( 'topVideoDownloads', 			$topDownloads );
         $this->set( 'featuredVideoDownloadStatus',  $featuredVideoDownloadStatus );
         $this->set( 'topVideoDownloadStatus', 		$topVideoDownloadStatus );
+        $this->set( 'featuredWishlistDetails', 		$featuredWishlistDetails );
+        $this->set( 'topVideoWishlistDetails', 		$topVideoWishlistDetails );
 
         /**
          * As per my understanding
@@ -599,5 +603,48 @@ class VideosController extends AppController {
     		}
     	}
     	return $videoDownloadStatus;
+    }
+    
+    public function getWishlistVideosData( $arrayVideos, $libraryId, $patronId, $arrayIndex ) {
+
+    	//create common structure for add to wishlist functionality
+    	//first check if session variable not set
+    	if ( !$this->Session->check( 'wishlistVideoArray' ) ) {
+    		
+    		$ids = '';
+    		
+    		foreach ( $arrayVideos as $key => $arrayVideo ) {
+    		
+    			if ( empty( $ids ) ) {
+    		
+    				$ids .=  $arrayVideo[$arrayIndex]['ProdID'];
+    			} else {
+    		
+    				$ids .= ',' .  $arrayVideo[$arrayIndex]['ProdID'];
+    			}
+    		}
+
+    		$wishlistDetails = $this->WishlistVideo->getWishListVideosStatus( $ids, $libraryId, $patronId );
+    		
+    		foreach ( $wishlistDetails as $key => $wishlistDetail ) {
+    			$videoWishlistDetails[$wishlistDetail['Wishlistvideo']['ProdID']] = 'Added To Wishlist';
+    		}
+    	} else {
+
+    		$wishlistVideoArray = $this->Session->read( 'wishlistVideoArray' );
+    		$wishlistVideoArray = array_unique( $wishlistVideoArray );
+    
+    		if ( !empty( $wishlistVideoArray ) ) {
+    			
+    			foreach ( $arrayVideos as $key => $arrayVideo ) {
+    				
+    				if ( in_array( $arrayVideo[$arrayIndex]['ProdID'], $wishlistVideoArray ) ) {
+    					$videoWishlistDetails[$arrayVideo[$arrayIndex]['ProdID']] = 'Added To Wishlist';
+    				}
+    			}
+    		}
+    	}
+    	
+    	return $videoWishlistDetails;
     }
 }

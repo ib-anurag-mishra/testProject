@@ -54,5 +54,18 @@ class WishlistVideo extends AppModel
 			return $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" and library_id = '.$libraryID)));
 		}
 	}
+	
+	public function getWishListVideosStatus() {
+		
+		$options = array('conditions' =>
+						array(
+								'library_id' => $libraryId,
+								'patron_id' => $patronId,
+								'ProdID IN ( ' . $ids . ' )'
+						)
+				);
+		
+		return $this->find( 'all', $options );
+	}
 }
 ?>

@@ -59,7 +59,12 @@
                                         <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                                         <div class="wishlist-popover">
                                             <?php
-                                            $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
+                                            if ( array_key_exists( $featureVideo["FeaturedVideo"]["ProdID"], $featuredWishlistDetails ) ):
+                                            	$wishlistInfo = 'Added To Wishlist';
+                                            else:
+                                            	$wishlistInfo = 'Add To Wishlist';
+                                            endif;
+
                                             echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $featureVideo["FeaturedVideo"]["ProdID"], $featureVideo["Video"]["provider_type"]);
                                             ?>
                                         </div>
@@ -164,7 +169,12 @@
                                             <a class="featured-video-download-now-button " href="javascript:void(0);"><?php __("Limit Met"); ?></a> 
                                   <?php endif; ?>	
                                   <?php 
-                                  		$wishlistInfo = $this->WishlistVideo->getWishlistVideoData( $topDownload["Video"]["ProdID"] );
+	                                 	if ( array_key_exists( $topDownload["Video"]["ProdID"], $topVideoWishlistDetails ) ):
+	                                 		$wishlistInfo = 'Added To Wishlist';
+	                                 	else:
+	                                 		$wishlistInfo = 'Add To Wishlist';
+	                                 	endif;
+
                                         echo $this->WishlistVideo->getWishListVideoMarkup( $wishlistInfo, $topDownload["Video"]["ProdID"], $featureVideo["Video"]["provider_type"] );
                                   ?>
                           <?php endif; ?>
