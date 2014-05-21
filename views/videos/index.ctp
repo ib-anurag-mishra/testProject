@@ -22,7 +22,7 @@
 
                                         if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 
-                                            $downloadsUsed = $videoDownloadStatus[$featureVideo['FeaturedVideo']['ProdID']][$featureVideo['Video']['provider_type']];
+                                            $downloadsUsed = $featuredVideoDownloadStatus[$featureVideo['FeaturedVideo']['ProdID']][$featureVideo['Video']['provider_type']];
 
                                             if ( $downloadsUsed > 0 ):
                                                 $featureVideo['Video']['status'] = 'avail';
@@ -128,8 +128,8 @@
 							<div class="wishlist-popover">
                           <?php
                                 if ( $this->Session->read( 'patron' ) ):
-                                        if ( $libraryDownload == '1' && $patronDownload == '1' ):
-                                            $downloadsUsed = $this->Videodownload->getVideodownloadfind( $topDownload['Video']['ProdID'], $topDownload['Video']['provider_type'], $libraryId, $patronId, Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) );
+                                        if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
+                                            $downloadsUsed = $topVideoDownloadStatus[$topDownload['Video']['ProdID']][$topDownload['Video']['provider_type']];
 
                                             if ( $downloadsUsed > 0 ):
                                                 $topDownload['Video']['status'] = 'avail';

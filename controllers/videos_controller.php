@@ -52,13 +52,15 @@ class VideosController extends AppController {
             $this->set( 'patronDownload',  $patronDownload );
         }
 
-        $featuredVideos 	 = $this->featuredVideos( $prefix, $territory );
-        $topDownloads   	 = $this->topDownloadVideos( $prefix, $territory );
-        $videoDownloadStatus = $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId );
+        $featuredVideos 	 		 = $this->featuredVideos( $prefix, $territory );
+        $topDownloads   	 		 = $this->topDownloadVideos( $prefix, $territory );
+        $featuredVideoDownloadStatus = $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId );
+        $topVideoDownloadStatus 	 = $this->getVideosDownloadStatus( $topDownloads, $libraryId, $patronId );
 
-        $this->set( 'featuredVideos', 	   $featuredVideos );
-        $this->set( 'topVideoDownloads',   $topDownloads );
-        $this->set( 'videoDownloadStatus', $videoDownloadStatus );
+        $this->set( 'featuredVideos', 				$featuredVideos );
+        $this->set( 'topVideoDownloads', 			$topDownloads );
+        $this->set( 'featuredVideoDownloadStatus',  $featuredVideoDownloadStatus );
+        $this->set( 'topVideoDownloadStatus', 		$topVideoDownloadStatus );
 
         /**
          * As per my understanding

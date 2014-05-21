@@ -680,7 +680,7 @@ class Videodownload extends AppModel
 		$options = array(
 						'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
 						'conditions' => array(
-								'(ProdID, provider_type) IN ' => $idsProviderType,
+								'(ProdID, provider_type) IN (' . $idsProviderType . ')',
 								'library_id' => $libraryId,
 								'patron_id' => $patronId,
 								'history < 2',
