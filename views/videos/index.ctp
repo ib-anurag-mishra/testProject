@@ -22,7 +22,7 @@
 
                                         if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 
-                                            $downloadsUsed = $featuredVideoDownloadStatus[$featureVideo['FeaturedVideo']['ProdID']][$featureVideo['Video']['provider_type']];
+                                            $downloadsUsed = isset( $featuredVideoDownloadStatus[$featureVideo['FeaturedVideo']['ProdID']][$featureVideo['Video']['provider_type']] ) ? $featuredVideoDownloadStatus[$featureVideo['FeaturedVideo']['ProdID']][$featureVideo['Video']['provider_type']] : 0;
 
                                             if ( $downloadsUsed > 0 ):
                                                 $featureVideo['Video']['status'] = 'avail';
@@ -134,7 +134,7 @@
                           <?php
                                 if ( $this->Session->read( 'patron' ) ):
                                         if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
-                                            $downloadsUsed = $topVideoDownloadStatus[$topDownload['Video']['ProdID']][$topDownload['Video']['provider_type']];
+                                            $downloadsUsed = isset( $topVideoDownloadStatus[$topDownload['Video']['ProdID']][$topDownload['Video']['provider_type']] ) ? $topVideoDownloadStatus[$topDownload['Video']['ProdID']][$topDownload['Video']['provider_type']] : 0 ;
 
                                             if ( $downloadsUsed > 0 ):
                                                 $topDownload['Video']['status'] = 'avail';
