@@ -1663,7 +1663,7 @@ STR;
                         ),
                     )
                 ),
-                'order' => 'ta.id ASC',
+                'order' => 'ta.id DESC',
                 'limit' => 25
                     )
             );
