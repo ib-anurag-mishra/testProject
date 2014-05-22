@@ -49,8 +49,8 @@
 		<section class="album-detail">
 			<div class="album-cover-image">
 				<?php                                         
-                                        $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
-                                 ?>
+				$albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+				?>
 				<img
 					src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>"
 					alt="album-detail-cover" width="250" height="250" />
@@ -62,10 +62,8 @@
 				<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
 				<div class="wishlist-popover">
 					<input type="hidden" id="<?= $album['Album']['ProdID'] ?>"
-						value="album" />
-					
-					<a class="add-to-playlist" href="javascript:void(0)">Add To
-						Playlist</a>
+						value="album" /> <a class="add-to-playlist"
+						href="javascript:void(0)">Add To Playlist</a>
 
 				</div>
 				<?php
@@ -74,10 +72,6 @@
 
 				<?php
 				$image = Configure::read('App.Music_Path') . $albumArtwork;
-				if ($page->isImage($image))
-				{
-					//Image is a correct one
-				} else { }
 				?>
 			</div>
 			<div class="release-info">Release Information</div>
@@ -160,6 +154,21 @@
 			}
 			?>
 
+			<?php
+			if ($this->Session->read('library_type') == 2)
+			{
+				$filePath = shell_exec('perl files/tokengen_streaming ' . $albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
+
+				if (!empty($filePath))
+				{
+					$songPath = explode(':', $filePath);
+					$streamUrl = trim($songPath[1]);
+					$albumSong['streamUrl'] = $streamUrl;
+					$albumSong['totalseconds'] = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']);
+				}
+			}
+			?>
+
 			<div class="tracklist">
 
 				<?php
@@ -212,8 +221,6 @@
 				}
 				?>
 
-
-
 				<div class="song <?php       echo $class;     echo $cs;  ?>">
 					<?php
 					if (strlen($albumSong['Song']['SongTitle']) >= 30)
@@ -222,31 +229,34 @@
 					}
 					else
 					{
-						echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '</a>';
+						if($this->getTextEncode($albumSong['Song']['SongTitle'])){
+							echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '</a>';
+						}else{
+							echo '<a style="text-decoration:none;" title="' . $albumSong['Song']['SongTitle'] . '">' . $albumSong['Song']['SongTitle'] . '</a>';
+						}
+							
 					}
 					if ($albumSong['Song']['Advisory'] == 'T')
 					{
 						echo '<span class="explicit"> (Explicit)</span>';
 					}
-					?>
-				</div>
+					?></div>
+				<?php
+				//check the artist value exist or not
+				$artistTextLenght = strlen($albumSong['Song']['Artist']);
+				$artistTextValue =$albumSong['Song']['Artist'];
+				if ($artistTextLenght >= 30){
+					$artistTextValue = substr($albumSong['Song']['Artist'], 0, 30) . '...';
+				}
+				if($this->getTextEncode($artistTextValue)){
+					$artistTextValue = $this->getTextEncode($artistTextValue);
+				}
+				?>
 				<div class="artist">
 					<a
 						href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>"
-						title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>">
-						<?php
-						if (strlen($albumSong['Song']['Artist']) >= 11)
-						{
-							if (strlen($albumSong['Song']['Artist']) >= 60)
-							{
-								$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 60) . '...';
-							}
-							echo $this->getTextEncode(substr($albumSong['Song']['Artist'], 0, 22));
-						}
-						else
-						{
-							echo $this->getTextEncode($albumSong['Song']['Artist']);
-						}
+						title="<?php echo $artistTextValue; ?>"> <?php
+						echo $artistTextValue;
 						?>
 					</a>
 				</div>
@@ -272,7 +282,9 @@
 							if ($albumSong['Song']['status'] != 'avail')
 							{
 								?>
-					<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
+					<form method="Post"
+						id="form<?php echo $albumSong["Song"]["ProdID"]; ?>"
+						action="/homes/userDownload">
 						<input type="hidden" name="ProdID"
 							value="<?php echo $albumSong["Song"]["ProdID"]; ?>" /> <input
 							type="hidden" name="ProviderType"
@@ -313,6 +325,9 @@
 					<?php
 						}
 					}
+				    elseif (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 0)){?>
+					<a id="not-allowed">Not Allowed</a>
+					<?php  }
 					else
 					{
 						?>

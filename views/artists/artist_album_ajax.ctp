@@ -11,8 +11,8 @@
 		<li>
 			<div class="album-container">
 				<?php                                         
-                                        $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
-                                 ?>
+				$albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+				?>
 				<a
 					href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
 					<img
@@ -36,7 +36,7 @@
 				?>
 				<a
 					href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
-					 <?php
+					<?php
 					$image = Configure::read('App.Music_Path') . $albumArtwork;
 					?>
 

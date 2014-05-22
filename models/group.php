@@ -49,4 +49,3 @@ class Group extends AppModel
    return $resultArr;
   }
 }
-?>

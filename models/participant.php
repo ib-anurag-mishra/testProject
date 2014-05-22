@@ -20,4 +20,3 @@ class Participant extends AppModel
 		)		
 	); 
 }
-?>

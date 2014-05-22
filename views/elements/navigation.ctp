@@ -302,7 +302,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	}
 }
 
- 
+
 
 ?>
 <div class="queue-overlay">
@@ -428,7 +428,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             }
 				} else {
 					?>
-			<h1 class="logo">
+			<h1 class="logo"
+				style="width: 350px; height: 108px; position: absolute; left: 0; top: 0;">
 				<a href="/homes/index"><img
 					src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo"
 					width="157" height="108"> </a>
@@ -436,13 +437,14 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<?php }
 			} else {
 				?>
-			<h1 class="logo">
+			<h1 class="logo"
+				style="width: 350px; height: 108px; position: absolute; left: 0; top: 0;">
 				<a href="/homes/index"><img
 					src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo"
 					width="157" height="108" /> </a>
 			</h1>
 			<?php } ?>
-			<div class="header-right-col" style="right:10px;">
+			<div class="header-right-col" style="right: 10px;">
 				<div class="row-1 clearfix">
 					<?php if(!$this->Session->read("patron")){ 
                                                             if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
@@ -462,7 +464,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					if($this->Session->read("patron")){
 						$maxStreamTime    =   $libraryInfo['Library']['library_streaming_hours']*60*60;
 
-						//if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
 						if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
 
 						{
@@ -531,13 +532,16 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 						$class = ' logged-in';
 						?>
 					<div class="download-count-container">
-						<div class="download-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>
+						<div class="download-count">
+							<span id='downloads_used'><?php echo $downloadCount; ?> </span>/
+							<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
+						</div>
 						<div class="music-note-icon"></div>
 					</div>
 					<?php } ?>
 					<div class="my-account-menu-container<?php echo $class ?>">
 						<?php if($this->Session->read("patron")){  ?>
-						<button class="my-account-menu no-ajaxy">My Account</button>
+						<button class="my-account-menu">My Account</button>
 
 						<ul class="account-menu-dropdown">
 							<?php 
@@ -810,9 +814,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	{
 		$new_releases_css = "sidebar-anchor active";
 	}
-
-
-
 	?>
 
 	<div class="content-wrapper clearfix">
@@ -869,19 +870,29 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				<ul>
 					<li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css,"id"=>'leftmyhistory07',"onclick"=>"setUpperNavigation('leftmyhistory07')")); ?>
 					</li>
-					<?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
 					<li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css,"id"=>'leftmywishlist07',"onclick"=>"setUpperNavigation('leftmywishlist07')")); ?>
 					</li>
-					<?php /* } */ ?>
 				</ul>
 			</div>
 			<?php } ?>
+			<?php                                                                                             
+			$temp_text  =   strip_tags($announcment_value);
 
+			if($temp_text!="")
+			{
+				$announcment_class  =   "display:block;";
+			}
+			else
+			{
+				$announcment_class  =   "";
+			}
+
+			?>
 			<div class="announcements">
 				<h2>
 					<?php __('Announcements'); ?>
 				</h2>
-				<div class="announcement">
+				<div class="announcement" style="<?php echo $announcment_class; ?>">
 					<?php echo $announcment_value; ?>
 				</div>
 			</div>

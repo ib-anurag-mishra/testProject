@@ -55,4 +55,3 @@ class Artist extends AppModel
         }
     }
 }
-?>

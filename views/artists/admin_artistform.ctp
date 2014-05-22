@@ -159,7 +159,7 @@ echo $session->flash();
 
 </script>
 <style type="text/css">
-#AutoArtistResult-DIV>ul>li {
+#AutoArtistResult-DIV > ul > li {
 	cursor: pointer;
 	padding-left: 5px;
 }

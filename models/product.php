@@ -10,4 +10,3 @@ class Product extends AppModel {
   var $name = 'Product';
   var $useTable = 'PRODUCT';
 }
-?>

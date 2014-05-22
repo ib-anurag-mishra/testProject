@@ -53,4 +53,3 @@ class Featuredartist extends AppModel
       }
    }
 }
-?>

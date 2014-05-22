@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  File Name : album.php
  File Description : Models page for the  Songs table.
@@ -37,4 +37,3 @@ class Album extends AppModel
 		)
 	);
 }
-?>

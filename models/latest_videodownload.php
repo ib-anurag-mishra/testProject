@@ -10,4 +10,3 @@ class LatestVideodownload extends AppModel
   var $name = 'LatestVideodownload';
   var $usetable = 'latest_videodownloads';
 }
-?>

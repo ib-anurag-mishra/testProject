@@ -56,4 +56,3 @@ class Newartist extends AppModel
 		}
 	}
 }
-?>
