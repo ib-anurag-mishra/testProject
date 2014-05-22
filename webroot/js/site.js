@@ -1873,8 +1873,51 @@ $('document').ready(function() {
          }*/
     });
 
-    //callSearchAjax();
-    //callMyAccountAjax();
-    //callNotificationAjax();
+    var Cookies = {
+        // Initialize by splitting the array of Cookies
+        init: function () {
+                var allCookies = document.cookie.split('; ');
+                for (var i=0;i<allCookies.length;i++) {
+                        var cookiePair = allCookies[i].split('=');
+                        this[cookiePair[0]] = cookiePair[1];
+                }
+        },
+        // Create Function: Pass name of cookie, value, and days to expire
+        create: function (name,value,days) {
+                if (days) {
+                        var date = new Date();
+                        date.setTime(date.getTime()+(days*24*60*60*1000));
+                        var expires = "; expires="+date.toGMTString();
+                }
+                else var expires = "";
+                document.cookie = name+"="+value+expires+"; path=/";
+                this[name] = value;
+        },
+        // Erase cookie by name
+        erase: function (name) {
+                this.create(name,'',-1);
+                this[name] = undefined;
+        }
+	};
+	Cookies.init();
+	var cur = document.URL;
+  	var fullpath = cur.split('/');
+  	var fullpath = fullpath.slice(3);
+  	var fullpath = fullpath.join('/');
+ 	var fullpath = '/'+fullpath;
+ 	var path = window.location.pathname;
+
+ 	if(path != '/users/redirection_manager' && path!= '/index' && path!= '/homes/chooser' && path!='/' && 'homes/index') {
+  
+    	document.cookie = "lastUrl=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        Cookies.erase('lastUrl');
+        document.cookie = "lastUrl =" + fullpath + ";domain=.freegalmusic.com;path=/";
+
+	}
+	
+    callSearchAjax();
+    callMyAccountAjax();
+    callNotificationAjax();
 
 });
+

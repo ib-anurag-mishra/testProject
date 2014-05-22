@@ -17,14 +17,14 @@ function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
 
 	if(!($con = ftp_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
 	{
-		echo "Not Able to Establish Connection\n";
+		echo "Not Able to Establish Connection with The Orchard using ftp. \n";
 		return false;
 	}
 	else
 	{
 		if(!ftp_login($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
 		{
-			echo "fail: unable to authenticate\n";
+			echo "fail: unable to authenticate with The Orchard using ftp.\n";
 			return false;
 		}
 		else
@@ -104,37 +104,77 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 {
 	if(!($con = ssh2_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
 	{
-		echo "Not Able to Establish Connection\n";
+		echo "Not Able to Establish Connection with The Orchard SFTP\n";
 		return false;
 	}
 	else
 	{
 		if(!ssh2_auth_password($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
 		{
-			echo "fail: unable to authenticate\n";
+			echo "fail: unable to authenticate with The Orchard SFTP\n";
 			return false;
 		}
 		else
 		{
-			$sftp = ssh2_sftp($con);
-			if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH."uploads/"))
-			{
-				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH."uploads/");
-			}
+//			$sftp = ssh2_sftp($con);
+//			if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH."uploads/"))
+//			{
+//				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH."uploads/");
+//			}
+                    
+                        // Create SFTP session
+                        $sftp = ssh2_sftp($con);
+                        $sftpStream = fopen('ssh2.sftp://' . $sftp . '/'.$dst, 'w');
 
-			if(!ssh2_scp_send($con, $src, REPORTS_SFTP_PATH."uploads/".$dst, 0644)){
-				echo "error sending $src report to ".REPORTS_SFTP_PATH."uploads/$dst report to IODA server\n";
-				fwrite($logFileWrite, "error sending " . $typeRepport . " report to IODA server\n");
-				return false;
-			}
-			else
-			{
-				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
-				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
-                                sendFile($src, $dst);
-				sendReportEmail($typeReport, $dst);
-				return true;
-			}
+                        try
+                        {
+                            if (!$sftpStream)
+                            {
+                                throw new Exception("Could not open remote file: $dst");
+                            }
+
+                            $data_to_send = file_get_contents($src);
+                            if ($data_to_send === false)
+                            {
+                                throw new Exception("Could not open local file: $src.");
+                            }
+
+                            if (fwrite($sftpStream, $data_to_send) === false)
+                            {
+                                throw new Exception("Could not send data from file: $src.");
+                            }
+
+                            fclose($sftpStream);
+
+                            echo ucfirst($typeReport) . " Report Sucessfully sent\n";
+                            fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+                            sendFile($src, $dst);
+                            sendReportEmail($typeReport, $dst);
+                            return true;
+                        }
+                        catch (Exception $e)
+                        {
+                            echo "error sending $src report to /$dst report to IODA server\n";
+                            fwrite($logFileWrite, "error sending " . $typeReport . " report to IODA server\n");                          
+                            echo 'Exception: ' . $e->getMessage();
+                            fclose($sftpStream);
+                            return false;
+                        }
+
+
+//			if(!ssh2_scp_send($con, $src, "/".$dst, 0644)){
+//				echo "error sending $src report to /$dst report to IODA server\n";
+//				fwrite($logFileWrite, "error sending " . $typeReport . " report to IODA server\n");
+//				return false;
+//			}
+//			else
+//			{
+//				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
+//				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+//                                sendFile($src, $dst);
+//				sendReportEmail($typeReport, $dst);
+//				return true;
+//			}
 		}
 	}
 }
@@ -218,13 +258,13 @@ function sendFile($src,$dst)
         
 	if(!($con = ssh2_connect($SFTP_HOST,$SFTP_PORT)))
 	{
-		echo "Not Able to Establish Connection\n";
+		echo "Not Able to Establish Connection with CDN.\n";
 	}
 	else
 	{
 		if(!ssh2_auth_password($con,$SFTP_USER,$SFTP_PASS))
 		{
-			echo "fail: unable to authenticate\n";
+			echo "fail: unable to authenticate with CDN.\n";
 		}
 		else
 		{
@@ -234,7 +274,7 @@ function sendFile($src,$dst)
 			}
 			else
 			{
-				//echo "FILE Sucessfully sent\n";
+				echo "FILE Sucessfully sent to CDN\n";
 			}
 
 		}

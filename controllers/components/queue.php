@@ -237,5 +237,3 @@ Class QueueComponent extends Object
 	}
 
 }
-
-?>

@@ -98,4 +98,3 @@ Class CdnUploadComponent extends Object
 		}
 	}
 }
-?>

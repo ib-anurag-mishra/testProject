@@ -393,7 +393,7 @@ class SoapsController extends AppController {
 					),
           'order' => array('FIELD(Album.ProdID, '.$val.') ASC'), 
           'chk' => 2,
-          'cache' => 'yes'
+         // 'cache' => 'yes'
 		  ));
       
       if(empty($albumData)) {
@@ -1115,7 +1115,6 @@ STR;
 									array('Song.ReferenceID' => $prodId),
 									array('Song.provider_type = Country.provider_type'),
 									array('Country.DownloadStatus' => 1),
-									//array('Country.StreamingStatus' => 1),
 									array('Country.StreamingSalesDate < NOW()'),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
@@ -1915,6 +1914,9 @@ STR;
 	if($auth_method_name['Library']['library_authentication_method'] == 'capita'){
 	 	$resp = $this->capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
   	}
+	elseif($auth_method_name['Library']['library_authentication_method'] == 'symws'){
+		$resp = $this->symwsAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+	}
 	else{
         	$resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       	}
@@ -4306,8 +4308,6 @@ STR;
 		$matches = array();
 		$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 		$data['database'] = 'freegal';
-		//$data['hostname'] = $existingLibraries['0']['Library']['library_host_name'];
-               // $data['port'] = $existingLibraries['0']['Library']['library_port_no'];
 		$data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];
 		
 		if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -4347,6 +4347,107 @@ STR;
 	}
 
     }
+
+/**
+   * Authenticates user by symws method
+   * @param $card
+   * @param $pin
+   * @param $library_id
+   * @param $agent
+   * @return AuthenticationResponseDataType[]
+   */
+
+    private function symwsAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
+	
+	$card = str_replace(" ","", $card);
+	$card = strtolower($card);
+	$data['card'] = $card;
+	$data['pin'] = $pin;
+    	$patronId = $card;
+	$data['patronId'] = $patronId;
+	$data['wrongReferral'] = '';
+   	$data['referral'] = '';
+          
+	$library_data = $this->authLibraryDetails($library_id);
+
+    	if($card == ''){
+		$response_msg = 'Card number not provided';
+      		return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+   	}
+	elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
+		$response_msg = 'Invalid Card number';
+      		return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+	}
+    	elseif($pin == ''){
+		$response_msg = 'Pin not provided';
+      		return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+    	}
+    	else{
+
+      	    if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
+		$response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
+       		 return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+     	     }
+	     $cardNo = substr($card,0,5);
+	     $data['cardNo'] = $cardNo;
+	     $this->Library->recursive = -1;
+	     $this->Library->Behaviors->attach('Containable');
+             $data['library_cond'] = $library_id;
+	
+	     $existingLibraries = $this->Library->find('all',array('conditions' => array('library_status' => 'active','library_authentication_method' => 'symws','Library.id' => $library_id),'fields' => array ('Library.id','Library.library_authentication_method','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no','Library.library_subdomain')
+		)
+	     );
+	   $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
+	   $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
+	    if(count($existingLibraries) == 0){
+		 $response_msg = 'Invalid credentials provided.';
+    		 return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+	    }
+	    else{
+		$matches = array();
+		$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+		$data['database'] = 'freegal';
+		$data['library_host_name'] = $existingLibraries['0']['Library']['library_host_name'];
+		$data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];
+		
+		if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+			$authUrl = Configure::read('App.AuthUrl_AU')."symws_validation";
+		}
+		else{
+			$authUrl = Configure::read('App.AuthUrl')."symws_validation";
+		}
+		$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
+		$resultAnalysis[0] = $result['Posts']['status'];
+		$resultAnalysis[1] = $result['Posts']['message'];
+		if($resultAnalysis[0] == "fail"){
+			$response_msg = $resultAnalysis[1];
+        		return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+		}
+		elseif($resultAnalysis[0] == "success"){
+			$token = md5(time());
+       			$insertArr['patron_id'] = $data['patronId'];
+			$insertArr['library_id'] = $library_id;
+			$insertArr['token'] = $token;
+			$insertArr['auth_time'] = time();
+			$insertArr['agent'] = $agent;
+			$insertArr['auth_method'] = $library_authentication_method;
+			$insertArr['authtype'] = $authtype;
+       	 		$insertArr['card'] = $card;
+        		$insertArr['pin'] = $pin;
+			if(0 == $cron_call) {
+          			$this->AuthenticationToken->save($insertArr);
+        		}
+        
+      			$patron_id = $insertArr['patron_id'];
+        		$response_msg = 'Login Successfull';
+        		return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
+		}
+	    }
+		
+	}
+
+    }
+
 
   /**
    * Function Name : updateUserDetails
@@ -4778,11 +4879,7 @@ STR;
 
 	  $this->Library->setDataSource('master'); 
     
-    if($maintainLatestDownload){
-	// Previous Procedure used 
-     /* $procedure = 'sonyproc_new';
-      $sql = "CALL sonyproc_new('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
-	*/
+    if($maintainLatestDownload){     
 	$procedure = 'downloadsong';
     $sql = "CALL downloadsong('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
       
@@ -6790,6 +6887,7 @@ STR;
       'mdlogin_reference' => '19',
       'ezproxy' => '16',
       'capita' => '17',
+      'symws' => '17',
 
     );
 
@@ -7255,7 +7353,6 @@ STR;
     $connection = ssh2_connect($this->CDN_HOST, 22);
     ssh2_auth_password($connection, $this->CDN_USER, $this->CDN_PASS);
     $filePath = '/published/'.$SaveAsName.'/'.$CdnPath;
-    //$filePath = '/published/000/000/000/000/004/519/20/RoseFalcon_LooksAreEverything_G010001640168b_1_2-256K_44S_2C_cbr1x.mp4';
 
     $sftp = ssh2_sftp($connection);
     $statinfo = null;

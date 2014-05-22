@@ -148,8 +148,6 @@ class NewsController extends AppController
 					$errorMsg .= "Not able to uopload image..";
 				}
 			}
-			
-			;
 
 			if(empty( $errorMsg )) {
 				if( $this->News->save($updateArr) ) {
@@ -369,4 +367,3 @@ class NewsController extends AppController
     		}
   	}
 }
-?>
