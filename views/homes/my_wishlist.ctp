@@ -322,7 +322,6 @@ $ieVersion = ieversion();
                                 $videoImageUrl = Configure::read('App.Music_Path') . $videoImage;
                                 ?>
                                 <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
-                                <!-- <a class="preview" href="javascript:void(0)"></a> -->
                             </div>
                             <div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>" href="javascript:void(0)">
                                     <?php

@@ -207,11 +207,6 @@
                             <?php
                         }
                         ?>
-
-
-
-
-                        <!-- <a class="top-10-download-now-button" href="javascript:void(0)">Download Now</a> -->
                         <?php
                         if ($this->Session->read("patron"))
                         {
