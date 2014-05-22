@@ -12,7 +12,7 @@ if (count($artistList) > 0)
 		{
 			echo " <li>";
 			$selected = (str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) == $this->Session->read('calledArtist')) ? "class='selected'" : "";
-			$ArtistName = str_replace("'", '', ($ArtistName));
+			//$ArtistName = str_replace("'", '', ($ArtistName));
 			$url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
 			?>
 
