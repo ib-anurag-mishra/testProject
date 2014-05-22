@@ -60,7 +60,6 @@ Class GenresController extends AppController
         $this->Genre->recursive = 2;
 
         if (($genre = Cache::read("genre" . $country)) === false)
-        //if(1)        
         {
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
@@ -239,7 +238,6 @@ Class GenresController extends AppController
 
     function view($Genre = null, $Artist = null)
     {
-//        /Configure::write('debug' ,2 );
         //login redirect issue fix        
         if (!base64_decode($this->Session->read('calledGenre')))
         {
@@ -267,8 +265,8 @@ Class GenresController extends AppController
 
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
-        //if (($genre = Cache::read("genre" . $country)) === false)
-        if(1) { 
+        if (($genre = Cache::read("genre" . $country)) === false)
+        {
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -960,5 +958,3 @@ Class GenresController extends AppController
         }
     }
 }
-
-?>

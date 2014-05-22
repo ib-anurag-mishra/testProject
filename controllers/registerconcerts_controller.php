@@ -75,4 +75,3 @@ class RegisterConcertsController extends AppController{
 	}
 
 }
-?>

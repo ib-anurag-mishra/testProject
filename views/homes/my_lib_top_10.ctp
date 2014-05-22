@@ -140,7 +140,6 @@
                                 if ($this->Session->read("patron"))
                                 {
                                     ?> 
-                                    <!-- <a href="#" class="preview"></a>  -->
                                     <?php
                                     if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                     {

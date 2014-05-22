@@ -1325,5 +1325,6 @@ class SolrComponent extends Object {
 	}
 }
 
-class SolrException extends Exception { }
-?>
+class SolrException extends Exception {
+    
+}

@@ -16,7 +16,9 @@ class TestsController extends AppController
      Function Name : beforeFilter
      Desc : actions that needed before other functions are getting called
     */
-    function beforeFilter() { }
+    function beforeFilter() {
+
+    }
 
 	function index() {
 
@@ -2246,4 +2248,3 @@ STR;
 		exit;
 	}
 }
-?>

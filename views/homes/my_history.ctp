@@ -113,9 +113,6 @@ $ieVersion =  ieversion();
 				<div class="row clearfix">
 					<div class="date"><?php echo date("Y-m-d",strtotime($downloadResult['Download']['created'])); ?></div>
 					<div class="small-album-container">
-						
-						<!-- <a class="preview" href="#"></a> -->
-                        
                                                     
                        <?php
                        

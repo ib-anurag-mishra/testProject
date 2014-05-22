@@ -796,4 +796,3 @@ Class StreamingComponent extends Object
 
 	}
 }
-?>

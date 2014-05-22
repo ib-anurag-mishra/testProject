@@ -1331,7 +1331,6 @@ function login($library = null){
         Desc : For saving the notification informaiton using ajax call from the home.ctp popup
     */
         function saveNotification(){
-            //Configure::write('debug', 2);
            
             $this->layout = false;
             
@@ -2959,7 +2958,7 @@ function login($library = null){
 						$authUrl = Configure::read('App.AuthUrl')."indlogin_validation";
 					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					//echo $result;exit;
+
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
@@ -3587,7 +3586,7 @@ function login($library = null){
 			$card = $this->data['User']['card'];
 			$data['card_orig'] = $card;
 			$card = str_replace(" ","",$card);
-		//	$card = strtolower($card);
+
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -6047,4 +6046,3 @@ function login($library = null){
         }
 
 }
-?>
