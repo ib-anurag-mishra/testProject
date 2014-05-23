@@ -454,7 +454,7 @@ $totalRows = count($genresAll);
                                 {
                                     echo " <li>";
                                     $selected = (str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) == $this->Session->read('calledArtist')) ? "class='selected'" : "";
-                                    $artistName = str_replace("'", '', ($artistName));
+                                    //$artistName = str_replace("'", '', ($artistName));
                                     $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
                                     ?>
                                     <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])); ?>/<?= base64_encode($genre) ?>">

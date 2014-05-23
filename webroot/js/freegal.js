@@ -2474,7 +2474,7 @@ function showHideGridCommingSoon(varType) {
 }
 
 $(document).ready(function() {
-
+    $('.sb-close').attr('href','');
     $(document).on('click', '.play-queue-btn', function() {
         playlist = $('#playlist_data').text();
         playlist = JSON.parse(playlist);

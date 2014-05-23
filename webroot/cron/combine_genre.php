@@ -23,7 +23,7 @@ mysql_select_db("freegal", $conn);
 $lf = new logfile();
 
 // Read values from combine_genres table and store in associative array.
-$syngenre_query    = "SELECT genre, expected_genre from combine_genres";
+$syngenre_query    = "SELECT id, genre, expected_genre from combine_genres where update_genre=0";
 $rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysql_error());
 $total_syngenres   = mysql_num_rows($rs_syngenre);
 
@@ -36,62 +36,32 @@ $combine_genre_arr = array();
 for($count=0;$count<$total_syngenres; $count++)
 {
     $row_data    =   mysql_fetch_array($rs_syngenre,MYSQL_ASSOC);
-    //$combine_genre_arr[$row_data['genre']] = $row_data['expected_genre'];
+    
+    $id                     =  mysql_real_escape_string($row_data['id']);
     $current_genre_value    =  mysql_real_escape_string($row_data['genre']);
     $updated_genre_value    =  mysql_real_escape_string($row_data['expected_genre']);
-   // echo "<br>current_genre_value: ".$current_genre_value.", updated_genre_value: ".$updated_genre_value;  
+   
     
     $genreUpdate_query       =  "Update Genre set expected_genre='".$updated_genre_value."' where Genre='".$current_genre_value."'";
     $rs_ugenre               =  mysql_query($genreUpdate_query) or die('Query failed: ' . mysql_error());
-   // echo "<br><br>Genre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows();
-    $lf->write("\nGenre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".mysql_affected_rows());
+  
+    
+    $total_affected_rows    =   mysql_affected_rows();
+    
+    $lf->write("\nGenre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".$total_affected_rows);
+    
+    if($total_affected_rows>0)
+    {
+        $cGenreUpdate_query       =  "Update combine_genres set update_genre='1' where id='".$id."'";
+        $rs_ugenre                =  mysql_query($cGenreUpdate_query) or die('Query failed: ' . mysql_error());
+        
+        $lf->write("\nupdate_genre in combine_genres set to 1 for id: ". $id);
+    }
 }
 
-//echo "<br>Done With Updation";
+
 $lf->write("\nDone with Updation");
 
+mysql_close($conn);
 
-/*
-        //Find Total number of records in Genre Table
-        $count_query        = "SELECT count(*) from Genre";
-        $rs_count           = mysql_query($count_query) or die('Query failed: ' . mysql_error());
-        $count_data         = mysql_fetch_array($rs_count, MYSQL_ASSOC);
-        $total_genres       = $count_data['count(*)'];
-        echo "<br>Total records in Genre Table: ". $total_genres;
-        $lf->write("\nTotal records in Genre Table: ". $total_genres);
-
-        
-        //Find Total Iterations to update expected_genre column in Genre Table.
-        $total_iterations   =   ceil($total_genres/10000);
-               
-        for($count=0; $count<$total_iterations; $count++)
-        {
-            $start_limit    =   10000*$count;
-            $end_limit      =   ($start_limit+10000)-1;
-            
-            // echo "<br>Start Limit: ".$start_limit.", End Limit: ".$end_limit;
-            // Fetch 10000 records from Genre table to update expected_genre Field.
-            $genre_query    = "SELECT ProdID, Genre from Genre Limit ".$start_limit.", ".$end_limit;
-            $rs_genre       = mysql_query($genre_query) or die('Query failed: ' . mysql_error());
-            $tot_count      = mysql_num_rows($rs_genre);
-            
-            while ($rowData = mysql_fetch_array($rs_genre, MYSQL_ASSOC))
-            {
-                $value_to_be_updated    =  mysql_real_escape_string($combine_genre_arr[$rowData['Genre']]); // value from expected_genre field in combine_genre table
-                $rowData['Genre']       =  mysql_real_escape_string($combine_genre_arr[$rowData['Genre']]);
-                $genreUpdate_query      =  "Update Genre set expected_genre='".$value_to_be_updated."' where ProdID=".$rowData['ProdID']." and Genre='".$rowData['Genre']."'";
-                $rs_ugenre               =  mysql_query($genreUpdate_query) or die('Query failed: ' . mysql_error());
-                echo "<br>Genre updated: From ". $rowData['Genre']." to ".$value_to_be_updated." having ProdID ".$rowData['ProdID'];
-                $lf->write("\nGenre updated: From ". $rowData['Genre']." to ".$value_to_be_updated." having ProdID ".$rowData['ProdID']);
-            }
-            
-            if($count==1)
-            {
-                die;
-            }
-        }
-        
-        echo "<br>Done With Updation";
-        $lf->write("\nDone with Updation");
-*/
 ?>
