@@ -1,2 +1,2 @@
-#incremental indexing for solr
+#!/bin/bash
 ../../../cake/console/cake.php incremental_index
