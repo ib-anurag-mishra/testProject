@@ -1654,7 +1654,8 @@ STR;
                     'Album.ArtistURL',
                     'Album.Label',
                     'Album.Copyright',
-                    'Album.provider_type'
+                    'Album.provider_type',
+                    'ta.id'
                 ),
                 'contain' => array(
                     'Genre' => array(
