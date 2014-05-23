@@ -4,8 +4,8 @@ App::import('Core', 'HttpSocket');
 
 class IncrementalIndexShell extends Shell {
 
-	var $core1 = 'freegalmusic';
-	var $core2 = 'freegalmusicvideos';
+	var $core1 =  'freegalmusic';
+	var $core2 =  'freegalmusicvideos';
 
 	var $songsIndexUrl = "http://192.168.100.24:8080/solr/freegalmusic/dataimport";
 
