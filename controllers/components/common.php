@@ -1634,7 +1634,7 @@ STR;
                         'type' => 'INNER',
                         'table' => 'top_albums',
                         'alias' => 'ta',
-                        'conditions' => array('Album.ProdID = ta.album')
+                        'conditions' => array('Album.ProdID = ta.album','ta.territory' => $territory)
                     )
                 ),
                 'conditions' => array(
@@ -1655,7 +1655,7 @@ STR;
                     'Album.Label',
                     'Album.Copyright',
                     'Album.provider_type',
-                    'ta.id'
+                    'ta.id as sortID'
                 ),
                 'contain' => array(
                     'Genre' => array(
@@ -1671,7 +1671,7 @@ STR;
                         ),
                     )
                 ),
-                'order' => 'id DESC',
+                'order' => 'sortID DESC',
                 'limit' => 25
                     )
             );
