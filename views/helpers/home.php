@@ -167,6 +167,7 @@ class HomeHelper extends AppHelper {
 			</div>
 			</div> <!-- end .grids -->
 			</div>';
+			Cache::delete('homes_national_top_100' . $territory);
 			Cache::write('homes_national_top_100' . $territory, $cacheWriteNationalTop100);
 			$cacheReadNationalTop100 = $cacheWriteNationalTop100;
 		}
@@ -175,8 +176,9 @@ class HomeHelper extends AppHelper {
 	}
 	
 	public function featuredAlbums($featuredArtists) {
-
-		$cacheReadFeaturedAlbums = Cache::read('homes_featured_albums');
+		
+		$territory = $this->Session->read('territory');
+		$cacheReadFeaturedAlbums = Cache::read('homes_featured_albums'. $territory);
 		
 		if($cacheReadFeaturedAlbums === false) {
 			
@@ -205,23 +207,9 @@ class HomeHelper extends AppHelper {
 				<div class="album-cover-container">
 			
 				<a href="/artists/view/' . base64_encode($v['Album']['ArtistText']) .'/' . $v['Album']['ProdID'] .'/' . base64_encode($v['Album']['provider_type']) .'">' . $this->Html->image($v['featuredImage'], array("height" => "77", "width" => "84", "alt" => $ArtistText . ' - ' . $v['Album']['AlbumTitle'])) .'</a>';
-			
-				if ($this->Session->read("patron")) {
-					if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']])) {
-						$cacheWriteFeaturedAlbums .= $this->Queue->getAlbumStreamNowLabel($v['albumSongs'][$v['Album']['ProdID']]);
-					}
-			
-					if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']])) {
-			
-						$cacheWriteFeaturedAlbums .= '<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
-						<div class="wishlist-popover">
-						<input type="hidden" id="' . $v['Album']['ProdID'] .'" value="album"/>
-						<a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-						</div>';
-					}
-				} else {
-					$cacheWriteFeaturedAlbums .= '<a class="top-100-download-now-button" href="/users/redirection_manager">' . __("Login") . '</a>';
-				}
+			/*Placeholder*/
+				$cacheWriteFeaturedAlbums .= $v['Album']['ProdID'] . $v['Album']['provider_type']  . '_featured_album';
+				
 				$cacheWriteFeaturedAlbums .= '</div>
 				<div class="album-title">
 				<a title="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($v['Album']['AlbumTitle'])) .'" href="/artists/view/' . base64_encode($v['Album']['ArtistText']) .'/' . $v['Album']['ProdID'] .'/' . base64_encode($v['Album']['provider_type']) .'">' . $this->Dataencode->getTextEncode($title) .'</a>
@@ -238,8 +226,8 @@ class HomeHelper extends AppHelper {
 			</div>
 			</div><!-- end .featured -->';
 			
-			Cache::delete('homes_featured_albums');
-			Cache::write('homes_featured_albums', $cacheWriteFeaturedAlbums);
+			Cache::delete('homes_featured_albums' . $territory);
+			Cache::write('homes_featured_albums' . $territory, $cacheWriteFeaturedAlbums);
 			$cacheReadFeaturedAlbums = $cacheWriteFeaturedAlbums;
 		}
 		
@@ -248,7 +236,8 @@ class HomeHelper extends AppHelper {
 	
 	public function comingSoon($coming_soon_rs, $coming_soon_videos) {
 
-		$cacheReadComingSoon = Cache::read('homes_coming_soon');
+		$territory = $this->Session->read('territory');
+		$cacheReadComingSoon = Cache::read('homes_coming_soon' . $territory);
 		
 		if($cacheReadComingSoon === false) {
 			
@@ -298,17 +287,9 @@ class HomeHelper extends AppHelper {
 				<div class="single-cover-container">
 				<a href="/artists/view/' . base64_encode($value['Song']['ArtistText']) .'/' . $value['Song']['ReferenceID'] .'/' . base64_encode($value['Song']['provider_type']) .'">
 				<img class="' . $lazyClass .'" src="' . $srcImg .'" data-original="' . $dataoriginal .'" alt="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($value['Song']['Artist']) . ' - ' . $this->Dataencode->getTextEncode($value['Song']['SongTitle'])) .'" width="162" height="162" /></a>';
-			
-				if ($this->Session->read("patron")) {
-					$cacheWriteComingSoon .= '<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)">
-			
-					</a>
-					<div class="wishlist-popover">';
-			
-					$wishlistInfo = $this->Wishlist->getWishlistData($value["Song"]["ProdID"]);
-					$cacheWriteComingSoon .= $this->Wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
-					$cacheWriteComingSoon .= '</div>';
-				}
+			/*PlaceHolder*/
+				$cacheWriteComingSoon .= $value["Song"]["ProdID"] . $value["Song"]["provider_type"] . '_coming_soon_song';
+
 				$cacheWriteComingSoon .= '</div>
 				<div class="song-title">
 				<a title="' . $this->Dataencode->getTextEncode($value['Song']['SongTitle']) .'" href="/artists/view/' . base64_encode($value['Song']['ArtistText']) .'/' . $value['Song']['ReferenceID'] .'/' . base64_encode($value['Song']['provider_type']) .'">';
@@ -383,17 +364,9 @@ class HomeHelper extends AppHelper {
 				<img  src="' . $value['videoAlbumImage'] .'"  alt="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($value['Video']['Artist']) . ' - ' . $this->Dataencode->getTextEncode($value['Video']['VideoTitle'])) .'" width="275" height="162" />
 				</a>';
 			
-				if ($this->Session->read("patron")) {
-			
-					$cacheWriteComingSoon .= '<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)">
-			
-					</a>
-					<div class="wishlist-popover">';
-			
-					$wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
-					$cacheWriteComingSoon .= $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-					$cacheWriteComingSoon .= '</div>';
-				}
+				/*PlaceHolder*/
+				$cacheWriteComingSoon .= $value['Video']['ProdID'] . $value['Video']['provider_type'] . '_coming_soon_video';
+				
 				$cacheWriteComingSoon .= '</div>
 				<div class="video-title">
 			
@@ -446,8 +419,8 @@ class HomeHelper extends AppHelper {
 			
 			</div> <!-- end coming soon -->';
 			
-			Cache::delete('homes_coming_soon');
-			Cache::write('homes_coming_soon', $cacheWriteComingSoon);
+			Cache::delete('homes_coming_soon' . $territory);
+			Cache::write('homes_coming_soon' . $territory, $cacheWriteComingSoon);
 			$cacheReadComingSoon = $cacheWriteComingSoon;
 		}
 		
@@ -456,7 +429,8 @@ class HomeHelper extends AppHelper {
 	
 	public function news($news) {
 
-		$cacheReadNews = Cache::read('homes_news');
+		$territory = $this->Session->read('territory');
+		$cacheReadNews = Cache::read('homes_news' . $territory);
 		
 		if( $cacheReadNews === false) {
 			
@@ -499,8 +473,8 @@ class HomeHelper extends AppHelper {
 			</div>
 			</div>';
 			
-			Cache::delete('homes_news');
-			Cache::write('homes_news', $cacheWriteNews);
+			Cache::delete('homes_news' . $territory);
+			Cache::write('homes_news' . $territory, $cacheWriteNews);
 			$cacheReadNews = $cacheWriteNews;
 		}
 		
