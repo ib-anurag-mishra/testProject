@@ -202,7 +202,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 			$replaceString .= '</div>';
 		}
 		$searchString = $value["Song"]["ProdID"] . $value["Song"]["provider_type"] . '_coming_soon_song';
-		$strNationalTop100 = str_replace( $searchString, $replaceString, $strComingSoonData );
+		$strComingSoonData = str_replace( $searchString, $replaceString, $strComingSoonData );
 	}
 
 	foreach ($coming_soon_videos as $key => $value) {
