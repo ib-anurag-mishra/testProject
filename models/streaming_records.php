@@ -10,4 +10,3 @@ class StreamingRecords extends AppModel
 	var $name = 'StreamingRecords';
 	var $usetable = 'streaming_records';
 }
-?>

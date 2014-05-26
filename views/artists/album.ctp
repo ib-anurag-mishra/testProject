@@ -120,9 +120,7 @@
 				?>
 				<li>
 					<div class="album-container">
-						<?php                                                         
-                                                        $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
-                                                 ?>
+						<?php  $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
 						<a
 							href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
 							<img
@@ -262,7 +260,9 @@
 									{
 										?>
 						<span class="top-100-download-now-button">
-							<form method="Post" id="form<?php echo $value['Video']['ProdID']; ?>" action="/videos/download" class="suggest_text1">
+							<form method="Post"
+								id="form<?php echo $value['Video']['ProdID']; ?>"
+								action="/videos/download" class="suggest_text1">
 								<input type="hidden" name="ProdID"
 									value="<?php echo $value['Video']['ProdID']; ?>" /> <input
 									type="hidden" name="ProviderType"
@@ -273,16 +273,14 @@
 									title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>"
 									onclick='return wishlistVideoDownloadOthersToken("<?php echo $value['Video']['ProdID']; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $value['Video']['provider_type']; ?>");'><label
 										class="top-10-download-now-button"><?php __('Download Now'); ?>
-									</label>
-								</a> <![endif]> <!--[if IE]>
+									</label> </a> <![endif]> <!--[if IE]>
                                                                         <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a></label>
                                                                 <![endif]-->
 								</span> <span class="afterClick"
 									id="vdownloading_<?php echo $value['Video']['ProdID']; ?>"
 									style="display: none;"><label
 									class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp'); ?>
-								</label>
-								</span> <span
+								</label> </span> <span
 									id="vdownload_loader_<?php echo $value['Video']['ProdID']; ?>"
 									style="display: none; float: right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?>
 								</span>
@@ -297,8 +295,7 @@
 							class="top-10-download-now-button"
 							style="width: 120px; cursor: pointer;"
 							title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?>
-						</label>
-						</a>
+						</label> </a>
 						<?php
 									}
 								}
@@ -341,8 +338,7 @@
                                                     echo date("F d Y", strtotime($value['Country']['SalesDate']));
                                                 }
                                                 ?> )'><?php __("Coming Soon"); ?>
-						</span>
-						</a>
+						</span> </a>
 						<?php
 							}
 						}
@@ -421,5 +417,5 @@
 		echo '<span> Sorry, there are no details available for this artist.</span>';
 	}
 	?>
-	
+
 </section>

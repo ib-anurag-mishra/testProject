@@ -168,7 +168,7 @@ Class CommonComponent extends Object
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
                 GROUP BY Song.ProdID
                 ORDER BY FIELD(Song.ProdID,$ids) ASC
-                LIMIT 75 
+                LIMIT 100 
 
 STR;
             $data = $albumInstance->query($sql_national_100);
@@ -187,14 +187,21 @@ STR;
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
                 }
-                Cache::delete("national" . $country,"cache2");
-                Cache::write("national" . $country, $data, "cache2");
+                //update the mem datas table
+                $MemDatas = ClassRegistry::init('MemDatas');
+                $nationalTopDownloadSer = base64_encode(serialize($data));
+                $memQuery = "update mem_datas set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
+                $MemDatas->setDataSource('master');
+                $MemDatas->query($memQuery);
+                $MemDatas->setDataSource('default');
+                
+                Cache::write("national" . $country, $data);
                 $this->log("cache written for national top 100 songs for $territory", "cache");
             }
             else
             {
-                $data = Cache::read("national" . $country, "cache2");
-                Cache::write("national" . $country, $data, "cache2");
+                $data = Cache::read("national" . $country);
+                Cache::write("national" . $country, Cache::read("national" . $country));
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
         }
@@ -1591,7 +1598,7 @@ STR;
                 'TopAlbum.language' => Configure::read('App.LANGUAGE')),
             'recursive' => -1,
             'order' => array(
-                'TopAlbum.id' => 'ASC')
+                'TopAlbum.id' => 'DESC')
                 )
         );
         
@@ -1663,7 +1670,7 @@ STR;
                         ),
                     )
                 ),
-                'order' => 'ta.id ASC',
+                'order' => 'ta.id DESC',
                 'limit' => 25
                     )
             );
@@ -2838,7 +2845,7 @@ STR;
     {
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         $videoInstance = ClassRegistry::init('Video');
-        $musicVideoRecs = $videoInstance->find('all', array('conditions' => array('DownloadStatus' => 1), 'fields' => 'Video.ProdID'));
+        $musicVideoRecs = $videoInstance->find('all', array('conditions' => array('Video.DownloadStatus' => 1), 'fields' => 'Video.ProdID'));
         $territoryNames = $this->getTerritories();
         for ($i = 0; $i < count($territoryNames); $i++)
         {
@@ -3105,7 +3112,17 @@ STR;
 
         if (!$this->Session->check('videodownloadCountArray') || $update)
         {
-            $videodownloadCount = $videodownloadInstance->getPatronDownloadCount($libId ,  $patID, $startDate, $endDate );;
+            $videodownloadCount = $videodownloadInstance->find(
+                    'all', array(
+                'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+                'conditions' => array(
+                    'library_id' => $libId,
+                    'patron_id' => $patID,
+                    'history < 2',
+                    'created BETWEEN ? AND ?' => array($startDate, $endDate)
+                ),
+                'group' => 'ProdID',
+            ));
             foreach ($videodownloadCount as $key => $value)
             {
                 $videodownloadCountArray[$value['Videodownload']['ProdID']] = array(
@@ -3161,6 +3178,3 @@ STR;
     }
 
 }
-
-
-?>

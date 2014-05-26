@@ -1836,7 +1836,7 @@ Class ReportsController extends AppController {
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
-                    //commenting since don't need to display this information
+
                     $arr_day_streaming_report = array();
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'day');
@@ -1871,7 +1871,7 @@ Class ReportsController extends AppController {
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
-                    //commenting since don't need to display this information
+
                     $arr_day_streaming_report = array();
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'week');
@@ -1897,7 +1897,7 @@ Class ReportsController extends AppController {
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
-                    //commenting since don't need to display this information
+
                     $arr_day_streaming_report = array();
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'month');
@@ -1923,7 +1923,6 @@ Class ReportsController extends AppController {
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 
-                    //commenting since don't need to display this information
                     $arr_day_streaming_report = array();
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $datesInfo, $territory, 'manual');

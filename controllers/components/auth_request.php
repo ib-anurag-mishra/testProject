@@ -76,4 +76,3 @@ Class AuthRequestComponent extends Object
 		return $parsed_xml;
 	}
 }
-?>

@@ -9,4 +9,3 @@ class Siteconfig extends AppModel
 {
 	var $name = 'Siteconfig';
 }
-?>

@@ -19,9 +19,9 @@
                 ?>
     
     <div class="input text">
-                    <label for="LibraryZipcode">Email </label>
-                    <input type="text" id="LibraryZipcode"  name="email" >
-                    <input type="hidden" i  name="hid_action" value="1">
+	    <label for="LibraryZipcode">Email </label>
+        <input type="text" id="LibraryZipcode"  name="email" >
+        <input type="hidden" name="hid_action" value="1">
     </div>
     
     <?php

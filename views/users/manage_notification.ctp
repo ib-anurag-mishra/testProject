@@ -76,6 +76,33 @@ $ieVersion = ieversion();
             </div>
         </div>
         <script type="text/javascript">
+                        $(function() {
+    <?php
+    if ($notificationAlreadySave === 'true')
+    {
+        ?>
+                                $('#show_newsletterboxField').show();
+        <?php
+    }
+    ?>
+
+
+
+                        });
+                        function checkEmailValue() {
+
+
+                            if (!$('#UserNewsletterEmail').val()) {
+                                alert('Please enter the valid notification email address.');
+                                return false;
+                            }
+                            if (!validateEmail($('#UserNewsletterEmail').val())) {
+                                alert('Please enter the valid notification email address.');
+                                return false;
+                            }
+                            return true;
+                        }
+
 
 
                         function validateEmail(email) {

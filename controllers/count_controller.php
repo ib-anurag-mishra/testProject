@@ -8,5 +8,4 @@ class CountController extends AppController {
     var $name = 'Count';
     var $autoLayout = false;
     var $uses = array();
-}	
-?>
+}

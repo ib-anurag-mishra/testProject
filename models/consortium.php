@@ -11,4 +11,3 @@ class Consortium extends AppModel
   var $useTable = 'consortia';
   
 }
-?>

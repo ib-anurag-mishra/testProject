@@ -5,8 +5,4 @@
  Author : m68interactive
 */
 
-class Category extends AppModel
-{
-  
-}
-?>
+class Category extends AppModel { }

@@ -436,6 +436,7 @@ class Download extends AppModel
         return false;
       }
     }
+
     if(!empty($data)){
       return $data;
     } else {
@@ -471,6 +472,7 @@ class Download extends AppModel
         return false;
       }
     }
+
     if(!empty($data)){
       return $data;
     } else {

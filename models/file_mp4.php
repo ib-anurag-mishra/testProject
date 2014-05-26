@@ -12,4 +12,3 @@ class File_mp4 extends AppModel
   var $useTable = 'File_mp4';
   var $primaryKey = 'FileID';
 }
-?>

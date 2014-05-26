@@ -24,7 +24,7 @@
     // set header and footer fonts
     $tcpdf->setHeaderFont(array($textfont,'',12));
     $tcpdf->xheadertext = 'Libraries Renewal Dates Report generate on '.date("Y-m-d H:i:s");
-    $tcpdf->xfootertext = 'Copyright � %d FreegalMusic.com. All rights reserved.';
+    $tcpdf->xfootertext = 'Copyright © %d FreegalMusic.com. All rights reserved.';
     
     //set margins
     $tcpdf->SetMargins("10", "15", "0");

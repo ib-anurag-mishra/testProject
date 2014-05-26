@@ -51,7 +51,6 @@ class StreamingHistory extends AppModel {
 	*/
 
 	function getDaysStreamedInformation($libraryID, $date, $territory,$reportCond=NULL) {
-		//        Configure::write('debug',0);
 		if(!is_array($date)){
 			$date_arr = explode("/", $date);
 			if($reportCond=='day'){
@@ -83,6 +82,7 @@ class StreamingHistory extends AppModel {
 			while ($row = mysql_fetch_assoc($result)) {
 				$all_Ids[] = $row["id"];
 			}
+
 			$lib_condition = $all_Ids;
 		} else {
 			$lib_condition = $libraryID;
@@ -130,6 +130,7 @@ class StreamingHistory extends AppModel {
 	*/
 
 	function getDaysStreamedByPetronInformation($libraryID, $date, $territory,$reportCond=NULL) {
+
 		if(!is_array($date)){
 			$date_arr = explode("/", $date);
 			if($reportCond=='day'){
@@ -450,6 +451,4 @@ class StreamingHistory extends AppModel {
 					'recursive' => -1));
 		}
 	}
-
 }
-?>

@@ -11,4 +11,3 @@ class Card extends AppModel
     var $useTable = false;
 
 }
-?>

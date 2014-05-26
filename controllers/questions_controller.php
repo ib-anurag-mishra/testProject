@@ -148,4 +148,3 @@ class QuestionsController extends AppController
 		$this->Question->setDataSource('default'); 
 	}
 }
-?>

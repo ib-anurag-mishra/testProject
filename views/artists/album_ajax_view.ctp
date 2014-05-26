@@ -4,8 +4,8 @@ foreach ($albumData as $album_key => $album):
 <section class="album-detail">
 	<div class="album-cover-image" id="genres_stream_now">
 		<?php                         
-                        $albumArtwork = $this->Token->regularToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
-                 ?>
+		$albumArtwork = $this->Token->regularToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+		?>
 		<img
 			src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>"
 			alt="album-detail-cover" width="250" height="250" />
@@ -18,16 +18,14 @@ foreach ($albumData as $album_key => $album):
 
 		<div class="wishlist-popover">
 			<input type="hidden" id="<?= $album['Album']['ProdID'] ?>"
-				value="album" />
-			
-			<a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+				value="album" /> <a class="add-to-playlist"
+				href="javascript:void(0)">Add To Playlist</a>
 		</div>
 		<?php
 		}
 		?>
 		<?php
 		$image = Configure::read('App.Music_Path') . $albumArtwork;
-		if ($page->isImage($image)) { /*Image is a correct one*/ } else { }
 		?>
 
 	</div>
@@ -50,8 +48,7 @@ foreach ($albumData as $album_key => $album):
 			echo '<br />';
 			echo '<font class="explicit"> (Explicit)</font>';
 		}
-		?>
-		</span>
+		?> </span>
 	</div>
 	<div class="album-label">
 		<?php echo __('Label') . ": "; ?>
@@ -60,8 +57,7 @@ foreach ($albumData as $album_key => $album):
 		{
 			echo $this->getTextEncode($album['Album']['Label']);
 		}
-		?>
-		</span>
+		?> </span>
 	</div>
 </section>
 
@@ -86,8 +82,8 @@ foreach ($albumData as $album_key => $album):
 
 	<?php
 	if ($this->Session->read('library_type') == 2)
-	{		
-                $filePath = $this->Token->streamingToken($albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
+	{
+		$filePath = $this->Token->streamingToken($albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
 
 		if (!empty($filePath))
 		{
@@ -175,8 +171,7 @@ foreach ($albumData as $album_key => $album):
 				{
 					echo $this->getTextEncode($albumSong['Song']['Artist']);
 				}
-				?>
-			</a>
+				?> </a>
 		</div>
 		<div class="time">
 			<?php echo $this->Song->getSongDurationTime($albumSong['Song']['FullLength_Duration']); ?>

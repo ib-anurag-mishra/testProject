@@ -865,4 +865,3 @@ class sip2Component extends Object {
 	}
 
 }
-?>

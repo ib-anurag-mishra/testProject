@@ -36,4 +36,3 @@ class Report extends AppModel
 			)
 	);
 }
-?>
