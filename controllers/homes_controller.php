@@ -2908,9 +2908,8 @@ STR;
         $prodId = $_REQUEST['prodId'];
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-
-
-        $videoUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
+        
+        $videoUrl  = $this->Token->regularToken($CdnPath . "/" . $SaveAsName);
         $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
         $finalURL = urlencode($finalVideoUrlArr[0]) . urlencode($finalVideoUrlArr[1]) . urlencode($finalVideoUrlArr[2]);
