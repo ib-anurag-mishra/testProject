@@ -1277,7 +1277,7 @@ STR;
                     INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE ( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)))
                         AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $albumAdvisory                
-                    group by Song.ReferenceID
+                    group by Albums.AlbumTitle
                     ORDER BY Country.SalesDate DESC
                     LIMIT 100
 STR;
