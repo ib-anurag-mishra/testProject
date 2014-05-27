@@ -405,6 +405,7 @@
                 }
 
                 $(document).ready(function() {
+                    alert(<?=$this->Session->read('approved');?>)
     <?php
     if ($this->Session->read('approved') && $this->Session->read('approved') === 'no')
     {
