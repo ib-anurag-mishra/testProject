@@ -448,7 +448,7 @@
                                 success: function(response) {
                                     $.fn.colorbox.close();
                                     $('#noti_content').hide();
-                                    location.reload();
+                                    //location.reload();
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                                 }
@@ -487,7 +487,7 @@
                                     sleep(2000);
                                     $.fn.colorbox.close();
                                     $('#noti_content').hide();
-                                    location.reload();
+                                    //location.reload();
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                                 }
