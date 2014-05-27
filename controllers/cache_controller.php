@@ -157,7 +157,7 @@ class CacheController extends AppController {
     } 
     
     function setNewReleaseAlbums($territory) {
-        $this->Common->getNewReleaseAlbums($territory);
+        $this->Common->getNewReleaseAlbums($territory, true);
     }
     
     function setNewReleaseVideos($territory) {
