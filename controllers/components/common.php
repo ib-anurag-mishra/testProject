@@ -1439,7 +1439,20 @@ STR;
         if(!empty($featured)){
             foreach ($featured as $k => $v)
             {                
-                $featured[$k]['albumSongs'] = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag'],0,$territory);
+            	$albumids = explode(',',$v['Featuredartist']['album']);
+               	if($v['Featuredartist']['album']!=0){
+                 	for ($i=0; $i<count($albumids); $i++){
+        				$streamsongs[$i] =  $this->requestAction(
+                         	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Featuredartist']['ArtistText']), $albumids[$i], base64_encode($v['Featuredartist']['provider_type']),0,$territory))
+                    	);
+					}
+        			$albumsongs = array();
+    				for($a =0; $a<count($streamsongs);$a++){
+        				$albumsongs =  array_merge($albumsongs,reset($streamsongs[$a]));
+        			}
+        			$featured[$k]['albumSongs'] = $albumsongs;
+        
+                }
             }
         }
         return $featured;

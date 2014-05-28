@@ -292,7 +292,15 @@ $str = <<<EOD
 EOD;
             return $str;  
             
-       }     
+       }else if($top == 3){
+       
+$str = <<<EOD
+            <button onclick="javascript:loadAlbumSong('{$playList}');" class="stream-artist">Stream Artist</button>
+EOD;
+            return $str;  
+            
+       }       
+   
     }
     
     
