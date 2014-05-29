@@ -7,6 +7,7 @@
         echo $this->Html->charset();
         echo $this->Html->meta('icon');
 
+// this creating a problem in IE9 so commented this code for time being
 //        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
 //        {
 //            header('X-UA-Compatible: IE=edge,chrome=1');
@@ -82,7 +83,7 @@
 
             <script type="text/javascript">
 
-    <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>
+            <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>
                 var languageSet = '<?php echo $setLang; ?>';
                 var webroot = '<?php echo $this->webroot; ?>';
                 function sleep(milliseconds) {
@@ -469,11 +470,6 @@
                             }
 
                             //post the notification information
-
-
-
-
-
                             var pid = <?= $this->Session->read('patron') ?>;
                             var lid = <?= $this->Session->read('library') ?>;
                             var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
