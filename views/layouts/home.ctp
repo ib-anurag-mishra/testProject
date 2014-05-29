@@ -495,11 +495,9 @@
     }
     ?>
     <?php
-   echo  $userLogin = $this->Session->read('streamPopupShow');
-   echo $this->Session->read('showNotificationPopup');
     
     if($userLogin == 'yes') {
-        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
         {
            echo 'narendra'; ?>
                     $(".streamApproval")
