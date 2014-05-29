@@ -1547,8 +1547,6 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
             {
                 
                 var downloadUsedArr = response.split('|');
-                alert(JSON.stringify(downloadUsedArr));
-                alert(type);
                 if(type == 1){
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 if (languageSet === 'en') {
