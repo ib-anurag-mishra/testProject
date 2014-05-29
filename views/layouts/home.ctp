@@ -494,7 +494,7 @@
         <?php
     }
     ?>
-            alert(<?=$this->Session->read('streamPopupShow');?>);
+            
     <?php
     $userLogin = $this->Session->read("userlogin");
     
