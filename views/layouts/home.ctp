@@ -494,14 +494,45 @@
         <?php
     }
     ?>
-            
     <?php
-    $userLogin = $this->Session->read("userlogin");
+   echo  $userLogin = $this->Session->read("userlogin");
     
-    
-    
-    if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
-    {
+    if($userLogin == 'yes') {
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        {
+            ?>
+                    $(".streamApproval")
+                            .colorbox(
+                            {
+                                width: "50%", inline: true, open: true,
+                                overlayClose: false, opacity: .5,
+                                escKey: false, noEscape: true, href: "#streamApproval_div",
+                                onOpen: function() {
+                                    $(document).unbind("keydown.cbox_close");
+                                }});
+
+                    $("#colorboxOKBtn").click(function() {
+                        var pid = '<?= $this->Session->read('patron') ?>';
+                        var lid = <?= $this->Session->read('library') ?>;
+                        var data = {pid: pid, lid: lid};
+                        jQuery.ajax({
+                            type: "post", // Request method: post, get
+                            url: webroot + "users/savestreampopup", // URL to request
+                            data: data, // postdata
+                            async: false,
+                            success: function(response) {
+                                sleep(2000);
+                                $.fn.colorbox.close();
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                    });
+            <?php
+        }
+    } else {
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        {
         ?>
                         $(".streamApproval")
                                 .colorbox(
@@ -531,8 +562,8 @@
                             });
                         });
         <?php
+        }
     }
-     
     ?>
 
                 });
