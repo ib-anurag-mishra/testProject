@@ -499,7 +499,7 @@
     if($userLogin == 'yes') {
         if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
         {
-           echo 'narendra'; ?>
+    ?>
                     $(".streamApproval")
                             .colorbox(
                             {
