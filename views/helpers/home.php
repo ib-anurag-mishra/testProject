@@ -2,20 +2,19 @@
 
 class HomeHelper extends AppHelper {
 	
-	var $uses 	 = array('Home');
-	var $helpers = array('Session', 'Queue', 'Dataencode', 'Html', 'Wishlist');
+	var $uses 	 = array( 'Home' );
+	var $helpers = array( 'Session', 'Queue', 'Dataencode', 'Html', 'Wishlist' );
 	
 	public function nationalTop100( $nationalTopDownload, $nationalTopAlbumsDownload ) {
 	
-		$territory = $this->Session->read('territory');
+		$territory = $this->Session->read( 'territory' );
 	
-		$cacheReadNationalTop100 = Cache::read('homes_national_top_100' . $territory );
+		$cacheReadNationalTop100 = Cache::read( 'homes_national_top_100' . $territory );
 	
-		if( $cacheReadNationalTop100 === false) {
+		if( $cacheReadNationalTop100 === false ) {
 	
-			$cacheWriteNationalTop100 = '
-			<div class="top-100">
-			<header><h3>' . __('National Top 100', true) . '</h3></header>
+			$cacheWriteNationalTop100 = '<div class="top-100">
+			<header><h3>' . __( 'National Top 100', true ) . '</h3></header>
 			<nav class="top-100-nav">
 			<ul>
 			<li><a href="#top-100-songs" id="songsIDVal" class="active no-ajaxy hp-tabs" data-category-type="songs" onclick="showHideGrid(\'songs\')">Songs</a></li>
@@ -26,162 +25,170 @@ class HomeHelper extends AppHelper {
 			<div id="top-100-songs-grid" class="top-100-grids horiz-scroll active">
 			<ul style="width:27064px;">';
 	
-			if (is_array($nationalTopDownload) && count($nationalTopDownload) > 0) {
-	
-				$k = 2000;
+			if ( is_array( $nationalTopDownload ) && count( $nationalTopDownload ) > 0 ) {
+
 				$nationalTopDownloadCount = count( $nationalTopDownload );
 	
-				for ($i = 0; $i < $nationalTopDownloadCount; $i++) {
+				for ( $i = 0; $i < $nationalTopDownloadCount; $i++ ) {
 	
 					//hide song if library block the explicit content
-					if (($this->Session->read('block') == 'yes') && ($nationalTopDownload[$i]['Song']['Advisory'] == 'T')) {
+					if ( ( $this->Session->read( 'block' ) == 'yes' ) && ( $nationalTopDownload[$i]['Song']['Advisory'] == 'T' ) ) {
 						continue;
 					}
 	
-					if ($i <= 9) {
-						$lazyClass = '';
-						$srcImg = $nationalTopDownload[$i]['songAlbumImage'];
+					if ( $i <= 9 ) {
+						$lazyClass 	  = '';
+						$srcImg 	  = $nationalTopDownload[$i]['songAlbumImage'];
 						$dataoriginal = '';
 					} else {                //  Apply Lazy Class for images other than first 10.
 	
-						$lazyClass = 'lazy';
-						$srcImg = $this->webroot . 'app/webroot/img/lazy-placeholder.gif';
+						$lazyClass 	  = 'lazy';
+						$srcImg 	  = $this->webroot . 'app/webroot/img/lazy-placeholder.gif';
 						$dataoriginal = $nationalTopDownload[$i]['songAlbumImage'];
 					}
 	
 					$cacheWriteNationalTop100	.= '<li>
 					<div class="top-100-songs-detail">
 					<div class="song-cover-container">
-					<a href="/artists/view/' . base64_encode($nationalTopDownload[$i]['Song']['ArtistText']) .'/' . $nationalTopDownload[$i]['Song']['ReferenceID'] .'/' . base64_encode($nationalTopDownload[$i]['Song']['provider_type']) .'">
+					<a href="/artists/view/' . base64_encode( $nationalTopDownload[$i]['Song']['ArtistText'] ) .'/' . $nationalTopDownload[$i]['Song']['ReferenceID'] .'/' . base64_encode( $nationalTopDownload[$i]['Song']['provider_type'] ) .'">
 					<img class="' . $lazyClass .'" alt="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']) . ' - ' . $this->Dataencode->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle'])) .'" src="' . $srcImg .'" data-original="' . $dataoriginal .'"  width="250" height="250" /></a>
 					<div class="top-100-ranking">' .($i + 1) . '</div>';
-					//---------------Begin-----ProdID_provider_type_streaming
+
+					//placeholder for streaming
 					$cacheWriteNationalTop100	.=  $nationalTopDownload[$i]['Song']['ProdID'] . '_' . $nationalTopDownload[$i]['Song']['provider_type'] . '_streaming';
-					//---------------------------end---- ProdID_provider_type_streaming
 	
-					//---------------------------begin---- ProdID_provider_type_download
+					//placeholder for download 
 					$cacheWriteNationalTop100	.=  $nationalTopDownload[$i]['Song']['ProdID'] . '_' . $nationalTopDownload[$i]['Song']['provider_type'] . '_download';
-					//---------------------------end---- ProdID_provider_type_download
 	
-					//---------------------------begin---- ProdID_provider_type_wishlist
+					//Placholder for wishlist
 					$cacheWriteNationalTop100	.=  $nationalTopDownload[$i]['Song']['ProdID'] . '_' . $nationalTopDownload[$i]['Song']['provider_type'] . '_wishlist';
-					//---------------------------end---- ProdID_provider_type_wishlist
+
 					$cacheWriteNationalTop100	.= '</div>';
 	
-					if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 30) {
-						$songTitle = $this->Dataencode->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 30)) . "..";
-					} else {
-						$songTitle = $this->Dataencode->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']);
-					}
+					if ( 'T' == $nationalTopDownload[$i]['Song']['Advisory'] ) {
 	
-					if ('T' == $nationalTopDownload[$i]['Song']['Advisory']) {
-	
-						if (strlen($songTitle) >= 20) {
-							$songTitle = $this->Dataencode->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 20)) . "..";
+						if ( strlen( $nationalTopDownload[$i]['Song']['SongTitle'] ) >= 20 ) {
+							$songTitle = $this->Dataencode->getTextEncode( substr( $nationalTopDownload[$i]['Song']['SongTitle'], 0, 20 ) ) . "..";
 						}
 	
 						$songTitle .='<span style="color: red;display: inline;"> (Explicit)</span> ';
-					}
-	
-					if (strlen($nationalTopDownload[$i]['Song']['ArtistText']) >= 30) {
-						$artistText = $this->Dataencode->getTextEncode(substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 30)) . "..";
+
+					} else if ( strlen( $nationalTopDownload[$i]['Song']['SongTitle'] ) >= 30 ) {
+						$songTitle = $this->Dataencode->getTextEncode( substr( $nationalTopDownload[$i]['Song']['SongTitle'], 0, 30 ) ) . "..";
 					} else {
-						$artistText = $this->Dataencode->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']);
+						$songTitle = $this->Dataencode->getTextEncode( $nationalTopDownload[$i]['Song']['SongTitle'] );
 					}
 	
+					if ( strlen( $nationalTopDownload[$i]['Song']['ArtistText'] ) >= 30 ) {
+						$artistText = $this->Dataencode->getTextEncode( substr( $nationalTopDownload[$i]['Song']['ArtistText'], 0, 30 ) ) . "..";
+					} else {
+						$artistText = $this->Dataencode->getTextEncode( $nationalTopDownload[$i]['Song']['ArtistText'] );
+					}
+
 					$cacheWriteNationalTop100	.= '<div class="song-title">
-					<a title="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle'])) .'" href="/artists/view/' . base64_encode($nationalTopDownload[$i]['Song']['ArtistText']) .'/' . $nationalTopDownload[$i]['Song']['ReferenceID'] .'/' . base64_encode($nationalTopDownload[$i]['Song']['provider_type']) .'">' . $this->Dataencode->getTextEncode($songTitle) .'</a>
+					<a title="' . $this->Dataencode->getValidText( $this->Dataencode->getTextEncode( $nationalTopDownload[$i]['Song']['SongTitle'] ) ) .'" href="/artists/view/' . base64_encode( $nationalTopDownload[$i]['Song']['ArtistText'] ) .'/' . $nationalTopDownload[$i]['Song']['ReferenceID'] .'/' . base64_encode( $nationalTopDownload[$i]['Song']['provider_type'] ) .'">' . $this->Dataencode->getTextEncode( $songTitle ) .'</a>
 					</div>
 					<div class="artist-name">
-					<a title="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText'])) .'" href="/artists/album/' . base64_encode($nationalTopDownload[$i]['Song']['ArtistText']) .'">' . $this->Dataencode->getTextEncode($artistText) .'</a>
+					<a title="' . $this->Dataencode->getValidText( $this->Dataencode->getTextEncode( $nationalTopDownload[$i]['Song']['ArtistText'] ) ) .'" href="/artists/album/' . base64_encode( $nationalTopDownload[$i]['Song']['ArtistText'] ) .'">' . $this->Dataencode->getTextEncode( $artistText ) .'</a>
 					</div>
 					</div>
 					</li>';
-					$k++;
 				}
 			}
+
 			$cacheWriteNationalTop100	.= '</ul>
 			</div>
 			<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
 			<ul style="width:27100px;">';
+
 			$count = 1;
-			if (count($nationalTopAlbumsDownload) > 0) {
-				foreach ($nationalTopAlbumsDownload as $key => $value) {
+
+			if ( is_array( $nationalTopAlbumsDownload ) && count( $nationalTopAlbumsDownload ) > 0 ) {
+
+				foreach ( $nationalTopAlbumsDownload as $key => $value ) {
+
 					//hide song if library block the explicit content
-					if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T')) {
+					if ( ( $this->Session->read( 'block') == 'yes' ) && ( $value['Albums']['Advisory'] == 'T' ) ) {
 						continue;
 					}
+
 					$cacheWriteNationalTop100	.= '<li>
 					<div class="album-container">';
 	
-					if ($count <= 10) {
-						$lazyClass = '';
-						$srcImg = $value['songAlbumImage'];
+					if ( $count <= 10 ) {
+						$lazyClass 	  = '';
+						$srcImg 	  = $value['songAlbumImage'];
 						$dataoriginal = '';
 					} else {               //  Apply Lazy Class for images other than first 10.
-						$lazyClass = 'lazy';
-						$srcImg = $this->webroot . 'app/webroot/img/lazy-placeholder.gif';
+						$lazyClass 	  = 'lazy';
+						$srcImg 	  = $this->webroot . 'app/webroot/img/lazy-placeholder.gif';
 						$dataoriginal = $value['songAlbumImage'];
 					}
-	
-					$cacheWriteNationalTop100	.= $this->Html->link($this->Html->image($srcImg, array("height" => "250", "width" => "250", "class" => $lazyClass, "data-original" => $dataoriginal)), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false));
+
+					$cacheWriteNationalTop100	.= $this->Html->link( $this->Html->image( $srcImg, array( "height" => "250", "width" => "250", "class" => $lazyClass, "data-original" => $dataoriginal ) ), array( 'controller' => 'artists', 'action' => 'view', base64_encode( $value['Song']['ArtistText'] ), $value['Song']['ReferenceID'], base64_encode( $value['Song']['provider_type'] ) ), array( 'class' => 'first', 'escape' => false ) );
 					$cacheWriteNationalTop100	.= '<div class="top-100-ranking">' . $count . '</div>';
-					//-------------Begin prodID_provider_type_albums
+
+					//Placeholder for Albums
 					$cacheWriteNationalTop100	.=  $value['Song']['ProdID'] . '_' . $value['Song']['provider_type'] . '_albums';
-					//-------------END prodID_provider_type_albums
 	
 					$cacheWriteNationalTop100	.= '</div>
 					<div class="album-title">
-					<a title="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($value['Albums']['AlbumTitle'])) .'" href="/artists/view/' . base64_encode($value['Song']['ArtistText']) .'/' . $value['Song']['ReferenceID'] .'/' . base64_encode($value['Song']['provider_type']) .'">';
+					<a title="' . $this->Dataencode->getValidText( $this->Dataencode->getTextEncode( $value['Albums']['AlbumTitle'] ) ) .'" href="/artists/view/' . base64_encode( $value['Song']['ArtistText'] ) .'/' . $value['Song']['ReferenceID'] .'/' . base64_encode( $value['Song']['provider_type'] ) .'">';
 	
-					if (strlen($value['Albums']['AlbumTitle']) > 20) {
-						$cacheWriteNationalTop100	.= $this->Dataencode->getValidText($this->Dataencode->getTextEncode(substr($value['Albums']['AlbumTitle'], 0, 20))) . "...";
+					if ( strlen( $value['Albums']['AlbumTitle'] ) > 20 ) {
+						$cacheWriteNationalTop100	.= $this->Dataencode->getValidText( $this->Dataencode->getTextEncode( substr( $value['Albums']['AlbumTitle'], 0, 20 ) ) ) . "...";
 					} else {
 						$cacheWriteNationalTop100	.= $value['Albums']['AlbumTitle'];
 					}
+
 					$cacheWriteNationalTop100	.= '</a>';
-					if ('T' == $value['Albums']['Advisory']) {
+
+					if ( 'T' == $value['Albums']['Advisory'] ) {
 						$cacheWriteNationalTop100	.= '<span style="color: red;display: inline;"> (Explicit)</span>';
 					}
+
 					$cacheWriteNationalTop100	.= '</div>
 					<div class="artist-name">
-					<a title="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($value['Song']['Artist'])) .'" href="/artists/album/' . str_replace('/', '@', base64_encode($value['Song']['ArtistText'])) .'/' . base64_encode($value['Song']['Genre']) .'">';
+					<a title="' . $this->Dataencode->getValidText( $this->Dataencode->getTextEncode( $value['Song']['Artist'] ) ) .'" href="/artists/album/' . str_replace( '/', '@', base64_encode( $value['Song']['ArtistText'] ) ) .'/' . base64_encode( $value['Song']['Genre'] ) .'">';
 	
-					if (strlen($value['Song']['Artist']) > 32) {
-						$cacheWriteNationalTop100	.= $this->Dataencode->getValidText($this->Dataencode->getTextEncode(substr($value['Song']['Artist'], 0, 32))) . "...";
+					if ( strlen( $value['Song']['Artist'] ) > 32 ) {
+						$cacheWriteNationalTop100	.= $this->Dataencode->getValidText( $this->Dataencode->getTextEncode( substr( $value['Song']['Artist'], 0, 32 ) ) ) . "...";
 					} else {
-						$cacheWriteNationalTop100	.= $this->Dataencode->getValidText($this->Dataencode->getTextEncode($value['Song']['Artist']));
+						$cacheWriteNationalTop100	.= $this->Dataencode->getValidText( $this->Dataencode->getTextEncode( $value['Song']['Artist'] ) );
 					}
+
 					$cacheWriteNationalTop100	.= '</a>
 					</div>
 					</li>';
 	
 					$count++;
 				}
-			} else {
-	
+			} else {	
 				$cacheWriteNationalTop100	.= '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
 			}
 	
 			$cacheWriteNationalTop100	.= '</ul>
 			</div>
-			</div> <!-- end .grids -->
+			</div>
 			</div>';
-			Cache::delete('homes_national_top_100' . $territory);
-			Cache::write('homes_national_top_100' . $territory, $cacheWriteNationalTop100);
+
+			Cache::delete( 'homes_national_top_100' . $territory );
+			Cache::write( 'homes_national_top_100' . $territory, $cacheWriteNationalTop100 );
+
 			$cacheReadNationalTop100 = $cacheWriteNationalTop100;
 		}
-	
+
 		return $cacheReadNationalTop100;
 	}
 	
-	public function featuredAlbums($featuredArtists) {
+	public function featuredAlbums( $featuredArtists ) {
 		
-		$territory = $this->Session->read('territory');
-		$cacheReadFeaturedAlbums = Cache::read('homes_featured_albums'. $territory);
+		$territory = $this->Session->read( 'territory' );
+
+		$cacheReadFeaturedAlbums = Cache::read( 'homes_featured_albums'. $territory );
 		
-		if($cacheReadFeaturedAlbums === false) {
-			
+		if( $cacheReadFeaturedAlbums === false ) {
+
 			$cacheWriteFeaturedAlbums = '<div class="featured">
 			<header>
 			<h3>Featured Albums</h3>
@@ -189,57 +196,59 @@ class HomeHelper extends AppHelper {
 			<div class="featured-grid horiz-scroll">
 			<ul style="width:3690px;">';
 			
-			foreach ($featuredArtists as $k => $v) {
-				if (strlen($v['Album']['AlbumTitle']) > 22) {
-					$title = substr($v['Album']['AlbumTitle'], 0, 22) . "..";
+			foreach ( $featuredArtists as $k => $v ) {
+
+				if ( strlen( $v['Album']['AlbumTitle'] ) > 22 ) {
+					$title = substr( $v['Album']['AlbumTitle'], 0, 22 ) . "..";
 				} else {
 					$title = $v['Album']['AlbumTitle'];
 				}
 
-				if (strlen($v['Album']['ArtistText']) > 22) {
-					$ArtistText = substr($v['Album']['ArtistText'], 0, 22) . "..";
+				if ( strlen( $v['Album']['ArtistText'] ) > 22 ) {
+					$ArtistText = substr( $v['Album']['ArtistText'], 0, 22 ) . "..";
 				} else {
 					$ArtistText = $v['Album']['ArtistText'];
 				}
-			
+
 				$cacheWriteFeaturedAlbums .= '<li>
 				<div class="featured-album-detail">
 				<div class="album-cover-container">
-			
-				<a href="/artists/view/' . base64_encode($v['Album']['ArtistText']) .'/' . $v['Album']['ProdID'] .'/' . base64_encode($v['Album']['provider_type']) .'">' . $this->Html->image($v['featuredImage'], array("height" => "77", "width" => "84", "alt" => $ArtistText . ' - ' . $v['Album']['AlbumTitle'])) .'</a>';
-			/*Placeholder*/
+				<a href="/artists/view/' . base64_encode( $v['Album']['ArtistText'] ) .'/' . $v['Album']['ProdID'] .'/' . base64_encode( $v['Album']['provider_type'] ) .'">' . $this->Html->image( $v['featuredImage'], array( "height" => "77", "width" => "84", "alt" => $ArtistText . ' - ' . $v['Album']['AlbumTitle'] ) ) .'</a>';
+
+			//Placeholder for featured Alubms
 				$cacheWriteFeaturedAlbums .= $v['Album']['ProdID'] . $v['Album']['provider_type']  . '_featured_album';
 				
 				$cacheWriteFeaturedAlbums .= '</div>
 				<div class="album-title">
-				<a title="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($v['Album']['AlbumTitle'])) .'" href="/artists/view/' . base64_encode($v['Album']['ArtistText']) .'/' . $v['Album']['ProdID'] .'/' . base64_encode($v['Album']['provider_type']) .'">' . $this->Dataencode->getTextEncode($title) .'</a>
+				<a title="' . $this->Dataencode->getValidText( $this->Dataencode->getTextEncode( $v['Album']['AlbumTitle'] ) ) .'" href="/artists/view/' . base64_encode( $v['Album']['ArtistText'] ) .'/' . $v['Album']['ProdID'] .'/' . base64_encode( $v['Album']['provider_type'] ) .'">' . $this->Dataencode->getTextEncode( $title ) .'</a>
 				</div>
 				<div class="artist-name">
 				<a title="' . $this->Dataencode->getValidText($this->Dataencode->getTextEncode($v['Album']['ArtistText'])) .'" href="/artists/album/' . str_replace('/', '@', base64_encode($v['Album']['ArtistText'])) .'/' . base64_encode($v['Genre']['Genre']) .'">' . $this->Dataencode->getTextEncode($ArtistText) .'</a>
 				</div>
 				</div>
 				</li>';
-			
 			}
-			
+
 			$cacheWriteFeaturedAlbums .= '</ul>
 			</div>
-			</div><!-- end .featured -->';
-			
-			Cache::delete('homes_featured_albums' . $territory);
-			Cache::write('homes_featured_albums' . $territory, $cacheWriteFeaturedAlbums);
+			</div>';
+
+			Cache::delete( 'homes_featured_albums' . $territory );
+			Cache::write( 'homes_featured_albums' . $territory, $cacheWriteFeaturedAlbums );
+
 			$cacheReadFeaturedAlbums = $cacheWriteFeaturedAlbums;
 		}
 		
 		return $cacheReadFeaturedAlbums;
 	}
 	
-	public function comingSoon($coming_soon_rs, $coming_soon_videos) {
+	public function comingSoon( $coming_soon_rs, $coming_soon_videos ) {
 
-		$territory = $this->Session->read('territory');
-		$cacheReadComingSoon = Cache::read('homes_coming_soon' . $territory);
+		$territory = $this->Session->read( 'territory' );
+
+		$cacheReadComingSoon = Cache::read( 'homes_coming_soon' . $territory );
 		
-		if($cacheReadComingSoon === false) {
+		if( $cacheReadComingSoon === false ) {
 			
 			$cacheWriteComingSoon = '<div class="coming-soon">
 			<header class="clearfix">
@@ -258,7 +267,7 @@ class HomeHelper extends AppHelper {
 			 
 			$total_songs = count($coming_soon_rs);
 			$sr_no = 0;
-			
+
 			foreach ($coming_soon_rs as $key => $value) {
 				//hide song if library block the explicit content
 				if (($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] == 'T')) {
