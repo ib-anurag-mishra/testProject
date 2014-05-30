@@ -163,17 +163,16 @@ class HomeHelper extends AppHelper {
 	
 					$count++;
 				}
+				
+				$cacheWriteNationalTop100	.= '</ul></div></div></div>';
+				
+				Cache::delete( 'homes_national_top_100' . $territory );
+				Cache::write( 'homes_national_top_100' . $territory, $cacheWriteNationalTop100 );
+
 			} else {	
 				$cacheWriteNationalTop100	.= '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+				$cacheWriteNationalTop100	.= '</ul></div></div></div>';
 			}
-	
-			$cacheWriteNationalTop100	.= '</ul>
-			</div>
-			</div>
-			</div>';
-
-			Cache::delete( 'homes_national_top_100' . $territory );
-			Cache::write( 'homes_national_top_100' . $territory, $cacheWriteNationalTop100 );
 
 			$cacheReadNationalTop100 = $cacheWriteNationalTop100;
 		}
