@@ -69,8 +69,8 @@ class HomesController extends AppController
     	$patronId  = $this->Session->read( 'patron' );
     	$territory = $this->Session->read( 'territory' );
     	
-    	$this-set( 'libraryId', $libraryId );
-    	$this-set( 'patronId',  $patronId );
+    	$this->set( 'libraryId', $libraryId );
+    	$this->set( 'patronId',  $patronId );
 
     	if ( !empty( $patronId ) ) {
 
