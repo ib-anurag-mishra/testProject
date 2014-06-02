@@ -6,11 +6,9 @@ class dataencodeView extends View
     function getTextEncode($text)
     {   
         // Function used only in Front End
-        // 
-        // commented to add another encoding
-//        $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
-//        return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
-        return mb_convert_encoding($text,'UTF-8', 'UTF-8');
+        $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+        return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
+        //return mb_convert_encoding($text,'UTF-8', 'UTF-8');
     }
 
     /**
