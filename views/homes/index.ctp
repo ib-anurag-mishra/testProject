@@ -365,6 +365,6 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 	</div>
 	<span id="artist_loader" style="display: none;"> <img
 		src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"
-		style="padding-left: 115px; padding-bottom: 25px; border: 0;" alt="" />
+		style="margin: 20px auto" alt="" />
 	</span>
 </section>
