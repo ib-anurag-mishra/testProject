@@ -106,8 +106,8 @@ class SearchHelper extends AppHelper {
        }
        
        //get the download sales date
-       if(is_array($TerritorySalesDateArray)){
-           foreach ($TerritorySalesDateArray as $TerritorySalesDateInfo) {
+       if(is_array($TerritoryStreamingSalesDateArray)){
+           foreach ($TerritoryStreamingSalesDateArray as $TerritorySalesDateInfo) {
                 $Territory_salesdate_array = explode("_", $TerritorySalesDateInfo);
 
                 if(isset($Territory_salesdate_array[0]) && ($Territory_salesdate_array[0] === $territory)){
@@ -128,11 +128,7 @@ class SearchHelper extends AppHelper {
            return 1;           
        }else{
            return 0;
-       }
-        
-    }
-    
-    
+       }   
+    }   
 }
-
 ?>
