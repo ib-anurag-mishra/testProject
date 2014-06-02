@@ -5,150 +5,110 @@
   Author : m68interactive
  */
 
-function createPagination($html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null)
-{
-    $queryString = html_entity_decode($queryString);
-    if ($totalPages > 1)
-    {
+function createPagination( $html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null ) {
 
-        $part = floor($pageLimitToShow / 2);
-        if ($type == 'listing')
-        {
-            if (1 != $currentPage)
-            {
-                $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
-            }
-            else
-            {
+	$pagination_str = '';
+	$queryString = html_entity_decode( $queryString );
+
+    if ( $totalPages > 1 ) {
+
+        $part = floor( $pageLimitToShow / 2 );
+
+        if ( $type == 'listing' ) {
+
+            if ( 1 != $currentPage ) {
+                $pagination_str .= $html->link('<<' . __( 'previous', true ), "/search/index/" . ( $currentPage - 1 ) . '/' . $facetPage . '/' . $queryString);
+            } else {
                 $pagination_str .= "&lt&ltprevious";
             }
-        }
-        else if ($type == 'block')
-        {
-            if (1 != $facetPage)
-            {
+        } else if ($type == 'block') {
+
+            if ( 1 != $facetPage ) {
                 $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString);
-            }
-            else
-            {
+            } else {
                 $pagination_str .= "&lt&ltprevious";
             }
         }
 
         $pagination_str .= " ";
-        if ($type == 'listing')
-        {
-            if ($currentPage <= $part)
-            {
-                $fromPage = 1;
+
+        if ( $type == 'listing' ) {
+
+            if ( $currentPage <= $part ) {
+                
+            	$fromPage = 1;
                 $topage = $currentPage + ($pageLimitToShow - $currentPage);
                 $topage = (($topage <= $totalPages) ? $topage : $totalPages);
-            }
-            elseif ($currentPage >= ($totalPages - $part))
-            {
+
+            } elseif ($currentPage >= ($totalPages - $part)) {
                 $fromPage = ($currentPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($currentPage - ($pageLimitToShow - ($totalPages - $currentPage))) + 1);
                 $topage = $totalPages;
                 $fromPage = (($fromPage > 1) ? $fromPage : 1);
-            }
-            else
-            {
+            } else {
                 $fromPage = $currentPage - $part;
                 $topage = $currentPage + $part;
             }
-        }
-        else if ($type == 'block')
-        {
-            if ($facetPage <= $part)
-            {
+        } else if ($type == 'block') {
+            if ($facetPage <= $part) {
                 $fromPage = 1;
                 $topage = $facetPage + ($pageLimitToShow - $facetPage);
                 $topage = (($topage <= $totalPages) ? $topage : $totalPages);
-            }
-            elseif ($facetPage >= ($totalPages - $part))
-            {
+            } elseif ($facetPage >= ($totalPages - $part)) {
                 $fromPage = ($facetPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($facetPage - ($pageLimitToShow - ($totalPages - $facetPage))) + 1);
                 $topage = $totalPages;
                 $fromPage = (($fromPage > 1) ? $fromPage : 1);
-            }
-            else
-            {
+            } else {
                 $fromPage = $facetPage - $part;
                 $topage = $facetPage + $part;
             }
         }
 
-        for ($pageCount = $fromPage; $pageCount <= $topage; $pageCount++)
-        {
-            if ($type == 'listing')
-            {
-                if ($currentPage == $pageCount)
-                {
+        for ($pageCount = $fromPage; $pageCount <= $topage; $pageCount++) {
+            if ($type == 'listing') {
+                if ($currentPage == $pageCount) {
                     $pagination_str .= $pageCount;
-                }
-                else
-                {
+                } else {
                     $pagination_str .= $html->link($pageCount, '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString);
                 }
-            }
-            else if ($type == 'block')
-            {
-                if ($facetPage == $pageCount)
-                {
+            } else if ($type == 'block') {
+                if ($facetPage == $pageCount) {
                     $pagination_str .= $pageCount;
-                }
-                else
-                {
+                } else {
                     $pagination_str .= $html->link($pageCount, '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString);
                 }
             }
             $pagination_str .= " ";
         }
+
         $pagination_str .= " ";
 
-        if ($type == 'listing')
-        {
-            if ($currentPage != $totalPages)
-            {
+        if ($type == 'listing') {
+            if ($currentPage != $totalPages) {
                 $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString);
-            }
-            else
-            {
+            } else {
                 $pagination_str .= "next&gt&gt";
             }
-        }
-        else if ($type == 'block')
-        {
-            if ($facetPage != $totalPages)
-            {
+        } else if ($type == 'block') {
+            if ($facetPage != $totalPages) {
                 $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString);
-            }
-            else
-            {
+            } else {
                 $pagination_str .= "next&gt&gt";
             }
         }
-    }
-    else
-    {
-        $pagination_str = '';
     }
 
     return $pagination_str;
 }
 
-function truncate_text($text, $char_count, $obj = null, $truncateByWord = true)
-{
+function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) {
 
-    if (strlen($text) > $char_count)
-    {
+    if ( strlen( $text ) > $char_count ) {
         $modified_text = substr($text, 0, $char_count);
         if($truncateByWord == true){
             $modified_text = substr($modified_text, 0, strrpos($modified_text, " ", 0));
         }
         $modified_text = substr($modified_text, 0, $char_count) . "...";
-    }
-    else
-    {
+    } else {
         $modified_text = $text;
     }
 
@@ -156,21 +116,16 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true)
 }
 
 //Code for check Sales date
-function Get_Sales_date($sales_date_array, $country)
-{
+function Get_Sales_date($sales_date_array, $country) {
     $Sales_date = '';
-    if (is_array($sales_date_array))
-    {
-        foreach ($sales_date_array as $TerritorySalesDate)
-        {
+    if (is_array($sales_date_array)) {
+        foreach ($sales_date_array as $TerritorySalesDate) {
             $Territory_date_array = explode("_", $TerritorySalesDate);
-            if (is_array($sales_date_array))
-            {
+            if (is_array($sales_date_array)) {
                 $Territory = $Territory_date_array[0];
             }
 
-            if ($country == $Territory)
-            {
+            if ($country == $Territory) {
                 $Sales_date = $Territory_date_array[1];
                 break;
             }
@@ -180,20 +135,17 @@ function Get_Sales_date($sales_date_array, $country)
     return $Sales_date;
 }
 ?>
+
 <section class="search-page">
-    <div class="breadcrumbs">
-        <?php
+	<div class="breadcrumbs">
+		<?php
         $html->addCrumb(__('Search Results', true), '/search/index');
-        echo $html->getCrumbs(' > ', __('Home', true), '/homes');
-        ?>
+      	echo $html->getCrumbs(' > ', __('Home', true), '/homes');
+		?>
     </div>
-    <header class="clearfix">
-
-
-    </header>
+    <header class="clearfix"></header>
     <section class="advanced-search">
-        <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage();
-                return false;">
+        <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage(); return false;">
             <input type="search" name="q" id="query" value="<?php echo $keyword; ?>"/>
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type)) ? $type : 'all' ?>" name="type">
             <input type="button" name="submit" id="submit" value="Search" />
