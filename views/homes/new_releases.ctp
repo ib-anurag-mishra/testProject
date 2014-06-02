@@ -59,14 +59,14 @@
 
                         </div>
                         <div class="album-title">							
-                            <a title="<?php echo mb_convert_encoding($value['Albums']['AlbumTitle'],'UTF-8', 'UTF-8'); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
+                            <a title="<?php echo $this->getTextEncode($value['Albums']['AlbumTitle']); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
                                 <?php
                                 if (strlen($value['Albums']['AlbumTitle']) > 20)
-                                    //echo substr($this->getTextEncode($value['Albums']['AlbumTitle']), 0, 20) . "...";
-                                    echo substr(mb_convert_encoding($value['Albums']['AlbumTitle'],'UTF-8', 'UTF-8'), 0, 20) . "...";
+                                    echo substr($this->getTextEncode($value['Albums']['AlbumTitle']), 0, 20) . "...";
+                                    //echo substr(mb_convert_encoding($value['Albums']['AlbumTitle'],'UTF-8', 'UTF-8'), 0, 20) . "...";
                                 else
-                                    //echo $this->getTextEncode($value['Albums']['AlbumTitle']);
-                                    echo mb_convert_encoding($value['Albums']['AlbumTitle'],'UTF-8', 'UTF-8');
+                                    echo $this->getTextEncode($value['Albums']['AlbumTitle']);
+                                    //echo mb_convert_encoding($value['Albums']['AlbumTitle'],'UTF-8', 'UTF-8');
                                 ?>
                             </a><?php
                             if ('T' == $value['Albums']['Advisory'])
@@ -74,14 +74,14 @@
                                 ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                         </div>
                         <div class="artist-name">							
-                            <a title="<?php echo mb_convert_encoding($value['Song']['Artist'],'UTF-8', 'UTF-8'); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
+                            <a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
                                 <?php
                                 if (strlen($value['Song']['Artist']) > 32)
-                                    //echo substr($this->getTextEncode($value['Song']['Artist']), 0, 32) . "...";
-                                    echo substr(mb_convert_encoding($value['Song']['Artist'],'UTF-8', 'UTF-8'), 0, 32) . "...";
+                                    echo substr($this->getTextEncode($value['Song']['Artist']), 0, 32) . "...";
+                                    //echo substr(mb_convert_encoding($value['Song']['Artist'],'UTF-8', 'UTF-8'), 0, 32) . "...";
                                 else
-                                    //echo $this->getTextEncode($this->getTextEncode($value['Song']['Artist']));
-                                    echo mb_convert_encoding($value['Song']['Artist'],'UTF-8', 'UTF-8');
+                                    echo $this->getTextEncode($this->getTextEncode($value['Song']['Artist']));
+                                    //echo mb_convert_encoding($value['Song']['Artist'],'UTF-8', 'UTF-8');
                                 ?>
                             </a>
                         </div>
