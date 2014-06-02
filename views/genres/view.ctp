@@ -197,7 +197,8 @@ $totalRows = count($genresAll);
                     foreach ($genresAll as $genre_name):
 
                         $genreNnameWithoutEncode = $genre_name;
-                        $genre_name_encoded = $this->getTextEncode($genre_name);                       
+                        //$genre_name_encoded = $this->getTextEncode($genre_name);                       
+                        $genre_name_encoded = htmlentities($genre_name);
 
                         if ($genre_name_encoded != '')
                         {	
