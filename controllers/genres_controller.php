@@ -58,8 +58,8 @@ Class GenresController extends AppController
         $this->set('patronDownload', $patronDownload);
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
-
-        if (($genre = Cache::read("genre" . $country)) === false)
+        $genreAll = Cache::read("genre" . $country);
+        if ($genreAll === false)
         {
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
@@ -81,7 +81,6 @@ Class GenresController extends AppController
             ));
             Cache::write("genre" . $country, $genreAll);
         }
-        $genreAll = Cache::read("genre" . $country);
 
         $this->set('genresAll', $genreAll);
 
@@ -106,7 +105,8 @@ Class GenresController extends AppController
                 $cond = "";
                 $block = 'no';
             }
-            if (($genres = Cache::read($genreName . $block)) === false)
+            $genreDetails = Cache::read($genreName . $block);
+            if ($genreDetails === false)
             {
                 $this->Song->recursive = 2;
                 $this->Song->Behaviors->attach('Containable');
@@ -164,7 +164,6 @@ Class GenresController extends AppController
                     ), 'limit' => '50'));
                 Cache::write($genreName . $block, $genreDetails);
             }
-            $genreDetails = Cache::read($genreName . $block);
             $finalArr = Array();
             $songArr = Array();
             if (count($genreDetails) > 3)
@@ -265,7 +264,8 @@ Class GenresController extends AppController
 
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
-        if (($genre = Cache::read("genre" . $country)) === false)
+        $genreAll = $genre = Cache::read("genre" . $country);
+        if ($genreAll === false)
         {
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
@@ -288,8 +288,6 @@ Class GenresController extends AppController
             ));
             Cache::write("genre" . $country, $genreAll);
         }
-        $genreAll = Cache::read("genre" . $country);
-
         $this->set('genresAll', $genreAll);
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
@@ -476,7 +474,7 @@ Class GenresController extends AppController
             $condition = array('Song.ArtistText LIKE' => $Artist . '%');
         }
         else
-        {
+        { 
             $condition = "";
         }
 

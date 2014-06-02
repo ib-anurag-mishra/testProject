@@ -1410,7 +1410,11 @@ $('document').ready(function() {
 
     });
 
-
+    $('#search-text').keypress(function(e) {
+  		if(e.which == 13) {
+       		$('#search-text').blur();   
+   		}
+	});
 
     var CurrentPageState = History.getState();
     var ReadycurrentPageState = CurrentPageState.url;

@@ -13,6 +13,9 @@
 //        }
           ?>
 
+	<meta name="apple-itunes-app" content="app-id=508036345" >
+        <meta name="google-play-app" content="app-id=com.libraryideas.freegalmusic" >
+
         <title>
             <?php __('Freegal Music : Your New Music Library :'); ?>
             <?php
@@ -43,7 +46,8 @@
                     'site.js',
                     'freegal40-site',
                     'jquery-scrollto',
-                    'search-results'
+                    'search-results',
+					'jquery.smartbanner.js'
                 )
         );
 
@@ -65,7 +69,8 @@
                     'freegal40',
                     'freegal_styles',
                     'jquery.autocomplete',
-                    'colorbox'
+                    'colorbox',
+					'jquery.smartbanner.css'
                         
                 )
         );
@@ -812,5 +817,17 @@
 
         </div>
     </div> <!-- body - background -->
+
+	<script type="text/javascript">
+        if ( !(/(iPad|iPhone|iPod).*OS [6-7].*AppleWebKit.*Mobile.*Safari/.test(navigator.userAgent)) ) {
+            $.smartbanner({
+                title: 'Freegal Music',
+                author: 'Library Ideas, LLC',
+                daysHidden: 0, 
+                daysReminder: 0,
+                icon: '<?php echo $this->webroot; ?>app/webroot/img/Android120x120.png'
+            });
+        }
+    </script>
 </body>
 </html>
