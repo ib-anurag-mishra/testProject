@@ -657,6 +657,10 @@ if (empty($getData))
                                             <input id="varialbe_index_flag10" type="radio" name="data[Variable][0][variable_index]" value="2" class="form_fields"  >All Index
                                         </td>
                                     </tr>
+    <!--                                                <tr>
+                                                    <td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index'); ?></td>
+                                                    <td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="50" id="authentication_variable_index0"></td>                                     
+                                            </tr>-->
                                     <tr id="msgNo">
                                         <td align="right" width="250"><?php echo $this->Form->label(null, 'Message No'); ?></td>
                                         <td align="left" style="padding-left:20px" class="libselect">
@@ -1235,63 +1239,83 @@ if (empty($getData))
                 </table>
             </div>
             <div id="form_step5" class="form_steps" style="display: none;">
-                <h1>Purchase Downloads</h1>
-                <table cellspacing="10" cellpadding="0" border="0">
-                    <tr><td id="formError5" class="formError" colspan="2"></td></tr
-                    <tr>
-                        <td align="right" width="250"><?php echo $this->Form->label('Library Download Type'); ?></td>
-                        <td  style="font-size:12px;">
-                            <input id="redio1" type="radio" name="data[Library][library_unlimited]" value="0" class="form_fields" onClick="get_purFields('0');" <?php
-                            if ($getData['Library']['library_unlimited'] == 0)
-                            {
-                                ?> checked="checked" <?php } ?>>A la Carte
-                            <input id="redio2" type="radio" name="data[Library][library_unlimited]" value="1" class="form_fields" onClick="get_purFields('1');" <?php
-                            if ($getData['Library']['library_unlimited'] == 1)
-                            {
-                                ?> checked="checked" <?php } ?>>Unlimited
-                        </td>
-                    </tr>
-                    <tr><td colspan="2"></td></tr>                   
-                   
-                    <tr>
-                        <td align="right" width="250"><?php echo $this->Form->label('Create a New Contract'); ?></td>
-                        <td>
+                <div class="purchaseWrapper">
+                    <div id="formError5" class="formError"></div>
+                    <div class="purchase_download">
+                        <h1>Purchase Downloads</h1>
+                        <div class="lib_type">
+                            <?php echo $this->Form->label('Library Download Type'); ?>
+                            <div class="unlmtd">
+                                <input id="redio1" type="radio" name="data[Library][library_unlimited]" value="0" onClick="get_purFields('0');" <?php 
+                                if ($getData['Library']['library_unlimited'] == 0) { ?> checked="checked" <?php } ?>>A la Carte
+                                <input id="redio2" type="radio" name="data[Library][library_unlimited]" value="1" onClick="get_purFields('1');" <?php
+                                if ($getData['Library']['library_unlimited'] == 1) { ?> checked="checked" <?php } ?>>Unlimited
+                            </div>
+                        </div>
+                        <div class="purchase_div">
+                            <?php echo $this->Form->label('Create a New Contract'); ?>
                             <input type="checkbox" id="LibraryShowContract" onclick="showContract()" class="form_fields">
-                        </td>
-                    </tr>					
-                    <tr id="contract_start">
-                        <td align="right" width="250"><?php echo $this->Form->label('Library Contract Start Date'); ?></td>
-                        <td align="left"><?php echo $this->Form->input('Library.library_contract_start_date', array('label' => false, 'div' => false, 'class' => 'form_fields', 'value' => $getData['Library']['library_contract_start_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="contractStart" value="<?php echo $getData['Library']['library_contract_start_date']; ?>"></td>
-                    </tr>
-                    <tr id="contract_end">
-                        <td align="right" width="250"><?php echo $this->Form->label('Library Contract End Date'); ?></td>
-                        <td align="left"><?php echo $this->Form->input('Library.library_contract_end_date', array('label' => false, 'div' => false, 'class' => 'form_fields', 'value' => $getData['Library']['library_contract_end_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="contractEnd" value="<?php echo $getData['Library']['library_contract_end_date']; ?>"></td>
-                    </tr>
-                    <tr <?php
-                    if ($getData['Library']['library_unlimited'] == 1 || $getData['Library']['library_contract_start_date'] == '')
-                    {
-                        ?> style="display:none;" <?php } ?> id="upgrd">
-                        <td align="right" width="250"><?php echo $this->Form->label(' Upgrade Current Library Contract'); ?></td>
-                        <td  align="left" style="padding-left:20px;"><?php echo $this->Form->button('Upgrade', array('type' => 'button', 'id' => 'upgrade')); ?></td
-                    </tr>
-                    <tr id="pur_order" style="display:none;">
-                        <td align="right" width="250"><?php echo $this->Form->label('Purchase Order #'); ?></td>
-                        <td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_order_num', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?></td>
-                    </tr>
-                    <tr id="pur_track" style="display:none;">
-                        <td align="right" width="250"><?php echo $this->Form->label('# of Purchased Tracks'); ?></td>
-                        <td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_tracks', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?></td>
-                    </tr>
-                    <tr id="pur_amount" style="display:none;">
-                        <td align="right" width="250"><?php echo $this->Form->label('Purchased Amount in $'); ?></td>
-                        <td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_amount', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?></td>
-                    </tr>
-                    <tr><td colspan="2"></td></tr>
-                    <tr>
-                        <td colspan="2" align="right"><?php echo $this->Form->button('Save', array('type' => 'button', 'id' => 'next_btn5')); ?></td>
-                    </tr>
-                    <tr><td colspan="2"></td></tr>
-                </table>
+                        </div>
+                        <div class="purchase_div">
+                                <?php echo $this->Form->label('Library Contract Start Date'); ?>
+                                <?php echo $this->Form->input('Library.library_contract_start_date', array('label' => false, 'div' => false, 'class' => 'form_fields', 'value' => $getData['Library']['library_contract_start_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="contractStart" value="<?php echo $getData['Library']['library_contract_start_date']; ?>">
+                        </div>
+                        <div class="purchase_div">
+                            <?php echo $this->Form->label('Library Contract End Date'); ?>
+                            <?php echo $this->Form->input('Library.library_contract_end_date', array('label' => false, 'div' => false, 'class' => 'form_fields', 'value' => $getData['Library']['library_contract_end_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="contractEnd" value="<?php echo $getData['Library']['library_contract_end_date']; ?>">
+                        </div> 
+                        <div class="purchase_div" <?php if ($getData['Library']['library_unlimited'] == 1 || $getData['Library']['library_contract_start_date'] == '') {   ?> style="display:none;" <?php } ?> id="upgrd">
+                            <?php echo $this->Form->label(' Upgrade Current Library Contract'); ?>
+                            <?php echo $this->Form->button('Upgrade', array('type' => 'button', 'id' => 'upgrade')); ?>
+                        </div>
+                    <div id="pur_order" class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('Purchase Order #'); ?>
+                        <?php echo $this->Form->input('LibraryPurchase.purchased_order_num', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>
+                    <div id="pur_track"  class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('# of Purchased Tracks'); ?>
+                        <?php echo $this->Form->input('LibraryPurchase.purchased_tracks', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>
+                    <div id="pur_amount" class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('Purchased Amount in $'); ?>
+                        <?php echo $this->Form->input('LibraryPurchase.purchased_amount', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>
+                    </div>
+                    <div class="purchase_streaming">
+                        <h1>Purchase Streaming</h1><br/><br/>
+                        <div class="purchase_div">
+                            <?php echo $this->Form->label('Create a New Contract'); ?>
+                            <input type="checkbox" id="ShowContract" onclick="showStreamContract()" class="form_fields">
+                        </div>
+                        <div class="purchase_div">
+                                <?php echo $this->Form->label('Library Contract Start Date'); ?>
+                                <?php echo $this->Form->input('ContractLibraryStreamingPurchase.library_contract_start_date', array('label' => false, 'div' => false, 'class' => 'form_fields', 'value' => $contractDates['ContractLibraryStreamingPurchase']['library_contract_start_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="stream_contract_start" value="<?php echo $contractDates['ContractLibraryStreamingPurchase']['library_contract_start_date']; ?>">
+                        </div>
+                        <div class="purchase_div">
+                            <?php echo $this->Form->label('Library Contract End Date'); ?>
+                            <?php echo $this->Form->input('ContractLibraryStreamingPurchase.library_contract_end_date', array('label' => false, 'div' => false, 'class' => 'form_fields', 'value' => $contractDates['ContractLibraryStreamingPurchase']['library_contract_end_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="stream_contract_end" value="<?php echo $contractDates['ContractLibraryStreamingPurchase']['library_contract_end_date']; ?>">
+                        </div> 
+                        <div class="purchase_div" <?php if ($getData['Library']['library_unlimited'] == 1 || $getData['Library']['library_contract_start_date'] == '') {   ?> style="display:none;" <?php } ?> id="strupgrd">
+                            <?php echo $this->Form->label(' Upgrade Current Library Contract'); ?>
+                            <?php echo $this->Form->button('Upgrade', array('type' => 'button', 'id' => 'strupgrade')); ?>
+                        </div>
+                    <div id="str_order" class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('Purchase Order #'); ?>
+                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_order_num', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>
+                    <div id="str_track"  class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('# of Hours Purchased'); ?>
+                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_hours', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>
+                    <div id="str_amount" class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('Purchased Amount in $'); ?>
+                        <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_amount', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>
+                    </div> 
+                    <div class="clr">
+                    </div>
+                    <?php echo $this->Form->button('Save', array('type' => 'button', 'id' => 'next_btn5')); ?>
+                </div>
                 <?php
                 if ($getData['Library']['id'] != "")
                 {
@@ -1315,7 +1339,7 @@ if (empty($getData))
                                 <th><label><b>Purchase Order #</b></label></th>
                                 <th><label><b># Of Purchased Tracks</b></label></th>
                                 <th><label><b>Purchased Amount In $</b></label></th>
-                                <th><label><b>Purchase Entry Date</b></label></th>
+                                <th><label><b>Purchase Entry Date</b></lable></th>
                             </tr>
                             <?php
                             foreach ($allPurchases as $key => $purchases)
@@ -1338,6 +1362,53 @@ if (empty($getData))
                     <?php
                 }
                 ?>
+                <?php
+                if ($getData['Library']['id'] != "")
+                {
+                    ?>
+                    <h1>Previously Purchased Streaming</h1>
+                    <table cellspacing="10" cellpadding="0" border="0">
+                        <?php
+                        if (count($streamPurchases) == 0)
+                        {
+                            ?>
+                            <tr>
+                                <td colspan="2"><label>There are no current purchases data available for this library at this moment.</label></td>
+                            </tr>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <tr>
+                                <th><label><b>No.</b></label></th>
+                                <th><label><b>Purchase Order #</b></label></th>
+                                <th><label><b># Of Hours Purchased</b></label></th>
+                                <th><label><b>Purchased Amount In $</b></label></th>
+                                <th><label><b>Purchase Entry Date</b></lable></th>
+                            </tr>
+                            <?php
+                            
+                            foreach ($streamPurchases as $key => $spurchases)
+                            {  
+                                ?>
+                                <tr>
+                                    <td><label><?php echo $key + 1; ?></label></td>
+                                    <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_order_num']; ?></label></td>
+                                    <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_hours']; ?></label></td>
+                                    <td><label>$<?php echo $spurchases['LibraryPurchasesStreaming']['purchased_amount']; ?></label></td>
+                                    <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['created']; ?></label></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
+                        <tr><td colspan="2"></td></tr>
+                        <tr><td colspan="2"></td></tr>
+                    </table>
+                    <?php
+                }
+                ?>                    
             </div>
         </div>
     </div>
@@ -1366,6 +1437,20 @@ if (isset($javascript))
                                                 }
                                             });
                                             $("#LibraryLibraryContractEndDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3, dateFormat: 'yy-mm-dd'});
+                                            $("#ContractLibraryStreamingPurchaseLibraryContractStartDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3, dateFormat: 'yy-mm-dd', onSelect: function(date) {
+                                                    oDate = $("#ContractLibraryStreamingPurchaseLibraryContractStartDate").datepicker("getDate");
+                                                    oDate.setDate(oDate.getDate() + 365);
+                                                    var MM = oDate.getMonth() + 1;
+                                                    var DD = oDate.getDate();
+                                                    var YY = oDate.getFullYear();
+                                                    if (MM < 10)
+                                                        MM = "0" + MM;
+                                                    if (DD < 10)
+                                                        DD = "0" + DD;
+                                                    $("#ContractLibraryStreamingPurchaseLibraryContractEndDate").val(YY + "-" + MM + "-" + DD);
+                                                }
+                                            });
+                                            $("#ContractLibraryStreamingPurchaseLibraryContractEndDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3, dateFormat: 'yy-mm-dd'});                                            
                                             $("#LibraryLibraryAuthenticationMethod").change(function() {
                                                 $("#dropDown").val($(this).val());
                                                 if ($(this).val() == 'referral_url') {
@@ -1373,7 +1458,9 @@ if (isset($javascript))
                                                     $("#allurl").hide();
                                                     $("#innovative1").hide();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();						
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1403,7 +1490,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").hide();					
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1433,7 +1522,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();					
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1463,7 +1554,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();					
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1493,7 +1586,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();						
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1524,7 +1619,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();						
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1556,6 +1653,8 @@ if (isset($javascript))
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
                                                     $("#innv_var").show();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").show();                                                    
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1586,7 +1685,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();					
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1617,7 +1718,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();				
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1648,7 +1751,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();				
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1678,7 +1783,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").hide();				
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1709,7 +1816,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();				
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").show();
                                                     $("#sip_port").show();
                                                     $("#sip_pin").show();
@@ -1739,7 +1848,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();		
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").show();
                                                     $("#sip_port").show();
                                                     $("#sip_pin").show();
@@ -1769,7 +1880,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").show();			
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").show();
+                                                    //$("#variable").show();						
                                                     $("#sip_host").show();
                                                     $("#sip_port").show();
                                                     $("#sip_pin").show();
@@ -1800,7 +1913,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").show();			
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").show();
+                                                    //$("#variable").show();						
                                                     $("#sip_host").show();
                                                     $("#sip_port").show();
                                                     $("#sip_pin").show();
@@ -1831,7 +1946,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").hide();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();			
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1862,6 +1979,8 @@ if (isset($javascript))
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
                                                     $("#innv_var").show();
+                                                    //$("#innovative_var_pin").show();
+                                                    //$("#variable").show();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1893,6 +2012,8 @@ if (isset($javascript))
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
                                                     $("#innv_var").show();
+                                                    //$("#innovative_var_pin").show();
+                                                    //$("#variable").show();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1923,7 +2044,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();
                                                     $("#innovative2").show();
-                                                    $("#innv_var").show();				
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").show();
+                                                    //$("#variable").show();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1955,7 +2078,9 @@ if (isset($javascript))
                                                     $("#innovative1").show();
                                                     $("#innovative2").hide();
                                                     $("#soap").show();
-                                                    $("#innv_var").hide();				
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -1985,7 +2110,9 @@ if (isset($javascript))
                                                     $("#innovative1").hide();
                                                     $("#innovative2").hide();
                                                     $("#soap").hide();
-                                                    $("#innv_var").hide();				
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
@@ -2014,7 +2141,9 @@ if (isset($javascript))
                                                     $("#referral_url").hide();
                                                     $("#innovative1").hide();
                                                     $("#innovative2").hide();
-                                                    $("#innv_var").hide();			
+                                                    $("#innv_var").hide();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
                                                     $("#sip_host").hide();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
