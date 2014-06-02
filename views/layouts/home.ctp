@@ -7,6 +7,7 @@
         echo $this->Html->charset();
         echo $this->Html->meta('icon');
 
+// this creating a problem in IE9 so commented this code for time being
 //        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
 //        {
 //            header('X-UA-Compatible: IE=edge,chrome=1');
@@ -87,7 +88,7 @@
 
             <script type="text/javascript">
 
-    <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>
+            <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>
                 var languageSet = '<?php echo $setLang; ?>';
                 var webroot = '<?php echo $this->webroot; ?>';
                 function sleep(milliseconds) {
@@ -410,6 +411,7 @@
                 }
 
                 $(document).ready(function() {
+                    
     <?php
     if ($this->Session->read('approved') && $this->Session->read('approved') === 'no')
     {
@@ -427,7 +429,84 @@
                         );
         <?php
     }
+  ?>
+   
+      <?php
+    
+    if($userLogin == 'yes') {
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        {
+    ?>
+                    $(".streamApproval")
+                            .colorbox(
+                            {
+                                width: "50%", inline: true, open: true,
+                                overlayClose: false, opacity: .5,
+                                escKey: false, noEscape: true, href: "#streamApproval_div",
+                                onOpen: function() {
+                                    $(document).unbind("keydown.cbox_close");
+                            }});
 
+                    $("#colorboxOKBtn").click(function() {
+                        var pid = '<?= $this->Session->read('patron') ?>';
+                        var lid = <?= $this->Session->read('library') ?>;
+                        var data = {pid: pid, lid: lid};
+                        jQuery.ajax({
+                            type: "post", // Request method: post, get
+                            url: webroot + "users/savestreampopup", // URL to request
+                            data: data, // postdata
+                            async: false,
+                            success: function(response) {
+                                sleep(2000);
+                                $.fn.colorbox.close();
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                    });
+            <?php
+        }
+    } else {
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        {
+        ?>
+                $(".streamApproval")
+                    .colorbox(
+                        {
+                            width: "50%", inline: true, open: true,
+                            overlayClose: false, opacity: .5,
+                            escKey: false, noEscape: true, href: "#streamApproval_div",
+                            onOpen: function() {
+                                $(document).unbind("keydown.cbox_close");
+                            }});
+
+                $("#colorboxOKBtn").click(function() {
+                    var pid = '<?= $this->Session->read('patron') ?>';
+                    var lid = <?= $this->Session->read('library') ?>;
+                    var data = {pid: pid, lid: lid};
+                    jQuery.ajax({
+                        type: "post", // Request method: post, get
+                        url: webroot + "users/savestreampopup", // URL to request
+                        data: data, // postdata
+                        async: false,
+                        success: function(response) {
+                            sleep(2000);
+                            $.fn.colorbox.close();
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+                });
+        <?php
+        }
+    }
+    ?>  
+     
+     
+     
+     
+     
+          <?php
     if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1))
     {
         ?>
@@ -453,7 +532,7 @@
                                 success: function(response) {
                                     $.fn.colorbox.close();
                                     $('#noti_content').hide();
-                                    //location.reload();
+                                    location.reload();
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                                 }
@@ -473,11 +552,6 @@
                             }
 
                             //post the notification information
-
-
-
-
-
                             var pid = <?= $this->Session->read('patron') ?>;
                             var lid = <?= $this->Session->read('library') ?>;
                             var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
@@ -492,7 +566,7 @@
                                     sleep(2000);
                                     $.fn.colorbox.close();
                                     $('#noti_content').hide();
-                                    //location.reload();
+                                    location.reload();
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                                 }
@@ -502,76 +576,7 @@
         <?php
     }
     ?>
-    <?php
-    $userLogin = $this->Session->read("userlogin");
-    if($userLogin == 'yes') {
-    if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
-    {
-        ?>
-                        $(".streamApproval")
-                                .colorbox(
-                                {
-                                    width: "50%", inline: true, open: true,
-                                    overlayClose: false, opacity: .5,
-                                    escKey: false, noEscape: true, href: "#streamApproval_div",
-                                    onOpen: function() {
-                                        $(document).unbind("keydown.cbox_close");
-                                    }});
 
-                        $("#colorboxOKBtn").click(function() {
-                            var pid = '<?= $this->Session->read('patron') ?>';
-                            var lid = <?= $this->Session->read('library') ?>;
-                            var data = {pid: pid, lid: lid};
-                            jQuery.ajax({
-                                type: "post", // Request method: post, get
-                                url: webroot + "users/savestreampopup", // URL to request
-                                data: data, // postdata
-                                async: false,
-                                success: function(response) {
-                                    sleep(2000);
-                                    $.fn.colorbox.close();
-                                },
-                                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                }
-                            });
-                        });
-        <?php
-    }
-    } else {
-        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
-        {
-        ?>
-                        $(".streamApproval")
-                                .colorbox(
-                                {
-                                    width: "50%", inline: true, open: true,
-                                    overlayClose: false, opacity: .5,
-                                    escKey: false, noEscape: true, href: "#streamApproval_div",
-                                    onOpen: function() {
-                                        $(document).unbind("keydown.cbox_close");
-                                    }});
-
-                        $("#colorboxOKBtn").click(function() {
-                            var pid = '<?= $this->Session->read('patron') ?>';
-                            var lid = <?= $this->Session->read('library') ?>;
-                            var data = {pid: pid, lid: lid};
-                            jQuery.ajax({
-                                type: "post", // Request method: post, get
-                                url: webroot + "users/savestreampopup", // URL to request
-                                data: data, // postdata
-                                async: false,
-                                success: function(response) {
-                                    sleep(2000);
-                                    $.fn.colorbox.close();
-                                },
-                                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                }
-                            });
-                        });
-        <?php
-        }
-    }
-    ?>
 
                 });
 
@@ -754,7 +759,7 @@
         <?php
         $userLogin = $this->Session->read("userlogin");
         if($userLogin == 'yes') {
-        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
         {
             ?>
             <style>#cboxClose{display:none !important;}</style>
