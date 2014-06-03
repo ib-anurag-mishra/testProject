@@ -698,7 +698,7 @@ Class ArtistsController extends AppController {
 
         //check if album value is set in url
         if ($album != '') {
-            $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
+            $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider);
         } else {
             $this->Song->Behaviors->attach('Containable');
             if ($libType != 2) {
