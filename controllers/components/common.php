@@ -2504,7 +2504,7 @@ STR;
             'recursive' => -1
                 )
         );
-
+        $this->log("Cache for library top 10 starts here for date".date("Y-m-d"), "cache");
         foreach ($libraryDetails AS $key => $val)
         {
             $libId = $val['Library']['id'];
@@ -2513,6 +2513,7 @@ STR;
             $this->getLibraryTop10Albums($country, $libId);
             $this->getLibraryTop10Videos($country, $libId);
         }
+        $this->log("Cache for library top 10 ends here for date".date("Y-m-d"), "cache");
     }
 
     /**
