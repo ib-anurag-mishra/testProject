@@ -1,4 +1,4 @@
-<?php
+ <?php
 /*
   File Name : admin_libraryform.ctp
   File Description : View page for library form
@@ -1295,7 +1295,7 @@ if (empty($getData))
                             <?php echo $this->Form->label('Library Contract End Date'); ?>
                             <?php echo $this->Form->input('ContractLibraryStreamingPurchase.library_contract_end_date', array('label' => false, 'div' => false, 'class' => 'form_fields', 'value' => $contractDates['ContractLibraryStreamingPurchase']['library_contract_end_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="stream_contract_end" value="<?php echo $contractDates['ContractLibraryStreamingPurchase']['library_contract_end_date']; ?>">
                         </div> 
-                        <div class="purchase_div" <?php if ($getData['Library']['library_unlimited'] == 1 || $getData['Library']['library_contract_start_date'] == '') {   ?> style="display:none;" <?php } ?> id="strupgrd">
+                        <div class="purchase_div" <?php if ($getData['Library']['library_unlimited'] == 1 || $contractDates['ContractLibraryStreamingPurchase']['library_contract_start_date'] == '') {   ?> style="display:none;" <?php } ?> id="strupgrd">
                             <?php echo $this->Form->label(' Upgrade Current Library Contract'); ?>
                             <?php echo $this->Form->button('Upgrade', array('type' => 'button', 'id' => 'strupgrade')); ?>
                         </div>
