@@ -637,8 +637,8 @@ Class LibrariesController extends AppController
                                                     }
                                                     $this->Library->create();
                                                     if ($this->Library->save($this->data['Library']))
-                                                    {                                        
-                                                        Cache::delete("library".$libraryId);
+                                                     {                                        
+                                                        $this->deleteLibraryCacheKey($libraryId);
                                                         if (count($this->data['Variable']) > 0)
                                                         {
                                                             if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'capita' || $this->data['Library']['library_authentication_method'] == 'symws' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
@@ -949,7 +949,15 @@ Class LibrariesController extends AppController
                 }
             }
         }
-        Cache::delete("library" . $libraryId);
+        $this->deleteLibraryCacheKey($libraryId);
+    }
+    
+    function deleteLibraryCacheKey($libraryId) {
+        $memcache = new Memcache;
+        $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+        $memcache->addServer(Configure::read('App.memcache_ip2'), 11211);
+        $key = Configure::read('App.memcache_key').'_library' . $libraryId;
+        $check = memcache_delete($memcache,$key);         
     }
 
     /*
