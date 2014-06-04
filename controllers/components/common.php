@@ -1443,12 +1443,15 @@ STR;
                	if($v['Featuredartist']['album']!=0){
                  	for ($i=0; $i<count($albumids); $i++){
         				$streamsongs[$i] =  $this->requestAction(
-                         	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Featuredartist']['ArtistText']), $albumids[$i], base64_encode($v['Featuredartist']['provider_type']),0,$territory))
+                         	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Featuredartist']['artist_name']), $albumids[$i], base64_encode($v['Featuredartist']['provider_type']),0,$territory))
                     	);
 					}
         			$albumsongs = array();
     				for($a =0; $a<count($streamsongs);$a++){
-        				$albumsongs =  array_merge($albumsongs,reset($streamsongs[$a]));
+        				$playlist = reset($streamsongs[$a]);
+					if($playlist[0]['Song']['ArtistText'] == $v['Featuredartist']['artist_name']) {
+        					$albumsongs =  array_merge($albumsongs,$playlist);
+					}
         			}
         			$featured[$k]['albumSongs'] = $albumsongs;
         
