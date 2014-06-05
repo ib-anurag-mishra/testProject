@@ -677,32 +677,22 @@ STR;
 
         $this->set('VideosData', $VideosData);
 
-
+        $country = $territory;
         //  More Videos By Artist            
         $MoreVideosData = array();
 	$MoreVideosDataCache = Cache::read("videolist_" . $country . "_" . $decodedId);
-        if (count($VideosData) > 0)
-        {
-
-            $country = $territory;
-
+        if (empty($MoreVideosDataCache)) {
             $decodedId = trim($VideosData[0]['Video']['ArtistText']);
             $decodedId = str_replace('@', '/', $decodedId);
-            if (!empty($country))
-            {
-
-                $MoreVideosData = $this->Common->getAllVideoByArtist($country, $decodedId);
+            $MoreVideosData = $this->Common->getAllVideoByArtist($country, $decodedId);
+            if(!empty($MoreVideosData)){
                 Cache::write("videolist_" . $country . "_" . $decodedId, $MoreVideosData);
+                $MoreVideosData = $MoreVideosData;
+            } else {
                 $MoreVideosData = $MoreVideosDataCache;
             }
-            else
-            {
-                $MoreVideosData = $MoreVideosDataCache;
-            }
-        }
-        else
-        {
-            $MoreVideosData = array();
+        } else {
+            $MoreVideosData = $MoreVideosDataCache;
         }
 
         $this->set('MoreVideosData', $MoreVideosData);
