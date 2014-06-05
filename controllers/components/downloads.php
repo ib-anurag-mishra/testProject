@@ -123,8 +123,12 @@ Class DownloadsComponent extends Object
 			$territory = $mobileTerritory;
 		}
 		$countryInstance->tablePrefix = strtolower($territory)."_";
-		$country = $countryInstance->find('first',array('fields'=>'ProdID','Territory','SalesDate','provider_type'),array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
+                $country = $countryInstance->find('first',
+                        array('fields'=>array('ProdID','Territory','SalesDate','provider_type'),
+                        'conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
 
+                $this->log(print_r($country, true),'download');
+                
 		if(!empty($country['Country'])){
 			return true;
 		} else {
