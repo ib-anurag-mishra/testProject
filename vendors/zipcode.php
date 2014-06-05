@@ -48,13 +48,8 @@ define('_ZIPS_SORT_BY_ZIP_DESC', 4);
 
 // constant for miles to kilometers conversion
 define('_M2KM_FACTOR', 1.609344);
+require_once('config/database.php');
 
-define('DB_HOST', '192.168.100.115');
-define('DB_USER', 'freegal_prod');
-define('DB_PASSWORD', '}e47^B1EO9hD');
-define('DB', 'freegal');
-
-  
 class zipcode_class {
 
    var $last_error = "";            // last error message set by this class
@@ -64,8 +59,9 @@ class zipcode_class {
    
    function __construct()
    {
-		mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) or die(mysql_error()); 
-		mysql_select_db(DB) or die(mysql_error()); 
+        $dbConfig = new DATABASE_CONFIG();
+        mysql_connect($dbConfig->default['host'], $dbConfig->default['login'], $dbConfig->default['password'], $dbConfig->default['database'])or die(mysql_error()); 
+        mysql_select_db($dbConfig->default['database']) or die(mysql_error()); 
    }
 
    function get_distance($zip1, $zip2) {

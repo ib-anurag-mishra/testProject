@@ -1,5 +1,4 @@
 <section class="my-top-100-page">
-
     <div class="breadcrumbs">
         <?php
         $html->addCrumb('New Releases', '/homes/new_releases');
@@ -17,26 +16,11 @@
                 $libId = $this->Session->read('library');
                 $patId = $this->Session->read('patron');
                 $count = 1;
-                $arr_all_albums =   array();
+
                 foreach ($new_releases_albums as $key => $value)
                 {
                     if($count==101) break;
-                    if(in_array($value['Albums']['AlbumTitle'], $arr_all_albums))
-                    {
-                       continue;
-                    }
-                    else
-                    {
-                        $arr_all_albums[$key] = $value['Albums']['AlbumTitle'];
-                    }
-                    
-                    
-                    
-                    //hide song if library block the explicit content
-                    if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T'))
-                    {
-                        continue;
-                    }                                           					
+
                     ?>					
                     <li>
                         <div class="album-container">
@@ -79,8 +63,10 @@
                                 <?php
                                 if (strlen($value['Albums']['AlbumTitle']) > 20)
                                     echo substr($this->getTextEncode($value['Albums']['AlbumTitle']), 0, 20) . "...";
+                                    //echo substr(mb_convert_encoding($value['Albums']['AlbumTitle'],'UTF-8', 'UTF-8'), 0, 20) . "...";
                                 else
                                     echo $this->getTextEncode($value['Albums']['AlbumTitle']);
+                                    //echo mb_convert_encoding($value['Albums']['AlbumTitle'],'UTF-8', 'UTF-8');
                                 ?>
                             </a><?php
                             if ('T' == $value['Albums']['Advisory'])
@@ -88,12 +74,14 @@
                                 ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                         </div>
                         <div class="artist-name">							
-                            <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
+                            <a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
                                 <?php
                                 if (strlen($value['Song']['Artist']) > 32)
                                     echo substr($this->getTextEncode($value['Song']['Artist']), 0, 32) . "...";
+                                    //echo substr(mb_convert_encoding($value['Song']['Artist'],'UTF-8', 'UTF-8'), 0, 32) . "...";
                                 else
                                     echo $this->getTextEncode($this->getTextEncode($value['Song']['Artist']));
+                                    //echo mb_convert_encoding($value['Song']['Artist'],'UTF-8', 'UTF-8');
                                 ?>
                             </a>
                         </div>
