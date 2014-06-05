@@ -75,7 +75,7 @@
                 )
         );
         ?>
-        <link href="/css/freegal40.css?v=06042014" rel="stylsheet" type="text/css" />
+        <link href="/css/freegal40.css?v=06042014" rel="stylesheet" type="text/css" />
         <!--[if IE 8]>
         <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
         <![endif]-->        
