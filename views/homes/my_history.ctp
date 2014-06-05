@@ -15,7 +15,7 @@ function ieversion()
     }
 }
 $ieVersion =  ieversion();
-?>
+?>  
 
 <!-- new HTML -->
 <form id="sortForm" name="sortForm" method='post'>
