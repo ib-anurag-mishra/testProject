@@ -2088,7 +2088,7 @@ STR;
 
     
     $resp->enc_value->enc_value->user_type = $this->getUserType('', $library_id, 1);
-    
+    $resp->enc_value->enc_value->authentication_type = $authtype;
     return $resp;
 		
 	}
