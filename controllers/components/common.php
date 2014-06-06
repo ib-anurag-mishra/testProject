@@ -1663,13 +1663,13 @@ STR;
                         'type' => 'INNER',
                         'table' => 'Songs',
                         'alias' => 'Song',
-                        'conditions' => array('Album.ProdID = Song.ReferenceID','Album.provider_type' => 'Song.provider_type')
+                        'conditions' => array('Album.ProdID = Song.ReferenceID','Album.provider_type = Song.provider_type')
                     ),
                     array(
                         'type' => 'INNER',
                         'table' => strtolower($territory).'_countries',
                         'alias' => 'Country',
-                        'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type' => 'Song.provider_type')
+                        'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')
                     )                    
                 ),
                 'conditions' => array(
