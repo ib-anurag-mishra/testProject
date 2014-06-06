@@ -596,7 +596,7 @@
 
         if ($this->Session->read('lId') && $this->Session->read('lId') != '')
         {
-            echo $this->Html->css('styles.css?v=060614');
+            echo $this->Html->css('styles');
             ?>
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico" />
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico" />
