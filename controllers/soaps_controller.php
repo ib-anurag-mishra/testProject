@@ -534,13 +534,13 @@ class SoapsController extends AppController {
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-    $library_terriotry = $this->getLibraryTerritory($libraryId);
+    $library_territory = $this->getLibraryTerritory($libraryId);
  
-    $featuredCache = Cache::read("featured".$library_terriotry);
+    $featuredCache = Cache::read("featured".$library_territory);
     if (($artists = $featuredCache) === false || $featuredCache == null) {
       
       //get all featured artist and make array
-     $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_terriotry,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1,'order' => array(
+     $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_territory,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1,'order' => array(
                 'TopAlbum.id' => 'DESC')));
 
       foreach($featured as $k => $v){
@@ -570,7 +570,7 @@ class SoapsController extends AppController {
 	'conditions' =>
           array('and' =>
             array(
-              array("Country.Territory" => $library_terriotry, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
+              array("Country.Territory" => $library_territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
             ), "1 = 1 GROUP BY Album.ProdID"
           ),
           'fields' => array(
@@ -617,7 +617,7 @@ class SoapsController extends AppController {
         }
       }  
                      
-      Cache::write("featured".$library_terriotry, $featured);
+      Cache::write("featured".$library_territory, $featured);
     }
     else {    
     $featured = $featuredCache;
