@@ -541,7 +541,7 @@ class SoapsController extends AppController {
       
       //get all featured artist and make array
      $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_terriotry,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1,'order' => array(
-                'TopAlbum.id' => 'ASC')));
+                'TopAlbum.id' => 'DESC')));
 
       foreach($featured as $k => $v){
         if($v['TopAlbum']['album'] != 0){
@@ -564,7 +564,7 @@ class SoapsController extends AppController {
                         'type' => 'INNER',
                         'table' => 'top_albums',
                         'alias' => 'ta',
-                        'conditions' => array('Album.ProdID = ta.album')
+                        'conditions' => array('Album.ProdID = ta.album','ta.territory' => $library_territory)
                     )
                 ),	
 	'conditions' =>
@@ -603,7 +603,7 @@ class SoapsController extends AppController {
                 'Files.SourceURL'
               ),
             )
-          ), 'order' => 'ta.id ASC', 'limit' => 20
+          ), 'order' => 'ta.id DESC', 'limit' => 20
         ));
                     
       }
