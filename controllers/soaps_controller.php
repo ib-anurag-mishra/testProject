@@ -1959,8 +1959,8 @@ STR;
      
 	  $library_id = $lib_id;
       	  $email = $username;
-	  $pin = $username;
-	  $password = $passcode;
+	  	  $card = $username;
+	      $password = $passcode;
           $pin = $passcode;
           $last_name = $passcode;
           $auth_method = $this->Library->find('first',array(
