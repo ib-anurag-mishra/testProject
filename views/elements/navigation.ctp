@@ -727,7 +727,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			$faqCss = "regular active";
 		}
 		?>
-        <div class="inner-wrapper" style="margin: 0 auto; width:1024px">
+        <div class="inner-wrapper">
     		<ul class="clearfix">
     			<li class="regular"><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss,"id"=>'home07',"onclick"=>"setUpperNavigation('home07')"));?>
     			</li>
