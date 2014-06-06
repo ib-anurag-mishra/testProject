@@ -1611,7 +1611,7 @@ STR;
     {
         set_time_limit(0); 
         $tokeninstance = ClassRegistry::init('Token');
-        
+        $countryPrefix = $this->getCountryPrefix($territory);
         $ids = '';
         $ids_provider_type = '';
         $topAlbumInstance = ClassRegistry::init('TopAlbum');
@@ -1658,7 +1658,19 @@ STR;
                         'table' => 'top_albums',
                         'alias' => 'ta',
                         'conditions' => array('Album.ProdID = ta.album','ta.territory' => $territory)
-                    )
+                    ),
+                    array(
+                        'type' => 'INNER',
+                        'table' => 'Songs',
+                        'alias' => 'Song',
+                        'conditions' => array('Album.ProdID = Song.ReferenceID','Album.provider_type' => 'Song.provider_type')
+                    ),
+                    array(
+                        'type' => 'INNER',
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'Country',
+                        'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type' => 'Song.provider_type')
+                    )                    
                 ),
                 'conditions' => array(
                     'and' => array(
