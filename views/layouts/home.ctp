@@ -67,7 +67,6 @@
         <?php
         echo $this->Html->css(
                 array(
-                    'freegal40',
                     'freegal_styles',
                     'jquery.autocomplete',
                     'colorbox',
@@ -76,10 +75,11 @@
                 )
         );
         ?>
+        <link href="/css/freegal40.css?v=06042014" rel="stylesheet" type="text/css" />
         <!--[if IE 8]>
         <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
         <![endif]-->        
-
+        
         <?php 
         if ($this->Session->read('library') && $this->Session->read('library') != '')
         {
