@@ -157,9 +157,9 @@ Class CommonComponent extends Object
         $territory = strtolower($territory);
         
         //create conditions 
-        $conditionArray = array(                
-                'Country.Territory' => strtoupper($territory) ,                
-                );
+        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";
+        $conditionArray[] = "Country.provider_type = Song.provider_type";
+        $conditionArray[] = "Song.ArtistText!=''";
          
         //make condition according to Genre value
         if ($genreValue != 'All') {
@@ -173,10 +173,6 @@ Class CommonComponent extends Object
                 $conditionArray[] = $conditionOR.")";
             }
         }
-        
-        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";
-        $conditionArray[] = "Country.provider_type = Song.provider_type";
-        $conditionArray[] = "Song.ArtistText!=''";
         
         //make condition according to Genre value
         if ($artistFilter == 'spl'){
@@ -222,6 +218,9 @@ Class CommonComponent extends Object
          //set artist list in the cache
          if (!empty($artistListResults)) {             
             //create cache variable name
+             
+            $artistListResults   =   $this->processGenre($artistListResults);
+             
             $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
             $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
@@ -3004,5 +3003,31 @@ STR;
         
         return $synGenres;
     }
+    
+    
+    /*
+     * @func processGenre
+     * @desc remove duplicate Genres
+     */
+
+    function processGenre($genreArr)
+    {
+        $unique_array = array();
+        
+        foreach ($genreArr as $key=>$value) 
+        {        
+            if (isset($unique_array[$value['Song']['ArtistText']])) 
+            {                    
+                    unset($genreArr[$key]);
+            }
+            else
+            {
+                $unique_array[$value['Song']['ArtistText']] = $value['Song']['ArtistText'];
+            }
+
+        }
+        return $genreArr;
+    }
+    
 
 }
