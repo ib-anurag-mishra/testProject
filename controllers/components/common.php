@@ -157,10 +157,8 @@ Class CommonComponent extends Object
         $territory = strtolower($territory);
         
         //create conditions 
-        $conditionArray = array(
-                'Country'.'provider_type' => 'Song'.'provider_type',
-                'Country.Territory' => strtoupper($territory) ,
-                'Song'.'ArtistText'!=''
+        $conditionArray = array(                
+                'Country.Territory' => strtoupper($territory) ,                
                 );
          
         //make condition according to Genre value
@@ -177,6 +175,8 @@ Class CommonComponent extends Object
         }
         
         $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";
+        $conditionArray[] = "Country.provider_type = Song.provider_type";
+        $conditionArray[] = "Song.ArtistText!=''";
         
         //make condition according to Genre value
         if ($artistFilter == 'spl'){
