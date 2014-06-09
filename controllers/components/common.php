@@ -3016,17 +3016,13 @@ STR;
         
         foreach ($genreArr as $key=>$value) 
         {        
-            if (isset($unique_array[$value['Song']['ArtistText']])) 
+            if (!in_array($value['Song']['ArtistText'], $unique_array)) 
             {                    
-                    unset($genreArr[$key]);
-            }
-            else
-            {
-                $unique_array[$value['Song']['ArtistText']] = $value['Song']['ArtistText'];
-            }
+                array_push($unique_array, $value['Song']['ArtistText']);
+            }            
 
         }
-        return $genreArr;
+        return $unique_array;
     }
     
 
