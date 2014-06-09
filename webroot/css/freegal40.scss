@@ -1412,6 +1412,106 @@ sub { top: 0.4em; }
 }
 
 
+
+.site-nav {
+
+	background: #52c6ec;
+	height:     39px;
+	position:   relative;
+	
+
+	
+
+	ul {
+	
+		float: right;
+		background: #52c6ec;
+	
+		li {
+			
+
+			display:    block;
+			float:      left;
+			text-align: center;
+			
+			
+			&:last-child {
+				border-right:none;
+				
+			}
+			
+			a {
+				color:           @nav-link-color;
+				display:         block;
+				font-size:       12px;
+				line-height:     39px;
+				padding-left:    15px;
+				padding-right:   15px;
+				text-decoration: none;
+				text-transform:  uppercase;
+				
+				&.active {
+					
+					background: #9cdbef;
+				}
+				
+				&:hover {
+					
+					background: #9cdbef;
+				}
+				
+			}
+		}
+	}
+	
+	.most-popular-sub-nav {
+		display: none;
+		position: absolute;
+		width: 125px;
+		left: 639px;
+		top:40px;
+		z-index: 100;
+		opacity: .93;
+		&.active {
+			
+			display: block;
+			
+		}
+		
+		div {
+			
+			
+			background: #52c6ec;
+			text-align: center;
+			border-bottom: 1px solid rgba(255,255,255,.8);
+			
+			&:last-child {
+				
+				border-bottom: 0;
+			}
+			
+			a {
+				display: block;
+				font-size: 12px;
+				color: #fff;
+				text-decoration: none;
+				padding: 10px 5px;
+				
+				&:hover {
+					background: #9cdbef;
+					
+				}
+			}
+		}
+	}
+	
+
+
+	
+
+}
+
+
 .content {
 	padding-left:177px;
 	padding-top:20px;
