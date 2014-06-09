@@ -158,8 +158,9 @@ Class CommonComponent extends Object
         
         //create conditions 
         $conditionArray = array(
-                'Country.DownloadStatus' => 1,                    
-                'Country.Territory' => strtoupper($territory)                
+                'Country'.'provider_type' => 'Song'.'provider_type',
+                'Country.Territory' => strtoupper($territory) ,
+                'Song'.'ArtistText'!=''
                 );
          
         //make condition according to Genre value
@@ -167,7 +168,7 @@ Class CommonComponent extends Object
             $synonym_list   =   $this->getGenreSynonyms($genreValue);
             $conditionOR = '';
             foreach($synonym_list as $single_synGenre){
-                $conditionOR = empty($conditionOR)? "(`Song`.`Genre` LIKE '%".$single_synGenre."%'" : $conditionOR." OR `Song`.`Genre` LIKE '%".$single_synGenre."%'";            
+                $conditionOR = empty($conditionOR)? "('Song'.'Genre' LIKE '%".$single_synGenre."%'" : $conditionOR." OR 'Song'.'Genre' LIKE '%".$single_synGenre."%'";            
             }            
             if(!empty($conditionOR))
             {
@@ -175,6 +176,7 @@ Class CommonComponent extends Object
             }
         }
         
+        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";
         
         //make condition according to Genre value
         if ($artistFilter == 'spl'){
@@ -185,8 +187,8 @@ Class CommonComponent extends Object
         }
       
         
-        $endLimit =  120;
-        $startLimit = ($pageNo * 120) - 120;
+        $endLimit =  30000;
+        $startLimit = ($pageNo * 30000) - 30000;
         
         $songInstance->unbindModel(array('hasOne' => array('Participant')));
         $songInstance->unbindModel(array('hasOne' => array('Country')));
@@ -196,7 +198,7 @@ Class CommonComponent extends Object
         //create query that fetch all artist according to selected Genre
         $artistListResults = $songInstance->find('all', array(
             'conditions' => $conditionArray,
-            'fields' => array('DISTINCT Song.ArtistText'),
+            'fields' => array('Song.ArtistText'),
             'limit'=> $endLimit, 'offset'=> $startLimit,
             'order' => array('Song.ArtistText ASC'),
             'joins' => array(
