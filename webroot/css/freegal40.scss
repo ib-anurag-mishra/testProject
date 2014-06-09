@@ -1513,6 +1513,13 @@ sub { top: 0.4em; }
 }
 
 
+.content-wrapper {
+
+	position: relative;
+	margin: 0 auto;
+	width:  1044px;
+}
+
 .content {
 	padding-left:177px;
 	padding-top:20px;
