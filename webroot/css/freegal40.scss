@@ -1520,9 +1520,9 @@ sub { top: 0.4em; }
 .site-footer {
 	background: url(../img/footer-bkg.gif) repeat-x;
 
-	height:     118px;
+	height: 118px;
 
-	width: 1024px;
+	min-width: 1024px;
 	
 	.footer-content {
 		color:     rgba(143,151,159,1);
