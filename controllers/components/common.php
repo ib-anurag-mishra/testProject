@@ -1669,7 +1669,7 @@ STR;
                         'type' => 'INNER',
                         'table' => strtolower($territory).'_countries',
                         'alias' => 'Country',
-                        'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')
+                        'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type' ,'Country.DownloadStatus = 1','Country.SalesDate != ""','Country.SalesDate < NOW()')
                     )                    
                 ),
                 'conditions' => array(
