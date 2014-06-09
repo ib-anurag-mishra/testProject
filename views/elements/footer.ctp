@@ -65,8 +65,9 @@
 		</div>
 	</div>
 </footer>
-<div class="filler"
-	style="height: 100px"></div>
+<?php if ($this->Session->read("patron") && $this->Session->read('library_type') == '2') { ?>
+	<div class="filler"></div>
+<?php } ?>
 
 
 <?php
