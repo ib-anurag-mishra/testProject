@@ -187,8 +187,8 @@ Class CommonComponent extends Object
         }
       
         
-        $endLimit =  30000;
-        $startLimit = ($pageNo * 30000) - 30000;
+        $endLimit =  10000;
+        $startLimit = ($pageNo * 10000) - 10000;
         
         $songInstance->unbindModel(array('hasOne' => array('Participant')));
         $songInstance->unbindModel(array('hasOne' => array('Country')));
