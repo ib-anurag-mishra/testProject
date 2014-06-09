@@ -449,16 +449,16 @@ $totalRows = count($genresAll);
                         {
                             for ($i = 0; $i < count($artistList); $i++)
                             {
-                                $artistName = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);
+                                $artistName = $this->getTextEncode($artistList[$i]);
                                 
                                 if ($artistName != "")
                                 {
                                     echo " <li>";
-                                    $selected = (str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) == $this->Session->read('calledArtist')) ? "class='selected'" : "";
+                                    $selected = (str_replace('/', '@', base64_encode($artistList[$i])) == $this->Session->read('calledArtist')) ? "class='selected'" : "";
                                     //$artistName = str_replace("'", '', ($artistName));
-                                    $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
+                                    $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($artistList[$i])) . "/" . base64_encode($genre);
                                     ?>
-                                    <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($artistList[$i]['Song']['ArtistText'])); ?>/<?= base64_encode($genre) ?>">
+                                    <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($artistList[$i])); ?>/<?= base64_encode($genre) ?>">
                                         <?php
                                     echo wordwrap($artistName, 35, "<br />\n", TRUE);
                                     echo '</a>';
