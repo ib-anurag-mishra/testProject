@@ -26,6 +26,9 @@ $default-transition-duration: 500ms;
 	   		box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: auto;
+}
 
 
 body { 
