@@ -39,7 +39,7 @@ class SoapsController extends AppController {
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token','TopAlbum'); 
-  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr', 'Queue'); 
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr', 'Queue','Common'); 
 
   
   function index(){
@@ -5861,6 +5861,12 @@ STR;
     $library_territory = $libraryDetails['Library']['library_territory'];   
 
 	$genreSongsCache = Cache::read($genreTitle.$library_territory);
+	
+ 	if($genreSongsCache == false || $genreSongsCache == null){
+        $this->Common->getGenreData($library_territory,$genreTitle);
+        $genreSongsCache = Cache::read($genreTitle.$library_territory);
+    }
+	
     if ( (($genreSongsCache ) !== false) && ($genreSongsCache !== null) ) {
 
       foreach($genreSongsCache AS $key => $val) {
