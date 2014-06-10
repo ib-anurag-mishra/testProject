@@ -117,7 +117,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 		if (!empty($albumData)) {
 			$i = 0;
 			foreach ($albumData as $palbum) {
-				$albumDetails = $album->getImage($palbum->ReferenceID);
+				$albumDetails = $album->getImage( $palbum->ReferenceID, $palbum->provider_type );
 
 				if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {					                                        
                                         $albumArtwork = $this->Token->artworkToken($albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
