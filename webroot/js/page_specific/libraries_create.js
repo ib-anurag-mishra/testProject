@@ -620,6 +620,7 @@ function showStreamContract(){
 			var end = $("#stream_contract_end").val();
 			$("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val(start);
 			$("#ContractLibraryStreamingPurchaseLibraryContractEndDate").val(end);
+                        $("#LibraryPurchasesStreamingPurchasedHours").val('');
 			$("#stream_contract_start").show();
 			$("#stream_contract_end").show();
 			$("#str_order").hide();
