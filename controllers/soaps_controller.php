@@ -39,7 +39,7 @@ class SoapsController extends AppController {
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token','TopAlbum'); 
-  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr', 'Queue'); 
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr', 'Queue','Common'); 
 
   
   function index(){
@@ -1941,6 +1941,157 @@ STR;
     
     return $resp;
   }
+
+
+
+  /**
+   * Function Name : callingFreegalMusic
+   * Desc : To authnticate users from third party applications
+   * @param string $lib_id
+   * @param string $username
+   * @param string $passcode
+   * @param string $agent
+   * @return AuthenticationResponseDataType[]
+   */
+
+
+ 	function callingFreegalMusic($lib_id, $username, $passcode, $agent ) {
+     
+	  $library_id = $lib_id;
+      	  $email = $username;
+	  	  $card = $username;
+	      $password = $passcode;
+          $pin = $passcode;
+          $last_name = $passcode;
+          $auth_method = $this->Library->find('first',array(
+	      'conditions' => array('Library.id' => $library_id),
+	      'fields' => array('library_authentication_method'),
+	      'recursive' => -1
+	      )
+	    );
+
+ 	  $authtype = $this->getLibraryIdentefierByLibraryMethod($auth_method['Library']['library_authentication_method']);
+     
+	switch($authtype){
+	
+      	case '1':  {
+        	$resp = $this->loginAuthinticate($email, $password, $library_id, $agent, $authtype, $cron_call);
+    	}
+      	break;
+
+      	case '2':  {
+       		$resp = $this->iloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '3':  {		
+        	$resp = $this->inloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '4':  {
+        	$resp = $this->inhloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '5':  {
+        	$resp = $this->ihdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '6':  {
+        	$resp = $this->ildloginAuthinticate($card, $last_name, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '7':  {
+        	$resp = $this->ilhdloginAuthinticate($card, $last_name, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '8':  {
+        	$resp = $this->sloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '9':  {
+        	$resp = $this->sdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '10':  {
+        	$resp = $this->ploginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '11':  {
+        	$resp = $this->indloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '12':  {
+        	$resp = $this->inhdloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '13':  {
+        	$resp = $this->snloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '14':  {
+        	$resp = $this->sndloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '15':  {
+        	$resp = $this->cloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '16':  {
+        	$resp = $this->referralAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+
+      	case '17':  {
+			$auth_method_name = $this->Library->find('first',array(
+	      'conditions' => array('Library.id' => $library_id),
+	      'fields' => array('library_authentication_method'),
+	      'recursive' => -1
+	      )
+	    );
+		if($auth_method_name['Library']['library_authentication_method'] == 'capita'){
+	 		$resp = $this->capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+  		}
+		elseif($auth_method_name['Library']['library_authentication_method'] == 'symws'){
+			$resp = $this->symwsAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+		}
+		else{
+        	$resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	}
+      	break;
+
+      	case '18':  {
+        	$resp = $this->mndloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+      
+      	case '19':  {
+        	$resp = $this->mdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
+      	break;
+      
+      	default:
+    }
+
+    
+    $resp->enc_value->enc_value->user_type = $this->getUserType('', $library_id, 1);
+    $resp->enc_value->enc_value->authentication_type = $authtype;
+    return $resp;
+		
+	}
 
   
   /**
@@ -5710,6 +5861,12 @@ STR;
     $library_territory = $libraryDetails['Library']['library_territory'];   
 
 	$genreSongsCache = Cache::read($genreTitle.$library_territory);
+	
+ 	if($genreSongsCache == false || $genreSongsCache == null){
+        $this->Common->getGenreData($library_territory,$genreTitle);
+        $genreSongsCache = Cache::read($genreTitle.$library_territory);
+    }
+	
     if ( (($genreSongsCache ) !== false) && ($genreSongsCache !== null) ) {
 
       foreach($genreSongsCache AS $key => $val) {
@@ -7367,6 +7524,5 @@ STR;
     }
   
   }
-  
-  
+
 }

@@ -727,44 +727,45 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			$faqCss = "regular active";
 		}
 		?>
-		<ul class="clearfix">
-			<li class="regular"><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss,"id"=>'home07',"onclick"=>"setUpperNavigation('home07')"));?>
-			</li>
-			<li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss,"id"=>'musicVideo07',"onclick"=>"setUpperNavigation('musicVideo07')")); ?>
-			</li>
-			<li class="most-popular"><?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ 
-				echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07' ,"onclick"=>"setUpperNavigation('topmylib07')"));
-			} else { if($this->Session->read("patron")){
-				echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>"setUpperNavigation('topmylib07')"));
-			} else { echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'us_top_10'), array("id"=>'topustop07',"onclick"=>"setUpperNavigation('topustop07')"));
-			}
-			} ?>
-			</li>
-			<li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss,"id"=>'newsRelease07',"onclick"=>"setUpperNavigation('newsRelease07')")); ?>
-			</li>
-			<li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss,"id"=>'genre07',"onclick"=>"setUpperNavigation('genre07')")); ?>
-			</li>
-			<li class="regular"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss,"id"=>'faq07',"onclick"=>"setUpperNavigation('faq07')")); ?>
-			</li>
-		</ul>
+        <div class="inner-wrapper">
+    		<ul class="clearfix">
+    			<li class="regular"><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss,"id"=>'home07',"onclick"=>"setUpperNavigation('home07')"));?>
+    			</li>
+    			<li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss,"id"=>'musicVideo07',"onclick"=>"setUpperNavigation('musicVideo07')")); ?>
+    			</li>
+    			<li class="most-popular"><?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ 
+    				echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07' ,"onclick"=>"setUpperNavigation('topmylib07')"));
+    			} else { if($this->Session->read("patron")){
+    				echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>"setUpperNavigation('topmylib07')"));
+    			} else { echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'us_top_10'), array("id"=>'topustop07',"onclick"=>"setUpperNavigation('topustop07')"));
+    			}
+    			} ?>
+    			</li>
+    			<li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss,"id"=>'newsRelease07',"onclick"=>"setUpperNavigation('newsRelease07')")); ?>
+    			</li>
+    			<li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss,"id"=>'genre07',"onclick"=>"setUpperNavigation('genre07')")); ?>
+    			</li>
+    			<li class="regular"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss,"id"=>'faq07',"onclick"=>"setUpperNavigation('faq07')")); ?>
+    			</li>
+    		</ul>
 
-		<div class="most-popular-sub-nav">
-			<?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ ?>
-			<div>
-				<?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>"setUpperNavigation('topmylib07')")); ?>
-			</div>
-			<?php } else {
-                                    if($this->Session->read("patron")){ ?>
-			<div>
-				<?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>"setUpperNavigation('topmylib07')")); ?>
-			</div>
-			<?php   } 
-                                  } ?>
-			<div>
-				<?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'), array("id"=>'topustop07',"onclick"=>"setUpperNavigation('topustop07')")); ?>
-			</div>
-		</div>
-
+    		<div class="most-popular-sub-nav">
+    			<?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ ?>
+    			<div>
+    				<?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>"setUpperNavigation('topmylib07')")); ?>
+    			</div>
+    			<?php } else {
+                                        if($this->Session->read("patron")){ ?>
+    			<div>
+    				<?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>"setUpperNavigation('topmylib07')")); ?>
+    			</div>
+    			<?php   } 
+                                      } ?>
+    			<div>
+    				<?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'), array("id"=>'topustop07',"onclick"=>"setUpperNavigation('topustop07')")); ?>
+    			</div>
+    		</div>
+        </div>
 	</nav>
 	<div class="gradient-border"></div>
 

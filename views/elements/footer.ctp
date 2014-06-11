@@ -5,15 +5,7 @@
 </div>
 <!-- end .content-wrapper -->
 
-<style>
-.player {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	height: 100px;
-	overflow: hidden;
-}
-</style>
+
 
 
 
@@ -65,8 +57,9 @@
 		</div>
 	</div>
 </footer>
-<div class="filler"
-	style="height: 100px"></div>
+<?php if ($this->Session->read("patron") && $this->Session->read('library_type') == '2') { ?>
+	<div class="filler"></div>
+<?php } ?>
 
 
 <?php
