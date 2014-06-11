@@ -18,6 +18,11 @@
 
 $default-transition-duration: 500ms;
 
+$body-bg-color: #ffffff;
+$base-font-color:#000;
+$base-font: Helvetica, Arial, sans-serif;
+$nav-link-color:#fff;
+
 *,
 *:before,
 *:after { 
@@ -32,11 +37,28 @@ html {
 	overflow: auto;
 }
 
+@-moz-document url-prefix() {
+	
+	#master-filter {
+		
+		padding-top: 6px;
+	}
+}
 
 body { 
 	font-family: Arial, Helvetica, sans-serif;
-	background: url(../img/site-bkg.jpg) repeat; 
+	background: url(../img/site-bkg.jpg) repeat;
+	color: #000;
+	.left-sidebar {
+
+		position: absolute;
+		height: 100%;
+		width: 156px;
+	}
+
 }
+
+
 
 img {
 
@@ -64,7 +86,10 @@ $dark-blue: #58c6ea;
 
 
 
-.explicit { color: $explicit-color; }
+.explicit { 
+	color: $explicit-color;
+	display: inline;
+}
 
 
 %form-reset {
@@ -92,6 +117,10 @@ button::-moz-focus-inner {
     border: 0
 }
 
+#audioPixel {
+	
+	height: 0;
+}
 
 
 .faq-link {
