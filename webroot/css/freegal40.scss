@@ -1279,12 +1279,15 @@ sub { top: 0.4em; }
 				width: 420px;
 				height: 340px;
 				font-size: 14px;
-				.box-shadow(0 0 2px rgba(0,0,0,.5));
+
+				-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5));
+				-moz-box-shadow: 0 0 2px rgba(0,0,0,.5));
+				box-shadow: 0 0 2px rgba(0,0,0,.5));
 				color: rgba(0,0,0,.4);
 				
 				li {
 					
-					.box-sizing;
+
 					padding: 1px;
 					border-bottom: 1px solid #e1e6e9;
 					position: relative;
@@ -1377,7 +1380,7 @@ sub { top: 0.4em; }
 
 
 
-			
+
 		}
 		
 

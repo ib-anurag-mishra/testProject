@@ -1,15 +1,13 @@
 /*
-Syntax error: Invalid CSS after "				.box-shadow": expected "{", was "(0 0 2px rgba(0..."
-        on line 1282 of /Applications/XAMPP/xamppfiles/htdocs/FreegalMusic/webroot/css/freegal40.scss
+Syntax error: Invalid CSS after "... rgba(0,0,0,.5)": expected ";", was ");"
+        on line 1283 of /Applications/XAMPP/xamppfiles/htdocs/FreegalMusic/webroot/css/freegal40.scss
 
 Backtrace:
-/Applications/XAMPP/xamppfiles/htdocs/FreegalMusic/webroot/css/freegal40.scss:1282
+/Applications/XAMPP/xamppfiles/htdocs/FreegalMusic/webroot/css/freegal40.scss:1283
 /Applications/Scout.app/Contents/Resources/vendor/gems/gems/sass-3.2.1/lib/sass/scss/parser.rb:1129:in `expected'
 /Applications/Scout.app/Contents/Resources/vendor/gems/gems/sass-3.2.1/lib/sass/scss/parser.rb:1066:in `expected'
 /Applications/Scout.app/Contents/Resources/vendor/gems/gems/sass-3.2.1/lib/sass/scss/parser.rb:1061:in `tok!'
-/Applications/Scout.app/Contents/Resources/vendor/gems/gems/sass-3.2.1/lib/sass/scss/parser.rb:517:in `block'
-/Applications/Scout.app/Contents/Resources/vendor/gems/gems/sass-3.2.1/lib/sass/scss/parser.rb:512:in `ruleset'
-/Applications/Scout.app/Contents/Resources/vendor/gems/gems/sass-3.2.1/lib/sass/scss/parser.rb:574:in `declaration_or_ruleset'
+/Applications/Scout.app/Contents/Resources/vendor/gems/gems/sass-3.2.1/lib/sass/scss/parser.rb:569:in `declaration_or_ruleset'
 org/jruby/RubyProc.java:268:in `call'
 org/jruby/RubyProc.java:228:in `call'
 /Applications/Scout.app/Contents/Resources/vendor/gems/gems/sass-3.2.1/lib/sass/scss/parser.rb:1104:in `rethrow'
@@ -91,4 +89,4 @@ org/jruby/RubyKernel.java:1419:in `loop'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Invalid CSS after \"				.box-shadow\": expected \"{\", was \"(0 0 2px rgba(0...\"\A         on line 1282 of /Applications/XAMPP/xamppfiles/htdocs/FreegalMusic/webroot/css/freegal40.scss"; }
+  content: "Syntax error: Invalid CSS after \"... rgba(0,0,0,.5)\": expected \";\", was \");\"\A         on line 1283 of /Applications/XAMPP/xamppfiles/htdocs/FreegalMusic/webroot/css/freegal40.scss"; }
