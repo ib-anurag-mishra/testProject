@@ -49,12 +49,7 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	background: url(../img/site-bkg.jpg) repeat;
 	color: #000;
-	.left-sidebar {
 
-		position: absolute;
-		height: 100%;
-		width: 156px;
-	}
 
 }
 
@@ -83,7 +78,29 @@ $blue-link: #008fbd;
 $explicit-color:#eb212e;
 $dark-blue: #58c6ea;
 
+.horiz-scroll::-webkit-scrollbar {
+-webkit-appearance:none !important;
+width:11px !important;
+.box-shadow(0 0 1px rgb(122, 122, 122));
+height: 10px;
+border:0;
+}
+.horiz-scroll::-webkit-scrollbar {
+border-radius:8px !important;
+//border:2px solid white !important;
+background-color:rgba(204, 204, 204,.25) !important
+}
+.horiz-scroll::-webkit-scrollbar-thumb {
+border-radius:8px !important;
+//border:2px solid white !important;
+background-color:rgba(0,0,0,.25) !important
+}
 
+// If you want it on hover //
+
+.horiz-scroll::-webkit-scrollbar:active,
+.horiz-scroll::-webkit-scrollbar:hover, 
+.horiz-scroll::-webkit-scrollbar:focus{/*border-radius:8px !important;border:2px solid white !important;*/background-color:rgba(204, 204, 204,.25) !important; height: 10px}
 
 
 .explicit { 
@@ -1689,6 +1706,29 @@ sub { top: 0.4em; }
 		margin-bottom:20px;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .top-albums {
