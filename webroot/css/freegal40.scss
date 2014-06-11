@@ -79,23 +79,23 @@ $explicit-color:#eb212e;
 $dark-blue: #58c6ea;
 
 .horiz-scroll::-webkit-scrollbar {
--webkit-appearance:none !important;
-width:11px !important;
--webkit-box-shadow: 0 0 1px rgb(122, 122, 122);
--moz-box-shadow: 0 0 1px rgb(122, 122, 122);
-box-shadow: 0 0 1px rgb(122, 122, 122);
-height: 10px;
-border:0;
+	-webkit-appearance:none !important;
+	width:11px !important;
+	-webkit-box-shadow: 0 0 1px rgb(122, 122, 122);
+	-moz-box-shadow: 0 0 1px rgb(122, 122, 122);
+	box-shadow: 0 0 1px rgb(122, 122, 122);
+	height: 10px;
+	border:0;
 }
 .horiz-scroll::-webkit-scrollbar {
-border-radius:8px !important;
-//border:2px solid white !important;
-background-color:rgba(204, 204, 204,.25) !important
+	border-radius:8px !important;
+	//border:2px solid white !important;
+	background-color:rgba(204, 204, 204,.25) !important
 }
 .horiz-scroll::-webkit-scrollbar-thumb {
-border-radius:8px !important;
-//border:2px solid white !important;
-background-color:rgba(0,0,0,.25) !important
+	border-radius:8px !important;
+	//border:2px solid white !important;
+	background-color:rgba(0,0,0,.25) !important
 }
 
 // If you want it on hover //
@@ -480,6 +480,9 @@ button::-moz-focus-inner {
 	}
 
 }
+
+
+
 
 %search-results-list {
 
@@ -15573,40 +15576,40 @@ sub { top: 0.4em; }
 
 						}
 
-                                                .play-btn {
-                                                        position: absolute;
-                                                        left:9px;
-                                                        top: 36px;
-                                                        width: 24px;
-                                                        height: 24px;
-                                                        @include border-radius(20px);
-                                                        border:1px solid #cacaca;
-                                                        @include background-image(radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px));
+                        .play-btn {
+                                position: absolute;
+                                left:9px;
+                                top: 36px;
+                                width: 24px;
+                                height: 24px;
+                                @include border-radius(20px);
+                                border:1px solid #cacaca;
+                                @include background-image(radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px));
 
-                                                        &:hover {
+                                &:hover {
 
-                                                                @include background-image(radial-gradient(45px 45px, #fdfdfd 10px, #fff 30px));
-                                                        }
+                                        @include background-image(radial-gradient(45px 45px, #fdfdfd 10px, #fff 30px));
+                                }
 
-                                                        &:active {
+                                &:active {
 
-                                                                @include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
-                                                        }		
+                                        @include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
+                                }		
 
-                                                        &:before {
+                                &:before {
 
-                                                                content: "";
-                                                                position: absolute;
-                                                                left:9px;
-                                                                top:7px;
-                                                                width: 0;
-                                                                height: 0;
-                                                                border-left:6px solid #000;
-                                                                border-top:4px solid transparent;
-                                                                border-bottom:4px solid transparent;
-                                                        }
+                                        content: "";
+                                        position: absolute;
+                                        left:9px;
+                                        top:7px;
+                                        width: 0;
+                                        height: 0;
+                                        border-left:6px solid #000;
+                                        border-top:4px solid transparent;
+                                        border-bottom:4px solid transparent;
+                                }
 
-                                                }
+                        }
 
 						.song-title {
 
@@ -15709,63 +15712,7 @@ sub { top: 0.4em; }
 			}
 			
 			
-			/*
-			ul {
-				overflow-y: hidden;
-				height: 216px;
-				width: 4125px;
-				
-				li {
-					
-					float: left;
-					display: block;
-					margin-right: 3px;
-					margin-bottom: 10px;
-					width: 162px;
-					
-					.album-cover-container {
-						
-						width: 162px;
-						height: 162px;
-						
-						position: relative;
-						
-						@extend %toggleable;
 
-
-						.ranking {
-
-							position: absolute;
-							right: 6px;
-							top:6px;;
-							text-align: center;
-							width: 40px;
-							height: 20px;
-							@include opacity(.75);
-							color:#000;
-							font-size: 16px;
-							font-family: Helvetica, Arial, sans-serif;
-							font-weight: bold;
-							background:#fff;
-							font-style: italic;
-							line-height: 20px;
-						}
-
-						@extend %album-cover-menu-and-icons;
-
-
-						img {
-							
-							width: 162px;
-							height: 162px;
-							
-							
-						}
-					}
-				}
-			}
-			*/
-			
 			
 				
 
@@ -19187,7 +19134,7 @@ footer {
 }
 
 .album-container {
-        @extend %toggeable;
+    @extend %toggeable;
 	.wishlist-icon {
 
 		position: absolute;
@@ -19210,6 +19157,7 @@ footer {
 
 	}
 }
+
 
 %toggeable {
 	.toggeable {
