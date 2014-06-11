@@ -1266,6 +1266,118 @@ sub { top: 0.4em; }
 
 				
 			}
+
+
+
+			.master-music-search-results {
+				display: none;
+				position: absolute;
+				left: 401px;
+				top:93px;
+				background: rgba(255,255,255,1);
+				z-index: 101;
+				width: 420px;
+				height: 340px;
+				font-size: 14px;
+				.box-shadow(0 0 2px rgba(0,0,0,.5));
+				color: rgba(0,0,0,.4);
+				
+				li {
+					
+					.box-sizing;
+					padding: 1px;
+					border-bottom: 1px solid #e1e6e9;
+					position: relative;
+					height: 68px;
+					
+					.master-search-results-image {
+						
+						position: absolute;
+						
+						left: 18px;
+						top: 9px;
+						
+						img {
+							
+							width: 50px;
+							height: 50px;
+							
+						}
+					}
+					
+					.master-search-results-detail {
+						
+						position: absolute;
+						left: 63px;
+						top:18px;
+						
+						.song-album-info {
+						
+							color: rgba(0,0,0,.6);
+							font-size: 14px;
+							padding-left: 22px;
+							
+							
+							
+							.album-title {
+								
+								a {
+									color: rgba(0,0,0,.6);
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+							}
+							
+							.song-title {
+							
+								a {
+									color: rgba(0,0,0,.6);
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+								
+							}
+						}
+						
+						.artist {
+							color: rgba(0,0,0,.4);
+							padding-left: 22px;
+							font-size: 12px;
+							
+							margin-top: 5px;
+							
+							a {
+								color: rgba(0,0,0,.4);
+								text-decoration: none;
+								
+								&:hover {
+									
+									text-decoration: underline;
+								}
+							}
+							
+						}
+						
+					}
+				}
+			}
+
+
+
+
+
+
+
+
+			
 		}
 		
 
