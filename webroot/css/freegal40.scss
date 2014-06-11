@@ -81,7 +81,9 @@ $dark-blue: #58c6ea;
 .horiz-scroll::-webkit-scrollbar {
 -webkit-appearance:none !important;
 width:11px !important;
-.box-shadow(0 0 1px rgb(122, 122, 122));
+-webkit-box-shadow: 0 0 1px rgb(122, 122, 122);
+-moz-box-shadow: 0 0 1px rgb(122, 122, 122);
+box-shadow: 0 0 1px rgb(122, 122, 122);
 height: 10px;
 border:0;
 }
