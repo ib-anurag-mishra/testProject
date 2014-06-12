@@ -86,22 +86,22 @@ Class LibrariesController extends AppController
     function admin_ajax_preview()
     {
         $this->layout = false;
-        if (isset($_GET['bgColor']) &&
-                isset($_GET['navBgColor']) && isset($_GET['boxheaderBgColor']) &&
-                isset($_GET['boxheaderTextColor']) && isset($_GET['textColor']) &&
-                isset($_GET['linkColor']) && isset($_GET['linkHoverColor']) &&
-                isset($_GET['navLinksColor']) && isset($_GET['navLinksHoverColor']))
+        if (isset($this->params['url']['bgColor']) &&
+                isset($this->params['url']['navBgColor']) && isset($this->params['url']['boxheaderBgColor']) &&
+                isset($this->params['url']['boxheaderTextColor']) && isset($this->params['url']['textColor']) &&
+                isset($this->params['url']['linkColor']) && isset($this->params['url']['linkHoverColor']) &&
+                isset($this->params['url']['navLinksColor']) && isset($this->params['url']['navLinksHoverColor']))
         {
-            $library_bgcolor = "#" . $_GET['bgColor'];
+            $library_bgcolor = "#" . $this->params['url']['bgColor'];
             $library_content_bgcolor = "#FFFFFF";
-            $library_nav_bgcolor = "#" . $_GET['navBgColor'];
-            $library_boxheader_bgcolor = "#" . $_GET['boxheaderBgColor'];
-            $library_boxheader_text_color = "#" . $_GET['boxheaderTextColor'];
-            $library_text_color = "#" . $_GET['textColor'];
-            $library_links_color = "#" . $_GET['linkColor'];
-            $library_links_hover_color = "#" . $_GET['linkHoverColor'];
-            $library_navlinks_color = "#" . $_GET['navLinksColor'];
-            $library_navlinks_hover_color = "#" . $_GET['navLinksHoverColor'];
+            $library_nav_bgcolor = "#" . $this->params['url']['navBgColor'];
+            $library_boxheader_bgcolor = "#" . $this->params['url']['boxheaderBgColor'];
+            $library_boxheader_text_color = "#" . $this->params['url']['boxheaderTextColor'];
+            $library_text_color = "#" . $this->params['url']['textColor'];
+            $library_links_color = "#" . $this->params['url']['linkColor'];
+            $library_links_hover_color = "#" . $this->params['url']['linkHoverColor'];
+            $library_navlinks_color = "#" . $this->params['url']['navLinksColor'];
+            $library_navlinks_hover_color = "#" . $this->params['url']['navLinksHoverColor'];
         }
         else
         {
@@ -116,10 +116,10 @@ Class LibrariesController extends AppController
             $library_navlinks_color = "#FFFFFF";
             $library_navlinks_hover_color = "#FFFFFF";
         }
-        if (isset($_GET['boxheaderBgColor']) && isset($_GET['boxHoverColor']))
+        if (isset($this->params['url']['boxheaderBgColor']) && isset($this->params['url']['boxHoverColor']))
         {
-            $library_box_header_color = "#" . $_GET['boxheaderBgColor'];
-            $library_box_hover_color = "#" . $_GET['boxHoverColor'];
+            $library_box_header_color = "#" . $this->params['url']['boxheaderBgColor'];
+            $library_box_hover_color = "#" . $this->params['url']['boxHoverColor'];
         }
         else
         {
@@ -128,8 +128,8 @@ Class LibrariesController extends AppController
         }
 
         //sets the library details which is set from the admin end
-        $this->set('libraryName', $_GET['libraryName']);
-        $this->set('imagePreview', $_GET['imagePreview']);
+        $this->set('libraryName', $this->params['url']['libraryName']);
+        $this->set('imagePreview', $this->params['url']['imagePreview']);
         $this->set('library_bgcolor', $library_bgcolor);
         $this->set('library_content_bgcolor', $library_content_bgcolor);
         $this->set('library_nav_bgcolor', $library_nav_bgcolor);
@@ -969,6 +969,13 @@ Class LibrariesController extends AppController
     {
         Configure::write('debug', 0);
         $this->layout = false;
+        
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
         $success = "";
         $error = "";
         $msg = "";
@@ -986,10 +993,10 @@ Class LibrariesController extends AppController
 
             if ($error == "")
             {
-                if ($_REQUEST['LibraryStepNum'] == "5" && $_REQUEST['LibraryID'] != "")
+                if ($this->params[$index]['LibraryStepNum'] == "5" && $this->params[$index]['LibraryID'] != "")
                 {
                     $upload_dir = WWW_ROOT . 'img/';
-                    $fileName = $_REQUEST['LibraryID'] . "." . $ph;
+                    $fileName = $this->params[$index]['LibraryID'] . "." . $ph;
                     $upload_Path = $upload_dir . $fileName;
                     if (!file_exists($upload_dir))
                     {
@@ -997,7 +1004,7 @@ Class LibrariesController extends AppController
                     }
                     move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
                     $this->Library->recursive = -1;
-                    $data = $this->Library->find('all', array('conditions' => array('id' => $_REQUEST['LibraryID'])));
+                    $data = $this->Library->find('all', array('conditions' => array('id' => $this->params[$index]['LibraryID'])));
                     $deleteFileName = $data[0]['Library']['library_image_name'];
                     if ($deleteFileName != null && !empty($deleteFileName))
                     {
@@ -1007,7 +1014,7 @@ Class LibrariesController extends AppController
                     $dst = Configure::read('App.CDN_PATH') . 'libraryimg/' . $fileName;
                     $success = $this->CdnUpload->sendFile($src, $dst, true);
                     unlink($upload_Path);
-                    $this->Library->id = $_REQUEST['LibraryID'];
+                    $this->Library->id = $this->params[$index]['LibraryID'];
                     $this->Library->saveField('library_image_name', $fileName);
                 }
             }
@@ -1089,9 +1096,16 @@ Class LibrariesController extends AppController
     function patron($library = null)
     {
         $this->layout = false;
-        if (isset($_REQUEST['url']))
+        
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
+        if (isset($this->params[$index]['url']))
         {
-            $requestUrlArr = explode("/", $_REQUEST['url']);
+            $requestUrlArr = explode("/", $this->params[$index]['url']);
             $patronId = $requestUrlArr['2'];
         }
 
@@ -1516,9 +1530,9 @@ STR;
     {
         Configure::write('debug', 0);
         $this->layout = false;
-        if (isset($_POST['method']) && (!empty($_POST['method'])))
+        if (isset($this->params['form']['method']) && (!empty($this->params['form']['method'])))
         {
-            $methode = $_POST['method'];
+            $methode = $this->params['form']['method'];
             $libs = $this->Library->find('list', array('fields' => array('id', 'library_name'), 'conditions' => array('library_authentication_method LIKE' => "%" . $methode . "%")));
             $data = '';
             foreach ($libs as $k => $v)
@@ -1617,7 +1631,7 @@ STR;
         if (isset($_POST) && !empty($_POST))
         {
 
-            if ((isset($this->data['Library']['library_name']) && ($this->data['Library']['library_name'] == '')) || (isset($_POST['library_timezone']) && ($_POST['library_timezone'] == '')))
+            if ((isset($this->data['Library']['library_name']) && ($this->data['Library']['library_name'] == '')) || (isset($this->params['form']['library_timezone']) && ($this->params['form']['library_timezone'] == '')))
             {
                 $this->Session->setFlash('Please enter valid inputs.', 'modal', array('class' => 'modal problem'));
             }
@@ -1625,7 +1639,7 @@ STR;
             {
 
                 $libName = mysql_real_escape_string($this->data['Library']['library_name']);
-                $libTime = mysql_real_escape_string($_POST['library_timezone']);
+                $libTime = mysql_real_escape_string($this->params['form']['library_timezone']);
                 $result = $this->Library->find('first', array(
                     'fields' => 'Library.id',
                     'conditions' => array('Library.library_name' => $libName)
@@ -1696,15 +1710,22 @@ STR;
 
         Configure::write('debug', 0);
         $this->layout = false;
+
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
         //redirect if user not set
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         $searchKey = '';
-        if (isset($_REQUEST['q']) && $_REQUEST['q'] != '')
+        if (isset($this->params[$index]['q']) && $this->params[$index]['q'] != '')
         {
-            $searchKey = $_REQUEST['q'];
+            $searchKey = $this->params[$index]['q'];
         }
 
         $result = $this->Library->find('all', array(

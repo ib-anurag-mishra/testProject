@@ -8,11 +8,11 @@
 
 Class ArtistsController extends AppController {
 
-	var $name = 'Artists';
-	var $uses = array('Featuredartist', 'Artist', 'Newartist', 'Files', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token');
-	var $layout = 'admin';
-	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo', 'Token');
-	var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'CdnUpload', 'Streaming', 'Common','Solr');
+	var $name 		= 'Artists';
+	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token');
+	var $layout 	= 'admin';
+	var $helpers 	= array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo', 'Token');
+	var $components = array('Session', 'Auth', 'Downloads', 'CdnUpload', 'Streaming', 'Common','Solr', 'RequestHandler');
 
     /*
       Function Name : beforeFilter
@@ -21,7 +21,7 @@ Class ArtistsController extends AppController {
 
     function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing','composer','newAlbum' , 'new_view' , 'getFeaturedSongs');
+		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs' );
     }
 
     /*
@@ -30,8 +30,8 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managefeaturedartist() {
-        $artists = $this->paginate('Featuredartist', array('album != ""', 'language' => Configure::read('App.LANGUAGE')));
-        $this->set('artists', $artists);
+        $artists = $this->paginate( 'Featuredartist', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
+        $this->set( 'artists', $artists );
     }
 
     /*
@@ -104,23 +104,30 @@ Class ArtistsController extends AppController {
      */
 
     function admin_insertfeaturedartist() {
+    	
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
         $errorMsg = '';
         $artist = '';
         $album_provider_type = '';
         $album_prodid = 0;
-        $alb_det = explode('-', $_REQUEST['album']);
+        $alb_det = explode('-', $this->params[$index]['album']);
         if (isset($alb_det[0])) {
             $album_prodid = $alb_det[0];
         }
         if (isset($alb_det[1])) {
             $album_provider_type = $alb_det[1];
         }
-        if (isset($_REQUEST['artistName'])) {
-            $artist = $_REQUEST['artistName'];
+        if (isset($this->params[$index]['artistName'])) {
+            $artist = $this->params[$index]['artistName'];
         } else {
             $artist = $this->data['Artist']['artist_name'];
         }
-        if (isset($_REQUEST['album'])) {
+        if (isset($this->params[$index]['album'])) {
             $album = $album_prodid;
         } else {
             $album = $this->data['Artist']['album'];
@@ -170,11 +177,18 @@ Class ArtistsController extends AppController {
      */
 
     function admin_updatefeaturedartist() {
+    	
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
         $errorMsg = '';
         $album_provider_type = '';
         $album_prodid = 0;
         $this->Featuredartist->id = $this->data['Artist']['id'];
-        $alb_det = explode('-', $_REQUEST['album']);
+        $alb_det = explode('-', $this->params[$index]['album']);
         if (isset($alb_det[0])) {
             $album_prodid = $alb_det[0];
         }
@@ -182,16 +196,16 @@ Class ArtistsController extends AppController {
             $album_provider_type = $alb_det[1];
         }
         $artistName = '';
-        if (isset($_REQUEST['artistName'])) {
-            $artistName = $_REQUEST['artistName'];
+        if (isset($this->params[$index]['artistName'])) {
+            $artistName = $this->params[$index]['artistName'];
         }
         $artist = '';
-        if (isset($_REQUEST['artistName'])) {
-            $artist = $_REQUEST['artistName'];
+        if (isset($this->params[$index]['artistName'])) {
+            $artist = $this->params[$index]['artistName'];
         } else {
             $artist = $this->data['Artist']['artist_name'];
         }
-        if (isset($_REQUEST['album'])) {
+        if (isset($this->params[$index]['album'])) {
             $album = $album_prodid;
         } else {
             $album = $this->data['Artist']['album'];
@@ -261,6 +275,13 @@ Class ArtistsController extends AppController {
     function admin_createartist() {
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
+        
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
         $errorMsg = '';
         $territories = $this->Territory->find("all");
         for ($m = 0; $m < count($territories); $m++) {
@@ -277,14 +298,14 @@ Class ArtistsController extends AppController {
                 $this->set('getData', $getData);
                 $condition = 'edit';
                 $artistName = '';
-                if (isset($_REQUEST['artistName'])) {
-                    $artistName = $_REQUEST['artistName'];
+                if (isset($this->params[$index]['artistName'])) {
+                    $artistName = $this->params[$index]['artistName'];
                 } else {
                     $artistName = $getData['Artist']['artist_name'];
                 }
                 $artist = '';
-                if (isset($_REQUEST['artistName'])) {
-                    $artist = $_REQUEST['artistName'];
+                if (isset($this->params[$index]['artistName'])) {
+                    $artist = $this->params[$index]['artistName'];
                 } else {
                     $artist = $this->data['Artist']['artist_name'];
                 }
@@ -341,8 +362,8 @@ Class ArtistsController extends AppController {
             $this->set('formHeader', 'Add  Artist');
             $condition = 'add';
             $artistName = '';
-            if (isset($_REQUEST['artistName'])) {
-                $artist = $_REQUEST['artistName'];
+            if (isset($this->params[$index]['artistName'])) {
+                $artist = $this->params[$index]['artistName'];
             } else {
                 $artist = $this->data['Artist']['artist_name'];
             }
@@ -467,6 +488,13 @@ Class ArtistsController extends AppController {
      */
 
     function admin_addnewartist() {
+    	
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
         $errorMsg = '';
         if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
             $artistId = $this->params['named']['id'];
@@ -478,14 +506,14 @@ Class ArtistsController extends AppController {
                 $this->set('getData', $getData);
                 $condition = 'edit';
                 $artistName = '';
-                if (isset($_REQUEST['artistName'])) {
-                    $artistName = $_REQUEST['artistName'];
+                if (isset($this->params[$index]['artistName'])) {
+                    $artistName = $this->params[$index]['artistName'];
                 } else {
                     $artistName = $getData['Newartist']['artist_name'];
                 }
                 $artist = '';
-                if (isset($_REQUEST['artistName'])) {
-                    $artist = $_REQUEST['artistName'];
+                if (isset($this->params[$index]['artistName'])) {
+                    $artist = $this->params[$index]['artistName'];
                 } else {
                     $artist = $this->data['Artist']['artist_name'];
                 }
@@ -534,8 +562,8 @@ Class ArtistsController extends AppController {
             $condition = 'add';
             $artistName = '';
             $artist = '';
-            if (isset($_REQUEST['artistName'])) {
-                $artist = $_REQUEST['artistName'];
+            if (isset($this->params[$index]['artistName'])) {
+                $artist = $this->params[$index]['artistName'];
             } else {
                 $artist = $this->data['Artist']['artist_name'];
             }
@@ -1439,7 +1467,7 @@ Class ArtistsController extends AppController {
 
     function getAlbumData() {
         Configure::write('debug', 0);
-        $albumSongs = json_decode(base64_decode($_POST['albumtData']));
+        $albumSongs = json_decode(base64_decode($this->params['form']['albumtData']));
         if (!empty($albumSongs)) {
             foreach ($albumSongs as $value) {
                 
@@ -1487,9 +1515,9 @@ Class ArtistsController extends AppController {
 
     function getFeaturedSongs() {
         Configure::write('debug', 0);
-        $artistText = base64_decode($_POST['artistText']);
-        $providerType = base64_decode($_POST['providerType']);
-        $flag = $_POST['flag'];        
+        $artistText = base64_decode($this->params['form']['artistText']);
+        $providerType = base64_decode($this->params['form']['providerType']);
+        $flag = $this->params['form']['flag'];        
         $territory = $this->Session->read('territory');
         $featuredComposerSongs = Cache::read("featured_artist_".$artistText.'_'.$flag.'_'.$territory);
         if ($featuredComposerSongs === false) {
@@ -1531,9 +1559,9 @@ Class ArtistsController extends AppController {
     function getNationalAlbumData() {
         
         Configure::write('debug', 0);
-        $artistText = $_POST['artistText'];
-        $prodId = $_POST['prodId'];
-        $providerType = $_POST['providerType'];
+        $artistText = $this->params['form']['artistText'];
+        $prodId = $this->params['form']['prodId'];
+        $providerType = $this->params['form']['providerType'];
         $territory = $this->Session->read('territory');
         $nationalAlbumSongs = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId);
         if ($nationalAlbumSongs === false) {
@@ -1590,14 +1618,14 @@ Class ArtistsController extends AppController {
      */    
     function getSongStreamUrl() {
         Configure::write('debug', 0);
-        $cdnPath = $_POST['cdnPath'];
-        $sourceUrl = $_POST['sourceUrl'];
-        $songLength = $_POST['songLength'];
-        $songTitle = $_POST['songTitle'];
-        $providerType = $_POST['providerType'];
-        $playlistId = $_POST['playlistId'];
-        $prodId = $_POST['prodId'];
-        $artistName = $_POST['artistName'];
+        $cdnPath = $this->params['form']['cdnPath'];
+        $sourceUrl = $this->params['form']['sourceUrl'];
+        $songLength = $this->params['form']['songLength'];
+        $songTitle = $this->params['form']['songTitle'];
+        $providerType = $this->params['form']['providerType'];
+        $playlistId = $this->params['form']['playlistId'];
+        $prodId = $this->params['form']['prodId'];
+        $artistName = $this->params['form']['artistName'];
         if (!empty($cdnPath) && !empty($sourceUrl) && !empty($songLength)) {
             $data = array();            
             $filePath = $this->Token->streamingToken($cdnPath . "/" . $sourceUrl);
@@ -2397,6 +2425,13 @@ Class ArtistsController extends AppController {
 
     function admin_getArtists() {
         Configure::write('debug', 0);
+        
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
         $this->Song->recursive = 0;
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $this->Song->unbindModel(array('hasOne' => array('Genre')));
@@ -2407,7 +2442,7 @@ Class ArtistsController extends AppController {
             'conditions' =>
             array('and' =>
                 array(
-                    array("find_in_set('" . '"' . $_REQUEST['Territory'] . '"' . "',Song.Territory)", 'Song.provider_type' => 'sony')
+                    array("find_in_set('" . '"' . $this->params[$index]['Territory'] . '"' . "',Song.Territory)", 'Song.provider_type' => 'sony')
                 )
             ),
             'fields' => array(
@@ -2435,14 +2470,21 @@ Class ArtistsController extends AppController {
      * */
     function admin_getAlbums() {
         Configure::write('debug', 0);
+
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
         $result = array();
-        $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID', 'Album.AlbumTitle', 'Album.provider_type'), 'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
+        $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID', 'Album.AlbumTitle', 'Album.provider_type'), 'conditions' => array('Album.ArtistText = ' => urldecode($this->params[$index]['artist'])), 'recursive' => -1));
         $val = '';
         $this->Song->Behaviors->attach('Containable');
-        $countryPrefix = strtolower($_REQUEST['Territory']) . "_";
+        $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
         $this->Country->setTablePrefix($countryPrefix);
         foreach ($allAlbum as $k => $v) {
-            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             if (count($recordCount) > 0) {
                 $val = $val . $v['Album']['ProdID'] . ",";
                 $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
@@ -2467,15 +2509,21 @@ Class ArtistsController extends AppController {
      *  
      * */
     function admin_getAutoArtist() {
+    	
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
 
         $artist = $this->Song->find('all', array(
             'conditions' =>
             array('and' =>
                 array(
                     array(
-                        "(find_in_set('" . '"' . $_REQUEST['Territory'] . '"' . "',Song.Territory) or Song.Territory = '" . '"' . $_REQUEST['Territory'] . '"' . "' )",
+                        "(find_in_set('" . '"' . $this->params[$index]['Territory'] . '"' . "',Song.Territory) or Song.Territory = '" . '"' . $this->params[$index]['Territory'] . '"' . "' )",
                         'Song.provider_type' => 'sony',
-                        'Song.ArtistText LIKE' => $_REQUEST['Name'] . "%",
+                        'Song.ArtistText LIKE' => $this->params[$index]['Name'] . "%",
                         'Song.downloadstatus' => '1'
                     )
                 )
