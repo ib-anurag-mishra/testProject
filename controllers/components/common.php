@@ -148,7 +148,7 @@ Class CommonComponent extends Object
         
         //check the page no. must be greater than 0
         if($pageNo < 1){
-            $pageNo=1;
+            $pageNo=1;            
         }
         
         //add the Song table model
@@ -228,7 +228,7 @@ Class CommonComponent extends Object
         else
         {
             $endLimitG =  12000;
-            $startLimitG = ($pageNoG * 12000) - 12000;
+            $startLimitG = ($pageNo * 12000) - 12000;
             
             /* Query written in below format as it is not possible to write in Cakephp Standard.
              * Ref URL: http://stackoverflow.com/questions/8175080/cakephp-select-from-subquery-select-foo-from-select
