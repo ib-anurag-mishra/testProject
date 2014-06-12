@@ -5654,7 +5654,7 @@ sub { top: 0.4em; }
                     z-index: 100;
                     width: 120px;
 					// margin-right: -5px;
-					border-right: 5px solid transparent;
+					// border-right: 5px solid transparent;
                     -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
                     -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
                     box-shadow: 0 0 2px rgba(0,0,0,.5);
@@ -5686,7 +5686,7 @@ sub { top: 0.4em; }
                     .playlist-options {
                         position: absolute;
                         // right: -147px;
-                        right: -151px;
+                        right: -146px;
                         top:0px;
                         display: none;
                         background: #fff;
