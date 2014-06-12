@@ -5740,6 +5740,7 @@ sub { top: 0.4em; }
 						position: relative;
 
 						&:after {
+							content: "";
 							position: absolute;
 							right:0;
 							width: 5px;
