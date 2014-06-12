@@ -10132,7 +10132,7 @@ sub { top: 0.4em; }
 /* my account page */
 .my-account-page {
 	
-	margin-left: 20px;
+
 	margin-top: 20px;
 	
 	
@@ -10249,6 +10249,23 @@ sub { top: 0.4em; }
 				}
 			}
 			
+		}
+
+		.email-notification-wrapper {
+
+			h3 {
+
+				margin-bottom: 15px;
+			}
+
+			#btnNotification {
+
+				padding: 5px;
+				width: 100px;
+				margin-top: 15px;
+				font-size: 14px;
+				font-family: Helvetica, Arial, sans-serif;
+			}
 		}
 		
 
