@@ -165,7 +165,7 @@ Class CommonComponent extends Object
             $synonym_list   =   $this->getGenreSynonyms($genreValue);
             $conditionOR = '';
             foreach($synonym_list as $single_synGenre){
-                $conditionOR = empty($conditionOR)? "(Genre.Genre = '".$single_synGenre."'" : $conditionOR." OR Genre.Genre = '".$single_synGenre."'";            
+                $conditionOR = empty($conditionOR)? "(Genres.Genre = '".$single_synGenre."'" : $conditionOR." OR Genres.Genre = '".$single_synGenre."'";            
             }            
             if(!empty($conditionOR))
             {
