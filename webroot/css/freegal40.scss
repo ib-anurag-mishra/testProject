@@ -5675,11 +5675,13 @@ sub { top: 0.4em; }
 
                         line-height: 20px;
                         text-decoration: none;
-
+						
                         &:hover {
 
                             background: #999;
                         }
+
+
 
                     }
 
@@ -5735,7 +5737,15 @@ sub { top: 0.4em; }
                     .add-to-playlist {
 
                         background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						position: relative;
 
+						&:after {
+							position: absolute;
+							right:0;
+							width: 5px;
+							height: 100%;
+
+						}
                         &:hover {
 
                             color: rgba(0,0,0,1);
