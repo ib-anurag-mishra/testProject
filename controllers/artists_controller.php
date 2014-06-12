@@ -1992,7 +1992,7 @@ Class ArtistsController extends AppController {
                 }
             }
 
-            $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
+            $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
 
             $this->paginate =
                     array(
