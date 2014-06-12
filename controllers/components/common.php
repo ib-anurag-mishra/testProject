@@ -157,8 +157,7 @@ Class CommonComponent extends Object
         $territory = strtolower($territory);
         
         //Common conditions 
-        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";
-        $conditionArray[] = "Country.provider_type = Song.provider_type";
+        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";        
         $conditionArray[] = "Song.ArtistText!=''";
          
         //make condition according to Genre value
@@ -166,7 +165,7 @@ Class CommonComponent extends Object
             $synonym_list   =   $this->getGenreSynonyms($genreValue);
             $conditionOR = '';
             foreach($synonym_list as $single_synGenre){
-                $conditionOR = empty($conditionOR)? "(Genre.Genre LIKE '%".$single_synGenre."%'" : $conditionOR." OR Genre.Genre LIKE '%".$single_synGenre."%'";            
+                $conditionOR = empty($conditionOR)? "(Genre.Genre = '".$single_synGenre."'" : $conditionOR." OR Genre.Genre = '".$single_synGenre."'";            
             }            
             if(!empty($conditionOR))
             {
