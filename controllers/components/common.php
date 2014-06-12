@@ -157,7 +157,8 @@ Class CommonComponent extends Object
         $territory = strtolower($territory);
         
         //Common conditions 
-        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";        
+        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";   
+        $conditionArray[] = "Country.SalesDate != ''";         
         $conditionArray[] = "Song.ArtistText!=''";
          
         //make condition according to Genre value
@@ -240,7 +241,7 @@ Class CommonComponent extends Object
                                                         LEFT JOIN `us_countries` AS `Country` ON (`Country`.`ProdID` = `Songs`.`ProdID` and `Country`.`provider_type` = `Songs`.`provider_type`) 
                                                         LEFT JOIN `Albums` AS `Albums` ON (`Songs`.`ReferenceID` = `Albums`.`ProdID`) 
                                                         WHERE (`Country`.`DownloadStatus` = 1 or `Country`.`StreamingStatus` =1) 
-                                                        AND `Songs`.`ArtistText`!='' 
+                                                        AND `Songs`.`ArtistText`!='' AND `Country`.`SalesDate` != ''
                                                         ORDER BY `Songs`.`ArtistText` ASC 
                                                         LIMIT ".$startLimitG.", ".$endLimitG.") Song");
             
