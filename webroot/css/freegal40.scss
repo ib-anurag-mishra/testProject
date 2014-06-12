@@ -14779,6 +14779,17 @@ sub { top: 0.4em; }
 								&.add-to-playlist {
 							
 									background: url(../img/playlist/playlist-arrow.png) 100px 12px no-repeat #fff;
+									position: relative;
+
+									&:after {
+
+										position: absolute;
+										content: "";
+										right: -5px;
+										top: 0;
+										width: 5px;
+										height: 100%;
+									}
 									
 									&:hover {
 										
