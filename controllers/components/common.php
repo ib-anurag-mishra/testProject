@@ -22,17 +22,20 @@ Class CommonComponent extends Object
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
         $genreInstance = ClassRegistry::init('Genre');
+        $songInstance = ClassRegistry::init('Song');
         $genreInstance->Behaviors->attach('Containable');
         $genreInstance->recursive = 2;
+        $genreList = array();
+        
         $genreAll = $genreInstance->find('all', array(
             'conditions' =>
             array('and' =>
                 array(
-                    array('Country.Territory' => $territory, "Genre.Genre NOT IN('Porn Groove')")
+                    array('Country.Territory' => $territory,'Country.DownloadStatus' => 1, "Genre.Genre NOT IN('Porn Groove')")
                 )
             ),
             'fields' => array(
-                'Genre.Genre'
+                'Genre.expected_genre'
             ),
             'contain' => array(
                 'Country' => array(
@@ -42,21 +45,283 @@ Class CommonComponent extends Object
                 ),
             ), 'group' => 'Genre.Genre'
         ));
-
-        $this->log("cache written for genre for $territory", 'debug');
-
+      
+        
+        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
+        
+        $combine_genre  =   array();
         if ((count($genreAll) > 0) && ($genreAll !== false))
-        {
-            Cache::delete("genre" . $territory);
-            Cache::write("genre" . $territory, $genreAll);
+        {                
+            for($count=0; $count<count($genreAll);$count++)
+            {               
+                array_push($combine_genre, $genreAll[$count]['Genre']['expected_genre']);
+            }
+            $combine_genre  = array_unique($combine_genre);
+            sort($combine_genre);
+            
+            Cache::write("genre" . $territory, $combine_genre,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
-        }
-        else
-        {
-            Cache::write("genre" . $territory, Cache::read("genre" . $territory));
-            $this->log("no data available for genre" . $territory, "cache");
-        }
+            
+            /*Cache::write("genre" . $territory, $genreAll,'GenreCache');
+            $this->log("cache written for genre for $territory", "cache");*/
+        }      
+        
+        return $combine_genre;
+         
     }
+    
+     /*
+     * @func runGenreCacheFromShell
+     * @desc This function is used to call all functions for setting Genre page cache variables and run from shell
+     */    
+    function runGenreCacheFromShell(){
+        set_time_limit(0); 
+        $this->log("shel cron log genreated", "shellCronLog");    
+        $territoriesList = $this->getTerritories();       
+        foreach($territoriesList as $territory){           
+            $this->setArtistText($territory);            
+        }
+       
+    }
+    
+    /*
+     * Function Name : setArtistText
+     * Function Description : This function is used to setArtistText.
+     * all this function create the cache variable for Genre and run from the cache cron
+     * 
+     * @paran $territory varChar 'territory value'
+     * 
+     */
+    function setArtistText($territory){
+        set_time_limit(0); 
+    
+              
+        //set the aritst cache for specific Genre
+        $genreAll = $this->getGenres($territory);
+        //commented but need sometime for testing perpuse
+        //$genreAll = Cache::read("genre" . $territory);
+       
+        sleep(1);
+        //add All filter
+        array_unshift($genreAll, "All");      
+        // create cache one by one for each Genre
+        foreach($genreAll as $genreEach){
+             //fetch the alphabets
+             for($k = 63;$k < 91;$k++){
+                 
+                $artistFilter = chr($k);             
+                
+                if($k==63){
+                    $artistFilter = 'All';
+                }
+                
+                if($k==64){
+                    $artistFilter = 'spl';
+                }             
+                    
+                //this code is commented for some testing               
+                //$totalPages = $this->checkGenrepagesCount($territory,$genreEach,$artistFilter);
+                
+                //for fetching two pages for per Genre with per Artist filter
+                $totalPages = 1;
+                
+                //set cache variable one by one
+                for( $i=1;$i<=$totalPages;$i++ ){                     
+                   $this->getArtistText($genreEach,$territory,$artistFilter,$i);                    
+                }                
+            }      
+        }       
+    }   
+    
+    
+     /*
+     * Function Name : getArtistText
+     * Function Description : get first 120 artist for selected Genre
+     * @paran $genreValue varChar 'genre value'
+     * @paran $territory varChar 'territory value'
+     * @paran $artistFilter varChar 'artist filter value'
+     * @paran $pageNo int 'page number value'
+     * 
+     * @return  $artistListResults array
+     */
+     function getArtistText($genreValue,$territory,$artistFilter='',$pageNo=1){
+        set_time_limit(0);  
+        
+        //check the page no. must be greater than 0
+        if($pageNo < 1){
+            $pageNo=1;
+        }
+        
+        //add the Song table model
+        $songInstance = ClassRegistry::init('Song');
+        //set the territory value
+        $territory = strtolower($territory);
+        
+        //create conditions 
+        $conditionArray = array(
+                'Country.DownloadStatus' => 1,                    
+                'Country.Territory' => strtoupper($territory)                
+                );
+         
+        //make condition according to Genre value
+        if ($genreValue != 'All') {
+            $synonym_list   =   $this->getGenreSynonyms($genreValue);
+            $conditionOR = '';
+            foreach($synonym_list as $single_synGenre){
+                $conditionOR = empty($conditionOR)? "(`Song`.`Genre` LIKE '%".$single_synGenre."%'" : $conditionOR." OR `Song`.`Genre` LIKE '%".$single_synGenre."%'";            
+            }            
+            if(!empty($conditionOR))
+            {
+                $conditionArray[] = $conditionOR.")";
+            }
+        }
+        
+        
+        //make condition according to Genre value
+        if ($artistFilter == 'spl'){
+            $conditionArray[] = "Song.ArtistText REGEXP '^[^A-Za-z]'";
+        }
+        elseif ($artistFilter != '' && $artistFilter != 'All') {
+            $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
+        }
+      
+        
+        $endLimit =  120;
+        $startLimit = ($pageNo * 120) - 120;
+        
+        $songInstance->unbindModel(array('hasOne' => array('Participant')));
+        $songInstance->unbindModel(array('hasOne' => array('Country')));
+        $songInstance->unbindModel(array('hasOne' => array('Genre')));
+        $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+        $songInstance->recursive = 0;
+        //create query that fetch all artist according to selected Genre
+        $artistListResults = $songInstance->find('all', array(
+            'conditions' => $conditionArray,
+            'fields' => array('DISTINCT Song.ArtistText'),
+            'limit'=> $endLimit, 'offset'=> $startLimit,
+            'order' => array('Song.ArtistText ASC'),
+            'joins' => array(
+                array(
+                    'table' => $territory.'_countries',
+                    'alias' => 'Country',
+                    'type' => 'inner',
+                    'foreignKey' => false,
+                    'conditions'=> array('Country.ProdID = Song.ProdID')
+                ),
+                array(
+                    'table' => 'Albums',
+                    'alias' => 'Albums',
+                    'type' => 'inner',
+                    'foreignKey' => false,
+                    'conditions'=> array('Song.ReferenceID = Albums.ProdID')
+                )
+            )
+         ));
+                
+         //set artist list in the cache
+         if (!empty($artistListResults)) {             
+            //create cache variable name
+            $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
+            Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
+            $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
+         } 
+         
+        return $artistListResults;
+         
+     }
+     
+     /*
+     * Function Name : checkGenrepagesCount
+     * Function Description : This get count of particular Genre and pages.
+     * this currenty not using anyware 
+     
+     * @paran $territory varChar 'territory value'
+     * @paran $genreEach varChar 'genre value'
+     * @paran $artistFilter varChar 'artist filter value'
+     * 
+     * @return  $totalPages int
+     */
+     
+     function checkGenrepagesCount($territory,$genreEach,$artistFilter){
+         
+        set_time_limit(0);    
+        //add the Song table model
+        $songInstance = ClassRegistry::init('Song');
+        
+        //check if artist filter is All or not
+        if($genreEach != 'All')
+        {
+            //create conditions array
+            $conditionArray = array(
+                'Country.DownloadStatus' => 1,                    
+                'Country.Territory' => strtoupper($territory)                
+            );
+
+            //Genre filter
+            if ($genreEach != '' && $genreEach != 'All')
+            {
+                $conditionArray[] = " Song.Genre LIKE '%".mysql_escape_string($genreEach)."%'";
+            }
+
+            //Artist filter
+            if ($artistFilter == 'spl')
+            {                       
+                $conditionArray[] = " Song.ArtistText REGEXP '^[^A-Za-z]'";
+            }
+            elseif ($artistFilter != '' && $artistFilter != 'All')
+            {
+                $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
+            }
+
+            $songInstance->unbindModel(array('hasOne' => array('Participant')));
+            $songInstance->unbindModel(array('hasOne' => array('Country')));
+            $songInstance->unbindModel(array('hasOne' => array('Genre')));
+            $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+            $songInstance->recursive = 0;
+
+            //query that fetch  artist count according to Genre
+            $artistCount = $songInstance->find('all', array(
+                'conditions' => $conditionArray,
+                'fields' => array('count(DISTINCT Song.ArtistText) as total'),
+
+                'joins' => array(
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'Country',
+                        'type' => 'left',
+                        'foreignKey' => false,
+                        'conditions'=> array('Country.ProdID = Song.ProdID')
+                    ),
+                    array(
+                        'table' => 'Albums',
+                        'alias' => 'Albums',
+                        'type' => 'left',
+                        'foreignKey' => false,
+                        'conditions'=> array('Song.ReferenceID = Albums.ProdID')
+                    )
+                )
+             ));
+            
+            if( isset($artistCount[0][0]['total']) && ($artistCount[0][0]['total'] > 0 ) ){                    
+                $totalPages = ceil( $artistCount[0][0]['total'] / 120 );                    
+            }else{
+                $totalPages =1;
+            }
+            
+            //value less then one then set default 1
+            if( $totalPages < 1){
+                $totalPages =1;
+            }
+
+        }else{
+            $totalPages =5;
+        }
+        return $totalPages;         
+     }
+     
+    
+     
+     
 
     /*
      * Function Name : getNationalTop100
@@ -3170,48 +3435,40 @@ STR;
             $this->Session->write('videodownloadCountArray', $videodownloadCountArray);
         }
     }
-
-    /**
-     * This function get Condition for Block if its found in session
-     * @return string
-     */
-    function getBlockCondition()
-    {
-        if ($this->Session->read('block') == 'yes')
-        {
-            return array('Song.Advisory' => 'F');
-        }
-        else
-        {
-            return "";
-        }
-    }
     
-    /**
-     * This function return the string which contains the
-     * 
-     * @param array $song_array
-     * @return String
+    
+    /*
+     * @func getGenreSynonyms
+     * @desc This is used to get synonyms list
      */
-    function getRefAndProviderCondString($song_array)
+
+    function getGenreSynonyms($genre_name)
     {
-        $val = '';
-        $val_provider_type = '';
+        $combineGenreData = Cache::read("combine_genre");
         
-        foreach ($song_array as $k => $v)
+        if ($combineGenreData === false)
         {
-            if (empty($val))
+            $combineGenreInstance = ClassRegistry::init('CombineGenre');
+            $combineGenreData     = $combineGenreInstance->find("all");
+                        
+            Cache::write("combine_genre", $combineGenreData);
+        }
+        
+        $synGenres = array();
+        
+        if($genre_name!='')
+        {            
+            for($cnt=0; $cnt<count($combineGenreData); $cnt++)
             {
-                $val .= $v['Song']['ReferenceID'];
-                $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
-            }
-            else
-            {
-                $val .= ',' . $v['Song']['ReferenceID'];
-                $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                if($combineGenreData[$cnt]['CombineGenre']['expected_genre']==$genre_name)       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
+                {
+                    //$synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['genre'];
+                    array_push($synGenres, $combineGenreData[$cnt]['CombineGenre']['genre']);
+                }
             }
         }
-        return $val . "&" . $val_provider_type;
+        
+        return $synGenres;
     }
 
 }
