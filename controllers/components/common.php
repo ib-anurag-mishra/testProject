@@ -165,7 +165,7 @@ Class CommonComponent extends Object
             $synonym_list   =   $this->getGenreSynonyms($genreValue);
             $conditionOR = '';
             foreach($synonym_list as $single_synGenre){
-                $conditionOR = empty($conditionOR)? "(Genres.Genre = '".$single_synGenre."'" : $conditionOR." OR Genres.Genre = '".$single_synGenre."'";            
+                $conditionOR = empty($conditionOR)? "(Genres.Genre = '".mysql_escape_string($single_synGenre)."'" : $conditionOR." OR Genres.Genre = '".mysql_escape_string($single_synGenre)."'";            
             }            
             if(!empty($conditionOR))
             {
@@ -243,13 +243,13 @@ Class CommonComponent extends Object
                                                         AND `Songs`.`ArtistText`!='' 
                                                         ORDER BY `Songs`.`ArtistText` ASC 
                                                         LIMIT ".$startLimitG.", ".$endLimitG.") Song");
+            
+            array_pop($artistListResults);          
         }
                 
          //set artist list in the cache
          if (!empty($artistListResults)) {             
             //create cache variable name
-             
-            //$artistListResults   =   $this->processGenre($artistListResults);
              
             $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
@@ -3033,27 +3033,5 @@ STR;
         
         return $synGenres;
     }
-    
-    
-    /*
-     * @func processGenre
-     * @desc remove duplicate Genres
-     */
-
-    function processGenre($genreArr)
-    {
-        $unique_array = array();
-        
-        foreach ($genreArr as $key=>$value) 
-        {        
-            if (!in_array($value['Song']['ArtistText'], $unique_array)) 
-            {                    
-                array_push($unique_array, $value['Song']['ArtistText']);
-            }            
-
-        }
-        return $unique_array;
-    }
-    
 
 }
