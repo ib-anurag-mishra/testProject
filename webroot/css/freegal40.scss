@@ -5742,9 +5742,10 @@ sub { top: 0.4em; }
 						&:after {
 							content: "";
 							position: absolute;
-							right:0;
+							right:-5px;
 							width: 5px;
 							height: 100%;
+							top: 0;
 
 						}
                         &:hover {
