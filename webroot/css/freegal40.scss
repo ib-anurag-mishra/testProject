@@ -5653,8 +5653,6 @@ sub { top: 0.4em; }
                     font-size: 12px;
                     z-index: 100;
                     width: 120px;
-					// margin-right: -5px;
-					// border-right: 5px solid transparent;
                     -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
                     -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
                     box-shadow: 0 0 2px rgba(0,0,0,.5);
@@ -5687,7 +5685,6 @@ sub { top: 0.4em; }
 
                     .playlist-options {
                         position: absolute;
-                        // right: -147px;
                         right: -146px;
                         top:0px;
                         display: none;
@@ -6121,6 +6118,17 @@ sub { top: 0.4em; }
 					.add-to-playlist {
 							
 						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						position: relative;
+
+						&:after {
+
+							position: absolute;
+							content: "";
+							right:-5px;
+							top: 0;
+							width: 5px;
+							height: 100%;
+						}
 						
 						&:hover {
 							
