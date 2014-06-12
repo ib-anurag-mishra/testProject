@@ -219,7 +219,7 @@ Class CommonComponent extends Object
          ));
                 
          //set artist list in the cache
-         if (!empty($artistListResults)) {             
+         if (!empty($artistListResults)) {              
             //create cache variable name
             $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
