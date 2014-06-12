@@ -1911,368 +1911,15 @@ sub { top: 0.4em; }
 
 
 
+/* being videos page */
 
-/* videos page */
 .videos {
 	
 
 	width: 847px;
 	
 	
-	.featured-videos {
-	
-		width: 100%;
-		height: auto;
-		position: relative;
-		
-		
-		&:after {
-			content: "";
-			position: absolute;
-			right: 0;
-			top:42px;
-			background: url(../img/videos/featured-videos/featured-video-shadow.png);
-			width: 11px;
-			height: 439px;
-				
-		}
-		
-		
-		header {
-			margin-bottom: 15px;
-			
-			h3 {
-				
-				float: left;
-				font-size: 26px;
-				letter-spacing: 1px;
-				
-				
-				
-			}
-			
-			.category-select {
-				
-				float: left;
 
-				-webkit-appearance: none;
-				padding: 0;
-				border: 0;
-				font-size: 12px;
-				color: rgba(0,0,0,1);
-				outline: 0;
-				-webkit-border-radius: 0;
-				-moz-border-radius: 0;
-				border-radius: 0;
-				line-height: 21px;
-				padding-left: 9px;
-				margin-left: 20px;
-				background: url(../img/videos/featured-videos/featured-all-select.png) no-repeat;
-				width: 135px;
-				height: 24px;
-				-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.3);
-				-moz-box-shadow: 0 1px 2px rgba(0,0,0,.3);
-				box-shadow: 0 1px 2px rgba(0,0,0,.3);
-				
-				
-			}
-			
-			.see-all {
-				
-				float: right;
-				margin-top: 10px;
-				
-				a {
-					
-					color: rgba(0, 0, 0, 0.8);
-					font-size: 10px;
-					font-weight: bold;
-					text-decoration: none;
-					
-				}
-				
-			}
-		}
-		
-		
-		
-		
-		#featured-video-grid {
-			overflow: hidden;
-			position: relative;
-			margin-top: 10px;
-			height: 452px;
-			
-			ul {
-				width: 13000px;
-				overflow-y: hidden;
-				height: auto;
-				
-				li {
-				
-					display: block;
-					float: left;
-					padding:5px 13px 5px 5px;
-					position: relative;
-				
-					a {
-					
-						img {
-					
-					
-							border: 1px solid #fff;
-
-							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							box-shadow: 0 0 4px rgba(0,0,0,.5);
-							
-						}
-					}
-					
-					
-					
-				}
-			}
-			
-			&:hover {
-				
-				overflow-x: scroll;
-			}
-			
-
-			
-			
-			
-			
-		
-			.featured-video-detail {
-				
-				position: relative;
-				margin-bottom: 10px;
-				
-				
-				.featured-video-download-now-button {
-					background: rgb(255,255,255);
-					display: block;
-					position: absolute;
-					width: 124px;
-					height: 25px;
-					line-height: 26px;
-					right: 36px;
-					bottom:50px;
-					-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-					opacity: 0;
-					text-transform: uppercase;
-					font-size: 12px;
-					text-align: center;
-					color:rgb(0,0,0);
-					text-decoration: none;	
-					font-weight: bold;
-					-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-					-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-					box-shadow: 0 0 2px rgba(0,0,0,.5);
-					
-				}
-				
-				.add-to-playlist-button {
-					background: url(../img/add-to-playlist-button.png);
-					display: block;
-					position: absolute;
-					bottom:50px;
-					right: 8px;
-					width: 26px;
-					height: 25px;
-					-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-					opacity: 0;
-					-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-					-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-					box-shadow: 0 0 2px rgba(0,0,0,.5);
-					
-				}
-				
-				.preview {
-					
-					display: block;
-					position: absolute;
-					left: 126px;
-					top:66px;
-					width: 23px;
-					height: 23px;
-					background: url(../img/news/top-100/preview-off.png);
-					opacity: 0;
-					
-					&:hover {
-						
-						background: url(../img/news/top-100/preview-hover.png);
-						opacity: 1;
-					}
-					
-					&.active {
-						
-						background: url(../img/news/top-100/preview-click.png);
-						opacity: 1;
-						width: 21px;
-						height: 21px;
-						left: 126px;
-						top: 66px;
-					}
-					
-					
-				}
-				
-				
-				.wishlist-popover {
-				
-					display: none;
-					position: absolute;
-					bottom: 77px; 
-					
-					font-size: 12px;
-					z-index: 100;
-					width: auto;
-                    right:8px;
-					
-					&.active {
-						
-						display: block;
-					}
-					
-
-					-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-					-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-					box-shadow: 0 0 2px rgba(0,0,0,.5);
-					
-					a {
-						background: #fff;
-						
-						display: block;
-						color: #000;
-						padding: 5px 10px 5px 10px;
-					
-						line-height: 20px;
-						text-decoration: none;
-						
-						&:hover {
-							background: #999;
-							color: rgba(0,0,0,1);
-							
-						}
-						
-						
-					}
-					
-					.playlist-options {
-						position: absolute;
-						right: -144px;
-						top:34px;
-						display: none;
-						background: #fff;
-						width: 145px;
-						height: 186px;
-
-						-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-						-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-						box-shadow: 0 0 2px rgba(0,0,0,.5);
-						
-						overflow-x: hidden;
-						
-						&.active {
-							
-							display: block;
-						}
-						
-						ul {
-							
-							li {
-								
-								float: none;
-								padding: 0;
-								
-								a {
-									
-									padding: 5px 5px 5px 10px;
-									text-decoration: none;
-									
-									&:hover {
-										
-										text-decoration: none;
-									}
-								}
-							}
-						}
-						
-						
-							
-					}
-					
-					
-					
-
-					
-					.add-to-playlist {
-							
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
-						
-						&:hover {
-							
-							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
-						}
-					}
-				} /* end wishlist popover */
-				
-			} /* end .featured-video-detail */
-			
-			.video-title {
-				
-				font-weight: bold;
-				font-size: 14px;
-				line-height: 15px;
-				padding-top: 8px;
-				padding-bottom: 4px;
-				
-				a {
-					
-					text-decoration: none;
-					color: rgba(0,0,0,1);
-					
-					&:hover {
-						
-						text-decoration: underline;
-					}
-					
-				}
-				
-	
-			}
-			
-			.video-name {
-				
-				color: rgba(0,0,0,.5);
-				font-size: 12px;
-				line-height: 15px;
-				
-				a {
-					
-					text-decoration: none;
-					color: rgba(0,0,0,.5);
-					
-					&:hover {
-						
-						text-decoration: underline;
-					}
-					
-				}
-			}
-			
-			
-			
-
-		} /* end featured video grid */
-		
-		
-		
-	} /* end .featured-videos */
 	
 	
 	
@@ -2720,6 +2367,367 @@ sub { top: 0.4em; }
 	
 } /* end .videos */
 
+
+
+.featured-videos {
+
+	width: 100%;
+	height: auto;
+	position: relative;
+	
+	
+	&:after {
+		content: "";
+		position: absolute;
+		right: 0;
+		top:42px;
+		background: url(../img/videos/featured-videos/featured-video-shadow.png);
+		width: 11px;
+		height: 439px;
+			
+	}
+	
+	
+	header {
+		margin-bottom: 15px;
+		
+		h3 {
+			
+			float: left;
+			font-size: 26px;
+			letter-spacing: 1px;
+			
+			
+			
+		}
+		
+		.category-select {
+			
+			float: left;
+
+			-webkit-appearance: none;
+			padding: 0;
+			border: 0;
+			font-size: 12px;
+			color: rgba(0,0,0,1);
+			outline: 0;
+			-webkit-border-radius: 0;
+			-moz-border-radius: 0;
+			border-radius: 0;
+			line-height: 21px;
+			padding-left: 9px;
+			margin-left: 20px;
+			background: url(../img/videos/featured-videos/featured-all-select.png) no-repeat;
+			width: 135px;
+			height: 24px;
+			-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.3);
+			-moz-box-shadow: 0 1px 2px rgba(0,0,0,.3);
+			box-shadow: 0 1px 2px rgba(0,0,0,.3);
+			
+			
+		}
+		
+		.see-all {
+			
+			float: right;
+			margin-top: 10px;
+			
+			a {
+				
+				color: rgba(0, 0, 0, 0.8);
+				font-size: 10px;
+				font-weight: bold;
+				text-decoration: none;
+				
+			}
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+} /* end .featured-videos */
+
+
+/* begin #featured-video-grid */
+#featured-video-grid {
+	overflow: hidden;
+	position: relative;
+	margin-top: 10px;
+	height: 452px;
+	
+	ul {
+		width: 13000px;
+		overflow-y: hidden;
+		height: auto;
+		
+		li {
+		
+			display: block;
+			float: left;
+			padding:5px 13px 5px 5px;
+			position: relative;
+		
+			a {
+			
+				img {
+			
+			
+					border: 1px solid #fff;
+
+					-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
+					-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
+					box-shadow: 0 0 4px rgba(0,0,0,.5);
+					
+				}
+			}
+			
+			
+			
+		}
+	}
+	
+	&:hover {
+		
+		overflow-x: scroll;
+	}
+	
+
+	
+	
+	
+	
+
+	.featured-video-detail {
+		
+		position: relative;
+		margin-bottom: 10px;
+		
+		
+		.featured-video-download-now-button {
+			background: rgb(255,255,255);
+			display: block;
+			position: absolute;
+			width: 124px;
+			height: 25px;
+			line-height: 26px;
+			right: 36px;
+			bottom:50px;
+			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+			opacity: 0;
+			text-transform: uppercase;
+			font-size: 12px;
+			text-align: center;
+			color:rgb(0,0,0);
+			text-decoration: none;	
+			font-weight: bold;
+			-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+			-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+			box-shadow: 0 0 2px rgba(0,0,0,.5);
+			
+		}
+		
+		.add-to-playlist-button {
+			background: url(../img/add-to-playlist-button.png);
+			display: block;
+			position: absolute;
+			bottom:50px;
+			right: 8px;
+			width: 26px;
+			height: 25px;
+			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+			opacity: 0;
+			-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+			-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+			box-shadow: 0 0 2px rgba(0,0,0,.5);
+			
+		}
+		
+		.preview {
+			
+			display: block;
+			position: absolute;
+			left: 126px;
+			top:66px;
+			width: 23px;
+			height: 23px;
+			background: url(../img/news/top-100/preview-off.png);
+			opacity: 0;
+			
+			&:hover {
+				
+				background: url(../img/news/top-100/preview-hover.png);
+				opacity: 1;
+			}
+			
+			&.active {
+				
+				background: url(../img/news/top-100/preview-click.png);
+				opacity: 1;
+				width: 21px;
+				height: 21px;
+				left: 126px;
+				top: 66px;
+			}
+			
+			
+		}
+		
+		
+		.wishlist-popover {
+		
+			display: none;
+			position: absolute;
+			bottom: 77px; 
+			
+			font-size: 12px;
+			z-index: 100;
+			width: auto;
+            right:8px;
+			
+			&.active {
+				
+				display: block;
+			}
+			
+
+			-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+			-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+			box-shadow: 0 0 2px rgba(0,0,0,.5);
+			
+			a {
+				background: #fff;
+				
+				display: block;
+				color: #000;
+				padding: 5px 10px 5px 10px;
+			
+				line-height: 20px;
+				text-decoration: none;
+				
+				&:hover {
+					background: #999;
+					color: rgba(0,0,0,1);
+					
+				}
+				
+				
+			}
+			
+			.playlist-options {
+				position: absolute;
+				right: -144px;
+				top:34px;
+				display: none;
+				background: #fff;
+				width: 145px;
+				height: 186px;
+
+				-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+				-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+				box-shadow: 0 0 2px rgba(0,0,0,.5);
+				
+				overflow-x: hidden;
+				
+				&.active {
+					
+					display: block;
+				}
+				
+				ul {
+					
+					li {
+						
+						float: none;
+						padding: 0;
+						
+						a {
+							
+							padding: 5px 5px 5px 10px;
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: none;
+							}
+						}
+					}
+				}
+				
+				
+					
+			}
+			
+			
+			
+
+			
+			.add-to-playlist {
+					
+				background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+				
+				&:hover {
+					
+					color: rgba(0,0,0,1);
+					background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+				}
+			}
+		} /* end wishlist popover */
+		
+	} /* end .featured-video-detail */
+	
+	.video-title {
+		
+		font-weight: bold;
+		font-size: 14px;
+		line-height: 15px;
+		padding-top: 8px;
+		padding-bottom: 4px;
+		
+		a {
+			
+			text-decoration: none;
+			color: rgba(0,0,0,1);
+			
+			&:hover {
+				
+				text-decoration: underline;
+			}
+			
+		}
+		
+
+	}
+	
+	.video-name {
+		
+		color: rgba(0,0,0,.5);
+		font-size: 12px;
+		line-height: 15px;
+		
+		a {
+			
+			text-decoration: none;
+			color: rgba(0,0,0,.5);
+			
+			&:hover {
+				
+				text-decoration: underline;
+			}
+			
+		}
+	}
+	
+	
+	
+
+} /* end featured video grid */
+
+/* end videos page */
 
 
 
