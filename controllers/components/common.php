@@ -235,15 +235,15 @@ Class CommonComponent extends Object
              * Ref URL: http://stackoverflow.com/questions/3781654/how-to-implement-a-sorting-subquery-in-the-from-section
              */
             
-            $artistListResults = $songInstance->query( "SELECT DISTINCT `DArtistText`.`ArtistText` 
+            $artistListResults = $songInstance->query( "SELECT DISTINCT `Song`.`ArtistText` 
                                                         FROM 
-                                                        (SELECT `Song`.`ArtistText` FROM `Songs` AS `Song` 
-                                                        LEFT JOIN `us_countries` AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID` and `Country`.`provider_type` = `Song`.`provider_type`) 
-                                                        LEFT JOIN `Albums` AS `Albums` ON (`Song`.`ReferenceID` = `Albums`.`ProdID`) 
+                                                        (SELECT `Songs`.`ArtistText` FROM `Songs` AS `Songs` 
+                                                        LEFT JOIN `us_countries` AS `Country` ON (`Country`.`ProdID` = `Songs`.`ProdID` and `Country`.`provider_type` = `Songs`.`provider_type`) 
+                                                        LEFT JOIN `Albums` AS `Albums` ON (`Songs`.`ReferenceID` = `Albums`.`ProdID`) 
                                                         WHERE (`Country`.`DownloadStatus` = 1 or `Country`.`StreamingStatus` =1) 
-                                                        AND `Song`.`ArtistText`!='' 
-                                                        ORDER BY `Song`.`ArtistText` ASC 
-                                                        LIMIT ".$startLimitG.", ".$endLimitG.") DArtistText");
+                                                        AND `Songs`.`ArtistText`!='' 
+                                                        ORDER BY `Songs`.`ArtistText` ASC 
+                                                        LIMIT ".$startLimitG.", ".$endLimitG.") Song");
         }
                 
          //set artist list in the cache

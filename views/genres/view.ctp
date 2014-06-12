@@ -449,7 +449,7 @@ $totalRows = count($genresAll);
                         {
                             for ($i = 0; $i < count($artistList); $i++)
                             {
-                                $artistName = $this->getTextEncode($artistList[$i]['DArtistText']['ArtistText']);
+                                $artistName = $this->getTextEncode($artistList[$i]['Song']['ArtistText']);
                                 
                                 if ($artistName != "")
                                 {
