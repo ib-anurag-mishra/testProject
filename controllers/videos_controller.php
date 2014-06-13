@@ -34,6 +34,8 @@ class VideosController extends AppController {
 
     function index() {
 
+    	$this->layout = 'home';
+
         $libraryId = $this->Session->read('library');
         $patronId  = $this->Session->read('patron');
         $territory = $this->Session->read('territory');
@@ -364,6 +366,8 @@ class VideosController extends AppController {
      */
 
     function details() {
+    	
+    	$this->layout = 'home';
 
         $libraryId = $this->Session->read( 'library' );
         $patronId  = $this->Session->read( 'patron' );
