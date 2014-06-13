@@ -75,7 +75,7 @@
                 )
         );
         ?>
-        <link href="/css/freegal40.css?v=06042014" rel="stylesheet" type="text/css" />
+        <link href="/css/freegal40.css?v=06172014" rel="stylesheet" type="text/css" />
         <!--[if IE 8]>
         <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
         <![endif]-->        
@@ -596,7 +596,7 @@
 
         if ($this->Session->read('lId') && $this->Session->read('lId') != '')
         {
-            echo $this->Html->css('styles');
+            // echo $this->Html->css('styles');
             ?>
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico" />
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico" />
@@ -646,16 +646,7 @@
             #newly_added a.first { display: block }
 
 
-            .player {
 
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                height: 100px;
-                overflow: hidden;
-
-
-            }
         </style>
 
 

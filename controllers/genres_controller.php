@@ -23,7 +23,7 @@ Class GenresController extends AppController
     {
         parent::beforeFilter();
 
-        $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions', 'album');
+        $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions', 'setGenres');
         $libraryCheckArr = array("view", "index");
     }
 
@@ -59,27 +59,9 @@ Class GenresController extends AppController
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
         $genreAll = Cache::read("genre" . $country);
-        if ($genreAll === false)
-        {
-            $genreAll = $this->Genre->find('all', array(
-                'conditions' =>
-                array('and' =>
-                    array(
-                        array('Country.Territory' => $country)
-                    )
-                ),
-                'fields' => array(
-                    'Genre.Genre'
-                ),
-                'contain' => array(
-                    'Country' => array(
-                        'fields' => array(
-                            'Country.Territory'
-                        )
-                    ),
-                ), 'group' => 'Genre.Genre'
-            ));
-            Cache::write("genre" . $country, $genreAll);
+        if ($genreAll === false) {
+        //if(1){ 
+            $genreAll = $this->Common->getGenres($country);
         }
 
         $this->set('genresAll', $genreAll);
@@ -229,445 +211,287 @@ Class GenresController extends AppController
         }
         $this->set('categories', $finalArray);
     }
+    
+    //just for test only
+    function setGenres(){
+        set_time_limit(0);   
+        $country = $this->Session->read('territory');
+        $this->Common->getGenres($country);
+       
+    }
 
     /*
-      Function Name : view
-      Desc : actions on view all genres page
-     */
-
+    Function Name : view
+    Desc : default funciton for Genre page
+    *
+    *
+    * @param $Genre VarChar  'Genre value'
+    * @param $Artist VarChar  'Artist value'
+    *
+    * @return void
+    */
     function view($Genre = null, $Artist = null)
     {
-        //login redirect issue fix        
-        if (!base64_decode($this->Session->read('calledGenre')))
-        {
-            $Genre = '';
+       set_time_limit(0);       
+        $this->layout = 'home';
+       //set the default page value
+        $pageNo =1;
+       
+        //set the selected artist value
+        $slectedArtistFilter = $Artist;
+        
+        //get values if user login    
+        $patId = $this->Session->read('patron');
+        $libId = $this->Session->read('library');
+        $country = $this->Session->read('territory');
+        if($patId){
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
         }
-        else
-        {
-            $Genre = $this->Session->read('calledGenre');
-            $this->Session->write('calledGenre', $Genre);
-        }
+        
 
+        //set the Genre and Artist value according to upcomming value        
         if ($Genre == '')
         {
             $Genre = "QWxs";
         }
-
-
-        $this->layout = 'home';
-        $country = $this->Session->read('territory');
-        if (!base64_decode($Genre))
+        if ($Artist == '' || $Artist == 'All')
         {
-            $this->Session->setFlash(__('Invalid Genre.', true));
-            $this->redirect(array('controller' => '/', 'action' => 'index'));
+            $Artist = "All";
+            $slectedArtistFilter =$Artist;
         }
-
-        $this->Genre->Behaviors->attach('Containable');
-        $this->Genre->recursive = 2;
-        $genreAll = $genre = Cache::read("genre" . $country);
-        if ($genreAll === false)
+       
+        //check the genre list cache
+        $genreAll = Cache::read("genre" . $country,'GenreCache');
+        if ($genreAll === false || empty($genreAll))
         {
-            $genreAll = $this->Genre->find('all', array(
-                'conditions' =>
-                array('and' =>
-                    array(
-                        array('Country.Territory' => $country, "Genre.Genre NOT IN( 'Caribbean','Downtempo','Dub','Fusion','House','Indie' ,'Progressive Rock','Psychedelic Rock', 'Symphony' ,'World' ,'Porn Groove')"
-                        )
-                    )
-                ),
-                'fields' => array(
-                    'Genre.Genre'
-                ),
-                'contain' => array(
-                    'Country' => array(
-                        'fields' => array(
-                            'Country.Territory'
-                        )
-                    ),
-                ), 'group' => 'Genre.Genre'
-            ));
-            Cache::write("genre" . $country, $genreAll);
-        }
-        $this->set('genresAll', $genreAll);
-        $patId = $this->Session->read('patron');
-        $libId = $this->Session->read('library');
-        $country = $this->Session->read('territory');
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
-        if ($this->Session->read('block') == 'yes')
-        {
-            $cond = array('Song.Advisory' => 'F');
-        }
-        else
-        {
-            $cond = "";
-        }
-
-
-
-        //login redirect fix if selected 
-        if ($this->Session->read('selectedAlpha') == 'All')
-        {
-            $Artist = null;
-        }
-        elseif ($Artist != $this->Session->read('selectedAlpha'))
-        {
-            $Artist = $this->Session->read('selectedAlpha');
-        }
-
-        if ($Artist == 'spl')
-        {
-            $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
-        }
-        elseif ($Artist != '' && $Artist != 'img')
-        {
-            $condition = array('Song.ArtistText LIKE' => $Artist . '%');
-        }
-        else
-        {
-            $condition = "";
-        }
-
-
-        $this->Song->recursive = 0;
+            $genreAll = $this->Common->getGenres($country);
+        } 
+        
+        //check the genre value         
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
-
-        if ($genre != 'All')
-        {
-            $this->Song->unbindModel(array('hasOne' => array('Participant')));
-            $this->Song->unbindModel(array('hasOne' => array('Country')));
-            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
-            $this->Song->Behaviors->attach('Containable');
-            $gcondition = array(
-                "Song.provider_type = Genre.provider_type",
-                "Genre.Genre = '$genre'",
-                "find_in_set('\"$country\"',Song.Territory) > 0",
-                'Song.DownloadStatus' => 1,        
-                "Song.Sample_FileID != ''",
-                "Song.ArtistText != ''",
-                "Song.ArtistText IS NOT NULL",
-                "Song.FullLength_FIleID != ''", 
-                $condition, 
-                '1 = 1'
-                );
-            $this->paginate = array(
-                'conditions' => $gcondition,
-                'fields' => array('DISTINCT Song.ArtistText'),
-                'contain' => array(
-                    'Genre' => array(
-                        'fields' => array(
-                            'Genre.Genre'
-                        )),
-                ),
-                'order' => 'Song.ArtistText ASC',
-                'extra' => array('chk' => 1),
-                'limit' => '60', 'cache' => 'yes', 'check' => 2
-            );
-        }
-        else
-        {
-            //this run
-            $this->Song->unbindModel(array('hasOne' => array('Participant')));
-            $this->Song->unbindModel(array('hasOne' => array('Country')));
-            $this->Song->unbindModel(array('hasOne' => array('Genre')));
-            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
-            $this->Song->Behaviors->attach('Containable');
-            $this->Song->recursive = 0;
-            $gcondition = array(
-                "find_in_set('\"$country\"',
-                Song.Territory) > 0",
-                'Song.DownloadStatus' => 1,
-                "Song.Sample_FileID != ''",
-                "Song.FullLength_FIleID != ''",
-                "Song.ArtistText != ''",
-                "Song.ArtistText IS NOT NULL",
-                $condition,
-                '1 = 1 '
-            );
-
-            $this->paginate = array(
-                'conditions' => $gcondition,
-                'fields' => array('DISTINCT Song.ArtistText'),
-                'extra' => array('chk' => 1),
-                'order' => 'Song.ArtistText ASC',
-                'limit' => '60',
-                'cache' => 'yes',
-                'check' => 2,
-                'all_query' => true,
-                'all_country' => "find_in_set('\"$country\"',Song.Territory) > 0",
-                'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
-            );
-        }
-
-
-        $this->Song->unbindModel(array('hasOne' => array('Participant')));
-        $allArtists = $this->paginate('Song');
-
-
-        $allArtistsNew = $allArtists;
-
-        for ($i = 0; $i < count($allArtistsNew); $i++)
-        {
-            if ($allArtistsNew[$i]['Song']['ArtistText'] != "")
-            {
-                $allArtists[$i] = $allArtistsNew[$i];
-            }
-        }
-
-        $tempArray = array();
-        for ($i = 0; $i < count($allArtistsNew); $i++)
-        {
-            $tempArray[] = trim($allArtistsNew[$i]['Song']['ArtistText']);
-        }
-        sort($tempArray, SORT_STRING);
-
-        for ($i = 0; $i < count($tempArray); $i++)
-        {
-            $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
-        }
-
-        $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
-        $this->set('genres', $allArtists);
-        $this->set('genre', $genre);
-        $this->set('selectedAlpha', $this->Session->read('selectedAlpha'));
+        $this->set('genre', $genre);        
+        
+        //create the cache variable name
+        $cacheVariableName = base64_encode($genre).strtolower($country).strtolower($Artist).$pageNo;
+       
+        
+        //check cache variable are set or not
+        $artistList = Cache::read($cacheVariableName,'GenreCache');
+        if ($artistList === false)
+       // if(1)
+        {             
+          
+            $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
+        } 
+     
+        //prepare the array that contains all alphabets which have no any artist value for the selected changes
+        $artistsNoAlpha = array();
+        $artistsNoAlpha = $this->checkArtistFilter($genre, $country ,$pageNo);  
+        
+        //set the value for generating view
+        $this->set('totalPages', 150);
+        $this->set('genresAll', $genreAll); 
+        $this->set('artistsNoAlpha', $artistsNoAlpha);
+        $this->set('selectedAlpha', $slectedArtistFilter);
+        $this->set('artistList', $artistList);
+        
+        
+        //app\views\genres\view.ctp
+             
     }
 
+    /*
+    Function Name : ajax_view
+    Desc : call when user click on any Genre name on Genre page
+    *
+    *
+    * @param $Genre VarChar  'Genre value'
+    * @param $Artist VarChar  'Artist value'
+    *
+    * @return void
+    */
     function ajax_view($Genre = null, $Artist = null)
     {
+       
+       
         $this->layout = 'ajax';
-
+        
+        $pageNo =1;
+        
+        //set the selected artist value
+        $slectedArtistFilter = $Artist;
+        
+        //get values if user login    
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $country = $this->Session->read('territory');
+        if($patId){
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+        }
+        
 
-        //login re-direct issue
-        $this->Session->write('calledGenre', $Genre);
-        $this->Session->write('selectedAlpha', $Artist);
-
-        $this->Session->delete('calledArtist');
-        $this->Session->delete('calledAlbum');
-        $this->Session->delete('calledProvider');
-        $this->Session->delete('page');
-
-        if ($Genre == '')
+         //set the Genre and Artist value according to upcomming value        
+        if ($Genre == '' )
         {
             $Genre = "QWxs";
         }
+        if ($Artist == '' || $Artist == 'All')
+        {
+            $Artist = "All";
+        }
+                            
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
-
-        if ($Artist != $this->Session->read('selectedAlpha'))
+        $this->set('genre', $genre); 
+        
+        //create the cache variable name for checking the variable already exist or not
+        $cacheVariableName = base64_encode($genre).strtolower($country).strtolower($Artist).$pageNo;     
+       
+        $artistList = Cache::read($cacheVariableName,'GenreCache');
+        //check cache variable are set or not
+        if ($artistList === false)         
         {
-            $Artist = $this->Session->read('selectedAlpha');
-        }
-
-
-        if ($Artist == 'spl')
-        {
-            $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
-        }
-        elseif ($Artist != '' && $Artist != 'img' && $Artist != 'All')
-        {
-            $condition = array('Song.ArtistText LIKE' => $Artist . '%');
-        }
-        else
-        { 
-            $condition = "";
-        }
-
-
-        $this->set('selectedCallFlag', 0);
-        if (isset($_REQUEST['ajax_genre_name']))
-        {
-            $this->set('selectedCallFlag', 1);
-        }
-
-        if ($this->Session->read('block') == 'yes')
-        {
-            $cond = array('Song.Advisory' => 'F');
-        }
-        else
-        {
-            $cond = "";
-        }
-
-        $this->Song->recursive = 0;
-
-        if ($genre != 'All')
-        {
-
-            //this one
-            $this->Song->unbindModel(array('hasOne' => array('Participant')));
-            $this->Song->unbindModel(array('hasOne' => array('Country')));
-            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
-            $this->Song->Behaviors->attach('Containable');
-            $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.ArtistText != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1 ');
-            $this->paginate = array(
-                'conditions' => $gcondition,
-                'fields' => array('DISTINCT Song.ArtistText'),
-                'order' => 'Song.ArtistText ASC',
-                'contain' => array(
-                    'Genre' => array(
-                        'fields' => array(
-                            'Genre.Genre'
-                        )),
-                ),
-                'extra' => array('chk' => 1),
-                'limit' => '60', 'cache' => 'yes', 'check' => 2
-            );
-        }
-        else
-        {
-
-            $this->Song->unbindModel(array('hasOne' => array('Participant')));
-            $this->Song->unbindModel(array('hasOne' => array('Country')));
-            $this->Song->unbindModel(array('hasOne' => array('Genre')));
-            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
-            $this->Song->Behaviors->attach('Containable');
-            $this->Song->recursive = 0;
-            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "Song.ArtistText != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 ');
-
-            $this->paginate = array(
-                'conditions' => $gcondition,
-                'fields' => array('DISTINCT Song.ArtistText'),
-                'order' => 'Song.ArtistText ASC',
-                'extra' => array('chk' => 1),
-                'limit' => '60',
-                'cache' => 'yes',
-                'check' => 2,
-                'all_query' => true,
-                'all_country' => "find_in_set('\"$country\"',Song.Territory) > 0",
-                'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
-            );
-        }
-
-
-
-        $this->Song->unbindModel(array('hasOne' => array('Participant')));
-        $allArtists = $this->paginate('Song');
-        $allArtistsNew = $allArtists;
-        for ($i = 0; $i < count($allArtistsNew); $i++)
-        {
-            if ($allArtistsNew[$i]['Song']['ArtistText'] != "")
-            {
-                $allArtists[$i] = $allArtistsNew[$i];
-            }
-        }
-
-
-        $tempArray = array();
-        for ($i = 0; $i < count($allArtistsNew); $i++)
-        {
-            $tempArray[] = trim($allArtistsNew[$i]['Song']['ArtistText']);
-        }
-        sort($tempArray, SORT_STRING);
-
-        for ($i = 0; $i < count($tempArray); $i++)
-        {
-            $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
-        }
-        $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
-        $this->set('genres', $allArtists);
-        $this->set('selectedAlpha', $Artist);
-        $this->set('genre', base64_decode($Genre));
+            $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);                
+        }      
+      
+       //prepare the array that contains all alphabets which have no any artist value
+        $artistsNoAlpha = array();
+        $artistsNoAlpha = $this->checkArtistFilter($genre, $country ,$pageNo);
+        
+       // print_r($artistsNoAlpha);
+        //set the value for generating view
+        $this->set('totalPages', 150);
+        $this->set('artistsNoAlpha', $artistsNoAlpha);
+        $this->set('selectedAlpha', $slectedArtistFilter);
+        $this->set('artistList', $artistList);
+        
+        //app\views\genres\ajax_view.ctp
     }
 
+   /*
+    Function Name : ajax_view_pagination
+    Desc : call when user scoll the aritst list on Genre page
+    *
+    *
+    * @param $Genre VarChar  'Genre value'
+    * @param $Artist VarChar  'Artist value'
+    *
+    * @return void
+    */
     function ajax_view_pagination($Genre = null, $Artist = null)
     {
-        //pagination value for login redirect issue on genre page
-        $this->Session->write('page', $this->params['named']['page']);
+         $this->layout = 'ajax';
 
-        $this->layout = 'ajax';
+         //pagination value for login redirect issue on genre page
+         if(isset($this->params['named']['page'])){
+             $pageNo = $this->params['named']['page'];
+         }else{
+             $pageNo =2;
+         }
+         
+        //get values if user login       
+        $patId = $this->Session->read('patron');
+        $libId = $this->Session->read('library');
+        $country = $this->Session->read('territory');
+        if($patId){
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+        }
+        
 
+         //set the Genre and Artist value according to upcomming value        
         if ($Genre == '')
         {
             $Genre = "QWxs";
         }
-        $country = $this->Session->read('territory');
-
-
-        if ($this->Session->read('block') == 'yes')
+        if ($Artist == '' || $Artist == 'All')
         {
-            $cond = array('Song.Advisory' => 'F');
-        }
-        else
-        {
-            $cond = "";
-        }
-        if ($Artist == 'spl')
-        {
-            $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
-        }
-        elseif ($Artist != '' && $Artist != 'img' && $Artist != 'All')
-        {
-            $condition = array('Song.ArtistText LIKE' => $Artist . '%');
-        }
-        else
-        {
-            $condition = "";
-        }
-        $this->Song->recursive = 0;
-
+            $Artist = "All";
+        }            
+          
+                     
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
-
-        if ($genre != 'All')
-        {
-
-            //this one 
-            $this->Song->unbindModel(array('hasOne' => array('Participant')));
-            $this->Song->unbindModel(array('hasOne' => array('Country')));
-            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
-            $this->Song->Behaviors->attach('Containable');
-            $this->Song->recursive = 0;
-            $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.ArtistText != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1 ');
-            $this->paginate = array(
-                'conditions' => $gcondition,
-                'fields' => array('DISTINCT Song.ArtistText'),
-                'order' => 'Song.ArtistText ASC',
-                'contain' => array(
-                    'Genre' => array(
-                        'fields' => array(
-                            'Genre.Genre'
-                        )),
-                ),
-                'extra' => array('chk' => 1),
-                'limit' => '60', 'cache' => 'yes', 'check' => 2,
-            );
+        $this->set('genre', $genre); 
+        
+        $cacheVariableName = base64_encode($genre).strtolower($country).strtolower($Artist).$pageNo;       
+       
+        $artistList = Cache::read($cacheVariableName,'GenreCache');
+        if ($artistList === false) {             
+              $artistList = $this->Common->getArtistText($genre,$country,$Artist,$pageNo);
         }
-        else
-        {
-
-
-            $this->Song->unbindModel(array('hasOne' => array('Participant')));
-            $this->Song->unbindModel(array('hasOne' => array('Country')));
-            $this->Song->unbindModel(array('hasOne' => array('Genre')));
-            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
-            $this->Song->Behaviors->attach('Containable');
-            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "Song.ArtistText != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 ');
-
-            $this->paginate = array(
-                'conditions' => $gcondition,
-                'fields' => array('DISTINCT Song.ArtistText'),
-                'order' => 'Song.ArtistText ASC',
-                'extra' => array('chk' => 1),
-                'limit' => '60',
-                'cache' => 'yes',
-                'check' => 2,
-                'all_query' => true,
-                'all_country' => "find_in_set('\"$country\"',Song.Territory) > 0",
-                'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
-            );
-        }
-        $this->Song->unbindModel(array('hasOne' => array('Participant')));
-        $allArtists = $this->paginate('Song');
-
-
+        //$this->getSortArtistList($artistList);      
+      
+            
+        //prepare the array that contains all alphabets which have no any artist value
+         $artistsNoAlpha = array();
+         $artistsNoAlpha = $this->checkArtistFilter($genre, $country ,$pageNo);
+        
+        
+        //set the value for generating view
+        $this->set('totalPages', 150);
+        $this->set('artistsNoAlpha', $artistsNoAlpha);
+        $this->set('selectedAlpha', $Artist);
+        $this->set('artistList', $artistList);
+        
+        //app\views\genres\ajax_view_pagination.ctp
+    }
+    
+    /*
+    Function Name : checkArtistFilter
+    Desc : check the artist list filter list
+    *
+    *
+    * @param $genre VarChar  'Genre value'
+    * @param $country VarChar  'territory value'
+    * @param $alphabet VarChar  'alphabets value'
+    * @param $pageNo int  'page value'
+    *
+    * @return $artistsNoAlpha array
+    */
+    function checkArtistFilter($genre, $country,$pageNo)
+    {
+        $artistsNoAlpha = array();
+        for($k = 63;$k < 91;$k++){
+            $alphabet = chr($k);
+            if($k==63){
+                $alphabet = 'All';
+            }
+            if($k==64){
+                $alphabet = 'spl';
+            }
+            $filterCacheVariableName = base64_encode($genre).strtolower($country).strtolower($alphabet).$pageNo;
+          
+            $artistAll = Cache::read($filterCacheVariableName,'GenreCache');
+            if($artistAll === false){
+                $artistsNoAlpha[]= $alphabet;
+            }else{
+                if(empty($artistAll)){
+                    $artistsNoAlpha[]= $alphabet;
+                }
+            }           
+        } 
+        return $artistsNoAlpha;
+    }
+    
+    /*
+      Function Name : getSortArtistList
+      Desc : actions for admin end manage genre to add/edit genres
+     */
+    function getSortArtistList($allArtists){
+        
         $allArtistsNew = $allArtists;
-        for ($i = 0; $i < count($allArtistsNew); $i++)
+
+        for ($i = 0; $i < count($allArtists); $i++)
         {
             if ($allArtistsNew[$i]['Song']['ArtistText'] != "")
             {
@@ -686,11 +510,8 @@ Class GenresController extends AppController
         {
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
         }
-
-
-        $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
-        $this->set('genres', $allArtists);
-        $this->set('genre', base64_decode($Genre));
+        
+        return $allArtists;
     }
 
     /*
@@ -737,222 +558,46 @@ Class GenresController extends AppController
         $this->set('selectedGenres', $selArray);
         $this->layout = 'admin';
     }
-
-
-    function searchrecords($type, $search_text)
-    {
-        $search_text = strtolower(trim($search_text));
-        $search_text = preg_replace('/\s\s+/', ' ', $search_text);
-        $insertArr['search_text'] = $search_text;
-        $insertArr['type'] = $type;
-        $genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
-        if (count($genre_id_count_array) > 0)
-        {
-            $insertArr['count'] = $genre_id_count_array[0]['Searchrecord']['count'] + 1;
-            $insertArr['id'] = $genre_id_count_array[0]['Searchrecord']['id'];
-        }
-        else
-        {
-            $insertArr['count'] = 1;
-        }
-
-        return $insertArr;
-    }
-
-	/*
-      Function Name : album
-      Desc : actions for genre albums 
-    */
-	
-	function album($page = 1, $facetPage = 1)
-    {
-        $layout = $_GET['layout'];
-
-        if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
-        {
-            unset($_SESSION['SearchReq']);
-        }// unset session when no params
-        if ((isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type'])))
-        {
-            unset($_SESSION['SearchReq']);
-            $this->redirect(array('controller' => 'search', 'action' => 'index?q=' . $_GET['q'] . '&type=' . $_GET['type']));
-        }//reset session & redirect to 1st page
-        if (('' != trim($_GET['q'])) && ('' != trim($_GET['type'])))
-        {
-            $_SESSION['SearchReq']['word'] = $_GET['q'];
-            $_SESSION['SearchReq']['type'] = $_GET['type'];
-        }//sets values in session
-
-        $queryVar = null;
-        $check_all = null;
-        $sortVar = 'ArtistText';
-        $sortOrder = 'asc';
-
-        if (isset($_GET['q']))
-        {
-            $queryVar = $_GET['q']; 
-        }
-        if (isset($_GET['type']))
-        {
-            $type = $_GET['type'];
-            $typeVar = $_GET['type'];
-        }
-        else
-        {
-            $typeVar = 'album';
-        }
-        $this->set('type', $typeVar);
-		
-		if(isset($_GET['filter']))
-		{
-			$filter = $_GET['filter'];
-		}
-		$this->set('filter',$filter);
-
-        if (isset($_GET['sort']))
-        {
-            $sort = $_GET['sort'];
-			$sortVar = 'Title';
-            
-        }
-        else
-        {
-            $sort = 'artist';
-        }
-
-        $this->set('sort', $sort);
-
-        if (isset($_GET['sortOrder']))
-        {
-            $sortOrder = $_GET['sortOrder'];
-            $sortOrder = (($sortOrder == 'asc' || $sortOrder == 'desc') ? $sortOrder : 'asc');
-        }
-        else
-        {
-            $sortOrder = 'asc';
-        }
-
-        $this->set('sortOrder', $sortOrder);
-
-        if (!empty($queryVar))
-        {
-            //Added code for log search data
-            $insertArr[] = $this->searchrecords($typeVar, $queryVar);
-            $this->Searchrecord->saveAll($insertArr);
-            //End Added code for log search data
-            $patId = $this->Session->read('patron');
-            $libId = $this->Session->read('library');
-            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-            $docs = array();
-            $total = 0;
-            $limit = 10;
-
-            if (!isset($page) || $page < 1)
-            {
-                $page = 1;
-            }
-            else
-            {
-                $page = $page;
-            }
-
-            if (!isset($facetPage) || $facetPage < 1)
-            {
-                $facetPage = 1;
-            }
-            else
-            {
-                $facetPage = $facetPage;
-            }
-
-            $country = $this->Session->read('territory');
-            $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
-
-            $total = $this->Solr->total;
-            $totalPages = ceil($total / $limit);
-
-            if ($total != 0)
-            { }
     
-            $songArray = array();
-            foreach ($songs as $key => $song)
-            {
-                $songArray[] = $song->ProdID;
-            }
+    /*
+      Function Name : combine_genres
+      Desc : Combining similiar Genres
+     */
+    
+    
+    
+     /*function combine_genres($all_genres)
+    {
+        $genresArrComb = array('Acid', 'Alternative','Audio Books','Children’s Music','Chinese','Christian','Comedy','Country','Dance','Deutschrock','Easy Listening','Electronic','Euro','Gospel  Christion','Hip Hop','Indian Pop / Indie Pop','J-Pop','Latin Music','Miscellaneous','MPB','New Age','Pop Rock','Rap Hip Hop','R & B / RB','Rock','Rock Espanol','Sound Tracks','Spoken Word','World Music'); 
+        $resulting_arr = array();
+        for($i=0; $i<count($all_genres);$i++){
             
-      
-            $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
-   
-            foreach ($songs as $key => $song)
-            {
-                $set = 0;
-                foreach ($downloadsUsed as $downloadKey => $downloadData)
-                {
-                   if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
-                    {
-                        $songs[$key]->status = 'avail';
-                        $set = 1;
-                        break;
-                    }
-                   
-                }
-                if ($set == 0)
-                {
-                    $songs[$key]->status = 'not';
-                }
-            }
-            
-            $this->set('songs', $songs);
+                    for($j=0; $j<count($genresArrComb);$j++){
 
-            if (!empty($type))
-            {
-             	$limit = 12;
-                $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album', 0, $filter);
-                       
-                $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit, 0, null, 0, $filter);
-                      
-                $arr_albumStream = array();
-                foreach ($albums as $objKey => $objAlbum) {
-                	$arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
-                    	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
-                    );
-                }
+                        if(in_array($all_genres[$i], $genresArrComb) && strlen($all_genres[$i])===strlen($genresArrComb[$j])){      // genre is found from $genresArrComb array  
+                            if(!in_array($all_genres[$i], $resulting_arr)){
+                                    array_push($resulting_arr, $all_genres[$i]);
+                                    break;
+                                }                                                        
+                        }
+                        elseif((stristr($all_genres[$i], $genresArrComb[$j]) && (strlen($all_genres[$i])>$genresArrComb[$j]))){ // similiar genres are found skip them
+                            break;
+                        }
+                        elseif(!in_array($all_genres[$i], $resulting_arr) && !in_array($all_genres[$i], $resulting_arr)){
+                                    array_push($resulting_arr, $all_genres[$i]);
+                                    break;
+                        }
                         
-                $this->set('albumData', $albums);
-                $this->set('arr_albumStream', $arr_albumStream);
-                $this->set('totalFacetFound', $totalFacetCount);
-                if (!empty($totalFacetCount))
-                {
-                    $this->set('totalFacetPages', ceil($totalFacetCount / $limit));
-                }
-                else
-                {
-                    $this->set('totalFacetPages', 0);
-                }
-            }
-          
-            $this->set('libraryDownload', $libraryDownload);
-            $this->set('patronDownload', $patronDownload);
-            $this->set('total', $total);
-            $this->set('totalPages', $totalPages);
-            $this->set('currentPage', $page);
-            $this->set('facetPage', $facetPage);
-	  
+                    }
+                    
         }
-        $this->set('keyword', htmlspecialchars($queryVar));
-        
-        if (isset($this->params['isAjax']) && $this->params['isAjax'] && $layout == 'ajax')
-        {
-            $this->layout = 'ajax';
-            $this->autoLayout = false;
-            $this->autoRender = false;
-            echo $this->render();
-            die;
-        }
-        else
-        {
-            $this->layout = 'home';
-        }
-    }
+        return $resulting_arr;
+      
+    }*/
+    
+    
+    
+
 }
+
+?>
