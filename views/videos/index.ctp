@@ -122,7 +122,7 @@
 							<li> 
                   <?php endif; ?>
 						<div class="video-cover-container">
-                        	<a href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>"><img alt="" src="<?= $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
+                        	<a href="/videos/details/<?= $topDownload["Videodownloads"]["ProdID"]; ?>"><img alt="" src="<?= $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
                         <?php
 								if ( $this->Session->read( 'patron' ) ):
                         ?>
@@ -181,7 +181,7 @@
                             </div>
                         </div>
                         <div class="video-title">
-							<a title="<?= $this->getValidText( $this->getTextEncode( $topDownload['Video']['VideoTitle'] ) ); ?>" href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>">
+							<a title="<?= $this->getValidText( $this->getTextEncode( $topDownload['Video']['VideoTitle'] ) ); ?>" href="/videos/details/<?= $topDownload["Videodownloads"]["ProdID"]; ?>">
                         	<?php
                             	if ( strlen( $topDownload['Video']['VideoTitle'] ) >= 20 ):
 									$topDownload['Video']['VideoTitle'] = substr( $topDownload['Video']['VideoTitle'], 0, 20 ) . '...';
