@@ -92,7 +92,7 @@ Class CommonComponent extends Object
      * @paran $territory varChar 'territory value'
      * 
      */
-    function setArtistText($territory){
+    function setArtistText($territory){   
         set_time_limit(0); 
     
               
