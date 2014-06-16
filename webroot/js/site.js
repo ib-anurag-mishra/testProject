@@ -27,17 +27,14 @@
 
 
 $('document').ready(function() {
-    var doc_height = $(document).height();
-    var lastScrollTop = 0;
-    var scrollingDown;
-    var footer_pos;
-    var music_search_results = $('.master-music-search-results');
-    var poll = $('.poll');
-    var music_player_container = $('.music-player-container');
+
+
+
+
+    var $music_search_results = $('.master-music-search-results');
     var $preview = $('.preview');
     var $most_popular_sub_nav = $('.most-popular-sub-nav');
-    var footer = $('.site-footer');
-    var footer_height = footer.height();
+
 
 
 
@@ -338,7 +335,7 @@ $('document').ready(function() {
 
         var container = $('.wishlist-popover');
         var container2 = $('.mejs-playlist.mejs-layer');
-        var container3 = music_search_results;
+        var container3 = $music_search_results;
         var container5 = $('.playlist-options');
         var container6 = $most_popular_sub_nav;
         var container7 = $('.queue-overlay');
