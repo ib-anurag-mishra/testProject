@@ -239,7 +239,7 @@ Class CommonComponent extends Object
             $artistListResults = $songInstance->query( "SELECT DISTINCT `Song`.`ArtistText` 
                                                         FROM 
                                                         (SELECT `Songs`.`ArtistText` FROM `Songs` AS `Songs` 
-                                                        LEFT JOIN `us_countries` AS `Country` ON (`Country`.`ProdID` = `Songs`.`ProdID` and `Country`.`provider_type` = `Songs`.`provider_type`) 
+                                                        LEFT JOIN ".$territory."_countries  AS `Country` ON (`Country`.`ProdID` = `Songs`.`ProdID` and `Country`.`provider_type` = `Songs`.`provider_type`) 
                                                         LEFT JOIN `Albums` AS `Albums` ON (`Songs`.`ReferenceID` = `Albums`.`ProdID`) 
                                                         WHERE (`Country`.`DownloadStatus` = 1 or `Country`.`StreamingStatus` =1) 
                                                         AND `Songs`.`ArtistText`!='' AND `Country`.`SalesDate` != ''
