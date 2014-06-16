@@ -236,14 +236,14 @@ Class CommonComponent extends Object
              * Ref URL: http://stackoverflow.com/questions/3781654/how-to-implement-a-sorting-subquery-in-the-from-section
              */
             
-            $artistListResults = $songInstance->query( "SELECT DISTINCT `Song`.`ArtistText` 
+            $artistListResults = $songInstance->query( "SELECT DISTINCT Song.ArtistText 
                                                         FROM 
-                                                        (SELECT `Songs`.`ArtistText` FROM `Songs` AS `Songs` 
-                                                        LEFT JOIN ".$territory."_countries  AS `Country` ON (`Country`.`ProdID` = `Songs`.`ProdID` and `Country`.`provider_type` = `Songs`.`provider_type`) 
-                                                        LEFT JOIN `Albums` AS `Albums` ON (`Songs`.`ReferenceID` = `Albums`.`ProdID`) 
-                                                        WHERE (`Country`.`DownloadStatus` = 1 or `Country`.`StreamingStatus` =1) 
-                                                        AND `Songs`.`ArtistText`!='' AND `Country`.`SalesDate` != ''
-                                                        ORDER BY `Songs`.`ArtistText` ASC 
+                                                        (SELECT Songs.ArtistText FROM Songs AS Songs 
+                                                        LEFT JOIN ".$territory."_countries  AS Country ON (Country.ProdID = Songs.ProdID and Country.provider_type = Songs.provider_type) 
+                                                        LEFT JOIN Albums AS Albums ON (Songs.ReferenceID = Albums.ProdID) 
+                                                        WHERE (Country.DownloadStatus = 1 or Country.StreamingStatus =1) 
+                                                        AND Songs.ArtistText!='' AND Country.SalesDate != ''
+                                                        ORDER BY Songs.ArtistText ASC 
                                                         LIMIT ".$startLimitG.", ".$endLimitG.") Song");
             
             array_pop($artistListResults);          
