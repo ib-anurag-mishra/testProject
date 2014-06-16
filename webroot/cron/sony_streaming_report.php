@@ -10,14 +10,18 @@
  * */
 include 'functions.php';
 $count = '';
+
 ini_set('error_reporting', E_ALL);
+ini_set('memory_limit', '-1');
+
 set_time_limit(0);
+
 //set timezone
 date_default_timezone_set('America/New_York');
-ini_set('memory_limit', '-1');
 
 $countrys = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
 //$countrys = array('GB' => 'GBP');
+
 
 $lib_types = array('Unlimited');
 
@@ -32,6 +36,10 @@ $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
 if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
 {
     echo $outputFile = "/reports_output_" . date('Y_m_d_h_i_s') . ".txt";
+    $log = "error_reports_output_" . date('Y_m_d_h_i_s') . ".txt";
+    $error_log = fopen(IMPORTLOGS . $log, 'w') or die("Can't Open the file!");
+
+
     foreach ($lib_types as $lib_type)
     {
         $lib_type_int = $lib_type == "ALC" ? 0 : 1;
@@ -43,12 +51,14 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
 
             if (!file_exists($reports_dir))
             {
+                fwrite($error_log, date('Y-m-d h:i:s') . " $reports_dir not found. " . "\n");
                 mkdir($reports_dir);
             }
 
             $logs_dir = IMPORTLOGS;
             if (!file_exists($logs_dir))
             {
+                fwrite($error_log, date('Y-m-d h:i:s') . " $logs_dir not found. " . "\n");
                 mkdir($logs_dir);
             }
 
@@ -56,10 +66,10 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
 
             if ($currentDate == $monthFirstDate)
             {
-                echo "\n----------------";
+                echo "\n----------------\n";
                 echo $showStartDate = date("Ymd", strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00')));
                 echo $showEndDate = date("Ymd", strtotime('-1 second', strtotime('+1 month', strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00')))));
-                echo "\n----------------";
+                echo "\n----------------\n";
 
                 $condStartDate = date("Y-m-d", strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00'))) . " 00:00:00";
                 $condEndDate = date("Y-m-d", strtotime('-1 second', strtotime('+1 month', strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00'))))) . " 23:59:59";
@@ -67,6 +77,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $count = 1;
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt'";
                 $result3 = mysql_query($sql);
+                fwrite($error_log, date('Y-m-d h:i:s') . "Line 77.  $sql " . "\n");
 
                 if ($result3)
                 {
@@ -96,6 +107,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             . "AND l.library_territory = '$country' and l.library_type = 2 "
                             . "GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                     $result = mysql_query($sql);
+                    fwrite($error_log, date('Y-m-d h:i:s') . "Line 77.  $sql " . "\n");
 
                     if ($result)
                     {
@@ -132,6 +144,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 }
 
                                 $dataresult = mysql_query($query);
+                                fwrite($error_log, date('Y-m-d h:i:s') . "Line 144.  $query " . "\n");
 
                                 if ($dataresult)
                                 {
@@ -142,6 +155,7 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 }
                                 else
                                 {
+                                    fwrite($error_log, date('Y-m-d h:i:s') . "Line 155.  $query failed " . "\n");
                                     sendalert("Query failed: " . $query);
                                     die("Query failed: " . $query . " Error: " . mysql_error());
                                 }
@@ -247,32 +261,6 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $trailer .= "0"; // Total Quantity Returned
                             fwrite($file, $trailer);
                             fclose($file);
-
-//                            $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . "_STREAMING.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . "_STREAMING.txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
-//                            $result6 = mysql_query($sql);
-//
-//                            if ($result6)
-//                            {
-//                                // FOR SENDING REPORT TO SONY SERVER USING SFTP
-//                                if (sendReportFilesftp($report_name, "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
-//                                {
-//                                    // FOR SENDING REPORT TO SONY SERVER USING FTP
-//                                    // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
-//                                    $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
-//                                    $result7 = mysql_query($sql);
-//
-//                                    if (!$result7)
-//                                    {
-//                                        sendalert("Query failed: " . $sql);
-//                                        die("Query failed: " . $sql . " Error: " . mysql_error());
-//                                    }
-//                                }
-//                            }
-//                            else
-//                            {
-//                                sendalert("Query failed: " . $sql);
-//                                die("Query failed: " . $sql . " Error: " . mysql_error());
-//                            }
                         }
                     }
                     else
@@ -283,9 +271,14 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 }
                 else
                 {
+                    fwrite($error_log, date('Y-m-d h:i:s') . " Query Fails : $sql " . "\n");
                     sendalert("Query failed: " . $sql);
                     die(" Query failed: " . $sql . " Error: " . mysql_error());
                 }
+            }
+            else
+            {
+                fwrite($error_log, date('Y-m-d h:i:s') . "Line no : 274. Today is not month First Date " . "\n");
             }
         }
     }
@@ -293,7 +286,9 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
 else
 {
     echo "\nToday is not either the week first day or the month first day so the report didn't get generated.\n";
+    fwrite($error_log, date('Y-m-d h:i:s') . " Line no : 282. Today is not month First Date " . "\n");
 }
 
+fwrite($error_log, date('Y-m-d h:i:s') . " ====  End  ====" . "\n");
+fclose($error_log);
 echo "\n----------- End -----------";
-?>
