@@ -362,15 +362,12 @@ $ieVersion = ieversion();
                                         if ($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d'))
                                         {
                                             ?>
-                                                                                      
                                             <![if !IE]>
-                                            <a href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>", "<?php echo $wishlistResultsVideo['WishlistVideo']['id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>",  "<?php echo $wishlistResultsVideo['WishlistVideo']["provider_type"]; ?>");'><label class="top-10-download-now-button"><?php __('Download'); ?></label></a>
+                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up two of your downloads, regardless of whether you then press 'Cancel' or not." href='#' onclick='return wishlistVideoDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>", "<?php echo $wishlistResultsVideo['WishlistVideo']['id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]); ?>", "<?php echo urlencode($finalVideoUrlArr[1]); ?>", "<?php echo urlencode($finalVideoUrlArr[2]); ?>", "<?php echo $wishlistResultsVideo['WishlistVideo']["provider_type"]; ?>");'><?php __('Download'); ?></a>
                                             <![endif]>
                                             <!--[if IE]>
-                                                    <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>','<?php echo $wishlistResultsVideo['WishlistVideo']['id']; ?>','<?php echo $wishlistResultsVideo['WishlistVideo']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download'); ?></a></label>
+                                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up two of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['provider_type']; ?>");' href="<?php echo trim($finalVideoUrl); ?>"><?php __('Download'); ?></a>
                                             <![endif]-->
-                                                       
-                                            
                                             <?php
                                         }
                                         else
