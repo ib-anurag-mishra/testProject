@@ -80,10 +80,6 @@ $('document').ready(function() {
 
     
 
-    $(document).on('mouseleave', '.search-page .tracklist-container .tracklist', function() {
-        $(this).find('.wishlist-popover').removeClass('active');
-    });
-
 
 
 
@@ -173,15 +169,7 @@ $('document').ready(function() {
 
     
 
-    $('.tracklist-shadow-container .tracklist-scrollable').on('mouseenter', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
 
-    });
-
-    $('.tracklist-shadow-container .tracklist-scrollable').on('mouseleave', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0.5});
-
-    });
 
 
 
@@ -202,34 +190,9 @@ $('document').ready(function() {
 
     });
 
-    $('.song-cover-container').on('mouseenter', function() {
-        $('.preview').css({opacity: 0});
-        $('.album-preview').css({opacity: 0});
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.top-100-download-now-button').css({opacity: 1});
-        $(this).find('.preview').css({opacity: 1});
-        $(this).find('.album-preview').css({opacity: 1});
-    });
 
-    $('.song-cover-container').on('mouseleave', function() {
-        $('.preview').css({opacity: 0});
-        $('.album-preview').css({opacity: 0});
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.top-100-download-now-button').css({opacity: 0});
-        $(this).find('.preview').css({opacity: 0});
-        $(this).find('.album-preview').css({opacity: 0});
-        $(this).find('.wishlist-popover').removeClass('active');
-    });
 
-    $('.single-cover-container').on('mouseenter', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
 
-    });
-
-    $('.single-cover-container').on('mouseleave', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.wishlist-popover').removeClass('active');
-    });
 
     $('.video-cover-container').on('mouseenter', function() {
         $(this).find('.top-video-login-button').css({opacity: 1});
