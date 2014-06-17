@@ -89,6 +89,7 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
+        $this->writeLibraryTop10songsCache();
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){            
             $this->setNewsCache($territory);
@@ -174,6 +175,10 @@ class CacheController extends AppController {
     
     function  setLibraryTopTenCache() { 
         $this->Common->setLibraryTopTenCache();
+    }
+    
+    function writeLibraryTop10songsCache() {
+        $this->Common->setLibraryTopTenSongsCache();
     }
     
     function setVideoCacheVar() {   
