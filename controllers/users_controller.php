@@ -295,6 +295,8 @@ Class UsersController extends AppController
    */
 
 	function admin_login() {
+            
+           echo $this->Session->read('Auth.User');
 		$this->layout = 'admin';
 		$this->Auth->autoRedirect = false;
 		if (empty($this->data)) {
@@ -327,66 +329,66 @@ Class UsersController extends AppController
 
 function login($library = null){
     $this->Session->write("layout_option", 'login');
-		if($this->Session->read('layout_option') == 'login'){
-			$this->layout = 'login';
-		}
-		else{
-			$this->layout = 'login';
-		}
+    if($this->Session->read('layout_option') == 'login'){
+            $this->layout = 'login';
+    }
+    else{
+            $this->layout = 'login';
+    }
 
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
-			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
-				if(count($url) > 0){
-					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
-						$this->Session->write("lId",$url[0]['Url']['library_id']);
-						$this->Session->write("login_action",'ilogin');
-					}
-				}
-				else {
-					$wrongReferral = 1;
-					$data['wrongReferral'] = $wrongReferral;
-				}
-			}
-			else if($library != null)
-			{
-				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
-				$this->get_login_layout_name($library_data);
-				if($this->Session->read('layout_option') == 'login'){
-					$this->layout = 'login';
-				}
-				else{
-					$this->layout = 'login';
-				}
-				if(count($library_data) > 0)
-				{
-					if($this->Session->read('lId') == '')
-					{
-						$this->Session->write("subdomain",$library);
-						$this->Session->write("lId",$library_data['Library']['id']);
-					}
-				}
-				else
-				{
-					$wrongReferral = 1;
-				}
-			}
-		}
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
-			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
-			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}
-		if ($this->Session->read('patron')){
-			$userType = $this->Session->read('patron');
-			if($userType != ''){
-				$this->Auth->autoRedirect = false;
-				$this->redirect('/index');
+    if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
+            if(isset($_SERVER['HTTP_REFERER']) && $library == null){
+                    $url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
+                    if(count($url) > 0){
+                            if($this->Session->read('referral') == ''){
+                                    $this->Session->write("referral",$_SERVER['HTTP_REFERER']);
+                                    $this->Session->write("lId",$url[0]['Url']['library_id']);
+                                    $this->Session->write("login_action",'ilogin');
+                            }
+                    }
+                    else {
+                            $wrongReferral = 1;
+                            $data['wrongReferral'] = $wrongReferral;
+                    }
+            }
+            else if($library != null)
+            {
+                    $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+                    $this->get_login_layout_name($library_data);
+                    if($this->Session->read('layout_option') == 'login'){
+                            $this->layout = 'login';
+                    }
+                    else{
+                            $this->layout = 'login';
+                    }
+                    if(count($library_data) > 0)
+                    {
+                            if($this->Session->read('lId') == '')
+                            {
+                                    $this->Session->write("subdomain",$library);
+                                    $this->Session->write("lId",$library_data['Library']['id']);
+                            }
+                    }
+                    else
+                    {
+                            $wrongReferral = 1;
+                    }
+            }
+    }
+    if(isset($_POST['lang'])){
+            $language = $_POST['lang'];
+            $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+            $this->Session->write('Config.language', $langDetail['Language']['short_name']);
+    }
+    if ($this->Session->read('patron')){
+            $userType = $this->Session->read('patron');
+            if($userType != ''){
+                    $this->Auth->autoRedirect = false;
+                    $this->redirect('/index');
 
-			}
-		}
-	}
+            }
+    }
+}
 
    /*
     Function Name : index

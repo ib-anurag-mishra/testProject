@@ -605,19 +605,28 @@ Class LibrariesController extends AppController
                                                 }
                                                 if ($this->User->save($this->data['User']))
                                                 {
+                                                    
+                                                  $this->data['LibraryPurchase']['previously_available_downloads'] = $getData['Library']['library_available_downloads'];  
+                                                    
+                                                    
                                                     if (trim($libraryId) != '' && is_numeric($libraryId))
                                                     {
-
                                                         if ($this->data['Library']['library_unlimited'] == 1)
                                                         {
                                                             $this->data['Library']['library_available_downloads'] = Configure::read('unlimited');
                                                         }
                                                         else
-                                                        {
-                                                            $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads'] + $this->data['LibraryPurchase']['purchased_tracks'];
+                                                        {                                                           
+                                                            //check if previously libray was unlimited or not
+                                                            if($getData['Library']['library_unlimited'] == 1){
+                                                                $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
+                                                            }else{
+                                                               $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads'] + $this->data['LibraryPurchase']['purchased_tracks'];
+                                                            }
                                                         }
+                                                        
                                                         $this->data['Library']['library_current_downloads'] = $getData['Library']['library_current_downloads'];
-                                                        $this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];
+                                                        $this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];                                                        
                                                     }
                                                     else
                                                     {
