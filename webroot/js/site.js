@@ -707,16 +707,7 @@ $('document').ready(function() {
     /* end new releases page */
 
 
-    /* notifications page */
 
-    $('.notifications-page input[type="submit"]').on('mousedown', function() {
-        $(this).addClass('clicked');
-    });
-
-    $('.notifications-page input[type="submit"]').on('mouseup', function() {
-        $(this).removeClass('clicked');
-    });
-    /* end notifications page */
 
 
 
@@ -734,88 +725,12 @@ $('document').ready(function() {
 
 
 
-    $(document).on('click', '.recent-downloads-page .add-to-wishlist-button', function(e) {
-        e.preventDefault();
-
-        $(this).siblings('.wishlist-popover').addClass('active');
-    });
 
 
 
 
-    $('.recent-downloads-page .wishlist-popover').on('mouseleave', function() {
+    
 
-        $(this).removeClass('active');
-    });
-
-
-    $('.recent-downloads-page .recent-downloads-scrollable .wishlist-popover').slice(0, 3).addClass('top');
-
-
-    $('.recent-downloads-page .recent-downloads-scrollable').on('scroll', function() {
-
-        $('.recent-downloads-page .recent-downloads-scrollable .wishlist-popover').removeClass('top');
-
-
-        $('.recent-downloads-page .recent-downloads-scrollable .row').each(function() {
-
-            if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-                $(this).find('.wishlist-popover').addClass('top');
-            }
-        });
-
-    });
-
-
-
-
-
-    $('.recent-downloads-page .recent-downloads-scrollable .row').on('mouseenter', function() {
-        $(this).find('.date').addClass('hovered');
-        $(this).find('.album-title').addClass('hovered');
-        $(this).find('.artist-name').addClass('hovered');
-        $(this).find('.time').addClass('hovered');
-        $(this).find('.song-title').addClass('hovered');
-        $(this).find('.preview').addClass('hovered');
-        $(this).find('.add-to-wishlist-button').addClass('hovered');
-
-    });
-
-    $('.recent-downloads-page .recent-downloads-scrollable .row').on('mouseleave', function() {
-        $(this).find('.date').removeClass('hovered');
-        $(this).find('.album-title').removeClass('hovered');
-        $(this).find('.artist-name').removeClass('hovered');
-        $(this).find('.time').removeClass('hovered');
-        $(this).find('.song-title').removeClass('hovered');
-        $(this).find('.preview').removeClass('hovered');
-        $(this).find('.add-to-wishlist-button').removeClass('hovered');
-
-    });
-
-
-
-    $('.recent-downloads-page .recent-video-downloads-scrollable .row').on('mouseenter', function() {
-
-        $(this).find('.date').addClass('hovered');
-        $(this).find('.album-title').addClass('hovered');
-        $(this).find('.artist-name').addClass('hovered');
-        $(this).find('.time').addClass('hovered');
-        $(this).find('.song-title').addClass('hovered');
-        $(this).find('.preview').addClass('hovered');
-        $(this).find('.add-to-wishlist-button').addClass('hovered');
-
-    });
-
-    $('.recent-downloads-page .recent-video-downloads-scrollable .row').on('mouseleave', function() {
-
-        $(this).find('.date').removeClass('hovered');
-        $(this).find('.album-title').removeClass('hovered');
-        $(this).find('.artist-name').removeClass('hovered');
-        $(this).find('.time').removeClass('hovered');
-        $(this).find('.song-title').removeClass('hovered');
-        $(this).find('.preview').removeClass('hovered');
-        $(this).find('.add-to-wishlist-button').removeClass('hovered');
-    });
 
 
 
@@ -833,50 +748,7 @@ $('document').ready(function() {
 
     });
 
-    $(document).on('click', '.recent-downloads-page .recent-downloads-scrollable .row .preview', function() {
 
-        if ($(this).hasClass('playing')) {
-
-            $(this).removeClass('playing');
-
-            $(this).parents('.row').removeClass('playing');
-            $(this).parent().removeClass('playing');
-            $(this).siblings('.date').removeClass('playing');
-            $(this).siblings('.album-title').removeClass('playing');
-            $(this).siblings('.artist-name').removeClass('playing');
-            $(this).siblings('.time').removeClass('playing');
-            $(this).siblings('.song-title').removeClass('playing');
-            $(this).siblings('.add-to-wishlist-button').removeClass('playing');
-            $(this).siblings('.download').removeClass('playing');
-
-
-        } else {
-
-            $('.recent-downloads-page .recent-downloads-scrollable .row').removeClass('playing');
-            $('.recent-downloads-page .recent-downloads-scrollable .row .date').removeClass('playing');
-            $('.recent-downloads-page .recent-downloads-scrollable .row .preview').removeClass('playing');
-            $('.recent-downloads-page .recent-downloads-scrollable .row .album-title').removeClass('playing');
-            $('.recent-downloads-page .recent-downloads-scrollable .row .artist-name').removeClass('playing');
-            $('.recent-downloads-page .recent-downloads-scrollable .row .time').removeClass('playing');
-            $('.recent-downloads-page .recent-downloads-scrollable .row .song-title').removeClass('playing');
-            $('.recent-downloads-page .recent-downloads-scrollable .row .add-to-wishlist-button').removeClass('playing');
-            $('.recent-downloads-page .recent-downloads-scrollable .row .download').removeClass('playing');
-
-            $(this).addClass('playing');
-            $(this).parents('.row').addClass('playing');
-            $(this).parent().addClass('playing');
-            $(this).siblings('.date').addClass('playing');
-            $(this).siblings('.album-title').addClass('playing');
-            $(this).siblings('.artist-name').addClass('playing');
-            $(this).siblings('.time').addClass('playing');
-            $(this).siblings('.song-title').addClass('playing');
-            $(this).siblings('.add-to-wishlist-button').addClass('playing');
-            $(this).siblings('.download').addClass('playing');
-
-
-        }
-
-    });
 
     /* end downloads page */
 
@@ -938,37 +810,11 @@ $('document').ready(function() {
 
 
 
-    $(document).on('click', '.tracklist-header span', function() {
-        if ($(this).hasClass('active')) {
-
-            if ($(this).hasClass('toggled')) {
-
-                $(this).removeClass('toggled');
-            } else {
-
-                $(this).addClass('toggled');
-            }
-
-
-        } else {
-            $('.tracklist-header span').removeClass('active');
-            $(this).addClass('active');
-
-        }
-
-    });
 
 
 
-    /* site login page */
-    $(document).on('mousedown', '.site-login input[type="submit"]', function() {
-        $(this).addClass('selected');
-    });
 
-    $(document).on('mouseup', '.site-login input[type="submit"]', function() {
-        $(this).removeClass('selected');
-    });
-    /* end site login page */
+
 
 
     /* now streaming/queue detail page */

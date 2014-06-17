@@ -12167,7 +12167,7 @@ sub { top: 0.4em; }
 				top: 27px;
 				cursor: pointer;
 				
-				&.selected {
+				&:active {
 					background: url(../img/site-login/login-btn-clicked.jpg);
 				}
 			}
