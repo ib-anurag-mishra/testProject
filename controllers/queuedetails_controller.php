@@ -30,15 +30,15 @@ class QueueDetailsController extends AppController{
 
 		$this->layout = 'home';
 
-		if($_POST['hdn_remove_song'])
+		if($this->params['form']['hdn_remove_song'])
 		{
-			if(!empty($_POST["Pdid"]))
+			if(!empty($this->params['form']["Pdid"]))
 			{
 				$conditions = array (
-						"Pdid" => $_POST["Pdid"]
+						"Pdid" => $this->params['form']["Pdid"]
 				);
 
-				$delete_reponse	= $this->QueuelistDetails->delete(array('Pdid' => $_POST["Pdid"]));
+				$delete_reponse	= $this->QueuelistDetails->delete(array('Pdid' => $this->params['form']["Pdid"]));
 
 			}
 			 

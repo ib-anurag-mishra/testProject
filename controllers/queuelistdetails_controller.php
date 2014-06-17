@@ -30,17 +30,17 @@ class QueueListDetailsController extends AppController
 
     function index()
     {
-        $dqPlid = $_POST["dqPlid"];
+        $dqPlid = $this->params['form']["dqPlid"];
         $patron_id = $this->Session->read('patron');
         if (!empty($patron_id))
         {
             $this->QueueDetail->setDataSource('master');
             $this->QueueList->setDataSource('master');
-            if ($_POST['hdn_remove_song'])
+            if ($this->params['form']['hdn_remove_song'])
             {
-                if (!empty($_POST["Pdid"]))
+                if (!empty($this->params['form']["Pdid"]))
                 {
-                    if ($this->QueueDetail->deleteAll(array('id' => $_POST["Pdid"]), false))
+                    if ($this->QueueDetail->deleteAll(array('id' => $this->params['form']["Pdid"]), false))
                     {
                         $this->Session->setFlash('Song has been deleted successfully from playlist', 'modal', array('class' => 'queue success'));
                         $this->redirect($this->referer());
@@ -52,11 +52,11 @@ class QueueListDetailsController extends AppController
                     }
                 }
             }
-            else if ($_POST['hid_action'] == 'rename_queue')
+            else if ($this->params['form']['hid_action'] == 'rename_queue')
             {
-                if (!empty($_POST["rqPlid"]))
+                if (!empty($this->params['form']["rqPlid"]))
                 {
-                    $this->data['QueueList']['queue_id'] = $_POST["rqPlid"];
+                    $this->data['QueueList']['queue_id'] = $this->params['form']["rqPlid"];
                     $this->QueueList->set($this->data['QueueList']);
                     if ($this->QueueList->save())
                     {
@@ -72,7 +72,7 @@ class QueueListDetailsController extends AppController
                     }
                 }
             }
-            else if ($_POST['hid_action'] == 'delete_queue')
+            else if ($this->params['form']['hid_action'] == 'delete_queue')
             {
                 if (!empty($dqPlid))
                 {
@@ -101,11 +101,11 @@ class QueueListDetailsController extends AppController
         Configure::write('debug', 0);
         if ($this->Session->read('library') && $this->Session->read('patron'))
         {
-            if (!empty($_POST['songId']))
+            if (!empty($this->params['form']['songId']))
             {
                 $this->QueueDetail->setDataSource('master');
                 $this->QueueList->setDataSource('master');
-                if ($this->QueueDetail->deleteAll(array('id' => $_POST['songId']), false))
+                if ($this->QueueDetail->deleteAll(array('id' => $this->params['form']['songId']), false))
                 {
                     echo "Success";
                     exit;
@@ -280,18 +280,18 @@ class QueueListDetailsController extends AppController
 
     function getPlaylistData()
     {
-        $prodId = $_POST['prodId'];
-        $provider = $_POST['providerType'];
-        $eventType = $_POST['eventFired'];
-        $userStreamedTime = $_POST['userStreamedTime'];
-        $songDuration = $_POST['songLength'];
+        $prodId = $this->params['form']['prodId'];
+        $provider = $this->params['form']['providerType'];
+        $eventType = $this->params['form']['eventFired'];
+        $userStreamedTime = $this->params['form']['userStreamedTime'];
+        $songDuration = $this->params['form']['songLength'];
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $this->Session->delete('queuePlaying');
         $this->Session->delete('songPlaying');
         $eventArray = array(5, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21);
 
-        $validationResponse = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider, $userStreamedTime, $eventType, '', $songDuration, $_POST['queueId'], $_POST['songToken']);
+        $validationResponse = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider, $userStreamedTime, $eventType, '', $songDuration, $this->params['form']['queueId'], $this->params['form']['songToken']);
         if (!empty($validationResponse) && is_array($validationResponse))
         {
             if ($validationResponse[0] == 0)
@@ -303,9 +303,9 @@ class QueueListDetailsController extends AppController
             {
                 if (!in_array($eventType, $eventArray))
                 {
-                    if (!empty($_POST['queueId']))
+                    if (!empty($this->params['form']['queueId']))
                     {
-                        $this->Session->write("queuePlaying", $_POST['queueId']);
+                        $this->Session->write("queuePlaying", $this->params['form']['queueId']);
                     }
                     else
                     {

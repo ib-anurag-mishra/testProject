@@ -10,7 +10,7 @@ Class UsersController extends AppController
 	var $name = 'Users';
 	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language');
 	var $layout = 'admin';
-	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Cookie','Streaming');
+	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Cookie','Streaming', 'RequestHandler');
 	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language','Consortium','Card','LibrariesTimezone','NotificationSubscriptions');
    
    /*
@@ -373,8 +373,8 @@ function login($library = null){
 				}
 			}
 		}
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -1334,18 +1334,24 @@ function login($library = null){
            
             $this->layout = false;
             
-            if(isset($_REQUEST['notificationClose']) && $_REQUEST['notificationClose']==1){
+            if ( $this->RequestHandler->isPost() ) {
+            	$index = 'form';
+            } else if ( $this->RequestHandler->isGet() ) {
+            	$index = 'url';
+            }
+            
+            if(isset($this->params[$index]['notificationClose']) && $this->params[$index]['notificationClose']==1){
                 $this->Session->write('showNotificationPopup','yes');
                 exit;
             }    
             
             
-            if(isset($_REQUEST['pid']) && isset($_REQUEST['lid']) && isset($_REQUEST['notificatinEmail']) 
-                    && $_REQUEST['lid']!=''  && $_REQUEST['pid']!='' && $_REQUEST['notificatinEmail']!=''){
+            if(isset($this->params[$index]['pid']) && isset($this->params[$index]['lid']) && isset($this->params[$index]['notificatinEmail']) 
+                    && $this->params[$index]['lid']!=''  && $this->params[$index]['pid']!='' && $this->params[$index]['notificatinEmail']!=''){
                 
-                $patronId = $_REQUEST['pid'];
-                $libaryID = $_REQUEST['lid'];
-                $notificatinEmail = $_REQUEST['notificatinEmail'];
+                $patronId = $this->params[$index]['pid'];
+                $libaryID = $this->params[$index]['lid'];
+                $notificatinEmail = $this->params[$index]['notificatinEmail'];
                 $this->NotificationSubscriptions->setDataSource('master');
                 
                 //check if record is already exist for this patron and library
@@ -1395,10 +1401,16 @@ function login($library = null){
             $this->layout = false;
             $this->autoRender = false;
             
-            if(isset($_REQUEST['pid']) && isset($_REQUEST['lid']) && $_REQUEST['lid']!=''  && $_REQUEST['pid']!='') 
+            if ( $this->RequestHandler->isPost() ) {
+            	$index = 'form';
+            } else if ( $this->RequestHandler->isGet() ) {
+            	$index = 'url';
+            }
+
+            if(isset($this->params[$index]['pid']) && isset($this->params[$index]['lid']) && $this->params[$index]['lid']!=''  && $this->params[$index]['pid']!='') 
             {
-                $patronId = $_REQUEST['pid'];
-                $libaryID = $_REQUEST['lid'];
+                $patronId = $this->params[$index]['pid'];
+                $libaryID = $this->params[$index]['lid'];
                 
                 $this->Currentpatron->setDataSource('master');
                 
@@ -1485,8 +1497,8 @@ function login($library = null){
 		else{
 			$this->layout = 'login';
 		}
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -1728,8 +1740,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -1968,8 +1980,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -2196,8 +2208,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -2424,8 +2436,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -2662,8 +2674,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -2889,8 +2901,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -3110,8 +3122,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -3351,8 +3363,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -3570,8 +3582,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -3806,8 +3818,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -3967,8 +3979,15 @@ function login($library = null){
 
 
 	function sso(){
-		if(isset($_REQUEST['libname'])){
-			$libName = $_REQUEST['libname'];
+		
+		if ( $this->RequestHandler->isPost() ) {
+			$index = 'form';
+		} else if ( $this->RequestHandler->isGet() ) {
+			$index = 'url';
+		}
+
+		if(isset($this->params[$index]['libname'])){
+			$libName = $this->params[$index]['libname'];
 			$this->Library->recursive = -1;
 			$this->Library->Behaviors->attach('Containable');
 			$existingLibraries = $this->Library->find('all',array(
@@ -4139,8 +4158,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -4378,8 +4397,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -4619,8 +4638,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -4863,8 +4882,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -5104,8 +5123,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -5326,8 +5345,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -5565,8 +5584,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}
@@ -5808,8 +5827,8 @@ function login($library = null){
 			$this->layout = 'login';
 		}
 
-		if(isset($_POST['lang'])){
-			$language = $_POST['lang'];
+		if(isset($this->params['form']['lang'])){
+			$language = $this->params['form']['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		}

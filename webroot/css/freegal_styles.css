@@ -31,7 +31,7 @@ form, fieldset{
     position:relative;
     min-height:441px;
 }
-.logo{
+/*.logo{
     display:block;
     width:238px;
     height:113px;
@@ -39,7 +39,7 @@ form, fieldset{
     overflow:hidden;
     margin:0 auto 10px;
     background:url(../img/logo.jpg) no-repeat;
-}
+}*/
 .logo a{
     display:block;
     height:100%;
