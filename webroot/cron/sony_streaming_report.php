@@ -25,8 +25,8 @@ $countrys = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'N
 
 $lib_types = array('Unlimited');
 
-$currentDate = '2014-04-01';
-//$currentDate = date("Y-m-d", time());
+//$currentDate = '2014-04-01';
+$currentDate = date("Y-m-d", time());
 
 
 echo $error_log_file = "/error_reports_output_" . date('Y_m_d_h_i_s') . ".txt";
@@ -78,7 +78,7 @@ if (($currentDate == $monthFirstDate))
             $count = 1;
             echo $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt'";
             $result3 = mysql_query($sql);
-            fwrite($error_log, date('Y-m-d h:i:s') . "Line 77.  $sql " . "\n");
+            //fwrite($error_log, date('Y-m-d h:i:s') . "Line 77.  $sql " . "\n");
 
             if ($result3)
             {
@@ -108,7 +108,7 @@ if (($currentDate == $monthFirstDate))
                         . "AND l.library_territory = '$country' and l.library_type = 2 "
                         . "GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                 $result = mysql_query($sql);
-                fwrite($error_log, date('Y-m-d h:i:s') . "Line 77.  $sql " . "\n");
+                //fwrite($error_log, date('Y-m-d h:i:s') . "Line 77.  $sql " . "\n");
 
                 if ($result)
                 {
@@ -145,7 +145,6 @@ if (($currentDate == $monthFirstDate))
                             }
 
                             $dataresult = mysql_query($query);
-                            fwrite($error_log, date('Y-m-d h:i:s') . "Line 144.  $query " . "\n");
 
                             if ($dataresult)
                             {
@@ -264,40 +263,40 @@ if (($currentDate == $monthFirstDate))
                         fclose($file);
 
 
-                        echo $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
-//                    $result6 = mysql_query($sql);
-//
-//                    if ($result6)
-//                    {
-//                        if (sendReportFilesftp($report_name, "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
-//                        {
-//                            // FOR SENDING REPORT TO SONY SERVER USING FTP
-//                            $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
-//                            $result7 = mysql_query($sql);
-//
-//                            if ($result7)
-//                            {
-//                                fwrite($error_log, date('Y-m-d h:i:s') . " File Send " . "\n");
-//                                echo "============= File Send. DB updated =============";
-//                            }
-//                            else
-//                            {
-//                                sendalert("Query failed: " . $sql);
-//                                die("Query failed: " . $sql . " Error: " . mysql_error());
-//                            }
-//                        }
-//                        else
-//                        {
-//                            sendalert("Error while sending File to Sony.");
-//                            fwrite($error_log, date('Y-m-d h:i:s') . " Error while sending the File. " . "\n");
-//                        }
-//                    }
-//                    else
-//                    {
-//                        sendalert("Query failed: " . $sql);
-//                        fwrite($error_log, date('Y-m-d h:i:s') . "Query failed: " . $sql . " Error: " . mysql_error() . "\n");
-//                        die("Query failed: " . $sql . " Error: " . mysql_error());
-//                    }
+                        $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
+                        $result6 = mysql_query($sql);
+
+                        if ($result6)
+                        {
+                            if (sendReportFilesftp($report_name, "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
+                            {
+                                // FOR SENDING REPORT TO SONY SERVER USING FTP
+                                $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
+                                $result7 = mysql_query($sql);
+
+                                if ($result7)
+                                {
+                                    fwrite($error_log, date('Y-m-d h:i:s') . " File Send " . "\n");
+                                    echo "============= File Send. DB updated =============";
+                                }
+                                else
+                                {
+                                    sendalert("Query failed: " . $sql);
+                                    die("Query failed: " . $sql . " Error: " . mysql_error());
+                                }
+                            }
+                            else
+                            {
+                                sendalert("Error while sending File to Sony.");
+                                fwrite($error_log, date('Y-m-d h:i:s') . " Error while sending the File. " . "\n");
+                            }
+                        }
+                        else
+                        {
+                            sendalert("Query failed: " . $sql);
+                            fwrite($error_log, date('Y-m-d h:i:s') . "Query failed: " . $sql . " Error: " . mysql_error() . "\n");
+                            die("Query failed: " . $sql . " Error: " . mysql_error());
+                        }
                     }
                 }
                 else
@@ -318,7 +317,7 @@ if (($currentDate == $monthFirstDate))
 }
 else
 {
-    echo "\nToday is not either the week first day or the month first day so the report didn't get generated.\n";
+    echo "\n Today is not the month first day so the report didn't get generated.\n";
     fwrite($error_log, date('Y-m-d h:i:s') . " Line no : 300. Today is not month First Date " . "\n");
 }
 
