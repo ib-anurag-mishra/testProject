@@ -28,6 +28,11 @@ $lib_types = array('Unlimited');
 $currentDate = '2014-04-01';
 //$currentDate = date("Y-m-d", time());
 
+
+echo $error_log_file = "/error_reports_output_" . date('Y_m_d_h_i_s') . ".txt";
+$error_log = fopen(IMPORTLOGS . $error_log_file, 'w') or die("Can't Open the error log file!");
+
+
 echo "\n----------- Start " . $currentDate . " -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -52,9 +57,6 @@ if (($currentDate == $monthFirstDate))
 
         echo $outputFile = "/reports_output_" . date('Y_m_d_h_i_s') . ".txt";
         $logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the log file!");
-
-        echo $error_log_file = "/error_reports_output_" . date('Y_m_d_h_i_s') . ".txt";
-        $error_log = fopen(IMPORTLOGS . $error_log_file, 'w') or die("Can't Open the error log file!");
     }
 
     foreach ($lib_types as $lib_type)
@@ -262,7 +264,7 @@ if (($currentDate == $monthFirstDate))
                         fclose($file);
 
 
-                        echo $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . "_STREAMING.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . "_STREAMING.txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
+                        echo $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
 //                    $result6 = mysql_query($sql);
 //
 //                    if ($result6)
