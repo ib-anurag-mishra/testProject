@@ -296,8 +296,7 @@ Class UsersController extends AppController
 
 	function admin_login() {
             
-           echo $this->Session->read('Auth.User');
-		$this->layout = 'admin';
+          $this->layout = 'admin';
 		$this->Auth->autoRedirect = false;
 		if (empty($this->data)) {
 			$this->Session->delete('Message.auth');
