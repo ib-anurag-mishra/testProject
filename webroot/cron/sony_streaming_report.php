@@ -51,10 +51,10 @@ if (($currentDate == $monthFirstDate))
         mkdir($logs_dir);
 
         echo $outputFile = "/reports_output_" . date('Y_m_d_h_i_s') . ".txt";
-        $logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the file!");
+        $logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the log file!");
 
         echo $error_log_file = "/error_reports_output_" . date('Y_m_d_h_i_s') . ".txt";
-        $error_log = fopen(IMPORTLOGS . $error_log_file, 'w') or die("Can't Open the file!");
+        $error_log = fopen(IMPORTLOGS . $error_log_file, 'w') or die("Can't Open the error log file!");
     }
 
     $lib_type_int = 1;
@@ -258,29 +258,28 @@ if (($currentDate == $monthFirstDate))
                     $trailer .= "0"; // Total Quantity Returned
                     fwrite($file, $trailer);
                     fclose($file);
-                    exit("end before sending to SFTP \n");
-                    if (sendReportFilesftp($report_name, "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
-                    {
-                        // FOR SENDING REPORT TO SONY SERVER USING FTP
-                        $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
-                        $result7 = mysql_query($sql);
-
-                        if ($result7)
-                        {
-                            fwrite($error_log, date('Y-m-d h:i:s') . " File Send " . "\n");
-                            echo "============= File Send. DB updated =============";
-                        }
-                        else
-                        {
-                            sendalert("Query failed: " . $sql);
-                            die("Query failed: " . $sql . " Error: " . mysql_error());
-                        }
-                    }
-                    else
-                    {
-                        sendalert("Error while sending File to Sony.");
-                        fwrite($error_log, date('Y-m-d h:i:s') . " Error while sending the File. " . "\n");
-                    }
+//                    if (sendReportFilesftp($report_name, "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
+//                    {
+//                        // FOR SENDING REPORT TO SONY SERVER USING FTP
+//                        $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
+//                        $result7 = mysql_query($sql);
+//
+//                        if ($result7)
+//                        {
+//                            fwrite($error_log, date('Y-m-d h:i:s') . " File Send " . "\n");
+//                            echo "============= File Send. DB updated =============";
+//                        }
+//                        else
+//                        {
+//                            sendalert("Query failed: " . $sql);
+//                            die("Query failed: " . $sql . " Error: " . mysql_error());
+//                        }
+//                    }
+//                    else
+//                    {
+//                        sendalert("Error while sending File to Sony.");
+//                        fwrite($error_log, date('Y-m-d h:i:s') . " Error while sending the File. " . "\n");
+//                    }
                 }
             }
             else
