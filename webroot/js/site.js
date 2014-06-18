@@ -721,14 +721,14 @@ $('document').ready(function() {
     $videos_scrollable_video_container.on('mouseenter', function() {
         $this = $(this);
         $this.find('.add-to-playlist-button').css({opacity: 1});
-        $this.find('.top-100-download-now-button').css({opacity: 1});
+        $this.find('.top-10-download-now-button').css({opacity: 1});
 
     });
 
     $videos_scrollable_video_container.on('mouseleave', function() {
         $this = $(this);
         $this.find('.add-to-playlist-button').css({opacity: 0});
-        $this.find('.top-100-download-now-button').css({opacity: 0});
+        $this.find('.top-10-download-now-button').css({opacity: 0});
         $this.find('.wishlist-popover').removeClass('active');
     });
 

@@ -397,7 +397,7 @@
                                             if ($value['Video']['status'] != 'avail')
                                             {
                                                 ?>
-                                                <span class="top-100-download-now-button">
+                                                <span class="top-10-download-now-button">
                                                     <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                         <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"]; ?>" />
                                                         <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
