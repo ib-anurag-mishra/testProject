@@ -43,8 +43,8 @@
                                                                         
                                     </span>                                   
                                                                        
-                                    <span class="afterClick" id="vdownloading_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp'); ?></span>
-                                    <span id="vdownload_loader_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                    <span class="afterClick" id="vdownloading_<?php echo $videosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp'); ?></span>
+                                    <span id="vdownload_loader_<?php echo $videosData[0]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                 </form>
                             </div>
                   <?php else: ?>
