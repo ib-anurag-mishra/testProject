@@ -888,53 +888,7 @@ function addToWishlist_top(prodId, providerType)
     return false;
 }
 
-function wishlistDownloadIE(prodId, id, provider)
-{
-    $('.beforeClick').hide();
-    $('.afterClick').show();
-    document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
-    document.getElementById('downloading_' + prodId).style.display = 'block';
-    document.getElementById('wishlist_song_' + prodId).style.display = 'none';
-    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider;
-    id = prodId;
-    jQuery.ajax({
-        type: "post", // Request method: post, get
-        url: webroot + "homes/wishlistDownload", // URL to request
-        data: data, // post data
-        success: function(response) {
-            var msg = response.substring(0, 5);
-            if (msg === 'error')
-            {
-                alert("Your download limit has exceeded.");
-                //location.reload();
-                $('.afterClick').hide();
-                $('.beforeClick').show(); 
-                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
-                return false;
-            }
-            else if (msg === 'suces')
-            {
-                $('.afterClick').hide();
-                $('.beforeClick').show();
-                var downloadUsedArr = response.split('|');
-                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
-                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
-                document.getElementById('downloading_' + prodId).style.display = 'none';
-                document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-            }
-            else
-            {
-                alert("You have been logged out from the system. Please login again.");
-                location.reload();
-                return false;
-            }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-        }
-    });
-    return false;
-}
+
 
 function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName, type)
 {
