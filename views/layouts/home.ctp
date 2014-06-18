@@ -43,8 +43,7 @@
         echo $javascript->link(
                 array(
                     'freegal',
-                    'ajaxify-html5.js', 
-                    'site.js',
+                    'ajaxify-html5.js',
                     'freegal40-site',
                     'jquery-scrollto',
                     'search-results',
