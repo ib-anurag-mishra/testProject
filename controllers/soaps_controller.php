@@ -6495,6 +6495,7 @@ STR;
     $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
     
     $AllData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
+	unset($AllData['lastPage']);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -6579,6 +6580,7 @@ STR;
     $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
     
     $ArtistData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
+	unset($ArtistData['lastPage']);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
       
@@ -6738,6 +6740,7 @@ STR;
     $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
     
     $SongData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
+	unset($SongData['lastPage']);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -6820,6 +6823,7 @@ STR;
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
     $VideoData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+	unset($VideoData['lastPage']);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
     
