@@ -722,6 +722,7 @@ $('document').ready(function() {
         $this = $(this);
         $this.find('.add-to-playlist-button').css({opacity: 1});
         $this.find('.top-10-download-now-button').css({opacity: 1});
+        $this.find('.mylib-top-10-video-download-now-button').css({opacity: 1});
 
     });
 
@@ -729,6 +730,7 @@ $('document').ready(function() {
         $this = $(this);
         $this.find('.add-to-playlist-button').css({opacity: 0});
         $this.find('.top-10-download-now-button').css({opacity: 0});
+        $this.find('.mylib-top-10-video-download-now-button').css({opacity: 0});
         $this.find('.wishlist-popover').removeClass('active');
     });
 
