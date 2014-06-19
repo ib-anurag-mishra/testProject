@@ -535,6 +535,7 @@ class SoapsController extends AppController {
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     $library_territory = $this->getLibraryTerritory($libraryId);
+	$countryPrefix = $this->Common->getCountryPrefix($library_$territory);
  
     $featuredCache = Cache::read("featured".$library_territory);
     if (($artists = $featuredCache) === false || $featuredCache == null) {
