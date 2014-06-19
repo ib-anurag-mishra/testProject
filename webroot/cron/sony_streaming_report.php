@@ -263,40 +263,40 @@ if (($currentDate == $monthFirstDate))
                         fclose($file);
 
 
-                        $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
-                        $result6 = mysql_query($sql);
-
-                        if ($result6)
-                        {
-                            if (sendReportFilesftp($report_name, "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
-                            {
-                                // FOR SENDING REPORT TO SONY SERVER USING FTP
-                                $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
-                                $result7 = mysql_query($sql);
-
-                                if ($result7)
-                                {
-                                    fwrite($error_log, date('Y-m-d h:i:s') . " File Send " . "\n");
-                                    echo "============= File Send. DB updated =============";
-                                }
-                                else
-                                {
-                                    sendalert("Query failed: " . $sql);
-                                    die("Query failed: " . $sql . " Error: " . mysql_error());
-                                }
-                            }
-                            else
-                            {
-                                sendalert("Error while sending File to Sony.");
-                                fwrite($error_log, date('Y-m-d h:i:s') . " Error while sending the File. " . "\n");
-                            }
-                        }
-                        else
-                        {
-                            sendalert("Query failed: " . $sql);
-                            fwrite($error_log, date('Y-m-d h:i:s') . "Query failed: " . $sql . " Error: " . mysql_error() . "\n");
-                            die("Query failed: " . $sql . " Error: " . mysql_error());
-                        }
+//                        $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
+//                        $result6 = mysql_query($sql);
+//
+//                        if ($result6)
+//                        {
+//                            if (sendReportFilesftp($report_name, "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt", $logFileWrite, "monthly"))
+//                            {
+//                                // FOR SENDING REPORT TO SONY SERVER USING FTP
+//                                $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
+//                                $result7 = mysql_query($sql);
+//
+//                                if ($result7)
+//                                {
+//                                    fwrite($error_log, date('Y-m-d h:i:s') . " File Send " . "\n");
+//                                    echo "============= File Send. DB updated =============";
+//                                }
+//                                else
+//                                {
+//                                    sendalert("Query failed: " . $sql);
+//                                    die("Query failed: " . $sql . " Error: " . mysql_error());
+//                                }
+//                            }
+//                            else
+//                            {
+//                                sendalert("Error while sending File to Sony.");
+//                                fwrite($error_log, date('Y-m-d h:i:s') . " Error while sending the File. " . "\n");
+//                            }
+//                        }
+//                        else
+//                        {
+//                            sendalert("Query failed: " . $sql);
+//                            fwrite($error_log, date('Y-m-d h:i:s') . "Query failed: " . $sql . " Error: " . mysql_error() . "\n");
+//                            die("Query failed: " . $sql . " Error: " . mysql_error());
+//                        }
                     }
                 }
                 else
