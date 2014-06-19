@@ -4790,7 +4790,16 @@ STR;
 
   private function isValidAuthenticationToken($token){
 
-    return $this->AuthenticationToken->find('count', array('conditions' => array('token' => $token)));
+	$tokenDetails =  $this->AuthenticationToken->find('all', array('conditions' => array('token' => $token)));
+    $tokenCreatedOn = $tokenDetails[0]['AuthenticationToken']['auth_time'];
+    $now = time();
+    $totalDiff = $now - $tokenCreatedOn;
+    $hourDiff = $totalDiff / 3600;
+    if($hourDiff > 10) {
+        $this->AuthenticationToken->deleteAll(array('token' => $token));
+    }
+ 
+	return $this->AuthenticationToken->find('count', array('conditions' => array('token' => $token)));
 
   }
 
