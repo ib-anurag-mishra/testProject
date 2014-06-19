@@ -363,7 +363,7 @@
                                             if ($value['Video']['status'] != 'avail')
                                             {
                                                 ?>
-                                                <span class="top-10-download-now-button">
+                                                <span class="mylib-top-10-video-download-now-button">
                                                     <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                         <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"]; ?>" />
                                                         <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
@@ -384,21 +384,21 @@
                                             else
                                             {
                                                 ?>
-                                                <a class="top-10-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
+                                                <a class="mylib-top-10-video-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
                                                 <?php
                                             }
                                         }
                                         else
                                         {
                                             ?>
-                                            <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met"); ?></a>
+                                            <a class="mylib-top-10-video-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?></a>
                                             <?php
                                         }
                                     }
                                     else
                                     {
                                         ?>
-                                        <a class="top-10-download-now-button " href="javascript:void(0);"><span title='<?php __("Coming Soon"); ?> ( <?php
+                                        <a class="mylib-top-10-video-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon"); ?> ( <?php
                                             if (isset($value['Country']['SalesDate']))
                                             {
                                                 echo date("F d Y", strtotime($value['Country']['SalesDate']));
@@ -410,7 +410,7 @@
                                     else
                                     {
                                         ?>
-                                    <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                                    <a class="mylib-top-10-video-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
 
 
                                     <?php
