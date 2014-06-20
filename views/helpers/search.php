@@ -237,9 +237,10 @@ class SearchHelper extends AppHelper {
     	$arrAlbumInfo['album_genre'] 	  = str_replace( '"', '', $palbum->Genre );
     	$arrAlbumInfo['linkArtistText']   = str_replace( '/', '@', base64_encode( $palbum->ArtistText ) );
     	$arrAlbumInfo['linkProviderType'] = base64_encode( $palbum->provider_type );
+    	$arrAlbumInfo['image'] 			  = $image;
     
     	if ( isset( $palbum->Label ) && !empty( $palbum->Label ) ) {
-    		$album_label_str = "Label: " . $this->truncateText( $obj->getTextEncode( $palbum->Label ), 32, $obj );
+    		$album_label_str = "Label: " . $this->truncateText( $palbum->Label, 32, $obj );
     	} else {
     		$album_label_str = "";
     	}

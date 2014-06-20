@@ -187,9 +187,7 @@ class SearchController extends AppController {
                         break;
                 }
 
-                $this->set( 'totalFacetFound', $totalFacetCount );
-
-                if ( !empty( $totalFacetCount ) ) {
+                if ( isset( $totalFacetCount ) && !empty( $totalFacetCount ) ) {
                     $this->set( 'totalFacetPages', ceil( $totalFacetCount / $limit ) );
                 } else {
                     $this->set( 'totalFacetPages', 0 );

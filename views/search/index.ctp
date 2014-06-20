@@ -111,6 +111,10 @@
 					$i = 1;
 					foreach ( $songs as $psong ):
 
+						if ( !is_object( $psong ) ) {
+							continue;
+						}
+
 						$downloadFlag = $this->Search->checkSongStatusForSearch( $psong->TerritoryDownloadStatus, $psong->TerritorySalesDate, $territory );
 						$StreamFlag   = $this->Search->checkSongStatusForSearch( $psong->TerritoryStreamingStatus, $psong->TerritoryStreamingSalesDate, $territory );
 
@@ -301,7 +305,7 @@
 				$i = 0;
 
 				foreach ( $albumData as $palbum ) {
-					$albumInfo = $this->Search->getAlbumInfo( $palbum, $obj = null );
+					$albumInfo = $this->Search->getAlbumInfo( $palbum, $this );
 					extract( $albumInfo );
 		?>
 					<div class="album-detail-container">
@@ -494,7 +498,7 @@
 					<ul>
 					<?php
 						foreach ( $artists as $artist ) {
-							$artist_name 	  = str_replace( '"', '', $artist->ArttistText );
+							$artist_name 	  = str_replace( '"', '', $artist->ArtistText );
 							$artist_name_text = str_replace( '/', '@', base64_encode( $artist->ArtistText ) );
 					?>
 							<li><?= $html->link( $artist_name . " (" . $artist->numFound . ")", array( 'controller' => 'artists', 'action' => 'album', $artist_name_text ), array( 'title' => $artist_name ) ); ?></li>
@@ -557,11 +561,11 @@
 						?>
 								<li>
 						<?php
-								$albumInfo = $this->Search->getAlbumInfo( $palbum, $obj = null );
+								$albumInfo = $this->Search->getAlbumInfo( $palbum, $this );
 								extract( $albumInfo );
 						?>
 								<div class="album-cover-container">
-									<a href="<?= "/artists/view/$linkArtistText/$palbum->ReferenceID/$linkProviderType"; ?>" title="<?= $this->getTextEncode($palbum->Title); ?>"> <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" /> </a>
+									<a href="<?= "/artists/view/$linkArtistText/$palbum->ReferenceID/$linkProviderType"; ?>" title="<?= $this->getTextEncode( $palbum->Title ); ?>"> <img src="<?= $image; ?>" alt="<?= $album_title; ?>" width="162" height="162" /> </a>
 								<?php if ( isset( $patronId ) && !empty( $patronId ) ) { ?>
 										<input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>" />
 							<?php
@@ -770,6 +774,11 @@
 							if ( isset( $songs ) && is_array( $songs ) && count( $songs ) > 0 ) {
 								$i = 1;
 								foreach ($songs as $psong) {
+									
+									if ( !is_object( $psong ) ) {
+										continue;
+									}
+
 									$downloadFlag = $this->Search->checkSongStatusForSearch( $psong->TerritoryDownloadStatus, $psong->TerritorySalesDate, $territory );
 									$StreamFlag   = $this->Search->checkSongStatusForSearch( $psong->TerritoryStreamingStatus, $psong->TerritoryStreamingSalesDate, $territory );
 
