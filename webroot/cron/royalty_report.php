@@ -27,8 +27,7 @@ $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m)
 $fetchRecordsFromTable = 'downloads';
 
 $libraryType = array('ALC' => '0', 'Unlimited' => '1');
-
-// $libraryType = array('ALC'=>'0');
+//$libraryType = array('ALC'=>'0');
 
 $unit_sales_rate = null;
 foreach ($arr_dates AS $key => $value)
@@ -99,8 +98,8 @@ foreach ($arr_dates AS $key => $value)
                 {
                     if (strtotime($q['library_contract_end_date']) >= strtotime($value['to_date']))
                     {
-                        echo '1';
-                        echo $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory, downloads.created "
+                        //echo '1';
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory, downloads.created "
                                 . "From $fetchRecordsFromTable as downloads "
                                 . "JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  "
                                 . "JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' "
@@ -111,8 +110,8 @@ foreach ($arr_dates AS $key => $value)
                     }
                     else
                     {
-                        echo "2";
-                        echo $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,"
+                        //echo "2";
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,"
                                 . "Albums.AlbumTitle,Albums.UPC,libraries.library_territory, downloads.created "
                                 . "From $fetchRecordsFromTable as downloads "
                                 . "JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  "
@@ -127,9 +126,9 @@ foreach ($arr_dates AS $key => $value)
                 {
                     if (strtotime($q['library_contract_end_date']) >= strtotime($value['to_date']))
                     {
-                        echo "3";
+                        //echo "3";
                         //$total_download_query = "SELECT library_id, count(*) as total_count From $fetchRecordsFromTable as downloads WHERE provider_type='ioda' and downloads.created between '" . $q['library_contract_start_date'] . " 00:00:00' and '" . $to_date . "' and library_id = " . $q['library_id'];
-                        echo $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,"
+                         $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,"
                                 . "libraries.library_territory, downloads.created "
                                 . "From $fetchRecordsFromTable as downloads "
                                 . "JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  "
@@ -142,7 +141,7 @@ foreach ($arr_dates AS $key => $value)
                     }
                     else
                     {
-                        echo "4";
+                        //echo "4";
                         $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,"
                                 . "libraries.library_territory, downloads.created "
                                 . "From $fetchRecordsFromTable as downloads "
@@ -182,37 +181,37 @@ foreach ($arr_dates AS $key => $value)
                 }
             }
             
-//            $version = 1;
-//            $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
-//            while (1)
-//            {
-//                if (file_exists($reportsFolder . "/" . $file_name))
-//                {
-//                    $version++;
-//                    $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
-//                }
-//                else
-//                {
-//                    break;
-//                }
-//            }
-//            $round_total_sales = round($total_sales, 2);
-//            if (false === strpos($round_total_sales, '.'))
-//            {
-//                $round_total_sales .= '.00';
-//            }
-//            else
-//            {
-//                $strlen = strlen(end(explode('.', $round_total_sales)));
-//                if (1 == $strlen)
-//                {
-//                    $round_total_sales .= '0';
-//                }
-//            }
-//
-//            $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
-//            $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
-//            write_file($royalty_content, $file_name, $reportsFolder . "/");
+            $version = 1;
+            $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
+            while (1)
+            {
+                if (file_exists($reportsFolder . "/" . $file_name))
+                {
+                    $version++;
+                    $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
+                }
+                else
+                {
+                    break;
+                }
+            }
+            $round_total_sales = round($total_sales, 2);
+            if (false === strpos($round_total_sales, '.'))
+            {
+                $round_total_sales .= '.00';
+            }
+            else
+            {
+                $strlen = strlen(end(explode('.', $round_total_sales)));
+                if (1 == $strlen)
+                {
+                    $round_total_sales .= '0';
+                }
+            }
+
+            $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
+            $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
+            write_file($royalty_content, $file_name, $reportsFolder . "/");
         }
     }
 }
