@@ -3533,6 +3533,12 @@ STR;
             }
         }
         
+        if(count($synGenres)==0)
+        {
+            array_push($synGenres, $genre_name);
+        }
+        
+        
         return $synGenres;
     }
 
