@@ -96,7 +96,7 @@ class HomesController extends AppController {
 
     }
 
-    function get_genre_tab_content($tab_no, $genre) {
+      function get_genre_tab_content($tab_no, $genre) {
         //Cachec results for Rock Genre
 
         $this->layout = 'ajax';

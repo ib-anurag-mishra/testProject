@@ -374,7 +374,8 @@ function login($library = null){
                     }
             }
     }
-    if(isset($this->params['form']['lang'])){
+
+    if( isset( $this->params['form']['lang'] ) ) {
             $language = $this->params['form']['lang'];
             $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
             $this->Session->write('Config.language', $langDetail['Language']['short_name']);
