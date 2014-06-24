@@ -3525,13 +3525,19 @@ STR;
         {            
             for($cnt=0; $cnt<count($combineGenreData); $cnt++)
             {
-                if($combineGenreData[$cnt]['CombineGenre']['expected_genre']==stripslashes($genre_name))       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
+                if($combineGenreData[$cnt]['CombineGenre']['expected_genre']==str_replace("\\", "", $genre_name))       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
                 {
                     //$synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['genre'];
                     array_push($synGenres, $combineGenreData[$cnt]['CombineGenre']['genre']);
                 }
             }
         }
+        
+        if(count($synGenres)==0)
+        {
+            array_push($synGenres, $genre_name);
+        }
+        
         
         return $synGenres;
     }
