@@ -32,7 +32,7 @@ class HomesController extends AppController {
         if (!empty($pat_id)) { //  After Login
             $this->Auth->allow('*');
         } else { //  Before Login 
-            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'checkStreamingComponent', 'terms');
+            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'terms');
         }
 
         $this->Cookie->name = 'baker_id';
@@ -94,25 +94,6 @@ class HomesController extends AppController {
         $this->set('featuredArtists', $featuresArtists);
         /* featured artist slideshow code Ends */
 
-    }
-
-    //this is just for streaming component test
-    function checkStreamingComponent() {         
-
-        echo 'libid=> ' . $libId = $this->Session->read('library');
-        echo '<br>patid=> ' . $patId = $this->Session->read('patron');
-        //testing for streaming component       
-        echo '<br>prodid=> ' . $prodId = '4789843';
-        echo '<br>providertyp=> ' . $provider = 'ioda';
-        echo '<br>userStreamedTime=> ' . $userStreamedTime = 0;
-        echo '<br>actionType=> ' . $actionType = '21';
-        echo '<br>songDuration=> ' . $songDuration = 44;
-        echo '<br>queue_id=> ' . $queue_id = '1952';
-        echo '<br>token_id=> ' . $token_id = 'WEB_201311714921595_7397';
-        echo '<br>';
-        $validationResponse = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider, $userStreamedTime, $actionType, '', $songDuration, $queue_id, $token_id);
-        print_r($validationResponse);
-        exit;
     }
 
     function get_genre_tab_content($tab_no, $genre) {
