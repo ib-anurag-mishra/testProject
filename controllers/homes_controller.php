@@ -32,7 +32,7 @@ class HomesController extends AppController {
         if (!empty($pat_id)) { //  After Login
             $this->Auth->allow('*');
         } else { //  Before Login 
-            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'checkStreamingComponent', 'terms');
+            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'terms');
         }
 
         $this->Cookie->name = 'baker_id';
@@ -96,7 +96,8 @@ class HomesController extends AppController {
 
     }
 
-      function get_genre_tab_content($tab_no, $genre) {
+    function get_genre_tab_content($tab_no, $genre) {
+
         //Cachec results for Rock Genre
 
         $this->layout = 'ajax';
@@ -430,10 +431,17 @@ STR;
      */
 
     function autoComplete() {
+    	
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
         $country = $this->Session->read('territory');
         $searchKey = '';
-        if (isset($_REQUEST['q']) && $_REQUEST['q'] != '') {
-            $searchKey = $_REQUEST['q'];
+        if (isset($this->params[$index]['q']) && $this->params[$index]['q'] != '') {
+            $searchKey = $this->params[$index]['q'];
         }
         $searchText = $searchKey;
         $this->set('searchKey', 'search=' . urlencode($searchText));
@@ -442,11 +450,11 @@ STR;
         $searchKey = '"^' . addslashes($searchKey) . '"';
         App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
         
-        if ($_REQUEST['type'] == 'album') {
+        if ($this->params[$index]['type'] == 'album') {
             $searchParam = "@Title " . $searchKey;
-        } else if ($_REQUEST['type'] == 'artist') {
+        } else if ($this->params[$index]['type'] == 'artist') {
             $searchParam = "@ArtistText " . $searchKey;
-        } else if ($_REQUEST['type'] == 'composer') {
+        } else if ($this->params[$index]['type'] == 'composer') {
             $searchParam = "@composer " . $searchKey;
         } else {
             $searchParam = "@SongTitle " . $searchKey;
@@ -461,7 +469,7 @@ STR;
 
         $searchResults = $this->paginate('Song');
         $this->set('output', $searchResults);
-        $this->set('type', $_REQUEST['type']);
+        $this->set('type', $this->params[$index]['type']);
         $this->layout = 'ajax';
     }
 
@@ -473,7 +481,7 @@ STR;
     function artistSearch() {
         $country = $this->Session->read('territory');
         $this->Song->recursive = 2;
-        $search = $_POST['search'];
+        $search = $this->params['form']['search'];
         if ($search == 'special') {
             $cond = array("ArtistText REGEXP '^[^A-Za-z]'");
         } else {
@@ -517,6 +525,13 @@ STR;
      */
 
     function search() {
+    	
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
         $country = $this->Session->read('territory');
         if ($country == 'US') {
             $nonMatchCountry = 'CA';
@@ -538,13 +553,13 @@ STR;
             $cond = "";
             $condSphinx = "";
         }
-        if ((isset($_REQUEST['artist']) && $_REQUEST['artist'] != '') || (isset($_REQUEST['label']) && $_REQUEST['label'] != '') || (isset($_REQUEST['composer']) && $_REQUEST['composer'] != '') || (isset($_REQUEST['song']) && $_REQUEST['song'] != '') || (isset($_REQUEST['album']) && $_REQUEST['album'] != '') || (isset($_REQUEST['genre_id']) && $_REQUEST['genre_id'] != '') || (isset($this->data['Home']['artist']) && $this->data['Home']['artist'] != '') || (isset($this->data['Home']['label']) && $this->data['Home']['label'] != '') || (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') || (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') || (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') || (isset($this->data['Home']['genre_id']) && $this->data['Home']['genre_id'] != '' || isset($_REQUEST['search']) && $_REQUEST['search'] != '')) {
+        if ((isset($this->params[$index]['artist']) && $this->params[$index]['artist'] != '') || (isset($this->params[$index]['label']) && $this->params[$index]['label'] != '') || (isset($this->params[$index]['composer']) && $this->params[$index]['composer'] != '') || (isset($this->params[$index]['song']) && $this->params[$index]['song'] != '') || (isset($this->params[$index]['album']) && $this->params[$index]['album'] != '') || (isset($this->params[$index]['genre_id']) && $this->params[$index]['genre_id'] != '') || (isset($this->data['Home']['artist']) && $this->data['Home']['artist'] != '') || (isset($this->data['Home']['label']) && $this->data['Home']['label'] != '') || (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') || (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') || (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') || (isset($this->data['Home']['genre_id']) && $this->data['Home']['genre_id'] != '' || isset($this->params[$index]['search']) && $this->params[$index]['search'] != '')) {
             
-            if ((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
+            if ((isset($this->params[$index]['match']) && $this->params[$index]['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
                 
-                if (isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
+                if (isset($this->params[$index]['match']) && $this->params[$index]['match'] != '') {
                     
-                    if ($_REQUEST['match'] == 'All') {
+                    if ($this->params[$index]['match'] == 'All') {
                         $condition = "and";
                         $preCondition1 = array('Song.DownloadStatus' => 1);
                         $preCondition2 = array('Song.TrackBundleCount' => 0);
@@ -559,12 +574,12 @@ STR;
                         $sphinxCheckCondition = "|";
                         $matchType = "Any";
                     }
-                    $artist = $_REQUEST['artist'];
-                    $label = $_REQUEST['label'];
-                    $composer = $_REQUEST['composer'];
-                    $song = $_REQUEST['song'];
-                    $album = $_REQUEST['album'];
-                    $genre = $_REQUEST['genre_id'];
+                    $artist = $this->params[$index]['artist'];
+                    $label = $this->params[$index]['label'];
+                    $composer = $this->params[$index]['composer'];
+                    $song = $this->params[$index]['song'];
+                    $album = $this->params[$index]['album'];
+                    $genre = $this->params[$index]['genre_id'];
                 }
                 if (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
                     if ($this->data['Home']['Match'] == 'All') {
@@ -764,22 +779,22 @@ STR;
             } else {
 
                 //Added code for log search data
-                if (isset($_REQUEST['search']) && $_REQUEST['search'] != '') {
-                    $insertArr[] = $this->searchrecords($_REQUEST['search_type'], $_REQUEST['search']);
+                if (isset($this->params[$index]['search']) && $this->params[$index]['search'] != '') {
+                    $insertArr[] = $this->searchrecords($this->params[$index]['search_type'], $this->params[$index]['search']);
                 }
                 $this->Searchrecord->saveAll($insertArr);
                 //End Added code for log search data
 
-                if ($_REQUEST['search_type'] == 'composer') {
+                if ($this->params[$index]['search_type'] == 'composer') {
                     $this->set('composer', "composer");
                 }
 
                 $searchKey = '';
                 $auto = 0;
-                if (isset($_REQUEST['search']) && $_REQUEST['search'] != '') {
-                    $searchKey = $_REQUEST['search'];
+                if (isset($this->params[$index]['search']) && $this->params[$index]['search'] != '') {
+                    $searchKey = $this->params[$index]['search'];
                 }
-                if (isset($_REQUEST['auto']) && $_REQUEST['auto'] == 1) {
+                if (isset($this->params[$index]['auto']) && $this->params[$index]['auto'] == 1) {
                     $auto = 1;
                 }
                 if ($searchKey == '') {
@@ -788,16 +803,16 @@ STR;
                 $searchText = $searchKey;
                 $this->set('searchKey', 'search=' . urlencode($searchText) . '&auto=' . $auto);
 
-                if ($_REQUEST['search_type'] == 'composer') {
+                if ($this->params[$index]['search_type'] == 'composer') {
                     $searchtype = 'composer';
-                } else if ($_REQUEST['search_type'] == 'artist') {
+                } else if ($this->params[$index]['search_type'] == 'artist') {
                     $searchtype = 'ArtistText';
-                } else if ($_REQUEST['search_type'] == 'album') {
+                } else if ($this->params[$index]['search_type'] == 'album') {
                     $searchtype = 'Title';
-                } else if ($_REQUEST['search_type'] == 'song') {
+                } else if ($this->params[$index]['search_type'] == 'song') {
                     $searchtype = 'SongTitle';
                 }
-                $this->set('searchtype', $_REQUEST['search_type']);
+                $this->set('searchtype', $this->params[$index]['search_type']);
                 
                 if ($auto == 0) {
                     $searchParam = "";
@@ -821,7 +836,7 @@ STR;
                     $searchParam = "@" . $searchtype . " " . $searchKey;
                 }
                 
-                if (!isset($_REQUEST['composer'])) {
+                if (!isset($this->params[$index]['composer'])) {
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 }
                 App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
@@ -874,11 +889,11 @@ STR;
                     $searchResults[$key]['Country']['provider_type'] = $songProvider_type;
                     //End code for sales date
                     //Changed for show seached like composer name in composer search
-                    if ($_REQUEST['search_type'] = 'composer') {
+                    if ($this->params[$index]['search_type'] = 'composer') {
                         $composer_value = $searchResults[$key]['Song']['Composer'];
                         $composer_value = str_replace('"', "", $composer_value);
                         $composer_array = explode(",", $composer_value);
-                        $search_text = $_REQUEST['search'];
+                        $search_text = $this->params[$index]['search'];
                         $coposer_text = '';
                         if (is_array($composer_array)) {
                             foreach ($composer_array as $composer_key => $composer_value) {
@@ -926,8 +941,8 @@ STR;
 
     function userDownload() {
         $this->layout = false;
-        $prodId = $_POST['ProdID'];
-        $provider = $_POST['ProviderType'];
+        $prodId = $this->params['form']['ProdID'];
+        $provider = $this->params['form']['ProviderType'];
 
         /*
           creates log file name
@@ -965,13 +980,13 @@ STR;
             $this->log("Validation Checked : " . $checked . " Valdition Passed : " . $validationPassedMessage . " Validation Message : " . $validationMessage . " for ProdID :" . $prodId . " and Provider : " . $provider . " for library id : " . $this->Session->read('library') . " and user id : " . $user, 'download');
             $libId = $this->Session->read('library');
             $patId = $this->Session->read('patron');
-            $prodId = $_POST['ProdID'];
+            $prodId = $this->params['form']['ProdID'];
             if ($prodId == '' || $prodId == 0) {
                 $this->redirect(array('controller' => 'homes', 'action' => 'index'));
             }
             $downloadsDetail = array();
 
-            $provider = $_POST['ProviderType'];
+            $provider = $this->params['form']['ProviderType'];
             $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
             $insertArr = Array();
             $insertArr['library_id'] = $libId;
@@ -1198,9 +1213,16 @@ STR;
 
     function checkPatron() {
         $this->layout = false;
-        $libid = $_REQUEST['libid'];
-        $patronid = $_REQUEST['patronid'];
-        $patronid = str_replace("_", "+", $_REQUEST['patronid']);
+        
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
+        $libid = $this->params[$index]['libid'];
+        $patronid = $this->params[$index]['patronid'];
+        $patronid = str_replace("_", "+", $this->params[$index]['patronid']);
         $userCache = Cache::read("login_" . $this->Session->read('territory') . "_" . $libid . "_" . $patronid);
         $date = time();
         $modifiedTime = $userCache[0];
@@ -1225,8 +1247,15 @@ STR;
 
     function approvePatron() {
         $this->layout = false;
-        $libid = $_REQUEST['libid'];
-        $patronid = base64_decode($_REQUEST['patronid']);
+        
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
+        $libid = $this->params[$index]['libid'];
+        $patronid = base64_decode($this->params[$index]['patronid']);
         $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $libid, 'patronid' => $patronid)));
         if (count($currentPatron) > 0){
             $updateArr = array();
@@ -1788,16 +1817,16 @@ STR;
             $this->layout = 'home';
         }
         $errorMsg = '';
-        if (isset($_POST['lang'])) {
-            $language = $_POST['lang'];
+        if (isset($this->params['form']['lang'])) {
+            $language = $this->params['form']['lang'];
             $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
             $this->Session->write('Config.language', $langDetail['Language']['short_name']);
         } else {
             $this->Session->write('Config.language', 'en');
         }
-        if ($_POST['hid_action'] == 1) {
+        if ($this->params['form']['hid_action'] == 1) {
 
-            $email = $_POST['email'];
+            $email = $this->params['form']['email'];
             if ($email == '') {
                 $errorMsg = "Please provide your email address.";
             } elseif (!($this->check_email($email))){
@@ -1835,22 +1864,27 @@ STR;
 
     function addToWishlist() {
         //creates log for Add to wishlist method when it is called
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
 
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
         $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                . " ProdID:" . $this->params[$index]['prodId'] . "  :ProviderId:" . $this->params[$index]['provider'];
 
-        if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['provider'])) {
+        if ($this->Session->read('library') && $this->Session->read('patron') && isset($this->params[$index]['prodId']) && isset($this->params[$index]['provider'])) {
             $libraryId = $this->Session->read('library');
             $patronId = $this->Session->read('patron');
 
-            $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $_REQUEST['prodId'])));
+            $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $this->params[$index]['prodId'])));
             if (!$wishlistCount) {
                 //get song details
-                $prodId = $_REQUEST['prodId'];
-                $provider = $_REQUEST['provider'];
+                $prodId = $this->params[$index]['prodId'];
+                $provider = $this->params[$index]['provider'];
                 if ($provider != 'sony') {
                     $provider = 'ioda';
                 }
@@ -1930,22 +1964,27 @@ STR;
 
     function addAlbumToWishlist() {
         //creates log for Add to wishlist method when it is called
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
 
         $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
         $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderType:" . $_REQUEST['providerType'] . "  :artistText:" . $_REQUEST['artistText'];
+                . " ProdID:" . $this->params[$index]['prodId'] . "  :ProviderType:" . $this->params[$index]['providerType'] . "  :artistText:" . $this->params[$index]['artistText'];
 
-        if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['providerType']) && isset($_REQUEST['artistText'])) {
+        if ($this->Session->read('library') && $this->Session->read('patron') && isset($this->params[$index]['prodId']) && isset($this->params[$index]['providerType']) && isset($this->params[$index]['artistText'])) {
             $libraryId = $this->Session->read('library');
             $patronId = $this->Session->read('patron');
 
-            $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $_REQUEST['prodId'])));
+            $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $this->params[$index]['prodId'])));
             if (!$wishlistCount) {
                 //get song details
-                $prodId = $_REQUEST['prodId'];
-                $provider = $_REQUEST['provider'];
+                $prodId = $this->params[$index]['prodId'];
+                $provider = $this->params[$index]['provider'];
                 if ($provider != 'sony') {
                     $provider = 'ioda';
                 }
@@ -2025,19 +2064,25 @@ STR;
 
     function addToWishlistVideo() {
 
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
 
 
-        if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['provider'])) {
+        if ($this->Session->read('library') && $this->Session->read('patron') && isset($this->params[$index]['prodId']) && isset($this->params[$index]['provider'])) {
             $libraryId = $this->Session->read('library');
             $patronId = $this->Session->read('patron');
 
-            $wishlistCount = $this->WishlistVideo->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $_REQUEST['prodId'])));
+            $wishlistCount = $this->WishlistVideo->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $this->params[$index]['prodId'])));
             if (!$wishlistCount) {
-                $prodId = $_REQUEST['prodId'];
-                $provider = $_REQUEST['provider'];
+                $prodId = $this->params[$index]['prodId'];
+                $provider = $this->params[$index]['provider'];
                 if ($provider != 'sony') {
                     $provider = 'ioda';
                 }
@@ -2068,7 +2113,7 @@ STR;
                 }
 
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                        . "  :ProdID:" . $this->params[$index]['prodId'] . "  :ProviderId:" . $this->params[$index]['provider'];
                 $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . "  :InsertArrayDetails:" . serialize($insertArr);
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
@@ -2077,7 +2122,7 @@ STR;
                 exit;
             } else {
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                        . "  :ProdID:" . $this->params[$index]['prodId'] . "  :ProviderId:" . $this->params[$index]['provider'];
                 $log_data .= "  :TracklistDetails:Track Details not found..";
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
@@ -2087,7 +2132,7 @@ STR;
             }
         } else {
             $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                    . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                    . "  :ProdID:" . $this->params[$index]['prodId'] . "  :ProviderId:" . $this->params[$index]['provider'];
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
             $this->log($log_data, $log_name);
 
@@ -2113,9 +2158,9 @@ STR;
         $sortArray = array('date', 'song', 'artist', 'album');
         $sortOrderArray = array('asc', 'desc');
 
-        if (isset($_POST)) {
-            $sort = $_POST['sort'];
-            $sortOrder = $_POST['sortOrder'];
+        if ( $this->RequestHandler->isPost() ) {
+            $sort = $this->params['form']['sort'];
+            $sortOrder = $this->params['form']['sortOrder'];
         }
 
         if (!in_array($sort, $sortArray)) {
@@ -2221,9 +2266,9 @@ STR;
         $sortArray = array('date', 'song', 'artist', 'album');
         $sortOrderArray = array('asc', 'desc');
 
-        if (isset($_POST)) {
-            $sort = $_POST['sort'];
-            $sortOrder = $_POST['sortOrder'];
+        if ( $this->RequestHandler->isPost() ) {
+            $sort = $this->params['form']['sort'];
+            $sortOrder = $this->params['form']['sortOrder'];
         }
 
         if (!in_array($sort, $sortArray)) {
@@ -2277,8 +2322,15 @@ STR;
     function removeWishlistSong() {
 
         $this->layout = false;
-        if (isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete'] != '') {
-            $temp = explode('-', trim($_REQUEST['delete']));
+        
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
+        if (isset($this->params[$index]['ajax']) && isset($this->params[$index]['delete']) && $this->params[$index]['delete'] != '') {
+            $temp = explode('-', trim($this->params[$index]['delete']));
             $deleteSongId = $temp[0];
 
             $this->Wishlist->setDataSource('master');
@@ -2316,8 +2368,15 @@ STR;
     function removeWishlistVideo() {
 
         $this->layout = false;
-        if (isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete'] != '') {
-            $temp = explode('-', trim($_REQUEST['delete']));
+        
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
+        if (isset($this->params[$index]['ajax']) && isset($this->params[$index]['delete']) && $this->params[$index]['delete'] != '') {
+            $temp = explode('-', trim($this->params[$index]['delete']));
             $deleteSongId = $temp[0];
             $this->WishlistVideo->setDataSource('master');
             if ($this->WishlistVideo->delete($deleteSongId)) {
@@ -2347,7 +2406,6 @@ STR;
         exit;
     }
 
-      
     /*
       Function Name : wishlistVideoDownloadToken
       Desc : For downloading a video from website 
@@ -2356,13 +2414,17 @@ STR;
     {
 
         $this->layout = false;
-
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
 
-        $prodId = $_REQUEST['prodId'];
-        $CdnPath = $_REQUEST['CdnPath'];
-        $SaveAsName = $_REQUEST['SaveAsName'];
+        $prodId = $this->params[$index]['prodId'];
+        $CdnPath = $this->params[$index]['CdnPath'];
+        $SaveAsName = $this->params[$index]['SaveAsName'];
         
         $videoUrl  = $this->Token->regularToken($CdnPath . "/" . $SaveAsName);
         $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
@@ -2384,10 +2446,10 @@ STR;
         //check id comming from request
         //if comming then this request will also remove records from wishlist
         $id =0;
-        if(isset($_REQUEST['id'])){
-             $id = $_REQUEST['id'];
+        if(isset($this->params[$index]['id'])){
+             $id = $this->params[$index]['id'];
         }
-        $provider = $_REQUEST['provider'];        
+        $provider = $this->params[$index]['provider'];        
         
         //get details for this song
         $trackDetails = $this->Video->getVideoData($prodId, $provider);
@@ -2663,12 +2725,18 @@ STR;
     function historyDownload() {
         $this->layout = false;
 
-        $id = $_REQUEST['id'];
-        $libId = $_REQUEST['libid'];
-        $patId = $_REQUEST['patronid'];
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
 
-        $CdnPath = $_REQUEST['CdnPath'];
-        $SaveAsName = $_REQUEST['SaveAsName'];
+        $id = $this->params[$index]['id'];
+        $libId = $this->params[$index]['libid'];
+        $patId = $this->params[$index]['patronid'];
+
+        $CdnPath = $this->params[$index]['CdnPath'];
+        $SaveAsName = $this->params[$index]['SaveAsName'];
         
         $songUrl  = $this->Token->regularToken($CdnPath . "/" . $SaveAsName);                
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
@@ -2701,9 +2769,15 @@ STR;
     function historyDownloadVideo() {
         $this->layout = false;
 
-        $id = $_REQUEST['id'];
-        $libId = $_REQUEST['libid'];
-        $patId = $_REQUEST['patronid'];
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
+        $id = $this->params[$index]['id'];
+        $libId = $this->params[$index]['libid'];
+        $patId = $this->params[$index]['patronid'];
         $this->Videodownload->recursive = -1;
         $downloadsUsed = $this->Videodownload->find('all', array('conditions' => array('ProdID' => $id, 'library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'order' => 'created DESC', 'limit' => '1'));
         $downloadCount = $downloadsUsed[0]['Videodownload']['history'];
@@ -2804,7 +2878,7 @@ STR;
 
     function music_box() {
         $this->layout = false;
-        $callType = $_POST['type'];
+        $callType = $this->params['form']['type'];
         if ($callType == 'top') {
             // Top Downloads functionality
             $libId = $this->Session->read('library');
@@ -2885,7 +2959,7 @@ STR;
     function language() {
 
         $this->layout = false;
-        $language = $_POST['lang'];
+        $language = $this->params['form']['lang'];
         $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
         $this->Session->write('Config.language', $langDetail['Language']['short_name']);
         $page = $this->Session->read('Config.language');
@@ -2998,7 +3072,7 @@ STR;
 
     function convertString() {
         $this->layout = false;
-        $str = $_POST['str'];
+        $str = $this->params['form']['str'];
         echo sha1($str);
         exit;
     }
@@ -3006,8 +3080,8 @@ STR;
     //Used to get Sample Song url
     function userSample() {
         $this->layout = false;
-        $prodId = $_POST['prodId'];
-        $pt = base64_decode($_POST['pt']);
+        $prodId = $this->params['form']['prodId'];
+        $pt = base64_decode($this->params['form']['pt']);
         $this->Song->recursive = 2;
         $data = $this->Song->find('first', array('conditions' => array('Song.ProdID' => $prodId, 'Song.provider_type' => $pt),
             'contain' => array(
@@ -3224,14 +3298,20 @@ STR;
         //set the layout fales because this is ajax call
         $this->layout = false;
 
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+
         //get all required variables
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        $prodId = $_REQUEST['prodId'];
-        $CdnPath = $_REQUEST['CdnPath'];
-        $SaveAsName = $_REQUEST['SaveAsName'];
-        $id = $_REQUEST['id'];
-        $provider = $_REQUEST['provider'];
+        $prodId = $this->params[$index]['prodId'];
+        $CdnPath = $this->params[$index]['CdnPath'];
+        $SaveAsName = $this->params[$index]['SaveAsName'];
+        $id = $this->params[$index]['id'];
+        $provider = $this->params[$index]['provider'];
 
         //start the logs        
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');

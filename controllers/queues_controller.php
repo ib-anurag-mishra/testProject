@@ -12,7 +12,7 @@ class QueuesController extends AppController
     var $name = 'Queues';
     var $layout = 'home';
     var $helpers = array('Html', 'Form', 'Session', 'Queue', 'Token');
-    var $components = array('Session', 'Auth', 'Acl', 'Queue', 'Streaming', 'Common');
+    var $components = array('Session', 'Auth', 'Acl', 'Queue', 'Streaming', 'Common', 'RequestHandler');
     var $uses = array('QueueList', 'QueueDetail', 'User', 'Album', 'Song', 'StreamingHistory');
 
     function beforeFilter()
@@ -100,20 +100,25 @@ class QueuesController extends AppController
     {
         Configure::write('debug', 0);
 
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
 
-        if ($this->Session->read('library') && $this->Session->read('patron') && !empty($_REQUEST['songProdId']) && !empty($_REQUEST['songProviderType']) && !empty($_REQUEST['albumProdId']) && !empty($_REQUEST['albumProviderType']) && !empty($_REQUEST['queueId']))
+        if ($this->Session->read('library') && $this->Session->read('patron') && !empty($this->params[$index]['songProdId']) && !empty($this->params[$index]['songProviderType']) && !empty($this->params[$index]['albumProdId']) && !empty($this->params[$index]['albumProviderType']) && !empty($this->params[$index]['queueId']))
         {
 
-            $song_details = $this->Streaming->getStreamingDetails($_REQUEST['songProdId'], $_REQUEST['songProviderType']); // Fetch Information related to Streaming
+            $song_details = $this->Streaming->getStreamingDetails($this->params[$index]['songProdId'], $this->params[$index]['songProviderType']); // Fetch Information related to Streaming
 
             if ($this->Session->read('library_type') == 2 && $song_details['Country']['StreamingSalesDate'] <= date('Y-m-d') && $song_details['Country']['StreamingStatus'] == 1)
             {
                 $insertArr = Array();
-                $insertArr['queue_id'] = $_REQUEST['queueId'];
-                $insertArr['song_prodid'] = $_REQUEST['songProdId'];
-                $insertArr['song_providertype'] = $_REQUEST['songProviderType'];
-                $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
-                $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
+                $insertArr['queue_id'] = $this->params[$index]['queueId'];
+                $insertArr['song_prodid'] = $this->params[$index]['songProdId'];
+                $insertArr['song_providertype'] = $this->params[$index]['songProviderType'];
+                $insertArr['album_prodid'] = $this->params[$index]['albumProdId'];
+                $insertArr['album_providertype'] = $this->params[$index]['albumProviderType'];
                 //insert into queuedetail table
                 $this->QueueDetail->setDataSource('master');
                 $this->QueueDetail->save($insertArr);
@@ -140,7 +145,13 @@ class QueuesController extends AppController
      */
     function addAlbumSongsToQueue()
     {
-        $albumSongs = json_decode($_REQUEST['albumSongs'], true);
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
+        $albumSongs = json_decode($this->params[$index]['albumSongs'], true);
         Configure::write('debug', 0);
         if ($this->Session->read('library') && $this->Session->read('patron') && !empty($albumSongs))
         {
@@ -211,10 +222,10 @@ class QueuesController extends AppController
         $sortArray = array('date', 'artist', 'album');
         $sortOrderArray = array('asc', 'desc');
 
-        if (isset($_POST))
+        if ( $this->RequestHandler->isPost() )
         {
-            $sort = $_POST['sort'];
-            $sortOrder = $_POST['sortOrder'];
+            $sort = $this->params['form']['sort'];
+            $sortOrder = $this->params['form']['sortOrder'];
         }
 
         if (!in_array($sort, $sortArray))
