@@ -39,14 +39,17 @@
                                 <form method="Post" id="form<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                     <input type="hidden" name="ProdID" value="<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" />
                                     <input type="hidden" name="ProviderType" value="<?php echo $VideosData[0]["Video"]["provider_type"]; ?>" />
-                                    <span class="beforeClick" id="download_video_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>">
+                                    <span class="beforeClick" id="download_video_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>">                                                                                               
+                                        
                                         <![if !IE]>
-                                        <a class="top-10-download-now-button no-ajaxy" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthers("<?php echo $VideosData[0]['Video']['ProdID']; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]); ?>", "<?php echo urlencode($finalVideoUrlArr[1]); ?>", "<?php echo urlencode($finalVideoUrlArr[2]); ?>", "<?php echo $VideosData[0]['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
+                                        <a class="top-10-download-now-button no-ajaxy" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $VideosData[0]['Video']['ProdID']; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>",  "<?php echo $VideosData[0]['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
                                         <![endif]>
                                         <!--[if IE]>
-                                                <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE('<?php echo $VideosData[0]['Video']['ProdID']; ?>','0','<?php echo $VideosData[0]['Video']['provider_type']; ?>');" href="<?php echo trim($finalVideoUrl); ?>"><?php __('Download Now'); ?></a></label>
-                                        <![endif]-->
-                                    </span>
+                                                <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $VideosData[0]['Video']['ProdID']; ?>','0','<?php echo $VideosData[0]['Video']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a></label>
+                                        <![endif]-->                                          
+                                                                        
+                                    </span>                                   
+                                                                       
                                     <span class="afterClick" id="vdownloading_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp'); ?></span>
                                     <span id="vdownload_loader_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                 </form>
