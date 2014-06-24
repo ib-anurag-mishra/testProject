@@ -53,8 +53,8 @@ Class CommonComponent extends Object
         if ((count($genreAll) > 0) && ($genreAll !== false))
         {                
             for($count=0; $count<count($genreAll);$count++)
-            {               
-                array_push($combine_genre, $genreAll[$count]['Genre']['expected_genre']);
+            {                               
+                array_push($combine_genre, str_replace("\\", "", $genreAll[$count]['Genre']['expected_genre']));
             }
             $combine_genre  = array_unique($combine_genre);
             sort($combine_genre);
