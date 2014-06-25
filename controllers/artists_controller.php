@@ -810,8 +810,9 @@ Class ArtistsController extends AppController {
         $this->Album->recursive = 2;
         $albumData = array();
         
-        //check if provider types string will not empty
+        //check if provider types string is not empty
         if( $val_provider_type != '' ) {
+            
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
         }
         
