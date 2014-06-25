@@ -244,7 +244,7 @@ class SolrComponent extends Object {
 				$arrGroup['field'] 		 = 'SongTitle';
 				break;
 		}
-		return  $arrFacet;
+		return  $arrGroup;
 	}
 	
 	public function createAutoCompleteFields( $type ) {
