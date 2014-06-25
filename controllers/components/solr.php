@@ -37,7 +37,7 @@ class SolrComponent extends Object {
 
 	var $timeoutSeconds = 10;
 
-	function initialize( $config = array(), $config2 = array() ) {
+	public function initialize( $config = array(), $config2 = array() ) {
 		
 		$settings  = array_merge( ( array ) $config, self::$_defaults );
 		$settings2 = array_merge( ( array ) $config2, self::$_defaults2 );
@@ -70,653 +70,405 @@ class SolrComponent extends Object {
 		}
 	}
 
-	function search( $keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false, $mobileExplicitStatus=0 ) {
+	public function createSearchConditions( $type, $country, $mobileExplicitStatus, $filter = '' ) {
 		
-		$query 			= '';
-		$provider_query = '';
-		$docs 			= array();
+		$conditions = '';
+		
+		if ( !empty( $filter ) ){
+			$filter = str_replace( ' ', '*', $filter );
+			$filter = ' AND Genre:' . $filter;
+		}
+
+		if ( $type == 'video' ) {			
+			$conditions = ' AND DownloadStatus:1';
+		} else {
+			$conditions = ' AND (TerritoryDownloadStatus:' . $country . '_1 OR TerritoryStreamingStatus:' . $country . '_1)' . $filter;
+		}
+		
+		if( $mobileExplicitStatus == 1 ) {
+			$conditions .= ' AND Advisory:F';
+		} else {
+			if ( $this->Session->read( 'block' ) == 'yes' ) {
+				$conditions .= ' AND Advisory:F';
+
+				if( $type != 'video' ) {
+					$conditions .= ' AND AAdvisory:F';
+				}
+			}
+		}
+		return $conditions;
+	}
+
+	public function connectToSolr() {
+
+		$connectedToSolr = false;
+		$retryCount 	 = 1;
+			
+		while ( !$connectedToSolr &&  $retryCount < 3 ) {
+		
+			try {
+				self::initialize( null );
+				$connectedToSolr = true;
+					
+			} catch( Exception $e ) {
+		
+			}
+			++$retryCount;
+		}
+		
+		if( !$connectedToSolr ) {
+		
+			$this->log('Unable to Connect to Solr','search');
+			exit;
+		}
+	}
+	
+	public function createSearchFields( $type ) {
+
+		$queryFields = '';
+
+		switch ( $type ) {
+
+			case 'song':
+				$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+				break;
+
+			case 'genre':
+				$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
+				break;
+		
+			case 'album':
+				$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+				break;
+		
+			case 'artist':
+				$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+				break;
+		
+			case 'label':
+				$queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+				break;
+		
+			case 'video':
+				$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
+				break;
+		
+			case 'composer':
+				$queryFields = "CComposer^100";
+				break;
+		
+			case 'all':
+				$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+				break;
+		
+			case 'genreAlbum':
+				$queryFields = "CGenre^60";
+				break;
+		
+			default:
+				$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+				break;
+		}
+		
+		return $queryFields;
+	}
+
+	public function getSearchResponse( $type, $query, $begin, $end, $additionalParams, $check = 0 ) {
+
+		if ( $type != 'video' ) {
+			if ( !empty( $check ) ) {
+				$response = self::$solr->search( $query, $begin, $end, $additionalParams, 1 );
+			} else {
+				$response = self::$solr->search( $query, $begin, $end, $additionalParams );
+			}
+		} else {
+			$response = self::$solr2->search( $query, $begin, $end, $additionalParams );
+		}
+
+		return $response;
+	}
+	
+	public function createGroupSearchFields( $type, $check ) {
+
+		$arrGroup = array();
+
+		switch ( $type ) {
+		
+			case 'song':
+				$arrGroup['queryFields'] = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+				$arrGroup['field'] 		 = 'SongTitle';
+				break;
+
+			case 'genre':
+				$arrGroup['queryFields'] = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
+				$arrGroup['field'] 		 = 'Genre';
+				break;
+
+			case 'album':		
+				if( !empty( $check ) ) {
+					$arrGroup['queryFields'] = "CComposer";
+				} else {
+					$arrGroup['queryFields'] = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+				}
+	
+				$arrGroup['field'] = 'rpjoin';
+				break;
+		
+			case 'artist':
+				$arrGroup['queryFields'] = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
+				$arrGroup['field'] 		 = 'ArtistText';
+				break;
+
+			case 'label':
+				$arrGroup['queryFields'] = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+				$arrGroup['field'] 		 = 'Label';
+				break;
+
+			case 'video':
+				$arrGroup['queryFields'] = "CVideoTitle^100 CArtistText^80 CTitle^60";
+				$arrGroup['field'] 		 = 'VideoTitle';
+				break;
+
+			case 'composer':
+				$arrGroup['queryFields'] = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
+				$arrGroup['field'] 		 = 'Composer';
+				break;
+
+			case 'genreAlbum':
+				$arrGroup['queryFields'] = "CGenre^60";
+				$arrGroup['field'] 		 = 'rpjoin';
+				break;
+		
+			default:
+				$arrGroup['queryFields'] = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+				$arrGroup['field'] 		 = 'SongTitle';
+				break;
+		}
+		return  $arrFacet;
+	}
+	
+	public function createAutoCompleteFields( $type ) {
+
+		$arrAuto = array();
+
+		switch ( $type ) {
+			case 'song':
+				$arrAuto['queryFields'] = "CSongTitle";
+				$arrAuto['field']		= 'SongTitle';
+				break;
+		
+			case 'genre':
+				$arrAuto['queryFields'] = "CGenre";
+				$arrAuto['field'] 		= 'Genre';
+				break;
+		
+			case 'album':
+				$arrAuto['queryFields'] = "CTitle";
+				$arrAuto['field'] 		= 'Title';
+				break;
+		
+			case 'artist':
+				$arrAuto['queryFields'] = "CArtistText";
+				$arrAuto['field'] 		= 'ArtistText';
+				break;
+		
+			case 'video':
+				$arrAuto['queryFields'] = "CVideoTitle^100 CArtistText^80 CTitle^60";
+				$arrAuto['field'] 		= 'VideoTitle';
+				break;
+		
+			case 'composer':
+				$arrAuto['queryFields'] = "CComposer";
+				$arrAuto['field'] 		= 'Composer';
+				break;
+		
+			case 'genreAlbum':
+				$arrAuto['queryFields'] = "CGenre";
+				$arrAuto['field'] 		= 'Genre';
+				break;
+		
+			default:
+				$arrAuto['queryFields'] = "CSongTitle";
+				$arrAuto['field']		= 'SongTitle';
+				break;
+		}
+		return $arrAuto;
+	}
+
+	public function search( $keyword, $type = 'song', $sort="SongTitle", $sortOrder = "asc", $page = 1, $limit = 10, $country, $perfect = false, $mobileExplicitStatus = 0 ) {
 
 		if ( !empty( $keyword ) ) {
-
 			if ( !empty( $country ) ) {
-
-				if ( $type == 'video' ) {
-					
-					$cond = " AND DownloadStatus:1";
-					
-				} else {
-					
-					$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-				}
-
-				if( 1 == $mobileExplicitStatus ) {
-					
-					$cond .= " AND Advisory:F";
-					
-				} else {
-					
-					if ( $this->Session->read( 'block' ) == 'yes' ) {
-						
-						$cond .= " AND Advisory:F";
-						
-						if( $type != 'video' ) {
-						
-							$cond .= " AND AAdvisory:F";
-						}
-					}
-				}
-
-				$searchkeyword = strtolower( $this->escapeSpace( $keyword ) );
-				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-
 				if ( !isset( self::$solr ) ) {
-					
-					$connectedToSolr = false;
-					$retryCount 	 = 1;
-					
-					while ( !$connectedToSolr &&  $retryCount < 3 ) {
-						
-						try {
-							self::initialize( null );
-							$connectedToSolr = true;
-							
-						} catch( Exception $e ) {
-
-						}
-						++$retryCount;
-					}
-
-					if( !$connectedToSolr ) {
-						
-						$this->log('Unable to Connect to Solr','search');
-						exit;
-					}
+					$this->connectToSolr();
 				}
 
-				if ( $perfect == false ) {
-					
-					switch ( $type ) {
-						
-						case 'song':
-							$query 		 = $searchkeyword;
-							$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-							break;
-
-						case 'genre':
-							$query 		 = $searchkeyword;
-							$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
-							break;
-
-						case 'album':
-							$query 		 = $searchkeyword;
-							$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
-							break;
-
-						case 'artist':
-							$query 		 = $searchkeyword;
-							$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
-							break;
-
-						case 'label':
-							$query 		 = $searchkeyword;
-							$queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-							break;
-
-						case 'video':
-							$query 		 = $searchkeyword;
-							$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
-							break;
-
-						case 'composer':
-							$query 		 = $searchkeyword;
-							$queryFields = "CComposer^100";
-							break;
-
-						case 'all':
-							$query 		 = $searchkeyword;
-							$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
-							break;
-
-						case 'genreAlbum':
-							$query 		 = $searchkeyword;
-							$queryFields = "CGenre^60";
-							break;
-
-						default:
-							$query 		 = $searchkeyword;
-							$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
-							break;
-					}
-				}
-
-				$query = $query . ' AND Territory:' . $country . $cond;
+				$conditions    = $this->createSearchConditions( $type, $country, $mobileExplicitStatus );
+				$searchkeyword = $this->escapeSpace( $keyword );
+				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
+				$queryFields   = $this->createSearchFields( $type );
 
 				if ( $page == 1 ) {
-					$start = 0;
-				} else {
-					$start = ( ( $page - 1 ) * $limit );
+					$this->Session->delete('pagebreak');
+					$this->Session->delete('combine_page');
+					$this->Session->delete('ioda_cons');
+					$this->Session->delete('sony_total');
 				}
 
 				$additionalParams = array(
-						'defType' => 'edismax',
-						'qf' => $queryFields
-				);
-
-				if ( 1 == $page ) {
-					
-					unset( $_SESSION['pagebreak'] );
-					unset( $_SESSION['combine_page'] );
-					unset( $_SESSION['ioda_cons'] );
-					unset( $_SESSION['sony_total'] );
-				}
-		
+										'defType' => 'edismax',
+										'qf' => $queryFields
+									);
+				
+				$query 					 = $searchkeyword . ' AND Territory:' . $country . $conditions;
 				$provider_query_lastpage = ' AND (provider_type:sony OR provider_type:ioda)';
+
 				$lastPageResponse = self::$solr->search( $query . $provider_query_lastpage, 0, 1, $additionalParams );
-				$lastPage = $lastPageResponse->response->numFound;
 
-				if ( !( isset( $_SESSION['pagebreak'] ) ) ) {
+				$lastPage 		= $lastPageResponse->response->numFound;
+				$provider_query = ' AND provider_type:sony';
+				
+				if ( !( $this->Session->check('pagebreak') ) ) {
 
-					$provider_query .= ' AND provider_type:sony';
-
-					if ( $type != 'video' ) {
-						
-						$response = self::$solr->search( $query . $provider_query, 0, 1, $additionalParams );
-						
-					} else {
-						
-						$response = self::$solr2->search( $query . $provider_query, 0, 1, $additionalParams );
-						
-					}
+					$response = $this->getSearchResponse( $type, $query . $provider_query, 0, 1, $additionalParams );
 					$num_found = $response->response->numFound;
 
-					if ( 0 == $num_found ) {
-						
-						// ioda call
-						$_SESSION['pagebreak'] 	  = 0;
-						$_SESSION['combine_page'] = 0;
-						$_SESSION['ioda_cons'] 	  = 0;
-						
+					if ( $num_found == 0 ) { // ioda call
+						$this->Session->write( 'pagebreak', 0 );
+						$this->Session->write( 'combine_page', 0 );
+						$this->Session->write( 'ioda_cons', 0 );
 					} else {
-						
 						$tot_pages = $num_found / $limit;
-						
+
 						if ( is_float( $tot_pages ) ) {
+							$intValue = intval( $tot_pages ) + 1;
 
-							$_SESSION['pagebreak'] 	  = intval( $tot_pages ) + 1;
-							$_SESSION['combine_page'] = 1;
-
+							$this->Session->write( 'pagebreak', $intValue );
+							$this->Session->write( 'combine_page', 1 );
 						} else {
-							$_SESSION['pagebreak'] 	  = $tot_pages;
-							$_SESSION['combine_page'] = 0;
+							$this->Session->write( 'pagebreak', $tot_pages );
+							$this->Session->write( 'combine_page', 0 );
 						}
 					}
 				}
 
-				if ( $page < $_SESSION['pagebreak'] ) {
+				if ( $page < $this->Session->read( 'pagebreak' ) ) { //sony
 
-					$provider_query = ' AND provider_type:sony';
-					$tmp_start 		= ( $page - 1 ) * $limit;
-					$start 			= $tmp_start;
-					
-					if ( $type != 'video' ) {
-						
-						$response = self::$solr->search( $query . $provider_query, $tmp_start, $limit, $additionalParams );
-						
-					} else {
-						$response = self::$solr2->search( $query . $provider_query, $tmp_start, $limit, $additionalParams );
-					}
-				}//sony
-				
-				if ( $page == $_SESSION['pagebreak'] ) {
-					
-					$provider_query = ' AND provider_type:sony';
-					$tmp_start 		= ($page - 1) * $limit;
-					$start 			= $tmp_start;
+					$tmp_start = ( $page - 1 ) * $limit;
+					$response  = $this->getSearchResponse( $type, $query . $provider_query, $tmp_start, $limit, $additionalParams );
 
-					if ( $type != 'video' ) {
-						$response = self::$solr->search( $query . $provider_query, $tmp_start, $limit, $additionalParams );
-						
-					} else {
-						$response = self::$solr2->search( $query . $provider_query, $tmp_start, $limit, $additionalParams );
-					}
+				} else if ( $page == $this->Session->read( 'pagebreak' ) ) { //sony & ioda
 
-					$_SESSION['sony_total'] = $response->response->numFound;
-					$fetched_result_count 	= count( $response->response->docs );
-					$_SESSION['ioda_cons'] 	= ( $limit - $fetched_result_count );
+					$tmp_start = ( $page - 1 ) * $limit;
+					$response  = $this->getSearchResponse( $type, $query . $provider_query, $tmp_start, $limit, $additionalParams );
 
-					if ( 1 == $_SESSION['combine_page'] ) {
-						
-						$provider_query = ' AND provider_type:ioda';
-						$start 			= 0;
-						
-						if ( $type != 'video' ) {
-							$sec_response = self::$solr->search( $query . $provider_query, 0, ($limit - $fetched_result_count), $additionalParams );
-							
-						} else {
-							$sec_response = self::$solr2->search( $query . $provider_query, 0, ($limit - $fetched_result_count), $additionalParams );
-						}
+					$fetched_result_count = $limit - count( $response->response->docs );
+					$provider_query 	  = ' AND provider_type:ioda';
+
+					$this->Session->write( 'ioda_cons', $fetched_result_count );
+					$this->Session->write( 'sony_total', $response->response->numFound );
+
+					if ( $this->Session->read('combine_page') == 1 ) {
+
+						$sec_response = $this->getSearchResponse( $type, $query . $provider_query, 0, $fetched_result_count, $additionalParams );
 
 						if ( $sec_response->response->numFound > 0 ) {
-							
 							$sec_response->response->docs = array_merge( $response->response->docs, $sec_response->response->docs );
 							$response = $sec_response;
 						}
 					} else {
-						
-						$provider_query = ' AND provider_type:ioda';
-						$start 			= 0;
-
-						if ( $type != 'video' ) {
-							$sec_response = self::$solr->search( $query . $provider_query, 0, 1, $additionalParams );
-							
-						} else {
-							$sec_response = self::$solr2->search( $query . $provider_query, 0, 1, $additionalParams );
-						}
+						$sec_response = $this->getSearchResponse( $type, $query . $provider_query, 0, 1, $additionalParams );
 
 						if ( $sec_response->response->numFound > 0 ) {
 							   $response->response->numFound = $sec_response->response->numFound;
 						}
 					}
-				}//sony & ioda
-				
-				if ( $page > $_SESSION['pagebreak'] ) {
+				} else if ( $page > $this->Session->read('pagebreak') ) { //ioda
 
 					$provider_query = ' AND provider_type:ioda';
-					$tmp_start 		= ( ( ( $page - $_SESSION['pagebreak'] ) - 1 ) * $limit ) + $_SESSION['ioda_cons'];
-					$start 			= $tmp_start;
+					$tmp_start 		= ( ( ( $page - $this->Session->read('pagebreak') ) - 1 ) * $limit ) + $this->Session->read('ioda_cons');
 
-					if ( $type != 'video' ) {
-						$response = self::$solr->search( $query . $provider_query, $tmp_start, $limit, $additionalParams );
-						
-					} else {
-						$response = self::$solr2->search( $query . $provider_query, $tmp_start, $limit, $additionalParams );
-					}
-					 $response->response->numFound = $response->response->numFound + $_SESSION['sony_total'];
-				}//ioda
+					$response = $this->getSearchResponse( $type, $query . $provider_query, $tmp_start, $limit, $additionalParams );
+
+					$response->response->numFound = $response->response->numFound + $this->Session->read('sony_total');
+				}
+
+				$docs = array();
 
 				if ( $response->getHttpStatus() == 200 ) {
-
 					if ( $response->response->numFound > 0 ) {
-
 						$this->total = $response->response->numFound;
+
 						foreach ( $response->response->docs as $doc ) {
 							$docs[] = $doc;
 						}
 						$docs['lastPage'] = $lastPage;
-					} else {
-						return array();
 					}
-				} else {
-					return array();
 				}
 				return $docs;
-
 			} else {
+				$this->log( 'Country was not set in the search function for keyword : ' . $keyword, 'search' );
+				return array();
+			}
+		} else {
+			$this->log( 'Keyword was empty in the search function', 'search' );
+			return array();
+		}
+	}
+
+	public function getFacetSearchTotal( $keyword, $type = 'song', $check = 0, $filter = null ) {
+
+		$country = $this->Session->read( 'territory' );
+
+		if ( !empty( $keyword ) ) {
+
+			if ( !empty( $country ) ) {
+				if ( !isset( self::$solr ) ) {
+					$this->connectToSolr();
+				}
+
+				$conditions    = $this->createSearchConditions( $type, $country, 0, $filter );
+				$searchkeyword = $this->escapeSpace( $keyword );
+				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
+				$arrGroup	   = $this->createGroupSearchFields( $type, $check );
 				
-				$this->log( 'Country was not set in the search function for keyword : '.$keyword,'search' );
-				return array();
-			}
-		} else {
-			$this->log( 'Keyword was empty in the search function','search' );
-			return array();
-		}
-	}
+				$queryFields = isset( $arrGroup['queryFields'] ) ? $arrGroup['queryFields'] : '';
+				$field 		 = isset( $arrGroup['field'] ) ? $arrGroup['field'] : '';
 
-	function facetSearch( $keyword, $type='song', $page=1, $limit = 5 ) {
-
-		$query 	 = '';
-		$country = $this->Session->read( 'territory' );
-
-		if ( !empty( $keyword ) ) {
-
-			if ( !empty( $country ) ) {
-
-				if( $type == 'video' ) {
-					
-					$cond = " AND DownloadStatus:1";
-					
-				} else {
-					
-					$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-				}
-
-				if ( $this->Session->read( 'block' ) == 'yes' ) {
-
-					$cond .= " AND Advisory:F";
-					
-					if( $type != 'video' ) {
-						$cond .= " AND AAdvisory:F";
-					}
-				}
-
-				$searchkeyword = strtolower( $this->escapeSpace( $keyword ) );
-				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-
-				if ( !isset( self::$solr ) ) {
-
-					$connectedToSolr = false;
-					$retryCount 	= 1;
-
-					while ( !$connectedToSolr &&  $retryCount < 3 ) {
-
-						try {
-							self::initialize( null );
-							$connectedToSolr = true;
-						}
-						catch( Exception $e ) {
-
-						}
-						++$retryCount;
-					}
-
-					if( !$connectedToSolr ) {
-
-						$this->log( 'Unable to Connect to Solr','search' );
-						exit;
-					}
-				}
-
-				switch ( $type ) {
-
-					case 'song':
-						$query = '(CSongTitle:(' . $searchkeyword . '))';
-						$field = 'SongTitle';
-						break;
-
-					case 'genre':
-						$query = '(CGenre:(' . $searchkeyword . '))';
-						$field = 'Genre';
-						break;
-
-					case 'album':
-						$query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:(' . $searchkeyword . '))';
-						$field = 'Title';
-						break;
-
-					case 'artist':
-						$query = '(CArtistText:(' . $searchkeyword . '))';
-						$field = 'ArtistText';
-						break;
-
-					case 'label':
-						$query = '(CLabel:(' . $searchkeyword . '))';
-						$field = 'Label';
-						break;
-
-					case 'video':
-						$query = '(CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
-						$field = 'VideoTitle';
-						break;
-
-					case 'composer':
-						$query = '(CComposer:(' . $searchkeyword . '))';
-						$field = 'Composer';
-						break;
-
-				   case 'album':
-					   	$query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:(' . $searchkeyword . '))';
-		   				$field = 'Title';
-		   				break;
-
-				   default:
-					   	$query = '(CSongTitle:(' . $searchkeyword . '))';
-					   	$field = 'SongTitle';
-		   				break;
-				}
-
-				$query = $query . ' AND Territory:' . $country;
-
-				if ( $page == 1 ) {
-					$start = 0;
-				} else {
-					$start = ( ( $page - 1 ) * $limit );
-				}
+				$query = $searchkeyword . ' AND Territory:' . $country . $conditions;
 
 				$additionalParams = array(
-						'facet' => 'true',
-						'facet.field' => array(
-								$field,
-						),
-						'facet.query' => $query,
-						'facet.mincount' => 1,
-						'facet.limit' => $limit,
-				);
+										'defType' => 'edismax',
+										'qf' => $queryFields,
+										'facet' => 'true',
+										'facet.field' => array( $field ),
+										'facet.query' => $query,
+										'facet.mincount' => 1,
+										'facet.limit' => 5000
+									);
 
-				if ( $type != 'video' ) {
+				$response  = $this->getSearchResponse( $type, $query, 0, '', $additionalParams, $check );
+				$docsCount = 0;
 
-					$response = self::$solr->search( $query, $start, $limit, $additionalParams );
-					
-					if ( $response->getHttpStatus() == 200 ) {
-						
-						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
-							
-							return $response->facet_counts->facet_fields->$field;
-							
-						} else {
-							return array();
-						}
-					} else {
-						return array();
+				if ( $response->getHttpStatus() == 200 ) {
+					if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
+						$docsCount = count( $response->facet_counts->facet_fields->$field );
 					}
-					return array();
-				} else {
-					$response = self::$solr2->search( $query, $start, $limit, $additionalParams );
-					
-					if ( $response->getHttpStatus() == 200 ) {
-
-						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
-
-							return $response->facet_counts->facet_fields->$field;
-
-						} else {
-							return array();
-						}
-					} else {
-						return array();
-					}
-					return array();
 				}
+				return $docsCount;
 			} else {
-				$this->log( 'Country was not set in the facet search function for keyword : '.$keyword,'search' );
+				$this->log( 'Country was not set in the facet search total function for keyword : ' . $keyword,'search' );
 				return array();
 			}
 		} else {
-			$this->log( 'Keyword was empty in the facet search function','search' );
+			$this->log( 'Keyword was empty in the facet search total function', 'search' );
 			return array();
 		}
 	}
 
-	function getFacetSearchTotal( $keyword, $type='song',$check=0, $filter = null ) {
-
-		$query 	 = '';
-		$country = $this->Session->read( 'territory' );
-
-		if ( !empty( $keyword ) ) {
-
-			if ( !empty( $country ) ) {
-
-				if ( $type == 'video' ) {
-					$cond = " AND DownloadStatus:1";
-				} else {
-
-					if ( !empty( $filter ) ) {
-
-						$filter = str_replace( ' ', '*', $filter );
-						$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1) AND Genre:".$filter;
-
-					} else {
-						$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-					}
-				}
-
-				if ( $this->Session->read( 'block' ) == 'yes' ) {
-
-					$cond .= " AND Advisory:F";
-
-					if( $type != 'video' ) {
-						$cond .= " AND AAdvisory:F";
-					}
-				}
-
-				$searchkeyword = strtolower( $this->escapeSpace( $keyword ) );
-				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-
-				if ( !isset( self::$solr ) ) {
-
-					$connectedToSolr = false;
-					$retryCount 	 = 1;
-
-					while ( !$connectedToSolr &&  $retryCount < 3 ) {
-
-						try {
-							self::initialize( null );
-							$connectedToSolr = true;
-
-						} catch( Exception $e ) {
-
-						}
-						++$retryCount;
-					}
-
-					if( !$connectedToSolr ) {
-						$this->log( 'Unable to Connect to Solr','search' );
-						exit;
-					}
-				}
-
-				switch ( $type ) {						
-
-					case 'song':
-						$query 		 = $searchkeyword;
-						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$field 		 = 'SongTitle';
-						break;
-
-					case 'genre':
-						$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Genre';
-						break;
-
-					case 'album':
-
-						if( !empty( $check ) ) {
-							$queryFields = "CComposer";
-						} else {
-							$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
-						}
-
-						$query = $searchkeyword;
-						$field = 'rpjoin';
-						break;
-
-					case 'artist':
-						$queryFields = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
-						$query 		 = $searchkeyword;
-						$field 		 = 'ArtistText';
-						break;
-
-					case 'label':
-						$queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Label';
-						break;
-
-					case 'video':
-						$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
-						$query 		 = $searchkeyword;
-						$field 		 = 'VideoTitle';
-						break;
-
-					case 'composer':
-						$queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Composer';
-						break;
-
-					case 'genreAlbum':
-						$queryFields = "CGenre^60";
-						$query 		 = $searchkeyword;
-						$field 		 = 'rpjoin';
-						break;
-
-					default:
-						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'SongTitle';
-						break;
-				}
-
-				$query = $query . ' AND Territory:' . $country . $cond;
-
-				if ( $page == 1 ) {
-					$start = 0;
-				} else {
-					$start = ( ( $page - 1 ) * $limit );
-				}
-
-				$additionalParams = array(
-						'defType' => 'edismax',
-						'qf' => $queryFields,
-						'facet' => 'true',
-						'facet.field' => array(
-								$field
-						),
-						'facet.query' => $query,
-						'facet.mincount' => 1,
-						'facet.limit' => 5000
-				);
-
-				if ( $type != 'video' ) {
-
-					if( !empty( $check ) ) {
-						$response = self::$solr->search( $query, $start, $limit, $additionalParams, 1 );
-					} else {
-						$response = self::$solr->search( $query, $start, $limit, $additionalParams );
-					}
-
-					if ( $response->getHttpStatus() == 200 ) {
-
-						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
-
-							return count( $response->facet_counts->facet_fields->$field );
-
-						} else {
-							return array();
-						}
-					} else {
-						return array();
-					}
-					return array();
-				} else {
-					$response = self::$solr2->search( $query, $start, $limit, $additionalParams );
-					
-					if ( $response->getHttpStatus() == 200 ) {
-						
-						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
-							return count( $response->facet_counts->facet_fields->$field );
-						} else {
-							return array();
-						}
-					} else {
-						return array();
-					}
-					return array();
-				}
-			} else {
-				$this->log( 'Country was not set in the facet search total function for keyword : '.$keyword,'search' );
-				return array();
-			}
-		} else {
-			$this->log( 'Keyword was empty in the facet search total function','search' );
-			return array();
-		}
-	}
-
-	function groupSearch( $keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null, $check = 0, $filter = null ) {
+	public function groupSearch( $keyword, $type = 'song', $page = 1, $limit = 5, $mobileExplicitStatus = 0, $country = null, $check = 0, $filter = null ) {
 
 		set_time_limit(0);
-		$query = '';
 
 		if( empty( $country ) ) {
 			$country = $this->Session->read( 'territory' );
@@ -725,601 +477,124 @@ class SolrComponent extends Object {
 		if ( !empty( $keyword ) ) {
 
 			if ( !empty( $country ) ) {
-
-				if( $type == 'video' ) {
-					$cond = " AND DownloadStatus:1";
-
-				} else {
-
-					if( !empty( $filter ) ) {
-
-		    			$filter = str_replace(' ', '*', $filter);
-		    			$cond   = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1) AND Genre:".$filter;
-
-					} else {
-						$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-					}
-				}
-
-				if( 1 == $mobileExplicitStatus ) {
-					$cond .= " AND Advisory:F";
-
-				} else {
-
-					if ( $this->Session->read( 'block' ) == 'yes' ) {
-
-						$cond .= " AND Advisory:F";
-
-						if( $type != 'video' ) {
-							$cond .= " AND AAdvisory:F";
-						}
-					}
-				}
-
-				$searchkeyword = strtolower( $this->escapeSpace( $keyword ) );
-				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-
 				if ( !isset( self::$solr ) ) {
-					
-					$connectedToSolr = false;
-					$retryCount 	 = 1;
-
-					while ( !$connectedToSolr &&  $retryCount < 3 ) {
-						try {
-							self::initialize( null );
-							$connectedToSolr = true;
-
-						} catch(Exception $e) {
-
-						}
-						++$retryCount;
-					}
-
-					if( !$connectedToSolr ) {
-						$this->log( 'Unable to Connect to Solr','search' );
-						exit;
-					}
+					$this->connectToSolr();
 				}
 
-				switch ( $type ) {
-					
-					case 'song':
-						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'SongTitle';
-						break;
+				$conditions    = $this->createSearchConditions( $type, $country, $mobileExplicitStatus, $filter );
+				$searchkeyword = $this->escapeSpace( $keyword );
+				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
+				$arrGroup	   = $this->createGroupSearchFields( $type, $check );
+				
+				$queryFields = isset( $arrGroup['queryFields'] ) ? $arrGroup['queryFields'] : '';
+				$field 		 = isset( $arrGroup['field'] ) ? $arrGroup['field'] : '';
 
-					case 'genre':
-						$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Genre';
-						break;
-
-					case 'album':
-
-						if( !empty( $check ) ) {
-							$queryFields = "CComposer";
-						} else {
-							$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
-						}
-						
-						$query = $searchkeyword;
-						$field = 'rpjoin';
-						break;
-
-					case 'artist':
-						$queryFields = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
-						$query 		 = $searchkeyword;
-						$field 		 = 'ArtistText';
-						break;
-
-					case 'label':
-						$queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Label';
-						break;
-
-					case 'video':
-						$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
-						$query 		 = $searchkeyword;
-						$field 		 = 'VideoTitle';
-						break;
-
-					case 'composer':
-						$queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Composer';
-						break;
-
-					case 'genreAlbum':
-						$queryFields = "CGenre^60";
-						$query 		 = $searchkeyword;
-						$field 		 = 'rpjoin';
-						break;
-
-					default:
-						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'SongTitle';
-						break;
-				}
-
-				$query = $query . ' AND Territory:' . $country . $cond;
+				$query = $searchkeyword . ' AND Territory:' . $country . $conditions;
 
 				if ( $page == 1 ) {
 					$start = 0;
 				} else {
-					$start = ( ( $page - 1 ) * $limit );
+					$start = ( $page - 1 ) * $limit;
 				}
 
 				$additionalParams = array(
-						'defType' => 'edismax',
-						'qf' => $queryFields,
-						'group' => 'true',
-						'group.field' => $field,
-						'group.query' => $query,
-						'group.sort' => 'provider_type desc',
-				);
-
-				if ( $type != 'video' ) {
-
-					if( !empty( $check ) ) {
-						$response = self::$solr->search( $query, $start, $limit, $additionalParams, 1 );
-					} else {
-						$response = self::$solr->search( $query, $start, $limit, $additionalParams );
-					}
-
-					if ( $response->getHttpStatus() == 200 ) {
-						
-						if ( !empty( $response->grouped->$field->groups ) ) {
-							
-							$docs = array();
-							
-							foreach ( $response->grouped->$field->groups as $group ) {
-								
-								$group->doclist->docs[0]->numFound = $group->doclist->numFound;
-								$docs[] = $group->doclist->docs[0];
-							}
-							return $docs;
-						} else {
-							return array();
-						}
-					} else {
-						return array();
-					}
-					return array();
-				} else {
-
-					$response = self::$solr2->search( $query, $start, $limit, $additionalParams );
-
-					if ( $response->getHttpStatus() == 200 ) {
-
-						if ( !empty( $response->grouped->$field->groups ) ) {
-
-							$docs = array();
-							foreach ( $response->grouped->$field->groups as $group ) {
-								$group->doclist->docs[0]->numFound = $group->doclist->numFound;
-								$docs[] = $group->doclist->docs[0];
-							}
-							return $docs;
-						} else {
-							return array();
-						}
-					} else {
-						return array();
-					}
-					return array();
-				}
-			} else {
-				$this->log( 'Country was not set in the group search function for keyword : '.$keyword,'search' );
-				return array();
-			}
-		} else {
-			$this->log( 'Keyword was empty in the group search function','search' );
-			return array();
-		}
-	}
-
-	function getGroupSearchTotal( $keyword, $type='song' ) {
-
-		$query 	 = '';
-		$country = $this->Session->read( 'territory' );
-
-		if ( !empty( $keyword ) ) {
-			
-			if ( !empty( $country ) ) {
-
-				if( $type == 'video' ) {
-					$cond = " AND DownloadStatus:1";
-				} else {
-					$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-				}
-
-				if ( $this->Session->read( 'block' ) == 'yes' ) {
-					
-					$cond .= " AND Advisory:F";
-					
-					if( $type != 'video' ) {
-						$cond .= " AND AAdvisory:F";
-					}
-				}
-
-				$searchkeyword = strtolower( $this->escapeSpace( $keyword ) );
-				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-
-				if ( !isset( self::$solr ) ) {
-
-					$connectedToSolr = false;
-					$retryCount 	 = 1;
-
-					while ( !$connectedToSolr &&  $retryCount < 3 ) {
-						try {
-							self::initialize( null );
-							$connectedToSolr = true;
-
-						} catch( Exception $e )
-						{
-
-						}
-						++$retryCount;
-					}
-
-					if( !$connectedToSolr ) {
-						$this->log('Unable to Connect to Solr','search');
-						exit;
-					}
-				}
-
-				switch ( $type ) {
-					case 'song':
-						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'SongTitle';
-						break;
-
-					case 'genre':
-						$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Genre';
-						break;
-
-					case 'album':
-						$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
-						$query 		 = $searchkeyword;
-						$field 		 = 'rpjoin';
-						break;
-
-					case 'artist':
-						$queryFields = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
-						$query 		 = $searchkeyword;
-						$field 		 = 'ArtistText';
-						break;
-
-					case 'label':
-						$queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Label';
-						break;
-
-					case 'video':
-						$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
-						$query 		 = $searchkeyword;
-						$field 		 = 'VideoTitle';
-						break;
-
-					case 'composer':
-						$queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'Composer';
-						break;
-
-					case 'genreAlbum':
-						$queryFields = "CGenre^60";
-						$query 		 = $searchkeyword;
-						$field 		 = 'rpjoin';
-						break;
-
-					default:
-						$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-						$query 		 = $searchkeyword;
-						$field 		 = 'SongTitle';
-						break;
-				}
-
-				$query = $query . ' AND Territory:' . $country . $cond;
-
-				if ( $page == 1 ) {
-					$start = 0;
-				} else {
-					$start = ( ( $page - 1 ) * $limit );
-				}
-
-				$additionalParams = array(
-						'defType' => 'edismax',
-						'qf' => $queryFields,
-						'group' => 'true',
-						'fl' => array(
-								$field
-						),
-						'group.query' => $query,
-				);
-
-				if ( $type != 'video' ) {
-
-					$response = self::$solr->search( $query, $start, $limit, $additionalParams );
-
-					if ( $response->getHttpStatus() == 200 ) {
-
-						if ( !empty( $response->grouped->$query->doclist->numFound ) ) {
-							return count( $response->grouped->$query->doclist->docs );
-
-						} else {
-							return array();
-						}
-					} else {
-						return array();
-					}
-					return array();
-				} else {
-					$response = self::$solr2->search( $query, $start, $limit, $additionalParams );
-					
-					if ( $response->getHttpStatus() == 200 ) {
-
-						if ( !empty( $response->grouped->$query->doclist->numFound ) ) {
-							return count( $response->grouped->$query->doclist->docs );
-
-						} else {
-							return array();
-						}
-					} else {
-						return array();
-					}
-					return array();
-				}
-			} else {
-				$this->log( 'Country was not set in the group search total function for keyword : '.$keyword,'search' );
-				return array();
-			}
-		} else {
-			$this->log( 'Keyword was empty in the group search total function','search' );
-			return array();
-		}
-	}
-
-	function getAutoCompleteData( $keyword, $type, $limit=10, $allmusic=0 ) {
-
-		$query 	 = '';
-		$country = $this->Session->read( 'territory' );
-
-		if ( !empty( $keyword ) ) {
-
-			if ( !empty( $country ) ) {
-
-				if( $type == 'video' ) {
-					$cond = " AND DownloadStatus:1";
-				} else {
-					$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-				}
-
-				if ( $this->Session->read( 'block' ) == 'yes' ) {
-
-					$cond .= " AND Advisory:F";
-
-					if( $type != 'video' ) {
-						$cond .= " AND AAdvisory:F";
-					}
-				}
-
-				$searchkeyword = strtolower( $this->escapeSpace( $keyword ) );
-				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-				$char 		   = substr( $keyword, 0, 1 );
-
-				if ( !isset( self::$solr ) ) {
-
-					$connectedToSolr = false;
-					$retryCount 	 = 1;
-
-					while ( !$connectedToSolr &&  $retryCount < 3 ) {
-						try {
-							self::initialize( null );
-							$connectedToSolr = true;
-						} catch( Exception $e ) {
-
-						}
-						++$retryCount;
-					}
-
-					if( !$connectedToSolr ) {
-						$this->log( 'Unable to Connect to Solr','search' );
-						exit;
-					}
-				}
-
-				if ( $type != 'all' ) {
-
-					switch ( $type ) {
-
-						case 'song':
-							$queryFields = "CSongTitle";
-							$query 		 = $searchkeyword;
-							$field 		 = 'SongTitle';
-							break;
-
-						case 'genre':
-							$queryFields = "CGenre";
-							$query 		 = $searchkeyword;
-							$field 		 = 'Genre';
-							break;
-
-						case 'album':
-							$queryFields = "CTitle";
-							$query 		 = $searchkeyword;
-							$field 		 = 'Title';
-							break;
-
-						case 'artist':
-							$queryFields = "CArtistText";
-							$query 		 = $searchkeyword;
-							$field 		 = 'ArtistText';
-							break;
-
-						case 'video':
-							$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
-							$query 		 = $searchkeyword;
-							$field 		 = 'VideoTitle';
-							break;
-
-						case 'composer':
-							$queryFields = "CComposer";
-							$query 		 = $searchkeyword;
-							$field 		 = 'Composer';
-							break;
-
-					    case 'genreAlbum':
-					    	$queryFields = "CGenre";
-					    	$query 		 = $searchkeyword;
-		    				$field 		 = 'Genre';
-		    				break;
-
-					    default:
-					    	$queryFields = "CSongTitle";
-					    	$query 		 = $searchkeyword;
-					    	$field 		 = 'SongTitle';
-					    	break;
-					}
-
-					$query = $query . ' AND Territory:' . $country . $cond;
-
-					$additionalParams = array(
-							'defType' => 'edismax',
-							'qf' => $queryFields,
-							'facet' => 'true',
-							'facet.field' => array(
-									$field
-							),
-							'facet.query' => $query,
-							'facet.mincount' => 1,
-							'facet.limit' => $limit
-					);
-
-					if ( $type != 'video' ) {
-
-						$response = self::$solr->search( $query, 0, 0, $additionalParams );
-
-						if ( $response->getHttpStatus() == 200 ) {
-
-							if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
-
-								if ( 1 == $allmusic ) {
-
-									$arr_result = array();
-									$arr_result[$response->response->numFound][$type] = $response->facet_counts->facet_fields->$field;
-									return $arr_result;
-
-								} else {
-									return $response->facet_counts->facet_fields->$field;
-								}
-							} else {
-								return array();
-							}
-						} else {
-							return array();
-						}
-						return array();
-					} else {
-
-						$response = self::$solr2->search( $query, 0, 0, $additionalParams );
-
-						if ( $response->getHttpStatus() == 200 ) {
-
-							if ( !empty($response->facet_counts->facet_fields->$field ) ) {
-
-								if ( 1 == $allmusic ) {
-
-									$arr_result = array();
-									$arr_result[$response->response->numFound][$type] = $response->facet_counts->facet_fields->$field;
-									return $arr_result;
-								} else {
-									return $response->facet_counts->facet_fields->$field;
-								}
-							} else {
-								return array();
-							}
-						} else {
-							return array();
-						}
-						return array();
-					}
-				} else {}
-			}
-			else
-			{
-				$this->log( 'Country was not set in the get autocomplete data function for keyword : '.$keyword,'search' );
-				return array();
-			}
-		} else {
-			$this->log( 'Keyword was empty in the get autocomplete data function','search' );
-			return array();
-		}
-	}
-
-	function query( $query, $limit ) {
-
-		$country = $this->Session->read( 'territory' );
-
-		if ( !empty( $keyword ) ) {
-
-			if ( !empty( $country ) ) {
-
-				if( $type == 'video' ) {
-					$cond = " AND DownloadStatus:1";
-				} else {
-					$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-				}
-
-				if ( $this->Session->read( 'block' ) == 'yes' ) {
-					$cond .= " AND Advisory:F";
-				}
-
-				$query 	  = $query . ' AND Territory:' . $country . $cond;
-				$response = self::$solr->search($query, 0, $limit);
+										'defType' => 'edismax',
+										'qf' => $queryFields,
+										'group' => 'true',
+										'group.field' => $field,
+										'group.query' => $query,
+										'group.sort' => 'provider_type desc',
+									);
+				$response = $this->getSearchResponse( $type, $query, $start, $limit, $additionalParams, $check );
+				$docs 	  = array();
 
 				if ( $response->getHttpStatus() == 200 ) {
+					if ( !empty( $response->grouped->$field->groups ) ) {
 
-					if ( $response->response->numFound > 0 ) {
-
-						foreach ( $response->response->docs as $doc ) {
-							$docs[] = $doc;
+						foreach ( $response->grouped->$field->groups as $group ) {
+							$group->doclist->docs[0]->numFound = $group->doclist->numFound;
+							$docs[] = $group->doclist->docs[0];
 						}
-					} else {
-						return array();
 					}
-				} else {
-					return array();
 				}
 				return $docs;
 			} else {
-				$this->log( 'Country was not set in the query function for query : '.$query,'search' );
+				$this->log( 'Country was not set in the group search function for keyword : ' . $keyword, 'search' );
 				return array();
 			}
 		} else {
-			$this->log( 'Keyword was empty in the query function','search' );
+			$this->log( 'Keyword was empty in the group search function', 'search' );
 			return array();
 		}
 	}
 
-	function escapeSpace( $keyword ) {
-		$keyword = str_replace( array( '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?' ), array( '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?' ), $keyword ); // for edismax
-		return $keyword;
+	public function getAutoCompleteData( $keyword, $type, $limit = 10, $allmusic = 0 ) {
+
+		$country = $this->Session->read( 'territory' );
+
+		if ( !empty( $keyword ) ) {
+			if ( !empty( $country ) ) {
+				if ( !isset( self::$solr ) ) {
+					$this->connectToSolr();
+				}
+
+				$conditions	   = $this->createSearchConditions( $type, $country, 0 );
+				$searchkeyword = $this->escapeSpace( $keyword );
+				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
+
+				if ( $type != 'all' ) {
+
+					$arrAuto 	 = $this->createAutoCompleteFields( $type );					
+					$queryFields = isset( $arrAuto['queryFields'] ) ? $arrAuto['queryFields'] : '';
+					$field 		 = isset( $arrAuto['field'] ) ? $arrAuto['field'] : '';
+					$query	 	 = $searchkeyword . ' AND Territory:' . $country . $conditions;
+
+					$additionalParams = array(
+											'defType' => 'edismax',
+											'qf' => $queryFields,
+											'facet' => 'true',
+											'facet.field' => array( $field ),
+											'facet.query' => $query,
+											'facet.mincount' => 1,
+											'facet.limit' => $limit
+										);
+
+					$response 	= $this->getSearchResponse( $type, $query, 0, 0, $additionalParams );
+					$arr_result = array();
+
+					if ( $response->getHttpStatus() == 200 ) {
+						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
+							if ( $allmusic == 1 ) {
+								$arr_result[$response->response->numFound][$type] = $response->facet_counts->facet_fields->$field;
+							} else {
+								return $response->facet_counts->facet_fields->$field;
+							}
+						}
+					}
+					return $arr_result;
+				}
+			} else {
+				$this->log( 'Country was not set in the get autocomplete data function for keyword : ' . $keyword, 'search' );
+				return array();
+			}
+		} else {
+			$this->log( 'Keyword was empty in the get autocomplete data function', 'search' );
+			return array();
+		}
 	}
 
-	function checkSearchKeyword( $searchkeyword ) {
+	public function escapeSpace( $keyword ) {
+		$keyword = str_replace( array( '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?' ), array( '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?' ), $keyword ); // for edismax
+		return strtolower( $keyword );
+	}
+
+	public function checkSearchKeyword( $searchkeyword ) {
 		$synonymsInstance = ClassRegistry::init( 'Synonym' );
 
-		$data = $synonymsInstance->find( 'first',array( 'conditions'=>array( 'searched_text'=>$searchkeyword ) ) );
+		$data = $synonymsInstance->find( 'first', array( 'conditions'=>array( 'searched_text'=>$searchkeyword ) ) );
 
 		if( !empty( $data ) ) {
-			$searchkeyword = "(".$searchkeyword." ".$data['Synonym']['replacement_text'].")";
+			$searchkeyword = "(" . $searchkeyword . " " . $data['Synonym']['replacement_text'] . ")";
 		}
 		return $searchkeyword;
 	}

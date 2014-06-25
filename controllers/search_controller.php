@@ -352,7 +352,6 @@ class SearchController extends AppController {
 
                 				if ( $name == 'album' ) {
                 					$keyword   = str_replace( array( ' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?' ), array( '\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?' ), $record );
-                					$albumdocs = $this->Solr->query( 'Title:' . $keyword, 1 );
                 				}
 
                 				$regex = "/^$queryVar/i";
@@ -377,7 +376,6 @@ class SearchController extends AppController {
                         $record    = trim( $record, '"' );
                         $record    = preg_replace( "/\n/", '', $record );
                         $keyword   = str_replace( array( ' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?' ), array( '\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?' ), $record );
-                        $albumdocs = $this->Solr->query('Title:' . $keyword, 1);
                         $records[] = "<div class='ac_first' style='font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . ucfirst( $name ) . "</div><div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|" . $rank;
                     }
                 }

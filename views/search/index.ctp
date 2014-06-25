@@ -419,6 +419,10 @@
 			if ( isset( $songs ) && is_array( $songs ) && count( $songs ) > 0 ) {
 			$b = 1;
 			foreach ( $songs as $psong ) {
+
+				if ( !is_object( $psong ) ) {
+					continue;
+				}
 		?>
 				<div class="video-result-container">
 					<div class="video-thumb">
