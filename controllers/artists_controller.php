@@ -836,7 +836,14 @@ Class ArtistsController extends AppController {
             $cond = "";
         }
         $this->Album->recursive = 2;
-        $albumData = $this->paginate('Album'); //getting the Albums for the artist
+
+        $albumData = array();
+        
+        //check if provider types string is not empty
+        if( $val_provider_type != '' ) {
+            
+            $albumData = $this->paginate('Album'); //getting the Albums for the artist
+        }
         
         if (!empty($albumData)) {            
             if ($libType == 2) {
