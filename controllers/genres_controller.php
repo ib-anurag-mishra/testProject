@@ -348,7 +348,7 @@ Class GenresController extends AppController
         }
                             
         $genre = base64_decode($Genre);
-        $genre = mysql_escape_string($genre);
+        //$genre = mysql_escape_string($genre);
         $this->set('genre', $genre); 
         
         //create the cache variable name for checking the variable already exist or not
