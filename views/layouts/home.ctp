@@ -77,6 +77,7 @@
                 array(
                     'freegal40-libraries',
                     'freegal',
+                    'freegal40-site',
                     'search-results',
                     'audioPlayer',
                     'recent-downloads',
