@@ -2,6 +2,19 @@
 <html>
 
     <head>
+        <title>
+            <?php __('Freegal Music : Your New Music Library :'); ?>
+            <?php
+            if ($title_for_layout == "Homes")
+            {
+                echo substr($title_for_layout, 0, -1);
+            }
+            else
+            {
+                echo $title_for_layout;
+            }
+            ?>
+        </title>        
 
         <?php
         echo $this->Html->charset();
@@ -17,19 +30,7 @@
         <meta name="apple-itunes-app" content="app-id=508036345" >
         <meta name="google-play-app" content="app-id=com.libraryideas.freegalmusic" >
 
-        <title>
-            <?php __('Freegal Music : Your New Music Library :'); ?>
-            <?php
-            if ($title_for_layout == "Homes")
-            {
-                echo substr($title_for_layout, 0, -1);
-            }
-            else
-            {
-                echo $title_for_layout;
-            }
-            ?>
-        </title>
+
         <?php
         echo $this->Html->css(
                 array(
