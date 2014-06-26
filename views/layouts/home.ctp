@@ -60,6 +60,7 @@
 
         echo $javascript->link(
                 array(
+                    'freegal40-libaries',
                     'freegal',
                     'search-results',
                     'audioPlayer',
