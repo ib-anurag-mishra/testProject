@@ -14,7 +14,7 @@
 //        }
           ?>
 
-	<meta name="apple-itunes-app" content="app-id=508036345" >
+        <meta name="apple-itunes-app" content="app-id=508036345" >
         <meta name="google-play-app" content="app-id=com.libraryideas.freegalmusic" >
 
         <title>
@@ -30,6 +30,21 @@
             }
             ?>
         </title>
+        <?php
+        echo $this->Html->css(
+                array(
+                    'freegal_styles',
+                    'jquery.autocomplete',
+                    'colorbox',
+                    'jquery.smartbanner.css'
+                        
+                )
+        );
+        ?>
+        <link href="/css/freegal40.css?v=06172014" rel="stylesheet" type="text/css" />
+        <!--[if IE 8]>
+        <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
+        <![endif]-->               
         
         <?php
         /*
@@ -91,21 +106,7 @@
         */
         ?>
 
-        <?php
-        echo $this->Html->css(
-                array(
-                    'freegal_styles',
-                    'jquery.autocomplete',
-                    'colorbox',
-					'jquery.smartbanner.css'
-                        
-                )
-        );
-        ?>
-        <link href="/css/freegal40.css?v=06172014" rel="stylesheet" type="text/css" />
-        <!--[if IE 8]>
-        <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
-        <![endif]-->        
+ 
         
         <?php 
         if ($this->Session->read('library') && $this->Session->read('library') != '')
@@ -625,8 +626,12 @@
         {
             // echo $this->Html->css('styles');
             ?>
+            <?php 
+            /* already included
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico" />
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico" />
+            */
+            ?>
 
             <script type="text/javascript">
                 var webroot = '<?php echo $this->webroot; ?>';
