@@ -17,8 +17,9 @@
         </title>        
 
         <?php
+        echo $this->Html->meta('icon');        
         echo $this->Html->charset();
-        echo $this->Html->meta('icon');
+
 
 // this creating a problem in IE9 so commented this code for time being
 //        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
@@ -37,12 +38,13 @@
                     'freegal_styles',
                     'jquery.autocomplete',
                     'colorbox',
-                    'jquery.smartbanner.css'
+                    'jquery.smartbanner.css',
+                    'freegal40.css?v=06172014'
                         
                 )
         );
         ?>
-        <link href="/css/freegal40.css?v=06172014" rel="stylesheet" type="text/css" />
+        <?php /*<link href="/css/freegal40.css?v=06172014" rel="stylesheet" type="text/css" /> */ ?>
         <!--[if IE 8]>
         <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
         <![endif]-->               
