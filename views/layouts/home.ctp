@@ -17,7 +17,7 @@
         </title>        
 
         <?php
-        echo $this->Html->meta('icon');        
+        // echo $this->Html->meta('icon');        
         echo $this->Html->charset();
 
 
@@ -27,10 +27,12 @@
 //            header('X-UA-Compatible: IE=edge,chrome=1');
 //        }
           ?>
-
+        <?php
+        echo $this->Html->meta('icon'); 
+        ?>
         <meta name="apple-itunes-app" content="app-id=508036345" >
         <meta name="google-play-app" content="app-id=com.libraryideas.freegalmusic" >
-
+        
 
         <?php
         echo $this->Html->css(
