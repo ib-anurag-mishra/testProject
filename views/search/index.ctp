@@ -465,7 +465,7 @@
 													<input type="hidden" name="ProviderType" value="<?= $psong->provider_type; ?>" />
 													<span class="beforeClick" id="download_video_<?= $psong->ProdID; ?>"> 
 														<![if !IE]>
-															<a class="download-btn" title="Download This Video" onclick='return wishlistVideoDownloadOthersToken("<?= $psong->ProdID; ?>", "0", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?= $psong->provider_type; ?>", 1);'></a>
+															<a class="download-btn" title="Download This Video" onclick='return wishlistVideoDownloadOthersToken("<?= $psong->ProdID; ?>", "0", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?= $psong->provider_type; ?>", 1);' href="javascript:void(0);"></a>
 														<![endif]>
 														<!--[if IE]>
 							                                <a class="download-btn" title="Download This Video" onclick='wishlistVideoDownloadIEToken("<?= $psong->ProdID; ?>", "0" , "<?= $psong->provider_type; ?>", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>",1);' href="javascript:void(0);"></a>
