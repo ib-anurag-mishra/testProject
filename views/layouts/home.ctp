@@ -31,6 +31,8 @@
             ?>
         </title>
         
+        <?php
+        /*
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/modernizr.custom.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/lazyload.1.9.1.js"></script>
@@ -38,8 +40,12 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.cycle.all.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
+        */
+        ?>
+
         
         <?php
+        /*
         echo $javascript->link(
                 array(
                     'freegal',
@@ -50,18 +56,39 @@
 					'jquery.smartbanner.js'
                 )
         );
+        */
 
+        echo $javascript->link(
+                array(
+                    'freegal',
+                    'search-results',
+                    'audioPlayer',
+                    'recent-downloads',
+                    'qtip_add'
+
+
+                )
+        );        
+
+
+        /*
         if ($this->Session->read("patron"))
         {
             ?>
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/swfobject.js"></script>
             <?php
         }
-        ?>        
+        */
+        ?>
+
+        <?php
+        /*        
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
+        */
+        ?>
 
         <?php
         echo $this->Html->css(
