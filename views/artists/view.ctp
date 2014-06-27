@@ -1,7 +1,7 @@
 <section class="albums-page">
 	<section class="album-detail-container clearfix">
 		<div class="breadcrumbs">
-			<span> <?php
+			<span><?php
 			$genre_crumb_name = $this->Genre->genreBreadcrumb($genre);
 			$html->addCrumb(__('All Genre', true), '/genres/view/');
 			
@@ -147,7 +147,8 @@
 					$streamingFlag = 1;
 				endif;
 
-
+				$class = '';
+				$cs = '';
 				if ($this->Session->read("patron")):
 
 					if ($this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1):
@@ -175,7 +176,7 @@
 					
 					endif;
 					
-					$class = 'logged_in';
+					$class = ' logged_in';
 
 					$cs = '';
 					
@@ -186,18 +187,18 @@
 				endif;
 				?>
 
-				<div class="song <?php       echo $class;     echo $cs;  ?>">
+				<div class="song<?php echo $class; echo $cs; ?>">
 					<?php
 					if (strlen($albumSong['Song']['SongTitle']) >= 30):
 					
-						echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
+						echo $this->Html->tag('a', substr($albumSong['Song']['SongTitle'], 0, 30) . '...', array('style' => 'text-decoration:none;', 'title' => $this->getTextEncode($albumSong['Song']['SongTitle'])));
 					
 					else:
 					
 						if($this->getTextEncode($albumSong['Song']['SongTitle'])):
-							echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '</a>';
+							echo $this->Html->tag('a', $this->getTextEncode($albumSong['Song']['SongTitle']), array('style' => 'text-decoration:none;', 'title' => $this->getTextEncode($albumSong['Song']['SongTitle'])));
 						else:
-							echo '<a style="text-decoration:none;" title="' . $albumSong['Song']['SongTitle'] . '">' . $albumSong['Song']['SongTitle'] . '</a>';
+							echo $this->Html->tag('a', $albumSong['Song']['SongTitle'], array('style' => 'text-decoration:none;', 'title' => $albumSong['Song']['SongTitle']));
 						endif;
 							
 					endif;
@@ -227,13 +228,16 @@
 				</div>
 				<?php
 				if ($this->Session->read('patron')):
+				
+				echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
+
 					?>
 
-				<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0);"></a>
 				<div class="wishlist-popover">
-				<input type="hidden" id="<?= $albumSong["Song"]["ProdID"] ?>" value="song" />
 					
 					<?php
+				echo $this->Form->hidden('empty', array('value' => 'song', 'id' => $albumSong["Song"]["ProdID"], 'name' => false));
+					
 					if (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1)):
 
 						if ($libraryDownload == '1' && $patronDownload == '1'):
@@ -262,34 +266,31 @@
 					<?php
 							else:
 								?>
-					<a class='add-to-wishlist' href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __("Downloaded"); ?></a>
+
 					<?php
+					echo $this->Html->link('Downloaded', array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'add-to-wishlist', 'title' => 'You have already downloaded this song. Get it from your recent downloads'));
 							endif;
-						else: ?>
-					
-					<a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met"); ?></a>
-					<?php
+						else:
+					echo $this->Html->link('Limit Met', 'javascript:void(0)', array('class' => 'add-to-wishlist'));
 						endif;
 					
-					elseif (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 0)):?>
-					
-					<a id="not-allowed">Not Allowed</a>
-					<?php  
+					elseif (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 0)):
+
+					echo $this->Html->tag('a', 'Not Allowed', array('id' => 'not-allowed'));
 
 					else:
-						?>
-					<a class="add-to-wishlist" title='<?php __("Coming Soon"); ?> ( <?php
-                                        if (isset($albumSong['Country']['SalesDate'])) {
-                                            echo date("F d Y", strtotime($albumSong['Country']['SalesDate']));
-                                        }
-                                        ?> )'
-						href="javascript:void(0)"><?php __('Coming Soon'); ?> </a>
-					<?php
+						
+						$comingSoonDate = 'Coming Soon';
+						if (isset($albumSong['Country']['SalesDate'])):
+	                        $comingSoonDate = 'Coming Soon ( ' . date("F d Y", strtotime($albumSong['Country']['SalesDate'])) . ' )';
+	                    endif;
+
+					echo $this->Html->link('Coming Soon', 'javascript:void(0)', array('class' => 'add-to-wishlist', 'title' => $comingSoonDate));
+
 					endif;
 					
-					if ($streamingFlag == 1): ?>
-						<a class="add-to-playlist" href="javascript:void(0);">Add To Playlist</a>
-					<?php 
+					if ($streamingFlag == 1): 
+						echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));
 					endif;
 			
 					$wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
@@ -299,10 +300,9 @@
 				</div>
 				<?php
 				else:
-					?>
-				<a class="genre-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
+					
+				echo $this->Html->link('Login', array('controller' => 'users', 'action' => 'redirection_manager'), array('class' => 'genre-download-now-button'));
 
-				<?php
 				endif;
 				?>
 
