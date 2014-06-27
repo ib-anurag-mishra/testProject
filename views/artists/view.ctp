@@ -14,9 +14,7 @@
 			echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 			?>
 			</span>
-		</div>
-
-		<?php 
+		</div><?php 
 
 		if (count($albumData) > 0):
 			
@@ -26,9 +24,7 @@
 			
 			<div class="album-cover-image">
 				
-				<?php                                         
-				
-				$albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+				<?php $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
 				
 				echo $this->Html->image(Configure::read('App.Music_Path') . $albumArtwork, array('alt' => 'album-detail-cover', 'width' => '250', 'height' => '250'));
 
@@ -36,6 +32,7 @@
 					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
 					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
 					?>
+				
 				<div class="wishlist-popover">
 					<?php
 					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
@@ -113,16 +110,14 @@
 			</div>
 
 			<?php
-			$i = 1;
+
 			foreach ($albumSongs[$album['Album']['ProdID']] as $key => $albumSong):
 
 			//hide song if library block the explicit content
 			if (($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] == 'T')):
 				continue;
 			endif;
-			?>
-
-			<?php
+			
 			if ($this->Session->read('library_type') == 2):				
                 
                 $filePath = $this->Token->streamingToken($albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
@@ -134,8 +129,7 @@
 					$albumSong['totalseconds'] = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']);
 				endif;
 			
-			endif;
-			?>
+			endif; ?>
 
 			<div class="tracklist">
 
@@ -217,8 +211,8 @@
 				
 				if($this->getTextEncode($artistTextValue)):
 					$artistTextValue = $this->getTextEncode($artistTextValue);
-				endif;
-				?>
+				endif; ?>
+				
 				<div class="artist">
 					<?php echo $this->Html->link($artistTextValue, array('controller' => 'artists', 'action' => 'album', base64_encode($albumSong['Song']['Artist'])), array('title' => $artistTextValue));?>
 				</div>
@@ -231,30 +225,47 @@
 				
 				echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
 
-					?>
+				?>
 
 				<div class="wishlist-popover">
 					
-					<?php
+				<?php
 				echo $this->Form->hidden('empty', array('value' => 'song', 'id' => $albumSong["Song"]["ProdID"], 'name' => false));
 					
 					if (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1)):
 
 						if ($libraryDownload == '1' && $patronDownload == '1'):
 							
-							if ($albumSong['Song']['status'] != 'avail'): ?>
+							if ($albumSong['Song']['status'] != 'avail'):
 					
-					<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
-						
-						<input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"]; ?>" />
-						<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
+					echo $this->Form->create(null, array(
+						'type' => 'post',
+						'url' => array(
+							'controller' => 'homes',
+							'action' => 'userDownload'
+						),
+						'id' => 'form' . $albumSong["Song"]["ProdID"],
+						'encoding' => null
+					));
+					
+					echo $this->Form->hidden('empty', array('value' => $albumSong["Song"]["ProdID"], 'name' => 'ProdID', 'id' => false));
+					echo $this->Form->hidden('empty', array('value' => $albumSong["Song"]["provider_type"], 'name' => 'ProviderType', 'id' => false));
+					
+					?>
 						<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
 							<![if !IE]>
-							<a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?php echo $albumSong["Song"]['ProdID']; ?>", "0", "<?php echo $albumSong['Full_Files']['CdnPath']; ?>", "<?php echo $albumSong['Full_Files']['SaveAsName']; ?>", "<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
+							<?php
+							echo $this->Html->link('Download Now', 'javascript:void(0)', array(
+								'class' => 'add-to-wishlist',
+								'title' => '"IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."',
+								'onclick' => 'return wishlistDownloadOthersHome("' . $albumSong["Song"]['ProdID'] . '", "0", "' . $albumSong['Full_Files']['CdnPath'] . '", "' . $albumSong['Full_Files']['SaveAsName'] . '", "' . $albumSong["Song"]["provider_type"] . '");'
+							));
+							?>
 							<![endif]>
+							
 						</span>
 						
-						<span class="afterClick"id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display: none;">
+						<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display: none;">
 							<a class="add-to-wishlist"><?php __("Please Wait.."); ?>
 								<span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float: right; padding-right: 8px; padding-top: 2px;">
 									<?php echo $html->image('ajax-loader_black.gif'); ?>
@@ -262,12 +273,9 @@
 							</a>
 						</span>
 
-					</form>
+					<?php echo $this->Form->end(); ?>
 					<?php
 							else:
-								?>
-
-					<?php
 					echo $this->Html->link('Downloaded', array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'add-to-wishlist', 'title' => 'You have already downloaded this song. Get it from your recent downloads'));
 							endif;
 						else:
@@ -297,40 +305,35 @@
 
 					echo $wishlist->getWishListMarkup($wishlistInfo, $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"]);
 					?>
-				</div>
-				<?php
+				</div><?php
+				
 				else:
 					
 				echo $this->Html->link('Login', array('controller' => 'users', 'action' => 'redirection_manager'), array('class' => 'genre-download-now-button'));
 
-				endif;
-				?>
+				endif; ?>
 
-			</div>
+			</div><?php
 
-			<?php
 			endforeach;
 
 			if (!empty($playListData)): ?>
 			
-			<div id="playlist_data" style="display: none;">
-				
-				<?php
-				$playList = implode(',', $playListData);
+			<div id="playlist_data" style="display: none;">	
+				<?php $playList = implode(',', $playListData);
 				if (!empty($playList)):
 					echo '[' . $playList . ']';
 				endif; ?>
-			</div>
-			
-			<?php endif; ?>
+			</div><?php
 
-		</section>
-		<?php
+			endif; ?>
+
+		</section><?php
+
 		endforeach;
 		
 		else:
 			echo '<span>Sorry, there are no more details available.</span>';
-		endif;
-		?>
+		endif;?>
 	</section>
 </section> <!-- close class="albums-page" -->
