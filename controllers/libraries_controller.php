@@ -1688,7 +1688,7 @@ STR;
                 }
                 else
                 {
-                    $this->Session->setFlash('This library not exist. - '.$this->data['Library']['library_name'], 'modal', array('class' => 'modal problem'));
+                    $this->Session->setFlash('This library not exist. - '.$libName, 'modal', array('class' => 'modal problem'));
                 }
             }
         }
