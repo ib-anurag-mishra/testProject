@@ -1328,8 +1328,7 @@ $(document).ready(function() {
 
 
     var artistScollAmount;
-    // var $artist_column = $('.artist-column');
-    // var $artist_column_ul = $artist_column.find('ul');
+
 
     $(document).on('click', '.artist-scroll-up', function() {
         var $artist_column = $('.artist-column');
