@@ -1647,8 +1647,8 @@ STR;
             else
             {
 
-                $libName = mysql_real_escape_string($this->data['Library']['library_name']);
-                $libTime = mysql_real_escape_string($this->params['form']['library_timezone']);
+                $libName = $this->data['Library']['library_name'];
+                $libTime = $this->params['form']['library_timezone'];
                 $result = $this->Library->find('first', array(
                     'fields' => 'Library.id',
                     'conditions' => array('Library.library_name' => $libName)
@@ -1688,7 +1688,7 @@ STR;
                 }
                 else
                 {
-                    $this->Session->setFlash('This library not exist.', 'modal', array('class' => 'modal problem'));
+                    $this->Session->setFlash('This library does not exist.', 'modal', array('class' => 'modal problem'));
                 }
             }
         }
