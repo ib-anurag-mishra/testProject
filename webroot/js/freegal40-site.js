@@ -259,11 +259,11 @@ $(document).ready(function() {
 
 
     var artistScollAmount;
-    var $artist_column = $('.artist-column');
-    var $artist_column_ul = $artist_column.find('ul');
+
 
     $(document).on('click', '.artist-scroll-up', function() {
-
+        var $artist_column = $('.artist-column');
+        var $artist_column_ul = $artist_column.find('ul');
         var currentScrollTop = $artist_column.scrollTop();
         var artistListHeight = $artist_column_ul.height();
         var artistColumnHeight = $artist_column.height();
@@ -278,6 +278,8 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.artist-scroll-down', function() {
+        var $artist_column = $('.artist-column');
+        var $artist_column_ul = $artist_column.find('ul');        
         var currentScrollTop = $artist_column.scrollTop();
         var artistListHeight = $artist_column_ul.height();
         var artistColumnHeight = $artist_column.height();
