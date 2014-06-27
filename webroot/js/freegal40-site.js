@@ -1332,6 +1332,7 @@ $(document).ready(function() {
     var $artist_column_ul = $artist_column.find('ul');
 
     $(document).on('click', '.artist-scroll-up', function() {
+        console.log('scroll up');
 
         var currentScrollTop = $artist_column.scrollTop();
         var artistListHeight = $artist_column_ul.height();
@@ -1347,6 +1348,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.artist-scroll-down', function() {
+        console.log('scroll down');
         var currentScrollTop = $artist_column.scrollTop();
         var artistListHeight = $artist_column_ul.height();
         var artistColumnHeight = $artist_column.height();
