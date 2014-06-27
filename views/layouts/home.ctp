@@ -540,6 +540,11 @@
                         });
                         //save email notificaion data and close t he popup
                         $("#colorboxSubmitBtn").click(function() {
+			
+							if (!$('#userNewsletterEmailField').val() && !$('#doNotShowCheck').val()) {
+                                alert('Please provide your interest');
+                                return false;
+                            }
 
                             if (!$('#userNewsletterEmailField').val()) {
                                 alert('Please enter the valid email address.');
@@ -733,6 +738,7 @@
                             <div >
                                 <b>*Email :</b>
                                 <input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
+				<input type="checkbox" style="margin-left:105px;" name="doNotShow" value="yes" id="doNotShowCheck"> Please do not show this message again
                             </div>
                         </div>
                         <br />
