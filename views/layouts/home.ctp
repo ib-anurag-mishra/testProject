@@ -560,7 +560,7 @@
                             var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
 							if($('#doNotShowCheck').is(':checked') && !$('#userNewsletterEmailField').val() ) {
 								var url = "users/savenotifypopup";
-								$('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form, Thank You.</b></span>');
+								$('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
 							}
 							else {
 								var url = "users/saveNotification";

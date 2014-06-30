@@ -454,7 +454,7 @@ function login($library = null){
 								$curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));
                                 $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
                                 $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 ) && $currentPatron['Currentpatron']['notify_popup'] == 'no'){
+                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
                                     $this->Session->write("showNotificationPopup", 'yes');                               
                                 }
 								else if( $curpatron['Currentpatron']['notify_popup'] == 'no') {
