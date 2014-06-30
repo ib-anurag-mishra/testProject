@@ -450,12 +450,17 @@ function login($library = null){
                                     $this->Session->write("isLibaryExistInTimzone", 0);                               
                                 }        
                                 
-                                //check if the notification entry is already there in the notification_subscription table
+                                //check if the notification entry is already there in the notification_subscription table and notify_popup value in patrons table
+								$curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));
                                 $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
                                 $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 ) && $currentPatron['Currentpatron']['notify_popup'] == 'no'){
                                     $this->Session->write("showNotificationPopup", 'yes');                               
-                                }else{
+                                }
+								else if( $curpatron['Currentpatron']['notify_popup'] == 'no') {
+						 			$this->Session->write("showNotificationPopup", 'yes');
+                                }
+								else{
                                     $this->Session->write("showNotificationPopup", 'no');                               
                                 }
                                 
