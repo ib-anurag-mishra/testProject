@@ -62,7 +62,14 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
         */
         ?>
-
+        <!--[if IE 9]>
+        <style type="text/css">
+            .artist-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options {
+    
+                right: -128px;
+            }
+        </style>
+        <![endif]-->
         
         <?php
         /*
