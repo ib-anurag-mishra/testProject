@@ -43,7 +43,7 @@
                                     {
                                         echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                         ?> 
-                                        <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
+                                        <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                         <div class="wishlist-popover">
                                             <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
