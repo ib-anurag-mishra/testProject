@@ -267,13 +267,14 @@
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>">
 
                                     <?php
-                                    if (strlen($topDownload['Video']['VideoTitle']) >= 20)
-                                    {
-                                        if (isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory']) {
-                                            $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 10) . '...';
+                                    if (isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory']) {
+                                        $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 10) . '...';
+                                    } else {
+                                        if (strlen($topDownload['Video']['VideoTitle']) >= 20)
+                                        {
 
-                                        } else {
                                             $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 20) . '...';
+
                                         }
                                     }
                                     ?>
