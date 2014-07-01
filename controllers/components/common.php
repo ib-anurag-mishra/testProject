@@ -257,7 +257,7 @@ Class CommonComponent extends Object
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
             $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
          } 
-         else
+         elseif($artistFilter == 'All')
          {       
              $territoryUpper    = strtoupper($territory);
              $genreList = Cache::read("genre" . $territoryUpper,'GenreCache');
