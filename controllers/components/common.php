@@ -259,13 +259,14 @@ Class CommonComponent extends Object
          } 
          else
          {       
-             $genreList = Cache::read("genre" . $territory,'GenreCache');
+             $territoryUpper    = strtoupper($territory);
+             $genreList = Cache::read("genre" . $territoryUpper,'GenreCache');
              $genreKey  = array_search($genreValue, $genreList);
              
              if ($genreKey!=false) {
                  
                  unset($genreList[$genreKey]);
-                 Cache::write("genre" . $territory, $genreList,'GenreCache');
+                 Cache::write("genre" . $territoryUpper, $genreList,'GenreCache');
                  $this->log($genreValue." deleted from genre Cache for $territory", "cache");
                  
              }
