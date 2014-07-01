@@ -257,6 +257,18 @@ Class CommonComponent extends Object
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
             $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
          } 
+         else
+         {       
+             $genreList = Cache::read("genre" . $territory,'GenreCache');
+             
+             if ((array_search($genreValue, $genreList)=$genreKey) !== FALSE ) {
+                 
+                 unset($genreList[$genreKey]);
+                 Cache::write("genre" . $territory, $genreList,'GenreCache');
+                 $this->log($genreValue." deleted from genre Cache for $territory", "cache");
+                 
+             }
+         }
          
         return $artistListResults;
          
