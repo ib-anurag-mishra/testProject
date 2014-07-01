@@ -1328,12 +1328,19 @@ $(document).ready(function() {
 
 
     var artistScollAmount;
+<<<<<<< HEAD
 
 
     $(document).on('click', '.artist-scroll-up', function() {
         var $artist_column = $('.artist-column');
         var $artist_column_ul = $artist_column.find('ul');        
+=======
 
+>>>>>>> hotfix_authIssueMobile
+
+    $(document).on('click', '.artist-scroll-up', function() {
+        var $artist_column = $('.artist-column');
+        var $artist_column_ul = $artist_column.find('ul');
         var currentScrollTop = $artist_column.scrollTop();
         var artistListHeight = $artist_column_ul.height();
         var artistColumnHeight = $artist_column.height();
@@ -1348,9 +1355,14 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.artist-scroll-down', function() {
+<<<<<<< HEAD
  
         var $artist_column = $('.artist-column');
         var $artist_column_ul = $artist_column.find('ul');       
+=======
+        var $artist_column = $('.artist-column');
+        var $artist_column_ul = $artist_column.find('ul');        
+>>>>>>> hotfix_authIssueMobile
         var currentScrollTop = $artist_column.scrollTop();
         var artistListHeight = $artist_column_ul.height();
         var artistColumnHeight = $artist_column.height();
