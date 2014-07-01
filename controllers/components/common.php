@@ -260,8 +260,9 @@ Class CommonComponent extends Object
          else
          {       
              $genreList = Cache::read("genre" . $territory,'GenreCache');
+             $genreKey  = array_search($genreValue, $genreList);
              
-             if ((array_search($genreValue, $genreList)=$genreKey) !== FALSE ) {
+             if ($genreKey!=false) {
                  
                  unset($genreList[$genreKey]);
                  Cache::write("genre" . $territory, $genreList,'GenreCache');
