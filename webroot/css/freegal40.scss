@@ -2310,6 +2310,9 @@ sub { top: 0.4em; }
 				padding-top: 2px;
 				padding-bottom: 4px;
 				width: 163px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 				
 				a {
 					
