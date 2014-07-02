@@ -150,6 +150,8 @@
                 ?>
             </ul>
         </section>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </section> <!-- end .featured-videos -->
     <section class="video-top-genres">
         <header class="clearfix">
