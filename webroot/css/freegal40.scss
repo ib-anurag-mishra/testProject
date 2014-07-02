@@ -2907,18 +2907,24 @@ sub { top: 0.4em; }
 						}
 						
 						.add-to-playlist-button {
-							background: url(../img/add-to-playlist-button.png);
-							display: block;
+							// background: url(../img/add-to-playlist-button.png);
+							// display: block;
+							// position: absolute;
+							// bottom:10px;
+							// right: 10px;
+							// width: 26px;
+							// height: 25px;
+							// -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+							// opacity: 0;
+							// -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// box-shadow: 0 0 2px rgba(0,0,0,.5);
 							position: absolute;
-							bottom:10px;
-							right: 10px;
-							width: 26px;
-							height: 25px;
-							-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-							opacity: 0;
-							-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-							box-shadow: 0 0 2px rgba(0,0,0,.5);
+							left: 5px;
+							top: 5px;
+							width: 28px;
+							height: 20px;
+							background: url(../img/freegal_sprite.png) -400px 0;							
 							
 						}
 						
