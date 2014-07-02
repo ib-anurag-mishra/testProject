@@ -3517,16 +3517,7 @@ sub { top: 0.4em; }
 		position: relative;
 		height: 320px;
 		
-		&:after {
-			
-			content: "";
-			position: absolute;
-			top: 0;
-			right: 0;
-			background: url(../img/us-top-10/us-top-10-tapered-shadow.png);
-			width: 11px;
-			height: 320px;
-		}
+
 	
 		.videos-scrollable {
 			
@@ -3537,10 +3528,7 @@ sub { top: 0.4em; }
 			padding-top: 1px;
 			
 			
-			&:hover {
-				
-				overflow-x: scroll;
-			}
+
 			
 			ul {
 				
@@ -3560,10 +3548,7 @@ sub { top: 0.4em; }
 						
 						img {
 							
-							border: 1px solid #fff;
-							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							box-shadow: 0 0 4px rgba(0,0,0,.5);
+
 							
 						}
 
