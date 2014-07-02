@@ -2970,7 +2970,15 @@ sub { top: 0.4em; }
 							-ms-transform: translate(-50px, -11px);
 							transform: translate(-50px, -11px);
 							font-size: 12px;
-							text-align: center;                                
+							line-height: 22px;
+							text-align: center;
+
+							text-decoration: none;
+
+							&:hover {
+
+								text-decoration: none;
+							}                                
                         }
 						
 						.wishlist-popover {
