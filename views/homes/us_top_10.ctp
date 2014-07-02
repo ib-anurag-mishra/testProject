@@ -98,6 +98,8 @@
                 ?>
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </div>
     <h3>Songs</h3>
     <div class="songs-shadow-container">
@@ -304,6 +306,8 @@
 
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>        
 
     </div>
     <h3>Videos</h3>
@@ -475,6 +479,8 @@
 
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>        
 
     </div>
 </section>
