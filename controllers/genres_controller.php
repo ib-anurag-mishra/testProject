@@ -23,7 +23,7 @@ Class GenresController extends AppController
     {
         parent::beforeFilter();
 
-        $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions', 'setGenres');
+        $this->Auth->allowedActions = array('view', 'index', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions', 'setGenres','album');
         $libraryCheckArr = array("view", "index");
     }
 
