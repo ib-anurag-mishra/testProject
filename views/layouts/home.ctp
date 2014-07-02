@@ -2,21 +2,6 @@
 <html>
 
     <head>
-
-        <?php
-        echo $this->Html->charset();
-        echo $this->Html->meta('icon');
-
-// this creating a problem in IE9 so commented this code for time being
-//        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
-//        {
-//            header('X-UA-Compatible: IE=edge,chrome=1');
-//        }
-          ?>
-
-	<meta name="apple-itunes-app" content="app-id=508036345" >
-        <meta name="google-play-app" content="app-id=com.libraryideas.freegalmusic" >
-
         <title>
             <?php __('Freegal Music : Your New Music Library :'); ?>
             <?php
@@ -29,40 +14,25 @@
                 echo $title_for_layout;
             }
             ?>
-        </title>
-        
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/modernizr.custom.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/lazyload.1.9.1.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.colorbox.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.cycle.all.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
-        
-        <?php
-        echo $javascript->link(
-                array(
-                    'freegal',
-                    'ajaxify-html5.js', 
-                    'site.js',
-                    'freegal40-site',
-                    'jquery-scrollto',
-                    'search-results',
-					'jquery.smartbanner.js'
-                )
-        );
+        </title>        
 
-        if ($this->Session->read("patron"))
-        {
-            ?>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/swfobject.js"></script>
-            <?php
-        }
-        ?>        
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
+        <?php
+        // echo $this->Html->meta('icon');        
+        echo $this->Html->charset();
+
+
+// this creating a problem in IE9 so commented this code for time being
+//        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
+//        {
+//            header('X-UA-Compatible: IE=edge,chrome=1');
+//        }
+          ?>
+        <?php
+        echo $this->Html->meta('icon'); 
+        ?>
+        <meta name="apple-itunes-app" content="app-id=508036345" >
+        <meta name="google-play-app" content="app-id=com.libraryideas.freegalmusic" >
+        
 
         <?php
         echo $this->Html->css(
@@ -70,15 +40,86 @@
                     'freegal_styles',
                     'jquery.autocomplete',
                     'colorbox',
-					'jquery.smartbanner.css'
+                    'jquery.smartbanner.css',
+                    'freegal40.css?v=06172014'
                         
                 )
         );
         ?>
-        <link href="/css/freegal40.css?v=06172014" rel="stylesheet" type="text/css" />
+        <?php /*<link href="/css/freegal40.css?v=06172014" rel="stylesheet" type="text/css" /> */ ?>
         <!--[if IE 8]>
         <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
-        <![endif]-->        
+        <![endif]-->               
+        
+        <?php
+        /*
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/modernizr.custom.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/lazyload.1.9.1.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.colorbox.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.cycle.all.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
+        */
+        ?>
+        <!--[if IE 9]>
+        <style type="text/css">
+            .artist-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options {
+    
+                right: -128px;
+            }
+        </style>
+        <![endif]-->
+        
+        <?php
+        /*
+        echo $javascript->link(
+                array(
+                    'freegal',
+                    'ajaxify-html5.js',
+                    'freegal40-site',
+                    'jquery-scrollto',
+                    'search-results',
+					'jquery.smartbanner.js'
+                )
+        );
+        */
+
+        echo $javascript->link(
+                array(
+                    'freegal40-libraries',
+                    'freegal',
+                    'freegal40-site',
+                    'search-results',
+                    'audioPlayer',
+                    'recent-downloads',
+                    'qtip_add'
+
+
+                )
+        );        
+
+
+        /*
+        if ($this->Session->read("patron"))
+        {
+            ?>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/swfobject.js"></script>
+            <?php
+        }
+        */
+        ?>
+
+        <?php
+        /*        
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
+        */
+        ?>
+
+ 
         
         <?php 
         if ($this->Session->read('library') && $this->Session->read('library') != '')
@@ -598,8 +639,12 @@
         {
             // echo $this->Html->css('styles');
             ?>
+            <?php 
+            /* already included
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico" />
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico" />
+            */
+            ?>
 
             <script type="text/javascript">
                 var webroot = '<?php echo $this->webroot; ?>';
