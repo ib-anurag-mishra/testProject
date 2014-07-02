@@ -2433,8 +2433,12 @@ sub { top: 0.4em; }
 		height: 162px;
 		position: absolute;
 		left: 0;
-		top: 0;
+		top: 50%;
 		background: url(../img/freegal_sprite.png) -200px 0;
+		-webkit-transform: translateY(-81px);
+		-moz-transform: translateY(-81px);
+		-ms-transform: translateY(-81px);
+		transform: translateY(-81px);						
 
 	}
 
@@ -2443,9 +2447,12 @@ sub { top: 0.4em; }
 		height: 162px;
 		position: absolute;
 		right: 0;
-		top: 0;
+		top: 50%;
 		background: url(../img/freegal_sprite.png) -300px 0;
-
+		-webkit-transform: translateY(-81px);
+		-moz-transform: translateY(-81px);
+		-ms-transform: translateY(-81px);
+		transform: translateY(-81px);
 	}	
 	
 	
