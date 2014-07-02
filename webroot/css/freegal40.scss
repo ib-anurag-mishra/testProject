@@ -1935,15 +1935,7 @@ sub { top: 0.4em; }
 		overflow-y: hidden;
 		position: relative;
 		
-		&:after {
-			content: "";
-			position: absolute;
-			right: 0;
-			top:62px;
-			background: url(../img/videos/top-genres/top-genres-border-shadow.png);
-			width: 11px;
-			height: 329px;
-		}
+
 		
 		
 				
@@ -2381,17 +2373,7 @@ sub { top: 0.4em; }
 	position: relative;
 	
 	
-	&:after {
-		content: "";
-		position: absolute;
-		right: 0;
-		top:42px;
-		background: url(../img/videos/featured-videos/featured-video-shadow.png);
-		width: 11px;
-		height: 439px;
-			
-	}
-	
+
 	
 	header {
 		margin-bottom: 15px;
