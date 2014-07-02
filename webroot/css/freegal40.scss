@@ -2792,13 +2792,15 @@ sub { top: 0.4em; }
 	.album-shadow-container {
 		
 		position: relative;
-		height: 320px;
+
+		height: auto;
 		
 
 		
 		.album-scrollable {
 			
-			height: 320px;
+
+			height: auto;
 			overflow-x: hidden;
 			overflow-y: hidden;
 
@@ -3169,7 +3171,7 @@ sub { top: 0.4em; }
 			right: 0;
 			top: 0;
 			background: url(../img/freegal_sprite.png) -300px 0;
-			
+
 		}
 	}
 	
