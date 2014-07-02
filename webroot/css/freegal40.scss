@@ -2801,8 +2801,10 @@ sub { top: 0.4em; }
 			height: 320px;
 			overflow-x: hidden;
 			overflow-y: hidden;
-			padding-left: 1px;
-			padding-top: 1px;
+			// padding-left: 1px;
+			// padding-top: 1px;
+			margin-left: 28px;
+			margin-right: 28px;
 			
 			&:hover {
 				
