@@ -39,7 +39,7 @@
                             <div class="featured-video-detail">
                                 <div class="video-thumbnail-container">
 
-                                    <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" alt="" /></a>
+                                    <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="288" height="162" alt="" /></a>
                                     
                                     <?php
                                     if ($this->Session->read('patron'))
