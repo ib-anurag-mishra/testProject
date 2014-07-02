@@ -2053,6 +2053,8 @@ sub { top: 0.4em; }
 		width: 850px;
 		margin-top: 10px;
 		overflow-x: hidden;
+		margin-left: 28px;
+		margin-right: 28px;
 	
 		ul {
 			width: 18000px;
@@ -2064,7 +2066,7 @@ sub { top: 0.4em; }
 				margin-top: 2px;
 				display: block;
 				float: left;
-				padding:5px 13px 5px 5px;
+				margin-right: 3px;
 				position: relative;
 			
 				a {
