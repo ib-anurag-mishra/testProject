@@ -3178,27 +3178,15 @@ sub { top: 0.4em; }
 	
 	.songs-shadow-container {
 		position: relative;
-		height: 320px;
+		height: auto;
 		
-		&:after {
-			
-			content: "";
-			position: absolute;
-			top: 0;
-			right: 0;
-			background: url(../img/us-top-10/us-top-10-tapered-shadow.png);
-			width: 11px;
-			height: 320px;
-		}
-	
+
 		.songs-scrollable {
 			
-			height: 320px;
+			height: auto;
 			overflow-y: hidden;
 			overflow-x: hidden;
-			padding-left: 1px;
-			padding-top: 1px;
-			
+
 			&:hover {
 				
 				overflow-x: scroll;
@@ -3222,10 +3210,8 @@ sub { top: 0.4em; }
 						
 						img {
 							
-							border: 1px solid #fff;
-							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							box-shadow: 0 0 4px rgba(0,0,0,.5);
+							width: 162px;
+							height: 162px;
 							
 						}
 
