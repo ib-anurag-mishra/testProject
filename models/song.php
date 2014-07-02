@@ -499,4 +499,75 @@ class Song extends AppModel
 			);
 		}
 	}
+	
+	public function getWishlistSongs( $countryPrefix, $libraryId, $patronId, $songSortBy, $sortType ) {
+		
+		$this->unBindModel( array( 'belongsTo' => array( 'Sample_Files', 'Full_Files' ), 'hasOne' => array( 'Participant', 'Genre', 'Country' ) ) );
+		
+		$options = array(
+					'fields' => array(
+								'wishlists.id',
+								'wishlists.created',
+								'wishlists.track_title',
+								'wishlists.artist',
+								'wishlists.album',
+								'wishlists.ProdID',
+								'wishlists.provider_type',
+								'Song.ReferenceID',
+								'Song.ProdID',
+								'Song.provider_type',
+								'Song.Advisory',
+								'Song.ArtistText',
+								'Song.FullLength_Duration',
+								'Albums.ProdID',
+								'Albums.provider_type',
+								'File.CdnPath',
+								'File.SourceURL',
+								'Country.Territory',
+								'Country.SalesDate',
+								'Country.StreamingSalesDate',
+								'Country.StreamingStatus',
+								'Country.DownloadStatus',
+								'Full_Files.CdnPath',
+								'Full_Files.SaveAsName',
+								'File.SaveAsName'
+							),
+					'joins' => array(
+								array(
+										'table' => 'wishlists',
+										'alias' => 'wishlists',
+										'type'  => 'LEFT',
+										'conditions' => array( 'wishlists.ProdID = Song.ProdID', 'wishlists.provider_type = Song.provider_type')
+									),
+								array(
+										'table' => 'File',
+										'alias' => 'Full_Files',
+										'type'  => 'LEFT',
+										'conditions' => array( 'Song.FullLength_FileID = Full_Files.FileID')
+									),
+								array(
+										'table' => $countryPrefix . 'countries',
+										'alias' => 'Country',
+										'type'  => 'LEFT',
+										'conditions' => array( 'Country.ProdID = Song.ProdID', 'Song.provider_type = Country.provider_type', 'Country.SalesDate != \'\'')
+									),
+								array(
+										'table' => 'Albums',
+										'alias' => 'Albums',
+										'type'  => 'INNER',
+										'conditions' => array( 'Song.ReferenceID=Albums.ProdID' )
+									),
+								array(
+										'table' => 'File',
+										'alias' => 'File',
+										'type'  => 'INNER',
+										'conditions' => array( 'Albums.FileID = File.FileID' )
+									)
+							),
+					'conditions' => array( 'wishlists.library_id' => $libraryId, 'wishlists.patron_id' => $patronId ),
+					'order' => array( $songSortBy => $sortType )
+				);
+		
+		return $this->find( 'all', $options );
+	}
 }

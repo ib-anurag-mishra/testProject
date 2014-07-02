@@ -8,13 +8,12 @@
 
 class HomesController extends AppController {
 
-    var $name = 'Homes';
-    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'WishlistVideo', 'Song', 'Language', 'Session', 'Mvideo', 'Download', 'Videodownload', 'Queue', 'Token');
-    var $components = array('RequestHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming');
-    var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload', 'Zipcode', 'StreamingHistory', 'MemDatas', 'Token');
+    var $name 		= 'Homes';
+    var $helpers 	= array( 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'WishlistVideo', 'Song', 'Language', 'Session', 'Mvideo', 'Download', 'Videodownload', 'Queue', 'Token', 'Home' );
+    var $components = array( 'RequestHandler', 'Downloads', 'PasswordHelper', 'Email', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming' );
+    var $uses 		= array( 'Home', 'User', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'Video', 'Videodownload', 'Zipcode', 'Token' );
 
-    /*
-      Function Name : beforeFilter
+    /* Function Name : beforeFilter
       Desc : actions that needed before other functions are getting called
      */
 
@@ -23,16 +22,16 @@ class HomesController extends AppController {
         parent::beforeFilter();
 
         // For super Admin while accesing convertString action
-        if ($this->params['action'] == 'convertString' && ($this->Session->read('Auth.User.type_id') == 1)) {
-            $pat_id = $this->Session->read('Auth.User.id');
+        if ( $this->params['action'] == 'convertString' && $this->Session->read( 'Auth.User.type_id' ) == 1 ) {
+        	$pat_id = $this->Session->read( 'Auth.User.id' );
         } else {       //  For Front End
-            $pat_id = $this->Session->read('patron');
+        	$pat_id = $this->Session->read( 'patron' );
         }
-
-        if (!empty($pat_id)) { //  After Login
-            $this->Auth->allow('*');
-        } else { //  Before Login 
-            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'terms');
+        
+        if ( ! empty( $pat_id ) ) { //  After Login
+        	$this->Auth->allow('*');
+        } else { //  Before Login
+        	$this->Auth->allow( 'display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'terms' );
         }
 
         $this->Cookie->name = 'baker_id';
@@ -42,58 +41,65 @@ class HomesController extends AppController {
     }
 
     /* Function Name    : index
-     * 
      * Responsible for display all the index page content
-     *  
      */
 
-    function index() {
+   public function index() {
         
         //check the server port and redirect to index page
-        if ($_SERVER['SERVER_PORT'] == 443) {
-            $this->redirect('http://' . $_SERVER['HTTP_HOST'] . '/index');
-        }
-        $this->layout = 'home';
-        // Local Top Downloads functionality
-        $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
-        $country = $this->Session->read('territory');
-        $territory = $this->Session->read('territory');
+        if ( env( 'SERVER_PORT' ) == 443 ) {
+			$this->redirect( 'http://' . env( 'HTTP_HOST' ) . '/index' );
+		}
 
-        $nationalTopDownload = array();
-        if (!empty($patId)) {
-            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+		$this->layout = 'home';
 
-            $this->set('libraryDownload', $libraryDownload);
-            $this->set('patronDownload', $patronDownload);
-        }
+		// Local Top Downloads functionality
+		$libraryId = $this->Session->read( 'library' );
+		$patronId  = $this->Session->read( 'patron' );
+		$territory = $this->Session->read( 'territory' );
 
-        /* Top Singles Starts */ 
-        $nationalTopDownload = Cache::read("top_singles" . $territory);
-        if ($nationalTopDownload === false) {
-            $nationalTopDownload = $this->Common->getTopSingles($territory);
-        }
-        $this->set('top_singles', $nationalTopDownload);
-        /* Top Singles Ends */ 
-        
-        /* National Top 100 Albums slider start */
-        $TopAlbums = Cache::read("topAlbums" . $territory);
-        if ($TopAlbums === false) {
-            $TopAlbums = $this->Common->getTopAlbums($territory);
-        }
-        $this->set('nationalTopAlbums', $TopAlbums);
-        /* National Top 100 Albums slider Ends */
+		if ( ! empty( $patronId ) ) {
+			$libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
+			$patronDownload  = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
 
-        /* featured artist slideshow code start */
-        $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.'1');
-        if ($featuresArtists === false) {
-            $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
-            Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
-        }        
-        $this->set('featuredArtists', $featuresArtists);
-        /* featured artist slideshow code Ends */
+			$this->set( 'libraryDownload', $libraryDownload );
+			$this->set( 'patronDownload', $patronDownload );
+		}
 
+		/* Top Singles Starts */
+		$nationalTopDownload = Cache::read( "top_singles" . $territory );
+
+		if ( $nationalTopDownload === false ) {
+			$nationalTopDownload = $this->Common->getTopSingles( $territory );
+		}
+
+		$this->set( 'top_singles', $nationalTopDownload );
+		/* Top Singles Ends */
+
+		/* National Top 100 Albums slider start */
+		$TopAlbums = Cache::read( "topAlbums" . $territory );
+
+		if ( $TopAlbums === false ) {
+			$TopAlbums = $this->Common->getTopAlbums( $territory );
+		}
+
+		$this->set( 'nationalTopAlbums', $TopAlbums );
+		/* National Top 100 Albums slider Ends */
+
+		/* featured artist slideshow code start */
+		$featuresArtists = Cache::read( "featured_artists_" . $territory . '_1' );
+
+		if ( $featuresArtists === false ) {
+			$featuresArtists = $this->Common->getFeaturedArtists( $territory, 1 );
+			Cache::write( 'featured_artists_' . $territory . '_1', $featuresArtists );
+		}
+
+		$this->set( 'featuredArtists', $featuresArtists );
+		/* featured artist slideshow code Ends */
+
+		$this->set( 'patron', $patronId );
+		$this->set( 'libraryType', $this->Session->read( 'library_type' ) );
+		$this->set( 'downloadVariArray', $this->Session->read( 'downloadVariArray') );
     }
 
     function get_genre_tab_content($tab_no, $genre) {
@@ -223,104 +229,118 @@ class HomesController extends AppController {
     }
 
     function my_lib_top_10() {
-        Configure::write('debug', 0);
-        $this->layout = 'home';
-        $patId = $this->Session->read('patron');
-        $country = $this->Session->read('territory');
-        $url = $_SERVER['SERVER_NAME'];
-        $host = explode('.', $url);
-        $subdomains = array_slice($host, 0, count($host) - 2);
-        $subdomains = $subdomains[0];
-        $libId = $this->Session->read('library');
 
-        if ($subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic') {
-            if (!$this->Session->read("patron")) {
-                $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+        $this->layout = 'home';
+        $patronId 	  = $this->Session->read( 'patron' );
+        $country 	  = $this->Session->read( 'territory' );
+        $libraryId 	  = $this->Session->read( 'library' );
+        $url 	 	  = env( 'SERVER_NAME' );
+        $host 	 	  = explode( '.', $url );
+        $subdomains   = array_slice( $host, 0, count( $host ) - 2 );
+        $subdomains   = $subdomains[0];
+
+        if ( $subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic' ) {
+            if ( !$patronId ) {
+                $this->redirect( array( 'controller' => 'homes', 'action' => 'index' ) );
             }
         }
 
-        /////////////////////////////////////Songs///////////////////////////////////////////////
+        /****************************************** Albums ************************************************/
 
-        $ids = '';
-        $ids_provider_type = '';
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
-        $topDownload_songs = Cache::read("lib" . $libId);
-        if ($topDownload_songs === false) {
-            $topDownload_songs = $this->Common->getLibraryTopTenSongs($country, $libId);
+        $topDownload_albums = Cache::read( 'lib_album' . $libraryId );
+
+        if ( $topDownload_albums === false ) {
+        	$topDownload_albums = $this->Common->getLibraryTop10Albums( $country, $libraryId );
         }
-        $this->set('top_10_songs', $topDownload_songs);
 
-        ////////////////////////////////////////////////Albums///////////////////////////////////////////////////
+        $this->set( 'topDownload_albums', $topDownload_albums );
 
-        $ids_provider_type_album = '';
-        $topDownload_albums = Cache::read("lib_album" . $libId);
-        if ($topDownload_albums === false) {
-            $topDownload_albums = $this->Common->getLibraryTop10Albums($country, $libId);
+        /****************************************** Songs ***********************************************/
+
+        $libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
+        $patronDownload  = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
+
+        $topDownload_songs = Cache::read( 'lib' . $libraryId );
+
+        if ( $topDownload_songs === false ) {
+            $topDownload_songs = $this->Common->getLibraryTopTenSongs( $country, $libraryId );
         }
-        $this->set('topDownload_albums', $topDownload_albums);
 
+        $this->set( 'top_10_songs', $topDownload_songs );
 
-        ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
-        $topDownload_videos_data = Cache::read("lib_video" . $libId);
-        if ($topDownload_videos_data === false) {
-            $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country, $libId);
+        /****************************************** Videos *************************************************/
+
+        $topDownload_videos_data = Cache::read( 'lib_video' . $libraryId );
+
+        if ( $topDownload_videos_data === false ) {
+            $topDownload_videos_data = $this->Common->getLibraryTop10Videos( $country, $libraryId );
         }
-        $this->set('topDownload_videos_data', $topDownload_videos_data);
+
+        $this->set( 'topDownload_videos_data', $topDownload_videos_data );
+        
+       $this->set( 'patronId', $patronId );
+       $this->set( 'libraryId', $libraryId );
+       $this->set( 'libraryType', $this->Session->read( 'library_type' ) );
+	   $this->set( 'downloadVariArray', $this->Session->read( 'downloadVariArray') );
+	   $this->set( 'libraryDownload', $libraryDownload );
+	   $this->set( 'patronDownload', $patronDownload );
     }
 
     function us_top_10() {
 
-        $this->layout = 'home';
+        $this->layout 	 = 'home';
+        $libraryId 		 = $this->Session->read('library');
+        $patronId  		 = $this->Session->read('patron');
+        $territory 		 = $this->Session->read('territory');
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
+        $patronDownload  = $this->Downloads->checkPatronDownload($patronId, $libraryId);
 
-        $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
-        $territory = $this->Session->read('territory');
+        /******************************************* Albums *****************************************/
+        
+        if ( !empty( $territory ) ) {
 
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+        	$ustop10Albums = Cache::read( 'national_us_top10_albums' . $territory );
 
-        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-        $siteConfigData = $this->Album->query($siteConfigSQL);
-        $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
+        	if ( $ustop10Albums === false ) {
+        		$ustop10Albums = $this->Common->getUsTop10Albums( $territory );
+        	}
+        }
 
-        //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
-        // National Top Downloads functionality
-        if (!empty($territory)) {
-            $national_us_top10_record = Cache::read("national_us_top10_songs" . $territory);
-            if ($national_us_top10_record === false) {
-                $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
+        $this->set('ustop10Albums', $ustop10Albums);
+        
+        /******************************************* Songs **********************************************/
+
+        if ( !empty( $territory ) ) {
+
+            $national_us_top10_record = Cache::read( 'national_us_top10_songs' . $territory );
+
+            if ( $national_us_top10_record === false ) {
+                $national_us_top10_record = $this->Common->getUsTop10Songs( $territory );
             } 
         }
+
         $this->set('nationalTopDownload', $national_us_top10_record);
 
-        //////////////////////////////////////////////Albums//////////////////////////////////////////////////////////////////////////
+        /******************************************** Videos ********************************************/
 
-        $country = $this->Session->read('territory');
+        if ( !empty( $territory ) ) {
 
-        if (!empty($country)) {
-            $ustop10Albums = Cache::read("national_us_top10_albums" . $territory);
-            if ($ustop10Albums === false) {
-                $ustop10Albums = $this->Common->getUsTop10Albums($territory);
-            } 
-        }
-        $this->set('ustop10Albums', $ustop10Albums);
+        	$usTop10VideoDownload = Cache::read( 'national_us_top10_videos' . $territory );
 
-        //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
-
-        $country = $this->Session->read('territory');
-
-        if (!empty($country)) {
-            $usTop10VideoDownload = Cache::read("national_us_top10_videos" . $territory);
-            if ($usTop10VideoDownload === false) {
-                $usTop10VideoDownload = $this->Common->getUsTop10Videos($territory);
+            if ( $usTop10VideoDownload === false ) {
+                $usTop10VideoDownload = $this->Common->getUsTop10Videos( $territory );
             }
         }
+
         $this->set('usTop10VideoDownload', $usTop10VideoDownload);
+        
+        $this->set( 'patronId', $patronId );
+        $this->set( 'libraryId', $libraryId );
+        $this->set( 'territory', $territory );
+        $this->set( 'libraryType', $this->Session->read( 'library_type' ) );
+        $this->set( 'downloadVariArray', $this->Session->read( 'downloadVariArray') );
+        $this->set( 'libraryDownload', $libraryDownload );
+        $this->set( 'patronDownload', $patronDownload );
     }
 
     function national_top_download() {
@@ -2146,109 +2166,69 @@ STR;
       Desc : To show songs present in wishlist
      */
 
-    function my_wishlist() {
-        //set the layout
-        $this->layout = 'home';
+    public function my_wishlist() {
+
+		$this->layout  = 'home';
         $countryPrefix = $this->Session->read('multiple_countries');
-        //fetch the session variables
-        $libraryId = $this->Session->read('library');
-        $patronId = $this->Session->read('patron');
+        $libraryId 	   = $this->Session->read('library');
+        $patronId 	   = $this->Session->read('patron');
 
         //create logics for sorting
-        $sortArray = array('date', 'song', 'artist', 'album');
-        $sortOrderArray = array('asc', 'desc');
+        $sortArray 		= array( 'date', 'song', 'artist', 'album' );
+        $sortOrderArray = array( 'asc', 'desc' );
 
         if ( $this->RequestHandler->isPost() ) {
-            $sort = $this->params['form']['sort'];
-            $sortOrder = $this->params['form']['sortOrder'];
+        	$sort = $this->params['form']['sort'];
+        	$sortOrder = $this->params['form']['sortOrder'];
+        } else {
+        	$sort 	   = 'date';
+        	$sortOrder = 'desc';
         }
 
-        if (!in_array($sort, $sortArray)) {
-            $sort = 'date';
+        if ( !in_array( $sort, $sortArray ) ) {
+        	$sort = 'date';
         }
 
-        if (!in_array($sortOrder, $sortOrderArray)) {
-            $sortOrder = 'desc';
+        if ( !in_array( $sortOrder, $sortOrderArray ) ) {
+        	$sortOrder = 'desc';
         }
 
-        switch ($sort) {
-            case 'date':
-                $songSortBy = 'wishlists.created';
-                $videoSortBy = 'WishlistVideo.created';
-                $sortType = $sortOrder;
-                break;
-            case 'song':
-                $songSortBy = 'wishlists.track_title';
-                $videoSortBy = 'WishlistVideo.track_title';
-                $sortType = $sortOrder;
-                break;
-            case 'artist':
-                $songSortBy = 'wishlists.artist';
-                $videoSortBy = 'WishlistVideo.artist';
-                $sortType = $sortOrder;
-                break;
-            case 'album':
-                $songSortBy = 'wishlists.album';
-                $videoSortBy = 'Video.Title';
-                $sortType = $sortOrder;
-                break;
+        switch ( $sort ) {
+        	case 'date':
+        		$songSortBy  = 'wishlists.created';
+        		$videoSortBy = 'WishlistVideo.created';
+        		break;
+
+        	case 'song':
+        		$songSortBy  = 'wishlists.track_title';
+        		$videoSortBy = 'WishlistVideo.track_title';
+        		break;
+
+        	case 'artist':
+        		$songSortBy  = 'wishlists.artist';
+        		$videoSortBy = 'WishlistVideo.artist';
+        		break;
+
+        	case 'album':
+        		$songSortBy  = 'wishlists.album';
+        		$videoSortBy = 'Video.Title';
+        		break;
         }
 
         //check library and patron download limit  
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patronId, $libraryId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+        $libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
+        $patronDownload = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
 
-        $wishlistResults = Array();
+       	$wishlistResults 	   = $this->Song->getWishlistSongs( $countryPrefix, $libraryId, $patronId, $songSortBy, $sortOrder );
+        $wishlistResultsVideos = $this->WishlistVideo->getWishlistVideos( $countryPrefix, $libraryId, $patronId, $videoSortBy, $sortOrder );
 
-        $wishlistQuery = <<<STR
-                    SELECT 
-                            wishlists.*,
-                            Song.ReferenceID,
-                            Song.ProdID,                            
-                            Song.provider_type,
-                            Song.Advisory,
-                            Song.ArtistText,
-                            Song.FullLength_Duration,
-                            Albums.ProdID,
-                            Albums.provider_type,
-                            File.CdnPath,
-                            File.SourceURL,
-                            Country.Territory,
-                            Country.SalesDate,
-                            Country.StreamingSalesDate,
-                            Country.StreamingStatus,
-                            Country.DownloadStatus,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            File.SaveAsName 
-                            
-                            
-                    FROM
-                            Songs AS Song
-                                    LEFT JOIN
-                            wishlists AS wishlists ON ( (wishlists.ProdID = Song.ProdID) && (wishlists.provider_type = Song.provider_type) )
-                                    LEFT JOIN 
-                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)                                
-                                    LEFT JOIN
-                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '')
-                                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
-                    WHERE
-                            library_id='$libraryId' and patron_id='$patronId' order by $songSortBy $sortType                               
-
-      
-	  
-STR;
-        //execute the query
-        $wishlistResults = $this->Wishlist->query($wishlistQuery);
-
-        $wishlistResultsVideos = $this->WishlistVideo->find('all', array('joins' => array(array('table' => 'video', 'alias' => 'Video', 'type' => 'LEFT', 'conditions' => array('WishlistVideo.ProdID = Video.ProdID', 'WishlistVideo.provider_type = Video.provider_type')), array('table' => 'File', 'alias' => 'File', 'type' => 'LEFT', 'conditions' => array('Video.Image_FileID = File.FileID')), array('table' => $countryPrefix . 'countries', 'alias' => 'Country', 'type' => 'LEFT', 'conditions' => array('Country.ProdID = Video.ProdID', 'Video.provider_type = Country.provider_type', 'Country.SalesDate != ""'))), 'group' => 'WishlistVideo.id', 'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId), 'fields' => array('WishlistVideo.id', 'WishlistVideo.ProdID', 'WishlistVideo.provider_type', 'WishlistVideo.track_title', 'WishlistVideo.created', 'WishlistVideo.patron_id', 'WishlistVideo.library_id', 'WishlistVideo.artist', 'Video.Title', 'Video.ReferenceID', 'Video.ArtistText', 'Video.Advisory', 'Video.provider_type', 'File.CdnPath', 'File.SourceURL', 'Country.Territory', 'Country.SalesDate'), 'order' => "$videoSortBy $sortType"));
-
-        $this->set('wishlistResults', $wishlistResults);
-        $this->set('wishlistResultsVideos', $wishlistResultsVideos);
-        $this->set('sort', $sort);
-        $this->set('sortOrder', $sortOrder);
+        $this->set( 'wishlistResults', $wishlistResults );
+        $this->set( 'wishlistResultsVideos', $wishlistResultsVideos );
+        $this->set( 'libraryDownload', $libraryDownload );
+        $this->set( 'patronDownload', $patronDownload );
+        $this->set( 'libraryType', $this->Session->read( 'library_type' ) );
+        $this->set( 'sort', $sort );
+        $this->set( 'sortOrder', $sortOrder );
     }
 
     /*
@@ -2256,62 +2236,62 @@ STR;
       Desc : To show songs user downloaded in last 2 weeks
      */
 
-    function my_history() {
-        $this->layout = 'home';
-        $libraryId = $this->Session->read('library');
-        $patronId = $this->Session->read('patron');
+    public function my_history() {
 
+        $this->layout  = 'home';
+        $libraryId 	   = $this->Session->read('library');
+        $patronId 	   = $this->Session->read('patron');
         $countryPrefix = $this->Session->read('multiple_countries');
-
-        $sortArray = array('date', 'song', 'artist', 'album');
-        $sortOrderArray = array('asc', 'desc');
+        
+        $sortArray 		= array( 'date', 'song', 'artist', 'album' );
+        $sortOrderArray = array( 'asc', 'desc' );
 
         if ( $this->RequestHandler->isPost() ) {
-            $sort = $this->params['form']['sort'];
-            $sortOrder = $this->params['form']['sortOrder'];
+        	$sort 	   = $this->params['form']['sort'];
+        	$sortOrder = $this->params['form']['sortOrder'];
+        } else {
+        	$sort 	   = 'date';
+        	$sortOrder = 'desc';
+        }
+        
+        if ( !in_array( $sort, $sortArray ) ) {
+        	$sort = 'date';
         }
 
-        if (!in_array($sort, $sortArray)) {
-            $sort = 'date';
+        if ( !in_array( $sortOrder, $sortOrderArray ) ) {
+        	$sortOrder = 'asc';
         }
 
-        if (!in_array($sortOrder, $sortOrderArray)) {
-            $sortOrder = 'asc';
+        switch ( $sort ) {
+        	case 'date':
+        		$songSortBy  = 'Download.created';
+        		$videoSortBy = 'Videodownload.created';
+        		break;
+
+        	case 'song':
+        		$songSortBy  = 'Download.track_title';
+        		$videoSortBy = 'Videodownload.track_title';
+        		break;
+
+        	case 'artist':
+        		$songSortBy  = 'Download.artist';
+        		$videoSortBy = 'Videodownload.artist';
+        		break;
+
+        	case 'album':
+        		$songSortBy  = 'Song.Title';
+        		$videoSortBy = 'Video.Title';
+        		break;
         }
 
-        switch ($sort) {
-            case 'date':
-                $songSortBy = 'Download.created';
-                $videoSortBy = 'Videodownload.created';
-                $sortType = $sortOrder;
-                break;
-            case 'song':
-                $songSortBy = 'Download.track_title';
-                $videoSortBy = 'Videodownload.track_title';
-                $sortType = $sortOrder;
-                break;
-            case 'artist':
-                $songSortBy = 'Download.artist';
-                $videoSortBy = 'Videodownload.artist';
-                $sortType = $sortOrder;
-                break;
-            case 'album':
-                $songSortBy = 'Song.Title';
-                $videoSortBy = 'Video.Title';
-                $sortType = $sortOrder;
-                break;
-        }
+        $downloadResults 	  = $this->Download->getDownloadedSongs( $countryPrefix, $libraryId, $patronId, $songSortBy, $sortOrder );
+        $videoDownloadResults = $this->Videodownload->getDownloadedVideo( $libraryId, $patronId, $videoSortBy, $sortOrder );
 
-        $countryTableName = $countryPrefix . 'countries';
-        $downloadResults = Array();
-        $downloadResults = $this->Download->find('all', array('joins' => array(array('table' => 'Songs', 'alias' => 'Song', 'type' => 'LEFT', 'conditions' => array('Download.ProdID = Song.ProdID', 'Download.provider_type = Song.provider_type')), array('table' => $countryTableName, 'alias' => 'Country', 'type' => 'INNER', 'conditions' => array('Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type')), array('table' => 'Albums', 'alias' => 'Album', 'type' => 'LEFT', 'conditions' => array('Song.ReferenceID = Album.ProdID', 'Song.provider_type = Album.provider_type')), array('table' => 'File', 'alias' => 'File', 'type' => 'LEFT', 'conditions' => array('Album.FileID = File.FileID')), array('table' => 'File', 'alias' => 'Full_Files', 'type' => 'LEFT', 'conditions' => array('Song.FullLength_FileID = Full_Files.FileID'))), 'group' => 'Download.id', 'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'fields' => array('Download.ProdID', 'Download.provider_type', 'Download.track_title', 'Download.created', 'Download.patron_id', 'Download.library_id', 'Download.artist, Song.Title, Song.SongTitle, Song.FullLength_Duration, Song.ProdID,Song.Advisory,Song.ArtistText,Song.ReferenceID,Song.provider_type,Album.ProdID,Album.provider_type, File.CdnPath, File.SourceURL', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'Full_Files.CdnPath', 'Full_Files.SaveAsName'), 'order' => "$songSortBy $sortType"));
-
-        $this->set('downloadResults', $downloadResults);
-        $videoDownloadResults = $this->Videodownload->find('all', array('joins' => array(array('table' => 'video', 'alias' => 'Video', 'type' => 'LEFT', 'conditions' => array('Videodownload.ProdID = Video.ProdID', 'Videodownload.provider_type = Video.provider_type')), array('table' => 'File', 'alias' => 'File', 'type' => 'LEFT', 'conditions' => array('Video.Image_FileID = File.FileID'))), 'group' => 'Videodownload.id', 'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'fields' => array('Videodownload.ProdID', 'Videodownload.provider_type', 'Videodownload.track_title', 'Videodownload.created', 'Videodownload.patron_id', 'Videodownload.library_id', 'Videodownload.artist', 'Video.ReferenceID', 'Video.ArtistText', 'Video.Advisory', 'Video.provider_type', 'Video.Title', 'File.CdnPath', 'File.SourceURL'), 'order' => "$videoSortBy $sortType"));
-
-        $this->set('videoDownloadResults', $videoDownloadResults);
-        $this->set('sort', $sort);
-        $this->set('sortOrder', $sortOrder);
+        $this->set( 'downloadResults', $downloadResults );
+        $this->set( 'videoDownloadResults', $videoDownloadResults );
+        $this->set( 'libraryType', $this->Session->read( 'library_type' ) );
+        $this->set( 'sort', $sort );
+        $this->set( 'sortOrder', $sortOrder );
     }
 
     /*
