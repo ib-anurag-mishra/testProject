@@ -2443,6 +2443,8 @@ sub { top: 0.4em; }
 	position: relative;
 	margin-top: 10px;
 	height: 452px;
+	margin-left: 28px;
+	margin-right: 28px;
 	
 	ul {
 		width: 13000px;
@@ -2453,7 +2455,7 @@ sub { top: 0.4em; }
 		
 			display: block;
 			float: left;
-			padding:5px 13px 5px 5px;
+			padding:5px 3px 5px 5px;
 			position: relative;
 		
 			a {
