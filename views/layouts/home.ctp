@@ -785,7 +785,7 @@
                                 	<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
 								</div>
 								<div>
-									<input type="checkbox" name="doNotShow" value="no" id="doNotShowCheck"> Please do not show this message again
+									<input type="checkbox" name="doNotShow" value="no" id="doNotShowCheck"> Do not show this message again
 								</div>
                             </div>
                         </div>
