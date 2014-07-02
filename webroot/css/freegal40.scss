@@ -2794,16 +2794,16 @@ sub { top: 0.4em; }
 		position: relative;
 		height: 320px;
 		
-		&:after {
+		// &:after {
 			
-			content: "";
-			position: absolute;
-			right: 0;
-			top:0;
-			background: url(../img/us-top-10/us-top-10-tapered-shadow.png);
-			width: 11px;
-			height: 336px;
-		}
+		// 	content: "";
+		// 	position: absolute;
+		// 	right: 0;
+		// 	top:0;
+		// 	background: url(../img/us-top-10/us-top-10-tapered-shadow.png);
+		// 	width: 11px;
+		// 	height: 336px;
+		// }
 		
 		.album-scrollable {
 			
@@ -2845,23 +2845,7 @@ sub { top: 0.4em; }
 						}
 						
 						.top-10-ranking {
-					
-							// position: absolute;
-							// left: 5px;
-							// top:5px;
-							// background: rgb(255,255,255); /* IE8 fallback */
-							// background: rgba(255,255,255,.8);
-							// width: 80px;
-							// height: 32px;
-							// font-size: 28px;
-							// line-height: 32px;
-							
-							// -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.5);
-							// -moz-box-shadow: 1px 1px 3px rgba(0,0,0,.5);
-							// box-shadow: 1px 1px 3px rgba(0,0,0,.5);
-							// text-align: center;
-							// font-style: italic;
-							// font-weight: bold;
+
 
 							position: absolute;
 							right: 6px;
