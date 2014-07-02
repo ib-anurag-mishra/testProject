@@ -780,12 +780,16 @@
                             Please add your email address here to receive twice-weekly email reminders of your available downloads.
                             <br /><br /><br />
                             <div >
-                                <b>Email :</b>
-                                <input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
-				<input type="checkbox" style="margin-left:105px;" name="doNotShow" value="no" id="doNotShowCheck"> Please do not show this message again
+								<div id="emaildiv" style="float:left;width:50%;">
+                                	<b>Email :</b>
+                                	<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
+								</div>
+								<div>
+									<input type="checkbox" name="doNotShow" value="no" id="doNotShowCheck"> Please do not show this message again
+								</div>
                             </div>
                         </div>
-                        <br />
+                        <br/>
                         <input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
 
                     </span>
