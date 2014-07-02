@@ -317,5 +317,7 @@
 
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </section> <!-- end .video-top-genres -->
 </section> <!-- end .videos -->
