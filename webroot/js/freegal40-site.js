@@ -551,10 +551,10 @@ $(document).ready(function() {
 
 
 
-    /* end my top 10 page */
 
 
-    /****** Search page ******/
+
+
 
     $videos_scrollable_video_container = $('.videos-scrollable').find('.video-container');
     $videos_scrollable_video_container.on('mouseenter', function() {
@@ -574,7 +574,7 @@ $(document).ready(function() {
         $this.find('.wishlist-popover').removeClass('active');
     });
 
-
+    /* end my top 10 page */
 
 
 
