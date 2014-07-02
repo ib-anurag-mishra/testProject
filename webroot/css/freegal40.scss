@@ -2846,22 +2846,38 @@ sub { top: 0.4em; }
 						
 						.top-10-ranking {
 					
-							position: absolute;
-							left: 5px;
-							top:5px;
-							background: rgb(255,255,255); /* IE8 fallback */
-							background: rgba(255,255,255,.8);
-							width: 80px;
-							height: 32px;
-							font-size: 28px;
-							line-height: 32px;
+							// position: absolute;
+							// left: 5px;
+							// top:5px;
+							// background: rgb(255,255,255); /* IE8 fallback */
+							// background: rgba(255,255,255,.8);
+							// width: 80px;
+							// height: 32px;
+							// font-size: 28px;
+							// line-height: 32px;
 							
-							-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.5);
-							-moz-box-shadow: 1px 1px 3px rgba(0,0,0,.5);
-							box-shadow: 1px 1px 3px rgba(0,0,0,.5);
+							// -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.5);
+							// -moz-box-shadow: 1px 1px 3px rgba(0,0,0,.5);
+							// box-shadow: 1px 1px 3px rgba(0,0,0,.5);
+							// text-align: center;
+							// font-style: italic;
+							// font-weight: bold;
+
+							position: absolute;
+							right: 6px;
+							top: 6px;
 							text-align: center;
-							font-style: italic;
+							width: 40px;
+							height: 20px;
+							filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
+							opacity: 0.75;
+							color: #000;
+							font-size: 16px;
+							font-family: Helvetica, Arial, sans-serif;
 							font-weight: bold;
+							background: #fff;
+							font-style: italic;
+							line-height: 20px;							
 							
 						}
 						
