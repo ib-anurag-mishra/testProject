@@ -756,6 +756,26 @@ Class GenresController extends AppController
         }
     }
     
+     function searchrecords($type, $search_text)
+    {
+        $search_text = strtolower(trim($search_text));
+        $search_text = preg_replace('/\s\s+/', ' ', $search_text);
+        $insertArr['search_text'] = $search_text;
+        $insertArr['type'] = $type;
+        $genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
+        if (count($genre_id_count_array) > 0)
+        {
+            $insertArr['count'] = $genre_id_count_array[0]['Searchrecord']['count'] + 1;
+            $insertArr['id'] = $genre_id_count_array[0]['Searchrecord']['id'];
+        }
+        else
+        {
+            $insertArr['count'] = 1;
+        }
+
+        return $insertArr;
+    }
+    
     /*
       Function Name : combine_genres
       Desc : Combining similiar Genres
