@@ -1634,6 +1634,12 @@ $(document).ready(function() {
 
     });
 
+    $('.my-top-100-page .album-container .add-to-playlist-button').next('ul').on('mouseleave',function(){
+        $(this).removeClass('active');
+
+    });
+
+
 
 
     $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
