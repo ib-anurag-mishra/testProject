@@ -4,7 +4,7 @@ class AppController extends Controller
 
     var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library','Announcement');
     var $view = 'Dataencode';
     var $patron_country;
     var $patron_id;
@@ -45,7 +45,7 @@ class AppController extends Controller
             $patronid = $this->Session->read("patron");
             if (empty($patronid))
             {
-                $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url', 'library_image_name', 'library_country', 'library_territory', 'library_authentication_method', 'library_type', 'test_library_type', 'library_block_explicit_content'), 'recursive' => -1));
+                $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url', 'library_image_name', 'library_country', 'library_territory', 'library_authentication_method', 'library_type', 'test_library_type', 'library_block_explicit_content','library_announcement'), 'recursive' => -1));
 
                 $this->Session->write("subdomain", $subdomains);
                 $this->Session->write("lId", $libraryIDArray['Library']['id']);
@@ -54,6 +54,7 @@ class AppController extends Controller
                 $this->Session->write("library", $libraryIDArray['Library']['id']);
                 $this->Session->write("library", $libraryIDArray['Library']['id']);
                 $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
+                $this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
                 $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }
         }
@@ -62,13 +63,14 @@ class AppController extends Controller
             $patronid = $this->Session->read("patron");
             if (empty($patronid))
             {
-                $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory', 'test_library_type', 'library_type', 'library_block_explicit_content'), 'recursive' => -1));
+                $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory', 'test_library_type', 'library_type', 'library_block_explicit_content','library_announcement'), 'recursive' => -1));
                 $country = $libraryData['Library']['library_territory'];
                 $this->Session->write("libCountry", $country);
                 $this->Session->write("territory", $country);
                 $this->Session->write("lId", 1);
                 $this->Session->write("library", 1);
                 //$this->Session->write("library_type", $libraryData['Library']['test_library_type']);
+                $this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
                 $this->Session->write("block", (($libraryData['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }
             elseif ($this->Session->read("patron") != "" && $this->Session->read("library") != "")
@@ -126,6 +128,7 @@ class AppController extends Controller
         header('Pragma: no-cache');
         //$this->checkOnlinePatron();
         // add announcement in the cache
+        
         $announcment_rs = Cache::read("announcementCache");
         if ($announcment_rs === false)
         {
@@ -143,10 +146,20 @@ class AppController extends Controller
             $announcmentValue = '';
         }
         $this->set('announcment_value', $announcmentValue);
-
-
-
-
+        
+        $isMovie = $this->Session->read("library_announcement");
+        if($isMovie == 1) {
+            $mvAnnouncment = Cache::read("moviesannouncementCache");
+            if ($mvAnnouncment === false)
+            {
+                $this->Announcement->setDataSource('movies');
+                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 3";
+                $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
+                Cache::write("moviesannouncementCache", $mvAnnouncment);
+            }
+            $this->set('movieAnnouncmentValue', $mvAnnouncment);
+            $this->Announcement->setDataSource('default');
+        }        
         /*
          * Below Code of Register Concert is Commented as per Request
          */

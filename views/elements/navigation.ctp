@@ -894,6 +894,25 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<?php echo $announcment_value; ?>
 				</div>
 			</div>
+
+                        <?php 
+                        if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
+
+                            $hostName = $_SERVER['SERVER_NAME'];
+                            $domain = explode('.',$hostName);
+                        ?>
+                            <div class="movie-announcements">
+                                 <?php foreach($movieAnnouncmentValue as $value) { ?>   
+                                    <div class="announcement">
+                                        <?php echo $value['announcements']['title']; ?>
+                                        <a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" >
+                                            <img src="<?php echo Configure::read('App.CDN').'blockimg/'.$value['announcements']['image']; ?>" width="146" height="146" alt="image description" />
+                                        </a>                                              
+                                    </div>
+                                    <br/>
+                                 <?php } ?>   
+                            </div>
+                        <?php } ?>
 		</section>
 		<div class="content" style="<?php echo $section_class; ?>">
 			<span class="ajaxmessage44" id="ajaxflashMessage44"></span>
