@@ -2891,6 +2891,20 @@ sub { top: 0.4em; }
 								margin-bottom: 0;
 								width: 100%;
 
+								a {
+
+									display: block;
+									padding: 10px;
+									text-decoration: none;
+									color: #000;
+									font-size: 11px;
+
+									&.create-new-playlist {
+
+										font-weight: bold;
+									}
+								}
+
 							}
 
 						}						
