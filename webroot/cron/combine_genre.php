@@ -11,14 +11,11 @@
  **/
 
 error_reporting(E_ALL);
-ini_set('display_errors', 2);
+ini_set('display_errors', 0);
 set_time_limit(0);
 
 require "logfile.php";
-
-$conn = mysql_connect("10.208.19.162","freegal_test","c45X^E1X7:TQ");       // Freegaldev
-//$conn = mysql_connect("192.168.100.114","freegal_prod","}e47^B1EO9hD");       // Freegal Production
-mysql_select_db("freegal", $conn);
+require "dbconnect.php";
 
 $lf = new logfile();
 
