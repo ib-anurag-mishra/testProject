@@ -55,7 +55,7 @@ class WishlistVideo extends AppModel
 		}
 	}
 	
-	public function getWishlistVideos( $countryPrefix, $libraryId, $patronId,$videoSortBy, $sortType ) {
+	public function getWishlistVideos( $countryPrefix, $libraryId, $patronId, $videoSortBy, $sortType ) {
 		
 		$options = array(
 						'joins' => array(

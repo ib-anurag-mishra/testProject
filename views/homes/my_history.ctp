@@ -2,7 +2,6 @@
     <input id='sort' type='hidden' name="sort" value="<?=$sort?>" />
     <input id='sortOrder' type='hidden' name="sortOrder" value="<?=$sortOrder?>" />
 </form>
-
 <section class="recent-downloads-page">
 	<div class="breadcrumbs">
 		<?php
@@ -78,7 +77,7 @@
 	            }
             ?>
             <div class="album-filter-button filter <?=$active?> <?=$toggled?>" style="cursor:pointer;"><?php echo __('Album'); ?></div>  
-			<div class="download-button filter"style="cursor:pointer;"><?php echo __('Download'); ?></div>
+			<div class="download-button filter"><?php echo __('Download'); ?></div>
 		</nav>
 	
 	<div class="recent-downloads-shadow-container" style="display:none">

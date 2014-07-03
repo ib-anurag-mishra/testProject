@@ -99,7 +99,7 @@
 						</div>
 						<?php
 						if ( isset( $patronId ) && ! empty( $patronId ) ) {
-							if ( isset( $libraryId ) && $libraryId == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1) {
+							if ( isset( $libraryType ) && $libraryType == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1) {
 
 								$song_title = $this->Home->explicitContent( $value['Song']['Advisory'], $value['Song']['SongTitle'] );
 								echo $this->Queue->getStreamNowLabel($value['streamUrl'], $song_title, $value['Song']['ArtistText'], $value['totalseconds'], $value['Song']['ProdID'], $value['Song']['provider_type']);
@@ -183,15 +183,15 @@
 						<a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?> </a>
 						<?php
 						}
-						if ( isset($patronId) && ! empty( $patronId ) ) {
+						if ( isset( $patronId ) && ! empty( $patronId ) ) {
 						?>
 							<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
 							<div class="wishlist-popover">
 								<input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song" />
 								<?php
-								if ( isset( $libraryId ) && $libraryId == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1) {
+								if ( isset( $libraryType ) && $libraryType == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1) {
 								?>
-								<a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+									<a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
 								<?php 
 								}
 								$wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);

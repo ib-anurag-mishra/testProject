@@ -173,7 +173,7 @@
         <div class="my-video-wishlist-scrollable">
             <div class="row-container">
                 <?php
-                if ( isset( $wishlistResultsVideos ) && is_array( $wishlistResultsVideos ) && count($wishlistResultsVideos) > 0 ) {
+                if ( isset( $wishlistResultsVideos ) && is_array( $wishlistResultsVideos ) && count( $wishlistResultsVideos ) > 0 ) {
                     foreach ($wishlistResultsVideos as $wishlistResultsVideo):
                 ?>
                         <div class="row clearfix" id="wishlistvideo-<?php echo $wishlistResultsVideo['WishlistVideo']['id'] . '-' . $wishlistResultsVideo['WishlistVideo']['ProdID'] ?>">
