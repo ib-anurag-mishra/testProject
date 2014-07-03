@@ -1624,7 +1624,12 @@ $(document).ready(function() {
 
     console.log('inside doc ready');
 
-    $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon, .my-top-100-page .album-container .add-to-playlist-button,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
+    $('.my-top-100-page .album-container .add-to-playlist-button').on('click',function(e){
+        e.preventDefault();
+        console.log('inside doc click');
+    });
+
+    $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
     {
         e.preventDefault();
 
