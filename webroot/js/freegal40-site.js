@@ -1639,6 +1639,8 @@ $(document).ready(function() {
 
     });
 
+    $('.my-top-100-page .album-container .add-to-playlist-button').next('ul').bindMouseWheel();
+
 
 
 
