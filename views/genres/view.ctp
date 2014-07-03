@@ -673,9 +673,9 @@ elseif ($this->Session->check('calledAlbum'))
     function scrollToSelectedGenre()
     {
         sleep(100);
-        var to_scroll = $(document).find(".genre-list");
-        $(document).find(".genre-list li").each(function() {
-            if ($(this).find('a').hasClass('selected'))
+        var to_scroll = $(document).find(".genre-column");
+        $(document).find(".genre-column li").each(function() {
+            if ($(this).find('a').hasClass('active'))
             {
                 var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
                 to_scroll.animate({
