@@ -1628,6 +1628,7 @@ $(document).ready(function() {
 
         if ($(this).hasClass('playlist-menu-icon'))
         {
+            console.log('inside if');
             var oldList = $(this).next('ul');
             oldList.empty();
             var queuelist = $(document).find('.playlist-options-new').find('ul').html();
@@ -1635,6 +1636,7 @@ $(document).ready(function() {
         }
         else
         {
+            console.log('inside else');
             var queuelist = $(document).find('.playlist-options-new').html();
             var oldList = $(this).next('.options-menu').find('.playlist-menu');
             oldList.remove();
