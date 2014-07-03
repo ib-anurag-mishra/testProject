@@ -3214,50 +3214,62 @@ STR;
         }
     }
 
-    function new_releases() {
+	public function new_releases() {
+
         $this->layout = 'home';
 
-        //fetch the session variables
-        $libraryId = $this->Session->read('library');
-        $patronId = $this->Session->read('patron');
+        $libraryId = $this->Session->read( 'library' );
+        $patronId  = $this->Session->read( 'patron' );
+        $territory = $this->Session->read( 'territory' );
 
-        if (!empty($libraryId) && !empty($patronId)) {
-            $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
-            $patronDownload = $this->Downloads->checkPatronDownload($patronId, $libraryId);
-            $this->set('libraryDownload', $libraryDownload);
-            $this->set('patronDownload', $patronDownload);
+        if ( !empty( $libraryId ) && !empty( $patronId ) ) {
+
+        	$libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
+            $patronDownload = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
+
+            $this->set( 'libraryDownload', $libraryDownload );
+            $this->set( 'patronDownload', $patronDownload );
         }
 
-        $territory = $this->Session->read('territory');
-        //get Advisory condition
-        //////////////////////////////////Videos/////////////////////////////////////////////////////////            
-        $coming_soon_videos = Cache::read("new_releases_videos" . $territory);
-        if ($coming_soon_videos === false) {
-            $coming_soon_videos = $this->Common->getNewReleaseVideos($territory);
+        /************************************* Videos *************************************/
+        if( $this->Session->read( 'block' ) == 'yes' ) {
+
+        	$coming_soon_videos = Cache::read( 'new_releases_videos_none_explicit' . $territory );
+	
+	        if ( $coming_soon_videos === false ) {
+	            $coming_soon_videos = $this->Common->getNewReleaseVideos( $territory, true );
+	        }
+        } else {
+        	$coming_soon_videos = Cache::read( 'new_releases_videos' . $territory );
+
+        	if ( $coming_soon_videos === false ) {
+        		$coming_soon_videos = $this->Common->getNewReleaseVideos( $territory );
+        	}
         }
 
-        $this->set('new_releases_videos', $coming_soon_videos);
+        $this->set( 'new_releases_videos', $coming_soon_videos );
 
-        //////////////////////////////////Albums/////////////////////////////////////////////////////////
+        /************************************ Albums ***************************************/
+        if( $this->Session->read( 'block' ) == 'yes' ) {
         
-        if( $this->Session->read('block') == 'yes' ) {
-        
-        	$new_releases_albums_rs = Cache::read("new_releases_albums_none_explicit" . $territory);
-        
+        	$new_releases_albums_rs = Cache::read( 'new_releases_albums_none_explicit' . $territory );
+
         	if ($new_releases_albums_rs === false) {
-        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory, true);
+        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums( $territory, true );
         	}
         } else {
-        
-        	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
-        
+        	$new_releases_albums_rs = Cache::read( 'new_releases_albums' . $territory );
+
         	if ($new_releases_albums_rs === false) {
-        
-        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums( $territory );
         	}
         }
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
+        
+        $this->set( 'libraryId', $libraryId );
+        $this->set( 'patronId', $patronId );
+        $this-set( 'libraryType', $this->Session->read('library_type') );
     }
 
     /*
