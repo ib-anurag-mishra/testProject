@@ -2877,9 +2877,20 @@ sub { top: 0.4em; }
 							border: 1px solid #999;
 							z-index: 1;
 
+
+
 							&.active {
 
 								display: block;
+							}
+
+							> li {
+								display: block;
+								background: #fff;
+								float: none;
+								margin-bottom: 0;
+								width: 100%;
+
 							}
 
 						}						
