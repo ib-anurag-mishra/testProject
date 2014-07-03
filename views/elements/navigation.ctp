@@ -906,7 +906,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     <div class="announcement">
                                         <?php echo $value['announcements']['title']; ?>
                                         <a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" >
-                                            <img src="<?php echo Configure::read('App.CDN').'blockimg/'.$value['announcements']['image']; ?>" width="146" height="146" alt="image description" />
+                                            <img src="<?php echo Configure::read('App.Movies_CDN').'announcements/'.$value['announcements']['image']; ?>" width="146" height="146" alt="image description" />
                                         </a>                                              
                                     </div>
                                     <br/>
