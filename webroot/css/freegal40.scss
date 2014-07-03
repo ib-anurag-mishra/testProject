@@ -2877,7 +2877,7 @@ sub { top: 0.4em; }
 							border: 1px solid #999;
 							z-index: 1;
 
-							&:active {
+							&.active {
 
 								display: block;
 							}
