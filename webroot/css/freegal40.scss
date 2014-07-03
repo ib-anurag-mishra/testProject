@@ -2899,6 +2899,12 @@ sub { top: 0.4em; }
 									color: #000;
 									font-size: 11px;
 
+									&:hover {
+
+										background: #cfeff9;
+										color: #000;
+									}
+
 									&.create-new-queue-btn {
 
 										font-weight: bold;
