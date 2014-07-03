@@ -1622,30 +1622,30 @@ $(document).ready(function() {
         return false;
     });
 
-    console.log('inside doc ready');
+
 
     $('.my-top-100-page .album-container .add-to-playlist-button').on('click',function(e){
         e.preventDefault();
         console.log('inside doc click');
+        
     });
+
+
 
     $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
     {
         e.preventDefault();
 
-        console.log('inside doc find');
 
         if ($(this).hasClass('playlist-menu-icon'))
-        {
-            console.log('inside if');
+        {           
             var oldList = $(this).next('ul');
             oldList.empty();
             var queuelist = $(document).find('.playlist-options-new').find('ul').html();
             $(this).next('ul').append(queuelist);
         }
         else
-        {
-            console.log('inside else');
+        {            
             var queuelist = $(document).find('.playlist-options-new').html();
             var oldList = $(this).next('.options-menu').find('.playlist-menu');
             oldList.remove();
