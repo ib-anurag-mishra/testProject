@@ -1626,8 +1626,11 @@ $(document).ready(function() {
 
     $('.my-top-100-page .album-container .add-to-playlist-button').on('click',function(e){
         e.preventDefault();
-        console.log('inside doc click');
         
+        var oldList = $(this).next('ul');
+        oldList.empty();
+        var queuelist = $(document).find('.playlist-options-new').find('ul').html();
+        $(this).next('ul').append(queuelist);
     });
 
 
