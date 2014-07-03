@@ -14,9 +14,9 @@ class HomeHelper extends AppHelper {
 		
 		if ( isset( $advisory ) && 'T' == $advisory ) {
 			if ( $isColor === true ) {
-				return $str . '<span style="color: red;display: inline;">(Explicit)</span>';
+				return $str . ' <span style="color: red;display: inline;">(Explicit)</span>';
 			} else {
-				return $str . '(Explicit)';
+				return $str . ' (Explicit)';
 			}
 		} else {
 			return $str;

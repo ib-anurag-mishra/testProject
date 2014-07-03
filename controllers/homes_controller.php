@@ -3269,7 +3269,7 @@ STR;
         
         $this->set( 'libraryId', $libraryId );
         $this->set( 'patronId', $patronId );
-        $this-set( 'libraryType', $this->Session->read('library_type') );
+        $this->set( 'libraryType', $this->Session->read('library_type') );
     }
 
     /*
