@@ -1807,6 +1807,10 @@ sub { top: 0.4em; }
                 background: none repeat scroll 0 0 #eeeeee;
                 font-size: 14px;
                 padding: 10px;
+                strong {
+
+                        font-weight: bold;
+                } 
 	}        
 }
 
