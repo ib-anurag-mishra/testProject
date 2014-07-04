@@ -47,5 +47,5 @@ if($download != ''){
 	$str .=  "Libraries reached their 85% of downloads\n\n".$download;
 	print "Libraries reached their 85% of downloads\n\n".$download;
 }
-echo mail("tech@m68interactive.com,briand@libraryideas.com,jimp@libraryideas.com","Library Status",$str,'From:no-reply@freegalmusic.com');exit;
+echo mail("tech@libraryideas.com,briand@libraryideas.com,jimp@libraryideas.com","Library Status",$str,'From:no-reply@freegalmusic.com');exit;
 ?>
