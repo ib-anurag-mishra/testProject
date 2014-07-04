@@ -645,4 +645,3 @@ class VideosController extends AppController {
     	
     	return $videoWishlistDetails;
     }
-}
