@@ -382,7 +382,7 @@
                                 ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                         </div>
                         <div class="artist-name">
-                            <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($value['Video']['ArtistText']); ?>">
+                            <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($video['Video']['ArtistText']); ?>">
                                 <?php
                                 if (strlen($value['Video']['ArtistText']) >= 35)
                                 {
