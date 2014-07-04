@@ -280,13 +280,18 @@
                             <?php endif; ?>
                         </div>
                         <div class="artist-name">
-                            <a title="<?= $this->getValidText( $this->getTextEncode( $value['Video']['ArtistText'] ) ); ?>" href="/artists/album/<?= base64_encode( $videosData['Video']['ArtistText'] ); ?>">
-                            <?php
-                                if ( strlen( $value['Video']['ArtistText'] ) >= 35 ):
-                                    echo $this->getTextEncode( substr( $value['Video']['ArtistText'], 0, 35 ) ) . "..";
-                                else:
-                                    echo $this->getTextEncode( $value['Video']['ArtistText'] );
-                                endif;
+                  <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($value['Video']['ArtistText']); ?>">
+                                <?php
+                                if (strlen($value['Video']['ArtistText']) >= 35)
+                                {
+                                    $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
+                                }
+                                else
+                                {
+                                    $VideoArtist = $this->getTextEncode($value['Video']['ArtistText']);
+                                }
+                                echo $VideoArtist;
+
                                 ?>
                             </a>
                         </div>
