@@ -153,7 +153,7 @@ class AppController extends Controller
             if ($mvAnnouncment === false)
             {
                 $this->Announcement->setDataSource('movies');
-                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 3";
+                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
                 $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
                 Cache::write("moviesannouncementCache", $mvAnnouncment);
             }

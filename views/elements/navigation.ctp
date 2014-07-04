@@ -894,23 +894,30 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<?php echo $announcment_value; ?>
 				</div>
 			</div>
+                        <br/>
 
                         <?php 
                         if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
 
                             $hostName = $_SERVER['SERVER_NAME'];
                             $domain = explode('.',$hostName);
+                            $i = 0;
                         ?>
                             <div class="movie-announcements">
-                                 <?php foreach($movieAnnouncmentValue as $value) { ?>   
-                                    <div class="announcement">
-                                        <?php echo $value['announcements']['title']; ?>
-                                        <a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" >
-                                            <img src="<?php echo Configure::read('App.Movies_CDN').'announcements/'.$value['announcements']['image']; ?>" width="146" height="146" alt="image description" />
-                                        </a>                                              
-                                    </div>
-                                    <br/>
-                                 <?php } ?>   
+                                 <p style="font-size: small; font-family: verdana, geneva;"> 
+                                    Did you know that Freegal is also a movie service? You can stream full-length concerts, and top movies like
+                                  </p>  
+                                 <?php foreach($movieAnnouncmentValue as $value) { 
+                                            $i++;
+                                  ?>   
+                                <strong><a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" >
+                                    <?php echo '"'.$value['announcements']['title'].'"'; ?>
+                                </a></strong>
+                                 <?php if($i == 1){
+                                            echo "and";
+                                        }
+                                  } ?> 
+                                 <strong><a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" >Click here to log in</a></strong>
                             </div>
                         <?php } ?>
 		</section>
