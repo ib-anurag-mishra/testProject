@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','redirection','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','manage_notification','saveNotification','unsubscribe', 'isPatronLogin','savestreampopup', 'capita', 'symws');
+		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','redirection','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','manage_notification','saveNotification','unsubscribe', 'isPatronLogin','savestreampopup', 'capita', 'symws', 'savenotifypopup');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -452,12 +452,17 @@ function login($library = null){
                                     $this->Session->write("isLibaryExistInTimzone", 0);                               
                                 }        
                                 
-                                //check if the notification entry is already there in the notification_subscription table
+                                //check if the notification entry is already there in the notification_subscription table and notify_popup value in patrons table
+								$curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));
                                 $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
                                 $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
                                 if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
                                     $this->Session->write("showNotificationPopup", 'yes');                               
-                                }else{
+                                }
+								else if( $curpatron['Currentpatron']['notify_popup'] == 'no') {
+						 			$this->Session->write("showNotificationPopup", 'yes');
+                                }
+								else{
                                     $this->Session->write("showNotificationPopup", 'no');                               
                                 }
                                 
@@ -1394,7 +1399,7 @@ function login($library = null){
             }
         }
         
-        /*
+    /*
         Function Name : saveNotification
         Desc : For saving the notification informaiton using ajax call from the home.ctp popup
     */
@@ -1428,6 +1433,36 @@ function login($library = null){
                 $this->Currentpatron->setDataSource('default');         
             }
         }
+
+	/*
+        Function Name : savenotifypopup
+        Desc : For saving the do not notify informaiton in current patron using ajax call from the home.ctp popup
+    */
+        function savenotifypopup(){
+
+            $this->layout = false;
+            $this->autoRender = false;
+            
+            if(isset($_REQUEST['pid']) && isset($_REQUEST['lid']) && $_REQUEST['lid']!=''  && $_REQUEST['pid']!='') 
+            {
+                $patronId = $_REQUEST['pid'];
+                $libaryID = $_REQUEST['lid'];
+                
+                $this->Currentpatron->setDataSource('master');
+                
+                //check if record is already exist for this patron and library
+                $currentPatronData = $this->Currentpatron->find('first', array('conditions' => array('libid' => $libaryID,'patronid' => $patronId)));
+                if(count($currentPatronData) > 0) {
+                        $this->Currentpatron->setDataSource('master');
+                        $currentPatronData['Currentpatron']['notify_popup'] = 'no';
+                        $this->Currentpatron->set($currentPatronData['Currentpatron']);
+                        $this->Currentpatron->save();   
+                        $this->Session->write('showNotificationPopup','yes');
+                }
+                $this->Currentpatron->setDataSource('default');         
+            }
+        }
+
    
     /*
         Function Name : ilogin
