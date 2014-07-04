@@ -465,57 +465,230 @@ class Videodownload extends AppModel
 		}
 	}
 
-        /**
-         * This function is used to return the downlaod count 
-         * for the current patron 
-         * 
-         * @param string $library_id
-         * @param string $patron_id
-         * @param string $start_date
-         * @param string $end_date
-         */
-        function getPatronDownloadCount($library_id , $patron_id , $start_date , $end_date )
-        {
-            return $this->find(
-                    'all', array(
-                'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
-                'conditions' => array(
-                    'library_id' => $library_id,
-                    'patron_id' => $patron_id,
-                    'history < 2',
-                    'created BETWEEN ? AND ?' => array($start_date, $end_date)
-                ),
-                'group' => 'ProdID',
-            ));
-        }
-        
-        /**
-         * This function check if the video is downloaded or not.
-         * and it return the count.
-         * 
-         * @param int $prodId
-         * @param string $provider_type
-         * @param int $library_id
-         * @param int $patron_id
-         * @param datetime $start_date
-         * @param datetime $end_date
-         * @return array
-         */
-        function checkVideoDownloadStatus($prodId, $provider_type,$library_id , $patron_id , $start_date , $end_date)
-        {
-             return $this->find(
-                    'all', array(
-                'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
-                'conditions' => array(
-                    'ProdID' => $prodId,
-                    'provider_type' => $provider_type,
-                    'library_id' => $library_id,
-                    'patron_id' => $patron_id,
-                    'history < 2',
-                    'created BETWEEN ? AND ?' => array($start_date, $end_date)
-                ),
-                'group' => 'ProdID',
-            ));
-        }
+	/**
+	 * This function is used to return the downlaod count
+	 * for the current patron
+	 *
+	 * @param string $library_id
+	 * @param string $patron_id
+	 * @param string $start_date
+	 * @param string $end_date
+	 */
+	function getPatronDownloadCount($library_id , $patron_id , $start_date , $end_date )
+	{
+		return $this->find(
+				'all', array(
+						'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+						'conditions' => array(
+								'library_id' => $library_id,
+								'patron_id' => $patron_id,
+								'history < 2',
+								'created BETWEEN ? AND ?' => array($start_date, $end_date)
+						),
+						'group' => 'ProdID',
+				));
+	}
+
+	/**
+	 * This function check if the video is downloaded or not.
+	 * and it return the count.
+	 *
+	 * @param int $prodId
+	 * @param string $provider_type
+	 * @param int $library_id
+	 * @param int $patron_id
+	 * @param datetime $start_date
+	 * @param datetime $end_date
+	 * @return array
+	 */
+	function checkVideoDownloadStatus($prodId, $provider_type,$library_id , $patron_id , $start_date , $end_date)
+	{
+		return $this->find(
+				'all', array(
+						'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+						'conditions' => array(
+								'ProdID' => $prodId,
+								'provider_type' => $provider_type,
+								'library_id' => $library_id,
+								'patron_id' => $patron_id,
+								'history < 2',
+								'created BETWEEN ? AND ?' => array($start_date, $end_date)
+						),
+						'group' => 'ProdID',
+				));
+	}
+
+	public function fetchVideodownloadTopDownloadedVideos($prefix) {
+	
+		$this->unBindModel(array('belongsTo' => array('Genre')));
+	
+		$options = array(
+				'conditions' => array(
+						'`Country`.`SalesDate` <=' => 'NOW()',
+						'`Video`.`DownloadStatus`' => '1'
+				),
+				'group' => array('`Videodownload`.`ProdID`'),
+				'order' => array('COUNT DESC'),
+				'limit' => 100,
+				'joins' => array(
+						array(
+								'table' => '`video`',
+								'alias' => '`Video`',
+								'type' 	=> 'LEFT',
+								'conditions' => array(
+										'`Videodownload`.`ProdID` = `Video`.`ProdID`',
+										'`Videodownload`.`provider_type` = `Video`.`provider_type`'
+								)
+						),
+						array(
+								'table' => '`File`',
+								'alias' => '`File`',
+								'type'  => 'LEFT',
+								'conditions' => array('`Video`.`Image_FileID` = `File`.`FileID`')
+						),
+						array(
+								'table' => '`File`',
+								'alias' => '`Video_file`',
+								'type'	=> 'LEFT',
+								'conditions' => array('`Video_file`.`FileID` = `Video`.`FullLength_FileID`')
+						),
+						array(
+								'table' => '`' . $prefix . 'countries`',
+								'alias' => '`Country`',
+								'type'	=> 'LEFT',
+								'conditions' => array(
+										'`Video`.`ProdId` = `Country`.`ProdId`',
+										'`Video`.`provider_type` = `Country`.`provider_type`'
+								)
+						)
+				),
+				'fields' => array(
+						'`Videodownload`.`ProdID`',
+						'`Video`.`ProdID`',
+						'`Video`.`provider_type`',
+						'`Video`.`VideoTitle`',
+						'`Video`.`ArtistText`',
+						'`Video`.`Advisory`',
+						'`File`.`CdnPath`',
+						'`File`.`SourceURL`',
+						'`Video_file`.`SaveAsName`',
+						'COUNT(DISTINCT(`Videodownload`.`id`)) AS COUNT',
+						'`Country`.`SalesDate`'
+				)
+		);
+	
+		return $this->find('all', $options);
+	}
+	
+	public function fetchVideodownloadTopDownloadedVideosByLibraryIdAndCreated($libraryId) {
+	
+		$options = array(
+				'conditions' => array('library_id' => $libraryId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))),
+				'group' => array('ProdID'),
+				'fields' => array(
+						'ProdID',
+						'COUNT(DISTINCT id) AS countProduct',
+						'provider_type'
+				),
+				'order' => 'countProduct DESC',
+				'limit' => 15
+		);
+			
+		$this->find('all', $options);
+	}
+	
+	public function fetchVideodownloadTopVideoGenre( $prefix, $territory, $genre, $explicitContent = true ) {
+	
+		$this->unBindModel(array('belongsTo' => array('Genre')));
+	
+		$options = array(
+				'fields' => array(
+						'Videodownload.ProdID',
+						'Video.ProdID',
+						'Video.Advisory',
+						'Video.ReferenceID',
+						'Video.provider_type',
+						'Video.VideoTitle',
+						'Video.Genre',
+						'Video.ArtistText',
+						'File.CdnPath',
+						'File.SourceURL',
+						'COUNT(DISTINCT(Videodownload.id)) AS COUNT',
+						'Country.SalesDate'
+				),
+				'group' => 'Videodownload.ProdID',
+				'order' => 'COUNT DESC',
+				'limit' => '0, 10',
+				'joins' => array(
+						array(
+								'table' => 'video',
+								'alias' => 'Video',
+								'type'  => 'LEFT',
+								'conditions' => array('Videodownload.ProdID = Video.ProdID', 'Videodownload.provider_type = Video.provider_type')
+						),
+						array(
+								'table' => 'File',
+								'alias' => 'File',
+								'type'  => 'LEFT',
+								'conditions' => array('Video.Image_FileID = File.FileID')
+						),
+						array(
+								'table' => 'Genre',
+								'alias' => 'Genre',
+								'type'  => 'LEFT',
+								'conditions' => array('Genre.ProdID = Video.ProdID')
+						),
+						array(
+								'table' => $prefix . 'countries',
+								'alias' => 'Country',
+								'type'  => 'LEFT',
+								'conditions' => array('Video.ProdID = Country.ProdID', 'Video.provider_type = Country.provider_type')
+						),
+						array(
+								'table' => 'libraries',
+								'alias' => 'Library',
+								'type'  => 'LEFT',
+								'conditions' => array('Library.id=Videodownload.library_id')
+						)
+				)
+		);
+	
+		if ( $explicitContent === false ) {
+			$options['conditions'] = array(
+					'Videodownload.library_id' => 1,
+					'Library.library_territory' => $territory,
+					'Country.SalesDate <=' => 'NOW()',
+					'Video.Genre' => $genre,
+					'Video.provider_type' => 'Genre.provider_type',
+					'Video.Advisory !=' => 'T'
+			);
+		} else {
+			$options['conditions'] = array(
+					'Videodownload.library_id' => 1,
+					'Library.library_territory' => $territory,
+					'Country.SalesDate <=' => 'NOW()',
+					'Video.Genre' => $genre,
+					'Video.provider_type' => 'Genre.provider_type'
+			);
+		}
+	
+		return $this->find('all', $options);
+	}
+	
+	public function getDownloadStatusOfVideos( $idsProviderType, $libraryId , $patronId, $startDate, $endDate ) {
+	
+		$options = array(
+				'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+				'conditions' => array(
+						'(ProdID, provider_type) IN (' . $idsProviderType . ')',
+						'library_id' => $libraryId,
+						'patron_id' => $patronId,
+						'history < 2',
+						'created BETWEEN ? AND ?' => array($startDate, $endDate)
+				),
+				'group' => 'ProdID',
+		);
+	
+		return $this->find( 'all', $options );
+	}
 }
-?>
