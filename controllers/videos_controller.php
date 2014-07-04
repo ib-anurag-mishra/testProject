@@ -394,7 +394,7 @@ class VideosController extends AppController {
             $videosData[0]['videoImage'] = Configure::read( 'App.Music_Path' ) . $videoArtwork;
         }
 
-        $this->set( 'videosData', $videosData );
+        $this->set( 'VideosData', $videosData );
 
         if ( count( $videosData ) > 0 ) {
 
@@ -402,7 +402,7 @@ class VideosController extends AppController {
 			$this->topVideoGenre( $prefix, $territory, $videosData[0]['Video']['Genre'] );
         }
 
-        $this->set( 'videoGenre', $videosData[0]['Video']['Genre'] );
+        $this->set( 'VideoGenre', $videosData[0]['Video']['Genre'] );
     }
     
     /**
@@ -522,7 +522,7 @@ class VideosController extends AppController {
     		Cache::write( 'top_videos_genre_' . $territory . '_' . $videoGenre . $cacheVariableSuffix, $topVideoGenreData );
     	}
     	
-    	$this->set( 'topVideoGenreData', $topVideoGenreData );
+    	$this->set( 'TopVideoGenreData', $topVideoGenreData );
     }
     
     /**
@@ -559,7 +559,7 @@ class VideosController extends AppController {
     		$moreVideosData = Cache::read( 'videolist_' . $country . '_' . $decodedId . $cacheVariableSuffix );
     	}
     	
-    	$this->set( 'moreVideosData', $moreVideosData );
+    	$this->set( 'MoreVideosData', $moreVideosData );
     }
     
     public function getVideosDownloadStatus( $arrayVideos, $libraryId, $patronId, $arrayIndex ) {
