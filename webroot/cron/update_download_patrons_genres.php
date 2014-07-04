@@ -105,7 +105,7 @@ function updateVideoDownloadGenres($date){
 
 
 function mailUpdate($response,$date,$query){
-  $toArray = array('tech@m68interactive.com');
+  $toArray = array('tech@libraryideas.com');
   switch($response){
     case 1:
       $subject = 'Download Patrons Not Updated Successfully';
