@@ -14,7 +14,7 @@
     </header>
     <h3>Albums</h3>
     <div class="album-shadow-container">
-        <div class="album-scrollable horiz-scroll">
+        <div class="album-scrollable horiz-scroll carousel">
             <ul style="width:2700px;">
                 <?php
                 $count = 1;
