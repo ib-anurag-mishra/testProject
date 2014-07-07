@@ -1719,7 +1719,7 @@ $(document).ready(function() {
                     $('.afterClick').hide();
                     
                     if (languageSet === 'en') {
-                        document.getElementById('wishlist' + prod_id).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+                        document.getElementById('wishlist' + prod_id).innerHTML = '<a class="add-to-wishlist added-to-wishlist">Added to Wishlist</a>';
                     } else {
                         document.getElementById('wishlist' + prod_id).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
                     }
