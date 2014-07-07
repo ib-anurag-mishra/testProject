@@ -1624,7 +1624,7 @@ $(document).ready(function() {
 
 
     /* added for my lib top 10 */
-    $('.my-top-100-page .album-container .add-to-playlist-button').on('click',function(e){
+    $('.my-top-100-page .album-container .add-to-playlist-button,.my-top-100-page .song-container .add-to-playlist-button').on('click',function(e){
         e.preventDefault();
         
         var oldList = $(this).next('ul');
@@ -1634,12 +1634,12 @@ $(document).ready(function() {
 
     });
 
-    $('.my-top-100-page .album-container .playlist-menu-icon').next('ul').on('mouseleave',function(){
+    $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').next('ul').on('mouseleave',function(){
         $(this).removeClass('active');
 
     });
 
-    $('.my-top-100-page .album-container .playlist-menu-icon').next('ul').bindMouseWheel();
+    $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').next('ul').bindMouseWheel();
 
     /* */
 
