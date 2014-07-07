@@ -3647,18 +3647,20 @@ sub { top: 0.4em; }
 								background: url(../img/freegal_sprite.png) -230px -225px;
 								opacity: 1;
 
-								&.song-downloaded {
 
-									
-									background: url(../img/freegal_sprite.png) -230px -275px;
-								}
-
-								&.download-limit-met {
-
-									background: url(../img/freegal_sprite.png) -230px -250px;
-
-								}
 							}
+
+							&.song-downloaded {
+
+								
+								background: url(../img/freegal_sprite.png) -230px -275px;
+							}
+
+							&.download-limit-met {
+
+								background: url(../img/freegal_sprite.png) -230px -250px;
+
+							}							
 
 						}
 					}
