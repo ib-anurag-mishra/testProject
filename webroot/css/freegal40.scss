@@ -3415,6 +3415,21 @@ sub { top: 0.4em; }
 						// 	opacity: 1;								
 						// }
 
+						> span > .add-to-wishlist {
+
+							display: block;
+							cursor: pointer;
+							text-indent: -9999px;
+							text-decoration: none;
+							position: absolute;
+							left: 33px;
+							top: 5px;
+							width: 28px;
+							height: 20px;
+							background: url(../img/freegal_sprite.png) 0 -200px;
+							opacity: 1;								
+						}
+
 						.wishlist-icon {
 
 							display: block;
