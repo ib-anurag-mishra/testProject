@@ -3272,6 +3272,35 @@ sub { top: 0.4em; }
 				
 						position: relative;
 						margin-bottom: 10px;
+
+						> li {
+							display: block;
+							background: #fff;
+							float: none;
+							margin-bottom: 0;
+							width: 100%;
+
+							a {
+
+								display: block;
+								padding: 10px;
+								text-decoration: none;
+								color: #000;
+								font-size: 11px;
+
+								&:hover {
+
+									background: #cfeff9;
+									color: #000;
+								}
+
+								&.create-new-queue-btn {
+
+									font-weight: bold;
+								}
+							}
+
+						}													
 						
 						img {
 							
