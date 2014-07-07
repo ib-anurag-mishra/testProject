@@ -291,8 +291,18 @@
                                 if ($this->Session->read("patron"))
                                 {
                                     ?> 
+                                    <?php
+                                    /*
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
+                                    */
+                                    ?>
+                                    <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+                                    <ul>
+                                        <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
 
+                                    </ul>
+                                   
+                                    
                                     <div class="wishlist-popover">
                                         <input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song"/>
                                         <?php
@@ -310,6 +320,8 @@
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                         ?>
                                     </div>
+                                    
+                                    
                                 <?php } ?>
 
                             </div>
