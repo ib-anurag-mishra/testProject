@@ -3632,7 +3632,7 @@ sub { top: 0.4em; }
 							
 						// }
 	
-						.top-10-download-now-button {
+						span.top-10-download-now-button {
 
 							.add-to-wishlist {
 								display: block;
@@ -3650,9 +3650,15 @@ sub { top: 0.4em; }
 
 							}
 
+							
+
+						}
+
+						a.top-10-download-now-button {
+
 							&.song-downloaded {
 
-								
+
 								background: url(../img/freegal_sprite.png) -230px -275px;
 							}
 
@@ -3660,8 +3666,7 @@ sub { top: 0.4em; }
 
 								background: url(../img/freegal_sprite.png) -230px -250px;
 
-							}							
-
+							}
 						}
 					}
 					
