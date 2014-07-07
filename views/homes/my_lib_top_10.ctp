@@ -275,10 +275,7 @@
                                             ?> )'><?php __("Coming Soon"); ?></span></a>
                                             <?php
 
-                                                $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
-                                                echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
-                                            
                                         }
                                     }
                                     else
@@ -310,7 +307,8 @@
                                     
 
                                    
-                                    
+                                    <?php
+                                    /*
                                     <div class="wishlist-popover">
                                         <input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song"/>
                                         <?php
@@ -328,6 +326,13 @@
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                         ?>
                                     </div>
+                                    */
+                                    ?>
+                                    <?php
+                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                        echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
+                                    ?>
                                     
                                     
                                 <?php } ?>
