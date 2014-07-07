@@ -457,7 +457,7 @@ function login($library = null){
                                 if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
                                     $this->Session->write("showNotificationPopup", 'yes');                               
                                 }
-								else if( $curpatron['Currentpatron']['notify_popup'] == 'no') {
+								else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $libraryArr['Library']['optout_email_notification'] == 1) {
 						 			$this->Session->write("showNotificationPopup", 'yes');
                                 }
 								else{
