@@ -659,7 +659,7 @@ class Videodownload extends AppModel
 					'Library.library_territory' => $territory,
 					'Country.SalesDate <=' => 'NOW()',
 					'Video.Genre' => $genre,
-					'Video.provider_type' => 'Genre.provider_type',
+					'Video.provider_type = Genre.provider_type',
 					'Video.Advisory !=' => 'T'
 			);
 		} else {
@@ -668,7 +668,7 @@ class Videodownload extends AppModel
 					'Library.library_territory' => $territory,
 					'Country.SalesDate <=' => 'NOW()',
 					'Video.Genre' => $genre,
-					'Video.provider_type' => 'Genre.provider_type'
+					'Video.provider_type = Genre.provider_type'
 			);
 		}
 	
