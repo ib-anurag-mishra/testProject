@@ -3377,25 +3377,25 @@ sub { top: 0.4em; }
 						}
 
 						.add-to-wishlist {
-							// position: absolute;
-							// left: 28px;
-							// top: 0;
-							// width: 26px;
-							// height: 20px;
-							// background: url(../img/freegal_sprite.png) 0 -100px;
-							// text-indent: -9999px;
-							// text-decoration: none;
-							display: block;
-							cursor: pointer;
+							position: absolute;
+							left: 28px;
+							top: 0;
+							width: 26px;
+							height: 20px;
+							background: url(../img/freegal_sprite.png) 0 -100px;
 							text-indent: -9999px;
 							text-decoration: none;
-							position: absolute;
-							left: 33px;
-							top: 5px;
-							width: 28px;
-							height: 20px;
-							background: url(../img/freegal_sprite.png) 0 -200px;
-							opacity: 1;							
+							// display: block;
+							// cursor: pointer;
+							// text-indent: -9999px;
+							// text-decoration: none;
+							// position: absolute;
+							// left: 33px;
+							// top: 5px;
+							// width: 28px;
+							// height: 20px;
+							// background: url(../img/freegal_sprite.png) 0 -200px;
+							// opacity: 1;							
 
 						}
 
@@ -3571,30 +3571,30 @@ sub { top: 0.4em; }
 						}
 
 
-						// .top-100-download-now-button , .top-10-download-now-button {
-						// 	background: rgb(255,255,255);
-						// 	display: block;
-						// 	position: absolute;
-						// 	width: 124px;
-						// 	height: 25px;
-						// 	line-height: 27px;
-						// 	right: 38px;
-						// 	bottom:10px;
-						// 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-						// 	opacity: 0;
-						// 	text-transform: uppercase;
-						// 	font-size: 12px;
-						// 	text-align: center;
+						.top-100-download-now-button , .top-10-download-now-button {
+							background: rgb(255,255,255);
+							display: block;
+							position: absolute;
+							width: 124px;
+							height: 25px;
+							line-height: 27px;
+							right: 38px;
+							bottom:10px;
+							-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+							opacity: 0;
+							text-transform: uppercase;
+							font-size: 12px;
+							text-align: center;
 							
-						// 	color:rgb(0,0,0);
-						// 	text-decoration: none;	
-						// 	font-weight: bold;
-						// 	-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-						// 	-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-						// 	box-shadow: 0 0 2px rgba(0,0,0,.5);
+							color:rgb(0,0,0);
+							text-decoration: none;	
+							font-weight: bold;
+							-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							box-shadow: 0 0 2px rgba(0,0,0,.5);
 							
 							
-						// }
+						}
 	
 						// .top-10-download-now-button {
 						// 	display: block;
