@@ -1670,9 +1670,9 @@ $(document).ready(function() {
     $(document).find('.song-container .wishlist-icon').on('click',function(e){
         e.preventDefault();
 
-        var ProdID = $(this).siblings().find('input[type="hidden"]').attr('id');
-        var Provider = $(this).siblings().find('input[type="hidden"]').attr('data-provider');
-        var type = $(this).siblings().find('input[type="hidden"]').attr('value');
+        var ProdID = $(this).prev('input[type="hidden"]').attr('id');
+        var Provider = $(this).prev('input[type="hidden"]').attr('data-provider');
+        var type = $(this).prev('input[type="hidden"]').attr('value');
 
         console.log(ProdID);
 
