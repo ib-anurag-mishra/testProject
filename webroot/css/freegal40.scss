@@ -3650,13 +3650,29 @@ sub { top: 0.4em; }
 
 							}
 							.song-downloaded {
-
+								display: block;
+								cursor: pointer;
+								text-indent: -9999px;
+								text-decoration: none;
+								position: absolute;
+								left: 33px;
+								top: 5px;
+								width: 28px;
+								height: 20px;
 
 								background: url(../img/freegal_sprite.png) -230px -275px;
 							}
 
 							.download-limit-met {
-
+								display: block;
+								cursor: pointer;
+								text-indent: -9999px;
+								text-decoration: none;
+								position: absolute;
+								left: 33px;
+								top: 5px;
+								width: 28px;
+								height: 20px;
 								background: url(../img/freegal_sprite.png) -230px -250px;
 
 							}
