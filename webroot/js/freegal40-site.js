@@ -1702,7 +1702,6 @@ $(document).ready(function() {
             
             var selected_songs = [];
             var prod_id = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
-            console.log(prod_id);
             var provider = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('data-provider');
             var type = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
             if(!type){
@@ -1716,9 +1715,10 @@ $(document).ready(function() {
                 url: webroot + 'homes/addToWishlistNewHome',
                 success: function(response)
                 {
+                    console.log('success');
                      $('.beforeClick').show();
                     $('.afterClick').hide();
-                    
+                                
                     if (languageSet === 'en') {
                         document.getElementById('wishlist' + prod_id).innerHTML = '<a class="add-to-wishlist added-to-wishlist">Added to Wishlist</a>';
                     } else {
