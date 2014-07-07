@@ -3633,28 +3633,31 @@ sub { top: 0.4em; }
 						// }
 	
 						.top-10-download-now-button {
-							display: block;
-							cursor: pointer;
-							text-indent: -9999px;
-							text-decoration: none;
-							position: absolute;
-							left: 33px;
-							top: 5px;
-							width: 28px;
-							height: 20px;
-							background: url(../img/freegal_sprite.png) -230px -225px;
-							opacity: 1;
 
-							&.song-downloaded {
+							.add-to-wishlist {
+								display: block;
+								cursor: pointer;
+								text-indent: -9999px;
+								text-decoration: none;
+								position: absolute;
+								left: 33px;
+								top: 5px;
+								width: 28px;
+								height: 20px;
+								background: url(../img/freegal_sprite.png) -230px -225px;
+								opacity: 1;
 
-								
-								background: url(../img/freegal_sprite.png) -230px -275px;
-							}
+								&.song-downloaded {
 
-							&.download-limit-met {
+									
+									background: url(../img/freegal_sprite.png) -230px -275px;
+								}
 
-								background: url(../img/freegal_sprite.png) -230px -250px;
+								&.download-limit-met {
 
+									background: url(../img/freegal_sprite.png) -230px -250px;
+
+								}
 							}
 
 						}
