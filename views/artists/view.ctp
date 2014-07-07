@@ -121,7 +121,7 @@
 				<?php
 				if (strlen($album['Album']['AlbumTitle']) >= 50)
 				{
-					$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50) . '...';
+					//$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50) . '...';
 				}
 				?>
 				<?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>
@@ -131,7 +131,7 @@
 				$artistNames = $artistName;
 				if (strlen($artistName) >= 30)
 				{
-					$artistName = substr($artistName, 0, 30) . '...';
+					//$artistName = substr($artistName, 0, 30) . '...';
 				}
 				?>
 				<a title="<?php echo $this->getTextEncode($artistNames); ?>"
