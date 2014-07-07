@@ -328,6 +328,7 @@
                                     </div>
                                     */
                                     ?>
+                                        <input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song"/>
                                     <?php
                                     
                                         $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
