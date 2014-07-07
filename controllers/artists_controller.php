@@ -713,6 +713,7 @@ Class ArtistsController extends AppController {
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
 
+                        
         $cond = "";
         if ($this->Session->read('block') == 'yes') {
             $cond = array('Song.Advisory' => 'F');
@@ -723,11 +724,18 @@ Class ArtistsController extends AppController {
         $val = '';
         $val_provider_type = '';
         $condition = array();
+        
+        //this flage will be use when $val_provider_type value found empty
+        $checkProviderTypeFlage = 0;
+      
 
         //check if album value is set in url
         if ($album != '') {
+            
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider);
+        
         } else {
+            
             $this->Song->Behaviors->attach('Containable');
             if ($libType != 2) {
                 $songs = $this->Song->find('all', array(
@@ -751,6 +759,7 @@ Class ArtistsController extends AppController {
                     'limit' => 1)
                 );
             } else {
+                
                 $songs = $this->Song->find('all', array(
                     'fields' => array(
                         'DISTINCT Song.ReferenceID',
@@ -773,16 +782,25 @@ Class ArtistsController extends AppController {
                     'recursive' => 0, 'limit' => 1)
                 );
             }
-            foreach ($songs as $k => $v) {
-                $val = $val . $v['Song']['ReferenceID'] . ",";
-                $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "'),";
+            
+            if(!empty($songs)){
+                foreach ($songs as $k => $v) {        
+
+                    $val = $val . $v['Song']['ReferenceID'] . ",";
+                    $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "'),";                
+                } 
             }
-            $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
+            
+            if($val_provider_type == '' || empty($songs)){
+                $checkProviderTypeFlage = 1;
+            }else{            
+                $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
+            }
         }
 
-        if ($this->Session->read('block') == 'yes') {
-            $cond = array('Album.Advisory' => 'F');
-        } else {
+        if ($this->Session->read('block') == 'yes') {            
+            $cond = array('Album.Advisory' => 'F');            
+        } else {            
             $cond = "";
         }
 
@@ -836,11 +854,15 @@ Class ArtistsController extends AppController {
             $cond = "";
         }
         $this->Album->recursive = 2;
-        $albumData = $this->paginate('Album'); //getting the Albums for the artist
+       
+       
+        //check if provider types string is not empty
+        if($checkProviderTypeFlage == 0) {
+              $albumData = $this->paginate('Album'); //getting the Albums for the artist
+        }       
         
         if (!empty($albumData)) {            
             if ($libType == 2) {
-
                 $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
             }
         }
@@ -849,7 +871,6 @@ Class ArtistsController extends AppController {
         if ($provider == "") {
             $provider = $albumData[0]['Album']['provider_type'];
         }
-
 
         //creating the Artist Url
         if (isset($albumData[0]['Song']['ArtistURL'])) {
