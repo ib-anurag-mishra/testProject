@@ -1702,6 +1702,7 @@ $(document).ready(function() {
             
             var selected_songs = [];
             var prod_id = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
+            console.log(prod_id);
             var provider = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('data-provider');
             var type = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
             if(!type){
