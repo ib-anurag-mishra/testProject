@@ -118,12 +118,7 @@
 
 			</div>
 			<div class="album-title">
-				<?php
-				if (strlen($album['Album']['AlbumTitle']) >= 50)
-				{
-					//$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50) . '...';
-				}
-				?>
+				
 				<?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>
 			</div>
 			<div class="artist-name">
@@ -131,11 +126,12 @@
 				$artistNames = $artistName;
 				if (strlen($artistName) >= 30)
 				{
-					//$artistName = substr($artistName, 0, 30) . '...';
+				    $artistName = $this->getTextEncode($artistName);
+                                    $artistName = substr($artistName, 0, 30) . '...';
 				}
 				?>
-				<a title="<?php echo $this->getTextEncode($artistNames); ?>"
-					href="/artists/album/<?php echo base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']); ?>"><?php echo $this->getTextEncode($artistName); ?>
+				<a title="<?php echo $this->getTextEncode($artistName); ?>"
+					href="/artists/album/<?php echo base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']); ?>"><?php echo $artistName; ?>
 				</a>
 			</div>
 			<div class="tracklist-header">
@@ -225,7 +221,7 @@
 					<?php
 					if (strlen($albumSong['Song']['SongTitle']) >= 30)
 					{
-						echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
+						echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . substr($this->getTextEncode($albumSong['Song']['SongTitle']), 0, 30) . '...</a>';
 					}
 					else
 					{
@@ -245,17 +241,19 @@
 				//check the artist value exist or not
 				$artistTextLenght = strlen($albumSong['Song']['Artist']);
 				$artistTextValue =$albumSong['Song']['Artist'];
-				if ($artistTextLenght >= 30){
-					$artistTextValue = substr($albumSong['Song']['Artist'], 0, 30) . '...';
-				}
+				
 				if($this->getTextEncode($artistTextValue)){
-					$artistTextValue = $this->getTextEncode($artistTextValue);
+					$artistTextValue = $this->getTextEncode($artistTextValue);                                        
+				}
+                                
+                                if ($artistTextLenght >= 30){
+					$artistTextValue = substr($albumSong['Song']['Artist'], 0, 30) . '...';
 				}
 				?>
 				<div class="artist">
 					<a
 						href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>"
-						title="<?php echo $artistTextValue; ?>"> <?php
+						title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>"> <?php
 						echo $artistTextValue;
 						?>
 					</a>
