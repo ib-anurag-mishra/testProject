@@ -119,7 +119,7 @@
     </div>
     <h3>Songs</h3>
     <div class="songs-shadow-container">
-        <div class="songs-scrollable horiz-scroll">
+        <div class="songs-scrollable carousel horiz-scroll">
             <ul style="width:2700px;">
                 <?php
 
