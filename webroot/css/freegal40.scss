@@ -3425,10 +3425,7 @@ sub { top: 0.4em; }
 							
 						}
 
-						.song-downloaded {
 
-							background: url(../img/freegal_sprite.png) -230px -275px;							
-						}						
 						
 						
 						.wishlist-popover {
@@ -3629,6 +3626,12 @@ sub { top: 0.4em; }
 							height: 20px;
 							background: url(../img/freegal_sprite.png) -230px -225px;
 							opacity: 1;
+
+							&.song-downloaded {
+
+								
+								background: url(../img/freegal_sprite.png) -230px -275px;
+							}
 
 						}
 					}
