@@ -3377,14 +3377,15 @@ sub { top: 0.4em; }
 						}
 
 						.add-to-wishlist {
-							position: absolute;
-							left: 28px;
-							top: 0;
-							width: 26px;
-							height: 20px;
-							background: url(../img/freegal_sprite.png) 0 -100px;
-							text-indent: -9999px;
-							text-decoration: none;
+							// position: absolute;
+							// left: 28px;
+							// top: 0;
+							// width: 26px;
+							// height: 20px;
+							// background: url(../img/freegal_sprite.png) 0 -100px;
+							// text-indent: -9999px;
+							// text-decoration: none;
+
 							// display: block;
 							// cursor: pointer;
 							// text-indent: -9999px;
@@ -3606,7 +3607,7 @@ sub { top: 0.4em; }
 							top: 5px;
 							width: 28px;
 							height: 20px;
-							background: url(../img/freegal_sprite.png) 0 -200px;
+							background: url(../img/freegal_sprite.png) -230px -225px;
 							opacity: 1;
 
 						}
