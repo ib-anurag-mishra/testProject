@@ -3655,6 +3655,13 @@ sub { top: 0.4em; }
 						}
 
 						a.top-10-download-now-button {
+							text-indent: -9999px;
+							text-decoration: none;
+							position: absolute;
+							left: 33px;
+							top: 5px;
+							width: 28px;
+							height: 20px;							
 
 							&.song-downloaded {
 
