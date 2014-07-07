@@ -3321,6 +3321,16 @@ sub { top: 0.4em; }
 							
 							
 						}
+
+						.wishlist-icon {
+							position: absolute;
+							left: 35px;
+							top: 5px;
+							width: 26px;
+							height: 20px;
+							background: url(../img/freegal_sprite.png) 0 -100px;
+							
+						}
 						
 						
 						.wishlist-popover {
