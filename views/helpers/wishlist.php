@@ -53,8 +53,8 @@ class WishlistHelper extends AppHelper {
 		if($wishlistInfo == 'Added To Wishlist') {
 			$str =  '<a class="add-to-wishlist" href="javascript:void(0);">'."Added To Wishlist".'</a>';
 		} else {
-			$str = '<span class="beforeClick" id="wishlist'.$song_ProdId.'"><a class="add-to-wishlist wishlist-icon" href=\'JavaScript:void(0);\' onclick=\'Javascript: addToWishlist("'.$song_ProdId.'","'.$song_Provider_Type.'");\'>'."Add To Wishlist".'</a></span>
-			<span class="afterClick" id="downloading_'.$song_ProdId.'" style="display:none;"><a class="add-to-wishlist wishlist-icon" href=\'JavaScript:void(0);\'>'."Please Wait...".'</a></span>';
+			$str = '<span class="beforeClick" id="wishlist'.$song_ProdId.'"><a class="add-to-wishlist" href=\'JavaScript:void(0);\' onclick=\'Javascript: addToWishlist("'.$song_ProdId.'","'.$song_Provider_Type.'");\'>'."Add To Wishlist".'</a></span>
+			<span class="afterClick" id="downloading_'.$song_ProdId.'" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>'."Please Wait...".'</a></span>';
 		}
 		return $str;
 
