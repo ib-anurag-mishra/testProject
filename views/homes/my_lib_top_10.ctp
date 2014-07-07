@@ -330,12 +330,14 @@
                                     ?>
                                         <input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song"/>
                                     <?php
+                                    /*
                                     
                                         $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
-                                    
+                                    */
                                     ?>
+                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
                                     
                                     
                                 <?php } ?>

@@ -1715,8 +1715,8 @@ $(document).ready(function() {
                 url: webroot + 'homes/addToWishlistNewHome',
                 success: function(response)
                 {
-                    console.log('success');
-                     $('.beforeClick').show();
+
+                    $('.beforeClick').show();
                     $('.afterClick').hide();
                                 
                     if (languageSet === 'en') {
