@@ -3026,7 +3026,7 @@ STR;
      * @function getAllVideoByArtist
      * @desc This is used to getAllVideoByArtist
      */
-    function getAllVideoByArtist($country, $decodedId)
+    function getAllVideoByArtist( $country, $decodedId, $explicitContent = true )
     {
         $tokeninstance = ClassRegistry::init('Token');
         //add the slashes in the text
@@ -3038,6 +3038,12 @@ STR;
         {
 
             $countryPrefix = $this->Session->read('multiple_countries');
+            $videoAdvisory = '';
+            
+            if( $explicitContent === false ) {
+            	$videoAdvisory = " AND Video.Advisory != 'T'";
+            }
+
             $sql_us_10_v = <<<STR
                 SELECT 
                                 Video.ProdID,
@@ -3082,7 +3088,7 @@ STR;
                                                 LEFT JOIN
                                 File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
                 WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1 $videoAdvisory
                 GROUP BY Video.ProdID
                 ORDER BY Country.SalesDate desc  
 STR;
