@@ -10,7 +10,7 @@
     </header>
     <h3>Albums</h3>
     <div class="album-shadow-container">
-        <div class="album-scrollable horiz-scroll">
+        <div class="album-scrollable horiz-scroll carousel">
             <ul style="width:27000px;">
                 <?php
                 $libId = $this->Session->read('library');
@@ -105,7 +105,7 @@
 
 <h3>Videos</h3>
 <div class="videos-shadow-container">
-    <div class="videos-scrollable horiz-scroll">
+    <div class="videos-scrollable horiz-scroll carousel">
         <ul style="width:44100px;">
             <?php
 
