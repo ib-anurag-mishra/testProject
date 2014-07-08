@@ -1641,6 +1641,16 @@ $(document).ready(function() {
 
     $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').next('ul').bindMouseWheel();
 
+    $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').on('mouseenter',function(){
+
+        $(this).find('.playlist-menu-icon').css({opacity:.5});
+    });
+
+    $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').on('mouseleave',function(){
+
+        $(this).find('.playlist-menu-icon').css({opacity:.0});
+    });    
+
     /* */
 
 

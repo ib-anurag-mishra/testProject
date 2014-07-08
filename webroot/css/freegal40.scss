@@ -2853,6 +2853,8 @@ sub { top: 0.4em; }
 					
 						position: relative;
 						margin-bottom: 10px;
+						
+
 						img {
 
 							width: 162px;
@@ -3004,6 +3006,7 @@ sub { top: 0.4em; }
 							width: 28px;
 							height: 20px;
 							background: url(../img/freegal_sprite.png) -400px 0;
+							opacity: 0;
 							
 						}
 						
