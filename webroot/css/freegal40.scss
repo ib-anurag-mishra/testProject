@@ -2096,10 +2096,11 @@ sub { top: 0.4em; }
 				
 				position: relative;
 				margin-bottom: 3px;
-				
-				
-				
-				
+				border: 1px solid #fff;
+				-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+				-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+				box-shadow: 0 0 2px rgba(0,0,0,.5);
+
 				.add-to-playlist-button {
 					background: url(../img/add-to-playlist-button.png);
 					display: block;
@@ -2541,6 +2542,13 @@ sub { top: 0.4em; }
 		position: relative;
 		margin-bottom: 10px;
 		
+		.video-thumbnail-container {
+
+			border: 1px solid #fff;
+			-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+			-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+			box-shadow: 0 0 2px rgba(0,0,0,.5);
+		}
 		
 		.featured-video-download-now-button {
 			background: rgb(255,255,255);
