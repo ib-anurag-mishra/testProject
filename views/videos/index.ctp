@@ -10,7 +10,7 @@
             <h3><?php echo __('Featured Videos', true); ?></h3>
 
         </header>
-        <section id="featured-video-grid" class="horiz-scroll">
+        <section id="featured-video-grid" class="horiz-scroll carousel">
             <ul class="clearfix">
 
 
@@ -159,7 +159,7 @@
 
         </header>
 
-        <div class="video-top-genres-grid horiz-scroll" style="margin-top:26px;">
+        <div class="video-top-genres-grid horiz-scroll carousel" style="margin-top:26px;">
 
             <ul class="clearfix">
                 <?php
