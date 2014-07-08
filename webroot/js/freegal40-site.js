@@ -1687,7 +1687,16 @@ $(document).ready(function() {
         $(this).find('.playlist-menu-icon').css({opacity:.0});
         $(this).find('.top-10-download-now-button').css({opacity:0});
         $(this).find('.album-preview').css({opacity:.0});
-    });            
+    });
+
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .playlist-menu-icon').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .playlist-menu-icon').on('mouseenter',function(){
+        $(this).css({opacity:.5});
+
+    });           
 
     /* */
 
