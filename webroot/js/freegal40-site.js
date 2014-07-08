@@ -1771,7 +1771,6 @@ $(document).ready(function() {
         var Provider = $(this).prev('input[type="hidden"]').attr('data-provider');
         var type = $(this).prev('input[type="hidden"]').attr('value');
 
-        console.log(ProdID);
 
         $.ajax({
             type: "post",
