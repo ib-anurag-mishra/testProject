@@ -1651,7 +1651,27 @@ $(document).ready(function() {
 
         $(this).find('.playlist-menu-icon').css({opacity:.0});
         $(this).find('.album-preview').css({opacity:.0});
-    });    
+    });
+
+    $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').find('.playlist-menu-icon').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').find('.playlist-menu-icon').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });
+
+    $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').find('.album-preview').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').find('.album-preview').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });        
 
     /* */
 
