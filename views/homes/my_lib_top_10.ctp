@@ -328,7 +328,8 @@
                                     </div>
                                     */
                                     ?>
-                                        <input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song"/>
+                                        
+                                        <input type="hidden" id="<?php echo $value["Song"]["ProdID"]; ?>" value="song" data-provider="<?php echo $value["Song"]["provider_type"]; ?>" />
                                     <?php
                                     /*
                                     
