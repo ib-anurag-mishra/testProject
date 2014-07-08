@@ -1676,19 +1676,21 @@ $(document).ready(function() {
 
  
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container').on('mouseenter',function(){
-
-        $(this).find('.playlist-menu-icon').css({opacity:.5});
-        $(this).find('.top-10-download-now-button').css({opacity:.5});
-        $(this).find('.album-preview').css({opacity:.5});
-        $(this).find('.wishlist-icon').css({opacity:.5});
+        $this = $(this);
+        $this.find('.playlist-menu-icon').css({opacity:.5});
+        $this.find('.top-10-download-now-button').css({opacity:.5});
+        $this.find('span.top-10-download-now-button').find('.add-to-wishlist').css({opacity:.5});
+        $this.find('.album-preview').css({opacity:.5});
+        $this.find('.wishlist-icon').css({opacity:.5});
     });
 
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container').on('mouseleave',function(){
-
-        $(this).find('.playlist-menu-icon').css({opacity:.0});
-        $(this).find('.top-10-download-now-button').css({opacity:0});
-        $(this).find('.album-preview').css({opacity:.0});
-        $(this).find('.wishlist-icon').css({opacity:.0});
+        $this = $(this);
+        $this.find('.playlist-menu-icon').css({opacity:.0});
+        $this.find('.top-10-download-now-button').css({opacity:0});
+        $this.find('span.top-10-download-now-button').find('.add-to-wishlist').css({opacity:.0});
+        $this.find('.album-preview').css({opacity:.0});
+        $this.find('.wishlist-icon').css({opacity:.0});
     });
 
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .playlist-menu-icon').on('mouseenter',function(){
@@ -1708,6 +1710,15 @@ $(document).ready(function() {
         $(this).css({opacity:.5});
 
     });
+
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .add-to-wishlist').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .add-to-wishlist').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });    
 
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .wishlist-icon').on('mouseenter',function(){
         $(this).css({opacity:1});
