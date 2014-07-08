@@ -15,7 +15,7 @@
     <h3>Albums</h3>
     <div class="album-shadow-container">
         <div class="album-scrollable horiz-scroll carousel">
-            <ul style="width:2700px;">
+            <ul style="width:1650px;">
                 <?php
                 $count = 1;
                 if (count($topDownload_albums) > 0)
@@ -120,7 +120,7 @@
     <h3>Songs</h3>
     <div class="songs-shadow-container">
         <div class="songs-scrollable carousel horiz-scroll">
-            <ul style="width:2700px;">
+            <ul style="width:1650px;">
                 <?php
 
                 $count = 1;

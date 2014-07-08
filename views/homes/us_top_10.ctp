@@ -13,7 +13,7 @@
     <h3>Albums</h3>
     <div class="album-shadow-container">
         <div class="album-scrollable horiz-scroll carousel">
-            <ul style="width:2700px;">
+            <ul style="width:1650px;">
                 <?php
                 $libId = $this->Session->read('library');
                 $patId = $this->Session->read('patron');
@@ -114,7 +114,7 @@
     <h3>Songs</h3>
     <div class="songs-shadow-container">
         <div class="songs-scrollable horiz-scroll carousel">
-            <ul>
+            <uls tyle="width:1650px;">
                 <?php
 
                 $count = 1;
