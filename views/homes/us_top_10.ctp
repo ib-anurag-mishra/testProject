@@ -114,7 +114,7 @@
     <h3>Songs</h3>
     <div class="songs-shadow-container">
         <div class="songs-scrollable horiz-scroll carousel">
-            <ul style="width:2700px;">
+            <ul>
                 <?php
 
                 $count = 1;
