@@ -11,7 +11,7 @@
     <h3>Albums</h3>
     <div class="album-shadow-container">
         <div class="album-scrollable horiz-scroll carousel">
-            <ul style="width:27000px;">
+            <ul style="width:16500px;">
                 <?php
                 $libId = $this->Session->read('library');
                 $patId = $this->Session->read('patron');
