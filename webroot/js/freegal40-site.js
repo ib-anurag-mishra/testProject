@@ -1693,7 +1693,7 @@ $(document).ready(function() {
         $(this).css({opacity:1});
 
     });
-    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .playlist-menu-icon').on('mouseenter',function(){
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .playlist-menu-icon').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
     });           
