@@ -27,3 +27,6 @@ webroot/uploads/*.txt
 
 
 /nbproject/private/
+*.scssc
+
+*.scssc

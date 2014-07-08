@@ -3551,7 +3551,7 @@ STR;
 
                 //check if this songs is already downloaded
                 if ($return == 'incld') {
-                    $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later." . $return;
+                    $log_data .= PHP_EOL . "empty|Something went wrong during download. Please try again later." . $return;
                     $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                     $this->log($log_data, $log_name);
                     echo "empty|You have already downloaded this song. Get it from your recent downloads.";
@@ -3559,11 +3559,11 @@ STR;
                 }
 
                 //if store procedure return something else                 
-                $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later." . $return;
+                $log_data .= PHP_EOL . "empty|Something went wrong during download. Please try again later." . $return;
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
                 
-                echo "empty|Something went wrong during download.Please try again later.";
+                echo "empty|Something went wrong during download. Please try again later.";
                 exit;
             }
         } else {
@@ -3628,9 +3628,9 @@ STR;
 
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
-                echo "success|Album is added succesfully to wishlist.";
+                echo "success|Album successfully added to your wishlist.";
             } else {
-                echo "error|You have been logged out.Please reload and login again..";
+                echo "error|You have been logged out. Please reload and login again.";
             }
         } elseif ($type == 'song') {
             if ($this->Session->read('library') && $this->Session->read('patron')) {
@@ -3664,18 +3664,18 @@ STR;
                     $log_data .= $wishlistResult;
                     $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                     $this->log($log_data, $log_name);
-                    echo "success|" . ((count($selectedSongs) > 1) ? "songs are " : "song is ") . " added succesfully to wishlist.";
+                    echo "success|" . ((count($selectedSongs) > 1) ? "Songs are " : "Song is ") . " added succesfully to wishlist.";
                 } else {
                     $log_data .= $wishlistResult[1];
                     $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                     $this->log($log_data, $log_name);
-                    echo "error|" . ((count($selectedSongs) > 1) ? "songs are " : "song is ") . " already added to wishlist.";                    
+                    echo "error|" . ((count($selectedSongs) > 1) ? "Songs are " : "Song is ") . " already added to wishlist.";                    
                 }
             } else {
-                echo "error|You have been logged out.Please reload and login again..";
+                echo "error|You have been logged out. Please reload and login again..";
             }
         } else {
-            echo "error|Something went wrong.Please try again.";
+            echo "error|Something went wrong. Please try again.";
         }
         exit;
     }
@@ -3744,7 +3744,7 @@ STR;
         
         if (!empty($allreadyAdded)) {
             $wishlistalreadyadded = array();
-            $wishlistalreadyadded[] = 'You have already added this song to wishlist';
+            $wishlistalreadyadded[] = 'You have already added this song to your wishlist';
             $wishlistalreadyadded[] = $log_data;
             return $wishlistalreadyadded;
         } else {

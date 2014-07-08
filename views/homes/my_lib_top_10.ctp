@@ -14,8 +14,8 @@
     </header>
     <h3>Albums</h3>
     <div class="album-shadow-container">
-        <div class="album-scrollable horiz-scroll">
-            <ul style="width:2700px;">
+        <div class="album-scrollable horiz-scroll carousel">
+            <ul style="width:1650px;">
                 <?php
                 $count = 1;
                 if (count($topDownload_albums) > 0)
@@ -40,17 +40,28 @@
                                 <?php
                                 if ($this->Session->read("patron"))
                                 {
+                                ?>
+                                    <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album" data-provider="<?= $value["Albums"]["provider_type"] ?>" />
+                                <?php
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                     {
                                         echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                         ?> 
-                                        <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
+                                        <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+                                        <ul>
+                                            <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+
+                                        </ul>
+                                        <?php
+                                        /*
                                         <div class="wishlist-popover">
                                             <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                             
                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                             
                                         </div>
+                                        */
+                                        ?>
                                         <?php
                                     }
                                     ?>
@@ -61,7 +72,7 @@
                                 else
                                 {
                                     ?>
-                                    <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                                    <?php /*<a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>*/ ?>
                                     <?php
                                 }
                                 ?>
@@ -103,11 +114,13 @@
                 ?>
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </div>
     <h3>Songs</h3>
     <div class="songs-shadow-container">
-        <div class="songs-scrollable horiz-scroll">
-            <ul style="width:2700px;">
+        <div class="songs-scrollable carousel horiz-scroll">
+            <ul style="width:1650px;">
                 <?php
 
                 $count = 1;
@@ -219,7 +232,7 @@
                                             else
                                             {
                                                 ?>
-                                                <a class="top-10-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
+                                                <a class="top-10-download-now-button song-downloaded" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
                                                 <?php
                                             }
                                         }
@@ -246,7 +259,7 @@
                                             else
                                             {
                                                 ?>
-                                                <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met"); ?></a>
+                                                <a class="top-10-download-now-button download-limit-met" href="javascript:void(0);"><?php __("Limit Met"); ?></a>
                                                 <?php
                                             }
                                         }
@@ -261,12 +274,14 @@
                                             }
                                             ?> )'><?php __("Coming Soon"); ?></span></a>
                                             <?php
+
+
                                         }
                                     }
                                     else
                                     {
                                         ?>
-                                    <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                                    <?php /*<a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>*/ ?>
 
 
                                     <?php
@@ -278,8 +293,22 @@
                                 if ($this->Session->read("patron"))
                                 {
                                     ?> 
+                                    <?php
+                                    /*
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
+                                    */
+                                    ?>
+                                    
+                                    <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+                                    <ul>
+                                        <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
 
+                                    </ul>
+                                    
+
+                                   
+                                    <?php
+                                    /*
                                     <div class="wishlist-popover">
                                         <input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song"/>
                                         <?php
@@ -297,6 +326,21 @@
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                         ?>
                                     </div>
+                                    */
+                                    ?>
+                                        
+                                        <input type="hidden" id="<?php echo $value["Song"]["ProdID"]; ?>" value="song" data-provider="<?php echo $value["Song"]["provider_type"]; ?>" />
+                                    <?php
+                                    /*
+                                    
+                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                        echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
+                                    */
+                                    ?>
+                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
+                                    
+                                    
                                 <?php } ?>
 
                             </div>
@@ -338,12 +382,14 @@
 
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
 
     </div>
     <h3>Videos</h3>
     <div class="videos-shadow-container">
-        <div class="videos-scrollable horiz-scroll">
-            <ul style="width:4430px;">
+        <div class="videos-scrollable horiz-scroll carousel">
+            <ul>
                 <?php
                 $count = 1;
 
@@ -464,7 +510,7 @@
                                     else
                                     {
                                         ?>
-                                    <a class="mylib-top-10-video-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                                    <?php /*<a class="mylib-top-10-video-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a> */ ?>
 
 
                                     <?php
@@ -525,6 +571,8 @@
 
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
 
     </div>
 </section>

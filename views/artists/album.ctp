@@ -361,9 +361,13 @@
 						else
 						{
 							?>
+						<?php
+						/*	
 						<a class="top-10-download-now-button"
 							href='/users/redirection_manager'> <?php __("Login"); ?>
 						</a>
+						*/
+						?>
 
 
 						<?php

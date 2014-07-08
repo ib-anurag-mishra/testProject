@@ -10,8 +10,8 @@
     </header>
     <h3>Albums</h3>
     <div class="album-shadow-container">
-        <div class="album-scrollable horiz-scroll">
-            <ul style="width:27000px;">
+        <div class="album-scrollable horiz-scroll carousel">
+            <ul style="width:16500px;">
                 <?php
                 $libId = $this->Session->read('library');
                 $patId = $this->Session->read('patron');
@@ -37,12 +37,19 @@
                                 {
                                     echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                     ?>
-                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
+                                    <a class="playlist-menu-icon add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
+                                    <ul>
+                                        <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
 
+                                    </ul>                                     
+                                    <?php
+                                    /*
                                     <div class="wishlist-popover">
                                         <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                         <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                     </div>
+                                    */
+                                    ?>
                                 <?php } ?>
 
 
@@ -51,7 +58,7 @@
                             else
                             {
                                 ?>
-                                <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                                <?php /*<a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>*/ ?>
                                 <?php
                             }
                             ?>
@@ -92,12 +99,14 @@
                 ?>
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </div>
 
 <h3>Videos</h3>
 <div class="videos-shadow-container">
-    <div class="videos-scrollable horiz-scroll">
-        <ul style="width:44100px;">
+    <div class="videos-scrollable horiz-scroll carousel">
+        <ul style="width:29100px;">
             <?php
 
             $count = 1;
@@ -189,7 +198,7 @@
                             else
                             {
                                 ?>
-                            <a class="mylib-top-10-video-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                            <?php /*<a class="mylib-top-10-video-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>*/ ?>
 
 
                             <?php
@@ -242,6 +251,7 @@
 
         </ul>
     </div>
-
+    <button class="left-scroll-button" type="button"></button>
+    <button class="right-scroll-button" type="button"></button>
 </div>
 </section>

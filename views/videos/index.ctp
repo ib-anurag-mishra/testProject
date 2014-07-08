@@ -3,7 +3,7 @@
         <header class="clearfix">
         	<h3><?= __('Featured Videos', true); ?></h3>
         </header>
-        <section id="featured-video-grid" class="horiz-scroll">
+        <section id="featured-video-grid" class="horiz-scroll carousel">
             <ul class="clearfix">
             <?php if ( is_array( $featuredVideos ) && count( $featuredVideos ) > 0 ):
 
@@ -16,7 +16,11 @@
 				  <?php endif; ?>
                             <div class="featured-video-detail">
                                 <div class="video-thumbnail-container">
-                                    <a href="/videos/details/<?=$featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?=$featureVideo['videoImage']; ?>" data-original="" width="275" height="162" alt="" /></a>
+
+
+                                    <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="288" height="162" alt="" /></a>
+                                    
+
                                     <?php
                                     if ( $this->Session->read( 'patron' ) ):
 
@@ -103,12 +107,18 @@
             ?>
             </ul>
         </section>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </section> <!-- end .featured-videos -->
     <section class="video-top-genres">
         <header class="clearfix">
             <h3><?php echo __('Top Videos', true); ?></h3>
         </header>
-        <div class="video-top-genres-grid horiz-scroll" style="margin-top:26px;">
+
+
+        <div class="video-top-genres-grid horiz-scroll carousel" style="margin-top:26px;">
+
+
             <ul class="clearfix">
                 <?php
                 if ( is_array( $topVideoDownloads ) && count( $topVideoDownloads ) > 0 ):
@@ -216,5 +226,7 @@
                 ?>
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </section> <!-- end .video-top-genres -->
 </section> <!-- end .videos -->

@@ -1334,8 +1334,6 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
 
 function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, type)
 {
-    //console.log('wishlistDownloadOthers called');
-
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
@@ -1380,7 +1378,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
                 }else{                
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                     if (languageSet === 'en') {
-                        document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
+                        document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history" class="song-downloaded">Downloaded</a>';
                     } else {
                         document.getElementById('wishlist_song_' + prodId).innerHTML = '<a href="/homes/my_history">bajaedas</a>';
                     }
