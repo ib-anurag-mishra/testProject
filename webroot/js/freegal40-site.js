@@ -1644,11 +1644,13 @@ $(document).ready(function() {
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').on('mouseenter',function(){
 
         $(this).find('.playlist-menu-icon').css({opacity:.5});
+        $(this).find('.album-preview').css({opacity:.5});
     });
 
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').on('mouseleave',function(){
 
         $(this).find('.playlist-menu-icon').css({opacity:.0});
+        $(this).find('.album-preview').css({opacity:.0});
     });    
 
     /* */
