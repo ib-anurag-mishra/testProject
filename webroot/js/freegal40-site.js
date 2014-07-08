@@ -1685,7 +1685,7 @@ $(document).ready(function() {
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container').on('mouseleave',function(){
 
         $(this).find('.playlist-menu-icon').css({opacity:.0});
-        $(this).find('.top-10-download-now-button').css({opacity:.5});
+        $(this).find('.top-10-download-now-button').css({opacity:0});
         $(this).find('.album-preview').css({opacity:.0});
     });            
 
