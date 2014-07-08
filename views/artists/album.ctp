@@ -45,11 +45,15 @@
 
 			echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 			echo " > ";
+                        if($this->getTextEncode($artisttext)){
+                            $artisttext = $this->getTextEncode($artisttext);
+                        }
+                        
 			if (strlen($artisttext) >= 30)
 			{
 				$artisttext = substr($artisttext, 0, 30) . '...';
 			}
-			echo $this->getTextEncode($artisttext);
+			echo $artisttext;
 		}
 		else
 		{
@@ -57,11 +61,15 @@
 			echo " > ";
 			echo "<a style='cursor: pointer;;' onClick='history.back();' >Search Results</a>";
 			echo " > ";
+                        if($this->getTextEncode($artisttext)){
+                            $artisttext = $this->getTextEncode($artisttext);
+                        }
+                        
 			if (strlen($artisttext) >= 30)
 			{
 				$artisttext = substr($artisttext, 0, 30) . '...';
 			}
-			echo $this->getTextEncode($artisttext);
+			echo $artisttext;
 		}
 
 		function ieversion()
