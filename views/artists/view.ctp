@@ -127,7 +127,7 @@
 				if (strlen($artistName) >= 30)
 				{
 				    $artistName = $this->getTextEncode($artistName);
-                                    $artistName = substr($artistName, 0, 30) . '...';
+                                    $artistName = substr($artistName, 0, 60) . '...';
 				}
 				?>
 				<a title="<?php echo $this->getTextEncode($artistName); ?>"
@@ -219,9 +219,9 @@
 
 				<div class="song <?php       echo $class;     echo $cs;  ?>">
 					<?php
-					if (strlen($albumSong['Song']['SongTitle']) >= 30)
+					if (strlen($albumSong['Song']['SongTitle']) >= 44)
 					{
-						echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . substr($this->getTextEncode($albumSong['Song']['SongTitle']), 0, 30) . '...</a>';
+						echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . substr($this->getTextEncode($albumSong['Song']['SongTitle']), 0, 44) . '...</a>';
 					}
 					else
 					{
@@ -246,8 +246,8 @@
 					$artistTextValue = $this->getTextEncode($artistTextValue);                                        
 				}
                                 
-                                if ($artistTextLenght >= 30){
-					$artistTextValue = substr($albumSong['Song']['Artist'], 0, 30) . '...';
+                                if ($artistTextLenght >= 35){
+					$artistTextValue = substr($albumSong['Song']['Artist'], 0, 35) . '...';
 				}
 				?>
 				<div class="artist">

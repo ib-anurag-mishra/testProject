@@ -97,7 +97,15 @@
 		{
 			?>
 		<h2>
-			<?php echo $this->getTextEncode($artisttitle); ?>
+			<?php 
+                        
+                        if($this->getTextEncode($artisttitle)){
+                           echo $this->getTextEncode($artisttitle);
+                        }else{
+                           echo $artisttitle;
+                        }
+                        
+                        ?>
 		</h2>
 		<?php
 		}
