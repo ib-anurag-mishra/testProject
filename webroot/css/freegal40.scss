@@ -3444,6 +3444,7 @@ sub { top: 0.4em; }
 							width: 28px;
 							height: 20px;
 							background: url(../img/freegal_sprite.png) -400px 0;
+							opacity: 0;
 							
 						}
 
@@ -3649,7 +3650,7 @@ sub { top: 0.4em; }
 								width: 28px;
 								height: 20px;
 								background: url(../img/freegal_sprite.png) -230px -225px;
-								opacity: 1;
+								opacity: 0;
 
 
 							}
@@ -3691,7 +3692,8 @@ sub { top: 0.4em; }
 							left: 33px;
 							top: 5px;
 							width: 28px;
-							height: 20px;							
+							height: 20px;
+							opacity: 0;							
 
 							&.song-downloaded {
 
