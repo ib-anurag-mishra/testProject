@@ -2471,7 +2471,7 @@ function displayMessage(response)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
-        document.getElementById("ajaxflashMessage44").style.background = "blue";
+        document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
         document.getElementById('ajaxflashMessage44').innerHTML = responseArray[1];
         $('#ajaxflashMessage44').fadeOut(5000);
         return false;
