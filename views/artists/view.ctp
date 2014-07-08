@@ -124,10 +124,14 @@
 			<div class="artist-name">
 				<?php
 				$artistNames = $artistName;
+                                if($this->getTextEncode($artistName)){
+                                   $artistName= $this->getTextEncode($artistName);
+                                }
+                                
+                                
 				if (strlen($artistName) >= 60)
 				{
-				    $artistName = $this->getTextEncode($artistName);
-                                    $artistName = substr($artistName, 0, 60) . '...';
+				    $artistName = substr($artistName, 0, 60) . '...';
 				}
 				?>
 				<a title="<?php echo $this->getTextEncode($artistName); ?>"
@@ -246,8 +250,8 @@
 					$artistTextValue = $this->getTextEncode($artistTextValue);                                        
 				}
                                 
-                                if ($artistTextLenght >= 40){
-					$artistTextValue = substr($albumSong['Song']['Artist'], 0, 40) . '...';
+                                if ($artistTextLenght >= 30){
+					$artistTextValue = substr($albumSong['Song']['Artist'], 0, 30) . '...';
 				}
 				?>
 				<div class="artist">
