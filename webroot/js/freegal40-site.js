@@ -1716,7 +1716,16 @@ $(document).ready(function() {
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .wishlist-icon').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
-    });                     
+    }); 
+
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .album-preview').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .album-preview').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });                         
 
     /* */
 
