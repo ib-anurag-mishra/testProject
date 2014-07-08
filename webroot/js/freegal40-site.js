@@ -1680,6 +1680,7 @@ $(document).ready(function() {
         $(this).find('.playlist-menu-icon').css({opacity:.5});
         $(this).find('.top-10-download-now-button').css({opacity:.5});
         $(this).find('.album-preview').css({opacity:.5});
+        $(this).find('.wishlist-icon').css({opacity:.5});
     });
 
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container').on('mouseleave',function(){
@@ -1687,6 +1688,7 @@ $(document).ready(function() {
         $(this).find('.playlist-menu-icon').css({opacity:.0});
         $(this).find('.top-10-download-now-button').css({opacity:0});
         $(this).find('.album-preview').css({opacity:.0});
+        $(this).find('.wishlist-icon').css({opacity:.0});
     });
 
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .playlist-menu-icon').on('mouseenter',function(){
@@ -1705,7 +1707,16 @@ $(document).ready(function() {
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .top-10-download-now-button').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
-    });                
+    });
+
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .wishlist-icon').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .wishlist-icon').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });                     
 
     /* */
 
