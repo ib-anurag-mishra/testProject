@@ -46,6 +46,10 @@
                                         echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                         ?> 
                                         <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+                                        <ul>
+                                            <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+
+                                        </ul>                                        
                                         <?php
                                         /*
                                         <div class="wishlist-popover">
