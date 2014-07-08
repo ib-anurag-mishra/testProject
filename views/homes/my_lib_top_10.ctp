@@ -389,7 +389,7 @@
     <h3>Videos</h3>
     <div class="videos-shadow-container">
         <div class="videos-scrollable horiz-scroll carousel">
-            <ul style="width:4430px;">
+            <ul>
                 <?php
                 $count = 1;
 
