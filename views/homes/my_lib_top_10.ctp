@@ -259,7 +259,7 @@
                                             else
                                             {
                                                 ?>
-                                                <a class="top-10-download-now-button download-limit-met " href="javascript:void(0);"><?php __("Limit Met"); ?></a>
+                                                <a class="top-10-download-now-button download-limit-met" href="javascript:void(0);"><?php __("Limit Met"); ?></a>
                                                 <?php
                                             }
                                         }

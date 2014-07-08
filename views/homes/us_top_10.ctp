@@ -221,14 +221,14 @@
                                             else
                                             {
                                                 ?>
-                                                <a class="top-10-download-now-button " href='/homes/my_history'><label style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
+                                                <a class="top-10-download-now-button song-downloaded" href='/homes/my_history'><label style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
                                                 <?php
                                             }
                                         }
                                         else
                                         {
                                             ?>
-                                            <a class="top-100-download-now-button " href="javascript:void(0);"><?php __("Limit Met"); ?></a>  
+                                            <a class="top-100-download-now-button download-limit-met" href="javascript:void(0);"><?php __("Limit Met"); ?></a>  
                                             <?php
                                         }
                                     }
@@ -258,9 +258,19 @@
                                 <?php
                                 if ($this->Session->read("patron"))
                                 {
-                                    ?> 
+                                    ?>
+                                    <?php
+                                    /* 
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
+                                    */
+                                    ?>
+                                    <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+                                    <ul>
+                                        <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
 
+                                    </ul>
+                                    <?php
+                                    /*
                                     <div class="wishlist-popover">
                                         <input type="hidden" id="<?= $value["Song"]["ProdID"] ?>" value="song"/>
 
@@ -275,6 +285,10 @@
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                         ?>
                                     </div>
+                                    */
+                                    ?>
+                                    <input type="hidden" id="<?php echo $value["Song"]["ProdID"]; ?>" value="song" data-provider="<?php echo $value["Song"]["provider_type"]; ?>" />
+                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
                                 <?php } ?>
 
                             </div>
