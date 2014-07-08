@@ -131,7 +131,7 @@
                                 
 				if (strlen($artistName) >= 90)
 				{
-				    $artistName = substr($artistName, 0, 90) . '...';
+				    $artistName = substr($artistName, 0, 90) . ' ...';
 				}
 				?>
 				<a title="<?php echo $this->getTextEncode($artistName); ?>"
