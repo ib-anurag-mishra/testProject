@@ -58,7 +58,7 @@
                             else
                             {
                                 ?>
-                                <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                                <?php /*<a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>*/ ?>
                                 <?php
                             }
                             ?>
@@ -198,7 +198,7 @@
                             else
                             {
                                 ?>
-                            <a class="mylib-top-10-video-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                            <?php /*<a class="mylib-top-10-video-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>*/ ?>
 
 
                             <?php
