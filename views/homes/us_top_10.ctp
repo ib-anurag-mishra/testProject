@@ -12,7 +12,7 @@
     </header>
     <h3>Albums</h3>
     <div class="album-shadow-container">
-        <div class="album-scrollable horiz-scroll">
+        <div class="album-scrollable horiz-scroll carousel">
             <ul style="width:2700px;">
                 <?php
                 $libId = $this->Session->read('library');
@@ -113,7 +113,7 @@
     </div>
     <h3>Songs</h3>
     <div class="songs-shadow-container">
-        <div class="songs-scrollable horiz-scroll">
+        <div class="songs-scrollable horiz-scroll carousel">
             <ul style="width:2700px;">
                 <?php
 
