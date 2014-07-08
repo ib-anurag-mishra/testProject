@@ -738,14 +738,14 @@
                         </div>
                         <b>Email Notification</b><br />
 
-                        <div style="height:100px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
+                        <div style="height:135px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
                             Please add your email address here to receive twice-weekly email reminders of your available downloads.
                             <br /><br /><br />
                             <div >
-								<div id="emaildiv" style="float:left;width:50%;">
+								<div id="emaildiv">
                                 	<b>Email :</b>
                                 	<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
-								</div>
+								</div><br/>
 								<div>
 									<input type="checkbox" name="doNotShow" value="no" id="doNotShowCheck"> Do not show this message again
 								</div>
