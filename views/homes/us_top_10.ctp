@@ -336,8 +336,8 @@
     </div>
     <h3>Videos</h3>
     <div class="videos-shadow-container">
-        <div class="videos-scrollable horiz-scroll">
-            <ul style="width:4430px;">
+        <div class="videos-scrollable horiz-scroll carousel">
+            <ul>
                 <?php
                 $count = 1;
                 if (!empty($usTop10VideoDownload) > 0)
