@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language','MemDatas');
+    var $uses = array('Song', 'Album','Announcement', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language','MemDatas');
     var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
@@ -116,6 +116,7 @@ class CacheController extends AppController {
        $this->setVideoCacheVar();    
        $this->setAppMyMusicVideoList(); 
        $this->setAnnouncementCache();
+       $this->setMoviesAnnouncements();
        $this->setTopArtist();
     }
     
@@ -217,6 +218,19 @@ class CacheController extends AppController {
             $this->log("cache wrritten for announcements", "cache");
         }    
    
+    }
+    
+    /* Function name : setMoviesAnnouncements
+     * Function Description : This function is used to set cache for movies announcements
+     * 
+     */
+    
+    function setMoviesAnnouncements() {
+        $this->Announcement->setDataSource('movies');
+        $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
+        $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
+        Cache::write("moviesannouncementCache", $mvAnnouncment); 
+        $this->Announcement->setDataSource('default');
     }
     
     /**
