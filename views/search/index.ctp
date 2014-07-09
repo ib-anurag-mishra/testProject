@@ -219,7 +219,7 @@
 											<input type="hidden" name="ProviderType" value="<?= $psong->provider_type; ?>" /> 
 											<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $psong->ProdID; ?>">
 												<![if !IE]>
-													<?php echo $this->Html->link( 'Download Now',
+													<?php /*echo $this->Html->link( 'Download Now',
 																'javascript:void(0)',
 																array( 
 																		'class' => 'no-ajaxy top-10-download-now-button',
@@ -227,10 +227,11 @@
 																		'onclick' => 'return wishlistDownloadOthersHome("' . $psong->ProdID . '", "0", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '", "' . $psong->provider_type . '")',
 																		'escape' => false
 																		 )
-															); ?>
+															);*/ ?>
+															<a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" title="<?php echo $hrefTitle;?>" onclick='return wishlistDownloadOthersHome("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'> <?php __('Download Now'); ?> </a>
 												<![endif]>
 												<!--[if IE]>
-													<?php echo $this->Html->link( 'Download Now',
+													<?php /*echo $this->Html->link( 'Download Now',
 																'javascript:void(0)',
 																array( 'class' => 'no-ajaxy top-10-download-now-button',
 																		'id' => 'song_download_' . $psong->ProdID,
@@ -238,7 +239,9 @@
 																		'onclick' => 'wishlistDownloadIEHome("' . $psong->ProdID . '", "0" , "' . $psong->provider_type . '", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '")',
 																		'escape' => false
 																		)
-															); ?>
+															);*/ 
+													?>
+													<a id="song_download_<?php echo $psong->ProdID; ?>" class="no-ajaxy top-10-download-now-button" title="<?php echo $hrefTitle; ?>" onclick='wishlistDownloadIEHome("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                 <![endif]-->
 											</span>
 											<span class="afterClick" id="downloading_<?= $psong->ProdID; ?>" style="display: none;">
@@ -422,13 +425,14 @@
 
 					$genre_name 	 = str_replace( '"', '', $genre->Genre );
 					$genre_name_text = $this->Search->truncateText( $genre_name, 125, $this );
-					$tilte 			 = urlencode ($genre->Genre );
+					$title 			 = urlencode ($genre->Genre );
 		?>
 				<li>
-					<?php echo $this->Html->link( $this->getTextEncode( $genre_name_text ) . '( ' . $genre->numFound . ' )', 
-							array( 'controller' => 'genres', 'action' => 'album', '?' => array( 'q' => $keyword, 'type' => 'album', 'filter' => $tilte ) ),
-							array( 'title' => $this->getTextEncode( $genre_name ) ) );
+					<?php /* echo $this->Html->link( $this->getTextEncode( $genre_name_text ) . ' (' . $genre->numFound . ')', 
+							array( 'controller' => 'genres', 'action' => 'album', '?' => array( 'q' => $keyword, 'type' => 'album', 'filter' => $title ) ),
+							array( 'title' => $this->getTextEncode( $genre_name ) ) );*/
 					?>
+					<a href="<?php echo "/genres/album?q=$keyword&type=album&filter=$title"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $genre->numFound; ?>)</a>
 				</li>
 		<?php 	} ?>
 			</ul>
@@ -479,7 +483,8 @@
 						?>
 						</div>
 						<?php if ( isset( $patronId ) && !empty( $patronId ) ) { ?>
-								<?=$this->Html->link( '', '#', array( 'class' => 'wishlist-btn', 'title' => 'Add to Wishlist', 'onclick' => 'Javascript: addToWishlistVideo("' . $psong->ProdID . '", "' . $psong->provider_type . '", 1)', 'escape' => false ) ) ?>
+								<?php //echo $this->Html->link( '', '#', array( 'class' => 'wishlist-btn', 'title' => 'Add to Wishlist', 'onclick' => 'Javascript: addToWishlistVideo("' . $psong->ProdID . '", "' . $psong->provider_type . '", 1)', 'escape' => false ) ) ?>
+								<a class="wishlist-btn" title="Add to Wishlist" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
 						<?php
 								$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
 								if ( $sales_date <= date( 'Y-m-d' ) ) {
@@ -493,20 +498,22 @@
 													<input type="hidden" name="ProviderType" value="<?= $psong->provider_type; ?>" />
 													<span class="beforeClick" id="download_video_<?= $psong->ProdID; ?>"> 
 														<![if !IE]>
-															<?php echo $this->Html->link( '', 'javascript:void(0)',
+															<?php /*echo $this->Html->link( '', 'javascript:void(0)',
 																		array( 'class' => 'download-btn', 'title' => 'Download This Video',
 																				'onclick' => 'return wishlistVideoDownloadOthersToken("' . $psong->ProdID . '", "0", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '", "' . $psong->provider_type . '", 1)',
 																				'escape' => false )
-																	);
+																	);*/
 															 ?>
+															 <a class="download-btn" title="Download This Video" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>", 1);'></a>
 														<![endif]>
 														<!--[if IE]>
-							                                <?php echo $this->Hml->link( '', 'javascript:void(0)',
+							                                <?php /*echo $this->Html->link( '', 'javascript:void(0)',
 							                                			array( 'class' => 'download-btn', 'title' => 'Download This Video',
 							                                					'onclick' => 'wishlistVideoDownloadIEToken("' . $psong->ProdID . '", "0" , "' . $psong->provider_type . '", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '",1)',
 							                                					'escape' => false
 							                                				)
-							                                		); ?>
+							                                		);*/ ?>
+							                                <a class="download-btn" title="Download This Video" onclick='wishlistVideoDownloadIEToken("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>",1);' href="javascript:void(0);"></a>
 							                            <![endif]-->
 													</span>
 													<span class="afterClick" id="vdownloading_<?= $psong->ProdID; ?>" style="display: none; float: left"></span>
@@ -741,12 +748,14 @@
 				<?php if ( isset( $videos ) && is_array( $videos ) && count( $videos ) > 0 ) { ?>
 				<ul>
 				<?php 	foreach ( $videos as $video ) {
-						$tilte 			 = urlencode( $video->VideoTitle );
+						$title 			 = urlencode( $video->VideoTitle );
 						$video_name_text = $this->Search->truncateText( $this->getTextEncode( $video->VideoTitle ), 125, $this );
 						$name 			 = $this->getTextEncode( $video->VideoTitle );
 						$video_name_text = ($name != "false") ? $video_name_text : ""
 				?>
-						<li> <?php echo $this->Html->link( $video_name_text, array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $tilte, 'type' => 'video' ) ), array( 'title' => $name ) ); ?> </li>
+						<li> <?php //echo $this->Html->link( $video_name_text, array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $title, 'type' => 'video' ) ), array( 'title' => $name ) ); ?> 
+							<a href="/search/index?q=<?php echo $title; ?>&type=video" title="<?php echo $name; ?>"><?php echo $video_name_text; ?> </a>
+						</li>
 				<?php	} ?>
 				</ul>
 				<?php } else { ?>
@@ -774,12 +783,14 @@
 
 							$genre_name 	 = str_replace( '"', '', $genre->Genre );
 							$genre_name		 = $this->getTextEncode( $genre_name );
-							$tilte 			 = urlencode( $genre_name );
+							$title 			 = urlencode( $genre_name );
 							$genre_name_text = $this->Search->truncateText( $genre_name , 125, $this );
 
 							if ( !empty( $genre_name_text ) ) {
 				?>
-								<li> <?php echo $this->Html->link( $genre_name_text . '( ' . $genre->numFound . ' )', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $tilte, 'type' => 'genre' ) ), array( 'title' => $genre_name ) ); ?> </li>
+								<li> <?php //echo $this->Html->link( $genre_name_text . ' (' . $genre->numFound . ')', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $title, 'type' => 'genre' ) ), array( 'title' => $genre_name ) ); ?> 
+								<a href="<?php echo "/search/index?q=$title&type=genre"; ?>" title="<?php echo $genre_name; ?>"><?php echo $genre_name_text; ?><span>(<?php echo $genre->numFound; ?>) </span> </a>
+								</li>
 				<?php
 							}
 						}
@@ -922,7 +933,7 @@
 																				<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $psong->ProdID; ?>"> 
 																					<![if !IE]>
 																						<?php 
-																						echo $this->Html->link( 'Download Now',
+																						/*echo $this->Html->link( 'Download Now',
 																								'javascript:void(0)',
 																								array(
 																										'class' => 'no-ajaxy top-10-download-now-button',
@@ -930,11 +941,12 @@
 																										'onclick' => 'return wishlistDownloadOthersHome("' . $psong->ProdID . '", "0", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '", "' . $psong->provider_type . '")',
 																										'escape' => false
 																								)
-																						);
-																						?> 
+																						);*/
+																						?>
+																						<a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" title="<?php echo $titleSong;?>" onclick='return wishlistDownloadOthersHome("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'> <?php __('Download Now'); ?> </a> 
 																					<![endif]>
 																					<!--[if IE]>
-						                                                            	<?php echo $this->Html->link( 'Download Now',
+						                                                            	<?php /*echo $this->Html->link( 'Download Now',
 																									'javascript:void(0)',
 																									array( 'class' => 'no-ajaxy top-10-download-now-button',
 																											'id' => 'song_download_' . $psong->ProdID,
@@ -942,8 +954,9 @@
 																											'onclick' => 'wishlistDownloadIEHome("' . $psong->ProdID . '", "0" , "' . $psong->provider_type . '", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '")',
 																											'escape' => false
 																											)
-																								);
+																								);*/
 						                                                            	?>
+						                                                            	<a id="song_download_<?php echo $psong->ProdID; ?>" class="no-ajaxy top-10-download-now-button" title="<?php echo $titleSong;?>" onclick='wishlistDownloadIEHome("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
 		                                                                            <![endif]-->
 																				</span>
 																				<span class="afterClick" id="downloading_<?= $psong->ProdID; ?>" style="display: none;">
