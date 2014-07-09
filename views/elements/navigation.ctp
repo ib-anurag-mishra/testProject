@@ -536,7 +536,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 						<div class="music-note-icon"></div>
 					</div>
 					<?php } ?>
-					<div class="my-account-menu-container<?php echo $class ?>">
+					<div class="my-account-menu-container<?php echo isset( $class ) ? $class : ''; ?>">
 						<?php if($this->Session->read("patron")){  ?>
 						<button class="my-account-menu">My Account</button>
 
