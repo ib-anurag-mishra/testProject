@@ -542,7 +542,7 @@
                         $("#colorboxSubmitBtn").click(function() {
 			
 							if (!$('#userNewsletterEmailField').val() && !$('#doNotShowCheck').is(':checked')){
-                                alert('Please provide your interest');
+                                alert('Please provide your information');
                                 return false;
                             }
 
