@@ -372,7 +372,7 @@
 													<?=$this->Html->link( 'Added to Wishlist', '#' )?>
 											<?php else: ?> 
 													<span class="beforeClick" id="wishlist<?= $palbum->ReferenceID ?>">
-														<?=$this->Html->link( 'Added to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
+														<?=$this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
 													</span>
 													<span class="afterClick" style="display: none;">
 														<?=$this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) )?>
