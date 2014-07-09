@@ -12,11 +12,13 @@ class TopSingles extends AppModel
 
 	function getAllTopSingles($territory) {
 		return $this->find('all', array(
-				'conditions' => array(
-						'territory' => $territory, ),
-				'recursive' => -1,
-				'order' => array(
-						'id' => 'asc')
+			'conditions' => array(
+				'territory' => $territory, 
+			),
+			'recursive' => -1,
+			'order' => array(
+				'id' => 'asc'
+			)
 		));
 	}
 }
