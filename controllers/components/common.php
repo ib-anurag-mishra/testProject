@@ -1200,142 +1200,95 @@ STR;
     }
     
     
-    /*
-     * Function Name : getTopAlbums
-     * Function Description : This function is used to getTopAlbums.
-     */
+  /*
+   * Function Name : getTopAlbums
+   * Function Description : This function is used to getTopAlbums.
+   */
 
-    function getTopAlbums($territory)
-    {
-        set_time_limit(0); 
-        $tokeninstance = ClassRegistry::init('Token');
-        $countryPrefix = $this->getCountryPrefix($territory);
-        $ids = '';
-        $ids_provider_type = '';
-        $topAlbumInstance = ClassRegistry::init('TopAlbum');
-        $topAlbums = $topAlbumInstance->find('all', array(
-            'conditions' => array(
-                'TopAlbum.territory' => $territory,
-                'TopAlbum.language' => Configure::read('App.LANGUAGE')),
-            'recursive' => -1,
-            'order' => array(
-                'TopAlbum.id' => 'DESC')
-                )
-        );
-        
-        foreach ($topAlbums as $k => $v)
-        {
-            if ($v['TopAlbum']['album'] != 0)
-            {
-                if (empty($ids))
-                {
-                    $ids .= $v['TopAlbum']['album'];
-                    $ids_provider_type .= "(" . $v['TopAlbum']['album'] . ",'" . $v['TopAlbum']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['TopAlbum']['album'];
-                    $ids_provider_type .= ',' . "(" . $v['TopAlbum']['album'] . ",'" . $v['TopAlbum']['provider_type'] . "')";
-                }
-            }
-        }
+  function getTopAlbums($territory) {
 
-        if ((count($topAlbums) < 1) || ($topAlbums === false))
-        {
-            $this->log("top album data is not available for" . $territory, "cache");
-        }
+    // Gets the list of the top albums that are manually set
+    $TopAlbum = ClassRegistry::init('TopAlbum');
+    $topAlbumsList = $TopAlbum->getTopAlbumsList($territory);
 
-        if ($ids != '')
-        {
-            $albumInstance = ClassRegistry::init('Album');
-            $albumInstance->recursive = 2;
-            $topAlbumData = $albumInstance->find('all', array(
-                'joins' => array(
-                    array(
-                        'type' => 'INNER',
-                        'table' => 'top_albums',
-                        'alias' => 'ta',
-                        'conditions' => array('Album.ProdID = ta.album','ta.territory' => $territory)
-                    ),
-                    array(
-                        'type' => 'INNER',
-                        'table' => 'Songs',
-                        'alias' => 'Song',
-                        'conditions' => array('Album.ProdID = Song.ReferenceID','Album.provider_type = Song.provider_type')
-                    ),
-                    array(
-                        'type' => 'INNER',
-                        'table' => strtolower($territory).'_countries',
-                        'alias' => 'Country',
-                        'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type' ,'Country.DownloadStatus = 1','Country.SalesDate != ""','Country.SalesDate < NOW()')
-                    )                    
-                ),
-                'conditions' => array(
-                    'and' => array(
-                        array(
-                            "(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")"
-                        ),
-                    ), 
-                    "1 = 1 GROUP BY Album.ProdID"
-                ),
-                'fields' => array(
-                    'Album.ProdID',
-                    'Album.Title',
-                    'Album.ArtistText',
-                    'Album.AlbumTitle',
-                    'Album.Artist',
-                    'Album.ArtistURL',
-                    'Album.Label',
-                    'Album.Copyright',
-                    'Album.provider_type',
-                    'ta.id as sortID'
-                ),
-                'contain' => array(
-                    'Genre' => array(
-                        'fields' => array(
-                            'Genre.Genre'
-                        )
-                    ),
-                    'Files' => array(
-                        'fields' => array(
-                            'Files.CdnPath',
-                            'Files.SaveAsName',
-                            'Files.SourceURL'
-                        ),
-                    )
-                ),
-                'order' => 'sortID DESC',
-                'limit' => 25
-                    )
-            );
-        }
-        else
-        {
-            $topAlbumData = array();
-        }
+    if ((count($topAlbumsList) < 1) || ($topAlbumsList === false)) {
 
-        if (empty($topAlbumData))
-        {
-            Cache::write("topAlbums" . $territory, Cache::read("topAlbums" . $territory));
+      $this->log('a list of top albums was not available for ' . $territory, "cache");
+
+    } else {
+
+      // creating a list of the album ids and provider types.
+      $ids_provider_type = '';
+      foreach ($topAlbumsList as $topAlbum) {
+        if ($topAlbum['TopAlbum']['album'] != 0) {
+          if (empty($ids_provider_type)) {
+            $ids_provider_type .= "(" . $topAlbum['TopAlbum']['album'] . ",'" . $topAlbum['TopAlbum']['provider_type'] . "')";
+          } else {
+            $ids_provider_type .= ',(' . $topAlbum['TopAlbum']['album'] . ",'" . $topAlbum['TopAlbum']['provider_type'] . "')";
+          }
         }
-        else
-        {
-            foreach ($topAlbumData as $k => $v)
-            {                
-                $albumArtwork = $tokeninstance->artworkToken($v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
-                $image = Configure::read('App.Music_Path') . $albumArtwork;
-                $topAlbumData[$k]['topAlbumImage'] = $image;
-                    $topAlbumData[$k]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),1,$territory))
-                    );
-            }
-            Cache::delete("topAlbums" . $territory);
-            Cache::write("topAlbums" . $territory, $topAlbumData);
+      }
+
+      // Gets the album info for each album on the list
+      if ($ids_provider_type != '') {
+        $Album = ClassRegistry::init('Album');
+        $topAlbumData = $Album->getTopAlbumData($territory, $ids_provider_type);
+      } else {
+        $topAlbumData = array();
+      }
+
+      if (!empty($topAlbumData)) {
+        $Token = ClassRegistry::init('Token');
+        $musicPath = Configure::read('App.Music_Path');
+        foreach ($topAlbumData as $key => $data) {                
+          $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Files']['CdnPath'] . '/' . $data['Files']['SourceURL']);;
+          $topAlbumData[$key]['albumSongs'] = $this->getAlbumSongsNew($data['Album']['ProdID'], $data['Album']['provider_type'], $territory);
+
         }
-        $this->log("cache written for Top Albums for $territory", 'debug');
-        $this->log("cache written for Top Albums for: $territory", "cache");
-        return $topAlbumData;
-    }    
+        Cache::write('top_albums' . $territory, $topAlbumData);
+        $this->log('cache written for Top Albums for: ' . $territory, 'debug');
+        $this->log('cache written for Top Albums for: ' . $territory, 'cache');
+      }
+
+    }
+
+    return $topAlbumData;
+  }
+
+  function getAlbumSongsNew($prodId, $provider, $territory) {
+
+    $countryPrefix = $this->getCountryPrefix($territory);
+    $Album = ClassRegistry::init('Album');
+    $albumData = $Album->findSongsForAlbum($prodId, $provider);
+
+    $albumSongs = array();
+    if (!empty($albumData)) {
+      $Song = ClassRegistry::init('Song');
+      foreach ($albumData as $album) {
+        $albumSongs[$album['Album']['ProdID']] = $Song->getSongDetails($album['Album']['ProdID'], $provider, $territory);  
+      }
+    }
+    foreach ($albumSongs as $k => $albumSong) {
+      foreach ($albumSong as $key => $value) {
+        $albumSongs[$k][$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
+        $albumSongs[$k][$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
+        $albumSongs[$k][$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
+        unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
+        unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
+        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
+        unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
+        unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
+        unset($albumSongs[$k][$key]['Song']['sequence_number']);
+        unset($albumSongs[$k][$key]['Song']['Title']);
+        unset($albumSongs[$k][$key]['Song']['Artist']);
+        unset($albumSongs[$k][$key]['Genre']);
+        unset($albumSongs[$k][$key]['Country']);
+        unset($albumSongs[$k][$key]['Sample_Files']);
+        unset($albumSongs[$k][$key]['Full_Files']);
+      }
+    }
+    return $albumSongs;
+  }
     
     /*
      * Function Name : getTopSingles
