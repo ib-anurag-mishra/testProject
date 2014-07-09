@@ -5,61 +5,63 @@
 	</div>
 
 	<?php
-	$search_category = '';
-	$arrayType 		 = array( 'song', 'album', 'genre', 'video', 'artist', 'composer', 'all' );
-	
-	if( in_array( $type, $arrayType ) ) {
-		$search_category = $type == 'all' ? 'search-results-'. $type .'-page' : 'search-results-' . $type . 's-page';
-	}
+		$search_category = '';
+		$arrayType 		 = array( 'song', 'album', 'genre', 'video', 'artist', 'composer', 'all' );
+		
+		if( in_array( $type, $arrayType ) ) {
+			$search_category = $type == 'all' ? 'search-results-'. $type .'-page' : 'search-results-' . $type . 's-page';
+		}
 	?>
 
 	<section class="<?= $search_category;?>">
-		<div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
+		<div class="faq-link">Need Help? Visit our <?=$this->Html->link( 'FAQ Section.','/questions') ?></div>
 		<div class="search-results-heading">Results for your search <?= $keyword; ?></div>
 		<div class="refine-text">Not what you're looking for? Refine your search below.</div>
 		<div class="filter-container clearfix">
 		
-			<?php if ( $type != 'all'): ?>
-				<a href="/search/index?q=<?= $keyword ?>&type=all">All Music</a>
-			<?php else: ?>
-				<a href="javascript:void(0)" class="active">All Music</a>
-			<?php endif; ?>
-			
-			<?php if ( $type != 'album' ): ?>
-				<a href="/search/index?q=<?= $keyword ?>&type=album">Albums</a>
-			<?php else: ?>
-				<a href="javascript:void(0)" class="active">Albums</a>
-			<?php endif; ?>
-			
-			<?php if ( $type != 'artist' ): ?>
-				<a href="/search/index?q=<?= $keyword ?>&type=artist">Artists</a>
-			<?php else: ?>
-				<a href="javascript:void(0)" class="active">Artists</a>
-			<?php endif; ?>
-			
-			<?php if ( $type != 'composer' ): ?>
-				<a href="/search/index?q=<?= $keyword; ?>&type=composer">Composers</a>
-			<?php else: ?>
-				<a href="javascript:void(0)" class="active">Composers</a>
-			<?php endif; ?>
-			
-			<?php if ( $type != 'genre' ): ?>
-				<a href="/search/index?q=<?= $keyword ?>&type=genre">Genres</a>
-			<?php else: ?>
-				<a href="javascript:void(0)" class="active">Genres</a>
-			<?php endif; ?>
-			
-			<?php if ( $type != 'video' ): ?>
-				<a href="/search/index?q=<?= $keyword ?>&type=video">Videos</a>
-			<?php else: ?>
-				<a href="javascript:void(0)" class="active">Videos</a>
-			<?php endif; ?>
-			
-			<?php if ( $type != 'song' ): ?>
-				<a href="/search/index?q=<?= $keyword ?>&type=song">Songs</a>
-			<?php else: ?>
-				<a href="javascript:void(0)" class="active">Songs</a>
-			<?php endif; ?>
+			<?php 
+				if ( $type != 'all') {
+					echo $this->Html->link( 'All Music', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'all' ) ), array( 'title' => 'All Music' ) );	
+				} else {
+					echo $this->Html->link( 'All Music', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'All Music' ) );
+				}
+	
+				if ( $type != 'album' ) {
+					echo $this->Html->link( 'Albums', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => 'Albums' ) );
+				} else {
+					echo $this->Html->link( 'Albums', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Albums' ) );
+				}
+	
+				if ( $type != 'artist' ) {
+					echo $this->Html->link( 'Artists', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array( 'title' => 'Artists' ) );
+				} else {
+					echo $this->Html->link( 'Artists', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Artists' ) );
+				}
+	
+				if ( $type != 'composer' ) {
+					echo $this->Html->link( 'Composers', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => 'Composers' ) );
+				} else {
+					echo $this->Html->link( 'Composers', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Composers' ) );
+				}
+	
+				if ( $type != 'genre' ) {
+					echo $this->Html->link( 'Genres', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => 'Genres' ) );
+				} else {
+					echo $this->Html->link( 'Genres', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Genres' ) );
+				}
+	
+				if ( $type != 'video' ) {
+					echo $this->Html->link( 'Videos', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => 'Videos' ) );
+				} else {
+					echo $this->Html->link( 'Videos', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Videos' ) );
+				}
+	
+				if ( $type != 'song' ) {
+					echo $this->Html->link( 'Songs', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'song' ) ), array( 'title' => 'Songs' ) );
+				} else {
+					echo $this->Html->link( 'Songs', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Songs' ) );
+				}
+			?>
 
 			<div class="search-container">
 				<form method="get" id="searchQueryForm" action="<?= $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage(); return false;">
@@ -78,27 +80,29 @@
 			<header><h3 class="songs-header">Songs</h3></header>
 			<div class="header-container">
 				<div class="song-header">
-					<a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type; ?>"><span class="song">Song</span></a>
+					<span class="song">Song</span>
 				</div>
 				<div class="song-border header-border"></div>
 				<div class="artist-header">
-					<a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type; ?>"><span class="artist">Artist</span></a>
+					<span class="artist">Artist</span>
 				</div>
 				<div class="artist-border header-border"></div>
 				<div class="album-header">
-					<a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type; ?>"><span class="album">Album</span></a>
+					<span class="album">Album</span>
 				</div>
 				<div class="album-border header-border"></div>
 				<div class="time-header">Time</div>
-				<?php if ( isset( $patronId ) && !empty( $patronId ) ): ?>
-						<a class="multi-select-icon no-ajaxy" href="#" title="Select All, Clear All, Add to Wishlist, Add to Playlist"></a>
+					<?php 
+					if ( isset( $patronId ) && !empty( $patronId ) ):
+						echo $this->Html->link( '', '#', array( 'class' => 'multi-select-icon no-ajaxy', 'title' => 'Select All, Clear All, Add to Wishlist, Add to Playlist' ) );
+					?>
 						<section class="options-menu">
 							<ul>
-								<li><a class="select-all no-ajaxy" href="#">Select All</a></li>
-								<li><a class="clear-all no-ajaxy" href="#">Clear All</a></li>
-								<li><a class="add-all-to-wishlist no-ajaxy" href="#">Add to Wishlist</a></li>
+								<li><?=$this->Html->link( 'Select All', '#', array( 'class' => 'select-all no-ajaxy' ) )?></li>
+								<li><?=$this->Html->link( 'Clear All', '#', array( 'class' => 'clear-all no-ajaxy' ) )?></li>
+								<li><?=$this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-all-to-wishlist no-ajaxy' ) )?></li>
 								<?php if ( isset( $libraryType ) && $libraryType == 2 ): ?>
-										<li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
+										<li><?=$this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
 								<?php endif; ?>
 							</ul>
 							<ul class="playlist-menu"></ul>
@@ -167,7 +171,7 @@
 							$songTitle	   = $this->getTextEncode( $psong->Title );
 							$linkSongTitle = str_replace( '"', '', $this->Search->truncateText( $this->getTextEncode( $psong->Title ), 25, $this ) );
 						?>
-						<a href="/artists/view/<?= $artistText; ?>/<?= $psong->ReferenceID; ?>/<?= $providerType; ?>" title="<?= $songTitle; ?>"><?= $linkSongTitle; ?></a>
+						<?=$this->Html->link( $linkSongTitle, array( 'controller' => 'artists', 'action' => 'view', $psong->ReferenceID, $providerType ), array( 'title' => $songTitle ) )?>
 					</div>
 					<div class="song song-name" <?= $styleSong; ?> sdtyped="<?= $downloadFlag . '-' . $StreamFlag . '-' . $territory; ?>">
 						<?php
@@ -179,7 +183,7 @@
 								$linkSongTitle .= '<font class="explicit"> (Explicit)</font>';
 							}
 						?>
-						<a style="text-decoration: none;" title="<?= $songTitle; ?>"><?= $linkSongTitle; ?></a>
+						<span title="<?= $songTitle; ?>"><?= $linkSongTitle; ?></span>
 					</div>
 					<div class="time">
 						<?php
@@ -195,7 +199,7 @@
 						?>
 					</div>
 					<?php if ( isset( $patronId ) && !empty( $patronId ) ): ?>
-						<a class="menu-btn no-ajaxy" href="#" title="Add to Wishlist, Playlist, or Download"></a>
+						<?=$this->Html->link( '', '#', array( 'class' => 'menu-btn no-ajaxy', 'title' => 'Add to Wishlist, Playlist, or Download' ) )?>
 						<section class="options-menu">
 							<input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>" />
 							<ul>
@@ -215,10 +219,26 @@
 											<input type="hidden" name="ProviderType" value="<?= $psong->provider_type; ?>" /> 
 											<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $psong->ProdID; ?>">
 												<![if !IE]>
-													<a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" title="<?= $hrefTitle ; ?>" onclick='return wishlistDownloadOthersHome("<?= $psong->ProdID; ?>", "0", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?= $psong->provider_type; ?>");'> <?php __('Download Now'); ?> </a>
+													<?php echo $this->Html->link( 'Download Now',
+																'javascript:void(0)',
+																array( 
+																		'class' => 'no-ajaxy top-10-download-now-button',
+																		'title' => $hrefTitle,
+																		'onclick' => 'return wishlistDownloadOthersHome("' . $psong->ProdID . '", "0", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '", "' . $psong->provider_type . '")',
+																		'escape' => false
+																		 )
+															); ?>
 												<![endif]>
 												<!--[if IE]>
-													<a href="javascript:void(0);" id="song_download_<?= $psong->ProdID; ?>" class="no-ajaxy top-10-download-now-button" title="<?= $hrefTitle ; ?>" onclick='wishlistDownloadIEHome("<?= $psong->ProdID; ?>", "0" , "<?= $psong->provider_type; ?>", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>");'><?php __('Download Now'); ?></a>
+													<?php echo $this->Html->link( 'Download Now',
+																'javascript:void(0)',
+																array( 'class' => 'no-ajaxy top-10-download-now-button',
+																		'id' => 'song_download_' . $psong->ProdID,
+																		'title' => $hrefTitle,
+																		'onclick' => 'wishlistDownloadIEHome("' . $psong->ProdID . '", "0" , "' . $psong->provider_type . '", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '")',
+																		'escape' => false
+																		)
+															); ?>
                                                 <![endif]-->
 											</span>
 											<span class="afterClick" id="downloading_<?= $psong->ProdID; ?>" style="display: none;">
@@ -229,12 +249,12 @@
 										</form>
 									</div> 
 									<?php else: ?>
-										<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?> </a>
+										<?=$this->Html->link( 'Downloaded', array( 'controller' => 'homes', 'action' => 'my_history' ), array( 'class' => 'top-100-download-now-button', 'title' => 'You have already downloaded this song. Get it from your recent downloads' ) )?>
 									<?php
 										endif;
 									  else:
 									?>
-										<a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?> </a>
+										<?=$this->Html->link( 'Limit Met', 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) )?>
 								<?php
 									endif;
 								 else:
@@ -243,9 +263,7 @@
 									 	$salesDate = date( "F d Y", strtotime( $sales_date ) );
 									 }
 								?>
-								<a class="top-100-download-now-button" href="javascript:void(0);">
-									<span title='<?php __("Coming Soon"); ?> ( <?= $salesDate; ?> )'> <?php __("Coming Soon"); ?> </span>
-								</a>
+									<?=$this->Html->link( 'Coming Soon', 'javascript:void(0)', array( 'class' => 'top-100-download-now-button', 'title' => 'Coming Soon ( ' . $salesDate . ' )' ) )?>								
 								<?php endif; ?>
 							</li>
 							<li>
@@ -253,21 +271,21 @@
 								$wishlistInfo = $wishlist->getWishlistData( $psong->ProdID );
 								if ( $wishlistInfo == 'Added To Wishlist' ):
 							?> 
-							<a href="#">Added to Wishlist</a>
+									<?=$this->Html->link( 'Added to Wishlist', '#' )?>
 							<?php else: ?> 
 								<span class="beforeClick" id="wishlist<?= $psong->ProdID ?>">
-									<a class="add-to-wishlist no-ajaxy" href="#">Add to Wishlist</a>
+									<?=$this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
 								</span>
 								<span class="afterClick" style="display: none;">
-									<a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a>
+									<?=$this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) )?>
 								</span>
 						 	<?php endif; ?>
 							</li>
 							<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
-								<li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
+								<li> <?=$this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?> </li>
 							</ul>
 							<ul class="playlist-menu">
-								<li><a href="#">Create New Playlist</a></li>
+								<li><?=$this->Html->link( 'Create New Playlist', '#')?></li>
 							</ul>
 						<?php endif; ?>
 					</section>
@@ -310,14 +328,21 @@
 		?>
 					<div class="album-detail-container">
 						<div class="cover-image">
-							<a href="<?= "/artists/view/$linkArtistText/$palbum->ReferenceID/$linkProviderType"; ?>" title="<?= $this->getTextEncode( $palbum->Title ); ?>"><img src="<?= $image; ?>" alt="<?= $album_title; ?>" width="162" height="162" /></a>
+							<?=$this->Html->link( $this->Html->image( $image, array( 'alt' => $album_title, 'width' => 162, 'height' => 162 ) ), array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false ) )?>
 						</div>
 						<div class="album-info">
 							<div class="album-title">
-								<strong><a href="<?= "/artists/view/$linkArtistText/$palbum->ReferenceID/$linkProviderType"; ?>" title="<?= $this->getTextEncode($palbum->Title); ?>"><?php echo $album_title; ?> <?= $explicit; ?></a></strong>
+								<strong> <?=$this->Html->link( $album_title . $explicit, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->Title ) ) )?> </strong>
 							</div>
 							<div class="artist">
-								by <a class="more-by-artist" href="/artists/album/<?= str_replace( '/', '@', base64_encode( $palbum->ArtistText ) ); ?>/<?= base64_encode( $album_genre ) ?>"><?= $this->getTextEncode( $palbum->ArtistText ); ?> </a>
+								by
+								<?php echo $this->Html->link( $this->getTextEncode( $palbum->ArtistText ), 
+										array( 'controller' => 'artists', 
+												'action' => 'album', 
+												str_replace( '/', '@', base64_encode( $palbum->ArtistText ) ), 
+												base64_encode( $album_genre ) ),
+										array( 'class' => 'more-by-artist' ) );
+								?>
 							</div>
 							<div class="genre">
 								Genre:
@@ -344,20 +369,20 @@
 
 												if ( $wishlistInfo == 'Added To Wishlist' ):
 											?> 
-													<a href="#">Added to Wishlist</a>
+													<?=$this->Html->link( 'Added to Wishlist', '#' )?>
 											<?php else: ?> 
 													<span class="beforeClick" id="wishlist<?= $palbum->ReferenceID ?>">
-														<a class="add-to-wishlist no-ajaxy" href="#">Add to Wishlist</a>
+														<?=$this->Html->link( 'Added to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
 													</span>
 													<span class="afterClick" style="display: none;">
-														<a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a>
+														<?=$this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) )?>
 													</span>
 											<?php endif; ?>
 											</li>
 											<?php if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ): ?>
-													<li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);">Add to Playlist</a></li>
+													<li> <?=$this->Html->link( 'Add to Playlist', 'JavaScript:void(0)', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
 										</ul>
-													<ul class="playlist-menu"><li><a href="#">Create New Playlist</a></li></ul>
+													<ul class="playlist-menu"><li><?=$this->Html->link( 'Create New Playlist', '#' )?></li></ul>
 											<?php endif; ?>
 									</section>
 							<?php } ?>
@@ -400,7 +425,10 @@
 					$tilte 			 = urlencode ($genre->Genre );
 		?>
 				<li>
-					<a href="<?= "/genres/album?q=$keyword&type=album&filter=$tilte"; ?>" title="<?= $this->getTextEncode( $genre_name ); ?>"><?= $this->getTextEncode( $genre_name_text ); ?> (<?= $genre->numFound;; ?>)</a>
+					<?php echo $this->Html->link( $this->getTextEncode( $genre_name_text ) . '( ' . $genre->numFound . ' )', 
+							array( 'controller' => 'genres', 'action' => 'album', '?' => array( 'q' => $keyword, 'type' => 'album', 'filter' => $tilte ) ),
+							array( 'title' => $this->getTextEncode( $genre_name ) ) );
+					?>
 				</li>
 		<?php 	} ?>
 			</ul>
@@ -428,20 +456,20 @@
 					<div class="video-thumb">
 					<?php                                    
 						$videoArtwork = $this->Token->artworkToken( $psong->ACdnPath . "/" . $psong->ASourceURL );
-						$VideoImage = Configure::read( 'App.Music_Path' ) . $videoArtwork;
+						$videoImage = Configure::read( 'App.Music_Path' ) . $videoArtwork;
 					?>
-						<a href="/videos/details/<?= $psong->ProdID; ?>"><img src="<?= $VideoImage; ?>"> </a>
+						<?=$this->Html->link( $this->Html->image( $videoImage, array( 'alt' => 'No Image' ) ), array( 'controller' => 'videos', 'action' => 'details', $psong->ProdID ), array( 'escape' => false ) ); ?>
 					</div>
 					<div class="video-info">
 						<div class="video-title">
-							<a href="/videos/details/<?= $psong->ProdID; ?>"><?= $this->getTextEncode( $psong->VideoTitle ); ?> </a>
+							<?=$this->Html->link( $this->getTextEncode( $psong->VideoTitle ), array( 'controller' => 'videos', 'action' => 'details', $psong->ProdID ) ); ?>
 						</div>
 						<div class="artist">
 						<?php 
 							$artistText = str_replace( '/', '@', base64_encode( $psong->ArtistText ) );
 							$linkArtist = $this->getTextEncode( $psong->ArtistText );
 						?>
-							by <a href="/artists/album/<?= $artistText; ?>/<?= base64_encode( $psong->Genre ) ?>"> <?= $linkArtist; ?></a>
+							by <?=$this->Html->link( $linkArtist, array( 'controller' => 'artists', 'action' => 'album', $artistText, base64_encode( $psong->Genre ) ) ); ?>
 						</div>
 						<div class="release-date">
 							Released on
@@ -451,7 +479,7 @@
 						?>
 						</div>
 						<?php if ( isset( $patronId ) && !empty( $patronId ) ) { ?>
-								<a class="wishlist-btn" title="Add to Wishlist" onclick='Javascript: addToWishlistVideo("<?= $psong->ProdID; ?>", "<?= $psong->provider_type; ?>", 1);'></a>
+								<?=$this->Html->link( '', '#', array( 'class' => 'wishlist-btn', 'title' => 'Add to Wishlist', 'onclick' => 'Javascript: addToWishlistVideo("' . $psong->ProdID . '", "' . $psong->provider_type . '", 1)', 'escape' => false ) ) ?>
 						<?php
 								$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
 								if ( $sales_date <= date( 'Y-m-d' ) ) {
@@ -465,25 +493,34 @@
 													<input type="hidden" name="ProviderType" value="<?= $psong->provider_type; ?>" />
 													<span class="beforeClick" id="download_video_<?= $psong->ProdID; ?>"> 
 														<![if !IE]>
-															<a class="download-btn" title="Download This Video" onclick='return wishlistVideoDownloadOthersToken("<?= $psong->ProdID; ?>", "0", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?= $psong->provider_type; ?>", 1);' href="javascript:void(0);"></a>
+															<?php echo $this->Html->link( '', 'javascript:void(0)',
+																		array( 'class' => 'download-btn', 'title' => 'Download This Video',
+																				'onclick' => 'return wishlistVideoDownloadOthersToken("' . $psong->ProdID . '", "0", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '", "' . $psong->provider_type . '", 1)',
+																				'escape' => false )
+																	);
+															 ?>
 														<![endif]>
 														<!--[if IE]>
-							                                <a class="download-btn" title="Download This Video" onclick='wishlistVideoDownloadIEToken("<?= $psong->ProdID; ?>", "0" , "<?= $psong->provider_type; ?>", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>",1);' href="javascript:void(0);"></a>
+							                                <?php echo $this->Hml->link( '', 'javascript:void(0)',
+							                                			array( 'class' => 'download-btn', 'title' => 'Download This Video',
+							                                					'onclick' => 'wishlistVideoDownloadIEToken("' . $psong->ProdID . '", "0" , "' . $psong->provider_type . '", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '",1)',
+							                                					'escape' => false
+							                                				)
+							                                		); ?>
 							                            <![endif]-->
 													</span>
 													<span class="afterClick" id="vdownloading_<?= $psong->ProdID; ?>" style="display: none; float: left"></span>
 													<span id="vdownload_loader_<?= $psong->ProdID; ?>" style="display: none; float: right;"><?= $html->image( 'ajax-loader_black.gif' ); ?> </span>
 												</form>
 											</div>
-								<?php 	} else { ?>
-											<a href="/homes/my_history" title="You have already download this video. Get it from your recent downloads" class="download-btn video-downloaded"></a>
-								<?php 	}
+								<?php 	} else {
+											echo $this->Html->link( '', array('controller' => 'homes', 'action' => 'my_history' ), array( 'title' => 'You have already download this video. Get it from your recent downloads', 'class' => 'download-btn video-downloaded') );
+								 		}
 									} else {
-								 ?>
-										<a title="Your download limit has been met." class="download-btn download-limit-met"></a>
-								<?php }
+								  		echo $this->Html->link( '', '#', array( 'class' => 'download-btn download-limit-met', 'title' => 'Your download limit has been met.' ) );
 									}
-							  }
+								}
+							}
 							?>
 					</div>
 				</div>
@@ -528,7 +565,7 @@
 						$composer_name = $this->getTextEncode($composer_name);
 						if ( $composer_name != '' && true == is_numeric( $composer->numFound ) ) {
 				?>
-							<li><a href="/artists/composer/<?= base64_encode( $composer->Composer ); ?>/1" title="<?= $composer_name; ?>"><?= $composer_name; ?> </a></li>
+							<li><?php echo $this->Html->link( $composer_name, array( 'controller' => 'artists', 'action' => 'composer', base64_encode( $composer->Composer ), 1 ), array( 'title' => $composer_name ) )?></li>
 				<?php
 						}
 					}
@@ -551,9 +588,11 @@
 		<section class="category-results album-results">
 			<header>
 				<h3 class="albums-header">Albums</h3>
-				<?php if ( isset( $albumData ) && !empty( $albumData ) ): ?>
-				<a class="see-more" href="/search/index?q=<?= $keyword; ?>&type=album" title="See More Albums"></a>
-				<?php endif; ?>
+				<?php 
+					if ( isset( $albumData ) && !empty( $albumData ) ) {
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => 'See More Albums', 'class' => 'see-more' ) );
+					}
+				?>
 			</header>
 			<div class="search-results-all-albums-carousel">
 			<?php if ( isset( $albumData ) && is_array( $albumData ) && count( $albumData ) > 0 ) { ?>
@@ -569,25 +608,33 @@
 								extract( $albumInfo );
 						?>
 								<div class="album-cover-container">
-									<a href="<?= "/artists/view/$linkArtistText/$palbum->ReferenceID/$linkProviderType"; ?>" title="<?= $this->getTextEncode( $palbum->Title ); ?>"> <img src="<?= $image; ?>" alt="<?= $album_title; ?>" width="162" height="162" /> </a>
+									<?php echo $this->Html->link( 
+												$this->Html-image( $image, array( 'alt' => $album_title, 'width' => 162, 'height' => 162 ) ),
+												array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ),
+												array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false )
+											);
+									?>
 								<?php if ( isset( $patronId ) && !empty( $patronId ) ) { ?>
 										<input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>" />
 							<?php
 									  	if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ) {
 											echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1 );
+											echo $this->Html->link('', '#', array( 'title' => 'Add to a Playlist or Create a New Playlist', 'class' => 'playlist-menu-icon toggleable no-ajaxy'));
 							?>
-											<a class="playlist-menu-icon toggleable no-ajaxy" title="Add to a Playlist or Create a New Playlist" href="#"></a>
-											<ul><li><a href="#" class="create-new-playlist">Create New Playlist...</a></li></ul>
-									<?php } ?>
-										<a class="wishlist-icon toggleable no-ajaxy" title="Add to Wishlist" href="#"></a>
-								<?php } ?>
+											<ul><li><?php echo $this->Html->link( 'Create New Playlist...', '#', array( 'class' => 'create-new-playlist' ) );?></li></ul>
+									<?php 
+									  	} 
+										
+										echo $this->Html->link( '', '#', array( 'class' => 'wishlist-icon toggleable no-ajaxy', 'title' => 'Add to Wishlist' ) );
+									}
+									?>
 									</div>
 									<div class="album-info">
 										<p class="title">
-											<a href="<?= "/artists/view/$linkArtistText/$palbum->ReferenceID/$linkProviderType"; ?>" title="<?= $this->getTextEncode( $palbum->Title ); ?>"> <?php echo $album_title; ?> </a>
+											<?php echo $this->Html->link( $album_title, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType), array( 'title' => $this->getTextEncode( $palbum->Title ) ) );?>
 										</p>
 										<p class="artist">
-											Genre: <span><a href="javascript:void(0)"><?= $album_genre; ?> </a> </span>
+											Genre: <span> <?php echo $this->Html->link( $album_genre, 'javascript:void(0)' );?></span>
 										</p>
 										<p class="label"> <?= $album_label_str; ?> </p>
 									</div>
@@ -610,9 +657,11 @@
 		<section class="category-results artist-results">
 			<header>
 				<h3 class="artists-header">Artists</h3>
-				<?php if ( isset( $artists ) && !empty( $artists ) ): ?>
-				<a class="see-more" href="/search/index?q=<?= $keyword; ?>&type=artist" title="See More Artists"></a>
-				<?php endif; ?>
+				<?php 
+					if ( isset( $artists ) && !empty( $artists ) ) {
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array('class' => 'see-more', 'title' => 'See More Artists'));
+				 	}
+				?>
 			</header>
 			<div class="search-results-list">
 				<?php if ( isset( $artists ) && is_array( $artists ) && count( $artists ) > 0 ) { ?>
@@ -649,9 +698,11 @@
 		<section class="category-results composers-results">
 			<header>
 				<h3 class="composers-header">Composers</h3>
-				<?php if ( isset( $composers ) && !empty( $composers ) ): ?>
-				<a class="see-more" href="/search/index?q=<?= $keyword; ?>&type=composer" title="See More Composers"></a>
-				<?php endif; ?>
+				<?php 
+					if ( isset( $composers ) && !empty( $composers ) ) {
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => 'See More Composers', 'class' => 'see-more' ) );
+				 	} 
+				 ?>
 			</header>
 			<div class="search-results-list">
 				<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ) { ?>
@@ -662,7 +713,7 @@
 								if ( !empty( $composer_name ) ) {
 									$composer_name = str_replace( '"', '', $composer_name );
 						?>
-									<li><a href="/artists/composer/<?= base64_encode( $composer->Composer ); ?>/1" title="<?= $composer_name; ?>"><?php echo str_replace( '"', '', $composer_name ); ?> </a> </li>
+									<li> <?php echo $this->Html->link( str_replace( '"', '', $composer_name ), array( 'controller' => 'artists', 'action' => 'composer', base64_encode( $composer->Composer ), 1 ), array( 'title' => $composer_name, 'class' => '' ) ); ?> </li>
 						<?php
 								}
 							}
@@ -680,9 +731,11 @@
 		<section class="category-results videos-results">
 			<header>
 				<h3 class="videos-header">Videos</h3>
-				<?php if ( isset( $videos ) && !empty( $videos ) ): ?>
-				<a class="see-more" href="/search/index?q=<?= $keyword; ?>&type=video" title="See More Videos"></a>
-				<?php endif; ?>
+				<?php 
+					if ( isset( $videos ) && !empty( $videos ) ) {
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => 'See More Videos', 'class' => 'see-more' ) );
+					} 
+				?>
 			</header>
 			<div class="search-results-list">
 				<?php if ( isset( $videos ) && is_array( $videos ) && count( $videos ) > 0 ) { ?>
@@ -691,8 +744,9 @@
 						$tilte 			 = urlencode( $video->VideoTitle );
 						$video_name_text = $this->Search->truncateText( $this->getTextEncode( $video->VideoTitle ), 125, $this );
 						$name 			 = $this->getTextEncode( $video->VideoTitle );
+						$video_name_text = ($name != "false") ? $video_name_text : ""
 				?>
-						<li><a href="/search/index?q=<?= $tilte; ?>&type=video" title="<?= $name; ?>"><?= (($name != "false") ? $video_name_text : ""); ?> </a></li>
+						<li> <?php echo $this->Html->link( $video_name_text, array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $tilte, 'type' => 'video' ) ), array( 'title' => $name ) ); ?> </li>
 				<?php	} ?>
 				</ul>
 				<?php } else { ?>
@@ -707,9 +761,11 @@
 		<section class="category-results genres-results">
 			<header>
 				<h3 class="genres-header">Genres</h3>
-				<?php if ( isset( $genres ) && !empty( $genres ) ) { ?>
-				<a class="see-more" href="/search/index?q=<?= $keyword; ?>&type=genre" title="See More Genres"></a>
-				<?php } ?>
+				<?php 
+					if ( isset( $genres ) && !empty( $genres ) ) {
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => 'See More Genres', 'class' => 'see-more' ) );
+					} 
+				?>
 			</header>
 			<div class="search-results-list">
 				<?php if ( isset( $genres ) && is_array( $genres ) && count( $genres ) ) { ?>
@@ -723,7 +779,7 @@
 
 							if ( !empty( $genre_name_text ) ) {
 				?>
-								<li><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?= $genre_name; ?>"><?= $genre_name_text; ?><span>(<?= $genre->numFound; ?>) </span> </a></li>
+								<li> <?php echo $this->Html->link( $genre_name_text . '( ' . $genre->numFound . ' )', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $tilte, 'type' => 'genre' ) ), array( 'title' => $genre_name ) ); ?> </li>
 				<?php
 							}
 						}
@@ -743,30 +799,31 @@
 			<div class="songs-results-list">
 				<div class="header-container">
 					<div class="artist-col">
-						<a href="<?= "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type; ?>"><span class="artist">Artist</span> </a>
+						<span class="artist">Artist</span>
 					</div>
 					<div class="artist-border header-border"></div>
 					<div class="composer-col">
-						<a href="<?= "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type; ?>"><span class="composer">Composer</span> </a>
+						<span class="composer">Composer</span>
 					</div>
 					<div class="composer-border header-border"></div>
 					<div class="album-col">
-						<a href="<?= "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type; ?>"><span class="album">Album</span> </a>
+						<span class="album">Album</span>
 					</div>
 					<div class="album-border header-border"></div>
 					<div class="song-col">
-						<a href="<?= "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type; ?>"><span class="song">Song</span> </a>
+						<span class="song">Song</span>
 					</div>
-					<?php if ( isset( $patronId ) && !empty( $patronId ) ) { ?>
-
-							<a class="multi-select-icon no-ajaxy" href="#" title="Select All, Clear All, Add to Wishlist, or Add to Playlist"></a>
+					<?php 
+						if ( isset( $patronId ) && !empty( $patronId ) ) {
+							echo $this->Html->link( '', '#', array( 'title' => 'Select All, Clear All, Add to Wishlist, or Add to Playlist', 'class' => 'multi-select-icon no-ajaxy' ) );
+					?>
 							<section class="options-menu">
 								<ul>
-									<li><a class="select-all no-ajaxy" href="#">Select All</a></li>
-									<li><a class="clear-all no-ajaxy" href="#">Clear All</a></li>
-									<li><a class="add-all-to-wishlist no-ajaxy" href="#">Add to Wishlist</a></li>
+									<li><?php echo $this->Html->link( 'Select All', '#', array( 'class' => 'select-all no-ajaxy' ) ); ?></li>
+									<li><?php echo $this->Html->link( 'Clear All', '#', array( 'class' => 'clear-all no-ajaxy' ) ); ?></li>
+									<li><?php echo $this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-all-to-wishlist no-ajaxy' ) ); ?></li>
 									<?php if ( isset( $libraryType ) && $libraryType == 2 ): ?>
-											<li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a> </li>
+											<li> <?php echo $this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) ); ?> </li>
 									<?php endif; ?>
 								</ul>
 								<ul class="playlist-menu"></ul>
@@ -829,22 +886,23 @@
 											<?= $html->link( str_replace( '"', '', $this->Search->truncateText( $psong->ArtistText, 20, $this ) ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $psong->ArtistText ) ) ), array( 'title' => $this->getTextEncode( $psong->ArtistText ) ) ); ?>
 										</div>
 										<div class="composer composer-name">
-											<a style="text-decoration: none;" title='<?= str_replace( '"', '', $this->getTextEncode( $psong->Composer ) ); ?>'><?= $this->Search->truncateText( str_replace( '"', '', $this->getTextEncode( $psong->Composer ) ), 25, $this ); ?> </a>
+											<span title='<?= str_replace( '"', '', $this->getTextEncode( $psong->Composer ) ); ?>'><?= $this->Search->truncateText( str_replace( '"', '', $this->getTextEncode( $psong->Composer ) ), 25, $this ); ?> </span>
 										</div>
 										<div class="album album-name">
-											<a href="/artists/view/<?= str_replace( '/', '@', base64_encode( $psong->ArtistText ) ); ?>/<?= $psong->ReferenceID; ?>/<?= base64_encode( $psong->provider_type ); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', $this->Search->truncateText($this->getTextEncode($psong->Title), 25, $this)); ?> </a>
+											<?php echo $this->Html->link( str_replace('"', '', $this->Search->truncateText($this->getTextEncode($psong->Title), 25, $this)), array( 'controller' => 'artists', 'action' => 'view', str_replace( '/', '@', base64_encode( $psong->ArtistText ) ), $psong->ReferenceID, base64_encode( $psong->provider_type ) ), array( 'title' => $this->getTextEncode($psong->Title) ) ); ?>
 										</div>
 										<div class="song song-name" sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $territory; ?>">
 										<?php $showSongTitle = $this->Search->truncateText( $psong->SongTitle, strlen( $psong->SongTitle ), $this ); ?>
-											<a style="text-decoration: none;" title="<?= str_replace( '"', '', $this->getTextEncode( $showSongTitle ) ); ?>"><?= $this->Search->truncateText( $this->getTextEncode( $psong->SongTitle ), 21, $this ); ?>
+											<span style="text-decoration: none;" title="<?= str_replace( '"', '', $this->getTextEncode( $showSongTitle ) ); ?>"><?= $this->Search->truncateText( $this->getTextEncode( $psong->SongTitle ), 21, $this ); ?>
 										<?php
 											if ($psong->Advisory == 'T') {
 												echo '<font class="explicit"> (Explicit)</font>';
 											}
-										?> </a>
+										?> </span>
 										</div>
-										<?php if ( isset( $patronId ) && !empty( $patronId ) ) { ?>
-												<a href="#" class="menu-btn no-ajaxy" title="Add To a Playlist, Wishlist, or Download"></a>
+										<?php if ( isset( $patronId ) && !empty( $patronId ) ) {
+												echo $this->Html->link( '', '#', array( 'title' => 'Add To a Playlist, Wishlist, or Download', 'class' => 'menu-btn no-ajaxy' ) );
+										?>
 												<section class="options-menu">
 													<input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>" />
 													<ul>
@@ -863,67 +921,84 @@
 																				<input type="hidden" name="ProviderType" value="<?= $psong->provider_type; ?>" />
 																				<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $psong->ProdID; ?>"> 
 																					<![if !IE]>
-																						<a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" title="<?= $titleSong; ?>" onclick='return wishlistDownloadOthersHome("<?= $psong->ProdID; ?>", "0", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?= $psong->provider_type; ?>");'> <?php __('Download Now'); ?> </a> 
+																						<?php 
+																						echo $this->Html->link( 'Download Now',
+																								'javascript:void(0)',
+																								array(
+																										'class' => 'no-ajaxy top-10-download-now-button',
+																										'title' => $titleSong,
+																										'onclick' => 'return wishlistDownloadOthersHome("' . $psong->ProdID . '", "0", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '", "' . $psong->provider_type . '")',
+																										'escape' => false
+																								)
+																						);
+																						?> 
 																					<![endif]>
 																					<!--[if IE]>
-						                                                            	<a id="song_download_<?= $psong->ProdID; ?>" class="no-ajaxy top-10-download-now-button" title="<?= $titleSong; ?>" onclick='wishlistDownloadIEHome("<?= $psong->ProdID; ?>", "0" , "<?= $psong->provider_type; ?>", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+						                                                            	<?php echo $this->Html->link( 'Download Now',
+																									'javascript:void(0)',
+																									array( 'class' => 'no-ajaxy top-10-download-now-button',
+																											'id' => 'song_download_' . $psong->ProdID,
+																											'title' => $titleSong,
+																											'onclick' => 'wishlistDownloadIEHome("' . $psong->ProdID . '", "0" , "' . $psong->provider_type . '", "' . $productInfo[0]['Full_Files']['CdnPath'] . '", "' . $productInfo[0]['Full_Files']['SaveAsName'] . '")',
+																											'escape' => false
+																											)
+																								);
+						                                                            	?>
 		                                                                            <![endif]-->
 																				</span>
 																				<span class="afterClick" id="downloading_<?= $psong->ProdID; ?>" style="display: none;">
 																					<a class="add-to-wishlist"><?php __("Please Wait.."); ?>
 																						<span id="wishlist_loader_<?= $psong->ProdID; ?>" style="float: right; padding-right: 8px; padding-top: 2px;"><?= $html->image( 'ajax-loader_black.gif' ); ?> </span> 
-																					</a> 
+																					</a>
+																					<?php /*echo $this->Html->link( 
+																									'Please Wait..' . $this->Html->tag( 'span', $html->image( 'ajax-loader_black.gif' ), array('id' => 'wishlist_loader_' . $psong->ProdID, 'style="float: right; padding-right: 8px; padding-top: 2px;"' ) ), 
+																									'#', 
+																									array( 'class' => 'add-to-wishlist', 'escape' => false ) 
+																							);*/
+																					?> 
 																				</span>
 																			</form>
 																		</div>
-														<?php 		} else { ?>
-														 				<a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?> </a>
-														<?php
+														<?php 		} else {
+														 				echo $this->Html->link( 'Downloaded', array( 'controller' => 'homes', 'action' => 'my_history' ), array( 'title' => 'You have already downloaded this song. Get it from your recent downloads', 'class' => 'top-100-download-now-button' ) );
 																	}
 																} else {
-														?>
-																	<a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?> </a> 
-														<?php
+																	echo $this->Html->link( 'Limit Met', 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) );
 																}
 															} else {
-														?>
-																<a class="top-100-download-now-button" href="javascript:void(0);">
-																	<span title='<?php __("Coming Soon"); ?> ( 
-														<?php
-						                            					$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
-						                            					if ( isset( $sales_date ) ) {
-						                                					echo date( "F d Y", strtotime( $sales_date ) );
-						                            					}
-						                            	?> 
-						                            					)'> <?php __("Coming Soon"); ?>
-															</span>
-														</a> 
-														<?php } ?>
+																$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
+																if ( isset( $sales_date ) ) {
+																	$sales_date = date( "F d Y", strtotime( $sales_date ) );
+																}
+
+															 	echo $this->Html->link(
+																		$this->Html->tag( 'span', 'Coming Soon ( ' . $sales_date . ' )', array( 'title' => 'Coming Soon' ) ), 
+																		'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) 
+																	);
+														 	} ?>
 														</li>
 														<li>
 														<?php
 															$wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
 						
 															if ( $wishlistInfo == 'Added To Wishlist' ) {
-														?> 
-																<a href="#">Added to Wishlist</a> 
-														<?php
+																echo $this->Html->link( 'Added to Wishlist', '#' );
 															} else {
 														?>
 																<span class="beforeClick" id="wishlist<?= $psong->ProdID ?>">
-																	<a class="add-to-wishlist no-ajaxy" href="#">Add to Wishlist</a>
+																	<?php echo $this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) );?>
 																</span> 
 																<span class="afterClick" style="display: none;">
-																	<a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a>
+																	<?php echo $this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) );?>
 																</span>
 														<?php
 															}
 														?>
 														</li>
 														<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
-																<li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
+																<li> <?php echo $this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) );?> </li>
 																</ul>
-																<ul class="playlist-menu"> <li><a href="#" class="no-ajaxy">Create New Playlist</a></li> </ul>
+																<ul class="playlist-menu"> <li> <?php echo $this->Html->link( 'Create New Playlist', '#', array( 'class' => 'no-ajaxy' ) );?> </li> </ul>
 														<?php endif; ?>
 												</section>
 												<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
