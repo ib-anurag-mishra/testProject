@@ -332,7 +332,7 @@
 						</div>
 						<div class="album-info">
 							<div class="album-title">
-								<strong> <?=$this->Html->link( $album_title . $explicit, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->Title ) ) )?> </strong>
+								<strong> <?=$this->Html->link( $album_title . $explicit, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false ) )?> </strong>
 							</div>
 							<div class="artist">
 								by
@@ -609,7 +609,7 @@
 						?>
 								<div class="album-cover-container">
 									<?php echo $this->Html->link( 
-												$this->Html-image( $image, array( 'alt' => $album_title, 'width' => 162, 'height' => 162 ) ),
+												$this->Html->image( $image, array( 'alt' => $album_title, 'width' => 162, 'height' => 162 ) ),
 												array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ),
 												array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false )
 											);
@@ -619,7 +619,7 @@
 							<?php
 									  	if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ) {
 											echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1 );
-											echo $this->Html->link('', '#', array( 'title' => 'Add to a Playlist or Create a New Playlist', 'class' => 'playlist-menu-icon toggleable no-ajaxy'));
+											echo $this->Html->link('', '#', array( 'title' => 'Add to a Playlist or Create a New Playlist', 'class' => 'playlist-menu-icon toggleable no-ajaxy' ) );
 							?>
 											<ul><li><?php echo $this->Html->link( 'Create New Playlist...', '#', array( 'class' => 'create-new-playlist' ) );?></li></ul>
 									<?php 

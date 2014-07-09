@@ -90,7 +90,9 @@ class SearchController extends AppController {
                 $facetPage = 1;
             }
 
-            /* We need to remove below two variables and also remove these arguments from search function of component*/
+            /* To do: 
+             * 		We need to remove below two variables and also remove these arguments from search function of Solr component
+            */
             $sortVar   = 'ArtistText';
             $sortOrder = 'asc';
             /**********************************************************************************************************/
@@ -99,7 +101,7 @@ class SearchController extends AppController {
             $songs   	= $this->Solr->search( $queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country );
             $total 	 	= $this->Solr->total;
             $totalPages = ceil( $total / $limit );
-            $lastPage 	= $songs['lastPage'];
+            $lastPage 	= isset( $songs['lastPage'] ) ? $songs['lastPage'] : '';
             $lastPage 	= ceil($lastPage / $limit);
             $songArray 	= array();
 

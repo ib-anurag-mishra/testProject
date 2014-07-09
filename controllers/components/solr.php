@@ -215,7 +215,7 @@ class SolrComponent extends Object {
 				break;
 		
 			case 'artist':
-				$arrGroup['queryFields'] = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
+				$arrGroup['queryFields'] = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
 				$arrGroup['field'] 		 = 'ArtistText';
 				break;
 
