@@ -89,6 +89,7 @@ if (empty($getData))
     $getData['Library']['library_language'] = 'en';
     $getData['Library']['library_exp_date_format'] = '';
     $getData['Library']['library_type'] = '1';
+    $getData['Library']['optout_email_notification'] = '0';
 }
 ?>
 <fieldset>
@@ -132,6 +133,24 @@ if (empty($getData))
                         </td>
                         <td align="left">
                             <?php echo $this->Form->label('Do not show library name on site'); ?>
+                        </td>
+                    </tr>
+		    <tr>
+                        <td align="right">
+                            <?php
+                            if ($getData['Library']['optout_email_notification'] == 0)
+                            {
+                                $checked = false;
+                            }
+                            elseif ($getData['Library']['optout_email_notification'] == 1)
+                            {
+                                $checked = true;
+                            }
+                            echo $this->Form->checkbox('optout_email_notification', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $checked));
+                            ?>
+                        </td>
+                        <td align="left">
+                            <?php echo $this->Form->label('Optout Email Request Notification'); ?>
                         </td>
                     </tr>					
                     <?php
