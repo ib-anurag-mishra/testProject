@@ -489,7 +489,7 @@
                             }});
 
                     $("#colorboxOKBtn").click(function() {
-                        var pid = '<?= $this->Session->read('patron') ?>';
+                        var pid = <?= $this->Session->read('patron') ?>;
                         var lid = <?= $this->Session->read('library') ?>;
                         var data = {pid: pid, lid: lid};
                         jQuery.ajax({
@@ -522,7 +522,7 @@
                             }});
 
                 $("#colorboxOKBtn").click(function() {
-                    var pid = '<?= $this->Session->read('patron') ?>';
+                    var pid = <?= $this->Session->read('patron') ?>;
                     var lid = <?= $this->Session->read('library') ?>;
                     var data = {pid: pid, lid: lid};
                     jQuery.ajax({
@@ -561,7 +561,12 @@
                                     escKey: false, noEscape: true, href: "#notificationApproval_div",
                                     onOpen: function() {
                                         $(document).unbind("keydown.cbox_close");
-                                    }});
+                                    },
+                                    onComplete: function() {
+                                        $("#cboxLoadingOverlay").remove();
+                                        $("#cboxLoadingGraphic").remove();
+                                    }
+                                });
                         //close the popup 
                         $("#colorboxCloseBtn").click(function() {
 
