@@ -3517,6 +3517,46 @@ STR;
     
     
     /*
+     * @func getGenreForSelection
+     * @desc This is used to get the 
+     */
+    function getGenreForSelection($genre_name)
+    {
+        $combineGenreData = Cache::read("combine_genre");
+        
+        if ($combineGenreData === false)
+        {
+            $combineGenreInstance = ClassRegistry::init('CombineGenre');
+            $combineGenreData     = $combineGenreInstance->find("all");                        
+            Cache::write("combine_genre", $combineGenreData);
+        }
+       
+       if($genre_name!='')
+        {            
+            for($cnt=0; $cnt<count($combineGenreData); $cnt++)
+            {
+                if($combineGenreData[$cnt]['CombineGenre']['genre']==str_replace("\\", "", $genre_name))       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
+                {
+                    $genre_name = $combineGenreData[$cnt]['CombineGenre']['expected_genre'];
+                }
+            }
+        }  
+        
+        return $genre_name;        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
      * @func getGenreSynonyms
      * @desc This is used to get synonyms list
      */
