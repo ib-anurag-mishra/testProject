@@ -272,6 +272,7 @@ Class GenresController extends AppController
         
         //check the genre value         
         $genre = base64_decode($Genre);
+        $genre = $this->Common->getGenreForSelection($genre);
         $genre = mysql_escape_string($genre);
         $this->set('genre', $genre);        
         
