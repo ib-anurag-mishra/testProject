@@ -527,10 +527,21 @@
 			break;
 		case 'composer':
 	?>
-		<header> <h3 class="composers-header"> More Composers Like <span><?= $keyword; ?> </span> </h3> </header>
+
+            
+		<header>
+			<h3 class="composers-header">
+				More Composers Like <span><?php echo $keyword; ?> </span>
+			</h3>
+		</header>
+           
+			
 		<div class="search-results-list">
-		<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ) { ?>
-				<ul>
+		 <?php if (!empty($composers)) {
+				?>	
+			<ul>
+
+
 				<?php
 					foreach ( $composers as $composer ) {
 
@@ -546,13 +557,21 @@
 				?>
 			</ul>
 			<?php
-				} else {
-			?>
-			<div style="color: red; padding: 50px;"> <span>No Composers Found</span> </div>
-			<?php
-				}
-			?>
+
+			$searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+			$pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString);
+			} else {
+				?>
+			<div style="color: red; padding: 50px;">
+				<span>No Composers Found</span>
+			</div>
+			 <?php
+                        }
+                       ?>
+
 		</div>
+               
+
 		<?php
 			break;
 		default:
@@ -672,32 +691,63 @@
 		<section class="category-results composers-results">
 			<header>
 				<h3 class="composers-header">Composers</h3>
-				<?php 
-					if ( isset( $composers ) && !empty( $composers ) ) {
-						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => 'See More Composers', 'class' => 'see-more' ) );
-				 	} 
-				 ?>
+
+				<?php
+                              
+				if (!empty($composers)) {
+					?>
+				<a class="see-more"
+					href="/search/index?q=<?php echo $keyword; ?>&type=composer"
+					title="See More Composers"></a>
+				<?php
+				}
+				?>
 			</header>
 			<div class="search-results-list">
-				<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ) { ?>
-						<ul>
-						<?php
-							foreach ( $composers as $composer ) {
-								$composer_name = $this->Search->truncateText( $this->getTextEncode( $composer->Composer ), 125, $this );
-								if ( !empty( $composer_name ) ) {
-									$composer_name = str_replace( '"', '', $composer_name );
-						?>
-									<li> <?php echo $this->Html->link( str_replace( '"', '', $composer_name ), array( 'controller' => 'artists', 'action' => 'composer', base64_encode( $composer->Composer ), 1 ), array( 'title' => $composer_name, 'class' => '' ) ); ?> </li>
-						<?php
-								}
-							}
-						?>
-						</ul>
-				<?php } else { ?>
+
+				<?php
+				if (!empty($composers)) {
+					?>
 				<ul>
-					<li>
-						<div style="color: red;"> <span>No Composers Found</span> </div>
+					<?php
+                                        $composerFlag = 0;
+					foreach ($composers as $composer) {
+						$tilte = urlencode($composer->Composer);
+						$composer_name = truncate_text($this->getTextEncode($composer->Composer), 125, $this);
+						if (!empty($composer_name)) {
+                                                    $composerFlag =1;
+							?>
+					<li><a
+						href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1"
+						title="<?php echo $this->getTextEncode($composer->Composer) ?>"><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?>
+					</a>
 					</li>
+					<?php
+						}
+					}
+                                        if($composerFlag == 0){
+                                            ?>
+                                        <li>
+						<div style="color: red;">
+							<span>No Composers Found</span>
+						</div>
+					</li>
+                                        
+                                        <?php
+                                        }
+					?>
+				</ul>
+				<?php
+				} else {
+					?>
+				<ul>
+					 <li>
+						<div style="color: red;">
+							<span>No Composers Found</span>
+						</div>
+
+					</li>
+                                       
 				</ul>
 				<?php } ?>
 			</div>
