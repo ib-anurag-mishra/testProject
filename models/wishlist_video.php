@@ -55,7 +55,7 @@ class WishlistVideo extends AppModel
 		}
 	}
 	
-	public function getWishListVideosStatus() {
+	public function getWishListVideosStatus( $ids, $libraryId, $patronId ) {
 	
 		$options = array('conditions' =>
 				array(
