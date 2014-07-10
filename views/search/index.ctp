@@ -899,15 +899,16 @@ case 'artist':
 		break;
 case 'composer':
 	?>
+            <?php
+			if (!empty($composers)) {
+				?>
 		<header>
 			<h3 class="composers-header">
 				More Composers Like <span><?php echo $keyword; ?> </span>
 			</h3>
 		</header>
 		<div class="search-results-list">
-			<?php
-			if (!empty($composers)) {
-				?>
+			
 			<ul>
 
 				<?php
@@ -941,12 +942,12 @@ case 'composer':
 			<div style="color: red; padding: 50px;">
 				<span>No Composers Found</span>
 			</div>
-			<?php
-			}
-			?>
+			
 
 		</div>
-
+                <?php
+		 }
+		?>
 		<?php
 		break;
 case 'all':
