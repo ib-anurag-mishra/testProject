@@ -714,7 +714,7 @@ case 'genre':
 				$i = 0;
 				foreach ($genres as $genre) {
 					$genre_name = str_replace('"', '', $genre->Genre);
-					$genre_name_text = truncate_text($genre_name, 125, $this);
+					$genre_name_text = $this->Search->truncateText($genre_name, 125, $this);
 					$genre_name_text =$genre_name;
 					$tilte = urlencode($genre->Genre);
 					$name = $genre->Genre;
