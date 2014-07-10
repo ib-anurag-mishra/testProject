@@ -1128,7 +1128,7 @@ default:
 			<header>
 				<h3 class="composers-header">Composers</h3>
 				<?php
-                                print_r($composers);
+                              
 				if (!empty($composers)) {
 					?>
 				<a class="see-more"
@@ -1145,10 +1145,12 @@ default:
 					?>
 				<ul>
 					<?php
+                                        $composerFlag = 0;
 					foreach ($composers as $composer) {
 						$tilte = urlencode($composer->Composer);
 						$composer_name = truncate_text($this->getTextEncode($composer->Composer), 125, $this);
 						if (!empty($composer_name)) {
+                                                    $composerFlag =1;
 							?>
 					<li><a
 						href="/artists/composer/<?= base64_encode($composer->Composer); ?>/1"
@@ -1158,17 +1160,23 @@ default:
 					<?php
 						}
 					}
+                                        if($composerFlag == 0){
+                                            ?>
+                                        <li>
+						<div style="color: red;">
+							<span>No Composers Found</span>
+						</div>
+					</li>
+                                        
+                                        <?php
+                                        }
 					?>
 				</ul>
 				<?php
 				} else {
 					?>
 				<ul>
-					<li>
-						<div style="color: red;">
-							<span>No Composers Found</span>
-						</div>
-					</li>
+					
 				</ul>
 				<?php
 				}
