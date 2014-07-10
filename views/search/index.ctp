@@ -1148,7 +1148,7 @@ default:
                                         $composerFlag = 0;
 					foreach ($composers as $composer) {
 						$tilte = urlencode($composer->Composer);
-						$composer_name = truncate_text($this->getTextEncode($composer->Composer), 125, $this);
+						$composer_name = $thist->Search->truncateText($this->getTextEncode($composer->Composer), 125, $this);
 						if (!empty($composer_name)) {
                                                     $composerFlag =1;
 							?>
