@@ -1176,7 +1176,12 @@ default:
 				} else {
 					?>
 				<ul>
-					
+					 <li>
+						<div style="color: red;">
+							<span>No Composers Found</span>
+						</div>
+					</li>
+                                       
 				</ul>
 				<?php
 				}
