@@ -581,25 +581,36 @@
                         });
                         //save email notificaion data and close t he popup
                         $("#colorboxSubmitBtn").click(function() {
-
-                            if (!$('#userNewsletterEmailField').val()) {
-                                alert('Please enter the valid email address.');
+			
+							if (!$('#userNewsletterEmailField').val() && !$('#doNotShowCheck').is(':checked')){
+                                alert('Please provide your information');
                                 return false;
                             }
 
-                            if (!validateEmail($('#userNewsletterEmailField').val())) {
-                                alert('Please enter the valid email address.');
-                                return false;
-                            }
-
+							if($('#userNewsletterEmailField').val()){
+                            	if (!validateEmail($('#userNewsletterEmailField').val())) {
+                                	alert('Please enter the valid email address.');
+                                	return false;
+                            	}
+							}
+			
+							
                             //post the notification information
                             var pid = <?= $this->Session->read('patron') ?>;
                             var lid = <?= $this->Session->read('library') ?>;
                             var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
-                            $('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
+							if($('#doNotShowCheck').is(':checked') && !$('#userNewsletterEmailField').val() ) {
+								var url = "users/savenotifypopup";
+								$('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
+							}
+							else {
+								var url = "users/saveNotification";
+							
+                            	$('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
+							}
                             jQuery.ajax({
                                 type: "post", // Request method: post, get
-                                url: webroot + "users/saveNotification", // URL to request
+                                url: webroot + url, // URL to request
                                 data: data, // postdata
                                 async:
                                         false,
@@ -772,15 +783,20 @@
                         </div>
                         <b>Email Notification</b><br />
 
-                        <div style="height:100px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
+                        <div style="height:135px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
                             Please add your email address here to receive twice-weekly email reminders of your available downloads.
                             <br /><br /><br />
                             <div >
-                                <b>*Email :</b>
-                                <input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
+								<div id="emaildiv">
+                                	<b>Email :</b>
+                                	<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
+								</div><br/>
+								<div>
+									<input type="checkbox" name="doNotShow" value="no" id="doNotShowCheck"> Do not show this message again
+								</div>
                             </div>
                         </div>
-                        <br />
+                        <br/>
                         <input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
 
                     </span>

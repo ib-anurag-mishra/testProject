@@ -240,7 +240,8 @@ Class LibrariesController extends AppController
                         'Library.is_sip_over_ssh',
                         'Library.library_sip_command',
                         'Library.library_type',
-                        'Library.library_streaming_hours'
+                        'Library.library_streaming_hours',
+			'Library.optout_email_notification'
                     ),
                     'contain' => array(
                         'User' => array(
@@ -384,7 +385,8 @@ Class LibrariesController extends AppController
                             'Library.youtube_icon',
                             'Library.library_unlimited',
                             'Library.library_type',
-                            'Library.library_streaming_hours'
+                            'Library.library_streaming_hours',
+			    'Library.optout_email_notification'
                         ),
                         'contain' => array(
                             'User' => array(
