@@ -521,11 +521,11 @@
 				<?php
 					$composerFlag = 0;
 					foreach ( $composers as $composer ):
-						$composerFlag = 1;
 						$composer_name = str_replace('"', '', $composer->Composer);
 						$composer_name = $this->Search->truncateText( $composer_name, 125, $this );
 						$composer_name = $this->getTextEncode($composer_name);
 						if ( $composer_name != '' && true == is_numeric( $composer->numFound ) ):
+							$composerFlag = 1;
 				?>
 							<li><?php echo $this->Html->link( $composer_name, array( 'controller' => 'artists', 'action' => 'composer', base64_encode( $composer->Composer ), 1 ), array( 'title' => $composer_name ) )?></li>
 				<?php
