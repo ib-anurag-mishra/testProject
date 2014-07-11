@@ -1147,6 +1147,11 @@ $(document).ready(function() {
         }
     });
 
+    $('.top-single-container').on('mouseleave',function(){
+        $(this).find('ul').removeClass('active');        
+
+    });
+
     $top_single_container_list = $('.top-single-container').find('ul');
 
     $top_single_container_list.bindMouseWheel();
