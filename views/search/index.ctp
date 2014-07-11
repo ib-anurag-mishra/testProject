@@ -519,8 +519,9 @@
 		<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ): ?>
 				<ul>
 				<?php
+					$composerFlag = 0;
 					foreach ( $composers as $composer ):
-
+						$composerFlag = 1;
 						$composer_name = str_replace('"', '', $composer->Composer);
 						$composer_name = $this->Search->truncateText( $composer_name, 125, $this );
 						$composer_name = $this->getTextEncode($composer_name);
@@ -530,7 +531,11 @@
 				<?php
 						endif;
 					endforeach;
+
+					if ( $composerFlag == 0 ):
 				?>
+						<li> <div style="color: red;"> <span>No Composers Found</span> </div> </li>
+			  <?php endif; ?>
 			</ul>
 			<?php
 				else:
