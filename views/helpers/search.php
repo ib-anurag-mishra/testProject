@@ -58,25 +58,25 @@ class SearchHelper extends AppHelper {
     
     			if ( $currentPage != 1 ) {
     
-    				$pagination_str .= $this->Html->link( '<button class="beginning"></button>', "/search/index/" . $queryString, array( 'escape' => FALSE ) );
-    				$pagination_str .= $this->Html->link( '<button class="prev"></button>', "/search/index/" . ( $currentPage - 1 ) . '/' . $facetPage . '/' . $queryString, array( 'escape' => FALSE ) );
+    				$pagination_str .= $this->Html->link( $this->Html->tag( 'button', '', array( 'class' => 'beginning' ) ), array( 'controller' => 'search', 'action' => 'index', $queryString ), array( 'escape' => FALSE ) );
+    				$pagination_str .= $this->Html->link( $this->Html->tag( 'button', '', array( 'class' => 'prev' ) ), array( 'controller' => 'search', 'action' => 'index', ( $currentPage - 1 ), $facetPage, $queryString ), array( 'escape' => FALSE ) );
     
     			} else {
     
-    				$pagination_str .= '<button class="beginning" style="cursor:text;"></button>';
-    				$pagination_str .= '<button class="prev" style="cursor:text;" ></button>';
+    				$pagination_str .= $this->Html->tag('button', '', array('class' => 'beginning', 'style' => 'cursor:text;', 'escape' => FALSE));
+    				$pagination_str .= $this->Html->tag('button', '', array('class' => 'prev', 'style' => 'cursor:text;', 'escape' => FALSE));
     			}
     
     		} else if ( $type == 'block' ) {
     
     			if ( $facetPage != 1 ) {
     
-    				$pagination_str .= $this->Html->link( '<button class="beginning"></button>', "/search/index/" . $queryString, array( 'escape' => FALSE ) );
-    				$pagination_str .= $this->Html->link( '<button class="prev"></button>', "/search/index/" . $currentPage . '/' . ( $facetPage - 1 ) . '/' . $queryString, array( 'escape' => FALSE ) );
+    				$pagination_str .= $this->Html->link( $this->Html->tag( 'button', '', array( 'class' => 'beginning' ) ), array( 'controller' => 'search', 'action' => 'index', $queryString ), array( 'escape' => FALSE ) );
+    				$pagination_str .= $this->Html->link( $this->Html->tag( 'button', '', array( 'class' => 'prev' ) ), array( 'controller' => 'search', 'action' => 'index', $currentPage, ( $facetPage - 1 ), $queryString ), array( 'escape' => FALSE ) );
     
     			} else {
-    				$pagination_str .= '<button class="beginning" style="cursor:text;"></button>';
-    				$pagination_str .= '<button class="prev" style="cursor:text;" ></button>';
+    				$pagination_str .= $this->Html->tag('button', '', array('class' => 'beginning', 'style' => 'cursor:text;', 'escape' => FALSE));
+    				$pagination_str .= $this->Html->tag('button', '', array('class' => 'prev', 'style' => 'cursor:text;', 'escape' => FALSE));
     			}
     		}
     
@@ -128,20 +128,20 @@ class SearchHelper extends AppHelper {
     
     				if ( $type == 'listing' ) {
     					if ( $currentPage == $pageCount ) {
-    						$pagination_str .= '<button class="page-' . $classCounter . '" style="cursor:text; background: none repeat scroll 0 0 #808080;color: #FFFFFF;" >' . $pageCount . '</button>';
+    						$pagination_str .= $this->Html->tag( 'button', $pageCount, array( 'class' => 'page-' . $classCounter, 'style' => 'cursor:text; background: none repeat scroll 0 0 #808080;color: #FFFFFF;', 'escape' => false ) );
     
     					} else {
-    						$pagination_str .= $this->Html->link('<button class="page-' . $classCounter . '">' . $pageCount . '</button>', '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
+    						$pagination_str .= $this->Html->link( $this->Html->tag( 'button', $pageCount, array( 'class' => 'page-' . $classCounter ) ), array( 'controller' => 'search', 'action' => 'index', $pageCount, $facetPage, $queryString ), array('escape' => FALSE));
     					}
     
     				} else if ( $type == 'block' ) {
     
     					if ( $facetPage == $pageCount ) {
     
-    						$pagination_str .= '<button class="page-' . $classCounter . '" style="cursor:text;background: none repeat scroll 0 0 #808080;color: #FFFFFF;" >' . $pageCount . '</button>';
+    						$pagination_str .= $this->Html->tag( 'button', $pageCount, array( 'class' => 'page-' . $classCounter, 'style' => 'cursor:text; background: none repeat scroll 0 0 #808080;color: #FFFFFF;', 'escape' => false ) );
     
     					} else {
-    						$pagination_str .= $this->Html->link('<button class="page-' . $classCounter . '">' . $pageCount . '</button>', '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
+    						$pagination_str .= $this->Html->link( $this->Html->tag( 'button', $pageCount, array( 'class' => 'page-' . $classCounter ) ), array( 'controller' => 'search', 'action' => 'index', $currentPage, $pageCount, $queryString ), array('escape' => FALSE));
     					}
     				}
     
@@ -155,8 +155,8 @@ class SearchHelper extends AppHelper {
     		if ( $type == 'listing' ) {
     
     			if ( $currentPage != $totalPages ) {
-    				$pagination_str .= $this->Html->link('<button class="next"></button>', '/search/index/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
-    				$pagination_str .= $this->Html->link('<button class="last"></button>', '/search/index/' . $totalPages . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
+    				$pagination_str .= $this->Html->link( $this->Html->tag( 'button', '', array( 'class' => 'next' ) ), array( 'controller' => 'search', 'action' => 'index', ( $currentPage + 1 ), $facetPage, $queryString ), array('escape' => FALSE));
+    				$pagination_str .= $this->Html->link( $this->Html->tag( 'button', '', array( 'class' => 'last' ) ), array( 'controller' => 'search', 'action' => 'index', $totalPages, $facetPage, $queryString ), array('escape' => FALSE));
     			} else {
     				$pagination_str .= '<button class="next" style="cursor:text;"></button>';
     				$pagination_str .= '<button class="last" style="cursor:text;"></button>';
@@ -164,11 +164,11 @@ class SearchHelper extends AppHelper {
     		} else if ( $type == 'block' ) {
     
     			if ($facetPage != $totalPages) {
-    				$pagination_str .= $this->Html->link('<button class="next"></button>', '/search/index/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString, array('escape' => FALSE));
-    				$pagination_str .= $this->Html->link('<button class="last"></button>', '/search/index/' . $currentPage . '/' . $totalPages . '/' . $queryString, array('escape' => FALSE));
+    				$pagination_str .= $this->Html->link( $this->Html->tag( 'button', '', array( 'class' => 'next' ) ), array( 'controller' => 'search', 'action' => 'index', $currentPage, ( $facetPage + 1 ), $queryString ), array('escape' => FALSE));
+    				$pagination_str .= $this->Html->link( $this->Html->tag( 'button', '', array( 'class' => 'last' ) ), array( 'controller' => 'search', 'action' => 'index', $currentPage, $totalPages, $queryString ), array('escape' => FALSE));
     			} else {
-    				$pagination_str .= '<button class="next" style="cursor:text;"></button>';
-    				$pagination_str .= '<button class="last" style="cursor:text;"></button>';
+    				$pagination_str .= $this->Html->tag('button', '', array('class' => 'next', 'style' => 'cursor:text;', 'escape' => FALSE));
+    				$pagination_str .= $this->Html->tag('button', '', array('class' => 'last', 'style' => 'cursor:text;', 'escape' => FALSE));
     			}
     		}
     	}

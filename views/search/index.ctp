@@ -72,8 +72,8 @@
 			</div>
 		</div>
 		<?php 
-			if ( !empty( $type ) && $type != 'all' ) {
-				switch ($type) {
+			if ( !empty( $type ) && $type != 'all' ):
+				switch ($type):
 					case 'song':
 		?>
 		<div class="songs">
@@ -303,10 +303,10 @@
 	?>
 		<header><h3 class="albums-header">Albums</h3></header>
 		<?php
-			if ( isset( $albumData ) && is_array( $albumData ) && count( $albumData ) > 0 ) {
+			if ( isset( $albumData ) && is_array( $albumData ) && count( $albumData ) > 0 ):
 				$i = 0;
 
-				foreach ( $albumData as $palbum ) {
+				foreach ( $albumData as $palbum ):
 					$albumInfo = $this->Search->getAlbumInfo( $palbum, $this );
 					extract( $albumInfo );
 		?>
@@ -319,18 +319,10 @@
 								<strong> <?=$this->Html->link( $album_title . $explicit, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false ) )?> </strong>
 							</div>
 							<div class="artist">
-								by
-								<?php echo $this->Html->link( $this->getTextEncode( $palbum->ArtistText ), 
-										array( 'controller' => 'artists', 
-												'action' => 'album', 
-												str_replace( '/', '@', base64_encode( $palbum->ArtistText ) ), 
-												base64_encode( $album_genre ) ),
-										array( 'class' => 'more-by-artist' ) );
-								?>
+								by <?php echo $this->Html->link( $this->getTextEncode( $palbum->ArtistText ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $palbum->ArtistText ) ), base64_encode( $album_genre ) ), array( 'class' => 'more-by-artist' ) ); ?>
 							</div>
 							<div class="genre">
-								Genre:
-								<?= $html->link( $this->getTextEncode( $album_genre ), array( 'controller' => 'genres', 'action' => 'view', '?genre='.$album_genre ), array( "title" => $this->getTextEncode( $album_genre ) ) ); ?>
+								Genre: <?= $html->link( $this->getTextEncode( $album_genre ), array( 'controller' => 'genres', 'action' => 'view', '?genre='.$album_genre ), array( "title" => $this->getTextEncode( $album_genre ) ) ); ?>
 							</div>
 							<?php if ( isset( $palbum->Copyright ) && $palbum->Copyright != '' && $palbum->Copyright != 'Unknown' ): ?>
 								<div class="label">
@@ -338,7 +330,7 @@
 								</div>
 							<?php endif; ?>
 							<?php
-								if ( isset( $patronId ) && !empty( $patronId ) ) {
+								if ( isset( $patronId ) && !empty( $patronId ) ):
 									if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ) {
 										echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 3 );
 									}
@@ -369,12 +361,12 @@
 													<ul class="playlist-menu"><li><?=$this->Html->link( 'Create New Playlist', '#' )?></li></ul>
 											<?php endif; ?>
 									</section>
-							<?php } ?>
+							<?php endif; ?>
 						</div>
 					</div>
 			<?php
 					$i++;
-				}
+				endforeach;
 			?>
 				<section style="position: relative; width: 866px; right: 21px;" class="search-results-songs-page">
 					<div class="pagination-container">
@@ -384,43 +376,38 @@
 					?>
 					</div>
 				</section>
-		<?php } else { ?>
+		<?php else: ?>
 		<div class="album-detail-container">
 			<div style="color: red; padding: 50px;">
 				<span>No Albums Found</span>
 			</div>
 		</div>
 		<?php
-				}
+				endif;
 			break;
 			case 'genre':
 		?>
 		<header> <h3 class="genres-header"> More Genres Like <span><?= $keyword; ?> </span> </h3> </header>
 		<div class="search-results-list">
 		<?php
-			if ( isset( $genres ) && is_array( $genres ) && count( $genres ) > 0 ) {
+			if ( isset( $genres ) && is_array( $genres ) && count( $genres ) > 0 ):
 		?>
 				<ul>
 		<?php
-				foreach ( $genres as $genre ) {
+				foreach ( $genres as $genre ):
 
 					$genre_name 	 = str_replace( '"', '', $genre->Genre );
 					$genre_name_text = $this->Search->truncateText( $genre_name, 125, $this );
 					$title 			 = urlencode ($genre->Genre );
 		?>
-				<li>
-					<?php echo $this->Html->link( $this->getTextEncode( $genre_name_text ) . ' (' . $genre->numFound . ')', 
-							array( 'controller' => 'genres', 'action' => 'album', '?' => array( 'q' => $keyword, 'type' => 'album', 'filter' => $genre->Genre ) ),
-							array( 'title' => $this->getTextEncode( $genre_name ) ) );
-					?>
-				</li>
-		<?php 	} ?>
+				<li> <?php echo $this->Html->link( $this->getTextEncode( $genre_name_text ) . ' (' . $genre->numFound . ')', array( 'controller' => 'genres', 'action' => 'album', '?' => array( 'q' => $keyword, 'type' => 'album', 'filter' => $genre->Genre ) ), array( 'title' => $this->getTextEncode( $genre_name ) ) ); ?> </li>
+		<?php 	endforeach; ?>
 			</ul>
-		<?php } else { ?>
+		<?php else: ?>
 			<div style="color: red; padding: 50px;">
 				<span>No Genres Found</span>
 			</div>
-		<?php } ?>
+		<?php endif; ?>
 		</div>
 		<?php
 			break;
@@ -428,9 +415,9 @@
 		?>
 		<header> <h3 class="videos-header">Videos</h3> </header>
 		<?php
-			if ( isset( $songs ) && is_array( $songs ) && count( $songs ) > 0 ) {
+			if ( isset( $songs ) && is_array( $songs ) && count( $songs ) > 0 ):
 			$b = 1;
-			foreach ( $songs as $psong ) {
+			foreach ( $songs as $psong ):
 
 				if ( !is_object( $psong ) ) {
 					continue;
@@ -462,14 +449,14 @@
 							echo date( "M d, Y", strtotime( $sales_date ) );
 						?>
 						</div>
-						<?php if ( isset( $patronId ) && !empty( $patronId ) ) { ?>
+						<?php if ( isset( $patronId ) && !empty( $patronId ) ): ?>
 								<span class="wishlist-btn" title="Add to Wishlist" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></span>
 						<?php
 								$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
-								if ( $sales_date <= date( 'Y-m-d' ) ) {
+								if ( $sales_date <= date( 'Y-m-d' ) ):
 									$productInfo = $mvideo->getDownloadData( $psong->ProdID, $psong->provider_type );
-									if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ) {
-										if ( $psong->status != 'avail' ) {
+									if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
+										if ( $psong->status != 'avail' ):
 						?>
 											<div>
 												<form method="Post" id="form<?= $psong->ProdID; ?>" action="/videos/download">
@@ -487,41 +474,41 @@
 													<span id="vdownload_loader_<?= $psong->ProdID; ?>" style="display: none; float: right;"><?= $html->image( 'ajax-loader_black.gif' ); ?> </span>
 												</form>
 											</div>
-								<?php 	} else {
+								<?php 	else:
 											echo $this->Html->link( '', array('controller' => 'homes', 'action' => 'my_history' ), array( 'title' => 'You have already download this video. Get it from your recent downloads', 'class' => 'download-btn video-downloaded') );
-								 		}
-									} else {
+								 		endif;
+									else:
 								  		echo $this->Html->link( '', '#', array( 'class' => 'download-btn download-limit-met', 'title' => 'Your download limit has been met.' ) );
-									}
-								}
-							}
+									endif;
+								endif;
+							endif;
 							?>
 					</div>
 				</div>
-		<?php }
-			} else {
+		<?php endforeach;
+			else:
 		?>
 				<div style="color: red; padding: 50px;"> <span>No Videos Found</span> </div>
-		<?php }
+		<?php endif;
 		break;
 
 		case 'artist':
 		?>
 			<header> <h3 class="artists-header"> More Artists Like <span><?= $keyword; ?> </span> </h3> </header>
 			<div class="search-results-list">
-			<?php if (isset( $artists ) && is_array( $artists ) && count( $artists ) > 0 ) { ?>
+			<?php if (isset( $artists ) && is_array( $artists ) && count( $artists ) > 0 ): ?>
 					<ul>
 					<?php
-						foreach ( $artists as $artist ) {
+						foreach ( $artists as $artist ):
 							$artist_name 	  = str_replace( '"', '', $artist->ArtistText );
 							$artist_name_text = str_replace( '/', '@', base64_encode( $artist->ArtistText ) );
 					?>
 							<li><?= $html->link( $artist_name . " (" . $artist->numFound . ")", array( 'controller' => 'artists', 'action' => 'album', $artist_name_text ), array( 'title' => $artist_name ) ); ?></li>
-					<?php } ?>
+					<?php endforeach; ?>
 					</ul>
-			<?php } else { ?>
+			<?php else: ?>
 			<div style="color: red; padding: 50px;"> <span>No Artists Found</span> </div>
-			<?php } ?>
+			<?php endif; ?>
 		</div>
 	<?php
 			break;
@@ -529,36 +516,36 @@
 	?>
 		<header> <h3 class="composers-header"> More Composers Like <span><?= $keyword; ?> </span> </h3> </header>
 		<div class="search-results-list">
-		<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ) { ?>
+		<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ): ?>
 				<ul>
 				<?php
-					foreach ( $composers as $composer ) {
+					foreach ( $composers as $composer ):
 
 						$composer_name = str_replace('"', '', $composer->Composer);
 						$composer_name = $this->Search->truncateText( $composer_name, 125, $this );
 						$composer_name = $this->getTextEncode($composer_name);
-						if ( $composer_name != '' && true == is_numeric( $composer->numFound ) ) {
+						if ( $composer_name != '' && true == is_numeric( $composer->numFound ) ):
 				?>
 							<li><?php echo $this->Html->link( $composer_name, array( 'controller' => 'artists', 'action' => 'composer', base64_encode( $composer->Composer ), 1 ), array( 'title' => $composer_name ) )?></li>
 				<?php
-						}
-					}
+						endif;
+					endforeach;
 				?>
 			</ul>
 			<?php
-				} else {
+				else:
 			?>
 			<div style="color: red; padding: 50px;"> <span>No Composers Found</span> </div>
 			<?php
-				}
+				endif
 			?>
 		</div>
 		<?php
 			break;
 		default:
 			break;
-		} // end switch case
-	} else { ?>
+		endswitch; // end switch case
+	else: ?>
 		<section class="category-results album-results">
 			<header>
 				<h3 class="albums-header">Albums</h3>
@@ -569,12 +556,12 @@
 				?>
 			</header>
 			<div class="search-results-all-albums-carousel">
-			<?php if ( isset( $albumData ) && is_array( $albumData ) && count( $albumData ) > 0 ) { ?>
+			<?php if ( isset( $albumData ) && is_array( $albumData ) && count( $albumData ) > 0 ): ?>
 					<div class="search-results-albums">
 						<ul class="clearfix">
 						<?php
 							$i = 0;
-							foreach ( $albumData as $palbum ) {
+							foreach ( $albumData as $palbum ):
 						?>
 								<li>
 						<?php
@@ -588,19 +575,19 @@
 												array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false )
 											);
 									?>
-								<?php if ( isset( $patronId ) && !empty( $patronId ) ) { ?>
+								<?php if ( isset( $patronId ) && !empty( $patronId ) ): ?>
 										<input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>" />
 							<?php
-									  	if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ) {
+									  	if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ):
 											echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1 );
 											echo $this->Html->link('', '#', array( 'title' => 'Add to a Playlist or Create a New Playlist', 'class' => 'playlist-menu-icon toggleable no-ajaxy' ) );
 							?>
 											<ul><li><?php echo $this->Html->link( 'Create New Playlist...', '#', array( 'class' => 'create-new-playlist' ) );?></li></ul>
 									<?php 
-									  	} 
+									  	endif;
 										
 										echo $this->Html->link( '', '#', array( 'class' => 'wishlist-icon toggleable no-ajaxy', 'title' => 'Add to Wishlist' ) );
-									}
+									endif;
 									?>
 									</div>
 									<div class="album-info">
@@ -615,17 +602,17 @@
 								</li>
 						<?php
 								$i++;
-							}
+							endforeach;
 						?>
 					</ul>
 				</div>
 				<button class="sr-albums-prev"></button>
 				<button class="sr-albums-next"></button>
 		<?php 
-			} else { 
+			else: 
 		?>
 				<ul> <li> <div style="color: red;"> <span>No Albums Found</span> </div> </li> </ul>
-		<?php } ?>
+	 <?php endif ?>
 			</div>
 		</section>
 		<section class="category-results artist-results">
@@ -638,13 +625,13 @@
 				?>
 			</header>
 			<div class="search-results-list">
-				<?php if ( isset( $artists ) && is_array( $artists ) && count( $artists ) > 0 ) { ?>
+				<?php if ( isset( $artists ) && is_array( $artists ) && count( $artists ) > 0 ): ?>
 						<ul>
 						<?php
-							foreach ( $artists as $artist ) {
+							foreach ( $artists as $artist ):
 								$artist_name_text = $this->Search->truncateText( $this->getTextEncode( $artist->ArtistText ), 125, $this );
 
-								if ( !empty( $artist_name_text ) ) {
+								if ( !empty( $artist_name_text ) ):
 
 									$linkArtistText	  = str_replace( '"', '', $artist->ArtistText );
 									$actionArtistText = str_replace( '/', '@', base64_encode( $artist->ArtistText ) );
@@ -654,19 +641,19 @@
 										<span>(<?= $artist->numFound; ?>) </span>
 									</li>
 						<?php
-								}
-							}
+								endif;
+							endforeach;
 						?>
 						</ul>
 				<?php
-					} else {
+					else:
 				?>
 				<ul>
 					<li>
 						<div style="color: red;"> <span>No Artists Found</span> </div>
 					</li>
 				</ul>
-				<?php } ?>
+				<?php endif; ?>
 			</div>
 		</section>
 		<section class="category-results composers-results">
@@ -679,27 +666,27 @@
 				 ?>
 			</header>
 			<div class="search-results-list">
-				<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ) { ?>
+				<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ): ?>
 						<ul>
 						<?php
-							foreach ( $composers as $composer ) {
+							foreach ( $composers as $composer ):
 								$composer_name = $this->Search->truncateText( $this->getTextEncode( $composer->Composer ), 125, $this );
-								if ( !empty( $composer_name ) ) {
+								if ( !empty( $composer_name ) ):
 									$composer_name = str_replace( '"', '', $composer_name );
 						?>
 									<li> <?php echo $this->Html->link( str_replace( '"', '', $composer_name ), array( 'controller' => 'artists', 'action' => 'composer', base64_encode( $composer->Composer ), 1 ), array( 'title' => $composer_name, 'class' => '' ) ); ?> </li>
 						<?php
-								}
-							}
+								endif;
+							endforeach;
 						?>
 						</ul>
-				<?php } else { ?>
+				<?php else: ?>
 				<ul>
 					<li>
 						<div style="color: red;"> <span>No Composers Found</span> </div>
 					</li>
 				</ul>
-				<?php } ?>
+				<?php endif; ?>
 			</div>
 		</section>
 		<section class="category-results videos-results">
@@ -712,24 +699,23 @@
 				?>
 			</header>
 			<div class="search-results-list">
-				<?php if ( isset( $videos ) && is_array( $videos ) && count( $videos ) > 0 ) { ?>
+				<?php if ( isset( $videos ) && is_array( $videos ) && count( $videos ) > 0 ): ?>
 				<ul>
-				<?php 	foreach ( $videos as $video ) {
-						$video_name_text = $this->Search->truncateText( $this->getTextEncode( $video->VideoTitle ), 125, $this );
-						$name 			 = $this->getTextEncode( $video->VideoTitle );
-						$video_name_text = ($name != "false") ? $video_name_text : ""
+				<?php 	foreach ( $videos as $video ):
+							$video_name_text = $this->Search->truncateText( $this->getTextEncode( $video->VideoTitle ), 125, $this );
+							$name 			 = $this->getTextEncode( $video->VideoTitle );
+							$video_name_text = ($name != "false") ? $video_name_text : ""
 				?>
-						<li> <?php echo $this->Html->link( $video_name_text, array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $video->VideoTitle, 'type' => 'video' ) ), array( 'title' => $name ) ); ?> 
-						</li>
-				<?php	} ?>
+							<li> <?php echo $this->Html->link( $video_name_text, array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $video->VideoTitle, 'type' => 'video' ) ), array( 'title' => $name ) ); ?> </li>
+				<?php	endforeach; ?>
 				</ul>
-				<?php } else { ?>
+				<?php else: ?>
 				<ul>
 					<li>
 						<div style="color: red;"> <span>No Videos Found</span> </div>
 					</li>
 				</ul>
-				<?php } ?>
+				<?php endif; ?>
 			</div>
 		</section>
 		<section class="category-results genres-results">
@@ -742,30 +728,29 @@
 				?>
 			</header>
 			<div class="search-results-list">
-				<?php if ( isset( $genres ) && is_array( $genres ) && count( $genres ) ) { ?>
+				<?php if ( isset( $genres ) && is_array( $genres ) && count( $genres ) ): ?>
 				<ul>
-				<?php	foreach ( $genres as $genre ) {
-
+				<?php	foreach ( $genres as $genre ):
 							$genre_name 	 = str_replace( '"', '', $genre->Genre );
 							$genre_name		 = $this->getTextEncode( $genre_name );
 							$genre_name_text = $this->Search->truncateText( $genre_name , 125, $this );
 
-							if ( !empty( $genre_name_text ) ) {
+							if ( !empty( $genre_name_text ) ):
 				?>
 								<li> <?php echo $this->Html->link( $genre_name_text . ' (' . $genre->numFound . ')', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $genre_name, 'type' => 'genre' ) ), array( 'title' => $genre_name ) ); ?> 
 								</li>
 				<?php
-							}
-						}
+							endif;
+						endforeach;
 				?>
 				</ul>
-				<?php } else { ?>
+				<?php else: ?>
 				<ul>
 					<li>
 						<div style="color: red;"> <span>No Genres Found</span> </div>
 					</li>
 				</ul>
-				<?php } ?>
+				<?php endif; ?>
 			</div>
 		</section>
 		<section class="category-results songs-results">
@@ -788,7 +773,7 @@
 						<span class="song">Song</span>
 					</div>
 					<?php 
-						if ( isset( $patronId ) && !empty( $patronId ) ) {
+						if ( isset( $patronId ) && !empty( $patronId ) ):
 							echo $this->Html->link( '', '#', array( 'title' => 'Select All, Clear All, Add to Wishlist, or Add to Playlist', 'class' => 'multi-select-icon no-ajaxy' ) );
 					?>
 							<section class="options-menu">
@@ -802,13 +787,13 @@
 								</ul>
 								<ul class="playlist-menu"></ul>
 							</section>
-					<?php } ?>
+					<?php endif; ?>
 				</div>
 				<div class="rows-container">
 					<?php
-							if ( isset( $songs ) && is_array( $songs ) && count( $songs ) > 0 ) {
+							if ( isset( $songs ) && is_array( $songs ) && count( $songs ) > 0 ):
 								$i = 1;
-								foreach ($songs as $psong) {
+								foreach ($songs as $psong):
 									
 									if ( !is_object( $psong ) ) {
 										continue;
@@ -868,13 +853,12 @@
 										<div class="song song-name" sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $territory; ?>">
 										<?php $showSongTitle = $this->Search->truncateText( $psong->SongTitle, strlen( $psong->SongTitle ), $this ); ?>
 											<span style="text-decoration: none;" title="<?= str_replace( '"', '', $this->getTextEncode( $showSongTitle ) ); ?>"><?= $this->Search->truncateText( $this->getTextEncode( $psong->SongTitle ), 21, $this ); ?>
-										<?php
-											if ($psong->Advisory == 'T') {
-												echo '<font class="explicit"> (Explicit)</font>';
-											}
-										?> </span>
+										<?php if ($psong->Advisory == 'T'): ?>
+												<font class="explicit"> (Explicit)</font>
+										<?php endif; ?>
+										</span>
 										</div>
-										<?php if ( isset( $patronId ) && !empty( $patronId ) ) {
+										<?php if ( isset( $patronId ) && !empty( $patronId ) ):
 												echo $this->Html->link( '', '#', array( 'title' => 'Add To a Playlist, Wishlist, or Download', 'class' => 'menu-btn no-ajaxy' ) );
 										?>
 												<section class="options-menu">
@@ -882,11 +866,11 @@
 													<ul>
 														<li>
 														<?php
-															if ( $downloadFlag === 1 ) {
+															if ( $downloadFlag === 1 ):
 																$productInfo = $song->getDownloadData( $psong->ProdID, $psong->provider_type );
 
-																if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ) {
-																	if ( $psong->status != 'avail' ) {
+																if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
+																	if ( $psong->status != 'avail' ):
 																		$titleSong = "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.";
 														?>
 																		<div class="top-100-download-now-button">
@@ -908,31 +892,28 @@
 																				</span>
 																			</form>
 																		</div>
-														<?php 		} else {
+														<?php 		else:
 														 				echo $this->Html->link( 'Downloaded', array( 'controller' => 'homes', 'action' => 'my_history' ), array( 'title' => 'You have already downloaded this song. Get it from your recent downloads', 'class' => 'top-100-download-now-button' ) );
-																	}
-																} else {
+																	endif;
+																else:
 																	echo $this->Html->link( 'Limit Met', 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) );
-																}
-															} else {
+																endif;
+															else:
 																$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
 																if ( isset( $sales_date ) ) {
 																	$sales_date = date( "F d Y", strtotime( $sales_date ) );
 																}
 
-															 	echo $this->Html->link(
-																		$this->Html->tag( 'span', 'Coming Soon ( ' . $sales_date . ' )', array( 'title' => 'Coming Soon' ) ), 
-																		'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) 
-																	);
-														 	} ?>
+															 	echo $this->Html->link( $this->Html->tag( 'span', 'Coming Soon ( ' . $sales_date . ' )', array( 'title' => 'Coming Soon' ) ), 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) );
+														 	endif; ?>
 														</li>
 														<li>
 														<?php
 															$wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
 						
-															if ( $wishlistInfo == 'Added To Wishlist' ) {
+															if ( $wishlistInfo == 'Added To Wishlist' ):
 																echo $this->Html->link( 'Added to Wishlist', '#' );
-															} else {
+															else:
 														?>
 																<span class="beforeClick" id="wishlist<?= $psong->ProdID ?>">
 																	<?php echo $this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) );?>
@@ -940,9 +921,7 @@
 																<span class="afterClick" style="display: none;">
 																	<?php echo $this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) );?>
 																</span>
-														<?php
-															}
-														?>
+														<?php endif; ?>
 														</li>
 														<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
 																<li> <?php echo $this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) );?> </li>
@@ -955,13 +934,13 @@
 												<?php else: ?>
 														<div class="sample-icon"></div>
 												<?php endif;
-													}
+													endif;
 												?>
 									</div>
 					<?php
 								$i++;
-							}
-						}
+							endforeach;
+						endif;
 					?>
 				</div>
 				<div class="pagination-container">
@@ -975,6 +954,6 @@
 				</div>
 			</div>
 		</section>
-		<?php } ?>
+		<?php endif; ?>
 	</section>
 </section>
