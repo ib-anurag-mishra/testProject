@@ -78,12 +78,11 @@ class HomesController extends AppController {
         /* Top Singles Ends */ 
         
         /* National Top 100 Albums slider start */
-        $TopAlbums = Cache::read("topAlbums" . $territory);
+        $TopAlbums = Cache::read("top_albums" . $territory);
         if ($TopAlbums === false) {
             $TopAlbums = $this->Common->getTopAlbums($territory);
         }
         $this->set('nationalTopAlbums', $TopAlbums);
-        /* National Top 100 Albums slider Ends */
 
         /* featured artist slideshow code start */
         $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.'1');
