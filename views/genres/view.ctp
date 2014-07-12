@@ -204,11 +204,14 @@ $totalRows = count($genresAll);
                         {	
                           if ($genre_name_encoded != 'Porn Groove')
                             {
-                                if ($genre_name_encoded == $genre)
+                             
+                               
+                                if (trim($genre_name_encoded) === trim($genre))
                                 {
+                                    // echo $genre_name_encoded .'=='. $genre.'<br>';
                                     ?>
                                     <li> 
-                                        <a  class="genre_list_item_all selected" 
+                                        <a  class="genre_list_item_all selected active" 
                                             href="javascript:void(0);" data-genre="<?php echo addslashes($genreNnameWithoutEncode); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>" 
                                             onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genreNnameWithoutEncode); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name_encoded); ?>')" >
