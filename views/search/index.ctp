@@ -622,7 +622,7 @@ case 'album':
 				</div>
 				<div class="genre">
 					Genre:
-					<?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?>
+					<?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view',base64_encode($album_genre)), array("title" => $this->getTextEncode($album_genre))); ?>
 				</div>
 				<?php
 				if ($palbum->Copyright != '' && $palbum->Copyright != 'Unknown')
