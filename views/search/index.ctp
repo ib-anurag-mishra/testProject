@@ -341,7 +341,7 @@
 										<ul>
 											<li>
 											<?php
-												$wishlistInfo = $wishlist->getWishlistData( $nationalTopSong['Song']['ProdID'] );
+												$wishlistInfo = $wishlist->getWishlistData($palbum->ProdID);
 
 												if ( $wishlistInfo == 'Added To Wishlist' ):
 											?> 
