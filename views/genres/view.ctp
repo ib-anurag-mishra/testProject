@@ -197,6 +197,7 @@ $totalRows = count($genresAll);
                     foreach ($genresAll as $genre_name):
 
                         $genreNnameWithoutEncode = $genre_name;
+                    
                         //$genre_name_encoded = $this->getTextEncode($genre_name);                       
                         $genre_name_encoded = htmlentities($genre_name);
 
@@ -205,10 +206,10 @@ $totalRows = count($genresAll);
                           if ($genre_name_encoded != 'Porn Groove')
                             {
                              
-                               
-                                if (trim($genre_name_encoded) === trim($genre))
+                              // echo $genre_name_encoded .'=='. $genre.'<br>';
+                                if (trim($genre_name_encoded) === trim($selectedGenre))
                                 {
-                                    // echo $genre_name_encoded .'=='. $genre.'<br>';
+                                     
                                     ?>
                                     <li> 
                                         <a  class="genre_list_item_all selected active" 

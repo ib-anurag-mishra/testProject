@@ -1050,8 +1050,11 @@ default:
 									</a>
 								</p>
 								<p class="artist">
-									Genre: <span><a href="javascript:void(0)"><?php echo $album_genre; ?>
-									</a> </span>
+									Genre: <span>
+                            <?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view',base64_encode($album_genre)), array("title" => $this->getTextEncode($album_genre))); ?>
+             
+                                                                                                                                                   
+                                                                            </span>
 								</p>
 								<p class="label">
 									<?php echo $album_label_str; ?>

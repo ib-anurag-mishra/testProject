@@ -272,10 +272,11 @@ Class GenresController extends AppController
         // echo $genre = base64_encode('Acid Jazz');die;
         
         //check the genre value         
-        $genre = base64_decode($Genre);
+         $genre = base64_decode($Genre);
          
-        $genre = $this->Common->getGenreForSelection($genre);
        
+        $selectedGenre = $this->Common->getGenreForSelection($genre);
+      
         $genre = mysql_escape_string($genre);
         $this->set('genre', $genre);        
         
@@ -302,6 +303,9 @@ Class GenresController extends AppController
         $this->set('artistsNoAlpha', $artistsNoAlpha);
         $this->set('selectedAlpha', $slectedArtistFilter);
         $this->set('artistList', $artistList);
+        $this->set('selectedGenre', $selectedGenre);
+
+        
         
         
         //app\views\genres\view.ctp
