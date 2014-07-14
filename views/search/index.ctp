@@ -644,7 +644,7 @@ case 'album':
 						data-provider="<?= $palbum->provider_type ?>" />
 					<ul>
 						<li><?php
-						$wishlistInfo = $wishlist->getWishlistData($nationalTopSong['Song']['ProdID']);
+						$wishlistInfo = $wishlist->getWishlistData($palbum->ProdID);
 
 						if ($wishlistInfo == 'Added To Wishlist') {
 							?> <a href="#">Added to Wishlist</a> <?php
