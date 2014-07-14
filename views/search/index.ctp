@@ -519,18 +519,23 @@
 		<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ): ?>
 				<ul>
 				<?php
+					$composerFlag = 0;
 					foreach ( $composers as $composer ):
-
 						$composer_name = str_replace('"', '', $composer->Composer);
 						$composer_name = $this->Search->truncateText( $composer_name, 125, $this );
 						$composer_name = $this->getTextEncode($composer_name);
 						if ( $composer_name != '' && true == is_numeric( $composer->numFound ) ):
+							$composerFlag = 1;
 				?>
 							<li><?php echo $this->Html->link( $composer_name, array( 'controller' => 'artists', 'action' => 'composer', base64_encode( $composer->Composer ), 1 ), array( 'title' => $composer_name ) )?></li>
 				<?php
 						endif;
 					endforeach;
+
+					if ( $composerFlag == 0 ):
 				?>
+						<li> <div style="color: red;"> <span>No Composers Found</span> </div> </li>
+			  <?php endif; ?>
 			</ul>
 			<?php
 				else:
@@ -669,16 +674,22 @@
 				<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ): ?>
 						<ul>
 						<?php
+							$composerFlag = 0;
 							foreach ( $composers as $composer ):
 								$composer_name = $this->Search->truncateText( $this->getTextEncode( $composer->Composer ), 125, $this );
 								if ( !empty( $composer_name ) ):
+									$composerFlag  = 1;
 									$composer_name = str_replace( '"', '', $composer_name );
 						?>
 									<li> <?php echo $this->Html->link( str_replace( '"', '', $composer_name ), array( 'controller' => 'artists', 'action' => 'composer', base64_encode( $composer->Composer ), 1 ), array( 'title' => $composer_name, 'class' => '' ) ); ?> </li>
 						<?php
 								endif;
 							endforeach;
+
+							if ( $composerFlag == 0 ):
 						?>
+								<li> <div style="color: red;"> <span>No Composers Found</span> </div> </li>
+					  <?php endif; ?>
 						</ul>
 				<?php else: ?>
 				<ul>
