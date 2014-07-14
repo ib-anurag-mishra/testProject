@@ -523,11 +523,19 @@
                                     }});
                         //close the popup 
                         $("#colorboxCloseBtn").click(function() {
-
-                            var data = {notificationClose: 1};
+	
+			    			if($('#doNotShowCheck').is(':checked')) {
+						 		var data = {pid: pid, lid: lid};
+						 		var url = "users/savenotifypopup";
+					 	 		$('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
+			    	}
+			    			else {
+								var data = {notificationClose: 1};
+								var url = "users/savenotifypopup";		        		
+			    			}
                             jQuery.ajax({
                                 type: "post", // Request  method: post, get
-                                url: webroot + "users/saveNotification", // URL to request
+                                url: webroot + url, // URL to request
                                 data: data, // post data
                                 success: function(response) {
                                     $.fn.colorbox.close();
