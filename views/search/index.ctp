@@ -322,7 +322,7 @@
 								by <?php echo $this->Html->link( $this->getTextEncode( $palbum->ArtistText ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $palbum->ArtistText ) ), base64_encode( $album_genre ) ), array( 'class' => 'more-by-artist' ) ); ?>
 							</div>
 							<div class="genre">
-								Genre: <?= $html->link( $this->getTextEncode( $album_genre ), array( 'controller' => 'genres', 'action' => 'view', '?genre='.$album_genre ), array( "title" => $this->getTextEncode( $album_genre ) ) ); ?>
+								Genre: <?= $html->link( $this->getTextEncode( $album_genre ), array( 'controller' => 'genres', 'action' => 'view', base64_encode( $album_genre ) ), array( "title" => $this->getTextEncode( $album_genre ) ) ); ?>
 							</div>
 							<?php if ( isset( $palbum->Copyright ) && $palbum->Copyright != '' && $palbum->Copyright != 'Unknown' ): ?>
 								<div class="label">
@@ -524,6 +524,7 @@
 						$composer_name = str_replace('"', '', $composer->Composer);
 						$composer_name = $this->Search->truncateText( $composer_name, 125, $this );
 						$composer_name = $this->getTextEncode($composer_name);
+
 						if ( $composer_name != '' && true == is_numeric( $composer->numFound ) ):
 							$composerFlag = 1;
 				?>
@@ -600,7 +601,7 @@
 											<?php echo $this->Html->link( $album_title, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType), array( 'title' => $this->getTextEncode( $palbum->Title ) ) );?>
 										</p>
 										<p class="artist">
-											Genre: <span> <?php echo $this->Html->link( $album_genre, 'javascript:void(0)' );?></span>
+											Genre: <span> <?= $html->link( $this->getTextEncode( $album_genre ), array( 'controller' => 'genres', 'action' => 'view', base64_encode( $album_genre ) ), array( "title" => $this->getTextEncode( $album_genre ) ) ); ?></span>
 										</p>
 										<p class="label"> <?= $album_label_str; ?> </p>
 									</div>
