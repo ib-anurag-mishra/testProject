@@ -1593,7 +1593,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative','id' => $library_cond),
-									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 									)
 								 );
 				} else {
@@ -1601,7 +1601,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative'),
-									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 									)
 								 );
 				}
@@ -1659,13 +1659,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -1832,7 +1838,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 															'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var','id' => $library_cond),
-															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 															)
 													 );
 				}
@@ -1841,7 +1847,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var'),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -1899,13 +1905,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2070,7 +2082,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 															'conditions' => array('library_status' => 'active','library_authentication_method' => 'mdlogin_reference','id' => $library_cond),
-															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 															)
 													 );
 				}
@@ -2079,7 +2091,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'mdlogin_reference'),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -2122,13 +2134,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2293,7 +2311,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 															'conditions' => array('library_status' => 'active','library_authentication_method' => 'mndlogin_reference','id' => $library_cond),
-															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 															)
 													 );
 				}
@@ -2302,7 +2320,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'mndlogin_reference'),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -2345,13 +2363,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2529,7 +2553,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 															'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_name','id' => $library_cond),
-															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 															)
 													 );
 				}
@@ -2538,7 +2562,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_name'),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -2595,13 +2619,19 @@ function login($library = null){
                                         }        
 
                                         //check if the notification entry is already there in the notification_subscription table
-                                        $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                        $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                        if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                        $this->Session->write("showNotificationPopup", 'yes');                               
-                                        }else{
-                                        $this->Session->write("showNotificationPopup", 'no');                               
-                                        }                                        
+                                        $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}                                      
                                         
 					$this->Session->write("patron", $patronId);
 					$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2749,7 +2779,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 												'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_wo_pin','id' => $library_cond),
-												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 												)
 											 );
 
@@ -2759,7 +2789,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 												'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_wo_pin'),
-												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 												)
 											 );
 				}
@@ -2818,13 +2848,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2975,7 +3011,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				} else {
@@ -2983,7 +3019,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin'),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -3041,13 +3077,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -3214,7 +3256,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				} else {
@@ -3222,7 +3264,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2'),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 													)
 												 );
 				}
@@ -3278,13 +3320,19 @@ function login($library = null){
                                                                 }        
 
                                                                 //check if the notification entry is already there in the notification_subscription table
-                                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                                }else{
-                                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                                }
+                                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}
                                                                 
 								$this->Session->write("patron", $patronId);
 								$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -3436,7 +3484,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_wo_pin','id' => $library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 													)
 												 );
 				} else {
@@ -3444,7 +3492,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_wo_pin'),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 													)
 												 );
 				}
@@ -3500,13 +3548,19 @@ function login($library = null){
                                                                 }        
 
                                                                 //check if the notification entry is already there in the notification_subscription table
-                                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                                }else{
-                                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                                }
+                                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                				$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                				$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                				if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    				$this->Session->write("showNotificationPopup", 'yes');                               
+                                				}
+												else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 							$this->Session->write("showNotificationPopup", 'yes');
+                                				}
+												else{
+                                    				$this->Session->write("showNotificationPopup", 'no');                               
+                                				}
                                                                   
 								  $this->Session->write("patron", $patronId);
 								  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -3676,7 +3730,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				} else {
@@ -3684,7 +3738,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var'),
-														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -3739,13 +3793,19 @@ function login($library = null){
                                                         }        
 
                                                         //check if the notification entry is already there in the notification_subscription table
-                                                        $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                        $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                        if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                        $this->Session->write("showNotificationPopup", 'yes');                               
-                                                        }else{
-                                                        $this->Session->write("showNotificationPopup", 'no');                               
-                                                        }
+                                                         $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                                         
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -3893,7 +3953,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin','id' => $library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 													)
 												 );
 				} else {
@@ -3901,7 +3961,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin'),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 													)
 												 );
 				}
@@ -3958,13 +4018,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                    $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                    $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                                 
                                                 
 						$this->Session->write("patron", $patronId);
@@ -4055,7 +4121,7 @@ function login($library = null){
 			$this->Library->Behaviors->attach('Containable');
 			$existingLibraries = $this->Library->find('all',array(
 												'conditions' => array('library_ezproxy_referral' => $referral,'library_status' => 'active','library_authentication_method' => 'ezproxy'),
-												'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+												'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 												)
 											 );
 		}
@@ -4252,14 +4318,14 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_https','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 
 				} else {
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_https'),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -4317,13 +4383,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -4491,14 +4563,14 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'capita','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no','Library.optout_email_notification')
 														)
 													 );
 
 				} else {
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'capita'),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -4557,13 +4629,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -4732,14 +4810,14 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'symws','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no','Library.optout_email_notification')
 														)
 													 );
 
 				} else {
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'symws'),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -4799,13 +4877,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -4978,7 +5062,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_https','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -4987,7 +5071,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_https'),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -5045,13 +5129,19 @@ function login($library = null){
                                             }        
 
                                             //check if the notification entry is already there in the notification_subscription table
-                                            $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                            $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                            if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                            $this->Session->write("showNotificationPopup", 'yes');                               
-                                            }else{
-                                            $this->Session->write("showNotificationPopup", 'no');                               
-                                            }
+                                             $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                            
 					   $this->Session->write("patron", $patronId);
 					   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -5200,7 +5290,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_https_wo_pin','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -5209,7 +5299,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_https_wo_pin'),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -5267,13 +5357,19 @@ function login($library = null){
                                             }        
 
                                             //check if the notification entry is already there in the notification_subscription table
-                                            $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                            $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                            if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                            $this->Session->write("showNotificationPopup", 'yes');                               
-                                            }else{
-                                            $this->Session->write("showNotificationPopup", 'no');                               
-                                            }
+                                             $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                            
 					   $this->Session->write("patron", $patronId);
 					   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -5439,7 +5535,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'soap','id' => $library_cond),
-									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 									)
 								 );
 				} else {
@@ -5447,7 +5543,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'soap'),
-									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 									)
 								 );
 				}
@@ -5504,13 +5600,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -5679,7 +5781,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 															'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_https_name','id' => $library_cond),
-															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 															)
 													 );
 				}
@@ -5688,7 +5790,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_https_name'),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 														)
 													 );
 				}
@@ -5746,13 +5848,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -5918,7 +6026,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'curl_method','id' => $library_cond),
-									'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+									'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 									)
 								 );
 				}
@@ -5927,7 +6035,7 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'curl_method','id' => $library_cond),
-									'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+									'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
 									)
 								 );
 				}
@@ -5981,13 +6089,19 @@ function login($library = null){
                                                 }        
 
                                                 //check if the notification entry is already there in the notification_subscription table
-                                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
-                                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
-                                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
-                                                $this->Session->write("showNotificationPopup", 'yes');                               
-                                                }else{
-                                                $this->Session->write("showNotificationPopup", 'no');                               
-                                                }
+                                                 $curpatron = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+											
+                                						$notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                						$emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                						if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    						$this->Session->write("showNotificationPopup", 'yes');                               
+                                						}
+														else if( $curpatron['Currentpatron']['notify_popup'] == 'no' ||  $existingLibraries['0']['Library']['optout_email_notification'] == 1) {
+						 									$this->Session->write("showNotificationPopup", 'yes');
+                                						}
+														else{
+                                    						$this->Session->write("showNotificationPopup", 'no');                               
+                                						}
                                                 
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
