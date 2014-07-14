@@ -524,6 +524,8 @@
                         //close the popup 
                         $("#colorboxCloseBtn").click(function() {
 	
+						 	var pid = <?= $this->Session->read('patron') ?>;
+                            var lid = <?= $this->Session->read('library') ?>;
 			    			if($('#doNotShowCheck').is(':checked')) {
 						 		var data = {pid: pid, lid: lid};
 						 		var url = "users/savenotifypopup";
@@ -531,7 +533,7 @@
 			    	}
 			    			else {
 								var data = {notificationClose: 1};
-								var url = "users/savenotifypopup";		        		
+								var url = "users/saveNotification";		        		
 			    			}
                             jQuery.ajax({
                                 type: "post", // Request  method: post, get
