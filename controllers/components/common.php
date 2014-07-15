@@ -95,9 +95,10 @@ Class CommonComponent extends Object
     function setArtistText($territory){
         set_time_limit(0); 
     
+        $genreInstance = ClassRegistry::init('Genre');
               
         //set the aritst cache for specific Genre
-        $genreAll = $this->getGenres($territory);
+        $genreAll = $genreInstance->getGenres($territory);
         //commented but need sometime for testing perpuse
         //$genreAll = Cache::read("genre" . $territory);
        

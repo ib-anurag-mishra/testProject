@@ -10,7 +10,7 @@ ini_set('memory_limit', '2048M');
 
 Class GenresController extends AppController
 {
-    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download','Searchrecord','LatestVideodownload','LatestDownload','Page', 'Token');    
+    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download','Searchrecord','LatestVideodownload','LatestDownload','Page', 'Token', 'Genre');    
     var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming','Solr');
     var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue','Session','Album','Html','Session','Queue','Wishlist', 'Token');
     
@@ -216,7 +216,7 @@ Class GenresController extends AppController
     function setGenres(){
         set_time_limit(0);   
         $country = $this->Session->read('territory');
-        $this->Common->getGenres($country);
+        $this->Genre->getGenres($country);
        
     }
 
@@ -267,7 +267,7 @@ Class GenresController extends AppController
         $genreAll = Cache::read("genre" . $country,'GenreCache');
         if ($genreAll === false || empty($genreAll))
         {
-            $genreAll = $this->Common->getGenres($country);
+            $genreAll = $this->Genre->getGenres($country);
         } 
         
         //check the genre value         

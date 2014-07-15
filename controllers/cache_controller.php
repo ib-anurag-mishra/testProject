@@ -117,7 +117,7 @@ class CacheController extends AppController {
     }
     
     function setGenre($territory){ 
-        $this->Common->getGenres($territory);
+        $this->Genre->getGenres($territory);
     }
     
     function setTopSingles($territory){
