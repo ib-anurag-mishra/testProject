@@ -20,7 +20,7 @@
 				</td>
 				<td class="left"><?php echo $topAlbum['TopAlbum']['territory'];?>
 				</td>
-				<td class="left"><?php $data = $album->getAlbum($artist['TopAlbum']['album']);echo $data[0]['Album']['AlbumTitle'];?>
+				<td class="left"><?php $data = $album->getAlbum($topAlbum['TopAlbum']['album']);echo $data[0]['Album']['AlbumTitle'];?>
 				</td>
 				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'artistform','id'=>$topAlbum['TopAlbum']['id']));?>
 				</td>
