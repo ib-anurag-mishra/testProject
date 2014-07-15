@@ -54,8 +54,8 @@ class WishlistVideo extends AppModel
 			return $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" and library_id = '.$libraryID)));
 		}
 	}
-	
-	public function getWishListVideosStatus() {
+
+	public function getWishListVideosStatus( $ids, $libraryId, $patronId ) {
 	
 		$options = array('conditions' =>
 				array(
@@ -63,6 +63,55 @@ class WishlistVideo extends AppModel
 						'patron_id' => $patronId,
 						'ProdID IN ( ' . $ids . ' )'
 				)
+		);
+	
+		return $this->find( 'all', $options );
+	}
+	
+	public function getWishlistVideos( $countryPrefix, $libraryId, $patronId, $videoSortBy, $sortType ) {
+	
+		$options = array(
+				'joins' => array(
+						array(
+								'table' => 'video',
+								'alias' => 'Video',
+								'type' => 'LEFT',
+								'conditions' => array( 'WishlistVideo.ProdID = Video.ProdID', 'WishlistVideo.provider_type = Video.provider_type' )
+						),
+						array(
+								'table' => 'File',
+								'alias' => 'File',
+								'type' => 'LEFT',
+								'conditions' => array( 'Video.Image_FileID = File.FileID' )
+						),
+						array(
+								'table' => $countryPrefix . 'countries',
+								'alias' => 'Country', 'type' => 'LEFT',
+								'conditions' => array( 'Country.ProdID = Video.ProdID', 'Video.provider_type = Country.provider_type', 'Country.SalesDate != ""' )
+						)
+				),
+				'group' => 'WishlistVideo.id',
+				'conditions' => array( 'library_id' => $libraryId, 'patron_id' => $patronId ),
+				'fields' => array(
+						'WishlistVideo.id',
+						'WishlistVideo.ProdID',
+						'WishlistVideo.provider_type',
+						'WishlistVideo.track_title',
+						'WishlistVideo.created',
+						'WishlistVideo.patron_id',
+						'WishlistVideo.library_id',
+						'WishlistVideo.artist',
+						'Video.Title',
+						'Video.ReferenceID',
+						'Video.ArtistText',
+						'Video.Advisory',
+						'Video.provider_type',
+						'File.CdnPath',
+						'File.SourceURL',
+						'Country.Territory',
+						'Country.SalesDate'
+				),
+				'order' => array( $videoSortBy => $sortType )
 		);
 	
 		return $this->find( 'all', $options );

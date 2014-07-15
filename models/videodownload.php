@@ -691,4 +691,49 @@ class Videodownload extends AppModel
 	
 		return $this->find( 'all', $options );
 	}
+
+	public function getDownloadedVideo( $libraryId, $patronId, $videoSortBy, $sortOrder ) {
+		 
+		$options = array(
+				'joins' => array(
+						array(
+								'table' => 'video',
+								'alias' => 'Video',
+								'type' => 'LEFT',
+								'conditions' => array('Videodownload.ProdID = Video.ProdID', 'Videodownload.provider_type = Video.provider_type')
+						),
+						array(
+								'table' => 'File',
+								'alias' => 'File',
+								'type' => 'LEFT',
+								'conditions' => array('Video.Image_FileID = File.FileID')
+						)
+				),
+				'group' => 'Videodownload.id',
+				'conditions' => array(
+						'library_id' => $libraryId,
+						'patron_id' => $patronId,
+						'history < 2',
+						'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))
+				),
+				'fields' => array(
+						'Videodownload.ProdID',
+						'Videodownload.provider_type',
+						'Videodownload.track_title',
+						'Videodownload.created',
+						'Videodownload.patron_id',
+						'Videodownload.library_id',
+						'Videodownload.artist',
+						'Video.ReferenceID',
+						'Video.ArtistText',
+						'Video.Advisory',
+						'Video.provider_type',
+						'Video.Title',
+						'File.CdnPath',
+						'File.SourceURL'
+				),
+				'order' => array( $videoSortBy => $sortOrder )
+		);
+		return $this->find( 'all', $options );
+	}
 }

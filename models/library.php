@@ -417,5 +417,39 @@ class Library extends AppModel
 	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
 	    $results = $this->find('count', compact('conditions','recursive', 'group'));
 	    return $results;
-	}	
+	}
+	
+	public function getLibraryTerritory() {
+		
+		$options = array(
+					'fields' => array(	'DISTINCT Library.library_territory', 'Library.library_country' ), 
+					'conditions' => array( "Library.library_territory <> 'US' AND Library.library_territory <> 'UNITE'" ) 
+					);
+		return $this->find( 'all', $options );
+	}
+	
+	public function getData( $conditions ) {
+		
+		$options = array( 'conditions' => array( 'library_status' => 'active', 'OR' => array( $conditions ) ) );
+		return $this->find( 'all', $options );
+	}
+	
+	public function getLibraryName( $condition1, $condition2, $result ) {
+		
+		$this->recursive = -1;
+		
+		if ( $condition2 === false && $result === false ) {
+			$optoins = array('conditions' => "library_territory = '$territory'");
+		} else {
+			$optoins = array(
+						'conditions' => array( 
+									'library_status' => 'active',
+	                                 'OR' => array(
+	                                            "substring(library_zipcode,1,5) in ($result)", "find_in_set('" . $condition1 . "',library_zipcode)", $condition2 )
+										)
+						);
+		}
+
+		return $this->find( 'all', $optoins );
+	}
 }

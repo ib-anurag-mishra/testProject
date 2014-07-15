@@ -1637,7 +1637,7 @@ STR;
      * Function Description : This function is used to getNewReleaseVideos.
      */
 
-    function getNewReleaseVideos($territory)
+    function getNewReleaseVideos( $territory, $explicitContent = false )
     {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
@@ -1647,6 +1647,14 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
+
+        	$videoAdvisory 	   = '';
+        	$cacheVariableName = 'new_releases_videos';
+        	
+        	if( $explicitContent === true ) {
+        		$videoAdvisory 	   = " AND Video.Advisory != 'T'";
+        		$cacheVariableName = 'new_releases_videos_none_explicit';
+        	}
 
             $data = array();
             $sql_video_new_release = <<<STR
@@ -1676,7 +1684,7 @@ STR;
                         LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
                         LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
                         LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                        WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
+                        WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $videoAdvisory
                         GROUP BY Video.ProdID 
                         ORDER BY Country.SalesDate DESC 
                         LIMIT 100 
@@ -1686,22 +1694,20 @@ STR;
             $this->log("new release album for $territory", "cachequery");
             $this->log($sql_video_new_release, "cachequery");
 
-            if (!empty($data))
-            {
-                foreach ($data as $key => $value)
-                {                    
+            if (!empty($data)) {
+                foreach ($data as $key => $value) {
+
                     $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
-                Cache::delete("new_releases_videos" . $country);
-                Cache::write("new_releases_videos" . $country, $data);
+
+                Cache::delete( $cacheVariableName . $country);
+                Cache::write( $cacheVariableName . $country, $data);
                 $this->log("cache written for new releases videos for $territory", "cache");
-            }
-            else
-            {
-                $data = Cache::read("new_releases_videos" . $country);
-                Cache::write("new_releases_videos" . $country, $data);
+            } else {
+                $data = Cache::read( $cacheVariableName . $country);
+                Cache::write( $cacheVariableName . $country, $data);
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
         }
