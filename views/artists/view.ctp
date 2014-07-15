@@ -52,8 +52,7 @@
 				<span> <?php
 				echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', '?genre='.$album['Genre']['Genre']), array("title" => $this->getTextEncode($album['Genre']['Genre'])));
 
-				if ($album['Album']['Advisory'] == 'T')
-				{
+				if ($album['Album']['Advisory'] == 'T'):
 
 					echo '<br />';
 					echo '<font class="explicit"> (Explicit)</font>';
