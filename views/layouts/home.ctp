@@ -5,19 +5,15 @@
         <title>
             <?php __('Freegal Music : Your New Music Library :'); ?>
             <?php
-            if ($title_for_layout == "Homes")
-            {
+            if ($title_for_layout == "Homes") {
                 echo substr($title_for_layout, 0, -1);
-            }
-            else
-            {
+            } else {
                 echo $title_for_layout;
             }
             ?>
         </title>        
 
         <?php
-        // echo $this->Html->meta('icon');        
         echo $this->Html->charset();
 
 
@@ -26,14 +22,12 @@
 //        {
 //            header('X-UA-Compatible: IE=edge,chrome=1');
 //        }
-          ?>
-        <?php
+
         echo $this->Html->meta('icon'); 
         ?>
         <meta name="apple-itunes-app" content="app-id=508036345" >
         <meta name="google-play-app" content="app-id=com.libraryideas.freegalmusic" >
         
-
         <?php
         echo $this->Html->css(
                 array(
@@ -45,45 +39,6 @@
                         
                 )
         );
-        ?>
-        <?php /*<link href="/css/freegal40.css?v=06172014" rel="stylesheet" type="text/css" /> */ ?>
-        <!--[if IE 8]>
-        <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
-        <![endif]-->               
-        
-        <?php
-        /*
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/modernizr.custom.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/lazyload.1.9.1.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.colorbox.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.cycle.all.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
-        */
-        ?>
-        <!--[if IE 9]>
-        <style type="text/css">
-            .artist-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options {
-    
-                right: -128px;
-            }
-        </style>
-        <![endif]-->
-        
-        <?php
-        /*
-        echo $javascript->link(
-                array(
-                    'freegal',
-                    'ajaxify-html5.js',
-                    'freegal40-site',
-                    'jquery-scrollto',
-                    'search-results',
-					'jquery.smartbanner.js'
-                )
-        );
-        */
 
         echo $javascript->link(
                 array(
@@ -99,31 +54,8 @@
                 )
         );        
 
-
-        /*
-        if ($this->Session->read("patron"))
-        {
-            ?>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/swfobject.js"></script>
-            <?php
-        }
-        */
-        ?>
-
-        <?php
-        /*        
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
-            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
-        */
-        ?>
-
- 
-        
-        <?php 
-        if ($this->Session->read('library') && $this->Session->read('library') != '')
-        {
+        if ($this->Session->read('library') && $this->Session->read('library') != '') {
+           
             $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
             ?>
 
@@ -151,10 +83,8 @@
                     sidebar_anchor.removeClass('active');
                     var sidebar_sub_nav_07 = $('.sidebar-sub-nav');
 
-
                     var sidebar_freegalqueues = $('.leftfqueuesclass');
                     sidebar_freegalqueues.removeClass('active');
-
 
                     var home07 = $('#home07');
                     var musicVideo07 = $('#musicVideo07');
@@ -197,7 +127,6 @@
                         home07.removeClass('active');
                         leftfqueues.addClass('active');
                     }
-
 
                     if (pageName === 'home07') {
                         musicVideo07.removeClass('active');
@@ -245,7 +174,6 @@
                         leftmywishlist07.removeClass('active');
                         leftmyhistory07.removeClass('active');
                         leftmylib07.removeClass('active');
-
                         leftnewrelease07.addClass('active');
                         newsRelease07.addClass('active');
                     } else if (pageName === 'genre07') {
@@ -312,7 +240,6 @@
                         leftmywishlist07.removeClass('active');
                         topmylib07.addClass('active');
                         leftmylib07.addClass('active');
-
                     } else if (pageName === 'ustoplib07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
@@ -330,7 +257,6 @@
                         leftmyhistory07.removeClass('active');
                         topmylib07.addClass('active');
                         ustoplib07.addClass('active');
-
                     } else if (pageName === 'leftnewrelease07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
@@ -395,7 +321,6 @@
                         leftnowstreaming07.removeClass('active');
                         topustop07.removeClass('active');
                         topmostpopuler07.addClass('active');
-
                         sidebar_sub_nav_07.addClass('active');
                         topmylib07.addClass('active');
                         leftmylib07.addClass('active');
@@ -407,7 +332,6 @@
                         home07.removeClass('active');
                         leftmusicVideo07.removeClass('active');
                         leftmylib07.removeClass('active');
-
                         leftnewrelease07.removeClass('active');
                         leftmyhistory07.removeClass('active');
                         leftnowstreaming07.removeClass('active');
@@ -431,7 +355,6 @@
                         topmylib07.removeClass('active');
                         leftnowstreaming07.removeClass('active');
                         leftsavedqueues07.addClass('active');
-
                     } else if (pageName === 'leftnowstreaming07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
@@ -447,79 +370,67 @@
                         topmylib07.removeClass('active');
                         leftsavedqueues07.removeClass('active');
                         leftnowstreaming07.addClass('active');
-
                     }
                 }
 
                 $(document).ready(function() {
                     
     <?php
-    if ($this->Session->read('approved') && $this->Session->read('approved') === 'no')
-    {
-        ?>
-                        $(".termsApproval")
-                                .colorbox(
-                                {
-                                    width: "50%", inline: true, open: true,
-                                    overlayClose: false, opacity: .5,
-                                    noEscape: true, href: "#termsApproval_div",
-                                    onOpen: function() {
-                                        $(document).unbind("keydown.cbox_close");
-                                    }
-                                }
-                        );
-        <?php
+    if ($this->Session->read('approved') && $this->Session->read('approved') === 'no') {
+?>
+        $(".termsApproval").colorbox({
+            width: "50%", inline: true, open: true,
+            overlayClose: false, opacity: .5,
+            noEscape: true, href: "#termsApproval_div",
+            onOpen: function() {
+                $(document).unbind("keydown.cbox_close");
+            }
+        });       
+<?php
     }
-  ?>
-   
-      <?php
     
     if($userLogin == 'yes') {
-        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
-        {
-    ?>
-                    $(".streamApproval")
-                            .colorbox(
-                            {
-                                width: "50%", inline: true, open: true,
-                                overlayClose: false, opacity: .5,
-                                escKey: false, noEscape: true, href: "#streamApproval_div",
-                                onOpen: function() {
-                                    $(document).unbind("keydown.cbox_close");
-                            }});
+        
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')) {
+?>
+            $(".streamApproval").colorbox({
+                        width: "50%", inline: true, open: true,
+                        overlayClose: false, opacity: .5,
+                        escKey: false, noEscape: true, href: "#streamApproval_div",
+                        onOpen: function() {
+                            $(document).unbind("keydown.cbox_close");
+                    }});
 
-                    $("#colorboxOKBtn").click(function() {
-                        var pid = <?= $this->Session->read('patron') ?>;
-                        var lid = <?= $this->Session->read('library') ?>;
-                        var data = {pid: pid, lid: lid};
-                        jQuery.ajax({
-                            type: "post", // Request method: post, get
-                            url: webroot + "users/savestreampopup", // URL to request
-                            data: data, // postdata
-                            async: false,
-                            success: function(response) {
-                                sleep(2000);
-                                $.fn.colorbox.close();
-                            },
-                            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            }
-                        });
-                    });
-            <?php
+            $("#colorboxOKBtn").click(function() {
+                var pid = <?= $this->Session->read('patron') ?>;
+                var lid = <?= $this->Session->read('library') ?>;
+                var data = {pid: pid, lid: lid};
+                jQuery.ajax({
+                    type: "post", // Request method: post, get
+                    url: webroot + "users/savestreampopup", // URL to request
+                    data: data, // postdata
+                    async: false,
+                    success: function(response) {
+                        sleep(2000);
+                        $.fn.colorbox.close();
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            });
+<?php
         }
     } else {
-        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
-        {
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')){
         ?>
-                $(".streamApproval")
-                    .colorbox(
-                        {
-                            width: "50%", inline: true, open: true,
-                            overlayClose: false, opacity: .5,
-                            escKey: false, noEscape: true, href: "#streamApproval_div",
-                            onOpen: function() {
-                                $(document).unbind("keydown.cbox_close");
-                            }});
+                $(".streamApproval").colorbox({
+                    width: "50%", inline: true, open: true,
+                    overlayClose: false, opacity: .5,
+                    escKey: false, noEscape: true, href: "#streamApproval_div",
+                    onOpen: function() {
+                        $(document).unbind("keydown.cbox_close");
+                    }
+                });
 
                 $("#colorboxOKBtn").click(function() {
                     var pid = <?= $this->Session->read('patron') ?>;
@@ -541,97 +452,91 @@
         <?php
         }
     }
-    ?>  
-     
-     
-     
-     
-     
-          <?php
-    if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1))
-    {
+
+    //if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1))
+    //{
         ?>
 
 
-                        $(".notificationApproval")
-                                .colorbox(
-                                {
-                                    width: "50%", inline: true, open: true,
-                                    overlayClose: false, opacity: .5,
-                                    escKey: false, noEscape: true, href: "#notificationApproval_div",
-                                    onOpen: function() {
-                                        $(document).unbind("keydown.cbox_close");
-                                    },
-                                    onComplete: function() {
-                                        $("#cboxLoadingOverlay").remove();
-                                        $("#cboxLoadingGraphic").remove();
-                                    }
-                                });
-                        //close the popup 
-                        $("#colorboxCloseBtn").click(function() {
+       //                  $(".notificationApproval")
+       //                          .colorbox(
+       //                          {
+       //                              width: "50%", inline: true, open: true,
+       //                              overlayClose: false, opacity: .5,
+       //                              escKey: false, noEscape: true, href: "#notificationApproval_div",
+       //                              onOpen: function() {
+       //                                  $(document).unbind("keydown.cbox_close");
+       //                              },
+       //                              onComplete: function() {
+       //                                  $("#cboxLoadingOverlay").remove();
+       //                                  $("#cboxLoadingGraphic").remove();
+       //                              }
+       //                          });
+       //                  //close the popup 
+       //                  $("#colorboxCloseBtn").click(function() {
 
-                            var data = {notificationClose: 1};
-                            jQuery.ajax({
-                                type: "post", // Request  method: post, get
-                                url: webroot + "users/saveNotification", // URL to request
-                                data: data, // post data
-                                success: function(response) {
-                                    $.fn.colorbox.close();
-                                    $('#noti_content').hide();
-                                    location.reload();
-                                },
-                                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                }
-                            });
-                        });
-                        //save email notificaion data and close t he popup
-                        $("#colorboxSubmitBtn").click(function() {
+       //                      var data = {notificationClose: 1};
+       //                      jQuery.ajax({
+       //                          type: "post", // Request  method: post, get
+       //                          url: webroot + "users/saveNotification", // URL to request
+       //                          data: data, // post data
+       //                          success: function(response) {
+       //                              $.fn.colorbox.close();
+       //                              $('#noti_content').hide();
+       //                              location.reload();
+       //                          },
+       //                          error: function(XMLHttpRequest, textStatus, errorThrown) {
+       //                          }
+       //                      });
+       //                  });
+       //                  //save email notificaion data and close t he popup
+       //                  $("#colorboxSubmitBtn").click(function() {
 			
-							if (!$('#userNewsletterEmailField').val() && !$('#doNotShowCheck').is(':checked')){
-                                alert('Please provide your information');
-                                return false;
-                            }
+							// if (!$('#userNewsletterEmailField').val() && !$('#doNotShowCheck').is(':checked')){
+       //                          alert('Please provide your information');
+       //                          return false;
+       //                      }
 
-							if($('#userNewsletterEmailField').val()){
-                            	if (!validateEmail($('#userNewsletterEmailField').val())) {
-                                	alert('Please enter the valid email address.');
-                                	return false;
-                            	}
-							}
+							// if($('#userNewsletterEmailField').val()){
+       //                      	if (!validateEmail($('#userNewsletterEmailField').val())) {
+       //                          	alert('Please enter the valid email address.');
+       //                          	return false;
+       //                      	}
+							// }
 			
 							
-                            //post the notification information
-                            var pid = <?= $this->Session->read('patron') ?>;
-                            var lid = <?= $this->Session->read('library') ?>;
-                            var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
-							if($('#doNotShowCheck').is(':checked') && !$('#userNewsletterEmailField').val() ) {
-								var url = "users/savenotifypopup";
-								$('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
-							}
-							else {
-								var url = "users/saveNotification";
+       //                      //post the notification information
+       //                      var pid = <?= $this->Session->read('patron') ?>;
+       //                      var lid = <?= $this->Session->read('library') ?>;
+       //                      var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
+							// if($('#doNotShowCheck').is(':checked') && !$('#userNewsletterEmailField').val() ) {
+							// 	var url = "users/savenotifypopup";
+							// 	$('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
+							// }
+							// else {
+							// 	var url = "users/saveNotification";
 							
-                            	$('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
-							}
-                            jQuery.ajax({
-                                type: "post", // Request method: post, get
-                                url: webroot + url, // URL to request
-                                data: data, // postdata
-                                async:
-                                        false,
-                                success: function(response) {
-                                    sleep(2000);
-                                    $.fn.colorbox.close();
-                                    $('#noti_content').hide();
-                                    location.reload();
-                                },
-                                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                }
-                            });
-                        });
+       //                      	$('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
+							// }
+       //                      jQuery.ajax({
+       //                          type: "post", // Request method: post, get
+       //                          url: webroot + url, // URL to request
+       //                          data: data, // postdata
+       //                          async:
+       //                                  false,
+       //                          success: function(response) {
+       //                              sleep(2000);
+       //                              $.fn.colorbox.close();
+       //                              $('#noti_content').hide();
+       //                              location.reload();
+       //                          },
+       //                          error: function(XMLHttpRequest, textStatus, errorThrown) {
+       //                          }
+       //                      });
+       //                  });
 
         <?php
-    }
+    //}
     ?>
 
 
