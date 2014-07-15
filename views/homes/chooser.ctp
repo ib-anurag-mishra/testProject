@@ -1,4 +1,4 @@
-<script language="text/javascript">
+<script>
 	$(function() {
 		$('.blkButton').corner('5px');
 	});
@@ -11,7 +11,7 @@
 <div class="login-container clearfix">
     <header class="clearfix">
         <h3>Select Your Library</h3>
-            <div class="more-info">Need help? Visit our <a href="/questions">FAQ section</a></div>
+            <div class="more-info">Need help? Visit our <?php echo $this->Html->link('FAQ section', '/questions')?></div>
     </header>
     <div class="login-library-container clearfix">
         <div class="form-wrapper">

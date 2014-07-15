@@ -10,7 +10,7 @@ class HomesController extends AppController {
 
     var $name 		= 'Homes';
     var $helpers 	= array( 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'WishlistVideo', 'Song', 'Language', 'Session', 'Mvideo', 'Download', 'Videodownload', 'Queue', 'Token', 'Home' );
-    var $components = array( 'RequestHandler', 'Downloads', 'PasswordHelper', 'Email', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming' );
+    var $components = array( 'RequestHandler', 'Downloads', 'PasswordHelper', 'Email', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming', 'Checkloginusers' );
     var $uses 		= array( 'Home', 'User', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'Video', 'Videodownload', 'Zipcode', 'Token' );
 
     /* Function Name : beforeFilter
@@ -100,6 +100,389 @@ class HomesController extends AppController {
 		$this->set( 'patron', $patronId );
 		$this->set( 'libraryType', $this->Session->read( 'library_type' ) );
 		$this->set( 'downloadVariArray', $this->Session->read( 'downloadVariArray') );
+    }
+    
+    public function my_lib_top_10() {
+    
+    	$this->layout = 'home';
+    	$patronId 	  = $this->Session->read( 'patron' );
+    	$country 	  = $this->Session->read( 'territory' );
+    	$libraryId 	  = $this->Session->read( 'library' );
+    	$url 	 	  = env( 'SERVER_NAME' );
+    	$host 	 	  = explode( '.', $url );
+    	$subdomains   = array_slice( $host, 0, count( $host ) - 2 );
+    	$subdomains   = $subdomains[0];
+    
+    	if ( $subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic' ) {
+    		if ( !$patronId ) {
+    			$this->redirect( array( 'controller' => 'homes', 'action' => 'index' ) );
+    		}
+    	}
+    
+    	/****************************************** Albums ************************************************/
+    
+    	$topDownload_albums = Cache::read( 'lib_album' . $libraryId );
+    
+    	if ( $topDownload_albums === false ) {
+    		$topDownload_albums = $this->Common->getLibraryTop10Albums( $country, $libraryId );
+    	}
+    
+    	$this->set( 'topDownload_albums', $topDownload_albums );
+    
+    	/****************************************** Songs ***********************************************/
+    
+    	$libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
+    	$patronDownload  = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
+    
+    	$topDownload_songs = Cache::read( 'lib' . $libraryId );
+    
+    	if ( $topDownload_songs === false ) {
+    		$topDownload_songs = $this->Common->getLibraryTopTenSongs( $country, $libraryId );
+    	}
+    
+    	$this->set( 'top_10_songs', $topDownload_songs );
+    
+    	/****************************************** Videos *************************************************/
+    
+    	$topDownload_videos_data = Cache::read( 'lib_video' . $libraryId );
+    
+    	if ( $topDownload_videos_data === false ) {
+    		$topDownload_videos_data = $this->Common->getLibraryTop10Videos( $country, $libraryId );
+    	}
+    
+    	$this->set( 'topDownload_videos_data', $topDownload_videos_data );
+    
+    	$this->set( 'patronId', $patronId );
+    	$this->set( 'libraryId', $libraryId );
+    	$this->set( 'libraryType', $this->Session->read( 'library_type' ) );
+    	$this->set( 'downloadVariArray', $this->Session->read( 'downloadVariArray') );
+    	$this->set( 'libraryDownload', $libraryDownload );
+    	$this->set( 'patronDownload', $patronDownload );
+    }
+    
+    public function us_top_10() {
+    
+    	$this->layout 	 = 'home';
+    	$libraryId 		 = $this->Session->read('library');
+    	$patronId  		 = $this->Session->read('patron');
+    	$territory 		 = $this->Session->read('territory');
+    	$libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
+    	$patronDownload  = $this->Downloads->checkPatronDownload($patronId, $libraryId);
+    
+    	/******************************************* Albums *****************************************/
+    
+    	if ( !empty( $territory ) ) {
+    
+    		$ustop10Albums = Cache::read( 'national_us_top10_albums' . $territory );
+    
+    		if ( $ustop10Albums === false ) {
+    			$ustop10Albums = $this->Common->getUsTop10Albums( $territory );
+    		}
+    	}
+    
+    	$this->set('ustop10Albums', $ustop10Albums);
+    
+    	/******************************************* Songs **********************************************/
+    
+    	if ( !empty( $territory ) ) {
+    
+    		$national_us_top10_record = Cache::read( 'national_us_top10_songs' . $territory );
+    
+    		if ( $national_us_top10_record === false ) {
+    			$national_us_top10_record = $this->Common->getUsTop10Songs( $territory );
+    		}
+    	}
+    
+    	$this->set('nationalTopDownload', $national_us_top10_record);
+    
+    	/******************************************** Videos ********************************************/
+    
+    	if ( !empty( $territory ) ) {
+    
+    		$usTop10VideoDownload = Cache::read( 'national_us_top10_videos' . $territory );
+    
+    		if ( $usTop10VideoDownload === false ) {
+    			$usTop10VideoDownload = $this->Common->getUsTop10Videos( $territory );
+    		}
+    	}
+    
+    	$this->set('usTop10VideoDownload', $usTop10VideoDownload);
+    
+    	$this->set( 'patronId', $patronId );
+    	$this->set( 'libraryId', $libraryId );
+    	$this->set( 'territory', $territory );
+    	$this->set( 'libraryType', $this->Session->read( 'library_type' ) );
+    	$this->set( 'downloadVariArray', $this->Session->read( 'downloadVariArray') );
+    	$this->set( 'libraryDownload', $libraryDownload );
+    	$this->set( 'patronDownload', $patronDownload );
+    }
+    
+    /*
+     * Function Name : chooser
+    * Desc : action for thelibrary login page
+    *
+    * Function added by Mangesh
+    */
+    
+    public function chooser() {
+    
+    	$this->layout = 'home';
+    	$territories  = $this->Library->getLibraryTerritory();
+    	$territorylist[''] = '';
+    
+    	foreach ( $territories as $territory ) {
+    		$territorylist["{$territory['Library']['library_territory']}"] = $territory['Library']['library_country'];
+    	}
+    
+    	$this->set('territorylist', $territorylist);
+    
+    	if ( isset( $this->data ) ) {
+    		if ( isset( $this->data['Library_details1']['zipcode'] ) ) {
+    
+    			$zip 		  = mysql_real_escape_string( $this->data['Library_details1']['zipcode'] );
+    			$city 		  = mysql_real_escape_string( $this->data['Library_details1']['city'] );
+    			$state 		  = mysql_real_escape_string( $this->data['Library_details1']['state'] );
+    			$library_name = mysql_real_escape_string( $this->data['Library_details1']['library_name'] );
+    			$country 	  = mysql_real_escape_string( $this->data['Library_details1']['country'] );
+    
+    			if ( ! empty( $zip ) || ! empty( $city ) || ! empty( $state ) || ! empty( $library_name ) || ! empty( $country ) ) {
+    
+    				//Check for Library name should not start with Free, Public or Library
+    				$pos1 = stripos( 'Free Library', $library_name );
+    				$pos2 = stripos( 'Public Library', $library_name );
+    
+    				if ( is_numeric( $pos1 ) || is_numeric( $pos2 ) ) {
+    					$this->Session->setFlash( 'Please Enter a valid Library name' );
+    				} else {
+    					//Added code for City
+    					$other_condition = '';
+    
+    					if ( ! empty( $city ) ) {
+    						if ( ! empty( $other_condition ) ) {
+    							$other_condition = 'OR library_city like "%' . $city . '%" ';
+    						} else {
+    							$other_condition .= ' library_city like "%' . $city . '%" ';
+    						}
+    					}
+    					//Added code for state
+    					if ( ! empty( $state ) ) {
+    						if ( ! empty( $other_condition ) ) {
+    							$other_condition .= ' OR library_state like "%' . $state . '%" ';
+    						} else {
+    							$other_condition .= 'library_state like "%' . $state . '%" ';
+    						}
+    					}
+    					//Added code for library name
+    					if (!empty($library_name)) {
+    						if ( ! empty( $other_condition ) ) {
+    							$other_condition .= ' OR library_name like "%' . $library_name . '%" ';
+    						} else {
+    							$other_condition .= 'library_name like "%' . $library_name . '%" ';
+    						}
+    					}
+    
+    					if (!empty($country)) {
+    						if ( ! empty( $other_condition ) ) {
+    							$other_condition .= ' OR library_territory = "' . $country . '" ';
+    						} else {
+    							$other_condition .= 'library_territory = "' . $country . '" ';
+    						}
+    					}
+    
+    					if ( empty( $zip ) ) {
+    						$result = $this->Library->getData( $other_condition );
+    
+    						if (!empty($result)) {
+    							$this->set('libraries', $result);
+    						} else {
+    							$this->set('msg', 'Sorry, currently there are no libraries in your area that subscribe to Freading.');
+    						}
+    					} else {
+    						$zipRows = $this->Zipcode->getZipCode( $zip );
+    
+    						if (!empty($zipRows)) {
+    							App::import('vendor', 'zipcode_class', array('file' => 'zipcode.php'));
+    							$zipcode = new zipcode_class();
+    
+    							$result    = $zipcode->get_zips_in_range($zipRows['Zipcode']['ZipCode'], 60, _ZIPS_SORT_BY_DISTANCE_ASC, true);
+    							$condition = implode("',library_zipcode) OR find_in_set('", explode(',', $result));
+    							$result    = $this->Library->getLibraryName( $condition, $other_condition, $result );
+    
+    							if (!empty($result)) {
+    								$this->set('libraries', $result);
+    							} else {
+    								$this->set('msg', 'Sorry, currently there are no libraries in your area that subscribe to Freading.');
+    							}
+    						} else {
+    							$this->Session->setFlash('Please Enter a valid zip code');
+    						}
+    					}
+    				}
+    			} else {
+    				$this->Session->setFlash('Please enter either your Library Name, Zip Code, City, State or Country.');
+    			}
+    		} else if ( isset( $this->data['Library_details1']['country'] ) ) {
+    			if ( $this->data['Library_details1']['country'] != '' ) {
+    
+    				$territory = $this->data['Library_details1']['country'];
+    
+    				$result = $this->Library->getLibraryName( $territory, false, false );
+    
+    				if (!empty($result))
+    					$this->set('libraries', $result);
+    				else
+    					$this->Session->setFlash('Sorry no libraries found in the country');
+    			} else {
+    				$this->Session->setFlash('Please select a country');
+    			}
+    		} else {
+    			$this->Session->setFlash('Please enter something valid');
+    		}
+    	} else {
+    		if ($this->Cookie->read('UrlReferer') == '') {
+    			$this->Cookie->write('UrlReferer', $this->referer(), false);
+    		} else if (strpos($this->Cookie->read('UrlReferer'), '?fb_xd_fragment')) {
+    			$this->Cookie->write('UrlReferer', $this->referer(), false);
+    		} else if (strpos($this->Cookie->read('UrlReferer'), 'internet_explorer')) {
+    			$this->Cookie->write('UrlReferer', $this->referer(), false);
+    		}
+    	}
+    }
+    
+    public function new_releases() {
+    
+    	$this->layout = 'home';
+    
+    	$libraryId = $this->Session->read( 'library' );
+    	$patronId  = $this->Session->read( 'patron' );
+    	$territory = $this->Session->read( 'territory' );
+    
+    	if ( !empty( $libraryId ) && !empty( $patronId ) ) {
+    
+    		$libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
+    		$patronDownload = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
+    
+    		$this->set( 'libraryDownload', $libraryDownload );
+    		$this->set( 'patronDownload', $patronDownload );
+    	}
+    
+    	/************************************* Videos *************************************/
+    	if( $this->Session->read( 'block' ) == 'yes' ) {
+    
+    		$coming_soon_videos = Cache::read( 'new_releases_videos_none_explicit' . $territory );
+    
+    		if ( $coming_soon_videos === false ) {
+    			$coming_soon_videos = $this->Common->getNewReleaseVideos( $territory, true );
+    		}
+    	} else {
+    		$coming_soon_videos = Cache::read( 'new_releases_videos' . $territory );
+    
+    		if ( $coming_soon_videos === false ) {
+    			$coming_soon_videos = $this->Common->getNewReleaseVideos( $territory );
+    		}
+    	}
+    
+    	$this->set( 'new_releases_videos', $coming_soon_videos );
+    
+    	/************************************ Albums ***************************************/
+    	if( $this->Session->read( 'block' ) == 'yes' ) {
+    
+    		$new_releases_albums_rs = Cache::read( 'new_releases_albums_none_explicit' . $territory );
+    
+    		if ($new_releases_albums_rs === false) {
+    			$new_releases_albums_rs = $this->Common->getNewReleaseAlbums( $territory, true );
+    		}
+    	} else {
+    		$new_releases_albums_rs = Cache::read( 'new_releases_albums' . $territory );
+    
+    		if ($new_releases_albums_rs === false) {
+    			$new_releases_albums_rs = $this->Common->getNewReleaseAlbums( $territory );
+    		}
+    	}
+    
+    	$this->set('new_releases_albums', $new_releases_albums_rs);
+    
+    	$this->set( 'libraryId', $libraryId );
+    	$this->set( 'patronId', $patronId );
+    	$this->set( 'libraryType', $this->Session->read('library_type') );
+    }
+    
+    /*
+     Function Name : aboutus
+    Desc : actions used for User end checking for cookie and javascript enable
+    */
+
+    function aboutus() {
+    	if (isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
+    
+    		if ($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
+    			$url = $this->Session->read('referral_url');
+    		} elseif ($this->Session->read('innovative') && ($this->Session->read('innovative') != '')) {
+    			$url = $this->webroot . 'users/ilogin';
+    		} elseif ($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')) {
+    			$url = $this->webroot . 'users/mdlogin';
+    		} elseif ($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')) {
+    			$url = $this->webroot . 'users/mndlogin';
+    		} elseif ($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')) {
+    			$url = $this->webroot . 'users/idlogin';
+    		} elseif ($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')) {
+    			$url = $this->webroot . 'users/ildlogin';
+    		} elseif ($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')) {
+    			$url = $this->webroot . 'users/ilhdlogin';
+    		} elseif ($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')) {
+    			$url = $this->webroot . 'users/ihdlogin';
+    		} elseif ($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')) {
+    			$url = $this->webroot . 'users/inhdlogin';
+    		} elseif ($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')) {
+    			$url = $this->webroot . 'users/inhlogin';
+    		} elseif ($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')) {
+    			$url = $this->webroot . 'users/inlogin';
+    		} elseif ($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')) {
+    			$url = $this->webroot . 'users/indlogin';
+    		} elseif ($this->Session->read('sip2') && ($this->Session->read('sip2') != '')) {
+    			$url = $this->webroot . 'users/slogin';
+    		} elseif ($this->Session->read('sip') && ($this->Session->read('sip') != '')) {
+    			$url = $this->webroot . 'users/snlogin';
+    		} elseif ($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')) {
+    			$url = $this->webroot . 'users/sdlogin';
+    		} elseif ($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')) {
+    			$url = $this->webroot . 'users/sndlogin';
+    		} elseif ($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')) {
+    			$url = $this->webroot . 'users/sso';
+    		} elseif ($this->Session->read('soap') && ($this->Session->read('soap') != '')) {
+    			$url = $this->webroot . 'users/plogin';
+    		} elseif ($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')) {
+    			$url = $this->webroot . 'users/clogin';
+    		} else {
+    			$url = $this->webroot . 'users/login';
+    		}
+    		$patronId = $this->Session->read('patron');
+    		$libraryId = $this->Session->read('library');
+    		$patronDetails = $this->Currentpatron->find('all', array('conditions' => array('patronid' => $patronId, 'libid' => $libraryId)));
+    		if (count($patronDetails) > 0) {
+    			$updateTime = date("Y-m-d H:i:s", time() - 60);
+    			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
+    			$this->Currentpatron->setDataSource('master');
+    			$this->Currentpatron->saveField('modified', $updateTime, false);
+    			$this->Currentpatron->setDataSource('default');
+    		}
+    		$this->Session->destroy();
+    		$this->Session->setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='" . $url . "'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
+    	}
+    	if (isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
+    		$this->Session->destroy();
+    		$this->Session->setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
+    	}
+    	if ($this->Session->read('lib_status') == 'invalid') {
+    		$this->Session->setFlash("The library you are trying to access is not registered with us");
+    		$this->Session->delete('lib_status');
+    	}
+    	if ($this->Cookie->read('msg') != '') {
+    		$this->Session->setFlash("This account is already active");
+    		$this->Cookie->delete('msg');
+    	}
+
+    	$this->layout = 'home';
     }
 
     function get_genre_tab_content($tab_no, $genre) {
@@ -228,121 +611,6 @@ class HomesController extends AppController {
         $this->set('genre_info', $genre_info);
     }
 
-    public function my_lib_top_10() {
-
-        $this->layout = 'home';
-        $patronId 	  = $this->Session->read( 'patron' );
-        $country 	  = $this->Session->read( 'territory' );
-        $libraryId 	  = $this->Session->read( 'library' );
-        $url 	 	  = env( 'SERVER_NAME' );
-        $host 	 	  = explode( '.', $url );
-        $subdomains   = array_slice( $host, 0, count( $host ) - 2 );
-        $subdomains   = $subdomains[0];
-
-        if ( $subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic' ) {
-            if ( !$patronId ) {
-                $this->redirect( array( 'controller' => 'homes', 'action' => 'index' ) );
-            }
-        }
-
-        /****************************************** Albums ************************************************/
-
-        $topDownload_albums = Cache::read( 'lib_album' . $libraryId );
-
-        if ( $topDownload_albums === false ) {
-        	$topDownload_albums = $this->Common->getLibraryTop10Albums( $country, $libraryId );
-        }
-
-        $this->set( 'topDownload_albums', $topDownload_albums );
-
-        /****************************************** Songs ***********************************************/
-
-        $libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
-        $patronDownload  = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
-
-        $topDownload_songs = Cache::read( 'lib' . $libraryId );
-
-        if ( $topDownload_songs === false ) {
-            $topDownload_songs = $this->Common->getLibraryTopTenSongs( $country, $libraryId );
-        }
-
-        $this->set( 'top_10_songs', $topDownload_songs );
-
-        /****************************************** Videos *************************************************/
-
-        $topDownload_videos_data = Cache::read( 'lib_video' . $libraryId );
-
-        if ( $topDownload_videos_data === false ) {
-            $topDownload_videos_data = $this->Common->getLibraryTop10Videos( $country, $libraryId );
-        }
-
-        $this->set( 'topDownload_videos_data', $topDownload_videos_data );
-        
-       $this->set( 'patronId', $patronId );
-       $this->set( 'libraryId', $libraryId );
-       $this->set( 'libraryType', $this->Session->read( 'library_type' ) );
-	   $this->set( 'downloadVariArray', $this->Session->read( 'downloadVariArray') );
-	   $this->set( 'libraryDownload', $libraryDownload );
-	   $this->set( 'patronDownload', $patronDownload );
-    }
-
-    public function us_top_10() {
-
-        $this->layout 	 = 'home';
-        $libraryId 		 = $this->Session->read('library');
-        $patronId  		 = $this->Session->read('patron');
-        $territory 		 = $this->Session->read('territory');
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
-        $patronDownload  = $this->Downloads->checkPatronDownload($patronId, $libraryId);
-
-        /******************************************* Albums *****************************************/
-        
-        if ( !empty( $territory ) ) {
-
-        	$ustop10Albums = Cache::read( 'national_us_top10_albums' . $territory );
-
-        	if ( $ustop10Albums === false ) {
-        		$ustop10Albums = $this->Common->getUsTop10Albums( $territory );
-        	}
-        }
-
-        $this->set('ustop10Albums', $ustop10Albums);
-        
-        /******************************************* Songs **********************************************/
-
-        if ( !empty( $territory ) ) {
-
-            $national_us_top10_record = Cache::read( 'national_us_top10_songs' . $territory );
-
-            if ( $national_us_top10_record === false ) {
-                $national_us_top10_record = $this->Common->getUsTop10Songs( $territory );
-            } 
-        }
-
-        $this->set('nationalTopDownload', $national_us_top10_record);
-
-        /******************************************** Videos ********************************************/
-
-        if ( !empty( $territory ) ) {
-
-        	$usTop10VideoDownload = Cache::read( 'national_us_top10_videos' . $territory );
-
-            if ( $usTop10VideoDownload === false ) {
-                $usTop10VideoDownload = $this->Common->getUsTop10Videos( $territory );
-            }
-        }
-
-        $this->set('usTop10VideoDownload', $usTop10VideoDownload);
-        
-        $this->set( 'patronId', $patronId );
-        $this->set( 'libraryId', $libraryId );
-        $this->set( 'territory', $territory );
-        $this->set( 'libraryType', $this->Session->read( 'library_type' ) );
-        $this->set( 'downloadVariArray', $this->Session->read( 'downloadVariArray') );
-        $this->set( 'libraryDownload', $libraryDownload );
-        $this->set( 'patronDownload', $patronDownload );
-    }
-
     function national_top_download() {
 
         $libId = $this->Session->read('library');
@@ -446,533 +714,24 @@ STR;
     }
 
     /*
-      Function Name : autoComplete
-      Desc : actions that is needed for auto-completeing the search
-     */
-
-    function autoComplete() {
-    	
-    	if ( $this->RequestHandler->isPost() ) {
-    		$index = 'form';
-    	} else if ( $this->RequestHandler->isGet() ) {
-    		$index = 'url';
-    	}
-
-        $country = $this->Session->read('territory');
-        $searchKey = '';
-        if (isset($this->params[$index]['q']) && $this->params[$index]['q'] != '') {
-            $searchKey = $this->params[$index]['q'];
-        }
-        $searchText = $searchKey;
-        $this->set('searchKey', 'search=' . urlencode($searchText));
-        $searchKey = str_replace("^", " ", $searchKey);
-        $searchKey = str_replace("$", " ", $searchKey);
-        $searchKey = '"^' . addslashes($searchKey) . '"';
-        App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-        
-        if ($this->params[$index]['type'] == 'album') {
-            $searchParam = "@Title " . $searchKey;
-        } else if ($this->params[$index]['type'] == 'artist') {
-            $searchParam = "@ArtistText " . $searchKey;
-        } else if ($this->params[$index]['type'] == 'composer') {
-            $searchParam = "@composer " . $searchKey;
-        } else {
-            $searchParam = "@SongTitle " . $searchKey;
-        }
-        $sphinxFinalCondition = $searchParam . " & " . "@Territory '" . $country . "' & @DownloadStatus 1";
-        $condSphinx = '';
-        $sphinxSort = "";
-        $sphinxDirection = "";
-        $this->paginate = array('Song' => array(
-                'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'extra' => 1
-        ));
-
-        $searchResults = $this->paginate('Song');
-        $this->set('output', $searchResults);
-        $this->set('type', $this->params[$index]['type']);
-        $this->layout = 'ajax';
-    }
-
-    /*
-      Function Name : artistSearch
-      Desc : actions that is needed for auto-completeing the search
-     */
-
-    function artistSearch() {
-        $country = $this->Session->read('territory');
-        $this->Song->recursive = 2;
-        $search = $this->params['form']['search'];
-        if ($search == 'special') {
-            $cond = array("ArtistText REGEXP '^[^A-Za-z]'");
-        } else {
-            $cond = array('ArtistText LIKE' => $search . '%');
-        }
-        $artistAll = Cache::read("artist" . $search . $country);
-        if ($artistAll === false) {
-            $artistAll = $this->Song->find('all', array(
-                'conditions' =>
-                array('and' =>
-                    array(
-                        $cond,
-                        array('Country.Territory' => $country),
-                        array('Song.provider_type = Country.provider_type'),
-                        array('DownloadStatus' => 1),
-                        array("Song.Sample_FileID != ''")
-                    )
-                ),
-                'fields' => array(
-                    'Song.ArtistText', 'Song.DownloadStatus',
-                ),
-                'contain' => array(
-                    'Country' => array(
-                        'fields' => array(
-                            'Country.Territory'
-                        )
-                    ),
-                ),
-                'order' => 'Song.ArtistText',
-                'group' => 'Song.ArtistText'
-            ));
-            Cache::write("artist" . $search . $country, $artistAll);
-        }
-        $this->set('distinctArtists', $artistAll);
-        $this->layout = 'ajax';
-    }
-
-    /*
-      Function Name : search
-      Desc : actions that is needed for advanced search
-     */
-
-    function search() {
-    	
-    	if ( $this->RequestHandler->isPost() ) {
-    		$index = 'form';
-    	} else if ( $this->RequestHandler->isGet() ) {
-    		$index = 'url';
-    	}
-
-        $country = $this->Session->read('territory');
-        if ($country == 'US') {
-            $nonMatchCountry = 'CA';
-            $countryVal = 1;
-        } else {
-            $nonMatchCountry = 'US';
-            $countryVal = 2;
-        }
-        $patId = $this->Session->read('patron');
-        $libId = $this->Session->read('library');
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
-        if ($this->Session->read('block') == 'yes') {
-            $cond = array('Song.Advisory' => 'F');
-            $condSphinx = "@Advisory F";
-        } else {
-            $cond = "";
-            $condSphinx = "";
-        }
-        if ((isset($this->params[$index]['artist']) && $this->params[$index]['artist'] != '') || (isset($this->params[$index]['label']) && $this->params[$index]['label'] != '') || (isset($this->params[$index]['composer']) && $this->params[$index]['composer'] != '') || (isset($this->params[$index]['song']) && $this->params[$index]['song'] != '') || (isset($this->params[$index]['album']) && $this->params[$index]['album'] != '') || (isset($this->params[$index]['genre_id']) && $this->params[$index]['genre_id'] != '') || (isset($this->data['Home']['artist']) && $this->data['Home']['artist'] != '') || (isset($this->data['Home']['label']) && $this->data['Home']['label'] != '') || (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') || (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') || (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') || (isset($this->data['Home']['genre_id']) && $this->data['Home']['genre_id'] != '' || isset($this->params[$index]['search']) && $this->params[$index]['search'] != '')) {
-            
-            if ((isset($this->params[$index]['match']) && $this->params[$index]['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
-                
-                if (isset($this->params[$index]['match']) && $this->params[$index]['match'] != '') {
-                    
-                    if ($this->params[$index]['match'] == 'All') {
-                        $condition = "and";
-                        $preCondition1 = array('Song.DownloadStatus' => 1);
-                        $preCondition2 = array('Song.TrackBundleCount' => 0);
-                        $preCondition3 = array('Country.Territory' => $country);
-                        $sphinxCheckCondition = "&";
-                        $matchType = "All";
-                    } else {
-                        $condition = "or";
-                        $preCondition1 = "";
-                        $preCondition2 = "";
-                        $preCondition3 = "";
-                        $sphinxCheckCondition = "|";
-                        $matchType = "Any";
-                    }
-                    $artist = $this->params[$index]['artist'];
-                    $label = $this->params[$index]['label'];
-                    $composer = $this->params[$index]['composer'];
-                    $song = $this->params[$index]['song'];
-                    $album = $this->params[$index]['album'];
-                    $genre = $this->params[$index]['genre_id'];
-                }
-                if (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
-                    if ($this->data['Home']['Match'] == 'All') {
-                        $condition = "and";
-                        $preCondition1 = array('Song.DownloadStatus' => 1);
-                        $preCondition2 = array('Song.TrackBundleCount' => 0);
-                        $preCondition3 = array('Country.Territory' => $country);
-                        $sphinxCheckCondition = "&";
-                        $matchType = "All";
-                    } else {
-                        $condition = "or";
-                        $preCondition1 = "";
-                        $preCondition2 = "";
-                        $preCondition3 = "";
-                        $sphinxCheckCondition = "|";
-                        $matchType = "Any";
-                    }
-                    $artist = $this->data['Home']['artist'];
-                    $label = $this->data['Home']['label'];
-                    $composer = $this->data['Home']['composer'];
-                    $song = $this->data['Home']['song'];
-                    $album = $this->data['Home']['album'];
-                    $genre = $this->data['Home']['genre_id'];
-
-                    $artist = str_replace("^", " ", $artist);
-                    $artist = str_replace("-", " ", $artist);
-                    $label = str_replace("^", " ", $label);
-                    $composer = str_replace("^", " ", $composer);
-                    $song = str_replace("^", " ", $song);
-                    $album = str_replace("^", " ", $album);
-
-                    $artist = str_replace("$", " ", $artist);
-                    $label = str_replace("$", " ", $label);
-                    $composer = str_replace("$", " ", $composer);
-                    $song = str_replace("$", " ", $song);
-                    $album = str_replace("$", " ", $album);
-                }
-                if ($artist != '') {
-                    $artistSearch = array('match(Song.ArtistText) against ("+' . $artist . '*" in boolean mode)');
-                    $sphinxArtistSearch = '@ArtistText "' . addslashes($artist) . '" ' . $sphinxCheckCondition . ' ';
-                } else {
-                    $artistSearch = '';
-                    $sphinxArtistSearch = '';
-                }
-                if ($label != '') {
-                    $labelSearch = array('match(Album.Label) against ("+' . $label . '*" in boolean mode)');
-                    $sphinxLabelSearch = '@LabelText "' . addslashes($label) . '" ' . $sphinxCheckCondition . ' ';
-                } else {
-                    $labelSearch = "";
-                    $sphinxLabelSearch = "";
-                }
-                if ($composer != '') {
-                    $composerSearch = array('match(Song.Composer) against ("+' . $composer . '*" in boolean mode)');
-                    $this->set('composer', $composer);
-                    $preCondition4 = array('Participant.Role' => 'Composer');
-                    $sphinxComposerSearch = '@Composer "' . addslashes($composer) . '" ' . $sphinxCheckCondition . ' ';
-                    $role = '2';
-                } else {
-                    $composerSearch = '';
-                    $preCondition4 = "";
-                    $sphinxComposerSearch = '';
-                    $role = '';
-                }
-                if ($song != '') {
-                    $songSearch = array('match(Song.SongTitle) against ("+' . $song . '*" in boolean mode)');
-                    $sphinxSongSearch = '@SongTitle "' . addslashes($song) . '" ' . $sphinxCheckCondition . ' ';
-                } else {
-                    $songSearch = '';
-                    $sphinxSongSearch = '';
-                }
-                if ($album != '') {
-                    $albumSearch = array('match(Song.Title) against ("+' . $album . '*" in boolean mode)');
-                    $sphinxAlbumSearch = '@Title "' . addslashes($album) . '" ' . $sphinxCheckCondition . ' ';
-                } else {
-                    $albumSearch = '';
-                    $sphinxAlbumSearch = '';
-                }
-                if ($genre != '') {
-                    $genreSearch = array('match(Song.Genre) against ("+' . $genre . '*" in boolean mode)');
-                    $sphinxGenreSearch = '@Genre "' . addslashes($genre) . '" ' . $sphinxCheckCondition . ' ';
-                } else {
-                    $genreSearch = '';
-                    $sphinxGenreSearch = '';
-                }
-                if ($country != '') {
-                    $territorySearch = array('match(Song.Territory) against ("+' . $country . '*" in boolean mode)');
-                    $sphinxTerritorySearch = '@Territory "' . addslashes($country) . '" ' . $sphinxCheckCondition . ' ';
-                } else {
-                    $territorySearch = '';
-                    $sphinxTerritorySearch = '';
-                }
-
-                $sphinxTempCondition = $sphinxArtistSearch . '' . $sphinxLabelSearch . '' . $sphinxComposerSearch . '' . $sphinxSongSearch . '' . $sphinxAlbumSearch . '' . $sphinxGenreSearch;
-                if ($sphinxTerritorySearch != '') {
-                    $sphinxTempCondition = substr($sphinxTempCondition, 0, -2);
-                    $sphinxTempCondition = $sphinxTempCondition . ' & ' . $sphinxTerritorySearch;
-                }
-                $sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-                
-                $sphinxFinalCondition = $sphinxFinalCondition . ' & @DownloadStatus 1 & ' . $condSphinx;
-                if ($condSphinx == "") {
-                    $sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
-                }
-
-                App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-
-                $this->set('searchKey', 'match=' . $matchType . '&artist=' . urlencode($artist) . '&label=' . urlencode($label) . '&composer=' . urlencode($composer) . '&song=' . urlencode($song) . '&album=' . urlencode($album) . '&genre_id=' . urlencode($genre));
-                if (isset($this->passedArgs['sort'])) {
-                    $sphinxSort = $this->passedArgs['sort'];
-                } else {
-                    $sphinxSort = "";
-                }
-                if (isset($this->passedArgs['direction'])) {
-                    $sphinxDirection = $this->passedArgs['direction'];
-                } else {
-                    $sphinxDirection = "";
-                }
-
-                $this->paginate = array('Song' => array(
-                        'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
-                ));
-
-                $searchResults = $this->paginate('Song');
-                $this->Download->recursive = -1;
-                foreach ($searchResults as $key => $value) {
-                    $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $value['Song']['ProdID'], 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-                    if (count($downloadsUsed) > 0) {
-                        $searchResults[$key]['Song']['status'] = 'avail';
-                    } else {
-                        $searchResults[$key]['Song']['status'] = 'not';
-                    }
-                    //Added code for Sales date issue
-                    $songProdID = $value['Song']['ProdID'];
-                    $songProvider_type = $value['Song']['provider_type'];
-
-                    $Country_array = $this->Country->find('first', array(
-                        'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $country, 'Country.provider_type' => $songProvider_type),
-                        'recursive' => -1,
-                            )
-                    );
-                    $SalesDate = $Country_array['Country']['SalesDate'];
-
-                    //overwrite the old issued Sales date with correct date
-                    $searchResults[$key]['Country']['SalesDate'] = $SalesDate;
-                    $searchResults[$key]['Country']['Territory'] = $country;
-                    $searchResults[$key]['Country']['provider_type'] = $songProvider_type;
-                    //End code for sales date
-                    //Changed for show seached like composer name in composer search
-                    if ($composer != '') {
-                        $composer_value = $searchResults[$key]['Song']['Composer'];
-                        $composer_value = str_replace('"', "", $composer_value);
-                        $composer_array = explode(",", $composer_value);
-                        $search_text = $composer;
-                        $coposer_text = '';
-                        if (is_array($composer_array)){
-                            
-                            foreach ($composer_array as $composer_key => $composer_value) {
-                                $pos = stripos($composer_value, $search_text);
-                                if (is_numeric($pos)) {
-                                    $coposer_text = $composer_value;
-                                    break;
-                                }
-                            }
-
-                            if ('' != $coposer_text) {
-                                $searchResults[$key]['Participant']['Name'] = $coposer_text;
-                            }
-                        }
-                    }
-                }
-
-                $this->set('searchResults', $searchResults);
-
-                //Added code for log search data			
-                if (isset($this->data['Home']['artist']) && $this->data['Home']['artist'] != '') {
-                    $insertArr[] = $this->searchrecords('artist', $this->data['Home']['artist']);
-                }
-                if (isset($this->data['Home']['label']) && $this->data['Home']['label'] != '') {
-                    $insertArr[] = $this->searchrecords('label', $this->data['Home']['label']);
-                }
-                if (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') {
-                    $insertArr[] = $this->searchrecords('composer', $this->data['Home']['composer']);
-                }
-                if (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') {
-                    $insertArr[] = $this->searchrecords('song', $this->data['Home']['song']);
-                }
-                if (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') {
-                    $insertArr[] = $this->searchrecords('album', $this->data['Home']['album']);
-                }
-                if (isset($this->data['Home']['genre_id']) && $this->data['Home']['genre_id'] != '') {
-                    $insertArr[] = $this->searchrecords('genre_id', $this->data['Home']['genre_id']);
-                }
-                if (is_array($insertArr)) {
-                    $this->Searchrecord->saveAll($insertArr);
-                }
-                //End Added code for log search data	
-            } else {
-
-                //Added code for log search data
-                if (isset($this->params[$index]['search']) && $this->params[$index]['search'] != '') {
-                    $insertArr[] = $this->searchrecords($this->params[$index]['search_type'], $this->params[$index]['search']);
-                }
-                $this->Searchrecord->saveAll($insertArr);
-                //End Added code for log search data
-
-                if ($this->params[$index]['search_type'] == 'composer') {
-                    $this->set('composer', "composer");
-                }
-
-                $searchKey = '';
-                $auto = 0;
-                if (isset($this->params[$index]['search']) && $this->params[$index]['search'] != '') {
-                    $searchKey = $this->params[$index]['search'];
-                }
-                if (isset($this->params[$index]['auto']) && $this->params[$index]['auto'] == 1) {
-                    $auto = 1;
-                }
-                if ($searchKey == '') {
-                    $searchKey = $this->data['Home']['search'];
-                }
-                $searchText = $searchKey;
-                $this->set('searchKey', 'search=' . urlencode($searchText) . '&auto=' . $auto);
-
-                if ($this->params[$index]['search_type'] == 'composer') {
-                    $searchtype = 'composer';
-                } else if ($this->params[$index]['search_type'] == 'artist') {
-                    $searchtype = 'ArtistText';
-                } else if ($this->params[$index]['search_type'] == 'album') {
-                    $searchtype = 'Title';
-                } else if ($this->params[$index]['search_type'] == 'song') {
-                    $searchtype = 'SongTitle';
-                }
-                $this->set('searchtype', $this->params[$index]['search_type']);
-                
-                if ($auto == 0) {
-                    $searchParam = "";
-                    $expSearchKeys = explode(" ", $searchKey);
-                    foreach ($expSearchKeys as $value) {
-                        $value = str_replace("^", " ", $value);
-                        $value = str_replace("$", " ", $value);
-                        $value = str_replace("-", " ", $value);
-                        $value = '"' . addslashes($value) . '"';
-                        if ($searchParam == "") {
-                            $searchParam = "@" . $searchtype . " " . $value;
-                        } else {
-                            $searchParam = $searchParam . " | @" . $searchtype . " " . $value;
-                        }
-                    }
-                } else {
-                    $searchKey = str_replace("^", " ", $searchKey);
-                    $searchKey = str_replace("-", " ", $searchKey);
-                    $searchKey = str_replace("$", " ", $searchKey);
-                    $searchKey = '"' . addslashes($searchKey) . '"';
-                    $searchParam = "@" . $searchtype . " " . $searchKey;
-                }
-                
-                if (!isset($this->params[$index]['composer'])) {
-                    $this->Song->unbindModel(array('hasOne' => array('Participant')));
-                }
-                App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-                
-                $sphinxFinalCondition = $searchParam . " & " . "@Territory " . $country . " & @DownloadStatus 1 & " . $condSphinx;
-                if ($condSphinx == "") {
-                    $sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
-                }
-
-                if (isset($this->passedArgs['sort'])) {
-                    $sphinxSort = $this->passedArgs['sort'];
-                } else {
-                    $sphinxSort = "";
-                }
-                if (isset($this->passedArgs['direction'])) {
-                    $sphinxDirection = $this->passedArgs['direction'];
-                } else {
-                    $sphinxDirection = "";
-                }
-
-                $this->paginate = array('Song' => array(
-                        'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
-                ));
-
-                $searchResults = $this->paginate('Song');
-
-                $this->Download->recursive = -1;
-                foreach ($searchResults as $key => $value) {
-                    $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $value['Song']['ProdID'], 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-                    if (count($downloadsUsed) > 0) {
-                        $searchResults[$key]['Song']['status'] = 'avail';
-                    } else {
-                        $searchResults[$key]['Song']['status'] = 'not';
-                    }
-
-                    //Added code for Sales date issue
-                    $songProdID = $value['Song']['ProdID'];
-                    $songProvider_type = $value['Song']['provider_type'];
-
-                    $Country_array = $this->Country->find('first', array(
-                        'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $country, 'Country.provider_type' => $songProvider_type),
-                        'recursive' => -1,
-                            )
-                    );
-                    $SalesDate = $Country_array['Country']['SalesDate'];
-
-                    //overwrite the old issued Sales date with correct date
-                    $searchResults[$key]['Country']['SalesDate'] = $SalesDate;
-                    $searchResults[$key]['Country']['Territory'] = $country;
-                    $searchResults[$key]['Country']['provider_type'] = $songProvider_type;
-                    //End code for sales date
-                    //Changed for show seached like composer name in composer search
-                    if ($this->params[$index]['search_type'] = 'composer') {
-                        $composer_value = $searchResults[$key]['Song']['Composer'];
-                        $composer_value = str_replace('"', "", $composer_value);
-                        $composer_array = explode(",", $composer_value);
-                        $search_text = $this->params[$index]['search'];
-                        $coposer_text = '';
-                        if (is_array($composer_array)) {
-                            foreach ($composer_array as $composer_key => $composer_value) {
-                                $pos = stripos($composer_value, $search_text);
-                                if (is_numeric($pos)) {
-                                    $coposer_text = $composer_value;
-                                    break;
-                                }
-                            }
-
-                            if ('' != $coposer_text) {
-                                $searchResults[$key]['Participant']['Name'] = $coposer_text;
-                            }
-                        }
-                    }
-                }
-                $this->set('searchResults', $searchResults);
-            }
-        } else {
-            $this->set('searchResults', array());
-        }
-        $this->layout = 'home';
-    }
-
-    function searchrecords($type, $search_text) {
-        $search_text = strtolower(trim($search_text));
-        $search_text = preg_replace('/\s\s+/', ' ', $search_text);
-        $insertArr['search_text'] = $search_text;
-        $insertArr['type'] = $type;
-        $genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
-        if (count($genre_id_count_array) > 0) {
-            $insertArr['count'] = $genre_id_count_array[0]['Searchrecord']['count'] + 1;
-            $insertArr['id'] = $genre_id_count_array[0]['Searchrecord']['id'];
-        } else {
-            $insertArr['count'] = 1;
-        }
-
-        return $insertArr;
-    }
-
-    /*
       Function Name : userDownload
       Desc : actions that is used for updating user download
      */
 
-    function userDownload() {
+    public function userDownload() {
+
         $this->layout = false;
-        $prodId = $this->params['form']['ProdID'];
+
+        $prodId   = $this->params['form']['ProdID'];
         $provider = $this->params['form']['ProviderType'];
 
-        /*
-          creates log file name
-         */
+       /** creates log file name **/
         $log_name = 'stored_procedure_web_log_' . date('Y_m_d');
-        $log_id = md5(time());
+        $log_id   = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
 
-        $Setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
-        $checkValidation = $Setting['Siteconfig']['svalue'];
+        $setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
+        $checkValidation = $setting['Siteconfig']['svalue'];
         if ($checkValidation == 1) {
 
             $validationResult = $this->Downloads->validateDownload($prodId, $provider);
@@ -1025,72 +784,11 @@ STR;
             $songUrl  = $this->Token->regularToken($trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);                
             $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 
-            if ($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'referral_url';
-            } elseif ($this->Session->read('innovative') && ($this->Session->read('innovative') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative';
-            } elseif ($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'mdlogin_reference';
-            } elseif ($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'mndlogin_reference';
-            } elseif ($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var';
-            } elseif ($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_name';
-            } elseif ($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_https_name';
-            } elseif ($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_https';
-            } elseif ($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
-            } elseif ($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_https';
-            } elseif ($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_wo_pin';
-            } elseif ($this->Session->read('sip2') && ($this->Session->read('sip2') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip2';
-            } elseif ($this->Session->read('sip') && ($this->Session->read('sip') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip';
-            } elseif ($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_wo_pin';
-            } elseif ($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip2_var';
-            } elseif ($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip2_var_wo_pin';
-            } elseif ($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip2_var_wo_pin';
-            } elseif ($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'ezproxy';
-            } elseif ($this->Session->read('soap') && ($this->Session->read('soap') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'soap';
-            } elseif ($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')) {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'curl_method';
-            } else {
-                $insertArr['email'] = $this->Session->read('patronEmail');
-                $insertArr['user_login_type'] = 'user_account';
-            }
-
-            $insertArr['user_agent'] = str_replace(";", "", $_SERVER['HTTP_USER_AGENT']);
+            $userArr = $this->Checkloginusers->checkLoginUser();
+            
+            $insertArr['email'] 		  = $userArr['email'];
+            $insertArr['user_login_type'] = $userArr['user_login_type'];
+            $insertArr['user_agent'] 	  = str_replace(";", "", $_SERVER['HTTP_USER_AGENT']);
             $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
             $this->Library->setDataSource('master');
 
@@ -1166,64 +864,6 @@ STR;
             $this->Session->setFlash($validationResult[1]);
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
-    }
-
-    /*
-      Function Name : advance_search
-      Desc : actions used for showing advanced search form
-     */
-
-    function advance_search() {
-        $this->layout = 'home';
-        $country = $this->Session->read('territory');
-        $this->Genre->Behaviors->attach('Containable');
-        $this->Genre->recursive = 2;
-        $this->Song->recursive = 2;
-        $genreAll = Cache::read("genre" . $country);
-        if ($genreAll === false) {
-            $results = $this->Song->find('all', array(
-                'conditions' => array(
-                    'Song.DownloadStatus' => 1,
-                    'Song.TrackBundleCount' => 0,
-                    'Country.Territory' => $country),
-                'fields' => array('ProdID'),
-                'contain' => array(
-                    'Country' => array(
-                        'fields' => array(
-                            'Country.Territory'
-                        )
-                    )),
-                'group' => array('Genre')));
-            $data = '';
-            foreach ($results as $k => $v) {
-                $data .= $v['Song']['ProdID'] . ',';
-            }
-            $genreAll = $this->Genre->find('all', array(
-                'conditions' =>
-                array('and' =>
-                    array(
-                        array('Country.Territory' => $country),
-                        array('Genre.ProdID IN (' . rtrim($data, ',') . ')')
-                    )
-                ),
-                'fields' => array(
-                    'Genre.Genre'
-                ),
-                'contain' => array(
-                    'Country' => array(
-                        'fields' => array(
-                            'Country.Territory'
-                        )
-                    ),
-                ), 'group' => 'Genre.Genre'
-            ));
-            Cache::write("genre" . $country, $genreAll);
-        }
-        $resultArr = array();
-        foreach ($genreAll as $genre) {
-            $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
-        }
-        $this->set('genres', $resultArr);
     }
 
     /*
@@ -1676,84 +1316,6 @@ STR;
         $this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
 
         $this->layout = 'admin';
-    }
-
-    /*
-      Function Name : aboutus
-      Desc : actions used for User end checking for cookie and javascript enable
-     */
-
-    function aboutus() {
-        if (isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
-            
-            if ($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
-                $url = $this->Session->read('referral_url');
-            } elseif ($this->Session->read('innovative') && ($this->Session->read('innovative') != '')) {
-                $url = $this->webroot . 'users/ilogin';
-            } elseif ($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')) {
-                $url = $this->webroot . 'users/mdlogin';
-            } elseif ($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')) {
-                $url = $this->webroot . 'users/mndlogin';
-            } elseif ($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')) {
-                $url = $this->webroot . 'users/idlogin';
-            } elseif ($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')) {
-                $url = $this->webroot . 'users/ildlogin';
-            } elseif ($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')) {
-                $url = $this->webroot . 'users/ilhdlogin';
-            } elseif ($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')) {
-                $url = $this->webroot . 'users/ihdlogin';
-            } elseif ($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')) {
-                $url = $this->webroot . 'users/inhdlogin';
-            } elseif ($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')) {
-                $url = $this->webroot . 'users/inhlogin';
-            } elseif ($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')) {
-                $url = $this->webroot . 'users/inlogin';
-            } elseif ($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')) {
-                $url = $this->webroot . 'users/indlogin';
-            } elseif ($this->Session->read('sip2') && ($this->Session->read('sip2') != '')) {
-                $url = $this->webroot . 'users/slogin';
-            } elseif ($this->Session->read('sip') && ($this->Session->read('sip') != '')) {
-                $url = $this->webroot . 'users/snlogin';
-            } elseif ($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')) {
-                $url = $this->webroot . 'users/sdlogin';
-            } elseif ($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')) {
-                $url = $this->webroot . 'users/sndlogin';
-            } elseif ($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')) {
-                $url = $this->webroot . 'users/sso';
-            } elseif ($this->Session->read('soap') && ($this->Session->read('soap') != '')) {
-                $url = $this->webroot . 'users/plogin';
-            } elseif ($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')) {
-                $url = $this->webroot . 'users/clogin';
-            } else {
-                $url = $this->webroot . 'users/login';
-            }
-            $patronId = $this->Session->read('patron');
-            $libraryId = $this->Session->read('library');
-            $patronDetails = $this->Currentpatron->find('all', array('conditions' => array('patronid' => $patronId, 'libid' => $libraryId)));
-            if (count($patronDetails) > 0) {
-                $updateTime = date("Y-m-d H:i:s", time() - 60);
-                $this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
-                $this->Currentpatron->setDataSource('master');
-                $this->Currentpatron->saveField('modified', $updateTime, false);
-                $this->Currentpatron->setDataSource('default');
-            }
-            $this->Session->destroy();
-            $this->Session->setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='" . $url . "'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
-        }
-        if (isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
-            $this->Session->destroy();
-            $this->Session->setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
-        }
-        if ($this->Session->read('lib_status') == 'invalid') {
-            $this->Session->setFlash("The library you are trying to access is not registered with us");
-            $this->Session->delete('lib_status');
-        }
-        if ($this->Cookie->read('msg') != '') {
-            $this->Session->setFlash("This account is already active");
-            $this->Cookie->delete('msg');
-        }
-
-        $this->layout = 'home';
     }
 
     /*
@@ -3080,196 +2642,6 @@ STR;
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         echo $finalSongUrl;
         exit;
-    }
-
-    /*
-     * Function Name : chooser
-     * Desc : action for thelibrary login page
-     * 
-     * Function added by Mangesh
-     */
-
-    public function chooser() {
-
-    	$this->layout = 'home';
-        $territories  = $this->Library->getLibraryTerritory();
-        $territorylist[''] = '';
-
-        foreach ( $territories as $territory ) {
-            $territorylist["{$territory['Library']['library_territory']}"] = $territory['Library']['library_country'];
-        }
-
-        $this->set('territorylist', $territorylist);
-
-        if ( isset( $this->data ) ) {
-            if ( isset( $this->data['Library_details1']['zipcode'] ) ) {
-
-                $zip 		  = mysql_real_escape_string( $this->data['Library_details1']['zipcode'] );
-                $city 		  = mysql_real_escape_string( $this->data['Library_details1']['city'] );
-                $state 		  = mysql_real_escape_string( $this->data['Library_details1']['state'] );
-                $library_name = mysql_real_escape_string( $this->data['Library_details1']['library_name'] );
-                $country 	  = mysql_real_escape_string( $this->data['Library_details1']['country'] );
-
-                if ( ! empty( $zip ) || ! empty( $city ) || ! empty( $state ) || ! empty( $library_name ) || ! empty( $country ) ) {
-
-                	//Check for Library name should not start with Free, Public or Library
-                    $pos1 = stripos( 'Free Library', $library_name );
-                    $pos2 = stripos( 'Public Library', $library_name );
-
-                    if ( is_numeric( $pos1 ) || is_numeric( $pos2 ) ) {
-                        $this->Session->setFlash( 'Please Enter a valid Library name' );
-                    } else {
-                        //Added code for City
-                        $other_condition = '';
-
-                        if ( ! empty( $city ) ) {
-                            if ( ! empty( $other_condition ) ) {
-                                $other_condition = 'OR library_city like "%' . $city . '%" ';
-                            } else {
-                                $other_condition .= ' library_city like "%' . $city . '%" ';
-                            }
-                        }
-                        //Added code for state
-                        if ( ! empty( $state ) ) {
-                            if ( ! empty( $other_condition ) ) {
-                                $other_condition .= ' OR library_state like "%' . $state . '%" ';
-                            } else {
-                                $other_condition .= 'library_state like "%' . $state . '%" ';
-                            }
-                        }
-                        //Added code for library name
-                        if (!empty($library_name)) {
-                            if ( ! empty( $other_condition ) ) {
-                                $other_condition .= ' OR library_name like "%' . $library_name . '%" ';
-                            } else {
-                                $other_condition .= 'library_name like "%' . $library_name . '%" ';
-                            }
-                        }
-
-                        if (!empty($country)) {
-                            if ( ! empty( $other_condition ) ) {
-                                $other_condition .= ' OR library_territory = "' . $country . '" ';
-                            } else {
-                                $other_condition .= 'library_territory = "' . $country . '" ';
-                            }
-                        }
-
-                        if ( empty( $zip ) ) {
-                            $result = $this->Library->getData( $other_condition );
-
-                            if (!empty($result)) {
-                                $this->set('libraries', $result);
-                            } else {
-                                $this->set('msg', 'Sorry, currently there are no libraries in your area that subscribe to Freading.');
-                            }
-                        } else {
-                            $zipRows = $this->Zipcode->getZipCode( $zip );
-
-                            if (!empty($zipRows)) {
-                                App::import('vendor', 'zipcode_class', array('file' => 'zipcode.php'));
-                                $zipcode = new zipcode_class();
-
-                                $result    = $zipcode->get_zips_in_range($zipRows['Zipcode']['ZipCode'], 60, _ZIPS_SORT_BY_DISTANCE_ASC, true);
-                                $condition = implode("',library_zipcode) OR find_in_set('", explode(',', $result));
-                                $result    = $this->Library->getLibraryName( $condition, $other_condition, $result );
-
-                                if (!empty($result)) {
-                                    $this->set('libraries', $result);
-                                } else {
-                                    $this->set('msg', 'Sorry, currently there are no libraries in your area that subscribe to Freading.');
-                                }
-                            } else {
-                                $this->Session->setFlash('Please Enter a valid zip code');
-                            }
-                        }
-                    }
-                } else {
-                    $this->Session->setFlash('Please enter either your Library Name, Zip Code, City, State or Country.');
-                }
-            } else if ( isset( $this->data['Library_details1']['country'] ) ) {
-                if ( $this->data['Library_details1']['country'] != '' ) {
-
-                	$territory = $this->data['Library_details1']['country'];
-
-                    $result = $this->Library->getLibraryName( $territory, false, false );
-
-                    if (!empty($result))
-                        $this->set('libraries', $result);
-                    else
-                        $this->Session->setFlash('Sorry no libraries found in the country');
-                } else {
-                    $this->Session->setFlash('Please select a country');
-                }
-            } else {
-                $this->Session->setFlash('Please enter something valid');
-            }
-        } else {
-            if ($this->Cookie->read('UrlReferer') == '') {
-                $this->Cookie->write('UrlReferer', $this->referer(), false);
-            } else if (strpos($this->Cookie->read('UrlReferer'), '?fb_xd_fragment')) {
-                $this->Cookie->write('UrlReferer', $this->referer(), false);
-            } else if (strpos($this->Cookie->read('UrlReferer'), 'internet_explorer')) {
-                $this->Cookie->write('UrlReferer', $this->referer(), false);
-            }
-        }
-    }
-
-	public function new_releases() {
-
-        $this->layout = 'home';
-
-        $libraryId = $this->Session->read( 'library' );
-        $patronId  = $this->Session->read( 'patron' );
-        $territory = $this->Session->read( 'territory' );
-
-        if ( !empty( $libraryId ) && !empty( $patronId ) ) {
-
-        	$libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
-            $patronDownload = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
-
-            $this->set( 'libraryDownload', $libraryDownload );
-            $this->set( 'patronDownload', $patronDownload );
-        }
-
-        /************************************* Videos *************************************/
-        if( $this->Session->read( 'block' ) == 'yes' ) {
-
-        	$coming_soon_videos = Cache::read( 'new_releases_videos_none_explicit' . $territory );
-	
-	        if ( $coming_soon_videos === false ) {
-	            $coming_soon_videos = $this->Common->getNewReleaseVideos( $territory, true );
-	        }
-        } else {
-        	$coming_soon_videos = Cache::read( 'new_releases_videos' . $territory );
-
-        	if ( $coming_soon_videos === false ) {
-        		$coming_soon_videos = $this->Common->getNewReleaseVideos( $territory );
-        	}
-        }
-
-        $this->set( 'new_releases_videos', $coming_soon_videos );
-
-        /************************************ Albums ***************************************/
-        if( $this->Session->read( 'block' ) == 'yes' ) {
-        
-        	$new_releases_albums_rs = Cache::read( 'new_releases_albums_none_explicit' . $territory );
-
-        	if ($new_releases_albums_rs === false) {
-        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums( $territory, true );
-        	}
-        } else {
-        	$new_releases_albums_rs = Cache::read( 'new_releases_albums' . $territory );
-
-        	if ($new_releases_albums_rs === false) {
-        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums( $territory );
-        	}
-        }
-
-        $this->set('new_releases_albums', $new_releases_albums_rs);
-        
-        $this->set( 'libraryId', $libraryId );
-        $this->set( 'patronId', $patronId );
-        $this->set( 'libraryType', $this->Session->read('library_type') );
     }
 
     /*

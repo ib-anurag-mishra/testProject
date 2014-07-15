@@ -12,47 +12,46 @@
             <ul style="width:27000px;">
                 <?php
                 $count = 1;
-                if ( isset( $new_releases_albums ) && is_array( $new_releases_albums ) && count( $new_releases_albums ) > 0 ) {
-	                foreach ( $new_releases_albums as $value ) {
+                if ( isset( $new_releases_albums ) && is_array( $new_releases_albums ) && count( $new_releases_albums ) > 0 ):
+	                foreach ( $new_releases_albums as $value ):
 				?>					
                     	<li>
                         	<div class="album-container">
 	                            <?=$html->link( $html->image( $value['albumImage'], array("height" => "250", "width" => "250")), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false))?>
 	                            <div class="top-10-ranking"><?=$count?></div>
 	                            <?php
-	                            if ( isset( $patronId ) && ! empty( $patronId )) {
-									if ( isset( $libraryType ) && $libraryType == 2 && !empty( $value['albumSongs'][$value['Albums']['ProdID']] ) ) {
+	                            if ( isset( $patronId ) && ! empty( $patronId )):
+									if ( isset( $libraryType ) && $libraryType == 2 && !empty( $value['albumSongs'][$value['Albums']['ProdID']] ) ):
 	                                    echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
+									 	echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
 								?>
-	                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
 	                                    <div class="wishlist-popover">
 	                                        <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
-	                                        <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+	                                        <?php echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));?>
 	                                    </div>
 								<?php
-									}
-	                            } else {
-	                            ?>
-	                                <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a>
-	                            <?php } ?>
+									endif;
+	                            else:
+	                            	echo $this->Html->link('Login', array( 'controller' => 'usres', 'action' => 'redirection_manager'), array('class' => 'top-10-download-now-button'));
+	                           	endif;
+	                           	?>
                         	</div>
                         	<div class="album-title">
                         		<?php 
 	                        		$albumTitle = $this->Home->trimString( $value['Albums']['AlbumTitle'], 20 );
 	                        		$albumTitle = $this->Home->explicitContent( $value['Albums']['Advisory'], $albumTitle, true );
+	                        		
+	                        		echo $this->Html->link( $this->getTextEncode( $albumTitle ), array( 'controller' => 'artists', 'action' => 'view', base64_encode( $value['Song']['ArtistText'] ), $value['Song']['ReferenceID'], base64_encode( $value['Song']['provider_type'] ) ), array( 'title' => $this->getTextEncode( $value['Albums']['AlbumTitle']) ) );
                         		?>					
-	                            <a title="<?= $this->getTextEncode( $value['Albums']['AlbumTitle']); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>"> <?=$this->getTextEncode( $albumTitle )?> </a>
                         	</div>
                         	<div class="artist-name">							
-	                            <a title="<?= $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
-	                                <?=$this->getTextEncode( $this->Home->trimString( $value['Song']['Artist'], 32 ) ); ?>
-	                            </a>
+	                            <?php echo $this->Html->link( $this->getTextEncode( $this->Home->trimString( $value['Song']['Artist'], 32 ) ), array( 'controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($value['Song']['ArtistText'])), base64_encode($value['Genre']['Genre']) ), array( 'title' => $this->getTextEncode($value['Song']['Artist']) ) );?>
 	                        </div>
                     	</li>
                 <?php
                     	$count++;
-                	}
-				}
+                	endforeach;
+				endif;
                 ?>
             </ul>
 		</div>
@@ -64,24 +63,23 @@
 			<ul style="width:44100px;">
             	<?php
 	            $count = 1;
-	            if ( isset( $new_releases_videos ) && is_array( $new_releases_videos ) && count( $new_releases_videos ) > 0 ) {
-					foreach ( $new_releases_videos as $value ) {
+	            if ( isset( $new_releases_videos ) && is_array( $new_releases_videos ) && count( $new_releases_videos ) > 0 ):
+					foreach ( $new_releases_videos as $value ):
 				?>
 						<li>
 							<div class="video-container">
-                        		<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                            		<img src="<?php echo $value['videoAlbumImage']; ?>" alt="<?php echo $this->getValidText($value['Video']['Artist'] . ' - ' . $value['Video']['VideoTitle']); ?>" width="423" height="250" />
-                        		</a>
+                        		<?php echo $this->Html->link( $this->Html->image( $value['videoAlbumImage'], array( 'alt' => $this->getValidText($value['Video']['Artist'] . ' - ' . $value['Video']['VideoTitle'] ), 'width' => '423', 'height' => '250' ) ), array( 'controller' => 'videos', 'action' => 'details', $value['Video']['ProdID'] ), array( 'escape' => false ) );?>
 		                        <div class="top-10-ranking"><?= $count; ?></div>
 		                        <?php
-								if ( isset( $patronId ) && ! empty( $patronId ) ) {
-		                            if ( $value['Country']['SalesDate'] <= date( 'Y-m-d' ) ) {
-		                                if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1') {
+								if ( isset( $patronId ) && ! empty( $patronId ) ):
+		                            if ( $value['Country']['SalesDate'] <= date( 'Y-m-d' ) ):
+		                                if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1'):
 		
 		                                    $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value['Video']['provider_type'], $libraryId, $patronId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 		                                    $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
 		
-		                                    if ( !( $downloadsUsed > 0 ) ) {
+		                                    if ( !( $downloadsUsed > 0 ) ):
+		                                    	$title = 'IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.';
 								?>
 		                                        <div class="mylib-top-10-video-download-now-button">
 		                                            <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
@@ -89,10 +87,10 @@
 		                                                <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
 		                                                <span class="beforeClick" id="download_video_<?php echo $value["Video"]["ProdID"]; ?>">
 		                                                    <![if !IE]>
-		                                                    	<a class="no-ajaxy" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $value['Video']['ProdID']; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $value['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
+		                                                    	<?php echo $this->Html->link( 'Download Now', 'javascript:void(0)', array( 'class' => 'top-10-download-now-button no-ajaxy', 'title' => $title, 'onclick' => "return wishlistVideoDownloadOthersToken(('{$value['Video']['ProdID']}', '0', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}', '{$value["Video"]["provider_type"]}')", 'escape' => false ) );?>
 		                                                    <![endif]>
 		                                                    <!--[if IE]>
-		                                                            <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a></label>
+		                                                    	<?php echo $this->Html->link( 'Download Now', 'javascript:void(0)', array( 'class' => 'top-10-download-now-button no-ajaxy', 'title' => $title, 'onclick' => "return wishlistVideoDownloadIEToken( '{$value["Video"]['ProdID']}', '0', '{$value["Video"]["provider_type"]}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}')", 'escape' => false ) );?>
 		                                                    <![endif]-->
 		                                                </span>
 		                                                <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp'); ?></span>
@@ -100,63 +98,50 @@
 		                                            </form>
 		                                        </div>
 								<?php
-											} else {
-		                        ?>
-												<a class="mylib-top-10-video-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
-								<?php
-											}
-										} else {
-								?>
-											<a class="mylib-top-10-video-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?></a>                    
-								<?php
+											else:
+												echo $this->Html->link( $this->Html->tag( 'label', 'Downloaded', array('class' => 'dload', 'style' => 'width: 120px; cursor: pointer;', 'title' => 'You have already downloaded this song. Get it from your recent downloads') ), array( 'controller' => 'homes', 'action' => 'my_history'), array('class' => 'mylib-top-10-video-download-now-button', 'escape' => false ) );
+											endif;
+										else:
+											echo $this->Html->link( 'Limit Met', 'javascript:void(0)', array( 'class' => 'mylib-top-10-video-download-now-button' ) );
+										endif;
+									else:
+										$salesDate = '';
+										if (isset($value['Country']['SalesDate'])) {
+											$salesDate = date("F d Y", strtotime($value['Country']['SalesDate']));
 										}
-									} else {
-								?>
-										<a class="mylib-top-10-video-download-now-button" href="javascript:void(0);">
-											<span title='<?php __("Coming Soon"); ?> ( 
-											<?php
-												if ( isset( $value['Country']['SalesDate'] ) ) {
-													echo date("F d Y", strtotime($value['Country']['SalesDate']));
-												}
-			                                ?> )'><?php __("Coming Soon"); ?>
-			                                </span>
-										</a>
-						<?php
-									}
-								} else {
-						?>
-									<a class="mylib-top-10-video-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
-						<?php
-								}
+										echo $this->Html->link( $this->Html->tag('span', 'Coming Soon', array( 'title' => 'Coming Soon (' . $salesDate . ')' ) ), 'javascript:void(0)', array('class' => 'mylib-top-10-video-download-now-button', 'escape' => false ) );
+									endif;
+								else:
+									echo $this->Html->link( 'Login', array('controller' => 'users', 'action' => 'redirection_manager'), array('class' => 'mylib-top-10-video-download-now-button' ) );
+								endif;
 							
-								if ( isset( $patronId ) && ! empty( $patronId ) ) {
-						?> 
-									<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
+								if ( isset( $patronId ) && ! empty( $patronId ) ):
+									echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
+						?>
 			                        <div class="wishlist-popover">
 			                        	<?php
 			                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);
 			                                echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value['Video']["ProdID"], $value['Video']["provider_type"]);
 			                            ?>  
 			                         </div>
-		                 <?php 	} ?>
+		                 <?php 	endif; ?>
 							</div>
 		                    <div class="album-title">
 		                    	<?php 
 	                        		$videoTitle = $this->Home->trimString( $value['Video']['VideoTitle'], 20 );
 	                        		$videoTitle = $this->Home->explicitContent( $value['Video']['Advisory'], $videoTitle, true );
+	                        		
+	                        		echo $this->Html->link( $this->getTextEncode( $videoTitle ), array( 'controller' => 'videos', 'action' => 'details', $value['Video']['ProdID'] ), array( 'title' => $this->getValidText($value['Video']['VideoTitle']),'escape' => false ) );
                         		?>
-		                        <a title="<?= $this->getValidText($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"> <?=$this->getTextEncode( $videoTitle )?> </a>
 		                    </div>
 		                    <div class="artist-name">
-		                        <a title="<?php echo $this->getValidText($value['Video']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
-		                            <?=$this->getTextEncode( $this->Home->trimString( $value['Video']['Artist'], 32 ) )?>
-		                        </a>
+		                    <?php echo $this->Html->link( $this->getTextEncode( $this->Home->trimString( $value['Video']['Artist'], 32 ) ), array( 'controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($value['Video']['ArtistText'])), base64_encode($value['Genre']['Genre']) ), array( 'title' => $this->getTextEncode($value['Video']['Artist']) ) );?>
 		                    </div>
 						</li>
 			<?php
 						$count++;
-					}
-				}
+					endforeach;
+				endif;
             ?>
 			</ul>
     	</div>
