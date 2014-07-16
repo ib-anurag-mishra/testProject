@@ -6,19 +6,15 @@
   Author : m68interactive
  */
 
-Class CommonComponent extends Object
-{
-
-    var $components = array('Session', 'Streaming', 'Queue');
-    var $uses = array('Token');
-
+Class CommonComponent extends Object {
+  
+    var $maintainLatestDownload=true;
     /*
      * Function Name : getGenres
      * Function Description : This function is used to get all genres.
      */
 
-    function getGenres($territory)
-    {
+    function getGenres($territory) {
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
         $genreInstance = ClassRegistry::init('Genre');
@@ -26,12 +22,12 @@ Class CommonComponent extends Object
         $genreInstance->Behaviors->attach('Containable');
         $genreInstance->recursive = 2;
         $genreList = array();
-        
+
         $genreAll = $genreInstance->find('all', array(
             'conditions' =>
             array('and' =>
                 array(
-                    array('Country.Territory' => $territory,'Country.DownloadStatus' => 1, "Genre.Genre NOT IN('Porn Groove')")
+                    array('Country.Territory' => $territory, 'Country.DownloadStatus' => 1, "Genre.Genre NOT IN('Porn Groove')")
                 )
             ),
             'fields' => array(
@@ -45,45 +41,318 @@ Class CommonComponent extends Object
                 ),
             ), 'group' => 'Genre.Genre'
         ));
-      
-        
-        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
-        
-        $combine_genre  =   array();
-        if ((count($genreAll) > 0) && ($genreAll !== false))
-        {                
-            for($count=0; $count<count($genreAll);$count++)
-            {                               
+
+
+        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");
+
+        $combine_genre = array();
+        if ((count($genreAll) > 0) && ($genreAll !== false)) {
+            for ($count = 0; $count < count($genreAll); $count++) {
                 array_push($combine_genre, str_replace("\\", "", $genreAll[$count]['Genre']['expected_genre']));
             }
-            $combine_genre  = array_unique($combine_genre);
+            $combine_genre = array_unique($combine_genre);
             sort($combine_genre);
-            
-            Cache::write("genre" . $territory, $combine_genre,'GenreCache');
+
+            Cache::write("genre" . $territory, $combine_genre, 'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
-            
-            /*Cache::write("genre" . $territory, $genreAll,'GenreCache');
-            $this->log("cache written for genre for $territory", "cache");*/
-        }      
-        
-        return $combine_genre;
-         
-    }
-    
-     /*
-     * @func runGenreCacheFromShell
-     * @desc This function is used to call all functions for setting Genre page cache variables and run from shell
-     */    
-    function runGenreCacheFromShell(){
-        set_time_limit(0); 
-        $this->log("shel cron log genreated", "shellCronLog");    
-        $territoriesList = $this->getTerritories();       
-        foreach($territoriesList as $territory){           
-            $this->setArtistText($territory);            
+
+            /* Cache::write("genre" . $territory, $genreAll,'GenreCache');
+              $this->log("cache written for genre for $territory", "cache"); */
         }
-       
+
+        return $combine_genre;
     }
-    
+
+    /*
+     * @func runGlobalCacheFromShell
+     * @desc This function is used to call all functions for all cache variables and run from shell
+     */
+
+    function runGlobalCacheFromShell() {
+        set_time_limit(0);
+        $this->log("Cache cron Starts", "cache");
+        $this->runCache();
+        $this->log("Cache cron Ends", "cache");
+    }
+
+    /*
+     * @func runCache
+     * @desc This function is used to call all functions for setting cache variables
+     */
+
+    function runCache() {
+        set_time_limit(0);
+        $this->setLibraryTopTenCache();
+        $territoriesList = $this->getTerritories();
+        foreach ($territoriesList as $territory) {
+            $this->getTopSingles($territory);
+            $this->getTopAlbums($territory);
+            $this->getFeaturedVideos($territory);
+            $this->getTopVideoDownloads($territory);            
+            $this->getUsTop10Songs($territory);
+            $this->getUsTop10Albums($territory);
+            $this->getUsTop10Videos($territory);
+            $this->getNewReleaseAlbums($territory);
+            $this->getNewReleaseVideos($territory);
+            $this->setFeaturedArtists($territory);
+            $this->writeFeaturedSongsInCache($territory);
+            $this->getDefaultQueues($territory);
+            $this->setArtistText($territory);
+        }
+        // I guess this is not required to set every day in the cache. When user will hit the page it will automatically get set.
+        //$this->setVideoCacheVar();
+
+        $this->setAppMyMusicVideoList();
+        $this->setAnnouncementCache();
+        $this->setTopArtist();
+    }
+
+    /**
+     * @function setAppMyMusicVideoList
+     * this function sets music videos list in cache for each territory for App
+     * @param nil
+     */
+    function setAppMyMusicVideoList() {
+        set_time_limit(0);
+
+        $countryInstance = ClassRegistry::init('Country');
+        $territoryInstance = ClassRegistry::init('Territory');
+        $albumInstance = ClassRegistry::init('Album');
+        $videoInstance = ClassRegistry::init('Video');
+        
+        $territories = $territoryInstance->find("all");
+
+        for ($mm = 0; $mm < count($territories); $mm++) {
+            $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
+        }
+        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+        $siteConfigData = $albumInstance->query($siteConfigSQL);
+        $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
+        for ($i = 0; $i < count($territoryNames); $i++) {
+            $territory = $territoryNames[$i];
+            if (0 == $multiple_countries) {
+                $countryPrefix = '';
+                $countryInstance->setTablePrefix('');
+            } else {
+                $countryPrefix = strtolower($territory) . "_";
+                $countryInstance->setTablePrefix($countryPrefix);
+            }
+
+            $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
+                v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
+                imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
+                FROM video AS v
+                INNER JOIN ' . $countryPrefix . 'countries AS c ON v.ProdID = c.ProdID AND v.provider_type = c.provider_type
+                INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type
+                INNER JOIN File AS ff ON v.FullLength_FileID = ff.FileID
+                INNER JOIN File AS imgf ON v.Image_FileID = imgf.FileID
+                INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
+                LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
+                WHERE c.Territory = "' . $territory . '" AND v.DownloadStatus = "1" GROUP BY v.ProdID
+                ORDER BY cnt DESC LIMIT 100';
+            $arr_video = $videoInstance->query($str_query);
+            if (!empty($arr_video)) {
+                $status = Cache::write("AppMyMusicVideosList_" . $territory, $arr_video);
+                $this->log("cache wrritten for mobile music videos list for territory_" . $territory, "cache");
+            }
+        }
+    }
+
+    /*
+     * Function Name : setAnnouncementCache
+     * Function Description : This function is used to set announcment Cache.
+     * all this function query must be same as queries written in app controller for announcement.
+     */
+
+    function setAnnouncementCache() {
+        
+        $albumInstance = ClassRegistry::init('Album');
+        
+        $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+        $announcment_rs = $albumInstance->query($announcment_query);
+        if (!empty($announcment_rs)) {
+            Cache::write("announcementCache", $announcment_rs);
+            $this->log("cache wrritten for announcements", "cache");
+        }
+    }
+
+    /*
+     * Function Name : setFeaturedArtists
+     * Function Description : This function is used to set all featured artists in Cache.
+     * 
+     */
+
+    function setFeaturedArtists($territory) {
+
+        $featuresArtists = $this->getFeaturedArtists($territory, 1);
+        if (!empty($featuresArtists)) {
+            Cache::write("featured_artists_" . $territory . '_' . '1', $featuresArtists);
+            $this->log("cache written for featured artists for: " . $territory . '_' . '1', "cache");
+        } else {
+            $this->log("unable to write cache for featured artists for: " . $territory . '_' . '1', "cache");
+        }
+
+        $page = 2;
+        while ($featuresArtists = $this->getFeaturedArtists($territory, $page)) {
+            if (!empty($featuresArtists)) {
+                Cache::write("featured_artists_" . $territory . '_' . $page, $featuresArtists);
+                $this->log("cache written for featured artists for: " . $territory . '_' . $page, "cache");
+            } else {
+                $this->log("unable to write cache for featured artists for: " . $territory . '_' . $page, "cache");
+            }
+            $page++;
+        }
+    }
+
+    /*
+     * Function Name : setTopArtist
+     * Function Description : This function sets top artist albums in cache, used in App only
+     */
+
+    function setTopArtist() {
+
+        set_time_limit(0);
+        
+        $libraryInstance = ClassRegistry::init('Library');
+        $songInstance = ClassRegistry::init('Song');
+        $albumInstance = ClassRegistry::init('Album');
+
+        //fetch all libraries
+        $libraryDetails = $libraryInstance->find('all', array(
+            'fields' => array('id', 'library_territory', 'library_block_explicit_content'),
+            'conditions' => array('library_status' => 'active'),
+            'recursive' => -1
+        ));
+
+        //loop for library
+        foreach ($libraryDetails AS $key => $libval) {
+
+            $library_territory = $libval['Library']['library_territory'];
+            $topSinglesCache = Cache::read("top_singles" . $library_territory);
+            if ((($topSinglesCache) !== false) && ($topSinglesCache !== null)) { // checks if nationalTop100 is set
+                //fetches top artist from nationTop100----Start
+                $arrTmp = $arrData = $arrFinal = $arrArtist = array();
+                $arrTmp = $topSinglesCache;
+
+                foreach ($arrTmp AS $key => $val) {
+                    $arrData[] = trim($val['Song']['ArtistText']);
+                }
+
+                $arrFinal = array_count_values($arrData);
+                arsort($arrFinal, SORT_NUMERIC);
+
+                foreach ($arrFinal AS $key => $val) {
+                    $arrArtist[] = $key;
+                }
+                //----------------------------------------End
+                //loop for artist
+                foreach ($arrArtist AS $key => $artistText) {
+
+                    $this->Session->write('territory', $library_territory);
+                    $this->switchCpuntriesTable();
+
+                    if (1 == $libval['Library']['library_block_explicit_content']) {
+                        $cond = array('Song.Advisory' => 'F');
+                    } else {
+                        $cond = "";
+                    }
+
+                    //fetches albums ids
+                    $songs = array();
+                    $songs = $songInstance->find('all', array(
+                        'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
+                        'conditions' => array(
+                            'LOWER(Song.ArtistText)' => strtolower($artistText),
+                            "Song.Sample_FileID != ''",
+                            "Song.FullLength_FIleID != ''",
+                            'Country.Territory' => $library_territory,
+                            'Country.DownloadStatus' => 1,
+                            $cond,
+                            'Song.provider_type = Country.provider_type'
+                        ),
+                        'contain' => array(
+                            'Country' => array(
+                                'fields' => array(
+                                    'Country.Territory'
+                                )
+                            )
+                        ),
+                        'recursive' => 0,
+                        'order' => array('Country.SalesDate DESC')
+                    ));
+
+                    $val = '';
+                    $val_provider_type = '';
+
+                    foreach ($songs as $k => $v) {
+                        if (empty($val)) {
+                            $val .= $v['Song']['ReferenceID'];
+                            $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                        } else {
+                            $val .= ',' . $v['Song']['ReferenceID'];
+                            $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                        }
+                    }
+
+                    $condition = array();
+                    $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
+
+
+                    //fetch album details
+                    $albumData = array();
+                    $albumData = $albumInstance->find('all', array('conditions' =>
+                        array('and' =>
+                            array(
+                                $condition
+                            ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+                        ),
+                        'fields' => array(
+                            'Album.ProdID',
+                            'Album.Title',
+                            'Album.ArtistText',
+                            'Album.AlbumTitle',
+                            'Album.Artist',
+                            'Album.ArtistURL',
+                            'Album.Label',
+                            'Album.Copyright',
+                            'Album.Advisory',
+                            'Album.provider_type'
+                        ),
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
+                            ),
+                            'Files' => array(
+                                'fields' => array(
+                                    'Files.CdnPath',
+                                    'Files.SaveAsName',
+                                    'Files.SourceURL'
+                                ),
+                            )
+                        ),
+                        'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+                        'chk' => 2,
+                    ));
+
+                    //sets cache 
+                    if (!empty($albumData)) {
+
+                        $artistText = strtolower(str_replace(' ', '_', $artistText));
+                        Cache::write("mobile_top_artist_" . $artistText . '_' . $library_territory, $albumData);
+                        $this->log("mobile_top_artist_" . $artistText . '_' . $library_territory . 'set successfully', "topartist");
+                    } else {
+
+                        $this->log("mobile_top_artist_" . $artistText . '_' . $library_territory . 'failed', "topartist");
+                    }
+                }
+            } else {
+                $this->log("national top 100 not set in Cache for territory " . $library_territory, "topartist");
+            }
+        }
+    }
+
     /*
      * Function Name : setArtistText
      * Function Description : This function is used to setArtistText.
@@ -92,49 +361,47 @@ Class CommonComponent extends Object
      * @paran $territory varChar 'territory value'
      * 
      */
-    function setArtistText($territory){
-        set_time_limit(0); 
-    
-              
+
+    function setArtistText($territory) {
+        set_time_limit(0);
+
         //set the aritst cache for specific Genre
         $genreAll = $this->getGenres($territory);
         //commented but need sometime for testing perpuse
         //$genreAll = Cache::read("genre" . $territory);
-       
+
         sleep(1);
         //add All filter
-        array_unshift($genreAll, "All");      
+        array_unshift($genreAll, "All");
         // create cache one by one for each Genre
-        foreach($genreAll as $genreEach){
-             //fetch the alphabets
-             for($k = 63;$k < 91;$k++){
-                 
-                $artistFilter = chr($k);             
-                
-                if($k==63){
+        foreach ($genreAll as $genreEach) {
+            //fetch the alphabets
+            for ($k = 63; $k < 91; $k++) {
+
+                $artistFilter = chr($k);
+
+                if ($k == 63) {
                     $artistFilter = 'All';
                 }
-                
-                if($k==64){
+
+                if ($k == 64) {
                     $artistFilter = 'spl';
-                }             
-                    
+                }
+
                 //this code is commented for some testing               
                 //$totalPages = $this->checkGenrepagesCount($territory,$genreEach,$artistFilter);
-                
                 //for fetching two pages for per Genre with per Artist filter
                 $totalPages = 1;
-                
+
                 //set cache variable one by one
-                for( $i=1;$i<=$totalPages;$i++ ){                     
-                   $this->getArtistText($genreEach,$territory,$artistFilter,$i);                    
-                }                
-            }      
-        }       
-    }   
-    
-    
-     /*
+                for ($i = 1; $i <= $totalPages; $i++) {
+                    $this->getArtistText($genreEach, $territory, $artistFilter, $i);
+                }
+            }
+        }
+    }
+
+    /*
      * Function Name : getArtistText
      * Function Description : get first 120 artist for selected Genre
      * @paran $genreValue varChar 'genre value'
@@ -144,145 +411,136 @@ Class CommonComponent extends Object
      * 
      * @return  $artistListResults array
      */
-     function getArtistText($genreValue,$territory,$artistFilter='',$pageNo=1){        
-        set_time_limit(0);  
-        
+
+    function getArtistText($genreValue, $territory, $artistFilter = '', $pageNo = 1) {
+        set_time_limit(0);
+
         //check the page no. must be greater than 0
-        if($pageNo < 1){
-            $pageNo=1;            
+        if ($pageNo < 1) {
+            $pageNo = 1;
         }
-        
+
         //add the Song table model
         $songInstance = ClassRegistry::init('Song');
         //set the territory value
         $territory = strtolower($territory);
-        
+
         //Common conditions 
-        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";   
-        $conditionArray[] = "Country.SalesDate != ''";         
+        $conditionArray[] = "(Country.DownloadStatus = 1 OR Country.StreamingStatus = 1)";
+        $conditionArray[] = "Country.SalesDate != ''";
         $conditionArray[] = "Song.ArtistText!=''";
-         
+
         //make condition according to Genre value
         if ($genreValue != 'All') {
-            $synonym_list   =   $this->getGenreSynonyms($genreValue);
+            $synonym_list = $this->getGenreSynonyms($genreValue);
             $conditionOR = '';
-            foreach($synonym_list as $single_synGenre){
-                $conditionOR = empty($conditionOR)? "(Genres.Genre = '".mysql_escape_string($single_synGenre)."'" : $conditionOR." OR Genres.Genre = '".mysql_escape_string($single_synGenre)."'";            
-            }            
-            if(!empty($conditionOR))
-            {
-                $conditionArray[] = $conditionOR.")";
+            foreach ($synonym_list as $single_synGenre) {
+                $conditionOR = empty($conditionOR) ? "(Genres.Genre = '" . mysql_escape_string($single_synGenre) . "'" : $conditionOR . " OR Genres.Genre = '" . mysql_escape_string($single_synGenre) . "'";
             }
-        }       
-        
+            if (!empty($conditionOR)) {
+                $conditionArray[] = $conditionOR . ")";
+            }
+        }
+
         //make condition according to Genre value
-        if ($artistFilter == 'spl'){
+        if ($artistFilter == 'spl') {
             $conditionArray[] = "Song.ArtistText REGEXP '^[^A-Za-z]'";
+        } elseif ($artistFilter != '' && $artistFilter != 'All') {
+            $conditionArray[] = " Song.ArtistText LIKE '" . $artistFilter . "%'";
         }
-        elseif ($artistFilter != '' && $artistFilter != 'All') {
-            $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
-        }
-        
+
         $songInstance->unbindModel(array('hasOne' => array('Participant')));
         $songInstance->unbindModel(array('hasOne' => array('Country')));
         $songInstance->unbindModel(array('hasOne' => array('Genre')));
-        $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+        $songInstance->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
         $songInstance->recursive = 0;
         //create query that fetch all artist according to selected Genre
-        
+
         if ($genreValue != 'All') {
-            
-            $endLimit =  120;
+
+            $endLimit = 120;
             $startLimit = ($pageNo * 120) - 120;
-            
+
             $artistListResults = $songInstance->find('all', array(
                 'conditions' => $conditionArray,
                 'fields' => array('DISTINCT Song.ArtistText'),
-                'limit'=> $endLimit, 'offset'=> $startLimit,
+                'limit' => $endLimit, 'offset' => $startLimit,
                 'order' => array('Song.ArtistText ASC'),
                 'joins' => array(
                     array(
-                        'table' => $territory.'_countries',
+                        'table' => $territory . '_countries',
                         'alias' => 'Country',
                         'type' => 'inner',
                         'foreignKey' => false,
-                        'conditions'=> array('Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type')
+                        'conditions' => array('Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type')
                     ),
                     array(
                         'table' => 'Genre',
                         'alias' => 'Genres',
                         'type' => 'inner',
                         'foreignKey' => false,
-                        'conditions'=> array('Genres.ProdID = Song.ProdID', 'Genres.provider_type = Song.provider_type')
+                        'conditions' => array('Genres.ProdID = Song.ProdID', 'Genres.provider_type = Song.provider_type')
                     ),
                     array(
                         'table' => 'Albums',
                         'alias' => 'Albums',
                         'type' => 'inner',
                         'foreignKey' => false,
-                        'conditions'=> array('Song.ReferenceID = Albums.ProdID', )
+                        'conditions' => array('Song.ReferenceID = Albums.ProdID',)
                     )
                 )
-             ));        
-        
-        }
-        else
-        {
-            $endLimitG =  12000;
+            ));
+        } else {
+            $endLimitG = 12000;
             $startLimitG = ($pageNo * 12000) - 12000;
-            
+
             /* Query written in below format as it is not possible to write in Cakephp Standard.
              * Ref URL: http://stackoverflow.com/questions/8175080/cakephp-select-from-subquery-select-foo-from-select
              * Ref URL: http://stackoverflow.com/questions/3781654/how-to-implement-a-sorting-subquery-in-the-from-section
              */
-            
-            $artistListResults = $songInstance->query( "SELECT DISTINCT Song.ArtistText 
+
+            $artistListResults = $songInstance->query("SELECT DISTINCT Song.ArtistText 
                                                         FROM 
                                                         (SELECT Songs.ArtistText FROM Songs AS Songs 
-                                                        LEFT JOIN ".$territory."_countries  AS Country ON (Country.ProdID = Songs.ProdID and Country.provider_type = Songs.provider_type) 
+                                                        LEFT JOIN " . $territory . "_countries  AS Country ON (Country.ProdID = Songs.ProdID and Country.provider_type = Songs.provider_type) 
                                                         LEFT JOIN Albums AS Albums ON (Songs.ReferenceID = Albums.ProdID) 
                                                         WHERE (Country.DownloadStatus = 1 or Country.StreamingStatus =1) 
                                                         AND Songs.ArtistText!='' AND Country.SalesDate != ''
                                                         ORDER BY Songs.ArtistText ASC 
-                                                        LIMIT ".$startLimitG.", ".$endLimitG.") Song");
-            
-            array_pop($artistListResults);          
+                                                        LIMIT " . $startLimitG . ", " . $endLimitG . ") Song");
+
+            array_pop($artistListResults);
         }
-                
-         //set artist list in the cache
-         if (!empty($artistListResults)) {             
+
+        //set artist list in the cache
+        if (!empty($artistListResults)) {
             //create cache variable name
-             
-            $cacheVariableName = base64_encode($genreValue).$territory.strtolower($artistFilter).$pageNo;              
-            Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
-            $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
-         } 
-         elseif($artistFilter == 'All')
-         {       
-             $territoryUpper    = strtoupper($territory);
-             $genreList = Cache::read("genre" . $territoryUpper,'GenreCache');
-             $genreKey  = array_search($genreValue, $genreList);
-             
-             if ($genreKey!=false) {
-                 
-                 unset($genreList[$genreKey]);
-                 Cache::write("genre" . $territoryUpper, $genreList,'GenreCache');
-                 $this->log($genreValue." deleted from genre Cache for $territory", "cache");
-                 
-             }
-         }
-         
+
+            $cacheVariableName = base64_encode($genreValue) . $territory . strtolower($artistFilter) . $pageNo;
+            Cache::write($cacheVariableName, $artistListResults, 'GenreCache');
+            $this->log("cache variable $cacheVariableName  set for " . $genreValue . '_' . $territory . '_' . $artistFilter . '_' . $pageNo, "genreLogs");
+        } elseif ($artistFilter == 'All') {
+            $territoryUpper = strtoupper($territory);
+            $genreList = Cache::read("genre" . $territoryUpper, 'GenreCache');
+            $genreKey = array_search($genreValue, $genreList);
+
+            if ($genreKey != false) {
+
+                unset($genreList[$genreKey]);
+                Cache::write("genre" . $territoryUpper, $genreList, 'GenreCache');
+                $this->log($genreValue . " deleted from genre Cache for $territory", "cache");
+            }
+        }
+
         return $artistListResults;
-         
-     }
-     
+    }
+
     /*
      * Function Name : getFeaturedVideos
      * Function Description : This function get featured videos
      */
 
-    function getFeaturedVideos($territory)
-    {
+    function getFeaturedVideos($territory) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
@@ -301,10 +559,8 @@ Class CommonComponent extends Object
         $this->log($featured_videos_sql, "cachequery");
 
         $featuredVideos = $albumInstance->query($featured_videos_sql);
-        if (!empty($featuredVideos))
-        {
-            foreach ($featuredVideos as $key => $featureVideo)
-            {                
+        if (!empty($featuredVideos)) {
+            foreach ($featuredVideos as $key => $featureVideo) {
                 $videoArtwork = $tokeninstance->artworkToken($featureVideo['File']['CdnPath'] . "/" . $featureVideo['File']['SourceURL']);
 
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
@@ -312,9 +568,7 @@ Class CommonComponent extends Object
             }
             Cache::write("featured_videos" . $territory, $featuredVideos);
             $this->log("cache written for featured videos for $territory", "cache");
-        }
-        else
-        {
+        } else {
             $featuredVideos = Cache::read("featured_videos" . $territory);
             Cache::write("featured_videos" . $territory, $featuredVideos);
             $this->log("Unable to update featured videos cache for " . $territory, "cache");
@@ -329,8 +583,7 @@ Class CommonComponent extends Object
      * Function Description : This function gets top videos downloaded
      */
 
-    function getTopVideoDownloads($territory)
-    {
+    function getTopVideoDownloads($territory) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
@@ -349,19 +602,15 @@ Class CommonComponent extends Object
         $this->log($topDownloadSQL, "cachequery");
 
         $topDownloads = $albumInstance->query($topDownloadSQL);
-        if (!empty($topDownloads))
-        {
-            foreach ($topDownloads as $key => $topDownload)
-            {                
+        if (!empty($topDownloads)) {
+            foreach ($topDownloads as $key => $topDownload) {
                 $videoArtwork = $tokeninstance->artworkToken($topDownload['File']['CdnPath'] . "/" . $topDownload['File']['SourceURL']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $topDownloads[$key]['videoImage'] = $videoImage;
             }
             Cache::write("top_download_videos" . $territory, $topDownloads);
             $this->log("cache written for top download   videos for $territory", "cache");
-        }
-        else
-        {
+        } else {
             $topDownloads = Cache::read("top_download_videos" . $territory);
             Cache::write("top_download_videos" . $territory, $topDownloads);
             $this->log("Unable to update top download  videos cache for " . $territory, "cache");
@@ -369,24 +618,21 @@ Class CommonComponent extends Object
         // End Caching functionality for top video downloads
         return $topDownloads;
     }
+
     /*
      * Function Name : getUsTop10Songs
      * Function Description : This function is used to get Us Top 10 Albums.
      */
 
-    function getUsTop10Songs($territory)
-    {
+    function getUsTop10Songs($territory) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for us top 10 Songs           
         $country = $territory;
-        if (!empty($country))
-        {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
-            {
+        if (!empty($country)) {
+            if ($this->maintainLatestDownload) {
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                 FROM `latest_downloads` AS `Download` 
                 LEFT JOIN libraries ON libraries.id=Download.library_id
@@ -395,9 +641,7 @@ Class CommonComponent extends Object
                 GROUP BY Download.ProdID 
                 ORDER BY `countProduct` DESC 
                 LIMIT 110";
-            }
-            else
-            {
+            } else {
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                 FROM `downloads` AS `Download` 
                 LEFT JOIN libraries ON libraries.id=Download.library_id
@@ -410,23 +654,18 @@ Class CommonComponent extends Object
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
-            foreach ($USTop10Downloaded as $natTopSong)
-            {
-                if (empty($ids))
-                {
+            foreach ($USTop10Downloaded as $natTopSong) {
+                if (empty($ids)) {
                     $ids .= $natTopSong['Download']['ProdID'];
                     $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $natTopSong['Download']['ProdID'];
                     $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
                 }
             }
 
-            if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false))
-            {
-                $this->log("download data not recevied for " . $territory, "cache");
+            if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
+                $this->log("download data not received for " . $territory, "cache");
             }
             $data = array();
 
@@ -476,41 +715,33 @@ STR;
             $this->log("US top 10 songs for $territory", "cachequery");
 
             $this->log($sql_US_TOP_10, "cachequery");
-            if ($ids_provider_type == "")
-            {
+            if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
 
-            if (!empty($data))
-            {
-                foreach ($data as $key => $value)
-                {                         
+            if (!empty($data)) {
+                foreach ($data as $key => $value) {
                     $songs_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songs_img = Configure::read('App.Music_Path') . $songs_img;
                     $data[$key]['songs_img'] = $songs_img;
-                                        
+
                     $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 
-                    if (!empty($filePath))
-                    {
+                    if (!empty($filePath)) {
                         $songPath = explode(':', $filePath);
                         $streamUrl = trim($songPath[1]);
                         $data[$key]['streamUrl'] = $streamUrl;
                         $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
                     }
                 }
-                Cache::delete("national_us_top10_songs" . $country);
                 Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("cache written for US top ten for $territory", "cache");
-            }
-            else
-            {
+            } else {
                 $data = Cache::read("national_us_top10_songs" . $country);
                 Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("Unable to update US top ten for " . $territory, "cache");
             }
         }
-        $this->log("cache written for US top ten for $territory", 'debug');
         //End Caching functionality for US TOP 10 Songs
         return $data;
     }
@@ -520,19 +751,15 @@ STR;
      * Function Description : This function is used to get Us Top 10 Albums.
      */
 
-    function getUsTop10Albums($territory)
-    {
+    function getUsTop10Albums($territory) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for us top 10 Album            
         $country = $territory;
-        if (!empty($country))
-        {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
-            {
+        if (!empty($country)) {
+            if ($this->maintainLatestDownload) {
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                    FROM `latest_downloads` AS `Download` 
                    LEFT JOIN libraries ON libraries.id=Download.library_id
@@ -541,9 +768,7 @@ STR;
                    GROUP BY Download.ProdID 
                    ORDER BY `countProduct` DESC 
                    LIMIT 110";
-            }
-            else
-            {
+            } else {
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                    FROM `downloads` AS `Download` 
                    LEFT JOIN libraries ON libraries.id=Download.library_id
@@ -556,22 +781,17 @@ STR;
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
-            foreach ($USTop10Downloaded as $natTopSong)
-            {
-                if (empty($ids))
-                {
+            foreach ($USTop10Downloaded as $natTopSong) {
+                if (empty($ids)) {
                     $ids .= $natTopSong['Download']['ProdID'];
                     $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $natTopSong['Download']['ProdID'];
                     $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
                 }
             }
 
-            if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false))
-            {
+            if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
                 $this->log("download data not recevied for " . $territory, "cache");
             }
             $data = array();
@@ -623,34 +843,27 @@ STR;
             $this->log("US top 10 album for $territory", "cachequery");
 
             $this->log($album_sql_US_TOP_10, "cachequery");
-            if ($ids_provider_type == "")
-            {
+            if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
 
-            if (!empty($data))
-            {
-                foreach ($data as $key => $value)
-                {
-                    $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);                    
+            if (!empty($data)) {
+                foreach ($data as $key => $value) {
+                    $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['album_img'] = $album_img;
                     $data[$key]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']), 0, $country))
                     );
                 }
-                Cache::delete("national_us_top10_albums" . $country);
                 Cache::write("national_us_top10_albums" . $country, $data);
                 $this->log("cache written for US top ten Album for $territory", "cache");
-            }
-            else
-            {
+            } else {
                 $data = Cache::read("national_us_top10_albums" . $country);
                 Cache::write("national_us_top10_albums" . $country, $data);
                 $this->log("Unable to update US top ten Album for " . $territory, "cache");
             }
         }
-        $this->log("cache written for US top ten Album for $territory", 'debug');
         //End Caching functionality for US TOP 10 Albums
         return $data;
     }
@@ -660,19 +873,15 @@ STR;
      * Function Description : This function is used to get Us Top 10 Videos.
      */
 
-    function getUsTop10Videos($territory)
-    {
+    function getUsTop10Videos($territory) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for us top 10 Video            
         $country = $territory;
-        if (!empty($country))
-        {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
-            {
+        if (!empty($country)) {
+            if ($this->maintainLatestDownload) {
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                      FROM `latest_videodownloads` AS `Download` 
                      LEFT JOIN libraries ON libraries.id=Download.library_id
@@ -681,9 +890,7 @@ STR;
                      GROUP BY Download.ProdID 
                      ORDER BY `countProduct` DESC 
                      LIMIT 110";
-            }
-            else
-            {
+            } else {
 
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                      FROM `videodownloads` AS `Download` 
@@ -697,28 +904,22 @@ STR;
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
-            foreach ($USTop10Downloaded as $natTopSong)
-            {
-                if (empty($ids))
-                {
+            foreach ($USTop10Downloaded as $natTopSong) {
+                if (empty($ids)) {
                     $ids .= $natTopSong['Download']['ProdID'];
                     $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $natTopSong['Download']['ProdID'];
                     $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
                 }
             }
 
-            if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false))
-            {
+            if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
                 $this->log("download data not recevied for " . $territory, "cache");
             }
             $data = array();
-            if ($ids_provider_type != "")
-            {
-            $video_sql_US_TOP_10 = <<<STR
+            if ($ids_provider_type != "") {
+                $video_sql_US_TOP_10 = <<<STR
              SELECT 
                      Video.ProdID,
                      Video.ReferenceID,
@@ -750,38 +951,29 @@ STR;
              ORDER BY FIELD(Video.ProdID, $ids) ASC
              LIMIT 10                   
 STR;
-            $data = $albumInstance->query($video_sql_US_TOP_10);
-            $this->log("US top 10 videos for $territory", "cachequery");
-            $this->log($video_sql_US_TOP_10, "cachequery");
-            
-            }
-            else
-            {
+                $data = $albumInstance->query($video_sql_US_TOP_10);
+                $this->log("US top 10 videos for $territory", "cachequery");
+                $this->log($video_sql_US_TOP_10, "cachequery");
+            } else {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
-            
-            
-            
-            if (!empty($data))
-            {
-                foreach ($data as $key => $value)
-                {                    
+
+
+
+            if (!empty($data)) {
+                foreach ($data as $key => $value) {
                     $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
-                Cache::delete("national_us_top10_videos" . $country);
                 Cache::write("national_us_top10_videos" . $country, $data);
                 $this->log("cache written for US top ten video for $territory", "cache");
-            }
-            else
-            {
+            } else {
                 $data = Cache::read("national_us_top10_videos" . $country);
                 Cache::write("national_us_top10_videos" . $country, $data);
                 $this->log("Unable to update US top ten video for " . $territory, "cache");
             }
         }
-        $this->log("cache written for US top ten video for $territory", 'debug');
         //End Caching functionality for US TOP 10 Videos
         return $data;
     }
@@ -791,16 +983,14 @@ STR;
      * Function Description : This function is used to getNewReleaseAlbums.
      */
 
-    function getNewReleaseAlbums($territory, $explicitContent = false)
-    {
+    function getNewReleaseAlbums($territory, $explicitContent = false) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $songInstance = ClassRegistry::init('Song');
         //Added caching functionality for new release Albums           
         $country = $territory;
-        if (!empty($country))
-        {
+        if (!empty($country)) {
             $sql = "SELECT Song.ProdID,Song.ReferenceID,Song.provider_type
                 FROM Songs AS Song
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
@@ -811,31 +1001,26 @@ STR;
             $ids = '';
             $ids_provider_type = '';
             $newReleaseSongsRec = $songInstance->query($sql);
-            foreach ($newReleaseSongsRec as $newReleaseRow)
-            {
-                if (empty($ids))
-                {
+            foreach ($newReleaseSongsRec as $newReleaseRow) {
+                if (empty($ids)) {
                     $ids .= $newReleaseRow['Song']['ProdID'];
                     $ids_provider_type .= "(" . $newReleaseRow['Song']['ProdID'] . ",'" . $newReleaseRow['Song']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $newReleaseRow['Song']['ProdID'];
                     $ids_provider_type .= ',' . "(" . $newReleaseRow['Song']['ProdID'] . ",'" . $newReleaseRow['Song']['provider_type'] . "')";
                 }
             }
 
-            if ((count($newReleaseSongsRec) < 1) || ($newReleaseSongsRec === false))
-            {
+            if ((count($newReleaseSongsRec) < 1) || ($newReleaseSongsRec === false)) {
                 $this->log("new release data not recevied for " . $territory, "cache");
             }
 
-            $albumAdvisory 	   = '';
+            $albumAdvisory = '';
             $cacheVariableName = 'new_releases_albums';
-            
-            if(true === $explicitContent) {
-            	$albumAdvisory 	   = " AND Albums.Advisory != 'T'";
-            	$cacheVariableName = 'new_releases_albums_none_explicit';
+
+            if (true === $explicitContent) {
+                $albumAdvisory = " AND Albums.Advisory != 'T'";
+                $cacheVariableName = 'new_releases_albums_none_explicit';
             }
 
             $data = array();
@@ -886,35 +1071,26 @@ STR;
             $this->log($sql_album_new_release, "cachequery");
 
 
-            if (!empty($data))
-            {
-                foreach ($data as $key => $value)
-                {
-                    $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);                    
+            if (!empty($data)) {
+                foreach ($data as $key => $value) {
+                    $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['albumImage'] = $album_img;
                     $data[$key]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']), 0, $country))
                     );
                 }
-                Cache::delete($cacheVariableName . $country);
                 Cache::write($cacheVariableName . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
-            }
-            else
-            {
+            } else {
                 $data = Cache::read($cacheVariableName . $country);
                 Cache::write($cacheVariableName . $country, $data);
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
 
-
-            $this->log("cache written for new releases albums for $territory", 'debug');
             //End Caching functionality for new releases albums
             return $data;
-        }
-        else
-        {
+        } else {
             $this->log("not able to  written cache for new releases albums for $territory", 'cache');
         }
     }
@@ -924,16 +1100,14 @@ STR;
      * Function Description : This function is used to getNewReleaseVideos.
      */
 
-    function getNewReleaseVideos($territory)
-    {
+    function getNewReleaseVideos($territory) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for new release videos           
         $country = $territory;
-        if (!empty($country))
-        {
+        if (!empty($country)) {
 
             $data = array();
             $sql_video_new_release = <<<STR
@@ -973,26 +1147,20 @@ STR;
             $this->log("new release album for $territory", "cachequery");
             $this->log($sql_video_new_release, "cachequery");
 
-            if (!empty($data))
-            {
-                foreach ($data as $key => $value)
-                {                    
+            if (!empty($data)) {
+                foreach ($data as $key => $value) {
                     $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
-                Cache::delete("new_releases_videos" . $country);
                 Cache::write("new_releases_videos" . $country, $data);
                 $this->log("cache written for new releases videos for $territory", "cache");
-            }
-            else
-            {
+            } else {
                 $data = Cache::read("new_releases_videos" . $country);
                 Cache::write("new_releases_videos" . $country, $data);
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
         }
-        $this->log("cache written for new releases videos for $territory", 'debug');
         //End Caching functionality for new releases videos  
         return $data;
     }
@@ -1002,114 +1170,105 @@ STR;
      * Function Description : This function is used to getFeaturedArtists.
      */
 
-    function getFeaturedArtists($territory,$page = 0, $limit = 20)
-    {
-    	set_time_limit(0);
+    function getFeaturedArtists($territory, $page = 0, $limit = 20) {
+        set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
-    	if(isset($page)){
-    		if($page <= 0)
-    		{
-    			$page = 1;
-    		}
-    		$offset = ($page - 1) * $limit;
-    	}
+        if (isset($page)) {
+            if ($page <= 0) {
+                $page = 1;
+            }
+            $offset = ($page - 1) * $limit;
+        }
 
-        
+
         $ids = '';
         $ids_provider_type = '';
         $featuredInstance = ClassRegistry::init('Featuredartist');
         $featured = $featuredInstance->find('all', array(
             'conditions' => array(
-                                'Featuredartist.territory' => $territory,
-                                'Featuredartist.language' => Configure::read('App.LANGUAGE')
-                            ),
-                'recursive' => -1,
-                'order' => array(
-                    'Featuredartist.id' => 'DESC'),
-                'limit' => "$offset,$limit"
+                'Featuredartist.territory' => $territory,
+                'Featuredartist.language' => Configure::read('App.LANGUAGE')
+            ),
+            'recursive' => -1,
+            'order' => array(
+                'Featuredartist.id' => 'DESC'),
+            'limit' => "$offset,$limit"
                 )
-        );        
-        
-        if ((count($featured) < 1) || ($featured === false))
-        {
+        );
+
+        if ((count($featured) < 1) || ($featured === false)) {
             $this->log("featured artist data is not available for" . $territory, "cache");
         }
-        if(!empty($featured)){
-            foreach ($featured as $k => $v)
-            {                
-            	$albumids = explode(',',$v['Featuredartist']['album']);
-               	if($v['Featuredartist']['album']!=0){
-			$streamsongs = array();
-                 	for ($i=0; $i<count($albumids); $i++){
-        				$streamsongs[$i] =  $this->requestAction(
-                         	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Featuredartist']['artist_name']), $albumids[$i], base64_encode($v['Featuredartist']['provider_type']),0,$territory))
-                    	);
-					}
-        			$albumsongs = array();
-    				for($a =0; $a<count($streamsongs);$a++){
-        				$playlist = reset($streamsongs[$a]);
-					$albumsongs =  array_merge($albumsongs,$playlist);
-				}
-        			$featured[$k]['albumSongs'] = $albumsongs;
-        
+        if (!empty($featured)) {
+            foreach ($featured as $k => $v) {
+                $albumids = explode(',', $v['Featuredartist']['album']);
+                if ($v['Featuredartist']['album'] != 0) {
+                    $streamsongs = array();
+                    for ($i = 0; $i < count($albumids); $i++) {
+                        $streamsongs[$i] = $this->requestAction(
+                                array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Featuredartist']['artist_name']), $albumids[$i], base64_encode($v['Featuredartist']['provider_type']), 0, $territory))
+                        );
+                    }
+                    $albumsongs = array();
+                    for ($a = 0; $a < count($streamsongs); $a++) {
+                        $playlist = reset($streamsongs[$a]);
+                        $albumsongs = array_merge($albumsongs, $playlist);
+                    }
+                    $featured[$k]['albumSongs'] = $albumsongs;
                 }
             }
         }
         return $featured;
     }
-    
+
     /**
      * Function name : writeFeaturedSongsInCache
      * Function Description This is used to write random songs related to a composer or artist into cache.
-     *  
-     */ 
-    
-    function writeFeaturedSongsInCache($territory){
+     */
+    function writeFeaturedSongsInCache($territory) {
         $featuredInstance = ClassRegistry::init('Featuredartist');
         $featured = $featuredInstance->find('all', array(
-                        'conditions' => array(
-                            'Featuredartist.territory' => $territory,
-                            'Featuredartist.language' => Configure::read('App.LANGUAGE')),
-                            'Featuredartist.album !=' => 0,
-                            'recursive' => -1,
-                            'order' => array(
-                                'Featuredartist.id' => 'desc'
-                            ),
-                    )
-        ); 
-        
-        foreach ($featured as $k => $v)
-        {                
-            $featuredSongs = $this->getRandomSongs($v['Featuredartist']['artist_name'],$v['Featuredartist']['provider_type'],$v['Featuredartist']['flag'],1,$territory);
-            if(!empty($featuredSongs)){
-                Cache::write("featured_artist_".$v['Featuredartist']['artist_name'].'_'.$v['Featuredartist']['flag'].'_'.$territory, $featuredSongs);
-                $this->log("cache written for featured artist for ".$v['Featuredartist']['artist_name']." with flag ".$v['Featuredartist']['flag']." for territory".$territory, "cache");                
+            'conditions' => array(
+                'Featuredartist.territory' => $territory,
+                'Featuredartist.language' => Configure::read('App.LANGUAGE')),
+            'Featuredartist.album !=' => 0,
+            'recursive' => -1,
+            'order' => array(
+                'Featuredartist.id' => 'desc'
+            ),
+                )
+        );
+
+        foreach ($featured as $k => $v) {
+            $featuredSongs = $this->getRandomSongs($v['Featuredartist']['artist_name'], $v['Featuredartist']['provider_type'], $v['Featuredartist']['flag'], 1, $territory);
+            if (!empty($featuredSongs)) {
+                Cache::write("featured_artist_" . $v['Featuredartist']['artist_name'] . '_' . $v['Featuredartist']['flag'] . '_' . $territory, $featuredSongs);
+                $this->log("cache written for featured artist for " . $v['Featuredartist']['artist_name'] . " with flag " . $v['Featuredartist']['flag'] . " for territory" . $territory, "cache");
             }
-        }        
+        }
     }
-    
+
     /**
      * Function name : getRandomSongs
      * Function Description This is used to get random songs related to a composer or artist.
      *  
      */
-    
-    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0, $territory = null){
-        
-        if(!empty($territory)) {
+    function getRandomSongs($artistComposer, $provider, $flag = 0, $ajax = 0, $territory = null) {
+
+        if (!empty($territory)) {
             $country = $territory;
             $countryPrefix = $this->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
         } else {
-            $country = $this->Session->read('territory'); 
-        }        
-        
+            $country = $this->Session->read('territory');
+        }
+
         $songInstance = Classregistry::init('Song');
-        if(empty($flag)){
-            $cond = array('Song.ArtistText' => $artistComposer , 'Song.provider_type = Country.provider_type' , 'Song.provider_type' => $provider);
-        }else{
+        if (empty($flag)) {
+            $cond = array('Song.ArtistText' => $artistComposer, 'Song.provider_type = Country.provider_type', 'Song.provider_type' => $provider);
+        } else {
             $cond = array('Song.Composer' => $artistComposer, 'Song.provider_type = Country.provider_type');
         }
-        if(!empty($ajax)){
+        if (!empty($ajax)) {
             $randomSongs = $songInstance->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -1143,9 +1302,9 @@ STR;
                             'Full_Files.SaveAsName'
                         )
                     )
-                ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'Song.CreatedOn DESC','limit' => 50
+                ), 'group' => 'Song.ProdID, Song.provider_type', 'order' => 'Song.CreatedOn DESC', 'limit' => 50
             ));
-        }else{
+        } else {
             $randomSongs = $songInstance->find('first', array(
                 'conditions' =>
                 array('and' =>
@@ -1180,122 +1339,121 @@ STR;
                         )
                     )
                 ), 'group' => 'Song.ProdID, Song.provider_type'
-            ));            
+            ));
         }
         if (!empty($ajax)) {
-            foreach ($randomSongs as $key => $value) {
-                $tokeninstance = ClassRegistry::init('Token');
+            $tokeninstance = ClassRegistry::init('Token');
+            
+             App::import('Component', 'Streaming');
+             $Streaming = new StreamingComponent();
+            
+            foreach ($randomSongs as $key => $value) {                
                 $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                 if (!empty($filePath)) {
                     $songPath = explode(':', $filePath);
                     $streamUrl = trim($songPath[1]);
                     $randomSongs[$key]['streamUrl'] = $streamUrl;
-                    $randomSongs[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                    $randomSongs[$key]['totalseconds'] = $Streaming->getSeconds($value['Song']['FullLength_Duration']);
                 }
             }
         }
-        
+
         return $randomSongs;
-
     }
-    
-    
-  /*
-   * Function Name : getTopAlbums
-   * Function Description : This function is used to getTopAlbums.
-   */
 
-  function getTopAlbums($territory) {
+    /*
+     * Function Name : getTopAlbums
+     * Function Description : This function is used to getTopAlbums.
+     */
 
-    // Gets the list of the top albums that are manually set
-    $TopAlbum = ClassRegistry::init('TopAlbum');
-    $topAlbumsList = $TopAlbum->getTopAlbumsList($territory);
+    function getTopAlbums($territory) {
 
-    if ((count($topAlbumsList) < 1) || ($topAlbumsList === false)) {
+        // Gets the list of the top albums that are manually set
+        $TopAlbum = ClassRegistry::init('TopAlbum');
+        $topAlbumsList = $TopAlbum->getTopAlbumsList($territory);
 
-      $this->log('a list of top albums was not available for ' . $territory, "cache");
+        if ((count($topAlbumsList) < 1) || ($topAlbumsList === false)) {
 
-    } else {
+            $this->log('a list of top albums was not available for ' . $territory, "cache");
+        } else {
 
-      // creating a list of the album ids and provider types.
-      $ids_provider_type = '';
-      foreach ($topAlbumsList as $topAlbum) {
-        if ($topAlbum['TopAlbum']['album'] != 0) {
-          if (empty($ids_provider_type)) {
-            $ids_provider_type .= "(" . $topAlbum['TopAlbum']['album'] . ",'" . $topAlbum['TopAlbum']['provider_type'] . "')";
-          } else {
-            $ids_provider_type .= ',(' . $topAlbum['TopAlbum']['album'] . ",'" . $topAlbum['TopAlbum']['provider_type'] . "')";
-          }
+            // creating a list of the album ids and provider types.
+            $ids_provider_type = '';
+            foreach ($topAlbumsList as $topAlbum) {
+                if ($topAlbum['TopAlbum']['album'] != 0) {
+                    if (empty($ids_provider_type)) {
+                        $ids_provider_type .= "(" . $topAlbum['TopAlbum']['album'] . ",'" . $topAlbum['TopAlbum']['provider_type'] . "')";
+                    } else {
+                        $ids_provider_type .= ',(' . $topAlbum['TopAlbum']['album'] . ",'" . $topAlbum['TopAlbum']['provider_type'] . "')";
+                    }
+                }
+            }
+
+            // Gets the album info for each album on the list
+            if ($ids_provider_type != '') {
+                $Album = ClassRegistry::init('Album');
+                $topAlbumData = $Album->getTopAlbumData($territory, $ids_provider_type);
+            } else {
+                $topAlbumData = array();
+            }
+
+            if (!empty($topAlbumData)) {
+                $Token = ClassRegistry::init('Token');
+                $musicPath = Configure::read('App.Music_Path');
+                foreach ($topAlbumData as $key => $data) {
+                    $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Files']['CdnPath'] . '/' . $data['Files']['SourceURL']);
+                    ;
+                    $topAlbumData[$key]['albumSongs'] = $this->getAlbumSongsNew($data['Album']['ProdID'], $data['Album']['provider_type'], $territory);
+                }
+                Cache::write('top_albums' . $territory, $topAlbumData);
+                $this->log('cache written for Top Albums for: ' . $territory, 'cache');
+            }
         }
-      }
 
-      // Gets the album info for each album on the list
-      if ($ids_provider_type != '') {
+        return $topAlbumData;
+    }
+
+    function getAlbumSongsNew($prodId, $provider, $territory) {
+
+        $countryPrefix = $this->getCountryPrefix($territory);
         $Album = ClassRegistry::init('Album');
-        $topAlbumData = $Album->getTopAlbumData($territory, $ids_provider_type);
-      } else {
-        $topAlbumData = array();
-      }
+        $albumData = $Album->findSongsForAlbum($prodId, $provider);
 
-      if (!empty($topAlbumData)) {
-        $Token = ClassRegistry::init('Token');
-        $musicPath = Configure::read('App.Music_Path');
-        foreach ($topAlbumData as $key => $data) {                
-          $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Files']['CdnPath'] . '/' . $data['Files']['SourceURL']);;
-          $topAlbumData[$key]['albumSongs'] = $this->getAlbumSongsNew($data['Album']['ProdID'], $data['Album']['provider_type'], $territory);
-
+        $albumSongs = array();
+        if (!empty($albumData)) {
+            $Song = ClassRegistry::init('Song');
+            foreach ($albumData as $album) {
+                $albumSongs[$album['Album']['ProdID']] = $Song->getSongDetails($album['Album']['ProdID'], $provider, $territory);
+            }
         }
-        Cache::write('top_albums' . $territory, $topAlbumData);
-        $this->log('cache written for Top Albums for: ' . $territory, 'debug');
-        $this->log('cache written for Top Albums for: ' . $territory, 'cache');
-      }
-
+        foreach ($albumSongs as $k => $albumSong) {
+            foreach ($albumSong as $key => $value) {
+                $albumSongs[$k][$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
+                $albumSongs[$k][$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
+                $albumSongs[$k][$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
+                unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
+                unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
+                unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
+                unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
+                unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
+                unset($albumSongs[$k][$key]['Song']['sequence_number']);
+                unset($albumSongs[$k][$key]['Song']['Title']);
+                unset($albumSongs[$k][$key]['Song']['Artist']);
+                unset($albumSongs[$k][$key]['Genre']);
+                unset($albumSongs[$k][$key]['Country']);
+                unset($albumSongs[$k][$key]['Sample_Files']);
+                unset($albumSongs[$k][$key]['Full_Files']);
+            }
+        }
+        return $albumSongs;
     }
 
-    return $topAlbumData;
-  }
-
-  function getAlbumSongsNew($prodId, $provider, $territory) {
-
-    $countryPrefix = $this->getCountryPrefix($territory);
-    $Album = ClassRegistry::init('Album');
-    $albumData = $Album->findSongsForAlbum($prodId, $provider);
-
-    $albumSongs = array();
-    if (!empty($albumData)) {
-      $Song = ClassRegistry::init('Song');
-      foreach ($albumData as $album) {
-        $albumSongs[$album['Album']['ProdID']] = $Song->getSongDetails($album['Album']['ProdID'], $provider, $territory);  
-      }
-    }
-    foreach ($albumSongs as $k => $albumSong) {
-      foreach ($albumSong as $key => $value) {
-        $albumSongs[$k][$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
-        $albumSongs[$k][$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
-        $albumSongs[$k][$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
-        unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
-        unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
-        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
-        unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
-        unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
-        unset($albumSongs[$k][$key]['Song']['sequence_number']);
-        unset($albumSongs[$k][$key]['Song']['Title']);
-        unset($albumSongs[$k][$key]['Song']['Artist']);
-        unset($albumSongs[$k][$key]['Genre']);
-        unset($albumSongs[$k][$key]['Country']);
-        unset($albumSongs[$k][$key]['Sample_Files']);
-        unset($albumSongs[$k][$key]['Full_Files']);
-      }
-    }
-    return $albumSongs;
-  }
-    
     /*
      * Function Name : getTopSingles
      * Function Description : This function is used to Top 100 singles songs.
      */
-    function getTopSingles($territory)
-    {
+
+    function getTopSingles($territory) {
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
 
@@ -1304,39 +1462,28 @@ STR;
         $top_singles_instance = ClassRegistry::init('TopSingles');
         $top_singles = $top_singles_instance->getAllTopSingles($territory);
 
-        if (!empty($top_singles))
-        {
-            foreach ($top_singles as $k => $v)
-            {
-                if ($v['TopSingles']['prod_id'] != 0)
-                {
-                    if (empty($ids))
-                    {
+        if (!empty($top_singles)) {
+            foreach ($top_singles as $k => $v) {
+                if ($v['TopSingles']['prod_id'] != 0) {
+                    if (empty($ids)) {
                         $ids .= $v['TopSingles']['prod_id'];
                         $ids_provider_type .= "(" . $v['TopSingles']['prod_id'] . ",'" . $v['TopSingles']['provider_type'] . "')";
-                    }
-                    else
-                    {
+                    } else {
                         $ids .= ',' . $v['TopSingles']['prod_id'];
                         $ids_provider_type .= ',' . "(" . $v['TopSingles']['prod_id'] . ",'" . $v['TopSingles']['provider_type'] . "')";
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             $this->log("top album data is not available for" . $territory, "cache");
         }
 
-     
-        if ($ids != '')
-        {
+        if ($ids != '') {
             $albumInstance = ClassRegistry::init('Album');
             $albumInstance->recursive = 2;
             $topSingleData = array();
 
-            $sql_top_singles = <<<STR
-                SELECT 
+            $sql_top_singles = "SELECT 
                         Song.ProdID,
                         Song.ReferenceID,
                         Song.Title,
@@ -1384,44 +1531,32 @@ STR;
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) 
                 GROUP BY Song.ProdID
                 ORDER BY FIELD(Song.ProdID,$ids) DESC
-                LIMIT 50 
-
-STR;
+                LIMIT 50 ";
             $topSingleData = $albumInstance->query($sql_top_singles);
 
-
-            
-            if (!empty($topSingleData))
-            {
+            if (!empty($topSingleData)) {
                 Cache::write("top_singles" . $territory, $topSingleData);
                 $data = $topSingleData;
                 $this->log("cache written for national top 100 songs for $territory", "cache");
-            }
-            else
-            {
+            } else {
                 $data = Cache::read("top_singles" . $territory);
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
 
-            $this->log("cache written for top 100 singles for $territory", 'debug');
             return $data;
         }
     }
-    
-    
+
     /*
      * Function Name : getGenreData
      * Function Description : This function is used to getGenreData.
      */
 
-    function getGenreData($territory, $genre)
-    {
+    function getGenreData($territory, $genre) {
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-        if ($maintainLatestDownload)
-        {
+        if ($this->maintainLatestDownload) {
             $restoregenre_query = "
         SELECT 
             COUNT(DISTINCT latest_downloads.id) AS countProduct,
@@ -1468,9 +1603,7 @@ STR;
         ORDER BY countProduct DESC
         LIMIT 10
         ";
-        }
-        else
-        {
+        } else {
             $restoregenre_query = "
       SELECT 
           COUNT(DISTINCT downloads.id) AS countProduct,
@@ -1522,14 +1655,10 @@ STR;
         $data = $albumInstance->query($restoregenre_query);
         $this->log("restoregenre_query for $territory", "cachequery");
         $this->log($restoregenre_query, "cachequery");
-        if (!empty($data))
-        {
-            Cache::delete($genre . $territory);
+        if (!empty($data)) {
             Cache::write($genre . $territory, $data);
             $this->log("cache written for: $genre $territory", "cache");
-        }
-        else
-        {
+        } else {
             Cache::write($genre . $territory, Cache::read($genre . $territory));
             $this->log("Unable to update key for: $genre $territory", "cache");
         }
@@ -1540,25 +1669,21 @@ STR;
      * @desc This is used to get top 10 for different genres
      */
 
-    function getDifferentGenreData($territory)
-    {
+    function getDifferentGenreData($territory) {
 
         $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
             "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
 
-        foreach ($genres as $genre)
-        {
+        foreach ($genres as $genre) {
             $this->getGenreData($territory, $genre);
         }
-        $this->log("cache written for top 10 for different genres for $territory", 'debug');
     }
 
     /**
      * @function getLibraryTopTenSongs
      * @desc get data of  LibraryTopTenSongs
      */
-    function getLibraryTopTenSongs($territory, $libId)
-    {
+    function getLibraryTopTenSongs($territory, $libId) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
@@ -1566,18 +1691,14 @@ STR;
         $downloadInstance = ClassRegistry::init('Download');
         $songInstance = ClassRegistry::init('Song');
         $country = $territory;
-        $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
+        $countryPrefix = $this->getCountryPrefix($territory);        
 
         //this is for my library songs start
 
-        if ($maintainLatestDownload)
-        {
+        if ($this->maintainLatestDownload) {
             $download_src = 'LatestDownload';
             $topDownloaded = $latestDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-        else
-        {
+        } else {
             $download_src = 'Download';
             $topDownloaded = $downloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
         }
@@ -1590,77 +1711,52 @@ STR;
         $sony_ids_str = '';
         $ioda_ids_str = '';
         $ids_provider_type = '';
-        foreach ($topDownloaded as $k => $v)
-        {
-            if ($maintainLatestDownload)
-            {
-                if (empty($ids))
-                {
+        foreach ($topDownloaded as $k => $v) {
+            if ($this->maintainLatestDownload) {
+                if (empty($ids)) {
                     $ids .= $v['LatestDownload']['ProdID'];
                     $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $v['LatestDownload']['ProdID'];
                     $ids_provider_type .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
                 }
-                if ($v['LatestDownload']['provider_type'] == 'sony')
-                {
+                if ($v['LatestDownload']['provider_type'] == 'sony') {
                     $sony_ids[] = $v['LatestDownload']['ProdID'];
-                }
-                else
-                {
+                } else {
                     $ioda_ids[] = $v['LatestDownload']['ProdID'];
                 }
-            }
-            else
-            {
-                if (empty($ids))
-                {
+            } else {
+                if (empty($ids)) {
                     $ids .= $v['Download']['ProdID'];
                     $ids_provider_type .= "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $v['Download']['ProdID'];
                     $ids_provider_type .= ',' . "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
                 }
-                if ($v['Download']['provider_type'] == 'sony')
-                {
+                if ($v['Download']['provider_type'] == 'sony') {
                     $sony_ids[] = $v['Download']['ProdID'];
-                }
-                else
-                {
+                } else {
                     $ioda_ids[] = $v['Download']['ProdID'];
                 }
             }
         }
 
-        if ((count($topDownloaded) < 1) || ($topDownloaded === false))
-        {
+        if ((count($topDownloaded) < 1) || ($topDownloaded === false)) {
             $this->log("top download is not available for library: $libId - $country", "cache");
         }
 
-        if ($ids != '')
-        {
-            if (!empty($sony_ids))
-            {
+        if ($ids != '') {
+            if (!empty($sony_ids)) {
                 $sony_ids_str = implode(',', $sony_ids);
             }
-            if (!empty($ioda_ids))
-            {
+            if (!empty($ioda_ids)) {
                 $ioda_ids_str = implode(',', $ioda_ids);
             }
-            if (!empty($sony_ids_str) && !empty($ioda_ids_str))
-            {
+            if (!empty($sony_ids_str) && !empty($ioda_ids_str)) {
                 $top_ten_condition_songs = "((Song.ProdID IN (" . $sony_ids_str . ") AND Song.provider_type='sony') OR (Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda'))";
-            }
-            else if (!empty($sony_ids_str))
-            {
+            } else if (!empty($sony_ids_str)) {
                 $top_ten_condition_songs = "(Song.ProdID IN (" . $sony_ids_str . ") AND Song.provider_type='sony')";
-            }
-            else if (!empty($ioda_ids_str))
-            {
+            } else if (!empty($ioda_ids_str)) {
                 $top_ten_condition_songs = "(Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda')";
             }
 
@@ -1719,37 +1815,29 @@ STR;
                             LIMIT 10
 STR;
             $topDownload = $songInstance->query($topDownloaded_query);
-        }
-        else
-        {
+        } else {
             $topDownload = array();
         }
 
         //library top 10 cache set
-        if ((count($topDownload) < 1) || ($topDownload === false))
-        {
+        if ((count($topDownload) < 1) || ($topDownload === false)) {
             Cache::write("lib" . $libId, Cache::read("lib" . $libId));
             $this->log("topDownloaded_query songs  returns null for lib: $libId $country", "cache");
-        }
-        else
-        {
-            foreach ($topDownload as $key => $value)
-            {                  
+        } else {
+            foreach ($topDownload as $key => $value) {
                 $songs_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $songs_img = Configure::read('App.Music_Path') . $songs_img;
                 $topDownload[$key]['songs_img'] = $songs_img;
-                    
-                    $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
-                    
-                    if (!empty($filePath))
-                    {
-                        $songPath = explode(':', $filePath);
-                        $streamUrl = trim($songPath[1]);
-                        $topDownload[$key]['streamUrl'] = $streamUrl;
-                        $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
-                    }
-            }
-            Cache::delete("lib" . $libId);
+
+                $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+
+                if (!empty($filePath)) {
+                    $songPath = explode(':', $filePath);
+                    $streamUrl = trim($songPath[1]);
+                    $topDownload[$key]['streamUrl'] = $streamUrl;
+                    $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                }
+            }            
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
@@ -1763,24 +1851,19 @@ STR;
      * @desc sets Cache for LibraryTopTenSongs
      */
 
-    function getLibraryTop10Albums($territory, $libId)
-    {
+    function getLibraryTop10Albums($territory, $libId) {
         set_time_limit(0);
-        $tokeninstance = ClassRegistry::init('Token');         
+        $tokeninstance = ClassRegistry::init('Token');
         $albumInstance = ClassRegistry::init('Album');
         $latestDownloadInstance = ClassRegistry::init('LatestDownload');
         $downloadInstance = ClassRegistry::init('Download');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
         //library top 10 cache set for albums start            
-        if ($maintainLatestDownload)
-        {
+        if ($this->maintainLatestDownload) {
             $download_src = 'LatestDownload';
             $topDownloaded_albums = $latestDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-        else
-        {
+        } else {
             $download_src = 'Download';
             $topDownloaded_albums = $downloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
         }
@@ -1794,80 +1877,55 @@ STR;
         $sony_ids_str = '';
         $ioda_ids_str = '';
         $ids_provider_type = '';
-        foreach ($topDownloaded_albums as $k => $v)
-        {
-            if ($maintainLatestDownload)
-            {
-                if (empty($ids))
-                {
+        foreach ($topDownloaded_albums as $k => $v) {
+            if ($this->maintainLatestDownload) {
+                if (empty($ids)) {
                     $ids .= $v['LatestDownload']['ProdID'];
                     $ids_provider_type_album .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $v['LatestDownload']['ProdID'];
                     $ids_provider_type_album .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
                 }
-                if ($v['LatestDownload']['provider_type'] == 'sony')
-                {
+                if ($v['LatestDownload']['provider_type'] == 'sony') {
                     $sony_ids[] = $v['LatestDownload']['ProdID'];
-                }
-                else
-                {
+                } else {
                     $ioda_ids[] = $v['LatestDownload']['ProdID'];
                 }
-            }
-            else
-            {
+            } else {
 
-                if (empty($ids))
-                {
+                if (empty($ids)) {
                     $ids .= $v['Download']['ProdID'];
                     $ids_provider_type_album .= "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $v['Download']['ProdID'];
                     $ids_provider_type_album .= ',' . "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
                 }
 
 
-                if ($v['Download']['provider_type'] == 'sony')
-                {
+                if ($v['Download']['provider_type'] == 'sony') {
                     $sony_ids[] = $v['Download']['ProdID'];
-                }
-                else
-                {
+                } else {
                     $ioda_ids[] = $v['Download']['ProdID'];
                 }
             }
         }
 
-        if ((count($topDownloaded_albums) < 1) || ($topDownloaded_albums === false))
-        {
+        if ((count($topDownloaded_albums) < 1) || ($topDownloaded_albums === false)) {
             $this->log("top download is not available for library: $libId - $country", "cache");
         }
 
-        if ($ids != '')
-        {
-            if (!empty($sony_ids))
-            {
+        if ($ids != '') {
+            if (!empty($sony_ids)) {
                 $sony_ids_str = implode(',', $sony_ids);
             }
-            if (!empty($ioda_ids))
-            {
+            if (!empty($ioda_ids)) {
                 $ioda_ids_str = implode(',', $ioda_ids);
             }
-            if (!empty($sony_ids_str) && !empty($ioda_ids_str))
-            {
+            if (!empty($sony_ids_str) && !empty($ioda_ids_str)) {
                 $top_ten_condition_albums = "((Song.ProdID IN (" . $sony_ids_str . ") AND Song.provider_type='sony') OR (Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda'))";
-            }
-            else if (!empty($sony_ids_str))
-            {
+            } else if (!empty($sony_ids_str)) {
                 $top_ten_condition_albums = "(Song.ProdID IN (" . $sony_ids_str . ") AND Song.provider_type='sony')";
-            }
-            else if (!empty($ioda_ids_str))
-            {
+            } else if (!empty($ioda_ids_str)) {
                 $top_ten_condition_albums = "(Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda')";
             }
 
@@ -1916,30 +1974,23 @@ STR;
             LIMIT 10
 STR;
             $topDownload = $albumInstance->query($topDownloaded_query_albums);
-        }
-        else
-        {
+        } else {
             $topDownload = array();
         }
 
         //library top 10 cache set
-        if ((count($topDownload) < 1) || ($topDownload === false))
-        {
+        if ((count($topDownload) < 1) || ($topDownload === false)) {
             Cache::write("lib_album" . $libId, Cache::read("lib_album" . $libId));
             $this->log("topDownloaded_query albums returns null for lib: $libId $country", "cache");
-        }
-        else
-        {
-            foreach ($topDownload as $key => $value)
-            {                
+        } else {
+            foreach ($topDownload as $key => $value) {
                 $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $album_img = Configure::read('App.Music_Path') . $album_img;
                 $topDownload[$key]['album_img'] = $album_img;
-                    $topDownload[$key]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
-                    );
+                $topDownload[$key]['albumSongs'] = $this->requestAction(
+                        array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']), 0, $country))
+                );
             }
-            Cache::delete("lib_album" . $libId);
             Cache::write("lib_album" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 albums cache set for lib: $libId $country", "cache");
@@ -1953,8 +2004,7 @@ STR;
      * @desc sets Cache for getLibraryTop10Videos
      */
 
-    function getLibraryTop10Videos($territory, $libId)
-    {
+    function getLibraryTop10Videos($territory, $libId) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $latestVideoDownloadInstance = ClassRegistry::init('LatestVideodownload');
@@ -1962,16 +2012,12 @@ STR;
         $videoInstance = ClassRegistry::init('Video');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
 
         //library top 10 cache set for videos start 
-        if ($maintainLatestDownload)
-        {
+        if ($this->maintainLatestDownload) {
             $download_src = 'LatestDownload';
             $topDownloaded_videos = $latestVideoDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-        else
-        {
+        } else {
             $download_src = 'Download';
             $topDownloaded_videos = $videodownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
         }
@@ -1985,78 +2031,53 @@ STR;
         $sony_ids_str = '';
         $ioda_ids_str = '';
         $ids_provider_type = '';
-        foreach ($topDownloaded_videos as $k => $v)
-        {
-            if ($maintainLatestDownload)
-            {
-                if (empty($ids))
-                {
+        foreach ($topDownloaded_videos as $k => $v) {
+            if ($this->maintainLatestDownload) {
+                if (empty($ids)) {
                     $ids .= $v['LatestVideodownload']['ProdID'];
                     $ids_provider_type_video .= "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $v['LatestVideodownload']['ProdID'];
                     $ids_provider_type_video .= ',' . "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
                 }
-                if ($v['LatestVideodownload']['provider_type'] == 'sony')
-                {
+                if ($v['LatestVideodownload']['provider_type'] == 'sony') {
                     $sony_ids[] = $v['LatestVideodownload']['ProdID'];
-                }
-                else
-                {
+                } else {
                     $ioda_ids[] = $v['LatestVideodownload']['ProdID'];
                 }
-            }
-            else
-            {
+            } else {
 
-                if (empty($ids))
-                {
+                if (empty($ids)) {
                     $ids .= $v['Download']['ProdID'];
                     $ids_provider_type_video .= "(" . $v['Videodownload']['ProdID'] . ",'" . $v['Videodownload']['provider_type'] . "')";
-                }
-                else
-                {
+                } else {
                     $ids .= ',' . $v['Download']['ProdID'];
                     $ids_provider_type_video .= ',' . "(" . $v['Videodownload']['ProdID'] . ",'" . $v['Videodownload']['provider_type'] . "')";
                 }
-                if ($v['Download']['provider_type'] == 'sony')
-                {
+                if ($v['Download']['provider_type'] == 'sony') {
                     $sony_ids[] = $v['Videodownload']['ProdID'];
-                }
-                else
-                {
+                } else {
                     $ioda_ids[] = $v['Videodownload']['ProdID'];
                 }
             }
         }
 
-        if ((count($topDownloaded_videos) < 1) || ($topDownloaded_videos === false))
-        {
+        if ((count($topDownloaded_videos) < 1) || ($topDownloaded_videos === false)) {
             $this->log("top download is not available for library: $libId - $country", "cache");
         }
 
-        if ($ids != '')
-        {
-            if (!empty($sony_ids))
-            {
+        if ($ids != '') {
+            if (!empty($sony_ids)) {
                 $sony_ids_str = implode(',', $sony_ids);
             }
-            if (!empty($ioda_ids))
-            {
+            if (!empty($ioda_ids)) {
                 $ioda_ids_str = implode(',', $ioda_ids);
             }
-            if (!empty($sony_ids_str) && !empty($ioda_ids_str))
-            {
+            if (!empty($sony_ids_str) && !empty($ioda_ids_str)) {
                 $top_ten_condition_videos = "((Video.ProdID IN (" . $sony_ids_str . ") AND Video.provider_type='sony') OR (Video.ProdID IN (" . $ioda_ids_str . ") AND Video.provider_type='ioda'))";
-            }
-            else if (!empty($sony_ids_str))
-            {
+            } else if (!empty($sony_ids_str)) {
                 $top_ten_condition_videos = "(Video.ProdID IN (" . $sony_ids_str . ") AND Video.provider_type='sony')";
-            }
-            else if (!empty($ioda_ids_str))
-            {
+            } else if (!empty($ioda_ids_str)) {
                 $top_ten_condition_videos = "(Video.ProdID IN (" . $ioda_ids_str . ") AND Video.provider_type='ioda')";
             }
 
@@ -2098,27 +2119,20 @@ STR;
              LIMIT 10
 STR;
             $topDownload = $videoInstance->query($topDownloaded_query_videos);
-        }
-        else
-        {
+        } else {
             $topDownload = array();
         }
 
         //library top 10 cache set
-        if ((count($topDownload) < 1) || ($topDownload === false))
-        {
+        if ((count($topDownload) < 1) || ($topDownload === false)) {
             Cache::write("lib_video" . $libId, Cache::read("lib_video" . $libId));
             $this->log("topDownloaded_query videos returns null for lib: $libId $country", "cache");
-        }
-        else
-        {
-            foreach ($topDownload as $key => $value)
-            {                
+        } else {
+            foreach ($topDownload as $key => $value) {
                 $albumArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
-            Cache::delete("lib_video" . $libId);
             Cache::write("lib_video" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
@@ -2132,29 +2146,22 @@ STR;
      * Function Name : getCountryPrefix
      * Function Description : This function is used to get the country prefix
      */
-    function getCountryPrefix($territory)
-    {
-	$multipleCountries = Cache::read('multipleCountries');
-        if (($multipleCountries) === false)
-        {
+    function getCountryPrefix($territory) {
+        $multipleCountries = Cache::read('multipleCountries');
+        if (($multipleCountries) === false) {
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
             $albumInstance = ClassRegistry::init('Album');
             $siteConfigData = $albumInstance->query($siteConfigSQL);
             $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
             Cache::write("multipleCountries", $multiple_countries);
-        }
-        else
-        {
+        } else {
             $multiple_countries = $multipleCountries;
         }
         $countryInstance = ClassRegistry::init('Country');
-        if (0 == $multiple_countries)
-        {
+        if (0 == $multiple_countries) {
             $countryPrefix = '';
             $countryInstance->setTablePrefix('');
-        }
-        else
-        {
+        } else {
             $countryPrefix = strtolower($territory) . "_";
             $countryInstance->setTablePrefix($countryPrefix);
         }
@@ -2165,15 +2172,13 @@ STR;
      * @function getVideoDetails
      * @desc This is used to getVideoDetails
      */
-    function getVideoDetails($territory, $indiMusicVidID)
-    {
+    function getVideoDetails($territory, $indiMusicVidID) {
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $videoInstance = ClassRegistry::init('Video');
         $albumInstance = ClassRegistry::init('Album');
-        $individualVideoSQL =
-                "SELECT Video.ProdID, Video.ReferenceID,Video.Advisory,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration,
+        $individualVideoSQL = "SELECT Video.ProdID, Video.ReferenceID,Video.Advisory,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration,
          Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,
          Full_Files.CdnPath,Full_Files.SaveAsName,File.CdnPath,File.SourceURL,File.SaveAsName
          FROM video as Video            
@@ -2185,19 +2190,14 @@ STR;
          Where Video.DownloadStatus = '1' AND Video.ProdID = " . $indiMusicVidID;
 
         $EachVideosData = $videoInstance->query($individualVideoSQL);
-        if ((count($EachVideosData) < 1) || ($EachVideosData === false))
-        {
+        if ((count($EachVideosData) < 1) || ($EachVideosData === false)) {
             $this->log("Music video id $indiMusicVidID returns null ", "cache");
-        }
-        else
-        {            
+        } else {
             $videoArtwork = $tokeninstance->artworkToken($EachVideosData[0]['File']['CdnPath'] . "/" . $EachVideosData[0]['File']['SourceURL']);
             $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path') . $videoArtwork;
         }
-        if (count($EachVideosData) > 0)
-        {
-            $MoreVideosSql =
-                    "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle,Video.Advisory, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
+        if (count($EachVideosData) > 0) {
+            $MoreVideosSql = "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle,Video.Advisory, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
              Sample_Files.SaveAsName,
              Full_Files.CdnPath,
              Full_Files.SaveAsName,
@@ -2219,24 +2219,19 @@ STR;
              Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '" . $EachVideosData[0]['Video']['ArtistText'] . "'   ORDER BY Country.SalesDate desc limit 0,10";
 
             $MoreVideosData = $albumInstance->query($MoreVideosSql);
-            foreach ($MoreVideosData as $key => $value)
-            {                
+            foreach ($MoreVideosData as $key => $value) {
                 $videoArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $MoreVideosData[$key]['videoImage'] = $videoImage;
             }
-            if (!empty($MoreVideosData))
-            {
+            if (!empty($MoreVideosData)) {
                 Cache::write("musicVideoMoreDetails_" . $territory . '_' . $EachVideosData[0]['Video']['ArtistText'], $MoreVideosData);
                 $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] cache set", "cache");
-            }
-            else
-            {
+            } else {
                 $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] returns null ", "cache");
             }
         }
-        if (count($EachVideosData) > 0)
-        {
+        if (count($EachVideosData) > 0) {
             $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID,Video.Advisory, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
                  `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
                  LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
@@ -2244,19 +2239,15 @@ STR;
                  WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '" . $EachVideosData[0]['Video']['Genre'] . "' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 0,10";
 
             $TopVideoGenreData = $albumInstance->query($TopVideoGenreSql);
-            foreach ($TopVideoGenreData as $key => $value)
-            {                
+            foreach ($TopVideoGenreData as $key => $value) {
                 $videoArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $TopVideoGenreData[$key]['videoImage'] = $videoImage;
             }
-            if (!empty($TopVideoGenreData))
-            {
+            if (!empty($TopVideoGenreData)) {
                 Cache::write("top_videos_genre_" . $territory . '_' . $EachVideosData[0]['Video']['Genre'], $TopVideoGenreData);
                 $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory cache set", "cache");
-            }
-            else
-            {
+            } else {
                 $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory returns null ", "cache");
             }
         }
@@ -2266,22 +2257,20 @@ STR;
      * @function getAllVideoByArtist
      * @desc This is used to getAllVideoByArtist
      */
-    function getAllVideoByArtist( $country, $decodedId, $explicitContent = true )
-    {
+    function getAllVideoByArtist($country, $decodedId, $explicitContent = true) {
         $tokeninstance = ClassRegistry::init('Token');
         //add the slashes in the text
         $decodedId = addslashes($decodedId);
         $videoInstance = ClassRegistry::init('Video');
         $preFix = strtolower($country) . "_";
 
-        if (!empty($country))
-        {
+        if (!empty($country)) {
 
             $countryPrefix = $this->Session->read('multiple_countries');
             $videoAdvisory = '';
-            
-            if( $explicitContent === false ) {
-            	$videoAdvisory = " AND Video.Advisory != 'T'";
+
+            if ($explicitContent === false) {
+                $videoAdvisory = " AND Video.Advisory != 'T'";
             }
 
             $sql_us_10_v = <<<STR
@@ -2334,8 +2323,7 @@ STR;
 STR;
 
             $artistVideoList = $videoInstance->query($sql_us_10_v);
-            foreach ($artistVideoList as $key => $value)
-            {                
+            foreach ($artistVideoList as $key => $value) {
                 $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
@@ -2350,8 +2338,7 @@ STR;
      * @function getDefaultQueues
      * @desc     This function is used to get default queues.
      */
-    function getDefaultQueues($territory)
-    {
+    function getDefaultQueues($territory) {
 
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
@@ -2369,34 +2356,29 @@ STR;
         ));
 
         //freegal Query Cache set
-        if ((count($queueData) < 1) || ($queueData === false))
-        {
+        if ((count($queueData) < 1) || ($queueData === false)) {
             Cache::write("defaultqueuelist", Cache::read("defaultqueuelist"));
             $this->log("Freegal Defaut Queues returns null ", "cache");
-        }
-        else
-        {
-            Cache::delete("defaultqueuelist");
+        } else {
             Cache::write("defaultqueuelist", $queueData);
 
             //library top 10 cache set
             $this->log("Freegal Defaut Queues cache set", "cache");
         }
+        
+        App::import('Component', 'Queue');
+        $QueueComponent = new QueueComponent();
 
         //set the variable for each freegal default queue 
-        foreach ($queueData as $value)
-        {
+        foreach ($queueData as $value) {
             $defaultQueueId = $value['QueueList']['queue_id'];
             $defaultQueueName = $value['QueueList']['queue_name'];
-            $eachQueueDetails = $this->Queue->getQueueDetails($defaultQueueId, $territory);
+            $eachQueueDetails = $QueueComponent->getQueueDetails($defaultQueueId, $territory);
 
-            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false))
-            {
+            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
                 $this->log("Freegal Defaut Queues " . $defaultQueueName . "( " . $defaultQueueId . " )" . " returns null ", "cache");
-            }
-            else
-            {
-                Cache::write("defaultqueuelistdetails".$territory.$defaultQueueId, $eachQueueDetails);
+            } else {
+                Cache::write("defaultqueuelistdetails" . $territory . $defaultQueueId, $eachQueueDetails);
                 $this->log("Freegal Defaut Queues " . $defaultQueueName . "( " . $defaultQueueId . " )" . " cache set", "cache");
             }
         }
@@ -2407,72 +2389,38 @@ STR;
      * @function setLibraryTopTenCache
      * @desc sets Cache for LibraryTopTen
      */
-    function setLibraryTopTenCache()
-    {
-
+    function setLibraryTopTenCache() {
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
         set_time_limit(0);
         $libraryInstance = ClassRegistry::init('Library');
         $libraryDetails = $libraryInstance->find('all', array(
             'fields' => array('id', 'library_territory'),
             'conditions' => array('library_status' => 'active'),
-            'recursive' => -1
-                )
+            'recursive' => -1)
         );
-        $this->log("Cache for library top 10 starts here for date".date("Y-m-d"), "cache");
-        foreach ($libraryDetails AS $key => $val)
-        {
-            $libId = $val['Library']['id'];
-            $country = $val['Library']['library_territory'];
-            $this->getLibraryTop10Albums($country, $libId);
-            $this->getLibraryTop10Videos($country, $libId);
-        }
-        $this->log("Cache for library top 10 ends here for date".date("Y-m-d"), "cache");
-    }
-    
-    
-    /**
-     * @function setLibraryTopTenSongsCache
-     * @desc sets Cache for LibraryTopTensongs
-     */    
-    
-    function setLibraryTopTenSongsCache()
-    {
-
-        //--------------------------------Library Top Ten Start--------------------------------------------------------------------
-        set_time_limit(0);
-        $libraryInstance = ClassRegistry::init('Library');
-        $libraryDetails = $libraryInstance->find('all', array(
-            'fields' => array('id', 'library_territory'),
-            'conditions' => array('library_status' => 'active'),
-            'recursive' => -1
-                )
-        );
-        $this->log("Cache for library top 10 songs starts here for date".date("Y-m-d"), "cache");
-        foreach ($libraryDetails AS $key => $val)
-        {
+        $this->log("Cache for library top 10 starts here for date" . date("Y-m-d"), "cache");
+        foreach ($libraryDetails AS $key => $val) {
             $libId = $val['Library']['id'];
             $country = $val['Library']['library_territory'];
             $this->getLibraryTopTenSongs($country, $libId);
+            $this->getLibraryTop10Albums($country, $libId);
+            $this->getLibraryTop10Videos($country, $libId);
         }
-        $this->log("Cache for library top 10 songs ends here for date".date("Y-m-d"), "cache");
-    }    
+        $this->log("Cache for library top 10 ends here for date" . date("Y-m-d"), "cache");
+    }
 
     /**
      * @function setVideoCacheVar
      * @desc sets video cache Variable
      */
-    function setVideoCacheVar()
-    {
+    function setVideoCacheVar() {
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         $videoInstance = ClassRegistry::init('Video');
         $musicVideoRecs = $videoInstance->find('all', array('conditions' => array('Video.DownloadStatus' => 1), 'fields' => 'Video.ProdID'));
         $territoryNames = $this->getTerritories();
-        for ($i = 0; $i < count($territoryNames); $i++)
-        {
+        for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
-            foreach ($musicVideoRecs as $musicVideoRec)
-            {
+            foreach ($musicVideoRecs as $musicVideoRec) {
                 $this->getVideoDetails($territory, $musicVideoRec['Video']['ProdID']);
             }
         }
@@ -2483,21 +2431,16 @@ STR;
      * @desc This is used to get territories list
      */
 
-    function getTerritories()
-    {
-	$territoryList = Cache::read('territoryList');
-        if (($territoryList) === false)
-        {
+    function getTerritories() {
+        $territoryList = Cache::read('territoryList');
+        if (($territoryList) === false) {
             $territoryInstance = ClassRegistry::init('Territory');
             $territories = $territoryInstance->find("all");
-            for ($mm = 0; $mm < count($territories); $mm++)
-            {
+            for ($mm = 0; $mm < count($territories); $mm++) {
                 $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
             }
             Cache::write("territoryList", $territoryNames);
-        }
-        else
-        {
+        } else {
             $territoryNames = $territoryList;
         }
         return $territoryNames;
@@ -2507,8 +2450,7 @@ STR;
      * @func getQueueAlbumDetails
      * @desc This is used to get Songs list for Stream Now on Search page
      */
-    function getQueueAlbumDetails($ProdID)
-    {
+    function getQueueAlbumDetails($ProdID) {
         $albumInstance = ClassRegistry::init('Album');
         $country = $this->Session->read('territory');
         $countryPrefix = $this->getCountryPrefix($country);
@@ -2546,30 +2488,25 @@ STR;
 
         return $albumInstance->query($album_songs);
     }
-    
-    
+
     /**
      * @func getAlbumSongs
      * @desc This is used to get album songs
-     */    
-    function getAlbumSongs($albumProdId,$provider){
-        
+     */
+    function getAlbumSongs($albumProdId, $provider) {
+
         $songInstance = ClassRegistry::init('Song');
         $country = $this->Session->read('territory');
-        $countryPrefix = $this->getCountryPrefix($country);        
+        $countryPrefix = $this->getCountryPrefix($country);
         $albumSongs = array();
         $libType = $this->Session->read('library_type');
         $cond = "";
-        if ($this->Session->read('block') == 'yes')
-        {
+        if ($this->Session->read('block') == 'yes') {
             $cond = array('Song.Advisory' => 'F');
-        }
-        else
-        {
+        } else {
             $cond = "";
-        }        
-        if ($libType != 2)
-        {
+        }
+        if ($libType != 2) {
             $albumSongs = $songInstance->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -2609,9 +2546,7 @@ STR;
                 'group' => 'Song.ProdID, Song.provider_type',
                 'order' => array('Song.sequence_number', 'Song.ProdID')
             ));
-        }
-        else
-        {
+        } else {
             $albumSongs = $songInstance->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -2635,12 +2570,12 @@ STR;
                     )
                 ),
                 'fields' => array(
-                        'Song.ProdID',
-			'Song.ProductID',
-			'Song.Title',
-			'Song.SongTitle',
-			'Song.Artist',
-			'Song.ISRC' 
+                    'Song.ProdID',
+                    'Song.ProductID',
+                    'Song.Title',
+                    'Song.SongTitle',
+                    'Song.Artist',
+                    'Song.ISRC'
                 ),
                 'contain' => array(
                     'Full_Files' => array(
@@ -2660,7 +2595,7 @@ STR;
                 'order' => array('Song.sequence_number', 'Song.ProdID')
             ));
         }
-        
+
         return $albumSongs;
     }
 
@@ -2668,8 +2603,7 @@ STR;
      * @func getSongsDetails
      * @desc This is used to get Songs details 
      */
-    function getSongsDetails($ProdID)
-    {
+    function getSongsDetails($ProdID) {
         $albumInstance = ClassRegistry::init('Album');
         $country = $this->Session->read('territory');
         $countryPrefix = $this->getCountryPrefix($country);
@@ -2724,15 +2658,13 @@ STR;
         return $albumInstance->query($album_songs);
     }
 
-    function getVideodownloadStatus($libId, $patID, $startDate, $endDate, $update = false)
-    {
+    function getVideodownloadStatus($libId, $patID, $startDate, $endDate, $update = false) {
         $videodownloadCountArray = array();
 
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videodownloadInstance->recursive = -1;
 
-        if (!$this->Session->check('videodownloadCountArray') || $update)
-        {
+        if (!$this->Session->check('videodownloadCountArray') || $update) {
             $videodownloadCount = $videodownloadInstance->find(
                     'all', array(
                 'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
@@ -2744,8 +2676,7 @@ STR;
                 ),
                 'group' => 'ProdID',
             ));
-            foreach ($videodownloadCount as $key => $value)
-            {
+            foreach ($videodownloadCount as $key => $value) {
                 $videodownloadCountArray[$value['Videodownload']['ProdID']] = array(
                     'provider_type' => $value['Videodownload']['provider_type'],
                     'totalProds' => $value[0]['totalProds']
@@ -2754,45 +2685,38 @@ STR;
             $this->Session->write('videodownloadCountArray', $videodownloadCountArray);
         }
     }
-    
-    
+
     /*
      * @func getGenreSynonyms
      * @desc This is used to get synonyms list
      */
 
-    function getGenreSynonyms($genre_name)
-    {
+    function getGenreSynonyms($genre_name) {
         $combineGenreData = Cache::read("combine_genre");
-        
-        if ($combineGenreData === false)
-        {
+
+        if ($combineGenreData === false) {
             $combineGenreInstance = ClassRegistry::init('CombineGenre');
-            $combineGenreData     = $combineGenreInstance->find("all");
-                        
+            $combineGenreData = $combineGenreInstance->find("all");
+
             Cache::write("combine_genre", $combineGenreData);
         }
-        
+
         $synGenres = array();
-        
-        if($genre_name!='')
-        {            
-            for($cnt=0; $cnt<count($combineGenreData); $cnt++)
-            {
-                if($combineGenreData[$cnt]['CombineGenre']['expected_genre']==str_replace("\\", "", $genre_name))       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
-                {
+
+        if ($genre_name != '') {
+            for ($cnt = 0; $cnt < count($combineGenreData); $cnt++) {
+                if ($combineGenreData[$cnt]['CombineGenre']['expected_genre'] == str_replace("\\", "", $genre_name)) {       // if $genre_name (expected_genre from Genre table) matches  $combineGenreData[$cnt]['CombineGenre']['expected_genre'] (expected_genre from combine_genres table), then copy genre value from combine_genre
                     //$synGenres  .=    empty($synGenres)?$combineGenreData[$cnt]['CombineGenre']['genre']:'|'.$combineGenreData[$cnt]['CombineGenre']['genre'];
                     array_push($synGenres, $combineGenreData[$cnt]['CombineGenre']['genre']);
                 }
             }
         }
-        
-        if(count($synGenres)==0)
-        {
+
+        if (count($synGenres) == 0) {
             array_push($synGenres, $genre_name);
         }
-        
-        
+
+
         return $synGenres;
     }
 
