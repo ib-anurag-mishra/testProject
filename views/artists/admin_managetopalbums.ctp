@@ -22,9 +22,9 @@
 				</td>
 				<td class="left"><?php $data = $album->getAlbum($topAlbum['TopAlbum']['album']);echo $data[0]['Album']['AlbumTitle'];?>
 				</td>
-				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'artistform','id'=>$topAlbum['TopAlbum']['id']));?>
+				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'topalbumform','id'=>$topAlbum['TopAlbum']['id']));?>
 				</td>
-				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'delete','id'=>$topAlbum['TopAlbum']['id']));?>
+				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'topalbumdelete','id'=>$topAlbum['TopAlbum']['id']));?>
 				</td>
 			</tr>
 

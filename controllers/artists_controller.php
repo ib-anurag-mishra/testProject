@@ -23,7 +23,7 @@ Class ArtistsController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs' );
 		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-                    $this->Auth->allow('admin_managetopalbums');
+                    $this->Auth->allow('admin_managetopalbums','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum');
                 }
     }
 
@@ -253,6 +253,22 @@ Class ArtistsController extends AppController {
         }
     }
 
+	/*
+      Function Name : admin_delete
+      Desc : For deleting a featured artist
+     */
+
+    function admin_topalbumdelete() {
+        $deleteArtistUserId = $this->params['named']['id'];
+        $deleteObj = new TopAlbum();
+        if ($deleteObj->del($deleteArtistUserId)) {
+            $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
+            $this->redirect('managetopalbums');
+        } else {
+            $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
+            $this->redirect('managetopalbums');
+        }
+    }
 
     /*
       Function Name : managefeaturedartist
