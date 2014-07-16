@@ -276,6 +276,410 @@ Class CommonComponent extends Object
          
      }
      
+     /*
+     * Function Name : checkGenrepagesCount
+     * Function Description : This get count of particular Genre and pages.
+     * this currenty not using anyware 
+     
+     * @paran $territory varChar 'territory value'
+     * @paran $genreEach varChar 'genre value'
+     * @paran $artistFilter varChar 'artist filter value'
+     * 
+     * @return  $totalPages int
+     */
+     
+     function checkGenrepagesCount($territory,$genreEach,$artistFilter){
+         
+        set_time_limit(0);    
+        //add the Song table model
+        $songInstance = ClassRegistry::init('Song');
+        
+        //check if artist filter is All or not
+        if($genreEach != 'All')
+        {
+            //create conditions array
+            $conditionArray = array(
+                'Country.DownloadStatus' => 1,                    
+                'Country.Territory' => strtoupper($territory)                
+            );
+
+            //Genre filter
+            if ($genreEach != '' && $genreEach != 'All')
+            {
+                $conditionArray[] = " Song.Genre LIKE '%".mysql_escape_string($genreEach)."%'";
+            }
+
+            //Artist filter
+            if ($artistFilter == 'spl')
+            {                       
+                $conditionArray[] = " Song.ArtistText REGEXP '^[^A-Za-z]'";
+            }
+            elseif ($artistFilter != '' && $artistFilter != 'All')
+            {
+                $conditionArray[] = " Song.ArtistText LIKE '".$artistFilter."%'";
+            }
+
+            $songInstance->unbindModel(array('hasOne' => array('Participant')));
+            $songInstance->unbindModel(array('hasOne' => array('Country')));
+            $songInstance->unbindModel(array('hasOne' => array('Genre')));
+            $songInstance->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+            $songInstance->recursive = 0;
+
+            //query that fetch  artist count according to Genre
+            $artistCount = $songInstance->find('all', array(
+                'conditions' => $conditionArray,
+                'fields' => array('count(DISTINCT Song.ArtistText) as total'),
+
+                'joins' => array(
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'Country',
+                        'type' => 'left',
+                        'foreignKey' => false,
+                        'conditions'=> array('Country.ProdID = Song.ProdID')
+                    ),
+                    array(
+                        'table' => 'Albums',
+                        'alias' => 'Albums',
+                        'type' => 'left',
+                        'foreignKey' => false,
+                        'conditions'=> array('Song.ReferenceID = Albums.ProdID')
+                    )
+                )
+             ));
+            
+            if( isset($artistCount[0][0]['total']) && ($artistCount[0][0]['total'] > 0 ) ){                    
+                $totalPages = ceil( $artistCount[0][0]['total'] / 120 );                    
+            }else{
+                $totalPages =1;
+            }
+            
+            //value less then one then set default 1
+            if( $totalPages < 1){
+                $totalPages =1;
+            }
+
+        }else{
+            $totalPages =5;
+        }
+        return $totalPages;         
+     }
+     
+    
+     
+     
+
+    /*
+     * Function Name : getNationalTop100
+     * Function Description : This function gets data of national top 100
+     */
+
+    function getNationalTop100($territory)
+    {
+        set_time_limit(0);
+        $countryPrefix = $this->getCountryPrefix($territory);
+        $country = $territory;
+        if (!empty($country))
+        {
+            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
+            if ($maintainLatestDownload)
+            {
+
+                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `latest_downloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '" . $country . "' 
+              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 110";
+            }
+            else
+            {
+                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `downloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '" . $country . "' 
+              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 110";
+            }
+            $ids = '';
+            $ids_provider_type = '';
+            $albumInstance = ClassRegistry::init('Album');
+            $natTopDownloaded = $albumInstance->query($sql);
+            foreach ($natTopDownloaded as $natTopSong)
+            {
+                if (empty($ids))
+                {
+                    $ids .= $natTopSong['Download']['ProdID'];
+                    $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                }
+                else
+                {
+                    $ids .= ',' . $natTopSong['Download']['ProdID'];
+                    $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                }
+            }
+
+            if ((count($natTopDownloaded) < 1) || ($natTopDownloaded === false))
+            {
+                $this->log("download data not recevied for " . $territory, "cache");
+            }
+            $data = array();
+
+            $sql_national_100 = <<<STR
+                SELECT 
+                        Song.ProdID,
+                        Song.ReferenceID,
+                        Song.Title,
+                        Song.ArtistText,
+                        Song.DownloadStatus,
+                        Song.SongTitle,
+                        Song.Artist,
+                        Song.Advisory,
+                        Song.Sample_Duration,
+                        Song.FullLength_Duration,
+                        Song.provider_type,
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Country.StreamingSalesDate,
+                        Country.StreamingStatus,
+                        Country.DownloadStatus,
+                        Sample_Files.CdnPath,
+                        Sample_Files.SaveAsName,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        File.CdnPath,
+                        File.SourceURL,
+                        File.SaveAsName,
+                        Sample_Files.FileID,
+                        PRODUCT.pid,
+                        Albums.ProdID,
+                        Albums.provider_type
+                FROM
+                        Songs AS Song
+                                LEFT JOIN
+                        File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                LEFT JOIN
+                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                LEFT JOIN
+                        Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
+                                INNER JOIN
+                        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+                                LEFT JOIN
+                        PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
+                                INNER JOIN 
+                        Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                INNER JOIN 
+                        File ON (Albums.FileID = File.FileID) 
+                WHERE
+                        (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
+                GROUP BY Song.ProdID
+                ORDER BY FIELD(Song.ProdID,$ids) ASC
+                LIMIT 100 
+
+STR;
+            $data = $albumInstance->query($sql_national_100);
+            $this->log("National top 100 songs for " . $territory, "cachequery");
+            $this->log($sql_national_100, "cachequery");
+            if ($ids_provider_type == "")
+            {
+                $this->log("ids_provider_type is set blank for " . $territory, "cache");
+            }
+            if (!empty($data))
+            {   
+                foreach ($data as $key => $value)
+                {      
+                    
+                    $albumArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
+                    $data[$key]['songAlbumImage'] = $songAlbumImage;
+                }
+                //update the mem datas table
+                $MemDatas = ClassRegistry::init('MemDatas');
+                $nationalTopDownloadSer = base64_encode(serialize($data));
+                $memQuery = "update mem_datas set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
+                $MemDatas->setDataSource('master');
+                $MemDatas->query($memQuery);
+                $MemDatas->setDataSource('default');
+                
+                Cache::write("national" . $country, $data);
+                $this->log("cache written for national top 100 songs for $territory", "cache");
+            }
+            else
+            {
+                $data = Cache::read("national" . $country);
+                Cache::write("national" . $country, Cache::read("national" . $country));
+                $this->log("Unable to update national 100 for " . $territory, "cache");
+            }
+        }
+        $this->log("cache written for national top 100 for $territory", 'debug');
+        return $data;
+    }
+
+    /*
+     * Function Name : getNationalTop100Albums
+     * Function Description : This function gets data of national top 100 Albums
+     */
+
+    function getNationalTop100Albums($territory)
+    {
+        set_time_limit(0);
+        $tokeninstance = ClassRegistry::init('Token');
+        $countryPrefix = $this->getCountryPrefix($territory);
+        $country = $territory;
+        if (!empty($country))
+        {
+            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
+            if ($maintainLatestDownload)
+            {
+
+                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `latest_downloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '" . $country . "' 
+              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 400";
+            }
+            else
+            {
+                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `downloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '" . $country . "' 
+              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 400";
+            }
+            $ids = '';
+            $ids_provider_type = '';
+            $albumInstance = ClassRegistry::init('Album');
+            $natTopDownloaded = $albumInstance->query($sql);
+            foreach ($natTopDownloaded as $natTopSong)
+            {
+                if (empty($ids))
+                {
+                    $ids .= $natTopSong['Download']['ProdID'];
+                    $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                }
+                else
+                {
+                    $ids .= ',' . $natTopSong['Download']['ProdID'];
+                    $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                }
+            }
+
+            if ((count($natTopDownloaded) < 1) || ($natTopDownloaded === false))
+            {
+                $this->log("download data not recevied for " . $territory, "cache");
+            }
+            $data = array();
+
+            $sql_national_100 = <<<STR
+                SELECT 
+                        Song.ProdID,
+                        Song.ReferenceID,
+                        Song.Title,
+                        Song.ArtistText,
+                        Song.DownloadStatus,
+                        Song.SongTitle,
+                        Song.Artist,
+                        Song.Advisory,
+                        Song.Sample_Duration,
+                        Song.FullLength_Duration,
+                        Song.provider_type,
+			Song.Genre,
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Country.StreamingSalesDate,
+                        Country.StreamingStatus,
+                        Country.DownloadStatus,
+                        Sample_Files.CdnPath,
+                        Sample_Files.SaveAsName,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        File.CdnPath,
+                        File.SourceURL,
+                        File.SaveAsName,
+                        Sample_Files.FileID,
+                        PRODUCT.pid,
+                        Albums.ProdID,
+                        Albums.provider_type,
+			Albums.AlbumTitle,
+                        Albums.Advisory
+                FROM
+                        Songs AS Song
+                                LEFT JOIN
+                        File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                LEFT JOIN
+                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                LEFT JOIN
+                        Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
+                                LEFT JOIN
+                        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+                                LEFT JOIN
+                        PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
+                                INNER JOIN 
+                        Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                INNER JOIN 
+                        File ON (Albums.FileID = File.FileID) 
+                WHERE
+                        (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
+                GROUP BY Song.ReferenceID
+                ORDER BY COUNT(Song.ReferenceID) DESC
+                LIMIT 100 
+
+STR;
+            $data = $albumInstance->query($sql_national_100);
+            $this->log("National top 100 Albums for " . $territory, "cachequery");
+            $this->log($sql_national_100, "cachequery");
+            if ($ids_provider_type == "")
+            {
+                $this->log("ids_provider_type is set blank for " . $territory, "cache");
+            }
+            if (!empty($data))
+            {
+
+                foreach ($data as $key => $value)
+                {                    
+                    $albumArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
+                    $data[$key]['songAlbumImage'] = $songAlbumImage;
+                    $albumSongs = $this->requestAction(
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
+                    );
+                    if(!empty($albumSongs[$value['Albums']['ProdID']])){
+                        $data[$key]['albumSongs'] = 1;
+                    }else{
+                        $data[$key]['albumSongs'] = 0;
+                    }
+                    if(!empty($albumSongs[$value['Albums']['ProdID']])){
+                        Cache::write("nationaltopalbum_" . $territory.'_'.$value['Albums']['ProdID'], $albumSongs);
+                        $this->log("cache written for national top album for $territory".$prodId, "cache");
+                    }
+                }
+
+                Cache::write("nationaltop100albums" . $country, $data);
+                $this->log("cache written for national top 100 albums for $territory", "cache");
+            }
+            else
+            {
+                $data = Cache::read("nationaltop100albums" . $country);
+                Cache::write("nationaltop100albums" . $country, $data);
+                $this->log("Unable to update national 100 albums for " . $territory, "cache");
+            }
+        }
+        $this->log("cache written for national top 100 albums for $territory", 'debug');
+        return $data;
+    }
+
     /*
      * Function Name : getFeaturedVideos
      * Function Description : This function get featured videos

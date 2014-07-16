@@ -3,11 +3,11 @@
 		<div class="breadcrumbs">
 			<span><?php
 			$genre_crumb_name = $this->Genre->genreBreadcrumb($genre);
-			$html->addCrumb(__('All Genre', true), '/genres/view/');
-			
+		
 			if ($genre_crumb_name != ""):
 				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' . $genre_crumb_name);
 			endif;
+
 
 			$html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
 			$html->addCrumb($this->getTextEncode($albumData[0]['Album']['AlbumTitle']), '/artists/view/' . str_replace('/', '@', base64_encode($artistName)) . '/' . $album . '/' . base64_encode($albumData[0]['Album']['provider_type']));
@@ -86,23 +86,29 @@
 
 			</div>
 			<div class="album-title">
+
 				
 			<?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>
+
 
 			</div>
 			<div class="artist-name">
 				<?php
 				$artistNames = $artistName;
-				if ($this->getTextEncode($artistName)):
-					$artistName= $this->getTextEncode($artistName);
-				endif;
+
+
+                                if($this->getTextEncode($artistName)):
+                                   $artistName= $this->getTextEncode($artistName);
+                                endif;
+                                
                                 
 				if (strlen($artistName) >= 90):
-					$artistName = substr($artistName, 0, 90) . '...';
+				    $artistName = substr($artistName, 0, 90) . ' ...';
 				endif;
-				
+
 				echo $this->Html->link($this->getTextEncode($artistName), array('controller' => 'artists', 'action' => 'album', base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist'])), array('title' => $this->getTextEncode($artistNames)));
 				?>
+
 
 			</div>
 			<div class="tracklist-header">
