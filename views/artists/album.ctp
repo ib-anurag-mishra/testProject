@@ -389,7 +389,7 @@
 						<?php } ?>
 					</div>
 					<div class="genre">
-						<?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view','?genre='.$album['Genre']['Genre']), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
+						<?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view','?genre='.$value['Genre']['Genre']), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
 					</div> <?php
 					if (!empty($value['Video']['video_label']))
 					{
