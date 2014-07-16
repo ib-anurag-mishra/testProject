@@ -149,7 +149,7 @@ Class ArtistsController extends AppController {
         $insertArr['album'] = $album;
         $insertArr['territory'] = $this->data['Artist']['territory'];
         $insertArr['language'] = Configure::read('App.LANGUAGE');
-        if (isset($album_provider_type)) {
+        if (!empty($album_provider_type)) {
             $insertArr['provider_type'] = $album_provider_type;
         }
         $insertObj = new TopAlbum();
@@ -228,7 +228,7 @@ Class ArtistsController extends AppController {
         $updateArr['territory'] = $this->data['Artist']['territory'];
         $updateArr['language'] = Configure::read('App.LANGUAGE');
         $updateArr['album'] = $album;
-        if (isset($album_provider_type)) {
+        if (!empty($album_provider_type)) {
             $updateArr['provider_type'] = $album_provider_type;
         }
         $updateObj = new TopAlbum();
