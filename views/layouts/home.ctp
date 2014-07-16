@@ -489,7 +489,7 @@
                             }});
 
                     $("#colorboxOKBtn").click(function() {
-                        var pid = <?= $this->Session->read('patron') ?>;
+                        var pid = '<?= $this->Session->read('patron') ?>';
                         var lid = <?= $this->Session->read('library') ?>;
                         var data = {pid: pid, lid: lid};
                         jQuery.ajax({
@@ -522,7 +522,7 @@
                             }});
 
                 $("#colorboxOKBtn").click(function() {
-                    var pid = <?= $this->Session->read('patron') ?>;
+                    var pid = '<?= $this->Session->read('patron') ?>';
                     var lid = <?= $this->Session->read('library') ?>;
                     var data = {pid: pid, lid: lid};
                     jQuery.ajax({
@@ -570,7 +570,7 @@
                         //close the popup 
                         $("#colorboxCloseBtn").click(function() {
 	
-			    var pid = <?= $this->Session->read('patron') ?>;
+			    var pid = '<?= $this->Session->read('patron') ?>';
                             var lid = <?= $this->Session->read('library') ?>;
 			    			if($('#doNotShowCheck').is(':checked')) {
 						 		var data = {pid: pid, lid: lid};
@@ -611,7 +611,7 @@
 			
 							
                             //post the notification information
-                            var pid = <?= $this->Session->read('patron') ?>;
+                            var pid = '<?= $this->Session->read('patron') ?>';
                             var lid = <?= $this->Session->read('library') ?>;
                             var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
 							if($('#doNotShowCheck').is(':checked') && !$('#userNewsletterEmailField').val() ) {
