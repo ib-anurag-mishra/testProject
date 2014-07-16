@@ -188,11 +188,11 @@ ini_set( 'session.cookie_lifetime', '0' ); // 0 means "until the browser is clos
 							$hrefArtist   = base64_encode( $nationalTopSong['Song']['ArtistText'] );
 							$providerType = base64_encode( $nationalTopSong['Song']['provider_type'] );
 							
-							echo $this->Html->link( $songTitle, array('controller' => 'artists', 'action' => 'view', $hrefArtist, $nationalTopSong['Song']['ReferenceID'], $providerType), array('title' => $hrefTitle ) );
+							echo $this->Html->link( $songTitle, array('controller' => 'artists', 'action' => 'view', $hrefArtist, $nationalTopSong['Song']['ReferenceID'], $providerType), array('title' => $hrefTitle, 'escape' => false ) );
 						?>
 						</div>
 						<div class="artist-name">
-							<?php echo $this->Html->link( $this->getValidText( $this->Home->trimString( $nationalTopSong['Song']['ArtistText'], 35 ) ), array('controller' => 'artists', 'action' => 'album', base64_encode( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) ) ) );?>
+							<?php echo $this->Html->link( $this->getValidText( $this->Home->trimString( $nationalTopSong['Song']['ArtistText'], 35 ) ), array('controller' => 'artists', 'action' => 'album', base64_encode( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) ), 'escape' => false ) );?>
 						</div>
 					</div>
 					<?php if( $count % 2 == 0 ): ?>
@@ -222,12 +222,12 @@ ini_set( 'session.cookie_lifetime', '0' ); // 0 means "until the browser is clos
 		$count = 1;
 
 		foreach ( $featuredArtists as $k => $v ):
-			$this->Home->trimString( $v['Featuredartist']['artist_name'], 22 );
+			$artistText = $this->Home->trimString( $v['Featuredartist']['artist_name'], 22 );
 		?>
 			<div class="featured-grid-item">
-				<?php echo $this->Html->link($html->image(Configure::read('App.CDN') . 'featuredimg/' . $v['Featuredartist']['artist_image'], array("height" => "77", "width" => "84", "alt" => $ArtistText)), array('controller' => 'artists', 'action' => 'album', base64_encode($v['Featuredartist']['artist_name'])), array('escape' => false));?>
+				<?php echo $this->Html->link($html->image(Configure::read('App.CDN') . 'featuredimg/' . $v['Featuredartist']['artist_image'], array("height" => "77", "width" => "84", "alt" => $artistText)), array('controller' => 'artists', 'action' => 'album', base64_encode($v['Featuredartist']['artist_name'])), array('escape' => false));?>
 				<div class="featured-grid-menu">
-					<div class="featured-artist-name"> <?php echo $this->getTextEncode($ArtistText); ?> </div>
+					<div class="featured-artist-name"> <?php echo $this->getTextEncode($artistText); ?> </div>
 					<div class="featured-artist-ctas">
 						<?php
 							if ( isset( $patron ) && ! empty( $patron ) ) {

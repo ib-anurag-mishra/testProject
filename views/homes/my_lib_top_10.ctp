@@ -44,11 +44,11 @@
 							$albumTitle = $this->Home->trimString( $value['Albums']['AlbumTitle'], 20 );
 							$albumTitle = $this->Home->explicitContent( $value['Albums']['Advisory'], $albumTitle, true );
 
-							echo $this->Html->link( $albumTitle, array( 'controller' => 'artists', 'action' => 'view', base64_encode( $value['Song']['ArtistText'] ), $value['Song']['ReferenceID'], base64_encode( $value['Song']['provider_type'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Albums']['AlbumTitle'] ) ) ) );
+							echo $this->Html->link( $albumTitle, array( 'controller' => 'artists', 'action' => 'view', base64_encode( $value['Song']['ArtistText'] ), $value['Song']['ReferenceID'], base64_encode( $value['Song']['provider_type'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Albums']['AlbumTitle'] ) ), 'escape' => false ) );
 						?>
 					</div>
 					<div class="artist-name">
-						<?php echo $this->Html->link( $this->Home->trimString( $value['Song']['Artist'], 32 ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $value['Song']['ArtistText'] ) ), base64_encode( $value['Genre']['Genre'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Song']['Artist'] ) ) ) );?>
+						<?php echo $this->Html->link( $this->Home->trimString( $value['Song']['Artist'], 32 ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $value['Song']['ArtistText'] ) ), base64_encode( $value['Genre']['Genre'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Song']['Artist'] ) ), 'escape' => false ) );?>
 					</div>
 				</li>
 				<?php
@@ -108,7 +108,7 @@
 									if ( !( $downloadsUsed > 0 ) ):
 										$title = 'IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.';
 						?>
-										<div class="top-10-download-now-button">
+										<span class="top-10-download-now-button">
 											<form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
 												<input type="hidden" name="ProdID" value="<?php echo $value["Song"]["ProdID"]; ?>" /> 
 												<input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" /> 
@@ -126,7 +126,7 @@
 													</span>
 												</span>
 											</form>
-										</div>
+										</span>
 								<?php else:
 										echo $this->Html->link( $this->Html->tag( 'label', 'Downloaded', array('class' => 'dload', 'style' => 'width: 120px; cursor: pointer;', 'title' => 'You have already downloaded this song. Get it from your recent downloads') ), array( 'controller' => 'homes', 'action' => 'my_history'), array('class' => 'top-10-download-now-button song-downloaded', 'escape' => false ) );
 									endif;
@@ -166,11 +166,11 @@
 						<?php 
 							$songTitle = $this->Home->trimString( $value['Song']['SongTitle'], 20 );
 							$songTitle = $this->Home->explicitContent( $value['Song']['Advisory'], $songTitle, true );
-							echo $this->Html->link( $songTitle, array( 'controller' => 'artists', 'action' => 'view', base64_encode( $value['Song']['ArtistText'] ), $value['Song']['ReferenceID'], base64_encode( $value['Song']['provider_type'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Song']['SongTitle'] ) ) ) );
+							echo $this->Html->link( $songTitle, array( 'controller' => 'artists', 'action' => 'view', base64_encode( $value['Song']['ArtistText'] ), $value['Song']['ReferenceID'], base64_encode( $value['Song']['provider_type'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Song']['SongTitle'] ) ), 'escape' => false ) );
 						?>
 					</div>
 					<div class="artist-name">
-						<?php echo $this->Html->link( $this->Home->trimString( $value['Song']['Artist'], 32 ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $value['Song']['ArtistText'] ) ), base64_encode( $value['Genre']['Genre'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Song']['Artist'] ) ) ) );?>
+						<?php echo $this->Html->link( $this->Home->trimString( $value['Song']['Artist'], 32 ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $value['Song']['ArtistText'] ) ), base64_encode( $value['Genre']['Genre'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Song']['Artist'] ) ), 'escape' => false ) );?>
 					</div>
 				</li>
 				<?php
@@ -274,7 +274,7 @@
 						?>
 					</div>
 					<div class="artist-name">
-						<?php echo $this->Html->link( $this->Home->trimString( $value['Video']['Artist'], 32 ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $value['Video']['ArtistText'] ) ), base64_encode( $value['Genre']['Genre'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Video']['Artist'] ) ) ) );?>
+						<?php echo $this->Html->link( $this->Home->trimString( $value['Video']['Artist'], 32 ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $value['Video']['ArtistText'] ) ), base64_encode( $value['Genre']['Genre'] ) ), array( 'title' => $this->getValidText( $this->getTextEncode( $value['Video']['Artist'] ) ), 'escape' => false ) );?>
 					</div>
 				</li>
 				<?php

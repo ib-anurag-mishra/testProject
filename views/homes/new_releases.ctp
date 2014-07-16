@@ -36,11 +36,11 @@
 	                        		$albumTitle = $this->Home->trimString( $value['Albums']['AlbumTitle'], 20 );
 	                        		$albumTitle = $this->Home->explicitContent( $value['Albums']['Advisory'], $albumTitle, true );
 	                        		
-	                        		echo $this->Html->link( $this->getTextEncode( $albumTitle ), array( 'controller' => 'artists', 'action' => 'view', base64_encode( $value['Song']['ArtistText'] ), $value['Song']['ReferenceID'], base64_encode( $value['Song']['provider_type'] ) ), array( 'title' => $this->getTextEncode( $value['Albums']['AlbumTitle']) ) );
+	                        		echo $this->Html->link( $this->getTextEncode( $albumTitle ), array( 'controller' => 'artists', 'action' => 'view', base64_encode( $value['Song']['ArtistText'] ), $value['Song']['ReferenceID'], base64_encode( $value['Song']['provider_type'] ) ), array( 'title' => $this->getTextEncode( $value['Albums']['AlbumTitle']), 'escape' => false ) );
                         		?>					
                         	</div>
                         	<div class="artist-name">							
-	                            <?php echo $this->Html->link( $this->getTextEncode( $this->Home->trimString( $value['Song']['Artist'], 32 ) ), array( 'controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($value['Song']['ArtistText'])), base64_encode($value['Genre']['Genre']) ), array( 'title' => $this->getTextEncode($value['Song']['Artist']) ) );?>
+	                            <?php echo $this->Html->link( $this->getTextEncode( $this->Home->trimString( $value['Song']['Artist'], 32 ) ), array( 'controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($value['Song']['ArtistText'])), base64_encode($value['Genre']['Genre']) ), array( 'title' => $this->getTextEncode($value['Song']['Artist']), 'escape' => false ) );?>
 	                        </div>
                     	</li>
                 <?php
@@ -84,7 +84,7 @@
 		                                                <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
 		                                                <span class="beforeClick" id="download_video_<?php echo $value["Video"]["ProdID"]; ?>">
 		                                                    <![if !IE]>
-		                                                    	<?php echo $this->Html->link( 'Download Now', 'javascript:void(0)', array( 'class' => 'top-10-download-now-button no-ajaxy', 'title' => $title, 'onclick' => "return wishlistVideoDownloadOthersToken(('{$value['Video']['ProdID']}', '0', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}', '{$value["Video"]["provider_type"]}')", 'escape' => false ) );?>
+		                                                    	<?php echo $this->Html->link( 'Download Now', 'javascript:void(0)', array( 'class' => 'top-10-download-now-button no-ajaxy', 'title' => $title, 'onclick' => "return wishlistVideoDownloadOthersToken('{$value['Video']['ProdID']}', '0', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}', '{$value["Video"]["provider_type"]}')", 'escape' => false ) );?>
 		                                                    <![endif]>
 		                                                    <!--[if IE]>
 		                                                    	<?php echo $this->Html->link( 'Download Now', 'javascript:void(0)', array( 'class' => 'top-10-download-now-button no-ajaxy', 'title' => $title, 'onclick' => "return wishlistVideoDownloadIEToken( '{$value["Video"]['ProdID']}', '0', '{$value["Video"]["provider_type"]}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}')", 'escape' => false ) );?>
@@ -130,7 +130,7 @@
                         		?>
 		                    </div>
 		                    <div class="artist-name">
-		                    <?php echo $this->Html->link( $this->getTextEncode( $this->Home->trimString( $value['Video']['Artist'], 32 ) ), array( 'controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($value['Video']['ArtistText'])), base64_encode($value['Genre']['Genre']) ), array( 'title' => $this->getTextEncode($value['Video']['Artist']) ) );?>
+		                    <?php echo $this->Html->link( $this->getTextEncode( $this->Home->trimString( $value['Video']['Artist'], 32 ) ), array( 'controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($value['Video']['ArtistText'])), base64_encode($value['Genre']['Genre']) ), array( 'title' => $this->getTextEncode($value['Video']['Artist']), 'escape' => false ) );?>
 		                    </div>
 						</li>
 			<?php
