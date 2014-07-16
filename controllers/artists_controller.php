@@ -23,7 +23,7 @@ Class ArtistsController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs' );
 		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-                    $this->Auth->allow('admin_managetopalbums','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum');
+                    $this->Auth->allow('admin_managetopalbums','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete');
                 }
     }
 
@@ -67,7 +67,7 @@ Class ArtistsController extends AppController {
                 $result = array();
                 $allAlbum = $this->Album->find('all', array(
                     'fields' => array('Album.ProdID', 'Album.AlbumTitle'),
-                    'conditions' => array('Album.ArtistText' => $getData['Featuredartist']['artist_name'], 'Album.provider_type' => $getData['Featuredartist']['provider_type']),
+                    'conditions' => array('Album.ArtistText' => $getData['TopAlbum']['artist_name'], 'Album.provider_type' => $getData['TopAlbum']['provider_type']),
                     'recursive' => -1
                 ));
 
@@ -84,8 +84,8 @@ Class ArtistsController extends AppController {
         } else {
             $this->set('formAction', 'admin_inserttopalbum');
             $this->set('formHeader', 'Add Top Album');
-            $getTopAlbumDataObj = new Featuredartist();
-            $featuredtData = $getTopAlbumDataObj->getallartists();
+            $getTopAlbumDataObj = new TopAlbum();
+            $topAlbumtData = $getTopAlbumDataObj->getallartists();
             $condition = 'add';
             $artistName = '';
         }
