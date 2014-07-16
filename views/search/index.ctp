@@ -340,8 +340,8 @@
 										<input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>" />
 										<ul>
 											<li>
-											<?php
-												$wishlistInfo = $wishlist->getWishlistData( $nationalTopSong['Song']['ProdID'] );
+											<?php												
+                                                                                                $wishlistInfo = $wishlist->getWishlistData($palbum->ProdID);
 
 												if ( $wishlistInfo == 'Added To Wishlist' ):
 											?> 
