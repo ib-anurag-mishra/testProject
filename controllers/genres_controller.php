@@ -250,7 +250,7 @@ Class GenresController extends AppController
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
         }
-        
+       
 
         //set the Genre and Artist value according to upcomming value        
         if ($Genre == '')
@@ -262,16 +262,21 @@ Class GenresController extends AppController
             $Artist = "All";
             $slectedArtistFilter =$Artist;
         }
-       
+  
         //check the genre list cache
         $genreAll = Cache::read("genre" . $country,'GenreCache');
         if ($genreAll === false || empty($genreAll))
         {
             $genreAll = $this->Common->getGenres($country);
-        } 
+        }
+        // echo $genre = base64_encode('Acid Jazz');die;
         
         //check the genre value         
-        $genre = base64_decode($Genre);
+         $genre = base64_decode($Genre);
+         
+       
+        $selectedGenre = $this->Common->getGenreForSelection($genre);
+      
         $genre = mysql_escape_string($genre);
         $this->set('genre', $genre);        
         
@@ -298,6 +303,9 @@ Class GenresController extends AppController
         $this->set('artistsNoAlpha', $artistsNoAlpha);
         $this->set('selectedAlpha', $slectedArtistFilter);
         $this->set('artistList', $artistList);
+        $this->set('selectedGenre', $selectedGenre);
+
+        
         
         
         //app\views\genres\view.ctp
