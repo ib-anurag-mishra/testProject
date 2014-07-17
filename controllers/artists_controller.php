@@ -90,15 +90,7 @@ Class ArtistsController extends AppController {
             $artistName = '';
         }
 
-        Configure::write('Cache.disable', false);
-        Cache::delete("topAlbumUS");
-        Cache::delete("topAlbumCA");
-        Cache::delete("topAlbumIT");
-        Cache::delete("topAlbumNZ");
-        Cache::delete("topAlbumAU");
-        Cache::delete("topAlbumIE");
-        Cache::delete("topAlbumGB");
-        Configure::write('Cache.disable', true);
+        
     }
 
 	/*
