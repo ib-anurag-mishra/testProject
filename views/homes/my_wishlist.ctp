@@ -140,10 +140,10 @@
                                             		$title = 'IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.';
                                             ?>
                                                 <![if !IE]>
-                                                	<?php echo $this->Html->link( 'Download', 'javascript:void(0)', array( 'title' => $title, 'onclick' => "return wishlistDownloadOthersHome({$wishlistResult['wishlists']['ProdID']}, {$wishlistResult['wishlists']['id']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']}, {$wishlistResult['wishlists']["provider_type"]})" ) );?>
+                                                	<?php echo $this->Html->link( 'Download', 'javascript:void(0)', array( 'title' => $title, 'onclick' => "return wishlistDownloadOthersHome('{$wishlistResult['wishlists']['ProdID']}', '{$wishlistResult['wishlists']['id']}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}', '{$wishlistResult['wishlists']["provider_type"]}')" ) );?>
                                                 <![endif]>
                                                 <!--[if IE]>
-                                                	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('title' => $title, 'onclick' => "return wishlistDownloadIEHome({$wishlistResult['wishlists']['ProdID']}, {$wishlistResult['wishlists']['id']}, {$wishlistResult['wishlists']["provider_type"]}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']})") );?>
+                                                	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('title' => $title, 'onclick' => "return wishlistDownloadIEHome('{$wishlistResult['wishlists']['ProdID']}', '{$wishlistResult['wishlists']['id']}', '{$wishlistResult['wishlists']["provider_type"]}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}')") );?>
                                                 <![endif]-->	
                                             <?php } else { ?>
                                                 <![if !IE]>
@@ -216,10 +216,10 @@
                                         		$title = 'IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.';		
                                         ?>
                                             <![if !IE]>
-                                            	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('title' => $title,'class' => 'top-10-download-now-button', 'onclick' => "return wishlistVideoDownloadOthersToken({$wishlistResultsVideo['WishlistVideo']['ProdID']}, {$wishlistResultsVideo['WishlistVideo']['id']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']}, {$wishlistResultsVideo['WishlistVideo']["provider_type"]} )"));?>
+                                            	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('title' => $title,'class' => 'top-10-download-now-button', 'onclick' => "return wishlistVideoDownloadOthersToken('{$wishlistResultsVideo['WishlistVideo']['ProdID']}', '{$wishlistResultsVideo['WishlistVideo']['id']}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}', '{$wishlistResultsVideo['WishlistVideo']["provider_type"]}' )"));?>
                                             <![endif]>
                                             <!--[if IE]>
-                                                    <?php echo $this->Html->link('Download', 'javascript:void()', array('title' => $title, 'class' => 'top-10-download-now-button no-ajaxy', 'onclick' => "wishlistVideoDownloadIEToken({$wishlistResultsVideo['WishlistVideo']['ProdID']}, {$wishlistResultsVideo['WishlistVideo']['id']}, {$wishlistResultsVideo['WishlistVideo']['provider_type']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']})"));?>
+                                                    <?php echo $this->Html->link('Download', 'javascript:void()', array('title' => $title, 'class' => 'top-10-download-now-button no-ajaxy', 'onclick' => "wishlistVideoDownloadIEToken('{$wishlistResultsVideo['WishlistVideo']['ProdID']}', '{$wishlistResultsVideo['WishlistVideo']['id']}', '{$wishlistResultsVideo['WishlistVideo']['provider_type']}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}')"));?>
                                             <![endif]-->
                                         <?php } else { ?>
 	                                            <![if !IE]>

@@ -143,10 +143,10 @@
                             		<?php $productInfo = $song->getDownloadData($downloadResult['Download']['ProdID'],$downloadResult['Download']['provider_type']); ?>
                                     <span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
                                             <![if !IE]>
-                                                    <?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "return historyDownloadOthers({$downloadResult['Download']['ProdID']}, {$downloadResult['Download']['library_id']}, {$downloadResult['Download']['patron_id']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']})"));?>
+                                                    <?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "return historyDownloadOthers('{$downloadResult['Download']['ProdID']}', '{$downloadResult['Download']['library_id']}', '{$downloadResult['Download']['patron_id']}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}')"));?>
                                             <![endif]>
                                             <!--[if IE]>
-                                                    <?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "historyDownload({$downloadResult['Download']['ProdID']}, {$downloadResult['Download']['id']}, {$downloadResult['Download']['patron_id']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']})") )?>
+                                                    <?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "historyDownload('{$downloadResult['Download']['ProdID']}', '{$downloadResult['Download']['id']}', '{$downloadResult['Download']['patron_id']}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}')") )?>
                                             <![endif]-->
                                     </span>
                                     <span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
@@ -221,10 +221,10 @@
 									?>
                             		<span class="beforeClick" id="download_song_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>">
                                     	<![if !IE]>
-                                        	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "return historyDownloadVideoOthers({$videoDownloadResult['Videodownload']['ProdID']}, {$videoDownloadResult['Videodownload']['library_id']}, {$videoDownloadResult['Videodownload']['patron_id']}, {urlencode($finalVideoUrlArr[0])}, {urlencode($finalVideoUrlArr[1])}, {urlencode($finalVideoUrlArr[2])})"))?>
+                                        	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "return historyDownloadVideoOthers('{$videoDownloadResult['Videodownload']['ProdID']}', '{$videoDownloadResult['Videodownload']['library_id']}', '{$videoDownloadResult['Videodownload']['patron_id']}', '{urlencode($finalVideoUrlArr[0])}', '{urlencode($finalVideoUrlArr[1])}', '{urlencode($finalVideoUrlArr[2])}')"))?>
                                         <![endif]>
                                         <!--[if IE]>
-                                        	<?php echo $this->Html->link('Download', trim($finalVideoUrl), array('onclick' => "historyDownloadVideo({$videoDownloadResult['Videodownload']['ProdID']}, {$videoDownloadResult['Videodownload']['library_id']}, {$videoDownloadResult['Videodownload']['patron_id']})"));?>
+                                        	<?php echo $this->Html->link('Download', trim($finalVideoUrl), array('onclick' => "historyDownloadVideo('{$videoDownloadResult['Videodownload']['ProdID']}', '{$videoDownloadResult['Videodownload']['library_id']}', '{$videoDownloadResult['Videodownload']['patron_id']}')"));?>
                                         <![endif]-->
 									</span>
 									<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
