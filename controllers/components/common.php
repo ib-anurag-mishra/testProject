@@ -7,7 +7,8 @@
  */
 
 Class CommonComponent extends Object {
-  
+    
+    var $components = array('Session');
     var $maintainLatestDownload=true;
 
     /*
@@ -667,6 +668,9 @@ STR;
             if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
+            
+            App::import('Component', 'Streaming');
+            $StreamingComponent = new StreamingComponent();
 
             if (!empty($data)) {
                 foreach ($data as $key => $value) {
@@ -680,7 +684,7 @@ STR;
                         $songPath = explode(':', $filePath);
                         $streamUrl = trim($songPath[1]);
                         $data[$key]['streamUrl'] = $streamUrl;
-                        $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                        $data[$key]['totalseconds'] = $StreamingComponent->getSeconds($value['Song']['FullLength_Duration']);
                     }
                 }
                 Cache::write("national_us_top10_songs" . $country, $data);
@@ -1294,7 +1298,7 @@ STR;
             $tokeninstance = ClassRegistry::init('Token');
             
              App::import('Component', 'Streaming');
-             $Streaming = new StreamingComponent();
+             $StreamingComponent = new StreamingComponent();
             
             foreach ($randomSongs as $key => $value) {                
                 $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
@@ -1302,7 +1306,7 @@ STR;
                     $songPath = explode(':', $filePath);
                     $streamUrl = trim($songPath[1]);
                     $randomSongs[$key]['streamUrl'] = $streamUrl;
-                    $randomSongs[$key]['totalseconds'] = $Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                    $randomSongs[$key]['totalseconds'] = $StreamingComponent->getSeconds($value['Song']['FullLength_Duration']);
                 }
             }
         }
@@ -1780,11 +1784,14 @@ STR;
 
                 $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 
+                App::import('Component', 'Streaming');
+                $StreamingComponent = new StreamingComponent();
+                
                 if (!empty($filePath)) {
                     $songPath = explode(':', $filePath);
                     $streamUrl = trim($songPath[1]);
                     $topDownload[$key]['streamUrl'] = $streamUrl;
-                    $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                    $topDownload[$key]['totalseconds'] = $StreamingComponent->getSeconds($value['Song']['FullLength_Duration']);
                 }
             }            
             Cache::write("lib" . $libId, $topDownload);
