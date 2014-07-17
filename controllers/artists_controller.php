@@ -9,7 +9,7 @@
 Class ArtistsController extends AppController {
 
 	var $name 		= 'Artists';
-	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token');
+	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token', 'TopAlbum');
 	var $layout 	= 'admin';
 	var $helpers 	= array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo', 'Genre', 'Token');
 	var $components = array('Session', 'Auth', 'Downloads', 'CdnUpload', 'Streaming', 'Common','Solr', 'RequestHandler');
@@ -22,6 +22,242 @@ Class ArtistsController extends AppController {
     function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs' );
+		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
+                    $this->Auth->allow('admin_managetopalbums','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete');
+                }
+    }
+
+    /*
+      Function Name : manageTopAlbums
+      Desc : action for listing all the top albums
+     */
+
+    function admin_managetopalbums() {
+        $topAlbums = $this->paginate( 'TopAlbum', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
+        $this->set( 'topAlbums', $topAlbums );
+    }
+
+	/*
+      Function Name : admin_topalbumform
+      Desc : action for displaying the add/edit featured artist form
+     */
+
+    function admin_topalbumform() {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(0);
+        $territories = $this->Territory->find("all");
+        for ($m = 0; $m < count($territories); $m++) {
+            $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
+        }
+        $this->set("territories", $territoriesArray);
+        if (!empty($this->params['named'])) { //gets the values from the url in form  of array
+            $artistId = $this->params['named']['id'];
+            if (trim($artistId) != '' && is_numeric($artistId)) {
+                $this->set('formAction', 'admin_updatetopalbum/id:' . $artistId);
+                $this->set('formHeader', 'Edit Top Album');
+                $getTopAlbumDataObj = new TopAlbum();
+                $getData = $getTopAlbumDataObj->getartistdata($artistId);
+                $this->set('getData', $getData);
+                $condition = 'edit';
+                $artistName = $getData['TopAlbum']['artist_name'];
+                $country = $getData['TopAlbum']['territory'];
+
+                $getArtistData = array();
+                $this->set('getArtistData', $getArtistData);
+                $result = array();
+                $allAlbum = $this->Album->find('all', array(
+                    'fields' => array('Album.ProdID', 'Album.AlbumTitle'),
+                    'conditions' => array('Album.ArtistText' => $getData['TopAlbum']['artist_name'], 'Album.provider_type' => $getData['TopAlbum']['provider_type']),
+                    'recursive' => -1
+                ));
+
+                $val = '';
+                $this->Song->Behaviors->attach('Containable');
+                foreach ($allAlbum as $k => $v) {
+                    $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $getData['topAlbum']['territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+                    if (count($recordCount) > 0) {
+                        $result[$v['Album']['ProdID']] = $v['Album']['AlbumTitle'];
+                    }
+                }
+                $this->set('album', $result);
+            }
+        } else {
+            $this->set('formAction', 'admin_inserttopalbum');
+            $this->set('formHeader', 'Add Top Album');
+            $getTopAlbumDataObj = new TopAlbum();
+            $topAlbumtData = $getTopAlbumDataObj->getallartists();
+            $condition = 'add';
+            $artistName = '';
+        }
+
+        Configure::write('Cache.disable', false);
+        Cache::delete("topAlbumUS");
+        Cache::delete("topAlbumCA");
+        Cache::delete("topAlbumIT");
+        Cache::delete("topAlbumNZ");
+        Cache::delete("topAlbumAU");
+        Cache::delete("topAlbumIE");
+        Cache::delete("topAlbumGB");
+        Configure::write('Cache.disable', true);
+    }
+
+	/*
+      Function Name : admin_insertfeaturedartist
+      Desc : inserts a featured artist
+     */
+
+    function admin_inserttopalbum() {
+    	
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
+        $errorMsg = '';
+        $artist = '';
+        $album_provider_type = '';
+        $album_prodid = 0;
+        $alb_det = explode('-', $this->params[$index]['album']);
+        if (isset($alb_det[0])) {
+            $album_prodid = $alb_det[0];
+        }
+        if (isset($alb_det[1])) {
+            $album_provider_type = $alb_det[1];
+        }
+        if (isset($this->params[$index]['artistName'])) {
+            $artist = $this->params[$index]['artistName'];
+        } else {
+            $artist = $this->data['Artist']['artist_name'];
+        }
+        if (isset($this->params[$index]['album'])) {
+            $album = $album_prodid;
+        } else {
+            $album = $this->data['Artist']['album'];
+        }
+        if ($artist == '') {
+            $errorMsg .= 'Please select an Artist.<br/>';
+        }
+        if ($this->data['Artist']['territory'] == '') {
+            $errorMsg .= 'Please Choose a Territory<br/>';
+        }
+        if ($album == '') {
+            $errorMsg .= 'Please select an Album.<br/>';
+        }
+		$territory = $this->data['Artist']['territory'];
+        $insertArr = array();
+        $insertArr['artist_name'] = $artist;
+        $insertArr['album'] = $album;
+        $insertArr['territory'] = $this->data['Artist']['territory'];
+        $insertArr['language'] = Configure::read('App.LANGUAGE');
+        if (!empty($album_provider_type)) {
+            $insertArr['provider_type'] = $album_provider_type;
+        }
+        $insertObj = new TopAlbum();
+        if (empty($errorMsg)) {
+            if ($insertObj->insert($insertArr)) {
+                $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+                Configure::write('Cache.disable', false);
+                $this->Common->getTopAlbums($territory);
+                $this->redirect('managetopalbums');
+            }
+        } else {
+            $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
+            $this->redirect('topalbumform');
+        }
+    }
+
+	/*
+      Function Name : admin_updatefeaturedartist
+      Desc : Updates a featured artist
+     */
+
+    function admin_updatetopalbum() {
+    	
+    	if ( $this->RequestHandler->isPost() ) {
+    		$index = 'form';
+    	} else if ( $this->RequestHandler->isGet() ) {
+    		$index = 'url';
+    	}
+
+        $errorMsg = '';
+        $album_provider_type = '';
+        $album_prodid = 0;
+        $this->Featuredartist->id = $this->data['Artist']['id'];
+        $alb_det = explode('-', $this->params[$index]['album']);
+        if (isset($alb_det[0])) {
+            $album_prodid = $alb_det[0];
+        }
+        if (isset($alb_det[1])) {
+            $album_provider_type = $alb_det[1];
+        }
+        $artistName = '';
+        if (isset($this->params[$index]['artistName'])) {
+            $artistName = $this->params[$index]['artistName'];
+        }
+        $artist = '';
+        if (isset($this->params[$index]['artistName'])) {
+            $artist = $this->params[$index]['artistName'];
+        } else {
+            $artist = $this->data['Artist']['artist_name'];
+        }
+        if (isset($this->params[$index]['album'])) {
+            $album = $album_prodid;
+        } else {
+            $album = $this->data['Artist']['album'];
+        }
+        if ($artist == '') {
+            $errorMsg .= 'Please select an Artist.<br/>';
+        }
+        if ($this->data['Artist']['territory'] == '') {
+            $errorMsg .= 'Please Choose a Territory';
+        }
+        if ($album == '') {
+            $errorMsg .= 'Please select an Album.<br/>';
+        }
+		$territory = $this->data['Artist']['territory'];
+        $updateArr = array();
+        $updateArr['id'] = $this->data['Artist']['id'];
+        $updateArr['artist_name'] = $artist;
+        $updateArr['territory'] = $this->data['Artist']['territory'];
+        $updateArr['language'] = Configure::read('App.LANGUAGE');
+        $updateArr['album'] = $album;
+        if (!empty($album_provider_type)) {
+            $updateArr['provider_type'] = $album_provider_type;
+        }
+        $updateObj = new TopAlbum();
+        if (empty($errorMsg)) {
+            if ($updateObj->insert($updateArr)) {
+                $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
+                Configure::write('Cache.disable', false);                
+				$this->Common->getTopAlbums($territory);
+                $this->redirect('managetopalbums');
+            }
+        } else {
+            $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
+            $this->redirect('managetopalbums');
+        }
+    }
+
+	/*
+      Function Name : admin_delete
+      Desc : For deleting a featured artist
+     */
+
+    function admin_topalbumdelete() {
+        $deleteArtistUserId = $this->params['named']['id'];
+        $deleteObj = new TopAlbum();
+		$getData = $deleteObj->getartistdata($deleteArtistUserId);
+		$territory = $getData['TopAlbum']['territory'];
+        if ($deleteObj->del($deleteArtistUserId)) {
+			Configure::write('Cache.disable', false);
+			$this->Common->getTopAlbums($territory);
+            $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
+            $this->redirect('managetopalbums');
+        } else {
+            $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
+            $this->redirect('managetopalbums');
+        }
     }
 
     /*
