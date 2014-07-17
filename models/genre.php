@@ -50,25 +50,22 @@ class Genre extends AppModel {
         $this->recursive = 2;
         $this->Behaviors->attach('Containable');        
         
-        $genreAll = $this->find('all', array(
-            'conditions' =>
-            array('and' =>
-                array(
-                    array('Country.Territory' => $territory,'Country.DownloadStatus' => 1, "Genre.Genre NOT IN('Porn Groove')")
-                )
-            ),
-            'fields' => array(
-                'Genre.expected_genre'
-            ),
-            'contain' => array(
-                'Country' => array(
-                    'fields' => array(
-                        'Country.Territory'
-                    )
-                ),
-            ), 'group' => 'Genre.Genre'
-        ));
-      
+        $options = array(
+				'fields' => array( 'Genre.expected_genre', 'Country.Territory'),
+				'conditions' => array('and' => array( array('Country.Territory' => $territory,'Country.DownloadStatus' => 1, "Genre.Genre NOT IN('Porn Groove')"))),
+				'joins' => array(
+						array(
+								'table' => strtolower($territory) . '_countries',
+								'alias' => 'Country',
+								'type' 	=> 'LEFT',
+								'conditions' => array('Genre.ProdID = Country.ProdID')
+						)						
+                                            ),
+                                 'group' => array('Genre.Genre')
+		);
+        
+        
+        $genreAll = $this->find('all', $options);
         
         $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
         
