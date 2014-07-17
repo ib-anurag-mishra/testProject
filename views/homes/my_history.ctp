@@ -221,7 +221,7 @@
 									?>
                             		<span class="beforeClick" id="download_song_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>">
                                     	<![if !IE]>
-                                        	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "return historyDownloadVideoOthers('{$videoDownloadResult['Videodownload']['ProdID']}', '{$videoDownloadResult['Videodownload']['library_id']}', '{$videoDownloadResult['Videodownload']['patron_id']}', '{urlencode($finalVideoUrlArr[0])}', '{urlencode($finalVideoUrlArr[1])}', '{urlencode($finalVideoUrlArr[2])}')"))?>
+                                        	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "return historyDownloadVideoOthers('{$videoDownloadResult['Videodownload']['ProdID']}', '{$videoDownloadResult['Videodownload']['library_id']}', '{$videoDownloadResult['Videodownload']['patron_id']}', '" . urlencode($finalVideoUrlArr[0]) . "', '" . urlencode($finalVideoUrlArr[1]) . "', '" . urlencode($finalVideoUrlArr[2]) . "')"))?>
                                         <![endif]>
                                         <!--[if IE]>
                                         	<?php echo $this->Html->link('Download', trim($finalVideoUrl), array('onclick' => "historyDownloadVideo('{$videoDownloadResult['Videodownload']['ProdID']}', '{$videoDownloadResult['Videodownload']['library_id']}', '{$videoDownloadResult['Videodownload']['patron_id']}')"));?>
