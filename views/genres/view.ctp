@@ -197,6 +197,7 @@ $totalRows = count($genresAll);
                     foreach ($genresAll as $genre_name):
 
                         $genreNnameWithoutEncode = $genre_name;
+                    
                         //$genre_name_encoded = $this->getTextEncode($genre_name);                       
                         $genre_name_encoded = htmlentities($genre_name);
 
@@ -204,11 +205,14 @@ $totalRows = count($genresAll);
                         {	
                           if ($genre_name_encoded != 'Porn Groove')
                             {
-                                if ($genre_name_encoded == $genre)
+                             
+                              // echo $genre_name_encoded .'=='. $genre.'<br>';
+                                if (trim($genre_name_encoded) === trim($selectedGenre))
                                 {
+                                     
                                     ?>
                                     <li> 
-                                        <a  class="genre_list_item_all selected" 
+                                        <a  class="genre_list_item_all selected active" 
                                             href="javascript:void(0);" data-genre="<?php echo addslashes($genreNnameWithoutEncode); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>" 
                                             onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genreNnameWithoutEncode); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($genre_name_encoded); ?>')" >
@@ -673,9 +677,9 @@ elseif ($this->Session->check('calledAlbum'))
     function scrollToSelectedGenre()
     {
         sleep(100);
-        var to_scroll = $(document).find(".genre-list");
-        $(document).find(".genre-list li").each(function() {
-            if ($(this).find('a').hasClass('selected'))
+        var to_scroll = $(document).find(".genre-column");
+        $(document).find(".genre-column li").each(function() {
+            if ($(this).find('a').hasClass('active'))
             {
                 var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
                 to_scroll.animate({

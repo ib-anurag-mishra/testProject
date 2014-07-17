@@ -92,14 +92,11 @@ class CacheController extends AppController {
         $this->writeLibraryTop10songsCache();
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){            
-            $this->setNewsCache($territory);
             $this->setGenre($territory);
 	    $this->setTopSingles($territory);
             $this->setFeaturedVideos($territory);
             $this->setTopVideoDownloads($territory);
 	    $this->setTopAlbums($territory);
-            $this->setComingSoonSongs($territory);
-            $this->setComingSoonVideos($territory);
             $this->setUsTop10Songs($territory);
             $this->setUsTop10Albums($territory);
             $this->setUsTop10Videos($territory);
@@ -116,6 +113,7 @@ class CacheController extends AppController {
        $this->setVideoCacheVar();    
        $this->setAppMyMusicVideoList(); 
        $this->setAnnouncementCache();
+       //$this->setMoviesAnnouncements();
        $this->setTopArtist();
     }
     
@@ -137,14 +135,6 @@ class CacheController extends AppController {
     function setTopAlbums($territory) {
         $this->Common->getTopAlbums($territory);
     }
-    function setComingSoonSongs($territory) {
-        $this->Common->getComingSoonSongs($territory);
-    }
-    
-    function setComingSoonVideos($territory) {
-        $this->Common->getComingSoonVideos($territory);
-    }
-    
     function setUsTop10Songs($territory) {
         $this->Common->getUsTop10Songs($territory);
     }
@@ -219,6 +209,19 @@ class CacheController extends AppController {
    
     }
     
+    /* Function name : setMoviesAnnouncements
+     * Function Description : This function is used to set cache for movies announcements
+     * 
+     */
+    
+    function setMoviesAnnouncements() {
+        $this->Announcement->setDataSource('movies');
+        $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
+        $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
+        Cache::write("moviesannouncementCache", $mvAnnouncment); 
+        $this->Announcement->setDataSource('default');
+    }
+    
     /**
      * Function Name : setFeaturedArtists
      * Function Description : This function is used to set all featured artists in Cache.
@@ -252,46 +255,6 @@ class CacheController extends AppController {
         
     }
     
-     /*
-     * Function Name : setNewsCache
-     * Function Description : This function is used to set News Cache.
-     * all this function query must be same as queries written in home controller for news.
-     */
-    function setNewsCache($territory){
-        
-         $lengRs = $this->Language->find('all', array('conditions' => array('status' => 'active'),'fields' => 'short_name'));
-         
-         
-         foreach($lengRs as $perLeg => $lengRow) {
-             $lenguage = trim($lengRow['Language']['short_name']);
-             
-             $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $lenguage))));
-
-             if($news_count != 0){
-                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $lenguage, 'place LIKE' => "%".$territory."%")),
-                'order' => 'News.created DESC',
-                'limit' => '10'
-                ));
-                 
-                $newCacheVarName = "news".$territory.$lenguage;
-                
-                
-             }else{
-                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$territory."%")),
-                'order' => 'News.created DESC',
-                'limit' => '10'
-                ));
-                 
-                $newCacheVarName = "news".$territory."en";
-                
-             }         
-             
-            Cache::write($newCacheVarName,$news_rs);           
-            $this->log("cache wrritten for ".  $newCacheVarName, "cache"); 
-         }     
-        
-    }
-        
 /**
   * Function Name : setTopArtist
   * Function Description : This function sets top artist albums in cache, used in App only
