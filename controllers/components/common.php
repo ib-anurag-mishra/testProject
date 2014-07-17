@@ -9,59 +9,6 @@
 Class CommonComponent extends Object {
   
     var $maintainLatestDownload=true;
-    /*
-     * Function Name : getGenres
-     * Function Description : This function is used to get all genres.
-     */
-
-    function getGenres($territory) {
-        set_time_limit(0);
-        $countryPrefix = $this->getCountryPrefix($territory);
-        $genreInstance = ClassRegistry::init('Genre');
-        $songInstance = ClassRegistry::init('Song');
-        $genreInstance->Behaviors->attach('Containable');
-        $genreInstance->recursive = 2;
-        $genreList = array();
-
-        $genreAll = $genreInstance->find('all', array(
-            'conditions' =>
-            array('and' =>
-                array(
-                    array('Country.Territory' => $territory, 'Country.DownloadStatus' => 1, "Genre.Genre NOT IN('Porn Groove')")
-                )
-            ),
-            'fields' => array(
-                'Genre.expected_genre'
-            ),
-            'contain' => array(
-                'Country' => array(
-                    'fields' => array(
-                        'Country.Territory'
-                    )
-                ),
-            ), 'group' => 'Genre.Genre'
-        ));
-
-
-        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");
-
-        $combine_genre = array();
-        if ((count($genreAll) > 0) && ($genreAll !== false)) {
-            for ($count = 0; $count < count($genreAll); $count++) {
-                array_push($combine_genre, str_replace("\\", "", $genreAll[$count]['Genre']['expected_genre']));
-            }
-            $combine_genre = array_unique($combine_genre);
-            sort($combine_genre);
-
-            Cache::write("genre" . $territory, $combine_genre, 'GenreCache');
-            $this->log("cache written for genre for $territory", "cache");
-
-            /* Cache::write("genre" . $territory, $genreAll,'GenreCache');
-              $this->log("cache written for genre for $territory", "cache"); */
-        }
-
-        return $combine_genre;
-    }
 
     /*
      * @func runGlobalCacheFromShell
@@ -365,8 +312,10 @@ Class CommonComponent extends Object {
     function setArtistText($territory) {
         set_time_limit(0);
 
+        $genreInstance = ClassRegistry::init('Genre');
+        
         //set the aritst cache for specific Genre
-        $genreAll = $this->getGenres($territory);
+        $genreAll = $genreInstance->getGenres($territory);
         //commented but need sometime for testing perpuse
         //$genreAll = Cache::read("genre" . $territory);
 

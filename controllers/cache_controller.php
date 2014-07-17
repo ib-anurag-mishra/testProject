@@ -36,7 +36,7 @@ class CacheController extends AppController {
     }
     
     function admin_setGenre($territory){ 
-        $this->Common->getGenres($territory);
+        $this->Genre->getGenres($territory);
     }
     
     function admin_setTopSingles($territory){
