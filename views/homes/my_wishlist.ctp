@@ -111,17 +111,21 @@
                             </div>
                             <div class="song-title">
                             	<?php $trackTitle = $this->Home->trimString( $wishlistResult['wishlists']['track_title'], 14 ); ?>
-                            	<a title="<?php echo $this->getTextEncode($wishlistResult['wishlists']['track_title']); ?>" href="javascript:void(0)"> <?=$this->getTextEncode( $trackTitle )?> </a>
+                            	<span title="<?php echo $this->getTextEncode($wishlistResult['wishlists']['track_title']); ?>"> <?=$this->getTextEncode( $trackTitle )?> </span>
                             </div>
 
                             <div class="album-title">
-                            	<?php $album = $this->Home->trimString( $wishlistResult['wishlists']['album'], 14 ); ?>
-                            	<a title="<?php echo $this->getTextEncode(htmlentities($wishlistResult['wishlists']['album'])); ?>" href="/artists/view/<?= base64_encode($wishlistResult['Song']['ArtistText']); ?>/<?= $wishlistResult['Song']['ReferenceID']; ?>/<?= base64_encode($wishlistResult['Song']['provider_type']); ?>"> <?=$this->getTextEncode( $album )?> </a>
+                            	<?php 
+                            		$album = $this->Home->trimString( $wishlistResult['wishlists']['album'], 14 ); 
+                            		echo $this->Html->link( $this->getTextEncode( $album ), array('controller' => 'artists', 'action' => 'view', base64_encode($wishlistResult['Song']['ArtistText']), $wishlistResult['Song']['ReferenceID'], base64_encode($wishlistResult['Song']['provider_type'] ) ), array('title' => $this->getValidText($wishlistResult['wishlists']['album']), 'escape' => false ) );
+                            	?>
                             </div>
 
                             <div class="artist-name">
-                            	<?php $artist = $this->Home->trimString( $wishlistResult['wishlists']['artist'], 14 ); ?>
-                            	<a title="<?php echo $this->getTextEncode(htmlentities($wishlistResult['wishlists']['artist'])); ?>" href="/artists/album/<?= base64_encode($wishlistResult['Song']['ArtistText']); ?>"> <?=$this->getTextEncode( $artist )?> </a>
+                            	<?php 
+                            		$artist = $this->Home->trimString( $wishlistResult['wishlists']['artist'], 14 ); 
+                            		echo $this->Html->link( $this->getTextEncode( $artist ), array( 'controller' => 'artists', 'action' => 'album', base64_encode($wishlistResult['Song']['ArtistText']) ), array('title' =>  $this->getValidText($wishlistResult['wishlists']['artist']), 'escape' => false ));
+                            	?>
                             </div>
 
                             <div class="download">
@@ -133,12 +137,13 @@
                                         <span class="beforeClick" id="wishlist_song_<?php echo $wishlistResult['wishlists']['ProdID']; ?>">
                                             <?php
                                             if ($wishlistResult['Country']['SalesDate'] <= date('Y-m-d') && ($wishlistResult['Country']['DownloadStatus'] == 1)) {
+                                            		$title = 'IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.';
                                             ?>
                                                 <![if !IE]>
-                                                <a href='javascript:void(0);' title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadOthersHome("<?php echo $wishlistResult['wishlists']['ProdID']; ?>", "<?php echo $wishlistResult['wishlists']['id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $wishlistResult['wishlists']["provider_type"]; ?>");'><?php __('Download'); ?></a>
+                                                	<?php echo $this->Html->link( 'Download', 'javascript:void(0)', array( 'title' => $title, 'onclick' => "return wishlistDownloadOthersHome({$wishlistResult['wishlists']['ProdID']}, {$wishlistResult['wishlists']['id']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']}, {$wishlistResult['wishlists']["provider_type"]})" ) );?>
                                                 <![endif]>
                                                 <!--[if IE]>
-                                                        <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $wishlistResult['wishlists']['ProdID']; ?>", "<?php echo $wishlistResult['wishlists']['id']; ?>" , "<?php echo $wishlistResult['wishlists']["provider_type"]; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download'); ?></a>
+                                                	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('title' => $title, 'onclick' => "return wishlistDownloadIEHome({$wishlistResult['wishlists']['ProdID']}, {$wishlistResult['wishlists']['id']}, {$wishlistResult['wishlists']["provider_type"]}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']})") );?>
                                                 <![endif]-->	
                                             <?php } else { ?>
                                                 <![if !IE]>
@@ -188,29 +193,33 @@
 
                             <div class="song-title">
                             	<?php $trackTitle = $this->Home->trimString( $wishlistResultsVideo['WishlistVideo']['track_title'], 14 ); ?>
-                            	<a title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>" href="javascript:void(0)"> <?=$this->getTextEncode($trackTitle)?> </a>
+                            	<span title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>"> <?=$this->getTextEncode($trackTitle)?> </span>
                             </div>
 
                             <div class="album-title">
                             	<?php $videoTitle = $this->Home->trimString( $wishlistResultsVideo['Video']['Title'], 14 ); ?>
-                            	<a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['Video']['Title'])); ?>" href="javascript:void(0)"><?= $this->getTextEncode( $videoTitle ); ?></a>
+                            	<span title="<?php echo $this->getTextEncode($wishlistResultsVideo['Video']['Title']); ?>"><?= $this->getTextEncode( $videoTitle ); ?></span>
                             </div>
                             
                             <div class="artist-name">
-                            	<?php $artist = $this->Home->trimString( $wishlistResultsVideo['WishlistVideo']['artist'], 14 ); ?>
-                            	<a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['WishlistVideo']['artist'])); ?>" href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>"> <?=$this->getTextEncode( $artist )?></a>
+                            	<?php 
+                            		$artist = $this->Home->trimString( $wishlistResultsVideo['WishlistVideo']['artist'], 14 );
+                            		echo $this->Html->link($this->getTextEncode( $artist ), array('controller' => 'artists', 'action' => 'album', base64_encode($wishlistResultsVideo['Video']['ArtistText']), array('title' => $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['artist']) )));
+                            	?>
                             </div>
 
                             <div class="download">
                                 <p>
                                     <?php $productInfo = $mvideo->getDownloadData($wishlistResultsVideo['WishlistVideo']['ProdID'], $wishlistResultsVideo['WishlistVideo']['provider_type']); ?>
                                     <span class="beforeClick" id="download_video_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
-                                        <?php if ($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d')) { ?>
+                                        <?php if ($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d')) { 
+                                        		$title = 'IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.';		
+                                        ?>
                                             <![if !IE]>
-                                            <a href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>", "<?php echo $wishlistResultsVideo['WishlistVideo']['id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>",  "<?php echo $wishlistResultsVideo['WishlistVideo']["provider_type"]; ?>");'><label class="top-10-download-now-button"><?php __('Download'); ?></label></a>
+                                            	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('title' => $title,'class' => 'top-10-download-now-button', 'onclick' => "return wishlistVideoDownloadOthersToken({$wishlistResultsVideo['WishlistVideo']['ProdID']}, {$wishlistResultsVideo['WishlistVideo']['id']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']}, {$wishlistResultsVideo['WishlistVideo']["provider_type"]} )"));?>
                                             <![endif]>
                                             <!--[if IE]>
-                                                    <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>','<?php echo $wishlistResultsVideo['WishlistVideo']['id']; ?>','<?php echo $wishlistResultsVideo['WishlistVideo']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download'); ?></a></label>
+                                                    <?php echo $this->Html->link('Download', 'javascript:void()', array('title' => $title, 'class' => 'top-10-download-now-button no-ajaxy', 'onclick' => "wishlistVideoDownloadIEToken({$wishlistResultsVideo['WishlistVideo']['ProdID']}, {$wishlistResultsVideo['WishlistVideo']['id']}, {$wishlistResultsVideo['WishlistVideo']['provider_type']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']})"));?>
                                             <![endif]-->
                                         <?php } else { ?>
 	                                            <![if !IE]>

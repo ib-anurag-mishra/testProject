@@ -11,7 +11,7 @@
 	</div>
 	<header class="clearfix">
 		<h2><?php echo __('Downloads', true); ?></h2>
-		<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="/questions">FAQ section.</a></div>
+		<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $this->Html->link('FAQ section.', '/questions');?></div>
 	</header>
 	<div class="instructions"> <?php echo $page->getPageContent('history'); ?> </div>
 	
@@ -121,17 +121,21 @@
 									$trackTitle = $this->getTextEncode( $trackTitle );
 									$trackTitle = $this->Home->explicitContent( $downloadResult['Song']['Advisory'], $trackTitle, true );
 								?>
-                            	<a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" href="javascript:void(0)"><?=$trackTitle?> </a>
+                            	<span title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>"><?=$trackTitle?> </span>
 							</div>
 
 							<div class="album-title">
-								<?php $songTitle = $this->Home->trimString( $downloadResult['Song']['Title'], 18 ); ?>
-                                 <a title="<?php echo $this->getTextEncode($downloadResult['Song']['Title'] ); ?>" href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>"> <?=$this->getTextEncode( $songTitle )?> </a>
+								<?php 
+									$songTitle = $this->Home->trimString( $downloadResult['Song']['Title'], 18 );
+                                	echo $this->Html->link($this->getTextEncode( $songTitle ), array('controller' => 'artists', 'action' => 'view', base64_encode($downloadResult['Song']['ArtistText']), $downloadResult['Song']['ReferenceID'], base64_encode($downloadResult['Song']['provider_type'] ) ), array('title' => $this->getTextEncode($downloadResult['Song']['Title'] )) );
+                                ?>
 							</div>
 
 							<div class="artist-name">
-								<?php $artist = $this->Home->trimString( $downloadResult['Download']['artist'], 18 ); ?>
-	                            <a title="<?php echo $this->getTextEncode($downloadResult['Download']['artist']); ?>" href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>"> <?=$this->getTextEncode( $artist )?> </a>
+								<?php 
+									$artist = $this->Home->trimString( $downloadResult['Download']['artist'], 18 );
+	                            	echo $this->Html->link($this->getTextEncode( $artist ), array('controller' => 'artists', 'action' => 'album', base64_encode($downloadResult['Song']['ArtistText'])), array('title' => $this->getTextEncode($downloadResult['Download']['artist'])));
+	                            ?>
                              </div>
 
 							<div class="download">           
@@ -139,10 +143,10 @@
                             		<?php $productInfo = $song->getDownloadData($downloadResult['Download']['ProdID'],$downloadResult['Download']['provider_type']); ?>
                                     <span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
                                             <![if !IE]>
-                                                    <a href='javascript:void(0);' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath'];?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName'];?>");'><?php __('Download');?></a>
+                                                    <?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "return historyDownloadOthers({$downloadResult['Download']['ProdID']}, {$downloadResult['Download']['library_id']}, {$downloadResult['Download']['patron_id']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']})"));?>
                                             <![endif]>
                                             <!--[if IE]>
-                                                    <a onclick='historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath'];?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName'];?>");' href="javascript:void(0);"><?php __('Download');?></a>
+                                                    <?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "historyDownload({$downloadResult['Download']['ProdID']}, {$downloadResult['Download']['id']}, {$downloadResult['Download']['patron_id']}, {$productInfo[0]['Full_Files']['CdnPath']}, {$productInfo[0]['Full_Files']['SaveAsName']})") )?>
                                             <![endif]-->
                                     </span>
                                     <span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
@@ -187,17 +191,17 @@
 									$trackTitle = $this->getTextEncode( $trackTitle );
 									$trackTitle = $this->Home->explicitContent( $videoDownloadResult['Video']['Advisory'], $trackTitle, true );
 								?>
-								<a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>" href="javascript:void(0)"><?=$trackTitle?> </a>
+								<span title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>"><?=$trackTitle?> </span>
 							</div>
 
 							<div class="album-title">
 								<?php $videoTitle = $this->Home->trimString( $videoDownloadResult['Video']['Title'], 21 ); ?>
-								<a title="<?php echo $this->getTextEncode($videoDownloadResult['Video']['Title']); ?>" href="javascript:void(0)"><?=$this->getTextEncode( $videoTitle )?></a>
+								<span title="<?php echo $this->getTextEncode($videoDownloadResult['Video']['Title']); ?>"><?=$this->getTextEncode( $videoTitle )?></span>
 							</div>
 
 							<div class="artist-name">
 								<?php $artist = $this->Home->trimString( $videoDownloadResult['Videodownload']['artist'], 18 ); ?>
-								<a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['artist']); ?>" href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>"><?=$this->getTextEncode( $artist )?></a>
+								<?php echo $this->Html->link($this->getTextEncode( $artist ), array('controller' => 'artists', 'action' => 'album', base64_encode($videoDownloadResult['Video']['ArtistText'])), array('title' => $this->getTextEncode($videoDownloadResult['Videodownload']['artist'])));?>
 							</div>
 					
 							<div class="wishlist-popover">
@@ -217,10 +221,10 @@
 									?>
                             		<span class="beforeClick" id="download_song_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>">
                                     	<![if !IE]>
-                                        	<a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
+                                        	<?php echo $this->Html->link('Download', 'javascript:void(0)', array('onclick' => "return historyDownloadVideoOthers({$videoDownloadResult['Videodownload']['ProdID']}, {$videoDownloadResult['Videodownload']['library_id']}, {$videoDownloadResult['Videodownload']['patron_id']}, {urlencode($finalVideoUrlArr[0])}, {urlencode($finalVideoUrlArr[1])}, {urlencode($finalVideoUrlArr[2])})"))?>
                                         <![endif]>
                                         <!--[if IE]>
-                                        	<a onclick='historyDownloadVideo("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
+                                        	<?php echo $this->Html->link('Download', trim($finalVideoUrl), array('onclick' => "historyDownloadVideo({$videoDownloadResult['Videodownload']['ProdID']}, {$videoDownloadResult['Videodownload']['library_id']}, {$videoDownloadResult['Videodownload']['patron_id']})"));?>
                                         <![endif]-->
 									</span>
 									<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
