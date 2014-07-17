@@ -895,7 +895,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				</div>
 			</div>
                         <br/>
-<!-- commented announcements code
                         <?php 
                         if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
 
@@ -919,7 +918,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                   } ?> 
                                  <a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here to log in</a>
                             </div>
-                        <?php } ?> -->
+                        <?php } ?> 
 		</section>
 		<div class="content" style="<?php echo $section_class; ?>">
 			<span class="ajaxmessage44" id="ajaxflashMessage44"></span>
