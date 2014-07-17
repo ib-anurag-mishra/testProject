@@ -47,7 +47,7 @@ class Genre extends AppModel {
     {
         set_time_limit(0);
 
-        $this->unBindModel(array('belongsTo' => array('Download'), 'hasOne' => array('Song', 'Country')));
+        $this->unBindModel(array('belongsTo' => array('Download'), 'hasOne' => array('Songs', 'Country')));
         
         $this->recursive = 2;
         $this->Behaviors->attach('Containable');        
