@@ -222,6 +222,7 @@ Class ArtistsController extends AppController {
         if ($album == '') {
             $errorMsg .= 'Please select an Album.<br/>';
         }
+		$territory = $this->data['Artist']['territory'];
         $updateArr = array();
         $updateArr['id'] = $this->data['Artist']['id'];
         $updateArr['artist_name'] = $artist;
@@ -236,15 +237,16 @@ Class ArtistsController extends AppController {
             if ($updateObj->insert($updateArr)) {
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));
     
-                Configure::write('Cache.disable', false);
+               /* Configure::write('Cache.disable', false);
                 Cache::delete("topAlbumUS");
                 Cache::delete("topAlbumCA");
                 Cache::delete("topAlbumIT");
                 Cache::delete("topAlbumNZ");
                 Cache::delete("topAlbumAU");
                 Cache::delete("topAlbumIE");
-                Cache::delete("topAlbumGB");
-                Configure::write('Cache.disable', true);
+                Cache::delete("topAlbumGB"); 
+                Configure::write('Cache.disable', true); */
+				$this->Common->getTopAlbums($territory);
                 $this->redirect('managetopalbums');
             }
         } else {
