@@ -615,8 +615,8 @@ Class CommonComponent extends Object
         $country = $territory;
         if (!empty($country))
         {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
+            
+            if ($this->maintainLatestDownload)
             {
 
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
@@ -767,8 +767,8 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
+            
+            if ($this->maintainLatestDownload)
             {
 
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
@@ -1022,8 +1022,8 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
+            
+            if ($this->maintainLatestDownload)
             {
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                 FROM `latest_downloads` AS `Download` 
@@ -1171,8 +1171,8 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
+            
+            if ($this->maintainLatestDownload)
             {
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                    FROM `latest_downloads` AS `Download` 
@@ -1311,8 +1311,8 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
+            
+            if ($this->maintainLatestDownload)
             {
                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                      FROM `latest_videodownloads` AS `Download` 
@@ -2060,8 +2060,8 @@ STR;
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-        if ($maintainLatestDownload)
+        
+        if ($this->maintainLatestDownload)
         {
             $restoregenre_query = "
         SELECT 
@@ -2208,11 +2208,11 @@ STR;
         $songInstance = ClassRegistry::init('Song');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
+        
 
         //this is for my library songs start
 
-        if ($maintainLatestDownload)
+        if ($this->maintainLatestDownload)
         {
             $download_src = 'LatestDownload';
             $topDownloaded = $latestDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
@@ -2233,7 +2233,7 @@ STR;
         $ids_provider_type = '';
         foreach ($topDownloaded as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if ($this->maintainLatestDownload)
             {
                 if (empty($ids))
                 {
@@ -2413,9 +2413,9 @@ STR;
         $downloadInstance = ClassRegistry::init('Download');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
+        
         //library top 10 cache set for albums start            
-        if ($maintainLatestDownload)
+        if ($this->maintainLatestDownload)
         {
             $download_src = 'LatestDownload';
             $topDownloaded_albums = $latestDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
@@ -2437,7 +2437,7 @@ STR;
         $ids_provider_type = '';
         foreach ($topDownloaded_albums as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if ($this->maintainLatestDownload) 
             {
                 if (empty($ids))
                 {
@@ -2603,10 +2603,10 @@ STR;
         $videoInstance = ClassRegistry::init('Video');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
+        
 
         //library top 10 cache set for videos start 
-        if ($maintainLatestDownload)
+        if ($this->maintainLatestDownload)
         {
             $download_src = 'LatestDownload';
             $topDownloaded_videos = $latestVideoDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
@@ -2628,7 +2628,7 @@ STR;
         $ids_provider_type = '';
         foreach ($topDownloaded_videos as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if ($this->maintainLatestDownload)
             {
                 if (empty($ids))
                 {
