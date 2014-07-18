@@ -97,7 +97,7 @@ echo $session->flash();
         $('#getAlbum select.select_fields option').remove();
       });
 		
-	  $('#album').change(function(){
+	  $('#ArtistAlbum').change(function(){
 		$('#getSongs').val('');
 		$('#getSongs select.select_fields option').remove();
         getSongs();
@@ -170,7 +170,7 @@ echo $session->flash();
   
 	function getSongs(){		
         var artistNameText = escape($("#ArtistArtistName").val());
-		var albumProdId = escape($('#album').val());
+		var albumProdId = escape($('#ArtistAlbum').val());
 		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+artistNameText+"&albumProdId="+albumProdId;
                     
 		jQuery.ajax({
