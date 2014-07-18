@@ -115,6 +115,14 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 					</li>
 				</ul>
 			</li>
+			<li><a href="#">Top Singles</a>
+				<ul>
+					<li><?php echo $html->link('Add Top Single', array('controller' => 'artists', 'action' => 'topsingleform'));?>
+					</li>
+					<li><?php echo $html->link('Manage Top Singles', array('controller' => 'artists', 'action' => 'managetopsingles'));?>
+					</li>
+				</ul>
+			</li>
 			<li><a href="#">Newly Added Artist</a>
 				<ul>
 					<li><?php echo $html->link('Add Artist', array('controller' => 'artists', 'action' => 'addnewartist'));?>
