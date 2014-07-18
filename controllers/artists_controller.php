@@ -2977,6 +2977,49 @@ Class ArtistsController extends AppController {
         exit;
     }
 
+     /**
+     * @getSongs
+     *  return songs in the selected album
+     *
+     * $name
+     *  string to be searchedin atrist name
+     *
+     * @return
+     *  
+     * */
+    function admin_getSongs() {
+        Configure::write('debug', 0);
+
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+		$albumProdId = $this->params[$index]['albumProdId'];
+		$territory   = $this->params[$index]['territory'];
+	
+        $result = array();
+      //  $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID', 'Album.AlbumTitle', 'Album.provider_type'), 'conditions' => array('Album.ArtistText = ' => urldecode($this->params[$index]['artist'])), 'recursive' => -1));
+        $val = '';
+        $this->Song->Behaviors->attach('Containable');
+        $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
+        $this->Country->setTablePrefix($countryPrefix);
+      
+            $songs = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID', 'Song.SongTitle'), 'conditions' => array('Song.ReferenceID' => $albumProdId, 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $territory), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+
+//		 $songs = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
+           
+        $data = "<option value=''>SELECT</option>";
+        foreach ($songs as $k => $v) {
+			$result[$v['Song']['ProdID']] = $v['Song']['SongTitle'];
+        }
+		foreach ($result as $k => $v) {
+		$data = $data . "<option value='" . $k. "'>" . $v . "</option>";
+		}
+        print "<select class='select_fields' id='album' name='album'>" . $data . "</select>";
+        exit;
+    }
+
     /**
      * @getAutoArtist
      *  return top 5 artist names with ajax call

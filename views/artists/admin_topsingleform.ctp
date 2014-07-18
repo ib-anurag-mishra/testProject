@@ -62,7 +62,7 @@ if(empty($album)){
 					<td align="right" width="390"><?php echo $form->label('Choose Song');?>
 					</td>
 					<td align="left">
-						<div id="getAlbum">
+						<div id="getSongs">
 							<?php
 							echo $form->select('album', $album, $getData['TopSingles']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
@@ -160,6 +160,25 @@ echo $session->flash();
 		return false;
 	}	
   
+	function getSongs(){		
+                var artistNameText = escape($("#ArtistArtistName").val());
+		var albumProdId = escape($('getAlbum').val());
+		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+artistNameText+"&albumProdId="+albumProdId;
+                    
+		jQuery.ajax({
+			type: "post",  // Request method: post, get
+			url: webroot+"admin/artists/getSongs", // URL to request
+			data: data,  // post data
+			success: function(response) {
+					$('#getSongs').text('');
+					$('#getSongs').html(response);
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {}
+		});
+		return false;
+	}
+
+
   function isArrowKey(event){
     if( (event.keyCode != 37) && (event.keyCode != 38) && (event.keyCode != 39) && (event.keyCode != 40)) {
       return true;
