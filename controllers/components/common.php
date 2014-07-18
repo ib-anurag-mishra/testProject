@@ -969,6 +969,9 @@ STR;
             {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
+            
+            App::import('Component', 'Streaming');
+            $StreamingComponent = new StreamingComponent();
 
             if (!empty($data))
             {
@@ -985,7 +988,7 @@ STR;
                         $songPath = explode(':', $filePath);
                         $streamUrl = trim($songPath[1]);
                         $data[$key]['streamUrl'] = $streamUrl;
-                        $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                        $data[$key]['totalseconds'] = $StreamingComponent->getSeconds($value['Song']['FullLength_Duration']);
                     }
                 }
                 Cache::delete("national_us_top10_songs" . $country);
@@ -2871,13 +2874,16 @@ STR;
             //library top 10 cache set
             $this->log("Freegal Defaut Queues cache set", "cache");
         }
+        
+        App::import('Component', 'Queue');
+        $QueueComponent = new QueueComponent();
 
         //set the variable for each freegal default queue 
         foreach ($queueData as $value)
         {
             $defaultQueueId = $value['QueueList']['queue_id'];
             $defaultQueueName = $value['QueueList']['queue_name'];
-            $eachQueueDetails = $this->Queue->getQueueDetails($defaultQueueId, $territory);
+            $eachQueueDetails = $QueueComponent->getQueueDetails($defaultQueueId, $territory);
 
             if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false))
             {
