@@ -2999,22 +2999,23 @@ Class ArtistsController extends AppController {
         if (isset($alb_det[0])) {
             $albumProdId = $alb_det[0];
         }
-		//$albumProdId = $this->params[$index]['albumProdId'];
+		if (isset($alb_det[1])) {
+            $provider_type = $alb_det[1];
+        }
+		
 		$territory   = $this->params[$index]['territory'];
-	
+		$artist_name = $this->params[$index]['artist'];
         $result = array();
-      //  $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID', 'Album.AlbumTitle', 'Album.provider_type'), 'conditions' => array('Album.ArtistText = ' => urldecode($this->params[$index]['artist'])), 'recursive' => -1));
+      
         $val = '';
         $this->Song->Behaviors->attach('Containable');
         $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
         $this->Country->setTablePrefix($countryPrefix);
-      print_r($albumProdId);
-            $songs = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID', 'Song.SongTitle'), 'conditions' => array('Song.ReferenceID' => $albumProdId, 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $territory), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
- 	 	print_r($songs);exit;
-//		 $songs = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
-           
+        $songs = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID', 'Song.SongTitle'), 'conditions' => array('Song.ReferenceID' => $albumProdId, 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $territory), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+ 
+ 	    $songs = $this->getAlbumSongs(base64_encode($artist_name), $albumProdId, base64_encode($provider_type), 1);
         $data = "<option value=''>SELECT</option>";
-        foreach ($songs as $k => $v) {
+        foreach ($songs[$albumProdId] as $k => $v) {
 			$result[$v['Song']['ProdID']] = $v['Song']['SongTitle'];
         }
 		foreach ($result as $k => $v) {
