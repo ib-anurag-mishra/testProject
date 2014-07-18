@@ -3,11 +3,12 @@ $this->pageTitle = 'Content';
 echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
-	$getData['TopAlbum']['artist_name'] = "";
-	$getData['TopAlbum']['id'] = "";
-	$getData['TopAlbum']['territory'] = "";
-	$getData['TopAlbum']['language'] = "";
-	$getData['TopAlbum']['album'] = "";
+	$getData['TopSingles']['artist_name'] = "";
+	$getData['TopSingles']['id'] = "";
+	$getData['TopSingles']['territory'] = "";
+	$getData['TopSingles']['language'] = "";
+	$getData['TopSingles']['album'] = "";
+	$getData['TopSingles']['prod_id'] = "";
 }
 if(empty($getArtistData)){
 	$getArtistData = array();
@@ -21,14 +22,14 @@ if(empty($album)){
 		<?php echo $formHeader;?>
 	</legend>
 	<div class="formFieldsContainer">
-		<?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['TopAlbum']['id'])); ?>
+		<?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['TopSingles']['id'])); ?>
 		<div class="form_steps">
 			<table cellspacing="10" cellpadding="0" border="0" width="100%">
 				<tr>
 					<td align="right" width="390"><?php echo $form->label('Choose Territory');?>
 					</td>
 					<td align="left"><?php
-					echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['TopAlbum']['territory'])
+					echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['TopSingles']['territory'])
 					);
 					?>
 					</td>
@@ -39,7 +40,7 @@ if(empty($album)){
 					<td align="left">
 						<div id="getArtist">
 							<?php
-							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['TopAlbum']['artist_name'], 'autocomplete' => 'off'));
+							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['TopSingles']['artist_name'], 'autocomplete' => 'off'));
 							?>
 							<div id="AutoArtistResult-DIV"></div>
 						</div>
@@ -52,7 +53,18 @@ if(empty($album)){
 					<td align="left">
 						<div id="getAlbum">
 							<?php
-							echo $form->select('album', $album, $getData['TopAlbum']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('album', $album, $getData['TopSingles']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							?>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" width="390"><?php echo $form->label('Choose Song');?>
+					</td>
+					<td align="left">
+						<div id="getAlbum">
+							<?php
+							echo $form->select('album', $album, $getData['TopSingles']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>

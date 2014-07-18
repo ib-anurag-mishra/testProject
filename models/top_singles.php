@@ -33,6 +33,28 @@ class TopSingles extends AppModel
 	}
 
 	/*
+	Function Name : getartistdata
+	Desc: gets data for the specified artist
+	*/
+	function getartistdata($id) {
+		$getArtistData = $this->find('first', array('conditions' => array('TopSingles.id' => $id)));
+		return $getArtistData;
+	}
+
+	/*
+	Function Name : getallartists
+	Desc: gets all the artists
+	*/
+	function getallartists() {
+		$getArtists = Cache::read("artists");
+		if ($getArtists === false) {
+			$getArtists = $this->find('all');
+			Cache::write("artists", $getArtists);
+		}
+		return $getArtists;
+	}
+
+	/*
 	 Function Name : del
 	 Desc: deletes a top single
 	*/

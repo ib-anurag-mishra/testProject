@@ -52,30 +52,30 @@ Class ArtistsController extends AppController {
         }
         $this->set("territories", $territoriesArray);
         if (!empty($this->params['named'])) { //gets the values from the url in form  of array
-            $topSingleId = $this->params['named']['id'];
-            if (trim($topSingleId) != '' && is_numeric($topSingleId)) {
-                $this->set('formAction', 'admin_updatetopsingle/id:' . $topSingleId);
+            $artistId = $this->params['named']['id'];
+            if (trim($artistId) != '' && is_numeric($artistId)) {
+                $this->set('formAction', 'admin_updatetopsingle/id:' . $artistId);
                 $this->set('formHeader', 'Edit Top Single');
-                $getTopSingleDataObj = new TopSingle();
-                $getData = $getTopSingleDataObj->gettopsingledata($topSingleId);
+                $getTopSingleDataObj = new TopSingles();
+                $getData = $getTopSingleDataObj->getartistdata($artistId);
                 $this->set('getData', $getData);
                 $condition = 'edit';
                 $artistName = $getData['TopSingles']['artist_name'];
                 $country = $getData['TopSingles']['territory'];
 
-                $getTopSingleData = array();
-                $this->set('getTopSingleData', $getTopSingleData);
+                $getArtistData = array();
+                $this->set('getArtistData', $getArtistData);
                 $result = array();
                 $allAlbum = $this->Album->find('all', array(
                     'fields' => array('Album.ProdID', 'Album.AlbumTitle'),
-                    'conditions' => array('Album.ArtistText' => $getData['TopAlbum']['artist_name'], 'Album.provider_type' => $getData['TopAlbum']['provider_type']),
+                    'conditions' => array('Album.ArtistText' => $getData['TopSingles']['artist_name'], 'Album.provider_type' => $getData['TopSingles']['provider_type']),
                     'recursive' => -1
                 ));
 
                 $val = '';
                 $this->Song->Behaviors->attach('Containable');
                 foreach ($allAlbum as $k => $v) {
-                    $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $getData['topAlbum']['territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+                    $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $getData['TopSingles']['territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
                     if (count($recordCount) > 0) {
                         $result[$v['Album']['ProdID']] = $v['Album']['AlbumTitle'];
                     }
@@ -86,7 +86,7 @@ Class ArtistsController extends AppController {
             $this->set('formAction', 'admin_inserttopsingle');
             $this->set('formHeader', 'Add Top Single');
             $getTopSingleDataObj = new TopSingles();
-            $topTopSingleData = $getTopSingleDataObj->getAllTopSingles();
+            $topSingletData = $getTopSingleDataObj->getallartists();
             $condition = 'add';
             $artistName = '';
         }
@@ -128,6 +128,9 @@ Class ArtistsController extends AppController {
         } else {
             $album = $this->data['Artist']['album'];
         }
+		if (isset($this->params[$index]['songID'])) {
+            $songID = $this->params[$index]['songID'];
+		}
         if ($artist == '') {
             $errorMsg .= 'Please select an Artist.<br/>';
         }
@@ -143,20 +146,21 @@ Class ArtistsController extends AppController {
         $insertArr['album'] = $album;
         $insertArr['territory'] = $this->data['Artist']['territory'];
         $insertArr['language'] = Configure::read('App.LANGUAGE');
+		$insertArr['prod_id'] = $songID;
         if (!empty($album_provider_type)) {
             $insertArr['provider_type'] = $album_provider_type;
         }
-        $insertObj = new TopAlbum();
+        $insertObj = new TopSingles();
         if (empty($errorMsg)) {
             if ($insertObj->insert($insertArr)) {
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                 Configure::write('Cache.disable', false);
-                $this->Common->getTopAlbums($territory);
-                $this->redirect('managetopalbums');
+                $this->Common->getTopSingles($territory);
+                $this->redirect('managetopsingles');
             }
         } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
-            $this->redirect('topalbumform');
+            $this->redirect('topsingleform');
         }
     }
 
