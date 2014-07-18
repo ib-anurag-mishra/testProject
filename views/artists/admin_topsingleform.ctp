@@ -94,14 +94,11 @@ echo $session->flash();
       $('#ArtistTerritory').change(function(){
  
         $('#ArtistArtistName').val('');
+		$('#getSongs').text('');
         $('#getAlbum select.select_fields option').remove();
       });
 		
-	  $('#ArtistAlbum').change(function(){
-		$('#getSongs').val('');
-		$('#getSongs select.select_fields option').remove();
-        getSongs();
-	  });
+	  
 
       $("#ArtistArtistName").keyup(function(event) {
         
@@ -136,6 +133,11 @@ echo $session->flash();
                     $('#AutoArtistResult-DIV').empty();
                     getAlbum();
                   });
+				  $('#ArtistAlbum').change(function(){
+					$('#getSongs').val('');
+					$('#getSongs select.select_fields option').remove();
+        			getSongs();
+	  			  });
                 }
               },
               error:function (XMLHttpRequest, textStatus, errorThrown) {}
