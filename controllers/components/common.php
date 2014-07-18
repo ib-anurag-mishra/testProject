@@ -1333,16 +1333,23 @@ STR;
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
-        $albumInstance = ClassRegistry::init('Album');
-        //Added caching functionality for new release videos           
-        $country = $territory;
-        if (!empty($country))
-        {
-
-            $data = array();
-            $sql_video_new_release = <<<STR
-                        SELECT 
-                            Video.ProdID,
+        $videoInstance = ClassRegistry::init('Video');                  
+             
+        //check if con
+        if (!empty($territory))
+        {            
+            $videoInstance->unbindModel(array('hasOne' => array('Country')));
+            $videoInstance->unbindModel(array('hasOne' => array('Participant')));
+           
+            $data = array();            
+            $data = $videoInstance->find('all', array(
+                'conditions' => array(
+                    'Video.DownloadStatus'   => '1',
+                    'Country.Territory'     => $territory,
+                    'Country.SalesDate != ' => '',
+                    'Country.SalesDate <=  NOW()' 
+                ),               
+                'fields' => array('Video.ProdID,
                             Video.ReferenceID,
                             Video.Title,
                             Video.ArtistText,
@@ -1361,21 +1368,30 @@ STR;
                             Full_Files.FileID,
                             Image_Files.FileID,
                             Image_Files.CdnPath,
-                            Image_Files.SourceURL
-                        FROM video AS Video
-                        LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                        LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-                        LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-                        LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                        WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
-                        GROUP BY Video.ProdID 
-                        ORDER BY Country.SalesDate DESC 
-                        LIMIT 100 
-STR;
-
-            $data = $albumInstance->query($sql_video_new_release);
-            $this->log("new release album for $territory", "cachequery");
-            $this->log($sql_video_new_release, "cachequery");
+                            Image_Files.SourceURL'
+                    ),                
+                'group' => 'Video.ProdID ',
+                'order' => array('Country.SalesDate DESC'),
+                'limit' => 100,
+                'joins' => array(
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'Country',
+                        'type' => 'Left',
+                        'foreignKey' => false,
+                        'conditions'=> array('Country.ProdID = Video.ProdID', 'Country.provider_type = Video.provider_type')
+                    ),                   
+                   
+                    array(
+                        'table' => 'File',
+                        'alias' => 'Image_Files',
+                        'type' => 'Left',
+                        'foreignKey' => false,
+                        'conditions'=> array('Video.Image_FileID = Image_Files.FileID' )
+                    )
+                )
+             ));          
+                
 
             if (!empty($data))
             {
@@ -1385,17 +1401,20 @@ STR;
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
-                Cache::delete("new_releases_videos" . $country);
-                Cache::write("new_releases_videos" . $country, $data);
+                Cache::delete("new_releases_videos" . $territory);
+                Cache::write("new_releases_videos" . $territory, $data);
                 $this->log("cache written for new releases videos for $territory", "cache");
             }
             else
             {
-                $data = Cache::read("new_releases_videos" . $country);
-                Cache::write("new_releases_videos" . $country, $data);
+                $data = Cache::read("new_releases_videos" . $territory);
+                Cache::write("new_releases_videos" . $territory, $data);
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
         }
+        
+       
+        
         $this->log("cache written for new releases videos for $territory", 'debug');
         //End Caching functionality for new releases videos  
         return $data;
