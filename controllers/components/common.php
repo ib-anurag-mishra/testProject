@@ -975,7 +975,7 @@ STR;
         $vdInstance = ClassRegistry::init('Videodownload');
         // Added caching functionality for top video downloads
         
-        $this->unBindModel(array('belongsTo' => array('Genre')));
+        $vdInstance->unBindModel(array('belongsTo' => array('Genre')));
 	
         $options = array(
                         'conditions' => array(
