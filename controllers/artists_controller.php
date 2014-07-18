@@ -2973,7 +2973,7 @@ Class ArtistsController extends AppController {
         foreach ($result as $k => $v) {
             $data = $data . "<option value='" . $k . "'>" . $v . "</option>";
         }
-        print "<select class='select_fields' id='album' name='album'>" . $data . "</select>";
+        print "<select class='select_fields' id='ArtistSong' name='album'>" . $data . "</select>";
         exit;
     }
 
@@ -3021,7 +3021,7 @@ Class ArtistsController extends AppController {
 		foreach ($result as $k => $v) {
 		$data = $data . "<option value='" . $k. "'>" . $v . "</option>";
 		}
-        print "<select class='select_fields' id='songs' name='songProdID'>" . $data . "</select>";
+        print "<select class='select_fields' id='ArtistSong' name='songProdID'>" . $data . "</select>";
         exit;
     }
 
