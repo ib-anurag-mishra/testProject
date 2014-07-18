@@ -9,67 +9,151 @@
 Class CommonComponent extends Object
 {
 
-    var $components = array('Session', 'Streaming', 'Queue');
-    var $uses = array('Token');
+    var $components = array('Session');
+    var $maintainLatestDownload=true;
 
     /*
-     * Function Name : getGenres
-     * Function Description : This function is used to get all genres.
+     * @func runGlobalCacheFromShell
+     * @desc This function is used to call all functions for all cache variables and run from shell
      */
 
-    function getGenres($territory)
-    {
+    function runGlobalCacheFromShell() {
         set_time_limit(0);
-        $countryPrefix = $this->getCountryPrefix($territory);
-        $genreInstance = ClassRegistry::init('Genre');
-        $songInstance = ClassRegistry::init('Song');
-        $genreInstance->Behaviors->attach('Containable');
-        $genreInstance->recursive = 2;
-        $genreList = array();
-        
-        $genreAll = $genreInstance->find('all', array(
-            'conditions' =>
-            array('and' =>
-                array(
-                    array('Country.Territory' => $territory,'Country.DownloadStatus' => 1, "Genre.Genre NOT IN('Porn Groove')")
-                )
-            ),
-            'fields' => array(
-                'Genre.expected_genre'
-            ),
-            'contain' => array(
-                'Country' => array(
-                    'fields' => array(
-                        'Country.Territory'
-                    )
-                ),
-            ), 'group' => 'Genre.Genre'
-        ));
-      
-        
-        $this->log("Each Genre Artist value checked finished for $territory", "genreLogs");      
-        
-        $combine_genre  =   array();
-        if ((count($genreAll) > 0) && ($genreAll !== false))
-        {                
-            for($count=0; $count<count($genreAll);$count++)
-            {                               
-                array_push($combine_genre, str_replace("\\", "", $genreAll[$count]['Genre']['expected_genre']));
-            }
-            $combine_genre  = array_unique($combine_genre);
-            sort($combine_genre);
-            
-            Cache::write("genre" . $territory, $combine_genre,'GenreCache');
-            $this->log("cache written for genre for $territory", "cache");
-            
-            /*Cache::write("genre" . $territory, $genreAll,'GenreCache');
-            $this->log("cache written for genre for $territory", "cache");*/
-        }      
-        
-        return $combine_genre;
-         
+        $this->log("Cache cron Starts", "cache");
+        $this->runCache();
+        $this->log("Cache cron Ends", "cache");
     }
     
+    /*
+     * @func runCache
+     * @desc This function is used to call all functions for setting cache variables
+     */
+
+    function runCache() {
+        set_time_limit(0);
+        $this->setLibraryTopTenCache();
+        $territoriesList = $this->getTerritories();
+        foreach ($territoriesList as $territory) {
+            $this->getTopSingles($territory);
+            $this->getTopAlbums($territory);
+            $this->getFeaturedVideos($territory);
+            $this->getTopVideoDownloads($territory);            
+            $this->getUsTop10Songs($territory);
+            $this->getUsTop10Albums($territory);
+            $this->getUsTop10Videos($territory);
+            $this->getNewReleaseAlbums($territory);
+            $this->getNewReleaseVideos($territory);
+            $this->setFeaturedArtists($territory);
+            $this->writeFeaturedSongsInCache($territory);
+            $this->getDefaultQueues($territory);
+            $this->setArtistText($territory);
+        }
+        // I guess this is not required to set every day in the cache. When user will hit the page it will automatically get set.
+        //$this->setVideoCacheVar();
+
+        $this->setAppMyMusicVideoList();
+        $this->setAnnouncementCache();
+        $this->setTopArtist();
+    }
+    
+    /**
+     * @function setAppMyMusicVideoList
+     * this function sets music videos list in cache for each territory for App
+     * @param nil
+     */
+    function setAppMyMusicVideoList() {
+        set_time_limit(0);
+
+        $countryInstance = ClassRegistry::init('Country');
+        $territoryInstance = ClassRegistry::init('Territory');
+        $albumInstance = ClassRegistry::init('Album');
+        $videoInstance = ClassRegistry::init('Video');
+        
+        $territories = $territoryInstance->find("all");
+
+        for ($mm = 0; $mm < count($territories); $mm++) {
+            $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
+        }
+        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+        $siteConfigData = $albumInstance->query($siteConfigSQL);
+        $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
+        for ($i = 0; $i < count($territoryNames); $i++) {
+            $territory = $territoryNames[$i];
+            if (0 == $multiple_countries) {
+                $countryPrefix = '';
+                $countryInstance->setTablePrefix('');
+            } else {
+                $countryPrefix = strtolower($territory) . "_";
+                $countryInstance->setTablePrefix($countryPrefix);
+            }
+
+            $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
+                v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
+                imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
+                FROM video AS v
+                INNER JOIN ' . $countryPrefix . 'countries AS c ON v.ProdID = c.ProdID AND v.provider_type = c.provider_type
+                INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type
+                INNER JOIN File AS ff ON v.FullLength_FileID = ff.FileID
+                INNER JOIN File AS imgf ON v.Image_FileID = imgf.FileID
+                INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
+                LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
+                WHERE c.Territory = "' . $territory . '" AND v.DownloadStatus = "1" GROUP BY v.ProdID
+                ORDER BY cnt DESC LIMIT 100';
+            $arr_video = $videoInstance->query($str_query);
+            if (!empty($arr_video)) {
+                $status = Cache::write("AppMyMusicVideosList_" . $territory, $arr_video);
+                $this->log("cache wrritten for mobile music videos list for territory_" . $territory, "cache");
+            }
+        }
+    }
+    
+    /*
+     * Function Name : setAnnouncementCache
+     * Function Description : This function is used to set announcment Cache.
+     * all this function query must be same as queries written in app controller for announcement.
+     */
+
+    function setAnnouncementCache() {
+        
+        $albumInstance = ClassRegistry::init('Album');
+        
+        $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+        $announcment_rs = $albumInstance->query($announcment_query);
+        if (!empty($announcment_rs)) {
+            Cache::write("announcementCache", $announcment_rs);
+            $this->log("cache wrritten for announcements", "cache");
+        }
+    }
+
+    /*
+     * Function Name : setFeaturedArtists
+     * Function Description : This function is used to set all featured artists in Cache.
+     * 
+     */
+
+    function setFeaturedArtists($territory) {
+
+        $featuresArtists = $this->getFeaturedArtists($territory, 1);
+        if (!empty($featuresArtists)) {
+            Cache::write("featured_artists_" . $territory . '_' . '1', $featuresArtists);
+            $this->log("cache written for featured artists for: " . $territory . '_' . '1', "cache");
+        } else {
+            $this->log("unable to write cache for featured artists for: " . $territory . '_' . '1', "cache");
+        }
+
+        $page = 2;
+        while ($featuresArtists = $this->getFeaturedArtists($territory, $page)) {
+            if (!empty($featuresArtists)) {
+                Cache::write("featured_artists_" . $territory . '_' . $page, $featuresArtists);
+                $this->log("cache written for featured artists for: " . $territory . '_' . $page, "cache");
+            } else {
+                $this->log("unable to write cache for featured artists for: " . $territory . '_' . $page, "cache");
+            }
+            $page++;
+        }
+    }
+    
+
      /*
      * @func runGenreCacheFromShell
      * @desc This function is used to call all functions for setting Genre page cache variables and run from shell
@@ -93,11 +177,12 @@ Class CommonComponent extends Object
      * 
      */
     function setArtistText($territory){
-        set_time_limit(0); 
-    
-              
+        set_time_limit(0);
+
+        $genreInstance = ClassRegistry::init('Genre');
+        
         //set the aritst cache for specific Genre
-        $genreAll = $this->getGenres($territory);
+        $genreAll = $genreInstance->getGenres($territory);
         //commented but need sometime for testing perpuse
         //$genreAll = Cache::read("genre" . $territory);
        
