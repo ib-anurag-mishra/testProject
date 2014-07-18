@@ -1,4 +1,4 @@
-<?php $this->pageTitle = 'Content';  echo "<pre>"; print_r($topSingles); exit;?>
+<?php $this->pageTitle = 'Content'; ?>
 
 <form>
 	<fieldset>
@@ -13,19 +13,21 @@
 				<th>Delete</th>
 			</tr>
 			<?php
-			foreach($topSingles as $topSingle)
+			foreach($topSingles as $topsingle)
 			{
 				?>
 			<tr>
-				<td class="left"><?php echo $topSingle['TopSingles']['artist_name'];?>
+				<td class="left"><?php echo $topsingle['Topsingles']['artist_name'];?>
 				</td>
-				<td class="left"><?php echo $topSingle['TopSingles']['territory'];?>
+				<td class="left"><?php echo $topsingle['Topsingles']['territory'];?>
 				</td>
-				<td class="left"><?php $data = $album->getSongDetails($topSingle['TopSingles']['album']);echo $data[0]['Album']['AlbumTitle'];?>
+				<td class="left"><?php $data = $album->getAlbum($topsingle['Topsingles']['album']);echo $data[0]['Album']['AlbumTitle'];?>
 				</td>
-				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'topalbumform','id'=>$topAlbum['TopAlbum']['id']));?>
+				<td class="left"><?php echo $topSingle['Topsingles']['prod_id'];?>
 				</td>
-				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'topalbumdelete','id'=>$topAlbum['TopAlbum']['id']));?>
+				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'topsinglesform','id'=>$topsingle['Topsingles']['id']));?>
+				</td>
+				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'topalbumdelete','id'=>$topsingle['Topsingles']['id']));?>
 				</td>
 			</tr>
 
