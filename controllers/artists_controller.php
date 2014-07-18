@@ -2995,7 +2995,11 @@ Class ArtistsController extends AppController {
         } else if ( $this->RequestHandler->isGet() ) {
         	$index = 'url';
         }
-		$albumProdId = $this->params[$index]['albumProdId'];
+		$alb_det = explode('-', $this->params[$index]['albumProdId']);
+        if (isset($alb_det[0])) {
+            $albumProdId = $alb_det[0];
+        }
+		//$albumProdId = $this->params[$index]['albumProdId'];
 		$territory   = $this->params[$index]['territory'];
 	
         $result = array();
@@ -3016,7 +3020,7 @@ Class ArtistsController extends AppController {
 		foreach ($result as $k => $v) {
 		$data = $data . "<option value='" . $k. "'>" . $v . "</option>";
 		}
-        print "<select class='select_fields' id='album' name='album'>" . $data . "</select>";
+        print "<select class='select_fields' id='songs' name='songProdID'>" . $data . "</select>";
         exit;
     }
 

@@ -139,7 +139,11 @@ echo $session->flash();
         
         }
           
-      });	
+      });
+
+	$("#album option").click(function(event){
+       getSongs();
+	});	
 
     
 	function getAlbum(){		
@@ -162,7 +166,7 @@ echo $session->flash();
   
 	function getSongs(){		
                 var artistNameText = escape($("#ArtistArtistName").val());
-		var albumProdId = escape($('getAlbum').val());
+		var albumProdId = escape($('#getAlbum').val());
 		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+artistNameText+"&albumProdId="+albumProdId;
                     
 		jQuery.ajax({
