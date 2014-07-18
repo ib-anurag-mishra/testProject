@@ -3008,9 +3008,9 @@ Class ArtistsController extends AppController {
         $this->Song->Behaviors->attach('Containable');
         $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
         $this->Country->setTablePrefix($countryPrefix);
-      
+      print_r($albumProdId);
             $songs = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID', 'Song.SongTitle'), 'conditions' => array('Song.ReferenceID' => $albumProdId, 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $territory), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
-
+ 	 	print_r($songs);exit;
 //		 $songs = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
            
         $data = "<option value=''>SELECT</option>";

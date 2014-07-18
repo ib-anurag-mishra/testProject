@@ -98,6 +98,7 @@ echo $session->flash();
       });
 		
 	  $('#album').change(function(){
+		$('#getSongs').val('');
        getSongs();
 	  });
 
@@ -168,7 +169,7 @@ echo $session->flash();
   
 	function getSongs(){		
         var artistNameText = escape($("#ArtistArtistName").val());
-		var albumProdId = escape($('#Album').val());
+		var albumProdId = escape($('#album').val());
 		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+artistNameText+"&albumProdId="+albumProdId;
                     
 		jQuery.ajax({
