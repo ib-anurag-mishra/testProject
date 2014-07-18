@@ -9,7 +9,7 @@
 Class ArtistsController extends AppController {
 
 	var $name 		= 'Artists';
-	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token', 'TopAlbum');
+	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token', 'TopAlbum','TopSingles');
 	var $layout 	= 'admin';
 	var $helpers 	= array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo', 'Genre', 'Token');
 	var $components = array('Session', 'Auth', 'Downloads', 'CdnUpload', 'Streaming', 'Common','Solr', 'RequestHandler');
@@ -34,8 +34,8 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopsingles() {
-        $topAlbums = $this->paginate( 'TopAlbum', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
-        $this->set( 'topAlbums', $topAlbums );
+        $topSingles = $this->paginate( 'TopSingles', array( 'prod_id != ""' ) );
+        $this->set( 'topSingles', $topSingles );
     }
 
 	/*
@@ -52,19 +52,19 @@ Class ArtistsController extends AppController {
         }
         $this->set("territories", $territoriesArray);
         if (!empty($this->params['named'])) { //gets the values from the url in form  of array
-            $artistId = $this->params['named']['id'];
-            if (trim($artistId) != '' && is_numeric($artistId)) {
-                $this->set('formAction', 'admin_updatetopalbum/id:' . $artistId);
-                $this->set('formHeader', 'Edit Top Album');
-                $getTopAlbumDataObj = new TopAlbum();
-                $getData = $getTopAlbumDataObj->getartistdata($artistId);
+            $topSingleId = $this->params['named']['id'];
+            if (trim($topSingleId) != '' && is_numeric($topSingleId)) {
+                $this->set('formAction', 'admin_updatetopsingle/id:' . $topSingleId);
+                $this->set('formHeader', 'Edit Top Single');
+                $getTopSingleDataObj = new TopSingle();
+                $getData = $getTopSingleDataObj->gettopsingledata($topSingleId);
                 $this->set('getData', $getData);
                 $condition = 'edit';
-                $artistName = $getData['TopAlbum']['artist_name'];
-                $country = $getData['TopAlbum']['territory'];
+                $artistName = $getData['TopSingles']['artist_name'];
+                $country = $getData['TopSingles']['territory'];
 
-                $getArtistData = array();
-                $this->set('getArtistData', $getArtistData);
+                $getTopSingleData = array();
+                $this->set('getTopSingleData', $getTopSingleData);
                 $result = array();
                 $allAlbum = $this->Album->find('all', array(
                     'fields' => array('Album.ProdID', 'Album.AlbumTitle'),
@@ -83,10 +83,10 @@ Class ArtistsController extends AppController {
                 $this->set('album', $result);
             }
         } else {
-            $this->set('formAction', 'admin_inserttopalbum');
-            $this->set('formHeader', 'Add Top Album');
-            $getTopAlbumDataObj = new TopAlbum();
-            $topAlbumtData = $getTopAlbumDataObj->getallartists();
+            $this->set('formAction', 'admin_inserttopsingle');
+            $this->set('formHeader', 'Add Top Single');
+            $getTopSingleDataObj = new TopSingles();
+            $topTopSingleData = $getTopSingleDataObj->getAllTopSingles();
             $condition = 'add';
             $artistName = '';
         }
@@ -238,18 +238,18 @@ Class ArtistsController extends AppController {
      */
 
     function admin_topsingledelete() {
-        $deleteArtistUserId = $this->params['named']['id'];
-        $deleteObj = new TopAlbum();
-		$getData = $deleteObj->getartistdata($deleteArtistUserId);
-		$territory = $getData['TopAlbum']['territory'];
-        if ($deleteObj->del($deleteArtistUserId)) {
+        $deleteTopSingleId = $this->params['named']['id'];
+        $deleteObj = new TopSingles();
+		$getData = $deleteObj->gettopsingledata($deleteTopSingleId);
+		$territory = $getData['TopSingles']['territory'];
+        if ($deleteObj->del($deleteTopSingleId)) {
 			Configure::write('Cache.disable', false);
-			$this->Common->getTopAlbums($territory);
+			$this->Common->getTopSingles($territory);
             $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
-            $this->redirect('managetopalbums');
+            $this->redirect('managetopsingles');
         } else {
             $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
-            $this->redirect('managetopalbums');
+            $this->redirect('managetopsingles');
         }
     }
 

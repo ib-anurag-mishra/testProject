@@ -1,26 +1,27 @@
-<?php $this->pageTitle = 'Content'; ?>
+<?php $this->pageTitle = 'Content';  echo "<pre>"; print_r($topSingles); exit;?>
 
 <form>
 	<fieldset>
-		<legend>Top Albums Listing</legend>
+		<legend>Top Singles Listing</legend>
 		<table id="list">
 			<tr>
 				<th class="left">Artist Name</th>
 				<th class="left">Territory</th>
 				<th class="left">Album</th>
+				<th class="left">Song</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
 			<?php
-			foreach($topAlbums as $topAlbum)
+			foreach($topSingles as $topSingle)
 			{
 				?>
 			<tr>
-				<td class="left"><?php echo $topAlbum['TopAlbum']['artist_name'];?>
+				<td class="left"><?php echo $topSingle['TopSingles']['artist_name'];?>
 				</td>
-				<td class="left"><?php echo $topAlbum['TopAlbum']['territory'];?>
+				<td class="left"><?php echo $topSingle['TopSingles']['territory'];?>
 				</td>
-				<td class="left"><?php $data = $album->getAlbum($topAlbum['TopAlbum']['album']);echo $data[0]['Album']['AlbumTitle'];?>
+				<td class="left"><?php $data = $album->getSongDetails($topSingle['TopSingles']['album']);echo $data[0]['Album']['AlbumTitle'];?>
 				</td>
 				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'topalbumform','id'=>$topAlbum['TopAlbum']['id']));?>
 				</td>

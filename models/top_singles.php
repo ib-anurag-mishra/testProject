@@ -21,4 +21,28 @@ class TopSingles extends AppModel
 			)
 		));
 	}
+
+
+	/*
+	Function Name : gettopsingledata
+	Desc: gets data for the specified top single
+	*/
+	function gettopsingledata($id) {
+		$getTopSingleData = $this->find('first', array('conditions' => array('TopSingles.id' => $id)));
+		return $getTopSingleData;
+	}
+
+	/*
+	 Function Name : del
+	 Desc: deletes a top single
+	*/
+	function del($id) {
+		if ($this->delete($id)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
 }
