@@ -1413,6 +1413,8 @@ STR;
             }
         }
         
+        
+        
        
         
         $this->log("cache written for new releases videos for $territory", 'debug');
