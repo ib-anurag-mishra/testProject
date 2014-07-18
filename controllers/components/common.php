@@ -1008,7 +1008,7 @@ STR;
                                                         'conditions' => array('`Video_file`.`FileID` = `Video`.`FullLength_FileID`')
                                         ),
                                         array(
-                                                        'table' => '`' . $prefix . 'countries`',
+                                                        'table' => '`' . strtolower($territory) . '_countries`',
                                                         'alias' => '`Country`',
                                                         'type'	=> 'LEFT',
                                                         'conditions' => array(
