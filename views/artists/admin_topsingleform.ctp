@@ -64,7 +64,7 @@ if(empty($album)){
 					<td align="left">
 						<div id="getSongs">
 							<?php
-							echo $form->select('album', $album, $getData['TopSingles']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('song', $songs, $getData['TopSingles']['songs'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
@@ -99,7 +99,8 @@ echo $session->flash();
 		
 	  $('#album').change(function(){
 		$('#getSongs').val('');
-       getSongs();
+		$('#getSongs select.select_fields option').remove();
+        getSongs();
 	  });
 
       $("#ArtistArtistName").keyup(function(event) {
