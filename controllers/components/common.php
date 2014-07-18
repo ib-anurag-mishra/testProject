@@ -931,8 +931,7 @@ STR;
 
         $this->log("featured videos $territory", "cachequery");
         $this->log($featured_videos_sql, "cachequery");
-
-        $featuredVideos = $albumInstance->query($featured_videos_sql);
+       
         if (!empty($featuredVideos))
         {
             foreach ($featuredVideos as $key => $featureVideo)
