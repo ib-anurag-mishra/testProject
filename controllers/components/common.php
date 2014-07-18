@@ -929,8 +929,7 @@ STR;
         // Added caching functionality for featured videos
         $featuredVideos =  $fvInstance->fetchFeaturedVideo(strtolower($territory)."_", $territory);   
 
-        $this->log("featured videos $territory", "cachequery");
-        $this->log($featured_videos_sql, "cachequery");
+        $this->log("featured videos $territory", "cachequery");        
        
         if (!empty($featuredVideos))
         {
@@ -967,70 +966,11 @@ STR;
         $countryPrefix = $this->getCountryPrefix($territory);
         $vdInstance = ClassRegistry::init('Videodownload');
         // Added caching functionality for top video downloads
+           
+        $topDownloads = $vdInstance->fetchVideodownloadTopDownloadedVideos(strtolower($territory)."_");
         
-        $vdInstance->unBindModel(array('belongsTo' => array('Genre')));
-	
-        $options = array(
-                        'conditions' => array(
-                                        '`Country`.`SalesDate` <=' => 'NOW()',
-                                        '`Video`.`DownloadStatus`' => '1'
-                        ),
-                        'group' => array('`Videodownload`.`ProdID`'),
-                        'order' => array('COUNT DESC'),
-                        'limit' => 100,
-                        'joins' => array(
-                                        array(
-                                                        'table' => '`video`',
-                                                        'alias' => '`Video`',
-                                                        'type' 	=> 'LEFT',
-                                                        'conditions' => array(
-                                                                        '`Videodownload`.`ProdID` = `Video`.`ProdID`',
-                                                                        '`Videodownload`.`provider_type` = `Video`.`provider_type`'
-                                                        )
-                                        ),
-                                        array(
-                                                        'table' => '`File`',
-                                                        'alias' => '`File`',
-                                                        'type'  => 'LEFT',
-                                                        'conditions' => array('`Video`.`Image_FileID` = `File`.`FileID`')
-                                        ),
-                                        array(
-                                                        'table' => '`File`',
-                                                        'alias' => '`Video_file`',
-                                                        'type'	=> 'LEFT',
-                                                        'conditions' => array('`Video_file`.`FileID` = `Video`.`FullLength_FileID`')
-                                        ),
-                                        array(
-                                                        'table' => '`' . strtolower($territory) . '_countries`',
-                                                        'alias' => '`Country`',
-                                                        'type'	=> 'LEFT',
-                                                        'conditions' => array(
-                                                                        '`Video`.`ProdId` = `Country`.`ProdId`',
-                                                                        '`Video`.`provider_type` = `Country`.`provider_type`'
-                                                        )
-                                        )
-                        ),
-                        'fields' => array(
-                                        '`Videodownload`.`ProdID`',
-                                        '`Video`.`ProdID`',
-                                        '`Video`.`provider_type`',
-                                        '`Video`.`VideoTitle`',
-                                        '`Video`.`ArtistText`',
-                                        '`Video`.`Advisory`',
-                                        '`File`.`CdnPath`',
-                                        '`File`.`SourceURL`',
-                                        '`Video_file`.`SaveAsName`',
-                                        'COUNT(DISTINCT(`Videodownload`.`id`)) AS COUNT',
-                                        '`Country`.`SalesDate`'
-                        )
-        );
-
-        $topDownloadSQL =   $vdInstance->find('all', $options);                
-            
-        $this->log("Top video downloads $territory", "cachequery");
-        $this->log($topDownloadSQL, "cachequery");
-
-        $topDownloads = $vdInstance->query($topDownloadSQL);
+        $this->log("Top video downloads $territory", "cachequery");        
+        
         if (!empty($topDownloads))
         {
             foreach ($topDownloads as $key => $topDownload)
