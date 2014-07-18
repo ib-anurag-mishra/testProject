@@ -927,7 +927,7 @@ STR;
         $fvInstance = ClassRegistry::init('FeaturedVideo');
         
         // Added caching functionality for featured videos
-        $featured_videos_sql =  $fvInstance->fetchFeaturedVideo(strtolower($territory)."_", $territory);   
+        $featuredVideos =  $fvInstance->fetchFeaturedVideo(strtolower($territory)."_", $territory);   
 
         $this->log("featured videos $territory", "cachequery");
         $this->log($featured_videos_sql, "cachequery");
