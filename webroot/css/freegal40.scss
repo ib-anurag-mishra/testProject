@@ -6972,16 +6972,16 @@ sub { top: 0.4em; }
 		height: 260px;
 		margin-top: 20px;
 		
-		&:after {
+		// &:after {
 			
-			content: "";
-			position: absolute;
-			top: 0;
-			right: 0;
-			background: url(../img/artist/vert-tapered-shadow.png);
-			width: 11px;
-			height: 226px;
-		}
+		// 	content: "";
+		// 	position: absolute;
+		// 	top: 0;
+		// 	right: 0;
+		// 	background: url(../img/artist/vert-tapered-shadow.png);
+		// 	width: 11px;
+		// 	height: 226px;
+		// }
 	
 		.videos-scrollable {
 			
@@ -7004,7 +7004,7 @@ sub { top: 0.4em; }
 				li {			
 					display: block;
 					float: left;
-					margin-right: 15px;
+					margin-right: 3px;
 				
 					.video-container {
 				
@@ -7013,10 +7013,12 @@ sub { top: 0.4em; }
 						
 						img {
 							
-							border: 1px solid #fff;
-							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// border: 1px solid #fff;
+							// -webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// -moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// box-shadow: 0 0 4px rgba(0,0,0,.5);
+							width: 288px;
+							height: 162px;
 							
 						}
 
