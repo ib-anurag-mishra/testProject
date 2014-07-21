@@ -1746,6 +1746,40 @@ $(document).ready(function() {
     /* */
 
 
+    $('.artist-page').find('.album-container').on('mouseenter',function(){
+        $this = $(this);
+        $this.find('.playlist-menu-icon').css({opacity:.5});
+        $this.find('.album-preview').css({opacity:.5});
+
+    });
+
+    $('.artist-page').find('.album-container').on('mouseleave',function(){
+        $this = $(this);
+        $this.find('.playlist-menu-icon').css({opacity:0});
+        $this.find('.album-preview').css({opacity:0});
+
+    });    
+
+    $('.artist-page').find('album-container').children('.playlist-menu-icon').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.artist-page').find('album-container').children('.playlist-menu-icon').on('mouseleave',function(){
+        $(this).css({opacity:0});
+
+    });
+
+    $('.artist-page').find('album-container').children('.album-preview').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.artist-page').find('album-container').children('.album-preview').on('mouseleave',function(){
+        $(this).css({opacity:0});
+
+    });    
+
     $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
     {
         e.preventDefault();
