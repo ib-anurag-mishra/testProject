@@ -1746,6 +1746,21 @@ $(document).ready(function() {
     /* */
 
 
+    $('.artist-page').find('.playlist-menu-icon').on('click',function(e){
+        e.preventDefault();
+        
+        var oldList = $(this).next('ul');
+        oldList.empty();
+        var queuelist = $(document).find('.playlist-options-new').find('ul').html();
+        $(this).next('ul').append(queuelist).addClass('active');
+
+    });
+
+    $('.artist-page').find('.playlist-menu-icon').next('ul').on('mouseleave',function(){
+        $(this).removeClass('active');
+
+    });
+
     $('.artist-page').find('.album-container').on('mouseenter',function(){
         $this = $(this);
         $this.find('.playlist-menu-icon').css({opacity:.5});
