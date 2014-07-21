@@ -86,7 +86,7 @@
         <header>
             <h2><?= __('More Videos By', true); ?> <?= $this->getValidText( $videosData[0]['Video']['ArtistText'] ); ?></h2>
         </header>
-        <div class="more-videos-scrollable horiz-scroll">
+        <div class="more-videos-scrollable horiz-scroll carousel">
             <ul style="width:30900px;">
             <?php
                 if ( is_array( $moreVideosData ) && count( $moreVideosData ) > 0 ):
@@ -187,12 +187,14 @@
            ?>
             </ul>
         </div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </section>
     <section class="top-videos">
         <header>
             <h2>Top <span><?= $this->getTextEncode( $videoGenre ); ?></span> Videos</h2>
         </header>
-        <div class="top-videos-scrollable horiz-scroll">
+        <div class="top-videos-scrollable horiz-scroll carousel">
             <ul>
             <?php
             if ( is_array( $topVideoGenreData ) && count( $topVideoGenreData ) > 0 ):
@@ -279,5 +281,7 @@
         ?>
             </ul>
 		</div>
+        <button class="left-scroll-button" type="button"></button>
+        <button class="right-scroll-button" type="button"></button>
     </section>		
 </section>
