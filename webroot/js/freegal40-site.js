@@ -1760,22 +1760,22 @@ $(document).ready(function() {
 
     });    
 
-    $('.artist-page').find('album-container').children('.playlist-menu-icon').on('mouseenter',function(){
+    $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseenter',function(){
         $(this).css({opacity:1});
 
     });
 
-    $('.artist-page').find('album-container').children('.playlist-menu-icon').on('mouseleave',function(){
+    $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseleave',function(){
         $(this).css({opacity:0});
 
     });
 
-    $('.artist-page').find('album-container').children('.album-preview').on('mouseenter',function(){
+    $('.artist-page').find('.album-container').children('.album-preview').on('mouseenter',function(){
         $(this).css({opacity:1});
 
     });
 
-    $('.artist-page').find('album-container').children('.album-preview').on('mouseleave',function(){
+    $('.artist-page').find('.album-container').children('.album-preview').on('mouseleave',function(){
         $(this).css({opacity:0});
 
     });    
