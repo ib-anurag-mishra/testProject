@@ -8855,7 +8855,7 @@ sub { top: 0.4em; }
 			height: 162px;
 			position: absolute;
 			left: 0;
-			top: 0;
+			top: 36px;
 			background: url(../img/freegal_sprite.png) -200px 0;		
 		}
 
@@ -8865,7 +8865,7 @@ sub { top: 0.4em; }
 			height: 162px;
 			position: absolute;
 			right: 0;
-			top: 0;
+			top: 36px;
 			background: url(../img/freegal_sprite.png) -300px 0;
 		}		
 		
@@ -9131,7 +9131,7 @@ sub { top: 0.4em; }
 			height: 162px;
 			position: absolute;
 			left: 0;
-			top: 0;
+			top: 36px;
 			background: url(../img/freegal_sprite.png) -200px 0;		
 		}
 
@@ -9141,7 +9141,7 @@ sub { top: 0.4em; }
 			height: 162px;
 			position: absolute;
 			right: 0;
-			top: 0;
+			top: 36px;
 			background: url(../img/freegal_sprite.png) -300px 0;
 		}		
 		
@@ -9173,14 +9173,14 @@ sub { top: 0.4em; }
 				
 				width: 2900px;
 				height: 220px;
-				padding-left: 1px;
-				padding-top: 1px;
+				// padding-left: 1px;
+				// padding-top: 1px;
 				
 				li {
 					
 					display: block;
 					float: left;
-					margin-right: 10px;
+					margin-right: 3px;
 					
 					.video-thumb-container {
 						
@@ -9188,10 +9188,10 @@ sub { top: 0.4em; }
 						
 						img {
 							
-							border: 1px solid #fff;
-							-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-							box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// border: 1px solid #fff;
+							// -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// box-shadow: 0 0 2px rgba(0,0,0,.5);
 						}
 						
 						.download-now-button {
