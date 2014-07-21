@@ -260,7 +260,7 @@
 		?>
 	<h3>Videos</h3>
 	<div class="videos-shadow-container">
-		<div class="videos-scrollable horiz-scroll">
+		<div class="videos-scrollable horiz-scroll carousel">
 			<ul style="width: 15000px;">
 				<?php
 				foreach ($artistVideoList as $key => $value)
@@ -449,6 +449,8 @@
 				<?php } ?>
 			</ul>
 		</div>
+		<button class="left-scroll-button"></button>
+		<button class="right-scroll-button"></button>
 	</div>
 	<?php
 	}
