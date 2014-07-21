@@ -1344,7 +1344,7 @@ STR;
             $data = array();
             if ($ids_provider_type != "")
             {
-                
+                $videoInstance->unbindModel(array('belongsTo' => array('Sample_Files')));
                 $videoInstance->unbindModel(array('hasOne' => array('Country')));
                 $videoInstance->unbindModel(array('hasOne' => array('Participant')));
            
@@ -1382,13 +1382,6 @@ STR;
                     'order' => array('FIELD(Video.ProdID, '.$ids.') ASC'),  
                     'limit' => 10,
                     'joins' => array(
-                        array(
-                            'table' => 'File',
-                            'alias' => 'Full_Files',
-                            'type' => 'Left',
-                            'foreignKey' => false,
-                            'conditions'=> array('Video.FullLength_FileID = Full_Files.FileID' )
-                        ), 
                         array(
                             'table' => 'Genre',
                             'alias' => 'Genre',
