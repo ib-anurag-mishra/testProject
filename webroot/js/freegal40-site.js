@@ -386,21 +386,21 @@ $(document).ready(function() {
 
 
     var totalASLiWidth = 0;
-    $('.artist-page .album-scrollable ul li').each(function() {
+    $('.artist-page .album-scrollable').children('ul').children('li').each(function() {
         totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
 
     });
 
-    $('.artist-page .album-scrollable ul').css({width: totalASLiWidth + 5});
+    $('.artist-page .album-scrollable').children('ul').css({width: totalASLiWidth + 5});
 
     var totalVSLiWidth = 0;
 
-    $('.artist-page .videos-scrollable ul li').each(function() {
+    $('.artist-page .videos-scrollable').children('ul').children('li').each(function() {
         totalVSLiWidth = totalVSLiWidth + $(this).outerWidth(true);
 
     });
 
-    $('.artist-page .videos-scrollable ul').css({width: totalVSLiWidth + 5});
+    $('.artist-page .videos-scrollable').children('ul').css({width: totalVSLiWidth + 5});
 
 
     
