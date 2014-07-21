@@ -6664,6 +6664,7 @@ sub { top: 0.4em; }
 						position: relative;
 						margin-bottom: 10px;
                         height: 162px;
+                       
                                                 
 						img {
 							
@@ -6674,7 +6675,59 @@ sub { top: 0.4em; }
 							
 						}
 						
-						
+						ul {
+							position: absolute;
+							left: 6px;
+							top: 26px;
+							width: 177px;
+							max-height: 131px;
+							overflow-y: scroll;
+							display: none;
+							-webkit-border-radius: 5px;
+							-moz-border-radius: 5px;
+							-ms-border-radius: 5px;
+							-o-border-radius: 5px;
+							border-radius: 5px;
+							border: 1px solid #999;
+							z-index: 1;
+
+
+
+							&.active {
+
+								display: block;
+							}
+
+							> li {
+								display: block;
+								background: #fff;
+								float: none;
+								margin-bottom: 0;
+								width: 100%;
+
+								a {
+
+									display: block;
+									padding: 10px;
+									text-decoration: none;
+									color: #000;
+									font-size: 11px;
+
+									&:hover {
+
+										background: #cfeff9;
+										color: #000;
+									}
+
+									&.create-new-queue-btn {
+
+										font-weight: bold;
+									}
+								}
+
+							}
+
+						}						
                         .album-preview {							
                             // background: none repeat scroll 0 0 #FFFFFF;
                             // bottom: 65px;
