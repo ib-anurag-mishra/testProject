@@ -1290,7 +1290,7 @@ STR;
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
-        $albumInstance = ClassRegistry::init('Album');
+        $videoInstance = ClassRegistry::init('Video');   
         //Added caching functionality for us top 10 Video            
         $country = $territory;
         if (!empty($country))
@@ -1343,39 +1343,76 @@ STR;
             $data = array();
             if ($ids_provider_type != "")
             {
-            $video_sql_US_TOP_10 = <<<STR
-             SELECT 
-                     Video.ProdID,
-                     Video.ReferenceID,
-                     Video.Title,
-                     Video.ArtistText,
-                     Video.DownloadStatus,
-                     Video.VideoTitle,
-                     Video.Artist,
-                     Video.Advisory,
-                     Video.Sample_Duration,
-                     Video.FullLength_Duration,
-                     Video.provider_type,
-                     Genre.Genre,
-                     Country.Territory,
-                     Country.SalesDate,
-                     Full_Files.CdnPath,
-                     Full_Files.SaveAsName,
-                     Full_Files.FileID,
-                     Image_Files.FileID,
-                     Image_Files.CdnPath,
-                     Image_Files.SourceURL
-             FROM video AS Video
-             LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-             LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
-             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-             LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-             WHERE ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
-             GROUP BY Video.ProdID
-             ORDER BY FIELD(Video.ProdID, $ids) ASC
-             LIMIT 10                   
-STR;
-            $data = $albumInstance->query($video_sql_US_TOP_10);
+                
+                $videoInstance->unbindModel(array('hasOne' => array('Country')));
+                $videoInstance->unbindModel(array('hasOne' => array('Participant')));
+           
+                $data = array();            
+                $data = $videoInstance->find('all', array(
+                    'conditions' => array(
+                        'Video.DownloadStatus'   => '1',
+                        'Country.Territory'     => $territory,
+                        'Country.SalesDate != ' => '',
+                        'Country.SalesDate <=  NOW()',
+                        'Video.ProdID, Video.provider_type' => array($ids_provider_type)
+                    ),               
+                    'fields' => array( 'Video.ProdID,
+                                        Video.ReferenceID,
+                                        Video.Title,
+                                        Video.ArtistText,
+                                        Video.DownloadStatus,
+                                        Video.VideoTitle,
+                                        Video.Artist,
+                                        Video.Advisory,
+                                        Video.Sample_Duration,
+                                        Video.FullLength_Duration,
+                                        Video.provider_type,
+                                        Genre.Genre,
+                                        Country.Territory,
+                                        Country.SalesDate,
+                                        Full_Files.CdnPath,
+                                        Full_Files.SaveAsName,
+                                        Full_Files.FileID,
+                                        Image_Files.FileID,
+                                        Image_Files.CdnPath,
+                                        Image_Files.SourceURL'
+                                    ),                
+                    'group' => 'Video.ProdID ',
+                    'order' => array('FIELD(Video.ProdID, '.$ids.') ASC'),  
+                    'limit' => 10,
+                    'joins' => array(
+                        array(
+                            'table' => 'File',
+                            'alias' => 'Full_Files',
+                            'type' => 'Left',
+                            'foreignKey' => false,
+                            'conditions'=> array('Video.FullLength_FileID = Full_Files.FileID' )
+                        ), 
+                        array(
+                            'table' => 'Genre',
+                            'alias' => 'Genre',
+                            'type' => 'Left',
+                            'foreignKey' => false,
+                            'conditions'=> array('Genre.ProdID = Video.ProdID', 'Video.provider_type = Genre.provider_type' )
+                        ),
+                        array(
+                            'table' => strtolower($territory).'_countries',
+                            'alias' => 'Country',
+                            'type' => 'Left',
+                            'foreignKey' => false,
+                            'conditions'=> array('Country.ProdID = Video.ProdID', 'Country.provider_type = Video.provider_type')
+                        ),
+                        array(
+                            'table' => 'File',
+                            'alias' => 'Image_Files',
+                            'type' => 'Left',
+                            'foreignKey' => false,
+                            'conditions'=> array('Video.Image_FileID = Image_Files.FileID' )
+                        )
+                    )
+                 ));
+                
+
             $this->log("US top 10 videos for $territory", "cachequery");
             $this->log($video_sql_US_TOP_10, "cachequery");
             
