@@ -6611,6 +6611,26 @@ sub { top: 0.4em; }
 		// 	width: 11px;
 		// 	height: 226px;
 		// }
+
+		.left-scroll-button {
+
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			left: 0;
+			top: 0;
+			background: url(../img/freegal_sprite.png) -200px 0;		
+		}
+
+		.right-scroll-button {
+
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			background: url(../img/freegal_sprite.png) -300px 0;
+		}
 		
 		.album-scrollable {
 			
