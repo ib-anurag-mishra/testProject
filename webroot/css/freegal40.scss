@@ -6601,29 +6601,29 @@ sub { top: 0.4em; }
 		height: 330px;
 		margin-top: 20px;
 		margin-bottom: 20px;
-		&:after {
+		// &:after {
 			
-			content: "";
-			position: absolute;
-			right: 0;
-			top:0;
-			background: url(../img/artist/vert-tapered-shadow.png);
-			width: 11px;
-			height: 226px;
-		}
+		// 	content: "";
+		// 	position: absolute;
+		// 	right: 0;
+		// 	top:0;
+		// 	background: url(../img/artist/vert-tapered-shadow.png);
+		// 	width: 11px;
+		// 	height: 226px;
+		// }
 		
 		.album-scrollable {
 			
 			height: 340px;
 			overflow-x: hidden;
 			overflow-y: hidden;
-			padding-left: 1px;
-			padding-top: 1px;
+			// padding-left: 1px;
+			// padding-top: 1px;
 			
-			&:hover {
+			// &:hover {
 				
-				overflow-x: scroll;
-			}
+			// 	overflow-x: scroll;
+			// }
 			
 			ul {
 				
@@ -6634,14 +6634,14 @@ sub { top: 0.4em; }
 					
 					display: block;
 					float: left;
-					width: 164px;
-					margin-right: 15px;
+					width: 162px;
+					margin-right: 3px;
 					
 					.album-container {
 					
 						position: relative;
 						margin-bottom: 10px;
-                                                height: 157px;
+                        height: 162px;
                                                 
 						img {
 							
