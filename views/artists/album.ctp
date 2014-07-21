@@ -124,7 +124,7 @@
 			?>
 	<h3>Albums</h3>
 	<div class="album-shadow-container">
-		<div class="album-scrollable horiz-scroll">
+		<div class="album-scrollable horiz-scroll carousel">
 			<ul style="width: 4500px">
 				<?php
 				foreach ($albumData as $album_key => $album):
@@ -217,7 +217,10 @@
 				?>
 			</ul>
 		</div>
-
+		<button class="left-scroll-button"></button>
+		<button class="right-scroll-button"></button>
+		<?php
+		/*
 		<div class="paging">
 			<?php
 			echo $paginator->prev('<< ' . __('Previous ', true), null, null, array('class' => 'disabled'));
@@ -225,6 +228,8 @@
 			echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
 			?>
 		</div>
+		*/
+		?>
 	</div>
 	<?php
 		}
