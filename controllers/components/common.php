@@ -1290,7 +1290,8 @@ STR;
         set_time_limit(0);
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
-        $videoInstance = ClassRegistry::init('Video');   
+        $videoInstance = ClassRegistry::init('Video');
+        $albumInstance = ClassRegistry::init('Album'); 
         //Added caching functionality for us top 10 Video            
         $country = $territory;
         if (!empty($country))
