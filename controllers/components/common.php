@@ -1355,7 +1355,7 @@ STR;
                         'Country.Territory'     => $territory,
                         'Country.SalesDate != ' => '',
                         'Country.SalesDate <=  NOW()',
-                        "Video.ProdID, Video.provider_type IN" => array($ids_provider_type)
+                        '((Video.ProdID, Video.provider_type) IN ($ids_provider_type))'
                     ),               
                     'fields' => array( 'Video.ProdID,
                                         Video.ReferenceID,
