@@ -1345,8 +1345,8 @@ STR;
             if ($ids_provider_type != "")
             {
                 $videoInstance->unbindModel(array('belongsTo' => array('Sample_Files')));
-                $videoInstance->unbindModel(array('hasOne' => array('Country')));
-                $videoInstance->unbindModel(array('hasOne' => array('Participant')));
+                $videoInstance->unbindModel(array('hasOne' => array('Country', 'Genre', 'Participant')));
+               
            
                 $data = array();            
                 $data = $videoInstance->find('all', array(
@@ -1355,7 +1355,7 @@ STR;
                         'Country.Territory'     => $territory,
                         'Country.SalesDate != ' => '',
                         'Country.SalesDate <=  NOW()',
-                        'Video.ProdID, Video.provider_type' => array($ids_provider_type)
+                        "Video.ProdID, Video.provider_type IN" => array($ids_provider_type)
                     ),               
                     'fields' => array( 'Video.ProdID,
                                         Video.ReferenceID,
