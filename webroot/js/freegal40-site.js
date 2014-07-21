@@ -1766,7 +1766,7 @@ $(document).ready(function() {
     });
 
     $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseleave',function(){
-        $(this).css({opacity:0});
+        $(this).css({opacity:.5});
 
     });
 
@@ -1776,7 +1776,7 @@ $(document).ready(function() {
     });
 
     $('.artist-page').find('.album-container').children('.album-preview').on('mouseleave',function(){
-        $(this).css({opacity:0});
+        $(this).css({opacity:.5});
 
     });    
 
