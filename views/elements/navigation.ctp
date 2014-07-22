@@ -894,7 +894,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<?php echo $announcment_value; ?>
 				</div>
 			</div>
-                        <br/>
                         <?php 
                         if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
 
