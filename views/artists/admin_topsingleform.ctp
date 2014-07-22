@@ -16,6 +16,10 @@ if(empty($getArtistData)){
 if(empty($album)){
 	$album = array();
 }
+
+if(empty($songs)){
+    $songs  = "";
+}
 ?>
 <fieldset>
 	<legend>
