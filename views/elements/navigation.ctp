@@ -902,7 +902,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             $i = 0;
                         ?>
                             <div class="movie-announcements">
-                                 <p style="font-size: small; font-family: verdana, geneva;"> 
+                                 <p> 
                                     Did you know that Freegal is also a movie service? You can stream full-length concerts, and top movies like
                                   </p>  
                                  <?php foreach($movieAnnouncmentValue as $value) { 
