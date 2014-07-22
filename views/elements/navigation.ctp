@@ -917,7 +917,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         }
                                   } ?>
                                   </p> 
-                                 <a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here to log in</a>
+                                 <p><a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here to log in</a></p>
                             </div>
                         <?php } ?> 
 		</section>
