@@ -903,8 +903,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                         ?>
                             <div class="movie-announcements">
                                  <p> 
-                                    Did you know that Freegal is also a movie service? You can stream full-length concerts, and top movies like
-                                  </p>  
+                                    Did you know that Freegal is also a movie service?
+                                  </p>
+                                  <p>You can stream full-length concerts, and top movies like  
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
@@ -914,7 +915,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                  <?php if($i == 1){
                                             echo "and";
                                         }
-                                  } ?> 
+                                  } ?>
+                                  </p> 
                                  <a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here to log in</a>
                             </div>
                         <?php } ?> 
