@@ -164,6 +164,7 @@ echo $session->flash();
 			success: function(response) {
 					$('#getAlbum').text('');
 					$('#getAlbum').html(response);
+                                        onAlbumUpdate();
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
 		});
@@ -196,6 +197,16 @@ echo $session->flash();
       return false;
     }
   }
+  
+    function onAlbumUpdate()
+    {
+        $('#ArtistAlbum').change(function() {
+
+            $('#getSongs').val('');
+            $('#getSongs select.select_fields option').remove();
+            getSongs();
+        });
+    }  
 
 
 </script>
