@@ -230,7 +230,7 @@ Class CommonComponent extends Object
         {
             $endLimitG =  12000;
             $startLimitG = ($pageNo * 12000) - 12000;
-           $conditionString = '';
+            $conditionString = '';
            
              //make condition according to Genre value
             if ($artistFilter == 'spl'){
