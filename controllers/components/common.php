@@ -1004,6 +1004,8 @@ STR;
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for us top 10 Songs           
         $country = $territory;
+        
+    
         if (!empty($country))
         {
             
@@ -1778,7 +1780,10 @@ STR;
             $countryPrefix = $this->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
         } else {
             $country = $this->Session->read('territory'); 
-        }        
+        }
+        
+         App::import('Component', 'Streaming');
+            $StreamingComponent = new StreamingComponent();
         
         $songInstance = Classregistry::init('Song');
         if(empty($flag)){
@@ -1867,7 +1872,7 @@ STR;
                     $songPath = explode(':', $filePath);
                     $streamUrl = trim($songPath[1]);
                     $randomSongs[$key]['streamUrl'] = $streamUrl;
-                    $randomSongs[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                    $randomSongs[$key]['totalseconds'] = $StreamingComponent->getSeconds($value['Song']['FullLength_Duration']);
                 }
             }
         }
@@ -2244,7 +2249,8 @@ STR;
         $songInstance = ClassRegistry::init('Song');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        
+        App::import('Component', 'Streaming');
+        $StreamingComponent = new StreamingComponent();
 
         //this is for my library songs start
 
@@ -2341,61 +2347,94 @@ STR;
                 $top_ten_condition_songs = "(Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda')";
             }
 
+            $songInstance->unbindModel(array('hasOne' => array('Country')));
+            $songInstance->unbindModel(array('hasOne' => array('Genre')));
+            $songInstance->unbindModel(array('hasOne' => array('Participant')));
             $songInstance->recursive = 2;
-            $topDownloaded_query = <<<STR
-                            SELECT 
-                                    Song.ProdID,
-                                    Song.ReferenceID,
-                                    Song.Title,
-                                    Song.ArtistText,
-                                    Song.DownloadStatus,
-                                    Song.SongTitle,
-                                    Song.Artist,
-                                    Song.Advisory,
-                                    Song.Sample_Duration,
-                                    Song.FullLength_Duration,
-                                    Song.provider_type,
-                                    Albums.ProdID,
-                                    Albums.provider_type,                                          
-                                    Genre.Genre,
-                                    Country.Territory,
-                                    Country.SalesDate,
-                                    Country.StreamingSalesDate,
-                                    Country.StreamingStatus,
-                                    Country.DownloadStatus,                                    
-                                    Sample_Files.CdnPath,
-                                    Sample_Files.SaveAsName,
-                                    Full_Files.CdnPath,
-                                    Full_Files.SaveAsName,
-                                    File.CdnPath,
-                                    File.SourceURL,
-                                    File.SaveAsName,
-                                    Sample_Files.FileID,
-                                    PRODUCT.pid
-                            FROM
-                                    Songs AS Song
-                                            LEFT JOIN
-                                    File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                            LEFT JOIN
-                                    File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                            LEFT JOIN
-                                    Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-                                            LEFT JOIN
-                             {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-                                            LEFT JOIN
-                                    PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type) 
-                                            INNER JOIN 
-                                    Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                            INNER JOIN 
-                                    File ON (Albums.FileID = File.FileID)
-                            WHERE
-                                    (($top_ten_condition_songs) AND 1 = 1)
-                            GROUP BY Song.ProdID
-                            ORDER BY FIELD(Song.ProdID,
-                                            $ids) ASC
-                            LIMIT 10
-STR;
-            $topDownload = $songInstance->query($topDownloaded_query);
+            
+                $topDownload = $songInstance->find('all', array(
+                'conditions' => array(
+                    '( ('.$top_ten_condition_songs.' ) AND 1 = 1)'                   
+                ),               
+                'fields' => array('
+                            Song.ProdID,
+                            Song.ReferenceID,
+                            Song.Title,
+                            Song.ArtistText,
+                            Song.DownloadStatus,
+                            Song.SongTitle,
+                            Song.Artist,
+                            Song.Advisory,
+                            Song.Sample_Duration,
+                            Song.FullLength_Duration,
+                            Song.provider_type,
+                            Albums.ProdID,
+                            Albums.provider_type,                                          
+                            Genre.Genre,
+                            Country.Territory,
+                            Country.SalesDate,
+                            Country.StreamingSalesDate,
+                            Country.StreamingStatus,
+                            Country.DownloadStatus,                                    
+                            Sample_Files.CdnPath,
+                            Sample_Files.SaveAsName,
+                            Full_Files.CdnPath,
+                            Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
+                            Sample_Files.FileID,
+                            PRODUCT.pid'
+                    ),                
+                'group' => 'Song.ProdID ',
+                'order' => array('FIELD(Song.ProdID,'.$ids.' ) ASC'),
+                'limit' => 10,
+                'joins' => array(
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'Country',
+                        'type' => 'Left',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type',
+                        'Country.DownloadStatus = "1" ',' Country.SalesDate != "" ','Country.SalesDate < NOW() ' )
+                    ),                   
+                   
+                    array(
+                        'table' => 'Genre',
+                        'alias' => 'Genre',
+                        'type' => 'Left',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Genre.ProdID = Song.ProdID',' Genre.provider_type = Song.provider_type ' )
+                    ),                   
+                   
+                    array(
+                        'table' => 'Albums',
+                        'alias' => 'Albums',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Song.ReferenceID = Albums.ProdID' )
+                    ),                   
+                   
+                    array(
+                        'table' => 'File',
+                        'alias' => 'File',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Albums.FileID = File.FileID' )
+                    ),                  
+                    array(
+                        'table' => 'PRODUCT',
+                        'alias' => 'PRODUCT',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'PRODUCT.ProdID = Song.ProdID','PRODUCT.provider_type = Song.provider_type' )
+                    
+                )
+             ))); 
+            
+            
+           
+                              
         }
         else
         {
@@ -2423,7 +2462,7 @@ STR;
                         $songPath = explode(':', $filePath);
                         $streamUrl = trim($songPath[1]);
                         $topDownload[$key]['streamUrl'] = $streamUrl;
-                        $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                        $topDownload[$key]['totalseconds'] = $StreamingComponent->getSeconds($value['Song']['FullLength_Duration']);
                     }
             }
             Cache::delete("lib" . $libId);
