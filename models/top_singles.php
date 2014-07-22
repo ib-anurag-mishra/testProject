@@ -21,6 +21,18 @@ class TopSingles extends AppModel
 			)
 		));
 	}
+        
+        /*
+         Function Name : insert
+         Desc : save an video data in the db
+        */
+        function insert($data) {
+            if($this->save($data)){
+                return true;
+            }else{
+                return false;
+            }
+        }        
 
 
 	/*

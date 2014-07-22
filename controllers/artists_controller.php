@@ -128,8 +128,8 @@ Class ArtistsController extends AppController {
         } else {
             $album = $this->data['Artist']['album'];
         }
-		if (isset($this->params[$index]['songID'])) {
-            $songID = $this->params[$index]['songID'];
+		if (isset($this->params[$index]['songProdID'])) {
+            $songID = $this->params[$index]['songProdID'];
 		}
         if ($artist == '') {
             $errorMsg .= 'Please select an Artist.<br/>';
