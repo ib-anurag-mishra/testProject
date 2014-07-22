@@ -23,7 +23,7 @@ Class ArtistsController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
 		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-                    $this->Auth->allow('admin_managetopalbums','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsinglealbum','admin_topsingledelete');
+                    $this->Auth->allow('admin_managetopalbums','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete');
                 }
     }
 
@@ -180,7 +180,6 @@ Class ArtistsController extends AppController {
         $errorMsg = '';
         $album_provider_type = '';
         $album_prodid = 0;
-        $this->Featuredartist->id = $this->data['Artist']['id'];
         $alb_det = explode('-', $this->params[$index]['album']);
         if (isset($alb_det[0])) {
             $album_prodid = $alb_det[0];
@@ -212,6 +211,9 @@ Class ArtistsController extends AppController {
         if ($album == '') {
             $errorMsg .= 'Please select an Album.<br/>';
         }
+        if (isset($this->params[$index]['songProdID'])) {
+            $songID = $this->params[$index]['songProdID'];
+        }        
 		$territory = $this->data['Artist']['territory'];
         $updateArr = array();
         $updateArr['id'] = $this->data['Artist']['id'];
@@ -219,6 +221,7 @@ Class ArtistsController extends AppController {
         $updateArr['territory'] = $this->data['Artist']['territory'];
         $updateArr['language'] = Configure::read('App.LANGUAGE');
         $updateArr['album'] = $album;
+        $updateArr['prod_id'] = $songID;
         if (!empty($album_provider_type)) {
             $updateArr['provider_type'] = $album_provider_type;
         }
@@ -227,12 +230,12 @@ Class ArtistsController extends AppController {
             if ($updateObj->insert($updateArr)) {
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
                 Configure::write('Cache.disable', false);                
-				$this->Common->getTopAlbums($territory);
-                $this->redirect('managetopalbums');
+				$this->Common->getTopSingles($territory);
+                $this->redirect('managetopsingles');
             }
         } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
-            $this->redirect('managetopalbums');
+            $this->redirect('managetopsingles');
         }
     }
 
