@@ -21,7 +21,7 @@
 				</td>
 				<td class="left"><?php echo $topSingle['TopSingles']['territory'];?>
 				</td>
-				<td class="left"><?php echo $topSingle['TopSingles']['album'];?>
+				<td class="left"><?php $data = $album->getAlbum($topSingle['TopSingles']['album']);echo $data[0]['Album']?>
 				</td>
 				<td class="left"><?php echo $topSingle['TopSingles']['prod_id'];?>
 				</td>
