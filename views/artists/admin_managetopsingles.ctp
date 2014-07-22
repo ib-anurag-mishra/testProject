@@ -25,7 +25,7 @@
 				</td>
 				<td class="left"><?php echo $topSingle['TopSingles']['prod_id'];?>
 				</td>
-				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'topsinglesform','id'=>$topSingle['TopSingles']['id']));?>
+				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'topsingleform','id'=>$topSingle['TopSingles']['id']));?>
 				</td>
 				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'topsingledelete','id'=>$topSingle['TopSingles']['id']));?>
 				</td>
