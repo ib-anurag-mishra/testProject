@@ -909,7 +909,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
-                                <strong><a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
+                                <strong><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
                                     <?php echo '"'.$value['announcements']['title'].'"'; ?>
                                 </a></strong>
                                  <?php if($i == 1){
@@ -917,7 +917,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         }
                                   } ?>
                                   </p> 
-                                 <p><a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here to log in</a></p>
+                                 <p><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here</a> to log in</p>
                             </div>
                         <?php } ?> 
 		</section>
