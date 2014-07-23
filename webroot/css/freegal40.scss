@@ -6023,10 +6023,10 @@ sub { top: 0.4em; }
                     // top: 170px;
                     left: 50%;
                     top: 50%;
-                    -webkit-transform: translate(62px,13px);
-                    -moz-transform: translate(62px,13px);
-                    -ms-transform: translate(62px,13px);
-                    transform: translate(62px,13px);
+                    -webkit-transform: translate(-62px,-13px);
+                    -moz-transform: translate(-62px,-13px);
+                    -ms-transform: translate(-62px,-13px);
+                    transform: translate(-62px,-13px);
                 }
                         
 	            .add-to-playlist-button {
