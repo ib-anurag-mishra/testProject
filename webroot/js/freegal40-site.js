@@ -311,6 +311,8 @@ $(document).ready(function() {
         } else {
 
             $(this).next('.wishlist-popover').addClass('active');
+            $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
+
         }
 
         return false;
