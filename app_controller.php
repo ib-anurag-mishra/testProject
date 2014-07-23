@@ -4,7 +4,7 @@ class AppController extends Controller
 
     var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library','Announcement');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library');
     var $view = 'Dataencode';
     var $patron_country;
     var $patron_id;
@@ -54,7 +54,7 @@ class AppController extends Controller
                 $this->Session->write("library", $libraryIDArray['Library']['id']);
                 $this->Session->write("library", $libraryIDArray['Library']['id']);
                 $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
-                $this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
+                //$this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
                 $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }
         }
@@ -70,7 +70,7 @@ class AppController extends Controller
                 $this->Session->write("lId", 1);
                 $this->Session->write("library", 1);
                 //$this->Session->write("library_type", $libraryData['Library']['test_library_type']);
-                $this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
+                //$this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
                 $this->Session->write("block", (($libraryData['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }
             elseif ($this->Session->read("patron") != "" && $this->Session->read("library") != "")
@@ -126,23 +126,23 @@ class AppController extends Controller
         //$this->checkOnlinePatron();
         // add announcement in the cache
         
-        $announcment_rs = Cache::read("announcementCache");
-        if ($announcment_rs === false)
-        {
-            $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
-            $announcment_rs = $this->Album->query($announcment_query);
-            Cache::write("announcementCache", $announcment_rs);
-        }
-
-        if (isset($announcment_rs[0]['pages']['page_content']))
-        {
-            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
-        }
-        else
-        {
-            $announcmentValue = '';
-        }
-        $this->set('announcment_value', $announcmentValue);
+//        $announcment_rs = Cache::read("announcementCache");
+//        if ($announcment_rs === false)
+//        {
+//            $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+//            $announcment_rs = $this->Album->query($announcment_query);
+//            Cache::write("announcementCache", $announcment_rs);
+//        }
+//
+//        if (isset($announcment_rs[0]['pages']['page_content']))
+//        {
+//            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
+//        }
+//        else
+//        {
+//            $announcmentValue = '';
+//        }
+//        $this->set('announcment_value', $announcmentValue);    commented to hide announcements
         
         $isMovie = $this->Session->read("library_announcement");
         if($isMovie == 1) {
