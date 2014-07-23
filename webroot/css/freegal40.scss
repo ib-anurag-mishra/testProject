@@ -6059,8 +6059,10 @@ sub { top: 0.4em; }
 
                     display: none;
                     position: absolute;
-                    left: 395px;
-                    top: 238px;
+                    // left: 395px;
+                    // top: 238px;
+                    left: 10px;
+                    top: 41px;
                     font-size: 12px;
                     z-index: 100;
                     width: 120px;
