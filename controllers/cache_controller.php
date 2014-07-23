@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language','MemDatas');
+    var $uses = array('Song', 'Album','Announcement', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language','MemDatas');
     var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
@@ -113,7 +113,7 @@ class CacheController extends AppController {
        $this->setVideoCacheVar();    
        $this->setAppMyMusicVideoList(); 
        $this->setAnnouncementCache();
-       //$this->setMoviesAnnouncements();
+       $this->setMoviesAnnouncements();
        $this->setTopArtist();
     }
     

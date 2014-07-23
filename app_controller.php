@@ -4,7 +4,7 @@ class AppController extends Controller
 
     var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library','Announcement');
     var $view = 'Dataencode';
     var $patron_country;
     var $patron_id;
@@ -144,19 +144,19 @@ class AppController extends Controller
         }
         $this->set('announcment_value', $announcmentValue);
         
-//        $isMovie = $this->Session->read("library_announcement");
-//        if($isMovie == 1) {
-//            $mvAnnouncment = Cache::read("moviesannouncementCache");
-//            if ($mvAnnouncment === false)
-//            {
-//                $this->Announcement->setDataSource('movies');
-//                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
-//                $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
-//                Cache::write("moviesannouncementCache", $mvAnnouncment);
-//            }
-//            $this->set('movieAnnouncmentValue', $mvAnnouncment);
-//            $this->Announcement->setDataSource('default');
-//        }     commented annoncements code   
+        $isMovie = $this->Session->read("library_announcement");
+        if($isMovie == 1) {
+            $mvAnnouncment = Cache::read("moviesannouncementCache");
+            if ($mvAnnouncment === false)
+            {
+                $this->Announcement->setDataSource('movies');
+                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
+                $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
+                Cache::write("moviesannouncementCache", $mvAnnouncment);
+            }
+            $this->set('movieAnnouncmentValue', $mvAnnouncment);
+            $this->Announcement->setDataSource('default');
+        }       
         /*
          * Below Code of Register Concert is Commented as per Request
          */

@@ -17,7 +17,7 @@ class IncrementalIndexShell extends Shell {
 
 	var $sleepTime = 300;
 
-	var $emailList = 'ghanshyam.agrawal@infobeans.com';
+	var $emailList = 'kiran.pyati@infobeans.com';
 
 	function main() {
 

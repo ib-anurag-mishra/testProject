@@ -894,8 +894,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<?php echo $announcment_value; ?>
 				</div>
 			</div>
-                        <br/>
-<!-- commented announcements code
                         <?php 
                         if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
 
@@ -904,22 +902,24 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             $i = 0;
                         ?>
                             <div class="movie-announcements">
-                                 <p style="font-size: small; font-family: verdana, geneva;"> 
-                                    Did you know that Freegal is also a movie service? You can stream full-length concerts, and top movies like
-                                  </p>  
+                                 <p> 
+                                    Did you know that Freegal is also a movie service?
+                                  </p>
+                                  <p>You can stream full-length concerts, and top movies like  
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
-                                <strong><a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
+                                <strong><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
                                     <?php echo '"'.$value['announcements']['title'].'"'; ?>
                                 </a></strong>
                                  <?php if($i == 1){
                                             echo "and";
                                         }
-                                  } ?> 
-                                 <a href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here to log in</a>
+                                  } ?>
+                                  .</p> 
+                                 <p><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here</a> to log in.</p>
                             </div>
-                        <?php } ?> -->
+                        <?php } ?> 
 		</section>
 		<div class="content" style="<?php echo $section_class; ?>">
 			<span class="ajaxmessage44" id="ajaxflashMessage44"></span>
