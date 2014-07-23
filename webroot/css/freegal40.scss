@@ -6098,8 +6098,9 @@ sub { top: 0.4em; }
 
                     .playlist-options {
                         position: absolute;
-                        right: -146px;
-                        top:0px;
+                        // right: -146px;
+                        left: 0;
+                        top: 0;
                         display: none;
                         background: #fff;
                         width: 145px;
