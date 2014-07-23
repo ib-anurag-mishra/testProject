@@ -67,6 +67,9 @@
         */
 	
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+        
+        Router::connect('/genres/index', array('controller' => 'genres', 'action' => 'view'));
+        Router::connect('/genres', array('controller' => 'genres', 'action' => 'view'));
   
         Router::connect('/wsdl', array('controller' => 'soaps', 'action' => 'wsdl'));
         //Router::connect('/soaps/*', array('controller' => 'soaps', 'action' => 'index'));
