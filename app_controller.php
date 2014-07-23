@@ -126,37 +126,37 @@ class AppController extends Controller
         //$this->checkOnlinePatron();
         // add announcement in the cache
         
-//        $announcment_rs = Cache::read("announcementCache");
-//        if ($announcment_rs === false)
-//        {
-//            $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
-//            $announcment_rs = $this->Album->query($announcment_query);
-//            Cache::write("announcementCache", $announcment_rs);
-//        }
-//
-//        if (isset($announcment_rs[0]['pages']['page_content']))
-//        {
-//            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
-//        }
-//        else
-//        {
-//            $announcmentValue = '';
-//        }
-//        $this->set('announcment_value', $announcmentValue);    commented to hide announcements
+        $announcment_rs = Cache::read("announcementCache");
+        if ($announcment_rs === false)
+        {
+            $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+            $announcment_rs = $this->Album->query($announcment_query);
+            Cache::write("announcementCache", $announcment_rs);
+        }
+
+        if (isset($announcment_rs[0]['pages']['page_content']))
+        {
+            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
+        }
+        else
+        {
+            $announcmentValue = '';
+        }
+        $this->set('announcment_value', $announcmentValue);    
         
-        $isMovie = $this->Session->read("library_announcement");
-        if($isMovie == 1) {
-            $mvAnnouncment = Cache::read("moviesannouncementCache");
-            if ($mvAnnouncment === false)
-            {
-                $this->Announcement->setDataSource('movies');
-                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
-                $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
-                Cache::write("moviesannouncementCache", $mvAnnouncment);
-            }
-            $this->set('movieAnnouncmentValue', $mvAnnouncment);
-            $this->Announcement->setDataSource('default');
-        }       
+//        $isMovie = $this->Session->read("library_announcement");
+//        if($isMovie == 1) {
+//            $mvAnnouncment = Cache::read("moviesannouncementCache");
+//            if ($mvAnnouncment === false)
+//            {
+//                $this->Announcement->setDataSource('movies');
+//                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
+//                $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
+//                Cache::write("moviesannouncementCache", $mvAnnouncment);
+//            }
+//            $this->set('movieAnnouncmentValue', $mvAnnouncment);
+//            $this->Announcement->setDataSource('default');
+//        }       
         /*
          * Below Code of Register Concert is Commented as per Request
          */
