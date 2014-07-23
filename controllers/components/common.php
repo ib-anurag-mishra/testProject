@@ -230,6 +230,15 @@ Class CommonComponent extends Object
         {
             $endLimitG =  12000;
             $startLimitG = ($pageNo * 12000) - 12000;
+            $conditionString = '';
+           
+             //make condition according to Genre value
+            if ($artistFilter == 'spl'){
+                $conditionString = " And Songs.ArtistText REGEXP '^[^A-Za-z]'";
+            }
+            elseif ($artistFilter != '' && $artistFilter != 'All') {
+                $conditionString = "And Songs.ArtistText LIKE '".$artistFilter."%'";
+            }
             
             /* Query written in below format as it is not possible to write in Cakephp Standard.
              * Ref URL: http://stackoverflow.com/questions/8175080/cakephp-select-from-subquery-select-foo-from-select
@@ -242,7 +251,7 @@ Class CommonComponent extends Object
                                                         LEFT JOIN ".$territory."_countries  AS Country ON (Country.ProdID = Songs.ProdID and Country.provider_type = Songs.provider_type) 
                                                         LEFT JOIN Albums AS Albums ON (Songs.ReferenceID = Albums.ProdID) 
                                                         WHERE (Country.DownloadStatus = 1 or Country.StreamingStatus =1) 
-                                                        AND Songs.ArtistText!='' AND Country.SalesDate != ''
+                                                        AND Songs.ArtistText!='' AND Country.SalesDate != '' ".$conditionString."
                                                         ORDER BY Songs.ArtistText ASC 
                                                         LIMIT ".$startLimitG.", ".$endLimitG.") Song");
             
