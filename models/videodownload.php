@@ -239,7 +239,8 @@ class Videodownload extends AppModel
 		$conditions = array(
 				'Videodownload.created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY Videodownload.id  ORDER BY created ASC"
 		);
-		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Videodownload.id','Videodownload.library_id','Videodownload.patron_id','Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created'),'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))),'recursive' => -1));
+		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Videodownload.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id','Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created'),'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))),
+'recursive' => -1));
 	}
 
 	/*

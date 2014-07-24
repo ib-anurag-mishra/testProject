@@ -219,7 +219,7 @@ class Downloadpatron extends AppModel
       'download_date = "'.$downloadDate.'" '.$lib_condition." ORDER BY download_date DESC"
     );
     
-    $record = $this->find('all',array('conditions'=>$conditions, 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')))));
+    $record = $this->find('all',array('conditions'=>$conditions, 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id')))));
     
     return $record;
   }
