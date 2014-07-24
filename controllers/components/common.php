@@ -2532,6 +2532,7 @@ STR;
         $downloadInstance = ClassRegistry::init('Download');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
+        $songInstance = ClassRegistry::init('Song');
         
         //library top 10 cache set for albums start            
         if ($this->maintainLatestDownload)
@@ -2553,7 +2554,7 @@ STR;
         $sony_ids = array();
         $sony_ids_str = '';
         $ioda_ids_str = '';
-        $ids_provider_type = '';
+        $ids_provider_type_album = '';
         foreach ($topDownloaded_albums as $k => $v)
         {
             if ($this->maintainLatestDownload) 
@@ -2631,51 +2632,87 @@ STR;
                 $top_ten_condition_albums = "(Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda')";
             }
 
-            $albumInstance->recursive = 2;
-            $topDownloaded_query_albums = <<<STR
-            SELECT 
-                    Song.ProdID,
-                    Song.ReferenceID,
-                    Song.Title,
-                    Song.ArtistText,
-                    Song.DownloadStatus,
-                    Song.SongTitle,
-                    Song.Artist,
-                    Song.Advisory,
-                    Song.Sample_Duration,
-                    Song.FullLength_Duration,
-                    Song.provider_type,
-                    Albums.ProdID,
-                    Albums.provider_type,
-                    Albums.Advisory,             
-                    Albums.AlbumTitle,
-                    Genre.Genre,
-                    Country.Territory,
-                    Country.SalesDate,
-                    Country.StreamingSalesDate,
-                    Country.StreamingStatus,
-                    Country.DownloadStatus,
-                    Sample_Files.CdnPath,
-                    Sample_Files.SaveAsName,
-                    Full_Files.CdnPath,
-                    Full_Files.SaveAsName,
-                    File.CdnPath,
-                    File.SourceURL,
-                    File.SaveAsName,
-                    Sample_Files.FileID
-            FROM Songs AS Song
-            LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-            LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-            LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-            LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-            INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-            INNER JOIN File ON (Albums.FileID = File.FileID)
-            WHERE (Country.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-            GROUP BY Song.ReferenceID
-            ORDER BY count(Song.ReferenceID) DESC
-            LIMIT 10
-STR;
-            $topDownload = $albumInstance->query($topDownloaded_query_albums);
+           
+            $songInstance->unbindModel(array('hasOne' => array('Country')));
+            $songInstance->unbindModel(array('hasOne' => array('Genre')));
+            $songInstance->unbindModel(array('hasOne' => array('Participant')));
+            $songInstance->recursive = 2;
+            
+                $topDownload = $songInstance->find('all', array(
+                'conditions' => array(
+                    'Country.DownloadStatus = "1"' ,
+                    'Country.Territory = "'.$country.'" AND Country.SalesDate != "" AND Country.SalesDate < NOW()',
+                    '('.$top_ten_condition_albums.' ) AND 1 = 1'
+                ),               
+                'fields' => array('
+                        Song.ProdID,
+                        Song.ReferenceID,
+                        Song.Title,
+                        Song.ArtistText,
+                        Song.DownloadStatus,
+                        Song.SongTitle,
+                        Song.Artist,
+                        Song.Advisory,
+                        Song.Sample_Duration,
+                        Song.FullLength_Duration,
+                        Song.provider_type,
+                        Albums.ProdID,
+                        Albums.provider_type,
+                        Albums.Advisory,             
+                        Albums.AlbumTitle,
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Country.StreamingSalesDate,
+                        Country.StreamingStatus,
+                        Country.DownloadStatus,
+                        Sample_Files.CdnPath,
+                        Sample_Files.SaveAsName,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        File.CdnPath,
+                        File.SourceURL,
+                        File.SaveAsName,
+                        Sample_Files.FileID'
+                    ),                
+                'group' => 'Song.ReferenceID ',
+                'order' => array('count(Song.ReferenceID) DESC'),
+                'limit' => 10,
+                'joins' => array(
+                                array(
+                                    'table' => strtolower($territory).'_countries',
+                                    'alias' => 'Country',
+                                    'type' => 'Left',
+                                    'foreignKey' => false,
+                                    'conditions'=> array( 'Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type' )
+                                ),                   
+
+                                array(
+                                    'table' => 'Genre',
+                                    'alias' => 'Genre',
+                                    'type' => 'Left',
+                                    'foreignKey' => false,
+                                    'conditions'=> array( 'Genre.ProdID = Song.ProdID',' Genre.provider_type = Song.provider_type ' )
+                                ),                   
+
+                                array(
+                                    'table' => 'Albums',
+                                    'alias' => 'Albums',
+                                    'type' => 'Inner',
+                                    'foreignKey' => false,
+                                    'conditions'=> array( 'Song.ReferenceID = Albums.ProdID' )
+                                ),                   
+
+                                array(
+                                    'table' => 'File',
+                                    'alias' => 'File',
+                                    'type' => 'Inner',
+                                    'foreignKey' => false,
+                                    'conditions'=> array( 'Albums.FileID = File.FileID' )
+                                )
+                           )
+                     ));         
+   
         }
         else
         {
@@ -2698,8 +2735,7 @@ STR;
                     $topDownload[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
-            }
-            Cache::delete("lib_album" . $libId);
+            }            
             Cache::write("lib_album" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 albums cache set for lib: $libId $country", "cache");
