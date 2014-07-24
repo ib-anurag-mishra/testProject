@@ -244,7 +244,7 @@ class DownloadVideoPatron extends AppModel
       'download_date = "'.$downloadDate.'" '.$lib_condition." ORDER BY download_date DESC"
     );
     
-    $record = $this->find('all',array('conditions'=>$conditions));
+    $record = $this->find('all',array('conditions'=>$conditions, 'fields' => array('Currentpatrons.id, `DownloadVideoPatron`.`download_date`, `DownloadVideoPatron`.`library_id`, `DownloadVideoPatron`.`patron_id`, `DownloadVideoPatron`.`email`, `DownloadVideoPatron`.`total`'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = DownloadVideoPatron.patron_id', 'Currentpatrons.libid = DownloadVideoPatron.library_id')))));
     
     return $record;
   }
