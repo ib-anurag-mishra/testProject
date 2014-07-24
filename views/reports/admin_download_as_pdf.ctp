@@ -453,43 +453,23 @@
 
     //Data loading
     foreach($downloads as $key => $download) {
-		if($download['Download']['email']!=''){
-			$patron = $download['Download']['email'];
-		}
-		else{
-			$patron = $download['Download']['patron_id'];
-		}
+	$patron = $download['Currentpatrons']['id'];
         $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
         $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
     }
     foreach($videoDownloads as $key => $download) {
-		if($download['Videodownload']['email']!=''){
-			$patron = $download['Videodownload']['email'];
-		}
-		else{
-			$patron = $download['Videodownload']['patron_id'];
-		}
+	$patron = $download['Currentpatrons']['id'];
         $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
         $video_data[] = array($key+1, $this->getAdminTextEncode($libraryName), $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
     }
 
     foreach($patronDownloads as $key => $patronDownload) {
-		if($patronDownload['Downloadpatron']['email']!=''){
-			$patron_id = $patronDownload['Downloadpatron']['email'];
-		}
-		else{
-			$patron_id = $patronDownload['Downloadpatron']['patron_id'];
-		}
+	$patron_id = $patronDownload['Currentpatrons']['id'];
         $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
     }
     
     foreach($patronVideoDownloads as $key => $patronDownload) {
-		if($patronDownload['DownloadVideoPatron']['email']!=''){
-			$patron_id = $patronDownload['DownloadVideoPatron']['email'];
-		}
-		else{
-			$patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
-		}
+	$patron_id = $patronDownload['Currentpatrons']['id'];
         $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
     }    
 
