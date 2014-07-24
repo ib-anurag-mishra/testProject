@@ -266,8 +266,8 @@ class Download extends AppModel
 			$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));
 			$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 		}
-		$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id ORDER BY created ASC");
-		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Download.id','Download.library_id','Download.patron_id','Download.artist','Download.track_title','Download.email','Download.created'),'recursive' => -1));
+		$conditions = array('Download.created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY Download.id ORDER BY created ASC");
+		return $this->find('all', array('conditions'=>$conditions,  'fields'=>array('Currentpatrons.patronid', 'Download.id','Download.library_id','Download.patron_id','Download.artist','Download.track_title','Download.email','Download.created'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))),'recursive' => -1));
   }
 
   /*
