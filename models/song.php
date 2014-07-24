@@ -254,32 +254,31 @@ class Song extends AppModel {
 	 * @return array
 	 */
 	function getArtistAlbums($artist_text , $country, $cond) {
+		
+		//$this->unBindModel( array( 'belongsTo' => array( 'Sample_Files', 'Full_Files' ), 'hasOne' => array( 'Participant', 'Genre', 'Country' ) ) );
+		
 		$this->Behaviors->attach('Containable');
-		return $this->find('all', array(
-			'fields' => array(
-				'DISTINCT Song.ReferenceID',
-				'Song.provider_type',
-				'Country.SalesDate'),
-			'conditions' => array(
-				'Song.ArtistText' => base64_decode($artist_text),
-				'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
-				"Song.Sample_FileID != ''",
-				"Song.FullLength_FIleID != ''",
-				'Country.Territory' => $country, $cond,
-				'Song.provider_type = Country.provider_type'
-			),
-			'contain' => array(
-				'Country' => array(
+		
+		$options = array(
 					'fields' => array(
-						'Country.Territory'
-					)
-				)
-			),
-			'recursive' => 0,
-			'order' => array(
-				'Country.SalesDate DESC'
-			)
-		));
+							'DISTINCT Song.ReferenceID',
+							'Song.provider_type',
+							'Country.SalesDate' 
+							),
+					'conditions' => array(
+							'Song.ArtistText' => $artist_text,
+							'Country.DownloadStatus' => 1,
+							"Song.Sample_FileID != ''",
+							"Song.FullLength_FIleID != ''",
+							'Country.Territory' => $country, $cond,
+							'Song.provider_type = Country.provider_type'
+							),
+					'contain' => array( 'Country' => array( 'fields' => array( 'Country.Territory' ) ) ),
+					'recursive' => 0,
+					'order' => array( 'Country.SalesDate DESC' )
+				);
+
+		return $this->find( 'all', $options );
 	}
 
 	function getArtistView($id , $country, $cond, $query_id) {
