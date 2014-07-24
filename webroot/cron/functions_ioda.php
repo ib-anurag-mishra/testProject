@@ -280,4 +280,44 @@ function sendFile($src,$dst)
 		}
 	}
 }
+
+
+function getFileName($library_territory, $from_date, $libTypeKey, $version)
+{
+    $file_name = "Freegal_r_" . $library_territory . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+
+    $SFTP_HOST = SFTP_HOST;
+    $SFTP_PORT = SFTP_PORT;
+    $SFTP_USER = SFTP_USER;
+    $SFTP_PASS = SFTP_PASS;
+    $CdnPath = '/published/freegalmusic/prod/EN/ioda_reports/';
+
+    if (!($con = ssh2_connect($SFTP_HOST, $SFTP_PORT)))
+    {
+        echo "Not Able to Establish Connection with CDN.\n";
+    }
+    else
+    {
+        if (!ssh2_auth_password($con, $SFTP_USER, $SFTP_PASS))
+        {
+            echo "fail: unable to authenticate with CDN.\n";
+        }
+        else
+        {
+            $sftp = ssh2_sftp($con);
+
+            while (1)
+            {
+                if (file_exists($CdnPath.$file_name))
+                {
+                    $version++;
+                    echo $file_name = "Freegal_r_" . $library_territory . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+                }else{
+                    break;
+                }
+            }
+        }
+    }
+}
+
 ?>

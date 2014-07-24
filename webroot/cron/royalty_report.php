@@ -134,6 +134,10 @@ foreach ($arr_dates AS $key => $value)
             }
             
             $version = 1;
+            
+             $file_name = getFileName($row_country['library_territory'] , $value['from_date'] , $libTypeKey , $version);
+             
+             exit;
             $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
             while (1)
             {
@@ -147,6 +151,12 @@ foreach ($arr_dates AS $key => $value)
                     break;
                 }
             }
+            
+            
+            
+            
+            
+            
             $round_total_sales = round($total_sales, 2);
             if (false === strpos($round_total_sales, '.'))
             {
