@@ -302,7 +302,7 @@ $ieVersion =  ieversion();
 				<?php
                     endforeach;
                     }else{
-                echo 	'<div style="height: 480px; text-align:center; padding-top: 200px; font-size:14px; font-weight: bold;">';?><?php echo __("No downloaded video from this week or last week."); ?><?php echo '</div>';
+                echo 	'<div style="height: 480px; text-align:center; padding-top: 200px; font-size:14px; font-weight: bold;">';?><?php echo __("No downloaded videos from this week or last week."); ?><?php echo '</div>';
                 }
 				?>
 				</div>
