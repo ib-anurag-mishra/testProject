@@ -18,16 +18,13 @@ date_default_timezone_set('America/New_York');
 
 $arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 1), 1, date(Y))); //'2012-10-01 00:00:00';
 $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 1), 1, date(Y))); //'2012-10-31 23:59:59';
-
 //$arr_dates['month']['from_date'] =  '2012-10-01 00:00:00';
 //$arr_dates['month']['to_date'] = '2012-10-31 23:59:59';
-
 //$fetchRecordsFromTable = 'latest_downloads';
 $fetchRecordsFromTable = 'downloads';
 
-$libraryType = array('ALC' => '0', 'Unlimited' => '1');
-
-// $libraryType = array('ALC'=>'0');
+//$libraryType = array('ALC' => '0', 'Unlimited' => '1');
+$libraryType = array('ALC'=>'0');
 
 $unit_sales_rate = null;
 foreach ($arr_dates AS $key => $value)
@@ -43,8 +40,8 @@ foreach ($arr_dates AS $key => $value)
             $unit_sales_rate = 0;
         }
         //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
-        $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD');
-        // $country_curency = array('US' => 'USD');
+        //$country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD');
+         $country_curency = array('US' => 'USD');
 
         $query_country = "Select distinct libraries.library_territory from libraries";
         $result_country = mysql_query($query_country, $freegal);
@@ -129,36 +126,13 @@ foreach ($arr_dates AS $key => $value)
                     $retail_price = ($libTypeKey == 'ALC') ? '0.5' : '   ';
                     $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $artistText, 'S', 1, 't', $unit_count, $unit_sales_rate, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], $retail_price, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', date('Y-m-d', strtotime($row['created'])), '', '');
                     $total_records++;
-                    $total_sold += $unit_count;                                       
+                    $total_sold += $unit_count;
                 }
             }
-            
+
             $version = 1;
-            
-             $file_name = getFileName($row_country['library_territory'] , $value['from_date'] , $libTypeKey , $version);
-             
-             exit;
-             
-             
-            $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
-            while (1)
-            {
-                if (file_exists($reportsFolder . "/" . $file_name))
-                {
-                    $version++;
-                    $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
-                }
-                else
-                {
-                    break;
-                }
-            }
-            
-            
-            
-            
-            
-            
+            $file_name = getFileName($row_country['library_territory'], $value['from_date'], $libTypeKey, $version);
+
             $round_total_sales = round($total_sales, 2);
             if (false === strpos($round_total_sales, '.'))
             {
@@ -199,15 +173,14 @@ function write_file($content, $file_name, $folder)
                 $dataRowString = implode($delimiter, $subArray);
                 fwrite($fh, $dataRowString . "\n");
             }
-            //fwrite($fh ,"\r\n"); 
         }
         fclose($fh);
 
         //FOR SENDING REPORT TO IODA SERVER USING SFTP
-        if (sendReportFilesftp($folder . $file_name, $file_name, $logFileWrite, "monthly"))
-        {
-            echo "Report $file_name sent";
-        }
+//        if (sendReportFilesftp($folder . $file_name, $file_name, $logFileWrite, "monthly"))
+//        {
+//            echo "Report $file_name sent";
+//        }
         //FOR SENDING REPORT TO IODA SERVER USING FTP
 //        if (sendReportFileftp($folder . $file_name, $file_name, $logFileWrite, "monthly"))
 //        {
