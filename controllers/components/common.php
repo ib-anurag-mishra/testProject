@@ -59,7 +59,7 @@ Class CommonComponent extends Object
             $combine_genre  = array_unique($combine_genre);
             sort($combine_genre);
             
-            Cache::write("genre" . $territory, $combine_genre,'GenreCache');
+            Cache::write("allgenre" . $territory, $combine_genre,'GenreCache');
             $this->log("cache written for genre for $territory", "cache");
             
             /*Cache::write("genre" . $territory, $genreAll,'GenreCache');
@@ -269,13 +269,13 @@ Class CommonComponent extends Object
          elseif($artistFilter == 'All')
          {       
              $territoryUpper    = strtoupper($territory);
-             $genreList = Cache::read("genre" . $territoryUpper,'GenreCache');
+             $genreList = Cache::read("allgenre" . $territoryUpper,'GenreCache');
              $genreKey  = array_search($genreValue, $genreList);
              
              if ($genreKey!=false) {
                  
                  unset($genreList[$genreKey]);
-                 Cache::write("genre" . $territoryUpper, $genreList,'GenreCache');
+                 Cache::write("allgenre" . $territoryUpper, $genreList,'GenreCache');
                  $this->log($genreValue." deleted from genre Cache for $territory", "cache");
                  
              }

@@ -58,7 +58,7 @@ Class GenresController extends AppController
         $this->set('patronDownload', $patronDownload);
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
-        $genreAll = Cache::read("genre" . $country);
+        $genreAll = Cache::read("allgenre" . $country);
         if ($genreAll === false) {
         //if(1){ 
             $genreAll = $this->Common->getGenres($country);
@@ -264,7 +264,7 @@ Class GenresController extends AppController
         }
   
         //check the genre list cache
-        $genreAll = Cache::read("genre" . $country,'GenreCache');
+        $genreAll = Cache::read("allgenre" . $country,'GenreCache');
         if ($genreAll === false || empty($genreAll))
         {
             $genreAll = $this->Common->getGenres($country);
