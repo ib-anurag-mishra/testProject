@@ -138,6 +138,8 @@ foreach ($arr_dates AS $key => $value)
              $file_name = getFileName($row_country['library_territory'] , $value['from_date'] , $libTypeKey , $version);
              
              exit;
+             
+             
             $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
             while (1)
             {
