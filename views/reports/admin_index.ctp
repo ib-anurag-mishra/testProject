@@ -324,7 +324,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                        <td><?php echo $download['Currentpatrons']['id'];?></td>
+                                        <td><?php echo $patronDownload['Currentpatrons']['id'];?></td>
                                         <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
@@ -352,7 +352,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                         <td><?php echo $download['Currentpatrons']['id'];?></td>
+                                         <td><?php echo $patronDownload['Currentpatrons']['id'];?></td>
                                         <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
