@@ -1285,6 +1285,10 @@ STR;
     /*
      * Function Name : getUsTop10Videos
      * Function Description : This function is used to get Us Top 10 Videos.
+     * 
+     * @param $territory string
+     * 
+     * @return $data array
      */
 
     function getUsTop10Videos($territory)
@@ -1294,48 +1298,90 @@ STR;
         $countryPrefix = $this->getCountryPrefix($territory);
         $videoInstance = ClassRegistry::init('Video');
         $albumInstance = ClassRegistry::init('Album'); 
+        
+        $latestVideodownload = ClassRegistry::init('LatestVideodownload','Download');
+        $videodownload = ClassRegistry::init('Videodownload','Download'); 
         //Added caching functionality for us top 10 Video            
         $country = $territory;
         if (!empty($country))
         {
             
-            if ($this->maintainLatestDownload)
-            {
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                     FROM `latest_videodownloads` AS `Download` 
-                     LEFT JOIN libraries ON libraries.id=Download.library_id
-                     WHERE libraries.library_territory = '" . $country . "' 
-                     AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-                     GROUP BY Download.ProdID 
-                     ORDER BY `countProduct` DESC 
-                     LIMIT 110";
+            if (!$this->maintainLatestDownload)
+            {            
+                 
+                
+                 $fetchTableUsed = 'LatestVideodownload';
+                 $USTop10Downloaded = $latestVideodownload->find('all', array(
+                    'conditions' => array(
+                        'libraries.library_territory = "' . $territory . '"',
+                        'LatestVideodownload.created BETWEEN "' . Configure::read('App.lastWeekStartDate') . '" AND "' . Configure::read('App.lastWeekEndDate') . '"'                       
+                    ),               
+                    'fields' => array( 'LatestVideodownload.ProdID,
+                                       COUNT(DISTINCT LatestVideodownload.id) AS countProduct,
+                                        provider_type'
+                                    ),                
+                    'group' => 'LatestVideodownload.ProdID ',
+                    'order' => array('countProduct DESC'),  
+                    'limit' => '110',
+                    'joins' => array(
+                        array(
+                            'table' => 'libraries',
+                            'alias' => 'libraries',
+                            'type' => 'Left',
+                            'foreignKey' => false,
+                            'conditions'=> array('libraries.id = LatestVideodownload.library_id' )
+                        )
+                    )
+                 ));
+                 
+                 
+                 
             }
             else
             {
 
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                     FROM `videodownloads` AS `Download` 
-                     LEFT JOIN libraries ON libraries.id=Download.library_id
-                     WHERE libraries.library_territory = '" . $country . "' 
-                     AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-                     GROUP BY Download.ProdID 
-                     ORDER BY `countProduct` DESC 
-                     LIMIT 110";
-            }
+                
+                 $videodownload->unbindModel(array('belongsTo' => array('Genre')));
+                 $fetchTableUsed = 'Videodownload';
+                 $USTop10Downloaded = $videodownload->find('all', array(
+                    'conditions' => array(
+                        'libraries.library_territory = "' . $territory . '"',
+                        'Videodownload.created BETWEEN "' . Configure::read('App.lastWeekStartDate') . '" AND "' . Configure::read('App.lastWeekEndDate') . '"'                       
+                    ),               
+                    'fields' => array( 'Videodownload.ProdID,
+                                       COUNT(DISTINCT Videodownload.id) AS countProduct,
+                                        provider_type'
+                                    ),                
+                    'group' => 'Videodownload.ProdID ',
+                    'order' => array('countProduct DESC'),  
+                    'limit' => 110,
+                    'joins' => array(
+                                    array(
+                                        'table' => 'libraries',
+                                        'alias' => 'libraries',
+                                        'type' => 'Left',
+                                        'foreignKey' => false,
+                                        'conditions'=> array('libraries.id = Videodownload.library_id' )
+                                    )
+                              )
+                 ));                         
+                
+            }     
+    
+            
             $ids = '';
-            $ids_provider_type = '';
-            $USTop10Downloaded = $albumInstance->query($sql);
+            $ids_provider_type = '';           
             foreach ($USTop10Downloaded as $natTopSong)
             {
                 if (empty($ids))
                 {
-                    $ids .= $natTopSong['Download']['ProdID'];
-                    $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                    $ids .= $natTopSong[$fetchTableUsed]['ProdID'];
+                    $ids_provider_type .= "(" . $natTopSong[$fetchTableUsed]['ProdID'] . ",'" . $natTopSong[$fetchTableUsed]['provider_type'] . "')";
                 }
                 else
                 {
-                    $ids .= ',' . $natTopSong['Download']['ProdID'];
-                    $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                    $ids .= ',' . $natTopSong[$fetchTableUsed]['ProdID'];
+                    $ids_provider_type .= ',' . "(" . $natTopSong[$fetchTableUsed]['ProdID'] . ",'" . $natTopSong[$fetchTableUsed]['provider_type'] . "')";
                 }
             }
 
@@ -1343,6 +1389,9 @@ STR;
             {
                 $this->log("download data not recevied for " . $territory, "cache");
             }
+            
+            
+            
             $data = array();
             if ($ids_provider_type != "")
             {
@@ -1407,17 +1456,12 @@ STR;
                         )
                     )
                  ));
-                
-
-            $this->log("US top 10 videos for $territory", "cachequery");
-            $this->log($video_sql_US_TOP_10, "cachequery");
-            
+             
             }
             else
             {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
-            }
-            
+            } 
             
             
             if (!empty($data))
