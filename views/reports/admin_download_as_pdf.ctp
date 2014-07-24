@@ -444,10 +444,10 @@
     $tcpdf->AddPage();
 
     //Column titles
-    $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
-    $video_header = array('','Library Name', 'Patron ID', 'Artists Name', 'Video title', 'Download');
-    $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
-    $patron_video_header = array('', 'Patron ID', 'Library Name', 'Total Number of Videos Downloaded');
+    $header = array('','Library Name', 'ID', 'Artists Name', 'Track title', 'Download');
+    $video_header = array('','Library Name', 'ID', 'Artists Name', 'Video title', 'Download');
+    $patron_header = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
+    $patron_video_header = array('', 'ID', 'Library Name', 'Total Number of Videos Downloaded');
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
     $genre_video_header = array('', 'Genre Name', 'Total Number of Videos Downloaded');
 

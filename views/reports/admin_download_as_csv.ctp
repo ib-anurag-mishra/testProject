@@ -115,7 +115,7 @@ if(empty($arr_all_patron_downloads)) {
 $line = array('Library Downloads Report');
 $csv->addRow($line);
 
-$line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
+$line = array('', 'Library Name', 'ID', 'Artists Name', 'Track title', 'Download');
 $csv->addRow($line);
 
 foreach($downloads as $key => $download) {
@@ -129,7 +129,7 @@ foreach($downloads as $key => $download) {
 $line = array('Library Video Downloads Report');
 $csv->addRow($line);
 
-$line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Video title', 'Download');
+$line = array('', 'Library Name', 'ID', 'Artists Name', 'Video title', 'Download');
 $csv->addRow($line);
 
 foreach($videoDownloads as $key => $download) {
@@ -145,7 +145,7 @@ $csv->addRow($line);
 $line = array('Patron Downloads Report');
 $csv->addRow($line);
 
-$line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+$line = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
 $csv->addRow($line);
 
 foreach($patronDownloads as $key => $patronDownload) {
@@ -160,7 +160,7 @@ $csv->addRow($line);
 $line = array('Patron Video Downloads Report');
 $csv->addRow($line);
 
-$line = array('', 'Patron ID', 'Library Name', 'Total Number of Videos Downloaded');
+$line = array('', 'ID', 'Library Name', 'Total Number of Videos Downloaded');
 $csv->addRow($line);
 
 foreach($patronVideoDownloads as $key => $patronDownload) {
