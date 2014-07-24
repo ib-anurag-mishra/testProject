@@ -210,7 +210,7 @@ $ieVersion =  ieversion();
                     $i++;
                     endforeach;
                     }else{
-                echo 	'<table><tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr></table>';
+                echo 	'<div>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</div>';
                 }
 				?>
 				</div>
