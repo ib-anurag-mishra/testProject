@@ -346,9 +346,9 @@ class Videodownload extends AppModel
 		$startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
 		$endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
 		$conditions = array(
-				'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id  ORDER BY created ASC"
+				'Videodownload.created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY Videodownload.id  ORDER BY created ASC"
 		);
-		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Videodownload.id','Videodownload.library_id','Videodownload.patron_id','Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created'),'recursive' => -1));
+		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id','Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))),'recursive' => -1));
 	}
 
 	function getConsortiumDaysDownloadInformation($libraryID, $date) {

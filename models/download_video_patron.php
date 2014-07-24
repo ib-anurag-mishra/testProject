@@ -354,7 +354,7 @@ class DownloadVideoPatron extends AppModel
       $conditions = array(
           'download_date BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id,library_id ORDER BY download_date DESC"
       );
-      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('patron_id','library_id','SUM(total) as total'))));
+      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('Currentpatrons.id', 'patron_id','library_id','SUM(total) as total'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = DownloadVideoPatron.patron_id', 'Currentpatrons.libid = DownloadVideoPatron.library_id'))))));
   }
 
 }
