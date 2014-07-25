@@ -910,9 +910,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
-                                <p><strong><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
-                                    <?php echo '"'.$value['announcements']['title'].'"'; ?>
-                                </a></strong></p>
+                                <p><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
+                                    <?php echo $value['announcements']['title']; ?>
+                                </a></p>
                                  <?php /*if($i == 1){
                                             echo "and";
                                         }*/
