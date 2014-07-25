@@ -700,6 +700,7 @@ class ServicesController extends AppController {
 				$data['card_orig'] = $card;
 				$data['pin'] = $this->params['pass'][3];
 				$data['name'] = $this->params['pass'][3];
+                                $v=$data;
 
 				$patronId = $card;
 				$data['patronId'] = $patronId;
