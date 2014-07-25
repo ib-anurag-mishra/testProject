@@ -149,37 +149,53 @@ class Album extends AppModel  {
 		return $albumData;
 	}
 	
-	public function fetchAlbumData( $prodId, $providerType ) {
+	public function fetchAlbumData( $prodId, $providerType, $action = '' ) {
+
+		if ( $action === 'view' ) {
+			$contain = array(
+					'Genre' => array( 'fields' => array( 'Genre.Genre' ) ),
+					'Files' => array( 'fields' => array( 'Files.CdnPath', 'Files.SaveAsName', 'Files.SourceURL' ) ),
+					'Country' => array( 'fields' => array( 'Country.Territory' ) )
+			);
+		
+			$order = array('Country.SalesDate' => 'desc');
+			$limit = 3;
+		} else {
+			$contain = array(
+					'Genre' => array( 'fields' => array( 'Genre.Genre' ) ),
+					'Files' => array( 'fields' => array( 'Files.CdnPath', 'Files.SaveAsName', 'Files.SourceURL' ) )
+			);
+		
+			$order = array('FIELD(Album.ProdID, ' . $prodId . ') ASC');
+			$limit = 25;
+		}
 		
 		$options = array(
-					'fields' => array(
-							'Album.ProdID',
-							'Album.Title',
-							'Album.ArtistText',
-							'Album.AlbumTitle',
-							'Album.Advisory',
-							'Album.Artist',
-							'Album.ArtistURL',
-							'Album.Label',
-							'Album.Copyright',
-							'Album.provider_type',
-							'Files.CdnPath',
-							'Files.SaveAsName',
-							'Files.SourceURL',
-							'Genre.Genre'
-							),
-					'conditions' => array( '(Album.ProdID, Album.provider_type) IN (' . $providerType . ') AND 1 = 1' ),
-					'group'	=> array( 'Album.ProdID', 'Album.provider_type'),
-					'contain' => array(
-							'Genre' => array( 'fields' => array( 'Genre.Genre' ) ),
-							'Files' => array( 'fields' => array( 'Files.CdnPath', 'Files.SaveAsName', 'Files.SourceURL' ) )
-							),
-					'order' => array('FIELD(Album.ProdID, ' . $prodId . ') ASC'),
-					'cache' => 'yes',
-					'chk' => 2,
-					'limit' => 25,
-					'recursive' => 2
-				);
+				'fields' => array(
+						'Album.ProdID',
+						'Album.Title',
+						'Album.ArtistText',
+						'Album.AlbumTitle',
+						'Album.Advisory',
+						'Album.Artist',
+						'Album.ArtistURL',
+						'Album.Label',
+						'Album.Copyright',
+						'Album.provider_type',
+						'Files.CdnPath',
+						'Files.SaveAsName',
+						'Files.SourceURL',
+						'Genre.Genre'
+				),
+				'conditions' => array( '(Album.ProdID, Album.provider_type) IN (' . $providerType . ') AND 1 = 1' ),
+				'group'	=> array( 'Album.ProdID', 'Album.provider_type'),
+				'contain' => $contain,
+				'order' => $order,
+				'cache' => 'yes',
+				'chk' => 2,
+				'limit' => $limit,
+				'recursive' => 2
+		);
 		
 		return $this->find( 'all', $options );
 	}
