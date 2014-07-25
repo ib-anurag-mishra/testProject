@@ -2590,7 +2590,6 @@ function multiSongCreateNewPlaylist(queueID)
 }
 $(document).ready(function() {
     scrollToSelectedGenre();
-   // scrollToSelectedAlpha();
 });
 
 function scrollToSelectedGenre()
@@ -2611,17 +2610,3 @@ function scrollToSelectedGenre()
     });
 }
 
-function scrollToSelectedAlpha()
-{
-    var to_scroll = $(document).find(".alphabetical-filter");
-    $(document).find('.alphabetical-filter li').each(function() {
-        if ($(this).find('a').hasClass('selected'))
-        {
-            var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
-            to_scroll.animate({
-                scrollTop: scroll_distance
-            }, 2000);
-            $(this).find('a').focus();
-        }
-    });
-}
