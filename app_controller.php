@@ -4,7 +4,7 @@ class AppController extends Controller
 
     var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library','Announcement','Page');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library','Announcement');
     var $view = 'Dataencode';
     var $patron_country;
     var $patron_id;

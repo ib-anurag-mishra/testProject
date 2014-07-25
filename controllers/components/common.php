@@ -1511,16 +1511,34 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-            $sql = "SELECT Song.ProdID,Song.ReferenceID,Song.provider_type
-                FROM Songs AS Song
-                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                WHERE  ( (Country.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
-                ORDER BY Country.SalesDate DESC LIMIT 10000";
 
+            $newReleaseSongsRec = $songInstance->find('all', array(
+            'conditions' => array(
+                'Country.DownloadStatus = "1"' ,
+                'Country.Territory = "'.$country.'" AND 1 = 1 AND Country.SalesDate != "" AND Country.SalesDate < NOW()'                   
+            ),               
+            'fields' => array('
+                    Song.ProdID,
+                    Song.ReferenceID,                     
+                    Song.provider_type'
+                ),              
+            'order' => array(' Country.SalesDate DESC '),
+            'limit' => 10000,
+            'recursive' => -1,
+            'joins' => array(
+                            array(
+                                'table' => strtolower($territory).'_countries',
+                                'alias' => 'Country',
+                                'type' => 'Left',
+                                'foreignKey' => false,
+                                'conditions'=> array( 'Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type' )
+                            )
+                      )
+            ));                
 
             $ids = '';
             $ids_provider_type = '';
-            $newReleaseSongsRec = $songInstance->query($sql);
+            
             foreach ($newReleaseSongsRec as $newReleaseRow)
             {
                 if (empty($ids))
@@ -1534,6 +1552,8 @@ STR;
                     $ids_provider_type .= ',' . "(" . $newReleaseRow['Song']['ProdID'] . ",'" . $newReleaseRow['Song']['provider_type'] . "')";
                 }
             }
+            
+            
 
             if ((count($newReleaseSongsRec) < 1) || ($newReleaseSongsRec === false))
             {
@@ -1541,73 +1561,98 @@ STR;
             }
 
             $albumAdvisory 	   = '';
-            $cacheVariableName = 'new_releases_albums';
-            
+            $cacheVariableName = 'new_releases_albums';           
             if(true === $explicitContent) {
-            	$albumAdvisory 	   = " AND Albums.Advisory != 'T'";
+            	$albumAdvisory 	   = " AND Albums.Advisory != 'T' ";
             	$cacheVariableName = 'new_releases_albums_none_explicit';
             }
 
-            $data = array();
-            $sql_album_new_release = <<<STR
-                    SELECT 
-                            Song.ProdID,
-                            Song.ReferenceID,
-                            Song.Title,
-                            Song.ArtistText,
-                            Song.DownloadStatus,
-                            Song.SongTitle,
-                            Song.Artist,
-                            Song.Advisory,
-                            Song.Sample_Duration,
-                            Song.FullLength_Duration,
-                            Song.provider_type,
-                            Albums.AlbumTitle,
-                            Albums.ProdID,
-                            Albums.Advisory,
-                            Genre.Genre,
-                            Country.Territory,
-                            Country.SalesDate,
-                            Country.StreamingSalesDate,
-                            Country.StreamingStatus,
-                            Country.DownloadStatus,
-                            File.CdnPath,
-                            File.SourceURL,
-                            File.SaveAsName,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            Full_Files.FileID
-                    FROM Songs AS Song
-                    LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                    LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-                    LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-                    INNER JOIN File ON (Albums.FileID = File.FileID) 
-                    WHERE ( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)))
-                        AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $albumAdvisory                
-                    group by Albums.AlbumTitle
-                    ORDER BY Country.SalesDate DESC
-                    LIMIT 100
-STR;
-
-
-            $data = $songInstance->query($sql_album_new_release);
-            $this->log("new release album for $territory", "cachequery");
-            $this->log($sql_album_new_release, "cachequery");
-
+            $data = array();            
+            $songInstance->unbindModel(array('hasOne' => array('Country')));
+            $songInstance->unbindModel(array('hasOne' => array('Genre')));
+            $songInstance->unbindModel(array('hasOne' => array('Participant')));
+            $songInstance->unbindModel(array('belongsTo' => array('Sample_Files')));
+            $songInstance->recursive = 2;
+            
+            $data = $songInstance->find('all', array(
+                'conditions' => array(
+                    '( Country.DownloadStatus = "1" )',
+                    '( Country.Territory = "'. $territory. '") AND ( Country.SalesDate != "" ) AND ( Country.SalesDate <= NOW() )',
+                    '( Song.ProdID, Song.provider_type) IN ( '.$ids_provider_type.' )  '.$albumAdvisory.' AND 1 = 1'                   
+                ),               
+                'fields' => array('
+                                Song.ProdID,
+                                Song.ReferenceID,
+                                Song.Title,
+                                Song.ArtistText,
+                                Song.DownloadStatus,
+                                Song.SongTitle,
+                                Song.Artist,
+                                Song.Advisory,
+                                Song.Sample_Duration,
+                                Song.FullLength_Duration,
+                                Song.provider_type,
+                                Albums.AlbumTitle,
+                                Albums.ProdID,
+                                Albums.Advisory,
+                                Genre.Genre,
+                                Country.Territory,
+                                Country.SalesDate,
+                                Country.StreamingSalesDate,
+                                Country.StreamingStatus,
+                                Country.DownloadStatus,
+                                File.CdnPath,
+                                File.SourceURL,
+                                File.SaveAsName,
+                                Full_Files.CdnPath,
+                                Full_Files.SaveAsName,
+                                Full_Files.FileID'
+                    ),                
+                'group' => 'Albums.AlbumTitle',
+                'order' => array('Country.SalesDate DESC'),
+                'limit' => 100,
+                'joins' => array(
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'Country',
+                        'type' => 'Left',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type' )
+                    ),                  
+                    array(
+                        'table' => 'Genre',
+                        'alias' => 'Genre',
+                        'type' => 'Left',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Genre.ProdID = Song.ProdID',' Genre.provider_type = Song.provider_type ' )
+                    ),
+                    array(
+                        'table' => 'Albums',
+                        'alias' => 'Albums',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Song.ReferenceID = Albums.ProdID' )
+                    ),
+                    array(
+                        'table' => 'File',
+                        'alias' => 'File',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Albums.FileID = File.FileID' )
+                    )
+             )));           
 
             if (!empty($data))
             {
                 foreach ($data as $key => $value)
-                {
+                {                  
                     $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);                    
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['albumImage'] = $album_img;
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
-                }
-                Cache::delete($cacheVariableName . $country);
+                }                
                 Cache::write($cacheVariableName . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
             }
