@@ -62,10 +62,10 @@ if($this->data['Report']['library_id'] == "all") {
 }
 else {
     $libraryDetails = $library->getLibraryDetails($this->data['Report']['library_id']);
-    $line = array('Library Name', 'Patron ID', 'Artists Name', 'Track Title', 'WishListed On');
+    $line = array('Library Name', 'ID', 'Artists Name', 'Track Title', 'WishListed On');
     $csv->addRow($line);
     foreach($wishlists as $key => $wishlist) {
-        $line = array($libraryDetails['Library']['library_name'], $wishlist['Wishlist']['patron_id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
+        $line = array($libraryDetails['Library']['library_name'], $wishlist['Currentpatrons']['id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
         $csv->addRow($line);
     }
     $line = array('', '', '', '', '');
