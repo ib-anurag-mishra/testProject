@@ -180,7 +180,7 @@
                                         <tr>
                                             <th>&nbsp;</th>
                                             <th>Library Name</th>
-                                            <th>Patron ID</th>
+                                            <th>ID</th>
                                             <th>Artists Name</th>
                                             <th>Track Title</th>
                                             <th>WishListed On</th>
@@ -193,7 +193,7 @@
                                             <tr>
                                                 <td><?php echo $i; ?></td>
                                                 <td><?php echo $libraryDetails['Library']['library_name']; ?></td>
-                                                <td><?php echo $wishlist['Wishlist']['patron_id']; ?></td>
+                                                <td><?php echo $wishlist['Currentpatrons']['id']; ?></td>
                                                 <td><?php echo $wishlist['Wishlist']['artist']; ?></td>
                                                 <td><?php echo $wishlist['Wishlist']['track_title']; ?></td>
                                                 <td><?php echo date("Y-m-d", strtotime($wishlist['Wishlist']['created'])); ?></td>
