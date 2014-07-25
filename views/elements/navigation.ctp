@@ -902,9 +902,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             $i = 0;
                         ?>
                             <div class="movie-announcements">
-                                 <p> 
-                                    Did you know that Freegal is also a movie service?
+                                 <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px; font-weight:bold"> 
+                                    Did you know?
                                   </p>
+                                  <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px;">Freegal is also a movie service!</p>
                                   <p>You can stream full-length concerts, and top movies like  
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
