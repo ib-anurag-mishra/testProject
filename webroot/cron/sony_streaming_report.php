@@ -16,7 +16,7 @@ set_time_limit(0);
 date_default_timezone_set('America/New_York');
 ini_set('memory_limit', '-1');
 
-$countrys = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
+$countrys = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR','BM' => 'BMD', 'DE' => 'EUR');
 //$countrys = array('GB' => 'GBP');
 
 $lib_types = array('Unlimited');
