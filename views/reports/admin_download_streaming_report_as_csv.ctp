@@ -95,9 +95,9 @@ $line = array('Library Streaming Report');
 $csv->addRow($line);
 
 if($this->data['Report']['library_id'] == "all") {
-    $line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+    $line = array('', 'Library Name', 'ID', 'Artists Name', 'Track title', 'Streamed date');
 }else{
-    $line = array('', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+    $line = array('', 'ID', 'Artists Name', 'Track title', 'Streamed date');
 }
 $csv->addRow($line);
 if($this->data['Report']['library_id'] == "all") {
@@ -126,26 +126,22 @@ $line = array('Patron Streaming Report');
 $csv->addRow($line);
 
 if($this->data['Report']['library_id'] == "all") {
-    $line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+    $line = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
 }else{
-    $line = array('', 'Patron ID', 'Total Number of Tracks Downloaded');
+    $line = array('', 'ID', 'Total Number of Tracks Downloaded');
 }
 $csv->addRow($line);
 
 if($this->data['Report']['library_id'] == "all") {
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-            if($patronStreamed['StreamingHistory']['patron_id']!=''){
-                    $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
-            }
+            $patron_id = $patronStreamed['Currentpatrons']['id'];
 
         $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])),($patronStreamed[0]['total_streamed_songs']));
         $csv->addRow($line);
     }
 }else{
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-            if($patronStreamed['StreamingHistory']['patron_id']!=''){
-                    $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
-            }
+            $patron_id = $patronStreamed['Currentpatrons']['id'];
 
         $line = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
         $csv->addRow($line);
