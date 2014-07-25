@@ -342,7 +342,7 @@ class Song extends AppModel {
 		if ( $queryType == 1 ) {
 		$conditions = array('and' =>
 									array(
-											array('Song.ReferenceID' => $album['Album']['ProdID']),
+											array('Song.ReferenceID' => $prodID),
 											array('Song.provider_type = Country.provider_type'),
 											array('Country.DownloadStatus' => 1),
 											array("Song.Sample_FileID != ''"),
@@ -355,7 +355,7 @@ class Song extends AppModel {
 		} else {
 			$conditions = array('and' =>
 									array(
-											array('Song.ReferenceID' => $album['Album']['ProdID']),
+											array('Song.ReferenceID' => $prodID),
 											array('Song.provider_type = Country.provider_type'),
 											array("Song.Sample_FileID != ''"),
 											array("Song.FullLength_FIleID != ''"),
