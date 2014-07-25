@@ -193,7 +193,7 @@
                                             <tr>
                                                 <td><?php echo $i; ?></td>
                                                 <td><?php echo $libraryDetails['Library']['library_name']; ?></td>
-                                                <td><?php echo $wishlist['Wishlist']['patron_id']; ?></td>
+                                                <td><?php echo $wishlist['Currentpatrons']['id']; ?></td>
                                                 <td><?php echo $wishlist['Wishlist']['artist']; ?></td>
                                                 <td><?php echo $wishlist['Wishlist']['track_title']; ?></td>
                                                 <td><?php echo date("Y-m-d", strtotime($wishlist['Wishlist']['created'])); ?></td>
