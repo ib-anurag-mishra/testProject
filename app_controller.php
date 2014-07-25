@@ -4,7 +4,7 @@ class AppController extends Controller
 
     var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library','Announcement');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library','Announcement','Page');
     var $view = 'Dataencode';
     var $patron_country;
     var $patron_id;
@@ -124,25 +124,26 @@ class AppController extends Controller
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache');
         //$this->checkOnlinePatron();
-        // add announcement in the cache
-        
-        $announcment_rs = Cache::read("announcementCache");
-        if ($announcment_rs === false)
-        {
-            $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
-            $announcment_rs = $this->Album->query($announcment_query);
-            Cache::write("announcementCache", $announcment_rs);
+        //
+        //
+        // add announcement in the cache        
+        $announcmentRs = Cache::read("announcementCache");       
+        if ($announcmentRs === false)
+        {            
+            $announcmentRs = $this->Common->setAnnouncementCache();
+            Cache::write("announcementCache", $announcmentRs);
         }
 
-        if (isset($announcment_rs[0]['pages']['page_content']))
+        if (isset($announcmentRs['Page']['page_content']))
         {
-            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
+            $announcmentValue = $announcmentRs['Page']['page_content'];
         }
         else
         {
             $announcmentValue = '';
         }
         $this->set('announcment_value', $announcmentValue);
+        
         
         $isMovie = $this->Session->read("library_announcement");
         if($isMovie == 1) {

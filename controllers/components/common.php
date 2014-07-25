@@ -115,14 +115,24 @@ Class CommonComponent extends Object
 
     function setAnnouncementCache() {
         
-        $albumInstance = ClassRegistry::init('Album');
-        
-        $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
-        $announcment_rs = $albumInstance->query($announcment_query);
-        if (!empty($announcment_rs)) {
-            Cache::write("announcementCache", $announcment_rs);
+        $pageInstance = ClassRegistry::init('Page');
+                     
+        $announcmentRs = $pageInstance->find('first',array(
+            'condtion' => array( 'announcement' => '1','language' => 'en'),
+            'fields' => array('*'),
+            'order' => array('modified DESC'),
+            'Limit' => 1
+        ));  
+               
+        if (!empty($announcmentRs)) {
+            Cache::write("announcementCache", $announcmentRs);
             $this->log("cache wrritten for announcements", "cache");
+        }else{
+             $this->log("cache not wrritten for announcements", "cache");
         }
+        
+        return $announcmentRs;
+        
     }
 
     /*
