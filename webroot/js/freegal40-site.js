@@ -2510,3 +2510,112 @@ function multiSongCreateNewPlaylist(queueID)
             }
         });
 }
+
+
+    $(document).ready(function() {
+        scrollToSelectedGenre();
+        scrollToSelectedAlpha();
+    });
+
+    function toScrollArtist(totalPageCalled)
+    {
+
+        for (var i = 2; i <= totalPageCalled; i++) {
+            var data = "npage=" + i;
+            var link = webroot + 'genres/ajax_view_pagination/page:' + i + "/<?= $this->Session->read('calledGenre') ?>" + "/<?= $this->Session->read('selectedAlpha') ?>";
+            jQuery.ajax({
+                type: "post", // Request method: post, get
+                url: link, // URL to request
+                data: data, // post data
+                success: function(newitems) {
+                    if (newitems) {
+                        $('#artist_loader').hide();
+                        $('#artistlistrecord').append(newitems);
+                    } else {
+                        $('#artist_loader').hide();
+                        return;
+                    }
+                },
+                async: false,
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        sleep(1000);
+        scrolltoSelectedArtist();
+        return;
+    }
+
+    function scrolltoSelectedArtist()
+    {
+        sleep(100);
+        var to_scroll = $(document).find("#artistscroll");
+        $("#artistlistrecord li").each(function() {
+            if ($(this).find('a').hasClass('selected'))
+            {
+                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+                to_scroll.animate({
+                    scrollTop: scroll_distance
+                }, 2000);
+
+                $(this).find('a').focus();
+
+            }
+        });
+    }
+
+    function scrollToSelectedGenre()
+    {
+        sleep(100);
+        var to_scroll = $(document).find(".genre-column");
+        $(document).find(".genre-column li").each(function() {
+            if ($(this).find('a').hasClass('active'))
+            {
+                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+                to_scroll.animate({
+                    scrollTop: scroll_distance
+                }, 2000);
+
+                $(this).find('a').focus();
+
+            }
+        });
+    }
+
+    function scrollToSelectedAlpha()
+    {
+        var to_scroll = $(document).find(".alphabetical-filter");
+        $(document).find('.alphabetical-filter li').each(function() {
+            if ($(this).find('a').hasClass('selected'))
+            {
+                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+                to_scroll.animate({
+                    scrollTop: scroll_distance
+                }, 2000);
+                $(this).find('a').focus();
+            }
+        });
+    }
+
+    function scrollToSelectedAlbum()
+    {
+        //focus on selected Album
+        var album_list = $(document).find('div.album-list-shadow-container .album-list > div.album-overview-container');
+        var called_Album = "<?php echo $this->Session->read('calledAlbumText') ?>";
+         
+        album_list.each(function() {
+            var album_id = $(this).attr('id');          
+
+            if (album_id === called_Album)
+            {
+                var to_scroll = $(document).find('div.album-list-shadow-container .album-list');
+                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+                to_scroll.animate({
+                    scrollTop: scroll_distance
+                }, 2000);
+
+            }
+        });
+    }
+

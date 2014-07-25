@@ -40,7 +40,7 @@
 			$html->addCrumb(__('All Genre', true), '/genres/view/');
 			if ($genre_crumb_name != "")
 			{
-				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$genre_crumb_name);
+				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/' .base64_encode($genre_crumb_name));
 			}
 
 			echo $html->getCrumbs(' > ', __('Home', true), '/homes');
