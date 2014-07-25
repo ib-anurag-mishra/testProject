@@ -906,11 +906,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     Did you know?
                                   </p>
                                   <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px;">Freegal is also a movie service!</p>
-                                  <p style="margin-bottom:10px;">Stream top movies like:</p> 
+                                  <p style="margin-bottom:14px;">Stream top movies like:</p> 
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
-                                <p><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
+                                <p style="margin-bottom:2px;"><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
                                     <?php echo $value['announcements']['title']; ?>
                                 </a></p>
                                  <?php /*if($i == 1){
@@ -918,7 +918,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         }*/
                                   } ?>
                                  
-                                 <p style="margin-top:10px;"><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here</a> to log in.</p>
+                                 <p style="margin-top:14px;"><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here</a> to log in.</p>
                             </div>
                         <?php } ?> 
 		</section>
