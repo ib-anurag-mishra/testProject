@@ -167,7 +167,7 @@
                                 foreach($downloads as $key => $download) {	
                                 ?>
                                     <tr>
-										<td><?php echo $i; ?></td>
+					<td><?php echo $i; ?></td>
                                         <td><?php echo $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
                                         <td><?php echo $download['Currentpatrons']['id']; ?></td>
                                         <td><?php echo $this->getAdminTextEncode($download['Download']['artist']); ?></td>
@@ -188,7 +188,7 @@
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
 				    <th>&nbsp;</th>
-                                    <th>Patron ID</th>
+                                    <th>ID</th>
                                     <th>Library Name</th>
                                     <th>Total Number of Tracks Downloaded</th>
                                 </tr>
@@ -198,13 +198,9 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-										<td><?php 
-										if($patronDownload['Download']['email']!=''){
-											echo $patronDownload['Download']['email'];
-										}else{
-											echo $patronDownload['Download']['patron_id'];
-										}?>
-										</td>
+                                        <td><?php 
+                                        echo $patronDownload['Currentpatrons']['patron_id']; ?>
+                                        </td>
                                         <td><?php echo $this->getAdminTextEncode($library->getLibraryName($patronDownload['Download']['library_id'])); ?></td>
                                         <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
                                     </tr>
