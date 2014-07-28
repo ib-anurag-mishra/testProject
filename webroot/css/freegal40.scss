@@ -1804,36 +1804,28 @@ sub { top: 0.4em; }
 	}
         
 	.movie-announcements {
-        background: none repeat scroll 0 0 #eeeeee;
-        font-size: 13px;
-        padding: 10px;
-        font-family: Arial, Helvetica, sans-serif;
+            background: none repeat scroll 0 0 #eeeeee;
+            font-size: 13px;
+            padding: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+            strong {
 
-		p {
+                    font-weight: bold;
+            }
 
-			padding-bottom: 10px;
-		}
-        strong {
+            .announcements-movie-titles {
 
-                font-weight: bold;
-        }
+                    &:hover {
 
-		.announcements-movie-titles {
+                            text-decoration: underline;
+                    }
+            }
 
-			&:hover {
+            .announcments-movie-cta {
 
-				text-decoration: underline;
-			}
-		}
-
-		.announcments-movie-cta {
-
-			font-weight: bold;
-			color: #52C6EC;
-		}
-
-
-               
+                    font-weight: bold;
+                    color: #52C6EC;
+            }
 	}        
 }
 
