@@ -519,7 +519,7 @@ class Videodownload extends AppModel
 				));
 	}
 
-	public function fetchVideodownloadTopDownloadedVideos($prefix) {
+	public function fetchVideodownloadTopDownloadedVideos( $prefix ) {
 	
 		$this->unBindModel(array('belongsTo' => array('Genre')));
 	
@@ -600,7 +600,7 @@ class Videodownload extends AppModel
 	
 	public function fetchVideodownloadTopVideoGenre( $prefix, $territory, $genre, $explicitContent = true ) {
 	
-		$this->unBindModel(array('belongsTo' => array('Genre')));
+		$this->unBindModel( array( 'belongsTo' => array( 'Genre' ) ) );
 	
 		$options = array(
 				'fields' => array(
@@ -677,7 +677,9 @@ class Videodownload extends AppModel
 	}
 	
 	public function getDownloadStatusOfVideos( $idsProviderType, $libraryId , $patronId, $startDate, $endDate ) {
-	
+
+		$this->unBindModel( array( 'belongsTo' => array( 'Genre' ) ) );
+
 		$options = array(
 				'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
 				'conditions' => array(
