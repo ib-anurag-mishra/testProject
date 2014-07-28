@@ -2549,7 +2549,7 @@ Class ArtistsController extends AppController {
                         'chk' => 2
             );
 
-            $this->paginate['limit'] = 25;
+            $this->paginate['limit'] = 50;
             $this->Album->recursive = 2;
             
             $albumData = $this->paginate('Album');
