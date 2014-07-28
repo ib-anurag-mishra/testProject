@@ -1657,10 +1657,10 @@ Class ReportsController extends AppController {
                 $this->Report->setValidation('reports_manual');
             }
 			$all_Ids = '';
-			$sql = "SELECT id from libraries where library_apikey = '".$consortium_id."'";
-			$result = mysql_query($sql);
-			while ($row = mysql_fetch_assoc($result)) {
-				$all_Ids = $all_Ids.$row["id"].",";
+			$result = $this->Library->find('list', array("conditions" => array('Library.library_apikey' => $consortium_id),'fields' => array('Library.id'), 'recursive' => -1));
+			
+			foreach($result as $k =>$v){
+				$all_Ids = $all_Ids.$v["id"].",";
 			}
 			$libraryData = $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
 			$this->set('libraries_download', $libraryData);
