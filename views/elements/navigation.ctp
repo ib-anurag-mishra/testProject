@@ -884,16 +884,19 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			{
 				$announcment_class  =   "";
 			}
+                        
+                        $isMovie = $this->Session->read("library_announcement");
 
-			?>
-			<div class="announcements">
-				<h2>
-					<?php __('Announcements'); ?>
-				</h2>
-				<div class="announcement" style="<?php echo $announcment_class; ?>">
-					<?php echo $announcment_value; ?>
-				</div>
-			</div>
+			if( empty($isMovie) ) { ?>
+                            <div class="announcements">
+                                    <h2>
+                                            <?php __('Announcements'); ?>
+                                    </h2>
+                                    <div class="announcement" style="<?php echo $announcment_class; ?>">
+                                            <?php echo $announcment_value; ?>
+                                    </div>
+                            </div>
+                        <?php } ?>
                         <?php 
                         if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
 
