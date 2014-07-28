@@ -44,6 +44,23 @@ $db = new mysqli('192.168.100.114', 'freegal_prod', '}e47^B1EO9hD', 'freegal');
 if ($db->connect_errno) {
 	die('There was an error connected to the database.' . "\n". $db->connect_error);
 }
+////////This needs to be customer id
+$sql3 = <<<EOS
+SELECT concat(min(libraries.library_contract_start_date), " 00:00:00") AS edge FROM libraries WHERE libraries.library_status = 'active' AND libraries.customer_id != 0
+UNION
+SELECT concat(max(libraries.library_contract_end_date), " 23:59:59") AS edge FROM libraries WHERE libraries.library_status = 'active' AND libraries.customer_id != 0
+EOS;
+$result3 = $db->query($sql3);
+if ($result3 === FALSE) { 
+	echo "there was an error with the query";
+} elseif ($result3 && $result3->num_rows) {
+	$minmax = array();
+	while ($row = $result3->fetch_assoc()) {
+		$minmax[] = $row['edge'];
+	}
+	$result3->free();
+}
+
 $sql = <<<EOT
 SELECT
 	LEFT (downloads.created, 7) as created,
@@ -59,7 +76,6 @@ ORDER BY
 EOT;
 $result = $db->query($sql);
 
-
 if ($result === FALSE) { 
 	echo "there was an error with the query";
 } elseif ($result && $result->num_rows) {
@@ -71,7 +87,7 @@ if ($result === FALSE) {
 
 	$result->free();
 
-	$case_statement = '';
+	$case_statement = ', sum(CASE WHEN downloads.created >= concat(libraries.library_contract_start_date, " 00:00:00") AND downloads.created <= concat(libraries.library_contract_end_date, " 23:59:59") THEN 1 ELSE 0 END) "CTE"';
 	
 	$allMonths = array();
 
@@ -90,21 +106,21 @@ if ($result === FALSE) {
 		$allWeeks[] = $label;
 
 	}
-	//echo $case_statement;
-	$lastWeekEnd = array_pop($weekLabels);
-	$max = max($endMonth, $lastWeekEnd['end']);
+////////This needs to be customer id
+	$min = $minmax[0];
+	$max = $minmax[1];
 	$sql = <<<EOD
 SELECT
-	libraries.id,
+	libraries.customer_id,
 	libraries.library_name
 	$case_statement
 FROM downloads
 JOIN libraries ON downloads.library_id = libraries.id
-WHERE downloads.created >= "$startMonth" AND downloads.created <= "$max"
+WHERE downloads.created >= "$min" AND downloads.created <= "$max" AND libraries.library_status = 'active' AND libraries.customer_id != 0
 GROUP BY downloads.library_id
-ORDER BY libraries.library_name ASC
 EOD;
 	echo $sql;
+	//exit;
 	$result2 = $db->query($sql);
 	
 	if ($result2 === FALSE) {
@@ -112,15 +128,15 @@ EOD;
 	} elseif ($result2 && $result2->num_rows) {
 
 		// Forms the name for the new file and deletes the file if it already exist
-		$file_path = 'reports/';
-		$file_name = 'fourMonthWeekDownloads.csv';
+		$file_path = '../uploads/';
+		$file_name = 'freegalmusic_download_' . date('ymd') . '.csv';
 		if (file_exists($file_path . $file_name))  {
 			unlink($file_path . $file_name);
 		}
 
 		//create the file
 		$report = fopen($file_path . $file_name, 'w') or die("Can't open file");
-		$header = 'Library ID,Library Name,' . $allMonths[0] . ',' . $allMonths[1] . ',' . $allMonths[2] . ',' . $allMonths[3] . ',' . $allWeeks[0] . ',' . $allWeeks[1] . ',' . $allWeeks[2] . ',' . $allWeeks[3] . "\n";
+		$header = 'Customer ID,Library Name,CTE,' . $allMonths[0] . ',' . $allMonths[1] . ',' . $allMonths[2] . ',' . $allMonths[3] . ',' . $allWeeks[0] . ',' . $allWeeks[1] . ',' . $allWeeks[2] . ',' . $allWeeks[3] . "\n";
 		fwrite($report, $header);
 
 		// Gets all the records
@@ -131,8 +147,8 @@ EOD;
 		$result2->free();
 
 		foreach ($final as $key => $value) {
-
-			$string = $value['id'] . ',' . $value['library_name'] . ',' . $value[$allMonths[0]] . ',' . $value[$allMonths[1]] . ',' . $value[$allMonths[2]] . ',' . $value[$allMonths[3]] . ',' . $value[$allWeeks[0]] . ',' . $value[$allWeeks[1]] . ',' . $value[$allWeeks[2]] . ',' . $value[$allWeeks[3]] . "\n";
+////////This needs to be customer id
+			$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['CTE'] . ',' . $value[$allMonths[0]] . ',' . $value[$allMonths[1]] . ',' . $value[$allMonths[2]] . ',' . $value[$allMonths[3]] . ',' . $value[$allWeeks[0]] . ',' . $value[$allWeeks[1]] . ',' . $value[$allWeeks[2]] . ',' . $value[$allWeeks[3]] . "\n";
 
 			fwrite($report, $string);
 		}
@@ -148,14 +164,14 @@ EOD;
 		// }
 
 		$to = "ralphk@libraryideas.com";
-		$from = "noreply@freegalmusic.com";
+		$from = "no-reply@freegalmusic.com";
 		$bcc = "ralph_kelley@yahoo.com";
 
-		$subject ="Freegalmusic.com:  4 month / 4 week download report";
+		$subject ='Freegalmusic.com: Library download report (' . date('ymd') . ')';
 		$message =
 				"Greetings,<br/><br/>
 
-				Attached is a report that contains the total downloads per library for each of the last four months and four weeks.<br/><br/>
+				Attached is a report that contains the total number of downloads each library had during their contract period. This report also contains the total downloads for each of the previous four months and each of the previous four weeks.<br/><br/>
 
 				Thanks,<br/>
 				The Freegal Music Team<br/><br/>";
