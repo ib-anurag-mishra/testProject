@@ -157,13 +157,11 @@ function getLastFourMonthsDownloads($db, $final, $months) {
 	$allMonths = array();
 	foreach ($months as $created => $month) {	
 		$allMonths[] = $month;
-		
-		$min = $created . '-01 00:00:00';
-		$max = date("Y-m-t", strtotime($created)) . ' 23:59:59';
+
 		$sql = "SELECT libraries.id, count(downloads.created) as '$month'
 				FROM downloads
 				JOIN libraries ON downloads.library_id = libraries.id
-				WHERE downloads.created >= '$min' AND downloads.created <= '$max' AND libraries.library_status = 'active' AND libraries.customer_id != 0
+				WHERE downloads.created LIKE '$created%' AND libraries.library_status = 'active' AND libraries.customer_id != 0
 				GROUP BY downloads.library_id";
 		print_r($sql);
 		$result = $db->query($sql);
