@@ -199,7 +199,7 @@
                                     <tr>
 					<td><?php echo $i; ?></td>
                                         <td><?php 
-                                        echo $patronDownload['Currentpatrons']['patron_id']; ?>
+                                        echo $patronDownload['Currentpatrons']['id']; ?>
                                         </td>
                                         <td><?php echo $this->getAdminTextEncode($library->getLibraryName($patronDownload['Download']['library_id'])); ?></td>
                                         <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
