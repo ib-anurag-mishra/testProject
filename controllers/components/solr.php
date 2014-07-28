@@ -130,7 +130,7 @@ class SolrComponent extends Object {
 		switch ( $type ) {
 
 			case 'song':
-				$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+				$queryFields = "CSongTitle^100 CArtistText^95 CTitle^90";
 				break;
 
 			case 'genre':
@@ -166,7 +166,7 @@ class SolrComponent extends Object {
 				break;
 		
 			default:
-				$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+				$queryFields = "CSongTitle^100 CArtistText^95 CTitle^90";
 				break;
 		}
 		
@@ -208,7 +208,7 @@ class SolrComponent extends Object {
 				if( !empty( $check ) ) {
 					$arrGroup['queryFields'] = "CComposer";
 				} else {
-					$arrGroup['queryFields'] = "CTitle^110 CArtistText^100";
+					$arrGroup['queryFields'] = "CTitle^100000 CArtistText^100 CGenre^60 CSongTitle^20 CComposer";
 				}
 	
 				$arrGroup['field'] = 'rpjoin';
