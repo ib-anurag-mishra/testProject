@@ -157,7 +157,7 @@
                                 <tr>
 				    <th>&nbsp;</th>
                                     <th>Library Name</th>
-                                    <th>Patron ID</th>
+                                    <th>ID</th>
                                     <th>Artists Name</th>
                                     <th>Track Title</th>
                                     <th>Download</th>
@@ -169,13 +169,7 @@
                                     <tr>
 										<td><?php echo $i; ?></td>
                                         <td><?php echo $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
-                                        <td><?php 
-											if($download['Download']['email']!=''){
-												echo $download['Download']['email'];
-											}else{
-												echo $download['Download']['patron_id'];
-											}?>
-										</td>
+                                        <td><?php echo $download['Currentpatrons']['id']; ?></td>
                                         <td><?php echo $this->getAdminTextEncode($download['Download']['artist']); ?></td>
                                         <td><?php echo $this->getAdminTextEncode($download['Download']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
