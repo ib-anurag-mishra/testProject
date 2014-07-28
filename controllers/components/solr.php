@@ -208,7 +208,7 @@ class SolrComponent extends Object {
 				if( !empty( $check ) ) {
 					$arrGroup['queryFields'] = "CComposer";
 				} else {
-					$arrGroup['queryFields'] = "CTitle^100000 CArtistText^100 CGenre^60 CSongTitle^20 CComposer";
+					$arrGroup['queryFields'] = "CTitle^110 CArtistText^100";
 				}
 	
 				$arrGroup['field'] = 'rpjoin';
