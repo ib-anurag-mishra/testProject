@@ -887,16 +887,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                         
                         $isMovie = $this->Session->read("library_announcement");
 
-			if( empty($isMovie) ) { ?>
+			?>
                             <div class="announcements">
                                     <h2>
                                             <?php __('Announcements'); ?>
                                     </h2>
+                                    <?php if( empty($isMovie) ) {  ?>
                                     <div class="announcement" style="<?php echo $announcment_class; ?>">
                                             <?php echo $announcment_value; ?>
                                     </div>
+                                    <?php } ?>
                             </div>
-                        <?php } ?>
                         <?php 
                         if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
 
