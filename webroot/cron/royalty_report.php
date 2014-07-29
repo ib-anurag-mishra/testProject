@@ -3,6 +3,7 @@
 /*
  * Code to generate Royality report
  */
+ini_set('memory_limit', '-1');
 error_reporting(1);
 set_time_limit(0);
 include_once "config_ioda.php";
@@ -22,8 +23,8 @@ $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m)
 //$arr_dates['month']['from_date'] =  '2012-10-01 00:00:00';
 //$arr_dates['month']['to_date'] = '2012-10-31 23:59:59';
 
-//$fetchRecordsFromTable = 'latest_downloads';
-$fetchRecordsFromTable = 'downloads';
+$fetchRecordsFromTable = 'latest_downloads';
+//$fetchRecordsFromTable = 'downloads';
 
 $libraryType = array('ALC' => '0', 'Unlimited' => '1');
 
@@ -43,7 +44,7 @@ foreach ($arr_dates AS $key => $value)
             $unit_sales_rate = 0;
         }
         //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
-        $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD');
+        $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD','BM' => 'USD', 'DE' => 'USD');
         // $country_curency = array('US' => 'USD');
 
         $query_country = "Select distinct libraries.library_territory from libraries";
@@ -134,19 +135,8 @@ foreach ($arr_dates AS $key => $value)
             }
             
             $version = 1;
-            $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
-            while (1)
-            {
-                if (file_exists($reportsFolder . "/" . $file_name))
-                {
-                    $version++;
-                    $file_name = "Freegal_r_" . strtolower($row_country['library_territory']) . "_" . date('Ym', strtotime($value['from_date'])) . '_' . $libTypeKey . "_v$version" . ".txt";
-                }
-                else
-                {
-                    break;
-                }
-            }
+            $file_name = getFileName($row_country['library_territory'], $value['from_date'], $libTypeKey, $version);
+            
             $round_total_sales = round($total_sales, 2);
             if (false === strpos($round_total_sales, '.'))
             {
