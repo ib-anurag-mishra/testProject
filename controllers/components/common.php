@@ -170,7 +170,7 @@ Class CommonComponent extends Object
                ORDER BY cnt DESC LIMIT 100';
                         
             $arr_video = $videoInstance->query($str_query);           
-           
+          
             if (!empty($arr_video)) {
                 $status = Cache::write("AppMyMusicVideosList_" . $territory, $arr_video);
                 $this->log("cache wrritten for mobile music videos list for territory_" . $territory, "cache");
