@@ -3402,37 +3402,11 @@ STR;
             $country = $val['Library']['library_territory'];
             $this->getLibraryTop10Albums($country, $libId);
             $this->getLibraryTop10Videos($country, $libId);
+            $this->getLibraryTopTenSongs($country, $libId);
         }
         $this->log("Cache for library top 10 ends here for date".date("Y-m-d"), "cache");
     }
-    
-    
-    /**
-     * @function setLibraryTopTenSongsCache
-     * @desc sets Cache for LibraryTopTensongs
-     */    
-    
-    function setLibraryTopTenSongsCache()
-    {
-
-        //--------------------------------Library Top Ten Start--------------------------------------------------------------------
-        set_time_limit(0);
-        $libraryInstance = ClassRegistry::init('Library');
-        $libraryDetails = $libraryInstance->find('all', array(
-            'fields' => array('id', 'library_territory'),
-            'conditions' => array('library_status' => 'active'),
-            'recursive' => -1
-                )
-        );
-        $this->log("Cache for library top 10 songs starts here for date".date("Y-m-d"), "cache");
-        foreach ($libraryDetails AS $key => $val)
-        {
-            $libId = $val['Library']['id'];
-            $country = $val['Library']['library_territory'];
-            $this->getLibraryTopTenSongs($country, $libId);
-        }
-        $this->log("Cache for library top 10 songs ends here for date".date("Y-m-d"), "cache");
-    }    
+        
 
     /**
      * @function setVideoCacheVar
