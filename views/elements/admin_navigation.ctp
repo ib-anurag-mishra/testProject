@@ -107,11 +107,19 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 					</li>
 				</ul>
 			</li>
-			<li><a href="#">Featured Artist</a>
+			<li><a href="#">Top Albums</a>
 				<ul>
-					<li><?php echo $html->link('Add Featured Artist', array('controller' => 'artists', 'action' => 'artistform'));?>
+					<li><?php echo $html->link('Add Top Album', array('controller' => 'artists', 'action' => 'topalbumform'));?>
 					</li>
-					<li><?php echo $html->link('Manage Featured Artist', array('controller' => 'artists', 'action' => 'managefeaturedartist'));?>
+					<li><?php echo $html->link('Manage Top Albums', array('controller' => 'artists', 'action' => 'managetopalbums'));?>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#">Top Singles</a>
+				<ul>
+					<li><?php echo $html->link('Add Top Single', array('controller' => 'artists', 'action' => 'topsingleform'));?>
+					</li>
+					<li><?php echo $html->link('Manage Top Singles', array('controller' => 'artists', 'action' => 'managetopsingles'));?>
 					</li>
 				</ul>
 			</li>
