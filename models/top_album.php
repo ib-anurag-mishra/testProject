@@ -38,7 +38,7 @@ class TopAlbum extends AppModel {
 	Desc: gets data for the specified artist
 	*/
 	function getartistdata($id) {
-		$getArtistData = $this->find('first', array('conditions' => array('Featuredartist.id' => $id)));
+		$getArtistData = $this->find('first', array('conditions' => array('TopAlbum.id' => $id)));
 		return $getArtistData;
 	}
 
