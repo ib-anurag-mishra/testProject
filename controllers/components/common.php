@@ -1299,8 +1299,8 @@ STR;
         $videoInstance = ClassRegistry::init('Video');
         $albumInstance = ClassRegistry::init('Album'); 
         
-        $latestVideodownload = ClassRegistry::init('LatestVideodownload','Download');
-        $videodownload = ClassRegistry::init('Videodownload','Download'); 
+        $latestVideodownload = ClassRegistry::init('LatestVideodownload');
+        $videodownload = ClassRegistry::init('Videodownload'); 
         //Added caching functionality for us top 10 Video            
         $country = $territory;
         if (!empty($country))
