@@ -1678,7 +1678,7 @@ Class ReportsController extends AppController {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumYearsDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date_from']."@".$this->data['Report']['date_to']);
                 }
                 $this->set('downloads', $downloads);
                 $this->set('patronDownloads', $patronDownloads);
