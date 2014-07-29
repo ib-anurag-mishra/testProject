@@ -132,7 +132,7 @@ function getContractToEndPurchases($db, $final, $min, $max, $key) {
 
 	$sql = "SELECT
 				libraries.id,
-				count(downloads.created) as cte
+				count(libraries.id) as cte
 			FROM downloads
 			JOIN libraries ON downloads.library_id = libraries.id
 			WHERE libraries.id = $key AND downloads.created >= concat(libraries.library_contract_start_date, ' 00:00:00') AND downloads.created <= concat(libraries.library_contract_end_date, ' 23:59:59')
@@ -159,7 +159,7 @@ function getLastFourMonthsDownloads($db, $final, $months) {
 	foreach ($months as $created => $month) {	
 		$allMonths[] = $month;
 
-		$sql = "SELECT libraries.id, count(downloads.created) as '$month'
+		$sql = "SELECT libraries.id, count(libraries.id) as '$month'
 				FROM downloads
 				JOIN libraries ON downloads.library_id = libraries.id
 				WHERE downloads.created LIKE '$created%' AND libraries.library_status = 'active' AND libraries.customer_id != 0
@@ -186,7 +186,7 @@ function getLastFourWeeksDownloads($db, $final, $weekLabels) {
 		$allWeeks[] = $label;
 		$min = $range['start'];
 		$max = $range['end'];
-		$sql = "SELECT libraries.id, count(downloads.created) as '$label'
+		$sql = "SELECT libraries.id, count(libraries.id) as '$label'
 				FROM downloads
 				JOIN libraries ON downloads.library_id = libraries.id
 				WHERE downloads.created >= '$min' AND downloads.created <= '$max' AND libraries.library_status = 'active' AND libraries.customer_id != 0
