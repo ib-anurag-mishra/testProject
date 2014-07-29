@@ -421,10 +421,14 @@ class Download extends AppModel
    Desc : lists all the downloads for for the selected date range
   */
   function getConsortiumManualDownloadInformation($libraryID, $date) {
-	  $lib_condition = "and library_id IN (".$libraryID.")";
+      $lib_condition = "and library_id IN (".$libraryID.")";
       $date_arr = explode("@", $date);
-      $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $date_arr[0]))." 00:00:00";
-      $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $date_arr[1]))." 23:59:59";
+      
+      $date_arr_from = explode("/", $date_arr[0]);
+      $date_arr_to = explode("/", $date_arr[1]);
+      $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
+      $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
+      
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id  ORDER BY created ASC"
       );
