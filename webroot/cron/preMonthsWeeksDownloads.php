@@ -136,6 +136,7 @@ function getContractToEndPurchases($db, $final, $min, $max, $key) {
 			FROM downloads
 			JOIN libraries ON downloads.library_id = libraries.id
 			WHERE libraries.id = $key AND downloads.created >= concat(libraries.library_contract_start_date, ' 00:00:00') AND downloads.created <= concat(libraries.library_contract_end_date, ' 23:59:59')
+			LIMIT 1
 	";
 	$result = $db->query($sql);
 	if ($result === FALSE) { 
@@ -206,7 +207,7 @@ function getLastFourWeeksDownloads($db, $final, $weekLabels) {
 }
 
 list($final, $allWeeks) = getLastFourWeeksDownloads($db, $final, $weekLabels);
-print_r($final);
+//print_r($final);
 //exit;
 
 // Forms the name for the new file and deletes the file if it already exist
