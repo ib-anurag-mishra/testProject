@@ -147,7 +147,7 @@ function getContractToEndPurchases($db, $final, $min, $max, $key) {
 		}
 		$result->free();
 	}
-	echo "End getContractToEndPurchases \n";
+	echo "$key: End getContractToEndPurchases \n";
 	return $final;
 }
 foreach ($final as $key => $value) {
@@ -158,11 +158,11 @@ function getLastFourMonthsDownloads($db, $final, $months) {
 	$allMonths = array();
 	foreach ($months as $created => $month) {	
 		$allMonths[] = $month;
-
-		$sql = "SELECT libraries.id, count(libraries.id) as '$month'
+		$min = $created . '-01 00:00:00';
+		$max = date("Y-m-t", strtotime($created)) . ' 23:59:59';
+		$sql = "SELECT downloads.library_id, count(downloads.library_id) as '$month'
 				FROM downloads
-				JOIN libraries ON downloads.library_id = libraries.id
-				WHERE downloads.created LIKE '$created%' AND libraries.library_status = 'active' AND libraries.customer_id != 0
+				WHERE downloads.created BETWEEN '$min' AND '$max'
 				GROUP BY downloads.library_id";
 		print_r($sql);
 		$result = $db->query($sql);
@@ -170,7 +170,7 @@ function getLastFourMonthsDownloads($db, $final, $months) {
 			echo "there was an error getting the library IDs";
 		} elseif ($result && $result->num_rows) {
 			while ($row = $result->fetch_assoc()) {
-				$final[$row['id']][$month] = $row[$month];
+				$final[$row['library_id']][$month] = $row[$month];
 			}
 			$result->free();
 		}
@@ -178,7 +178,59 @@ function getLastFourMonthsDownloads($db, $final, $months) {
 	echo "End getLastFourMonthsDownloads \n";
 	return array($final, $allMonths);
 }
-list($final, $allMonths) = getLastFourMonthsDownloads($db, $final, $months);
+//list($final, $allMonths) = getLastFourMonthsDownloads($db, $final, $months);
+
+function getAll($db, $final, $months, $weekLabels) {
+	$case_statement = '';
+ 	$allMonths = array();
+ 
+ 	foreach ($months as $created => $month) {	
+ 		$case_statement .= ', sum(CASE WHEN LEFT (downloads.created, 7) = "' . $created . '" then 1 else 0 end) "' . $month . '"';
+ 		$allMonths[] = $month;
+ 	}
+
+
+ 
+ 	$allWeeks = array();
+ 	foreach ($weekLabels as $label => $range) {
+ 		$case_statement .= ', sum(CASE WHEN downloads.created >= "' . $range['start'] . '" AND  downloads.created <= "' . $range['end'] . '" then 1 else 0 end) "' . $label . '"';
+ 		$allWeeks[] = $label;
+ 	}
+
+ 	$lastWeekEnd = array_pop($weekLabels);
+ 	$startMonth = date('Y-m-01', strtotime(date("Y-m",strtotime("-4 Months")))) . ' 00:00:00';
+	$max = max(date('Y-m-t', strtotime(date("Y-m",strtotime("-1 Months")))) . ' 23:59:59', $lastWeekEnd['end']);
+ 	foreach ($final as $key => $value) {
+ 		
+	 	$sql = <<<EOD
+				SELECT downloads.library_id $case_statement
+				FROM downloads
+				WHERE downloads.created >= "$startMonth" AND downloads.created <= "$max" AND downloads.library_id = $key
+				GROUP BY downloads.library_id
+EOD;
+	 	// echo $sql;
+	 	// exit;
+	 	$result = $db->query($sql);
+	 	if ($result === FALSE) { 
+			echo "there was an error getting the library IDs";
+		} elseif ($result && $result->num_rows) {
+			while ($row = $result->fetch_assoc()) {
+				$final[$row['library_id']][$allMonths[0]] = $row[$allMonths[0]];
+				$final[$row['library_id']][$allMonths[1]] = $row[$allMonths[1]];
+				$final[$row['library_id']][$allMonths[2]] = $row[$allMonths[2]];
+				$final[$row['library_id']][$allMonths[3]] = $row[$allMonths[3]];
+				$final[$row['library_id']][$allWeeks[0]] = $row[$allWeeks[0]];
+				$final[$row['library_id']][$allWeeks[1]] = $row[$allWeeks[1]];
+				$final[$row['library_id']][$allWeeks[2]] = $row[$allWeeks[2]];
+				$final[$row['library_id']][$allWeeks[3]] = $row[$allWeeks[3]];
+			}
+			$result->free();
+		}
+ 	}
+ 	
+	return array($final, $allMonths, $allWeeks);
+}
+list($final, $allMonths, $allWeeks) = getAll($db, $final, $months, $weekLabels);
 
 function getLastFourWeeksDownloads($db, $final, $weekLabels) {
 	$allWeeks = array();
@@ -206,7 +258,7 @@ function getLastFourWeeksDownloads($db, $final, $weekLabels) {
 	return array($final, $allWeeks);
 }
 
-list($final, $allWeeks) = getLastFourWeeksDownloads($db, $final, $weekLabels);
+//list($final, $allWeeks) = getLastFourWeeksDownloads($db, $final, $weekLabels);
 //print_r($final);
 //exit;
 
