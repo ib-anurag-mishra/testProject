@@ -68,15 +68,19 @@ Class CommonComponent extends Object
         $territoryInstance = ClassRegistry::init('Territory');
         $albumInstance = ClassRegistry::init('Album');
         $videoInstance = ClassRegistry::init('Video');
+        $siteconfig = ClassRegistry::init('Siteconfig');
         
         $territories = $territoryInstance->find("all");
 
         for ($mm = 0; $mm < count($territories); $mm++) {
             $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
         }
-        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
-        $siteConfigData = $albumInstance->query($siteConfigSQL);
-        $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
+        
+        //get the config value from site config table
+        $siteConfigData = $siteconfig->fetchSiteconfigDataBySoption('multiple_countries');
+              
+        
+        $multiple_countries = (($siteConfigData['Siteconfig']['svalue'] == 1) ? true : false);
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -86,20 +90,87 @@ Class CommonComponent extends Object
                 $countryPrefix = strtolower($territory) . "_";
                 $countryInstance->setTablePrefix($countryPrefix);
             }
+       
+           $arr_video = array(); 
+           
+          /*               
+            $videoInstance->unbindModel(array('belongsTo' => array('Sample_Files')));
+            $videoInstance->unbindModel(array('hasOne' => array('Country', 'Genre', 'Participant')));           
+            
+           
+            $arr_video = array();            
+            $arr_video = $videoInstance->find('all', array(
+                'conditions' => array(
+                    'Video.DownloadStatus'   => '1',
+                    'Country.Territory'     => $territory                  
+                ),               
+                'fields' => array( 'Video.ProdID,'
+                    . ' Video.ReferenceID, Video.Title, Video.VideoTitle, Video.ArtistText,'
+                    . ' Video.Artist, Video.Advisory, Video.ISRC, Video.Composer, Video.FullLength_Duration,'
+                    . ' Video.DownloadStatus, Country.SalesDate, Genre.Genre, Full_Files.CdnPath AS VideoCdnPath,'
+                    . ' Full_Files.SaveAsName AS VideoSaveAsName, Image_Files.CdnPath AS ImgCdnPath,'
+                    . ' Image_Files.SourceURL AS ImgSourceURL, PRODUCT.pid,'
+                    . ' COUNT(Videodownload.id) AS cnt '
+                    ),                
+                'group' => 'Video.ProdID ',
+                'order' => array('cnt DESC'),  
+                'limit' => 10,
+                'joins' => array(
+                     array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'Country',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array('Country.ProdID = Video.ProdID', 'Country.provider_type = Video.provider_type')
+                    ),
+                    array(
+                        'table' => 'Genre',
+                        'alias' => 'Genre',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array('Genre.ProdID = Video.ProdID', 'Video.provider_type = Genre.provider_type' )
+                    ),                   
+                    array(
+                        'table' => 'File',
+                        'alias' => 'Image_Files',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array('Video.Image_FileID = Image_Files.FileID' )
+                    ),                                   
+                    array(
+                        'table' => 'PRODUCT',
+                        'alias' => 'PRODUCT',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'PRODUCT.ProdID = Video.ProdID','PRODUCT.provider_type = Video.provider_type' )                    
+                    ),                                   
+                    array(
+                        'table' => 'videodownloads',
+                        'alias' => 'Videodownload',
+                        'type' => 'Left',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'Videodownload.ProdID = Video.ProdID','Videodownload.provider_type = Video.provider_type' )                    
+                    )
+                )
+             ));
+            
+            */     
 
             $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
-                v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
-                imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
-                FROM video AS v
-                INNER JOIN ' . $countryPrefix . 'countries AS c ON v.ProdID = c.ProdID AND v.provider_type = c.provider_type
-                INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type
-                INNER JOIN File AS ff ON v.FullLength_FileID = ff.FileID
-                INNER JOIN File AS imgf ON v.Image_FileID = imgf.FileID
-                INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
-                LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
-                WHERE c.Territory = "' . $territory . '" AND v.DownloadStatus = "1" GROUP BY v.ProdID
-                ORDER BY cnt DESC LIMIT 100';
-            $arr_video = $videoInstance->query($str_query);
+               v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
+               imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
+               FROM video AS v
+               INNER JOIN ' . $countryPrefix . 'countries AS c ON v.ProdID = c.ProdID AND v.provider_type = c.provider_type
+               INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type
+               INNER JOIN File AS ff ON v.FullLength_FileID = ff.FileID
+               INNER JOIN File AS imgf ON v.Image_FileID = imgf.FileID
+               INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
+               LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
+               WHERE c.Territory = "' . $territory . '" AND v.DownloadStatus = "1" GROUP BY v.ProdID
+               ORDER BY cnt DESC LIMIT 100';
+                        
+            $arr_video = $videoInstance->query($str_query);           
+           
             if (!empty($arr_video)) {
                 $status = Cache::write("AppMyMusicVideosList_" . $territory, $arr_video);
                 $this->log("cache wrritten for mobile music videos list for territory_" . $territory, "cache");
