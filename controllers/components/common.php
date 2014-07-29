@@ -67,7 +67,7 @@ Class CommonComponent extends Object
         $countryInstance = ClassRegistry::init('Country');
         $territoryInstance = ClassRegistry::init('Territory');
         $albumInstance = ClassRegistry::init('Album');
-        $videoInstance = ClassRegistry::init('Video');
+        $videoInstance = ClassRegistry::init( array( 'class'=>'Video','alias'=>'v' ) );
         $siteconfig = ClassRegistry::init('Siteconfig');
         
         $territories = $territoryInstance->find("all");
@@ -89,87 +89,76 @@ Class CommonComponent extends Object
             } else {
                 $countryPrefix = strtolower($territory) . "_";
                 $countryInstance->setTablePrefix($countryPrefix);
-            }
-       
-           $arr_video = array(); 
-           
-          /*               
+            }  
+                       
             $videoInstance->unbindModel(array('belongsTo' => array('Sample_Files')));
+            $videoInstance->unbindModel(array('belongsTo' => array('Full_Files')));           
             $videoInstance->unbindModel(array('hasOne' => array('Country', 'Genre', 'Participant')));           
             
            
             $arr_video = array();            
             $arr_video = $videoInstance->find('all', array(
                 'conditions' => array(
-                    'Video.DownloadStatus'   => '1',
-                    'Country.Territory'     => $territory                  
+                    'v.DownloadStatus'   => '1',
+                    'c.Territory'     => $territory                  
                 ),               
-                'fields' => array( 'Video.ProdID,'
-                    . ' Video.ReferenceID, Video.Title, Video.VideoTitle, Video.ArtistText,'
-                    . ' Video.Artist, Video.Advisory, Video.ISRC, Video.Composer, Video.FullLength_Duration,'
-                    . ' Video.DownloadStatus, Country.SalesDate, Genre.Genre, Full_Files.CdnPath AS VideoCdnPath,'
-                    . ' Full_Files.SaveAsName AS VideoSaveAsName, Image_Files.CdnPath AS ImgCdnPath,'
-                    . ' Image_Files.SourceURL AS ImgSourceURL, PRODUCT.pid,'
-                    . ' COUNT(Videodownload.id) AS cnt '
+                'fields' => array( 'v.ProdID,'
+                    . ' v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText,'
+                    . ' v.Artist, v.Advisory, v.ISRC, v.Composer, v.FullLength_Duration,'
+                    . ' v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath,'
+                    . ' ff.SaveAsName AS VideoSaveAsName, imgf.CdnPath AS ImgCdnPath,'
+                    . ' imgf.SourceURL AS ImgSourceURL, prd.pid,'
+                    . ' COUNT(vd.id) AS cnt '
                     ),                
-                'group' => 'Video.ProdID ',
+                'group' => 'v.ProdID ',
                 'order' => array('cnt DESC'),  
-                'limit' => 10,
+                'limit' => 100,
                 'joins' => array(
                      array(
                         'table' => strtolower($territory).'_countries',
-                        'alias' => 'Country',
+                        'alias' => 'c',
                         'type' => 'Inner',
                         'foreignKey' => false,
-                        'conditions'=> array('Country.ProdID = Video.ProdID', 'Country.provider_type = Video.provider_type')
+                        'conditions'=> array('c.ProdID = v.ProdID', 'c.provider_type = v.provider_type')
                     ),
                     array(
                         'table' => 'Genre',
-                        'alias' => 'Genre',
+                        'alias' => 'gr',
                         'type' => 'Inner',
                         'foreignKey' => false,
-                        'conditions'=> array('Genre.ProdID = Video.ProdID', 'Video.provider_type = Genre.provider_type' )
+                        'conditions'=> array('gr.ProdID = v.ProdID', 'v.provider_type = gr.provider_type' )
                     ),                   
                     array(
                         'table' => 'File',
-                        'alias' => 'Image_Files',
+                        'alias' => 'imgf',
                         'type' => 'Inner',
                         'foreignKey' => false,
-                        'conditions'=> array('Video.Image_FileID = Image_Files.FileID' )
-                    ),                                   
+                        'conditions'=> array('v.Image_FileID = imgf.FileID' )
+                    ),
+                     array(
+                        'table' => 'File',
+                        'alias' => 'ff',
+                        'type' => 'Inner',
+                        'foreignKey' => false,
+                        'conditions'=> array( 'v.FullLength_FileID = ff.FileID' )
+                    ), 
                     array(
                         'table' => 'PRODUCT',
-                        'alias' => 'PRODUCT',
+                        'alias' => 'prd',
                         'type' => 'Inner',
                         'foreignKey' => false,
-                        'conditions'=> array( 'PRODUCT.ProdID = Video.ProdID','PRODUCT.provider_type = Video.provider_type' )                    
+                        'conditions'=> array( 'prd.ProdID = v.ProdID','prd.provider_type = v.provider_type' )                    
                     ),                                   
                     array(
                         'table' => 'videodownloads',
-                        'alias' => 'Videodownload',
+                        'alias' => 'vd',
                         'type' => 'Left',
                         'foreignKey' => false,
-                        'conditions'=> array( 'Videodownload.ProdID = Video.ProdID','Videodownload.provider_type = Video.provider_type' )                    
+                        'conditions'=> array( 'vd.ProdID = v.ProdID','vd.provider_type = v.provider_type' )                    
                     )
                 )
-             ));
-            
-            */     
-
-            $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
-               v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
-               imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
-               FROM video AS v
-               INNER JOIN ' . $countryPrefix . 'countries AS c ON v.ProdID = c.ProdID AND v.provider_type = c.provider_type
-               INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type
-               INNER JOIN File AS ff ON v.FullLength_FileID = ff.FileID
-               INNER JOIN File AS imgf ON v.Image_FileID = imgf.FileID
-               INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
-               LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
-               WHERE c.Territory = "' . $territory . '" AND v.DownloadStatus = "1" GROUP BY v.ProdID
-               ORDER BY cnt DESC LIMIT 100';
-                        
-            $arr_video = $videoInstance->query($str_query);           
+             ));            
+           
           
             if (!empty($arr_video)) {
                 $status = Cache::write("AppMyMusicVideosList_" . $territory, $arr_video);
@@ -1207,7 +1196,7 @@ STR;
                         $data[$key]['totalseconds'] = $StreamingComponent->getSeconds($value['Song']['FullLength_Duration']);
                     }
                 }
-                Cache::delete("national_us_top10_songs" . $country);
+                
                 Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("cache written for US top ten for $territory", "cache");
             }
@@ -1347,7 +1336,7 @@ STR;
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
                 }
-                Cache::delete("national_us_top10_albums" . $country);
+               
                 Cache::write("national_us_top10_albums" . $country, $data);
                 $this->log("cache written for US top ten Album for $territory", "cache");
             }
@@ -1551,7 +1540,7 @@ STR;
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
-                Cache::delete("national_us_top10_videos" . $country);
+                
                 Cache::write("national_us_top10_videos" . $country, $data);
                 $this->log("cache written for US top ten video for $territory", "cache");
             }
@@ -1822,8 +1811,7 @@ STR;
                     $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
-                }
-                Cache::delete("new_releases_videos" . $territory);
+                }            
                 Cache::write("new_releases_videos" . $territory, $data);
                 $this->log("cache written for new releases videos for $territory", "cache");
             }
@@ -2698,7 +2686,7 @@ STR;
                         $topDownload[$key]['totalseconds'] = $StreamingComponent->getSeconds($value['Song']['FullLength_Duration']);
                     }
             }
-            Cache::delete("lib" . $libId);
+           
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
@@ -3103,7 +3091,7 @@ STR;
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
-            Cache::delete("lib_video" . $libId);
+           
             Cache::write("lib_video" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
@@ -3361,7 +3349,7 @@ STR;
         }
         else
         {
-            Cache::delete("defaultqueuelist");
+            
             Cache::write("defaultqueuelist", $queueData);
 
             //library top 10 cache set
