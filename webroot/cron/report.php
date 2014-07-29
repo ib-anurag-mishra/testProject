@@ -10,6 +10,7 @@
 include 'functions.php';
 
 $currentDate = date('Y-m-d');
+ini_set('memory_limit', '-1');
 list($year, $month, $day) = explode('-', $currentDate);
 $weekFirstDay = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"));
 $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));

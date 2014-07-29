@@ -7,7 +7,7 @@
  * @package report
  * This cron script is intended to run on every week to generate the download report for Sony and SCP to sony server
  **/
-
+ini_set('memory_limit', '-1');
 include 'functions.php';
 $count = '';
 ini_set('error_reporting', E_ALL);

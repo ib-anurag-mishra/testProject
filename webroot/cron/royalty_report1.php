@@ -4,6 +4,7 @@
  * Code to generate Royality report
  */
 error_reporting(1);
+ini_set('memory_limit', '-1');
 set_time_limit(0);
 include_once "config_ioda.php";
 include_once "functions_ioda.php";
