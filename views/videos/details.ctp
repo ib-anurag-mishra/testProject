@@ -87,7 +87,7 @@
             <h2><?= __('More Videos By', true); ?> <?= $this->getValidText( $videosData[0]['Video']['ArtistText'] ); ?></h2>
         </header>
         <div class="more-videos-scrollable horiz-scroll carousel">
-            <ul style="width:30900px;">
+            <ul>
             <?php
                 if ( is_array( $moreVideosData ) && count( $moreVideosData ) > 0 ):
 

@@ -432,6 +432,23 @@ $(document).ready(function() {
     $('.artist-page .videos-scrollable').children('ul').css({width: totalVSLiWidth + 5});
 
 
+    var totalMVLiWidth = 0;
+    $('.individual-videos-page .more-videos-scrollable').children('ul').children('li').each(function() {
+        totalMVLiWidth = totalMVLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.individual-videos-page .more-videos-scrollable').children('ul').css({width: totalVSLiWidth + 5});
+
+    var totalTVLiWidth = 0;
+    $('.individual-videos-page .top-videos-scrollable').children('ul').children('li').each(function() {
+        totalMVLiWidth = totalMVLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.individual-videos-page .top-videos-scrollable').children('ul').css({width: totalVSLiWidth + 5});          
+
+
     
     $(document).on('click', '.artist-page .album-shadow-container div.paging span a', function(event) {
 
