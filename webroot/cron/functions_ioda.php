@@ -349,4 +349,26 @@ function getFileNameDB($library_territory, $from_date, $libTypeKey, $version, $d
     return $file_name;
 }
 
+function write_file($content, $file_name, $folder)
+{
+    if (count($content[1]) > 1)
+    {
+        echo $file = $folder . $file_name;
+        $fh = fopen($file, 'w') or die("can't open file");
+        foreach ($content as $data)
+        {
+            $delimiter = "\t";
+            $titleString = implode($delimiter, $data[0]);
+            unset($data[0]);
+            fwrite($fh, $titleString . "\n");
+            foreach ($data as $subArray)
+            {
+                $dataRowString = implode($delimiter, $subArray);
+                fwrite($fh, $dataRowString . "\n");
+            }
+        }
+        fclose($fh);
+    }
+}
+
 ?>
