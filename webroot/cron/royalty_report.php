@@ -146,12 +146,13 @@ foreach ($arr_dates AS $key => $value)
                 $tmp_cont2 = $song_download_query . '//' . mysql_num_rows($result) . "////\r\n";
                 fwrite($fh, $tmp_cont2);
 
+                echo $song_download_query."\n";
                 $song_download_result = mysql_query($song_download_query, $freegal);
 
                 $error = mysql_error($freegal);
                 if (empty($error))
                 {
-                    if (mysql_num_rows($song_download_result) > 0)
+                    if (mysql_num_rows($song_download_result) == 0)
                     {
                         while ($row = mysql_fetch_assoc($song_download_result))
                         {
@@ -186,7 +187,7 @@ foreach ($arr_dates AS $key => $value)
                     }
                     else
                     {
-                        echo "No song downloaded for the Library ID : " . $q['library_id'];
+                        echo "No song downloaded for the Library ID : " . $q['library_id']."\n";
                         continue;
                     }
                 }
