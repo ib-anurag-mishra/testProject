@@ -343,7 +343,7 @@ function getFileNameDB($library_territory, $from_date, $libTypeKey, $version, $d
         else
         {
             $version++;
-            echo $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+            $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
         }
     }
     return $file_name;
