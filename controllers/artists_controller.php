@@ -128,9 +128,9 @@ Class ArtistsController extends AppController {
         } else {
             $album = $this->data['Artist']['album'];
         }
-		if (isset($this->params[$index]['songProdID'])) {
+	if (isset($this->params[$index]['songProdID'])) {
             $songID = $this->params[$index]['songProdID'];
-		}
+	}
         if ($artist == '') {
             $errorMsg .= 'Please select an Artist.<br/>';
         }
@@ -140,13 +140,19 @@ Class ArtistsController extends AppController {
         if ($album == '') {
             $errorMsg .= 'Please select an Album.<br/>';
         }
+        if ($songID == '') {
+            $errorMsg .= 'Please select Song.<br/>';
+        }
+        if($album_provider_type == '') {
+            $errorMsg .= 'Please select another album as this albums provider type is empty.<br/>';
+        }
 		$territory = $this->data['Artist']['territory'];
         $insertArr = array();
         $insertArr['artist_name'] = $artist;
         $insertArr['album'] = $album;
         $insertArr['territory'] = $this->data['Artist']['territory'];
         $insertArr['language'] = Configure::read('App.LANGUAGE');
-		$insertArr['prod_id'] = $songID;
+	$insertArr['prod_id'] = $songID;
         if (!empty($album_provider_type)) {
             $insertArr['provider_type'] = $album_provider_type;
         }
@@ -213,6 +219,12 @@ Class ArtistsController extends AppController {
         }
         if (isset($this->params[$index]['songProdID'])) {
             $songID = $this->params[$index]['songProdID'];
+        }
+        if ($songID == '') {
+            $errorMsg .= 'Please select Song.<br/>';
+        }
+        if($album_provider_type == '') {
+            $errorMsg .= 'Please select another album as this albums provider type is empty.<br/>';
         }        
 		$territory = $this->data['Artist']['territory'];
         $updateArr = array();
