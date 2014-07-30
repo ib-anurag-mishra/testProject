@@ -76,6 +76,8 @@ $(document).ready(function() {
 
 
 
+
+
     
 
 
@@ -291,6 +293,33 @@ $(document).ready(function() {
         return false;
     });
 
+
+    $(document).on('click', '.albums-page .album-cover-image .add-to-playlist-button', function(e) {
+        e.preventDefault();
+
+        var queuelist = $(document).find('.playlist-options-test').html();
+        var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
+        oldList.remove();
+
+        $(this).next('.wishlist-popover').append(queuelist);
+
+        $('.wishlist-popover').removeClass('active');
+
+        if ($(this).next('.wishlist-popover').hasClass('active')) {
+            $(this).next('.wishlist-popover').removeClass('active');
+            $(this).find('.add-to-playlist-button').css({opacity: 0.5});
+        } else {
+
+            $(this).next('.wishlist-popover').addClass('active');
+            $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
+
+        }
+
+        return false;
+    });    
+
+
+
     /* clickoffs */
     $(document).mouseup(function(e) {
 
@@ -386,21 +415,38 @@ $(document).ready(function() {
 
 
     var totalASLiWidth = 0;
-    $('.artist-page .album-scrollable ul li').each(function() {
+    $('.artist-page .album-scrollable').children('ul').children('li').each(function() {
         totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
 
     });
 
-    $('.artist-page .album-scrollable ul').css({width: totalASLiWidth + 5});
+    $('.artist-page .album-scrollable').children('ul').css({width: totalASLiWidth + 5});
 
     var totalVSLiWidth = 0;
 
-    $('.artist-page .videos-scrollable ul li').each(function() {
+    $('.artist-page .videos-scrollable').children('ul').children('li').each(function() {
         totalVSLiWidth = totalVSLiWidth + $(this).outerWidth(true);
 
     });
 
-    $('.artist-page .videos-scrollable ul').css({width: totalVSLiWidth + 5});
+    $('.artist-page .videos-scrollable').children('ul').css({width: totalVSLiWidth + 5});
+
+
+    var totalMVLiWidth = 0;
+    $('.individual-videos-page .more-videos-scrollable').children('ul').children('li').each(function() {
+        totalMVLiWidth = totalMVLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.individual-videos-page .more-videos-scrollable').children('ul').css({width: totalMVLiWidth + 5});
+
+    var totalTVLiWidth = 0;
+    $('.individual-videos-page .top-videos-scrollable').children('ul').children('li').each(function() {
+        totalTVLiWidth = totalTVLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.individual-videos-page .top-videos-scrollable').children('ul').css({width: totalTVLiWidth + 5});          
 
 
     
@@ -1745,6 +1791,55 @@ $(document).ready(function() {
 
     /* */
 
+
+    $('.artist-page').find('.playlist-menu-icon').on('click',function(e){
+        e.preventDefault();
+        
+        var oldList = $(this).next('ul');
+        oldList.empty();
+        var queuelist = $(document).find('.playlist-options-new').find('ul').html();
+        $(this).next('ul').append(queuelist).addClass('active');
+
+    });
+
+    $('.artist-page').find('.playlist-menu-icon').next('ul').on('mouseleave',function(){
+        $(this).removeClass('active');
+
+    });
+
+    $('.artist-page').find('.album-container').on('mouseenter',function(){
+        $this = $(this);
+        $this.find('.playlist-menu-icon').css({opacity:.5});
+        $this.find('.album-preview').css({opacity:.5});
+
+    });
+
+    $('.artist-page').find('.album-container').on('mouseleave',function(){
+        $this = $(this);
+        $this.find('.playlist-menu-icon').css({opacity:0});
+        $this.find('.album-preview').css({opacity:0});
+
+    });    
+
+    $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });
+
+    $('.artist-page').find('.album-container').children('.album-preview').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.artist-page').find('.album-container').children('.album-preview').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });    
 
     $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
     {

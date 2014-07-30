@@ -210,7 +210,7 @@ $ieVersion =  ieversion();
                     $i++;
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+                echo 	'<div style="height: 480px; text-align:center; padding-top: 200px; font-size:14px; font-weight: bold;">';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</div>';
                 }
 				?>
 				</div>
@@ -302,7 +302,7 @@ $ieVersion =  ieversion();
 				<?php
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded video from this week or last week."); ?><?php echo '</p></td></tr>';
+                echo 	'<div style="height: 480px; text-align:center; padding-top: 200px; font-size:14px; font-weight: bold;">';?><?php echo __("No downloaded videos from this week or last week."); ?><?php echo '</div>';
                 }
 				?>
 				</div>
