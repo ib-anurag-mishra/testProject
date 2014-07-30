@@ -2462,7 +2462,7 @@ Class ArtistsController extends AppController {
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
-        $combineGenre = $this->Common->getGenreForSelection($album);
+        $combineGenre = $this->Common->getGenreForSelection(base64_decode($album));
 		$this->set('combineGenre',$combineGenre);
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
@@ -2563,6 +2563,9 @@ Class ArtistsController extends AppController {
                 }
             }
 
+            foreach ($albumData as $key => $value) {
+                    $albumData[$key]['combineGenre'] = $this->Common->getGenreForSelection($albumData[$key]['Genre']['Genre']);
+                }
             $this->set('albumData', $albumData);
 
             if (isset($this->params['named']['page'])) {
@@ -2584,7 +2587,10 @@ Class ArtistsController extends AppController {
                     $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
                     Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
                 }
-            } 
+            }
+            foreach ($artistVideoList as $key => $value) {
+                    $artistVideoList[$key]['combineGenre'] = $this->Common->getGenreForSelection($artistVideoList[$key]['Genre']['Genre']);
+            }
             $this->set('artistVideoList', $artistVideoList);
         }
     }
