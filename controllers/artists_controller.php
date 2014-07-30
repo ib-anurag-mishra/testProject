@@ -1739,7 +1739,7 @@ Class ArtistsController extends AppController {
       Desc : For getting songs related to an Album
      */
 
-    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null, $territory = null) {
+    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null, $territory = null , $adminTerritory = null) {
 
         if (empty($ajax)) {
             if (count($this->params['pass']) > 1) {
@@ -1764,11 +1764,13 @@ Class ArtistsController extends AppController {
 
         if(!empty($territory)) {
             $country = $territory;
-            $album = $this->params['pass'][1];
-            $provider = base64_decode($this->params['pass'][2]);
-            $id = $this->params['pass'][0];
+            if(empty($adminTerritory)) {
+                $album = $this->params['pass'][1];
+                $provider = base64_decode($this->params['pass'][2]);
+                $id = $this->params['pass'][0];
 
-            $countryPrefix = $this->Common->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
+                $countryPrefix = $this->Common->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
+            }
         } else {
             $country = $this->Session->read('territory'); 
         }
@@ -3026,7 +3028,7 @@ Class ArtistsController extends AppController {
         $this->Song->Behaviors->attach('Containable');
         $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
         $this->Country->setTablePrefix($countryPrefix);
- 	$songs = $this->getAlbumSongs(base64_encode($artist_name), $albumProdId, base64_encode($provider_type), 1 , $territory);
+ 	$songs = $this->getAlbumSongs(base64_encode($artist_name), $albumProdId, base64_encode($provider_type), 1 , $territory , 1);
         $data = "<option value=''>SELECT</option>";
         foreach ($songs[$albumProdId] as $k => $v) {
 			$result[$v['Song']['ProdID']] = $v['Song']['SongTitle'];
