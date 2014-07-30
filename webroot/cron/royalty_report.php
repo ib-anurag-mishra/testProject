@@ -45,7 +45,8 @@ foreach ($arr_dates AS $key => $value)
     $query_country = "Select distinct libraries.library_territory from libraries";
     $result_country = mysql_query($query_country, $freegal);
 
-    if (empty(mysql_error($freegal)))
+    $error = mysql_error($freegal);
+    if (empty($error))
     {
         while ($row_country = mysql_fetch_assoc($result_country))
         {
@@ -147,7 +148,8 @@ foreach ($arr_dates AS $key => $value)
 
                 $song_download_result = mysql_query($song_download_query, $freegal);
 
-                if (empty(mysql_error($freegal)))
+                $error = mysql_error($freegal);
+                if (empty($error))
                 {
                     if (mysql_num_rows($song_download_result) > 0)
                     {
