@@ -152,7 +152,7 @@ foreach ($arr_dates AS $key => $value)
                 $error = mysql_error($freegal);
                 if (empty($error))
                 {
-                    if (mysql_num_rows($song_download_result) == 0)
+                    if (mysql_num_rows($song_download_result) > 0)
                     {
                         while ($row = mysql_fetch_assoc($song_download_result))
                         {
@@ -183,7 +183,10 @@ foreach ($arr_dates AS $key => $value)
                         $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
                         $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
 
-                        $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1);
+                        $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1 , $freegal);
+                        
+                        print_r($royalty_content);
+                        exit;
                     }
                     else
                     {
