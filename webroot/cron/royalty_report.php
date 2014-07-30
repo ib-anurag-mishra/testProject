@@ -29,7 +29,7 @@ $fetchRecordsFromTable = 'latest_downloads';
 $libraryType = array('ALC' => '0');
 //$libraryType = array('ALC' => '0', 'Unlimited' => '1');
 
-$country_curency = array('CA' => 'CAD');
+$country_curency = array('US' => 'USD');
 //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
 //$country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
 
