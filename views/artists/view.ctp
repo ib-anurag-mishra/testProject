@@ -7,7 +7,7 @@
 
 			if ($genre_crumb_name != "")
 			{
-				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$genre_crumb_name);
+				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$combineGenre);
 			}
 
 			$html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
