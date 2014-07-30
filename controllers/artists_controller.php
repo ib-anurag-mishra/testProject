@@ -128,9 +128,9 @@ Class ArtistsController extends AppController {
         } else {
             $album = $this->data['Artist']['album'];
         }
-		if (isset($this->params[$index]['songProdID'])) {
+	if (isset($this->params[$index]['songProdID'])) {
             $songID = $this->params[$index]['songProdID'];
-		}
+	}
         if ($artist == '') {
             $errorMsg .= 'Please select an Artist.<br/>';
         }
@@ -140,13 +140,19 @@ Class ArtistsController extends AppController {
         if ($album == '') {
             $errorMsg .= 'Please select an Album.<br/>';
         }
+        if ($songID == '') {
+            $errorMsg .= 'Please select Song.<br/>';
+        }
+        if($album_provider_type == '') {
+            $errorMsg .= 'Please select another album as this albums provider type is empty.<br/>';
+        }
 		$territory = $this->data['Artist']['territory'];
         $insertArr = array();
         $insertArr['artist_name'] = $artist;
         $insertArr['album'] = $album;
         $insertArr['territory'] = $this->data['Artist']['territory'];
         $insertArr['language'] = Configure::read('App.LANGUAGE');
-		$insertArr['prod_id'] = $songID;
+	$insertArr['prod_id'] = $songID;
         if (!empty($album_provider_type)) {
             $insertArr['provider_type'] = $album_provider_type;
         }
@@ -213,6 +219,12 @@ Class ArtistsController extends AppController {
         }
         if (isset($this->params[$index]['songProdID'])) {
             $songID = $this->params[$index]['songProdID'];
+        }
+        if ($songID == '') {
+            $errorMsg .= 'Please select Song.<br/>';
+        }
+        if($album_provider_type == '') {
+            $errorMsg .= 'Please select another album as this albums provider type is empty.<br/>';
         }        
 		$territory = $this->data['Artist']['territory'];
         $updateArr = array();
@@ -230,7 +242,7 @@ Class ArtistsController extends AppController {
             if ($updateObj->insert($updateArr)) {
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
                 Configure::write('Cache.disable', false);                
-				$this->Common->getTopSingles($territory);
+		$this->Common->getTopSingles($territory);
                 $this->redirect('managetopsingles');
             }
         } else {
@@ -1729,7 +1741,7 @@ Class ArtistsController extends AppController {
       Desc : For getting songs related to an Album
      */
 
-    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null, $territory = null) {
+    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null, $territory = null , $adminTerritory = null) {
 
         if (empty($ajax)) {
             if (count($this->params['pass']) > 1) {
@@ -1754,11 +1766,13 @@ Class ArtistsController extends AppController {
 
         if(!empty($territory)) {
             $country = $territory;
-            $album = $this->params['pass'][1];
-            $provider = base64_decode($this->params['pass'][2]);
-            $id = $this->params['pass'][0];
+            if(empty($adminTerritory)) {
+                $album = $this->params['pass'][1];
+                $provider = base64_decode($this->params['pass'][2]);
+                $id = $this->params['pass'][0];
 
-            $countryPrefix = $this->Common->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
+                $countryPrefix = $this->Common->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
+            }
         } else {
             $country = $this->Session->read('territory'); 
         }
@@ -2975,7 +2989,7 @@ Class ArtistsController extends AppController {
         $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
         $this->Country->setTablePrefix($countryPrefix);
         foreach ($allAlbum as $k => $v) {
-            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.provider_type = Country.provider_type','Country.SalesDate !=' => '' ,'Country.SalesDate <='  => date('Y-m-d'), 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             if (count($recordCount) > 0) {
                 $val = $val . $v['Album']['ProdID'] . ",";
                 $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
@@ -3015,7 +3029,7 @@ Class ArtistsController extends AppController {
             $provider_type = $alb_det[1];
         }
 		
-		$territory   = $this->params[$index]['territory'];
+		$territory   = $this->params[$index]['Territory'];
 		$artist_name = $this->params[$index]['artist'];
         $result = array();
       
@@ -3023,9 +3037,7 @@ Class ArtistsController extends AppController {
         $this->Song->Behaviors->attach('Containable');
         $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
         $this->Country->setTablePrefix($countryPrefix);
-        $songs = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID', 'Song.SongTitle'), 'conditions' => array('Song.ReferenceID' => $albumProdId, 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $territory), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
- 
- 	    $songs = $this->getAlbumSongs(base64_encode($artist_name), $albumProdId, base64_encode($provider_type), 1);
+ 	$songs = $this->getAlbumSongs(base64_encode($artist_name), $albumProdId, base64_encode($provider_type), 1 , $territory , 1);
         $data = "<option value=''>SELECT</option>";
         foreach ($songs[$albumProdId] as $k => $v) {
 			$result[$v['Song']['ProdID']] = $v['Song']['SongTitle'];

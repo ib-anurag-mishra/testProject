@@ -36,8 +36,8 @@ $lib_types = array('Unlimited');
   {
   echo $currentDate = $dt->format( "Y-m-d" );
   echo "\n"; */
-$currentDate = '2014-04-01';
-//$currentDate = date("Y-m-d", time());
+//$currentDate = '2014-04-01';
+$currentDate = date("Y-m-d", time());
 echo "\n----------- Start " . $currentDate . " -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
