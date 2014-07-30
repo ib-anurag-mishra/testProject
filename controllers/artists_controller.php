@@ -160,8 +160,8 @@ Class ArtistsController extends AppController {
         if (empty($errorMsg)) {
             if ($insertObj->insert($insertArr)) {
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-//                Configure::write('Cache.disable', false);
-//                $this->Common->getTopSingles($territory);
+                Configure::write('Cache.disable', false);
+                $this->Common->getTopSingles($territory);
                 $this->redirect('managetopsingles');
             }
         } else {
@@ -241,8 +241,8 @@ Class ArtistsController extends AppController {
         if (empty($errorMsg)) {
             if ($updateObj->insert($updateArr)) {
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
-//                Configure::write('Cache.disable', false);                
-//		$this->Common->getTopSingles($territory);
+                Configure::write('Cache.disable', false);                
+		$this->Common->getTopSingles($territory);
                 $this->redirect('managetopsingles');
             }
         } else {
