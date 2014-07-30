@@ -438,15 +438,15 @@ $(document).ready(function() {
 
     });
 
-    $('.individual-videos-page .more-videos-scrollable').children('ul').css({width: totalVSLiWidth + 5});
+    $('.individual-videos-page .more-videos-scrollable').children('ul').css({width: totalMVLiWidth + 5});
 
     var totalTVLiWidth = 0;
     $('.individual-videos-page .top-videos-scrollable').children('ul').children('li').each(function() {
-        totalMVLiWidth = totalMVLiWidth + $(this).outerWidth(true);
+        totalTVLiWidth = totalTVLiWidth + $(this).outerWidth(true);
 
     });
 
-    $('.individual-videos-page .top-videos-scrollable').children('ul').css({width: totalVSLiWidth + 5});          
+    $('.individual-videos-page .top-videos-scrollable').children('ul').css({width: totalTVLiWidth + 5});          
 
 
     
