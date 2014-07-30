@@ -64,20 +64,20 @@ foreach ($arr_dates AS $key => $value)
 
 
 
-            echo $query = "SELECT clp.library_id, clp.library_contract_start_date, clp.library_contract_end_date, clp.library_unlimited, sum(lp.purchased_tracks) as total_tracks_purchase ,  "
-            . "sum(lp.purchased_amount) as total_amount, l.library_territory, lp.library_id, clp.id as contract_id, clp.id_library_purchases, l.library_name, "
-            . "l.library_user_download_limit, l.library_download_type, l.library_download_limit, l.library_current_downloads, l.library_total_downloads, "
-            . "l.library_available_downloads, l.library_territory, l.library_status FROM library_purchases lp "
-            . "INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases "
-            . "INNER JOIN libraries l ON clp.library_id = l.id "
-            . "WHERE ( (clp.library_contract_start_date <= '" . $value['from_date'] . "' AND clp.library_contract_end_date >= '" . $value['to_date'] . "')  "
-            . "OR (clp.library_contract_start_date <= '" . $value['from_date'] . "' AND clp.library_contract_end_date BETWEEN '" . $value['from_date'] . "' "
-            . "AND '" . $value['to_date'] . "') OR (clp.library_contract_start_date BETWEEN '" . $value['from_date'] . "' AND '" . $value['to_date'] . "' "
-            . "AND clp.library_contract_end_date >= '" . $value['to_date'] . "') OR (clp.library_contract_start_date >= '" . $value['from_date'] . "' "
-            . "AND clp.library_contract_end_date <= '" . $value['to_date'] . "') ) AND clp.library_unlimited = '" . $libTypeValue . "' "
-            . "AND l.library_territory='" . $row_country['library_territory'] . "' "
-            . "GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',clp.library_id),clp.library_unlimited,clp.library_id "
-            . "ORDER BY clp.library_id;";
+            $query = "SELECT clp.library_id, clp.library_contract_start_date, clp.library_contract_end_date, clp.library_unlimited, sum(lp.purchased_tracks) as total_tracks_purchase ,  "
+                    . "sum(lp.purchased_amount) as total_amount, l.library_territory, lp.library_id, clp.id as contract_id, clp.id_library_purchases, l.library_name, "
+                    . "l.library_user_download_limit, l.library_download_type, l.library_download_limit, l.library_current_downloads, l.library_total_downloads, "
+                    . "l.library_available_downloads, l.library_territory, l.library_status FROM library_purchases lp "
+                    . "INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases "
+                    . "INNER JOIN libraries l ON clp.library_id = l.id "
+                    . "WHERE ( (clp.library_contract_start_date <= '" . $value['from_date'] . "' AND clp.library_contract_end_date >= '" . $value['to_date'] . "')  "
+                    . "OR (clp.library_contract_start_date <= '" . $value['from_date'] . "' AND clp.library_contract_end_date BETWEEN '" . $value['from_date'] . "' "
+                    . "AND '" . $value['to_date'] . "') OR (clp.library_contract_start_date BETWEEN '" . $value['from_date'] . "' AND '" . $value['to_date'] . "' "
+                    . "AND clp.library_contract_end_date >= '" . $value['to_date'] . "') OR (clp.library_contract_start_date >= '" . $value['from_date'] . "' "
+                    . "AND clp.library_contract_end_date <= '" . $value['to_date'] . "') ) AND clp.library_unlimited = '" . $libTypeValue . "' "
+                    . "AND l.library_territory='" . $row_country['library_territory'] . "' "
+                    . "GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',clp.library_id),clp.library_unlimited,clp.library_id "
+                    . "ORDER BY clp.library_id;";
 
             $result = mysql_query($query, $freegal);
             $file_name = $reportsFolder . '/tmp_debug_data.txt';
@@ -181,6 +181,8 @@ foreach ($arr_dates AS $key => $value)
 
                         $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
                         $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
+
+                        $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1);
                     }
                     else
                     {
@@ -190,7 +192,7 @@ foreach ($arr_dates AS $key => $value)
                 }
                 else
                 {
-                    echo "Error at Line Number : " . mysql_error($freegal);
+                    echo "Error at Line Number : " . mysql_error($freegal) . "\n";
                 }
             }
         }

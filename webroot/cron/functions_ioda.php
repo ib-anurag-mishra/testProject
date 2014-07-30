@@ -284,7 +284,7 @@ function sendFile($src, $dst)
     }
 }
 
-function getFileName($library_territory, $from_date, $libTypeKey, $version)
+function getFileNameCDN($library_territory, $from_date, $libTypeKey, $version)
 {
     $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
 
@@ -325,6 +325,15 @@ function getFileName($library_territory, $from_date, $libTypeKey, $version)
     }
 
     return $file_name;
+}
+
+function getFileNameDB($library_territory, $from_date, $libTypeKey, $version)
+{
+    $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+    $query = "SELECT * FROM freegal.ioda_reports where report_name='$file_name' ";
+    $file_found = mysql_fetch_assoc(mysql_query($query, $freegal));
+    
+    print_r($file_found);
 }
 
 ?>
