@@ -118,11 +118,7 @@ function sendReportFilesftp($src, $dst, $logFileWrite, $typeReport)
         }
         else
         {
-//			$sftp = ssh2_sftp($con);
-//			if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH."uploads/"))
-//			{
-//				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH."uploads/");
-//			}
+
             // Create SFTP session
             $sftp = ssh2_sftp($con);
             $sftpStream = fopen('ssh2.sftp://' . $sftp . '/' . $dst, 'w');
@@ -149,8 +145,8 @@ function sendReportFilesftp($src, $dst, $logFileWrite, $typeReport)
 
                 echo ucfirst($typeReport) . " Report Sucessfully sent\n";
                 fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
-                sendFile($src, $dst);
-                sendReportEmail($typeReport, $dst);
+
+
                 return true;
             }
             catch (Exception $e)
@@ -239,10 +235,10 @@ function sendReportFilesftp($src, $dst, $logFileWrite, $typeReport)
   Description : Function for sending Email for Reports
  */
 
-function sendReportEmail($typereport, $dst)
+function sendReportEmail($typereport, $dst , $message)
 {
     $subject = $typereport . REPORT_SUBJECT;
-    $success = mail(REPORT_TO, $subject, $dst . " " . REPORT_BODY, REPORT_HEADERS);
+    $success = mail(REPORT_TO, $subject, $dst . " " . $message.REPORT_BODY, REPORT_HEADERS);
     return $success;
 }
 
@@ -353,6 +349,9 @@ function getFileNameDB($library_territory, $from_date, $libTypeKey, $version, $d
 
 function write_file($content, $file_name, $folder, $db)
 {
+    $outputFile = "iodareports_output_" . date('Y_m_d_h_i_s') . ".txt";
+    $logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the file!");
+
     if (count($content[1]) > 1)
     {
         echo $file = $folder . $file_name;
@@ -371,11 +370,100 @@ function write_file($content, $file_name, $folder, $db)
         }
         fclose($fh);
 
+        $status_message = '';
 
-        if (sendFile($file, $file_name))
+        $cdn_status = sendFile($file, $file_name);
+        if ($cdn_status)
         {
             $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_cdn_uploaded`='1' WHERE `report_name`='$file_name' ";
             mysql_query($update_query, $db);
+            fwrite($logFileWrite, "$file_name uploaded on CDN \n");
+            $status_message .="$file_name uploaded on CDN \n";
+        }
+        else
+        {
+            fwrite($logFileWrite, "$file_name not uploaded on CDN \n");
+            $status_message .="$file_name not uploaded on CDN \n";
+        }
+
+        $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
+        if ($ioda_status)
+        {
+            $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_send_ioda`='1' WHERE `report_name`='$file_name' ";
+            mysql_query($update_query, $db);
+            fwrite($logFileWrite, "$file_name uploaded on IODA SERVER \n");
+            $status_message .="$file_name uploaded on IODA SERVER \n";
+        }
+        else
+        {
+            fwrite($logFileWrite, "$file_name not uploaded on IODA SERVER\n");
+            $status_message .="$file_name not uploaded on IODA SERVER \n";
+        }
+
+        //sendReportEmail("monthly", $file_name);
+    }
+    else
+    {
+        fwrite($logFileWrite, "Array is empty \n");
+    }
+    fclose($logFileWrite);
+}
+
+
+function sendReportFileIODA($src, $dst, $logFileWrite, $typeReport)
+{
+    if (!($con = ssh2_connect(REPORTS_SFTP_HOST, REPORTS_SFTP_PORT)))
+    {
+        fwrite($logFileWrite, "Not Able to Establish Connection with The Orchard SFTP \n");
+        return false;
+    }
+    else
+    {
+        if (!ssh2_auth_password($con, REPORTS_SFTP_USER, REPORTS_SFTP_PASS))
+        {
+            fwrite($logFileWrite, "fail: unable to authenticate with The Orchard SFTP \n");
+            return false;
+        }
+        else
+        {
+            // Create SFTP session
+            $sftp = ssh2_sftp($con);
+            $sftpStream = fopen('ssh2.sftp://' . $sftp . '/' . $dst, 'w');
+
+            try
+            {
+                if (!$sftpStream)
+                {
+                    fwrite($logFileWrite, "Could not open remote file: $dst. \n");
+                    throw new Exception("Could not open remote file: $dst.");
+                }
+
+                $data_to_send = file_get_contents($src);
+                if ($data_to_send === false)
+                {
+                    fwrite($logFileWrite, "Could not open local file: $src \n");
+                    throw new Exception("Could not open local file: $src.");
+                }
+
+                if (fwrite($sftpStream, $data_to_send) === false)
+                {
+                    fwrite($logFileWrite, "Could not send data from file: $src \n");
+                    throw new Exception("Could not send data from file: $src.");
+                }
+
+                fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+                fclose($sftpStream);
+                echo ucfirst($typeReport) . " Report Sucessfully sent\n";
+                return true;
+            }
+            catch (Exception $e)
+            {
+                echo "error sending $src report to /$dst report to IODA server\n";
+                echo 'Exception: ' . $e->getMessage();
+                fwrite($logFileWrite, "error sending " . $typeReport . " report to IODA server\n" . 'Exception: ' . $e->getMessage() . "\n");
+                fclose($sftpStream);
+                return false;
+            }
         }
     }
 }
