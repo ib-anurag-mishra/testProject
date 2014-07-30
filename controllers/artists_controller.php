@@ -1341,6 +1341,7 @@ Class ArtistsController extends AppController {
         }
 
         if (isset($albumData['0']['Genre']['Genre'])) {
+			$albumData['0']['Genre']['Genre']['link'] = $this->Common->getGenreForSelection($albumData['0']['Genre']['Genre']);
             $this->set("genre", $albumData['0']['Genre']['Genre']);
         } else {
             $this->set("genre", '');
