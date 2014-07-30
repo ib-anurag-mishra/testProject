@@ -40,7 +40,7 @@
 			$html->addCrumb(__('All Genre', true), '/genres/view/');
 			if ($genre_crumb_name != "")
 			{
-				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$genre_crumb_name);
+				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$combineGenre);
 			}
 
 			echo $html->getCrumbs(' > ', __('Home', true), '/homes');
@@ -185,7 +185,7 @@
 					</div>
 					<div class="genre">
 						<?php
-						echo __('Genre') . ": " . $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', '?genre='.$album['Genre']['Genre']), array("title" => $this->getTextEncode($album['Genre']['Genre']))) . '<br />';
+						echo __('Genre') . ": " . $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', '?genre='.$combineGenre), array("title" => $this->getTextEncode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '')
 						{
 							echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank', 'style' => 'word-wrap:break-word;word-break:break-word;width:160px;'));
@@ -409,7 +409,7 @@
 						<?php } ?>
 					</div>
 					<div class="genre">
-						<?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view','?genre='.$value['Genre']['Genre']), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
+						<?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view','?genre='.$combineGenre), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
 					</div> <?php
 					if (!empty($value['Video']['video_label']))
 					{

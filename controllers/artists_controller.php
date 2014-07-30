@@ -2462,7 +2462,8 @@ Class ArtistsController extends AppController {
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
-
+        $combineGenre = $this->Common->getGenreForSelection($album);
+		$this->set('combineGenre',$combineGenre);
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('libraryDownload', $libraryDownload);
