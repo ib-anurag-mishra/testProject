@@ -275,10 +275,12 @@ function sendFile($src, $dst)
             if (!ssh2_scp_send($con, $src, $CdnPath . $dst, 0644))
             {
                 echo "error\n";
+                return false;
             }
             else
             {
                 echo "FILE Sucessfully sent to CDN\n";
+                return true;
             }
         }
     }
@@ -349,7 +351,7 @@ function getFileNameDB($library_territory, $from_date, $libTypeKey, $version, $d
     return $file_name;
 }
 
-function write_file($content, $file_name, $folder)
+function write_file($content, $file_name, $folder, $db)
 {
     if (count($content[1]) > 1)
     {
@@ -368,6 +370,13 @@ function write_file($content, $file_name, $folder)
             }
         }
         fclose($fh);
+
+
+        if (sendFile($file, $file_name))
+        {
+            $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_cdn_uploaded`='1' WHERE `report_name`='$file_name' ";
+            mysql_query($update_query, $db);
+        }
     }
 }
 
