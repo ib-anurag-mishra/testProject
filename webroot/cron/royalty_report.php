@@ -183,10 +183,10 @@ foreach ($arr_dates AS $key => $value)
                         $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
                         $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
 
-                        $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1 , $freegal);
+                        echo $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1 , $freegal);
+                       
+                        exit();
                         
-                        print_r($royalty_content);
-                        exit;
                     }
                     else
                     {

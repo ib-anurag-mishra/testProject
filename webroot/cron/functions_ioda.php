@@ -330,10 +330,23 @@ function getFileNameCDN($library_territory, $from_date, $libTypeKey, $version)
 function getFileNameDB($library_territory, $from_date, $libTypeKey, $version, $db)
 {
     $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
-    $query = "SELECT * FROM freegal.ioda_reports where report_name='$file_name' ";
-    $file_found = mysql_fetch_assoc(mysql_query($query, $db));
-    
-    print_r($file_found);
+
+    while (1)
+    {
+        $query = "SELECT * FROM freegal.ioda_reports where report_name='$file_name' ";
+        $file_found = mysql_query($query, $db);
+
+        if (mysql_num_rows($file_found) == 0)
+        {
+            break;
+        }
+        else
+        {
+            $version++;
+            echo $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+        }
+    }
+    return $file_name;
 }
 
 ?>
