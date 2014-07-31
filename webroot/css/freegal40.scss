@@ -5967,7 +5967,7 @@ sub { top: 0.4em; }
 		// padding-left: 20px;
 		// margin-bottom: 16px;
 		// font-size: 14px;
-		
+
 	}
 
 	.fq {
@@ -5978,7 +5978,11 @@ sub { top: 0.4em; }
 	.fa {
 
 		display: none;
+	
+		&.active {
 
+			display: block;
+		}
 
 	}
 
