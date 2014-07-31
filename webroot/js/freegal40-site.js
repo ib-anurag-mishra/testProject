@@ -1552,8 +1552,8 @@ $(document).ready(function() {
 
 
     /* FAQ page */
-    var $faq_container_question = $('.faq-container').find('li').hasClass('fq');
-    var $faq_container_answer = $('.faq-container').find('li').hasClass('fa');
+    var $faq_container_question = $('.faq-container').find('.fq');
+    var $faq_container_answer = $('.faq-container').find('.fa');
 
     $faq_container_question.on('click',function(){
         $this = $(this);
