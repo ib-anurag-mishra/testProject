@@ -5982,13 +5982,13 @@ sub { top: 0.4em; }
 		font-size: 14px;
 		padding: 0;
 		line-height: 18px;
-		
+		// -webkit-transition: max-height 2s;
 
 
 		&.active {
 
 			// display: block;
-			-webkit-transition: max-height 2s;
+			-webkit-transition: padding 2s, margin-bottom 2s, max-height 2s;
 			max-height: 1000px;
 			padding: 10px 10px 10px 20px;
 			margin-bottom: 16px;
