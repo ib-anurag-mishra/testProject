@@ -1328,7 +1328,7 @@ $(document).ready(function() {
 
         console.log($siblings_carousel.children('ul').width() + ' - ' + currentScrollLeft + ' = ' + ($siblings_carousel.children('ul').width() - currentScrollLeft))
 
-        if($siblings_carousel.children('ul').width() - currentScrollLeft < 700) {
+        if($siblings_carousel.children('ul').width() - currentScrollLeft < 800) {
 
             console.log('near end');
         }
