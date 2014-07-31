@@ -5924,27 +5924,32 @@ sub { top: 0.4em; }
 			padding-left: 20px;
 			margin-bottom: 16px;
 			font-size: 14px;
+			cursor: pointer;
 			
-			a {
-				text-decoration: none;
-				color: rgba(0,0,0,.8);
+			// a {
+			// 	text-decoration: none;
+			// 	color: rgba(0,0,0,.8);
 				
-			}
+			// }
 			
-			p {
+			// p {
 				
-				display: none;
-				color: rgba(0,0,0,.6);
-				font-size: 14px;
-				padding: 10px 10px 10px 20px;
-				line-height: 18px;
+			// 	display: none;
+			// 	color: rgba(0,0,0,.6);
+			// 	font-size: 14px;
+			// 	padding: 10px 10px 10px 20px;
+			// 	line-height: 18px;
 				
-				&.active {
-					display: block;
+			// 	&.active {
+			// 		display: block;
 					
-				}
-			}
+			// 	}
+			// }
+
+
 		}
+
+
 	}
 	
 	
