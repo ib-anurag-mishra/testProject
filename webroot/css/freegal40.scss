@@ -5980,7 +5980,7 @@ sub { top: 0.4em; }
 		margin-bottom: 0;
 		color: rgba(0,0,0,.6);
 		font-size: 14px;
-		padding: 0 10px 0 20px;
+		padding: 10px 10px 10px 20px;
 		line-height: 18px;
 		// -webkit-transition: max-height 2s;
 
@@ -5988,9 +5988,8 @@ sub { top: 0.4em; }
 		&.active {
 
 			// display: block;
-			-webkit-transition: padding 1s, max-height 1s, margin-bottom 1s;
+			-webkit-transition: max-height 1s, margin-bottom 1s;
 			max-height: 1000px;
-			padding: 10px 10px 10px 20px;
 			margin-bottom: 16px;
 		}
 
