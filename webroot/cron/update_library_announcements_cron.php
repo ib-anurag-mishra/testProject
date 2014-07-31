@@ -11,7 +11,7 @@
 
 $freegalConn = mysql_connect("192.168.100.114","freegal_prod","}e47^B1EO9hD");
 mysql_select_db("fmovies", $freegalConn);
-$query = "SELECT customer_id FROM libraries where library_status = 'active' and customer_id is not null";
+$query = "SELECT customer_id FROM libraries where library_status = 'active' and customer_id is not null and customer_id != 0 and customer_id <> ''";
 $result = mysql_query($query) or die('Query failed: ' . mysql_error());
 while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
     $freegalIds[] = $line['customer_id'];
