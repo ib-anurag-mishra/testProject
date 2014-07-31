@@ -5946,22 +5946,35 @@ sub { top: 0.4em; }
 			// 	}
 			// }
 			
-			&.fq {
+			// &.fq {
 
-				cursor: pointer;
-			}
+			// 	cursor: pointer;
+			// }
 
-			&.fa {
+			// &.fa {
 
-				display: none;
+			// 	display: none;
 
 
-			}
+			// }
 
 		}
 
 
 	}
+
+	.fq {
+
+		cursor: pointer;
+	}
+
+	.fa {
+
+		display: none;
+
+
+	}
+
 	
 	
 	.underline {
