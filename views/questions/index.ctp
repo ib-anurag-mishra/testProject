@@ -43,13 +43,12 @@
                                        }
                                }
                                ?>			
-                <li>
-                    <a href="javascript:void(0);" class="no-ajaxy">
-                        <?php echo strip_tags($questionquText); ?>
-                    </a>
-                    <?php /*<p style="display: none;" ></p>*/?>
-                    <?php echo str_replace(array("<li>", "</li>", "<ul>", "</ul>"), array("<p style='display: none;'>", "</p>", "", ""), $questionansText); ?>
-                </li>
+
+                             
+
+
+                <li class="fq"><?php echo strip_tags($questionquText); ?></li>
+                <li class="fa"><?php echo str_replace(array("<li>", "</li>", "<ul>", "</ul>"), array("<p style='display: none;'>", "</p>", "", ""), $questionansText); ?></li>                
 
                 <?php $Title = $question['Section']['title']; ?>
             <?php endforeach; ?>
