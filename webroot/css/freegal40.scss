@@ -5979,6 +5979,7 @@ sub { top: 0.4em; }
 
 		// display: none;
 		height: 0;
+		overflow: hidden;
 	
 		&.active {
 
