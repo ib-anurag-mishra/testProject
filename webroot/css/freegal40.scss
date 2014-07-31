@@ -5919,27 +5919,70 @@ sub { top: 0.4em; }
 			margin-bottom: 16px;
 			font-size: 14px;
 			
-			a {
-				text-decoration: none;
-				color: rgba(0,0,0,.8);
-				
-			}
 			
-			p {
+			// a {
+			// 	text-decoration: none;
+			// 	color: rgba(0,0,0,.8);
 				
-				display: none;
-				color: rgba(0,0,0,.6);
-				font-size: 14px;
-				padding: 10px 10px 10px 20px;
-				line-height: 18px;
+			// }
+			
+			// p {
 				
-				&.active {
-					display: block;
+			// 	display: none;
+			// 	color: rgba(0,0,0,.6);
+			// 	font-size: 14px;
+			// 	padding: 10px 10px 10px 20px;
+			// 	line-height: 18px;
+				
+			// 	&.active {
+			// 		display: block;
 					
-				}
-			}
+			// 	}
+			// }
+			
+			// &.fq {
+
+			// 	cursor: pointer;
+			// }
+
+			// &.fa {
+
+			// 	display: none;
+
+
+			// }
+
 		}
+
+
 	}
+
+	.fq {
+		padding-left: 20px;
+		margin-bottom: 16px;
+		font-size: 14px;
+		cursor: pointer;
+	}
+
+
+
+	.fa {
+
+		display: none;
+		margin-bottom: 16px;
+		color: rgba(0,0,0,.6);
+		font-size: 14px;
+		padding: 10px 10px 10px 20px;
+		line-height: 18px;
+
+
+
+		&.active {
+
+		}
+
+	}
+
 	
 	
 	.underline {
