@@ -5975,14 +5975,14 @@ sub { top: 0.4em; }
 	.fa {
 
 		// display: none;
-		height: 0;
+		max-height: 0;
 		overflow: hidden;
 		margin-bottom: 0;
 		color: rgba(0,0,0,.6);
 		font-size: 14px;
 		padding: 0;
 		line-height: 18px;
-		padding: 0;
+
 
 		&.active {
 
