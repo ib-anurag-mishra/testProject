@@ -1326,7 +1326,11 @@ $(document).ready(function() {
 
         var currentScrollLeft = $siblings_carousel.scrollLeft();
 
-        console.log(currentScrollLeft);
+        console.log($siblings_carousel.children('ul').width);
+        if($siblings_carousel.children('ul').width - currentScrollLeft < 700) {
+
+            console.log('near end');
+        }
         currentScrollLeft = currentScrollLeft + 654;
         $siblings_carousel.animate({scrollLeft: currentScrollLeft});
 
