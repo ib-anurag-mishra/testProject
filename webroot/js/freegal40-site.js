@@ -1326,6 +1326,7 @@ $(document).ready(function() {
 
         var currentScrollLeft = $siblings_carousel.scrollLeft();
 
+        console.log($siblings_carousel.children('ul').width() + ' - ' + currentScrollLeft + ' = ' + ($siblings_carousel.children('ul').width() - currentScrollLeft))
 
         if($siblings_carousel.children('ul').width() - currentScrollLeft < 700) {
 
