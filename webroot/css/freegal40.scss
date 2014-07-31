@@ -5977,11 +5977,13 @@ sub { top: 0.4em; }
 
 	.fa {
 
-		display: none;
+		// display: none;
+		height: 0;
 	
 		&.active {
 
-			display: block;
+			// display: block;
+			min-height: 100px;
 		}
 
 	}
