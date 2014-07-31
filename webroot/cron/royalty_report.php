@@ -61,9 +61,6 @@ foreach ($arr_dates AS $key => $value)
                     array('RECORD_TYPE', 'DETAIL_ROWS', 'TOTAL_SOLD', 'TOTAL_FREE', 'TOTAL_PROMO', 'TOTAL_SUB', 'TOTAL_UPGRADE', 'TOTAL_REFUND')
                 ),
             );
-
-
-
             $query = "SELECT clp.library_id, clp.library_contract_start_date, clp.library_contract_end_date, clp.library_unlimited, sum(lp.purchased_tracks) as total_tracks_purchase ,  "
                     . "sum(lp.purchased_amount) as total_amount, l.library_territory, lp.library_id, clp.id as contract_id, clp.id_library_purchases, l.library_name, "
                     . "l.library_user_download_limit, l.library_download_type, l.library_download_limit, l.library_current_downloads, l.library_total_downloads, "
@@ -189,7 +186,6 @@ foreach ($arr_dates AS $key => $value)
                         mysql_query($insert_query, $freegal);
                         
                         write_file($royalty_content, $file_name, $reportsFolder . "/" , $freegal);
-                        exit();
                     }
                     else
                     {

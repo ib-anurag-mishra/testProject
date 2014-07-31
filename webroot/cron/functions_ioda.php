@@ -235,10 +235,10 @@ function sendReportFilesftp($src, $dst, $logFileWrite, $typeReport)
   Description : Function for sending Email for Reports
  */
 
-function sendReportEmail($typereport, $dst , $message)
+function sendReportEmail($typereport, $dst, $message)
 {
     $subject = $typereport . REPORT_SUBJECT;
-    $success = mail(REPORT_TO, $subject, $dst . " " . $message.REPORT_BODY, REPORT_HEADERS);
+    $success = mail(REPORT_TO, $subject, $dst . " " . $message . REPORT_BODY, REPORT_HEADERS);
     return $success;
 }
 
@@ -375,7 +375,7 @@ function write_file($content, $file_name, $folder, $db)
         $cdn_status = sendFile($file, $file_name);
         if ($cdn_status)
         {
-            $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_cdn_uploaded`='1' WHERE `report_name`='$file_name' ";
+            $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_cdn_uploaded`='1' , modified=now() WHERE `report_name`='$file_name' ";
             mysql_query($update_query, $db);
             fwrite($logFileWrite, "$file_name uploaded on CDN \n");
             $status_message .="$file_name uploaded on CDN \n";
@@ -389,7 +389,7 @@ function write_file($content, $file_name, $folder, $db)
         $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
         if ($ioda_status)
         {
-            $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_send_ioda`='1' WHERE `report_name`='$file_name' ";
+            $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_send_ioda`='1' , modified=now() WHERE `report_name`='$file_name' ";
             mysql_query($update_query, $db);
             fwrite($logFileWrite, "$file_name uploaded on IODA SERVER \n");
             $status_message .="$file_name uploaded on IODA SERVER \n";
@@ -400,7 +400,15 @@ function write_file($content, $file_name, $folder, $db)
             $status_message .="$file_name not uploaded on IODA SERVER \n";
         }
 
-        //sendReportEmail("monthly", $file_name);
+        if ($cdn_status && $ioda_status)
+        {
+            echo exec(" rm  " . $file);
+        }
+        else
+        {
+            fwrite($logFileWrite, "$file_name not uploaded on SERVER. Not deleted. \n");
+        }
+        sendReportEmail("monthly", $file_name);
     }
     else
     {
@@ -408,7 +416,6 @@ function write_file($content, $file_name, $folder, $db)
     }
     fclose($logFileWrite);
 }
-
 
 function sendReportFileIODA($src, $dst, $logFileWrite, $typeReport)
 {
