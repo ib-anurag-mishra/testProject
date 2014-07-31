@@ -1552,8 +1552,9 @@ $(document).ready(function() {
 
 
     /* FAQ page */
-    var $faq_container_question = $('.faq-container').find('.fq');
-    var $faq_container_answer = $('.faq-container').find('.fa');
+    var $faq_container = $('.faq-container');
+    var $faq_container_question = $faq_container.find('.fq');
+    var $faq_container_answer = $faq_container.find('.fa');
 
     $faq_container_question.on('click',function(){
         $this = $(this);
@@ -1562,8 +1563,8 @@ $(document).ready(function() {
             $this.next('.fa').slideDown(500).addClass('active');
 
         } else {
-
-            $('.fa').slideUp(500).removeClass('active');
+            $faq_container.find('fa.active').slideUp(500).removeClass('active');
+            // $('.fa').slideUp(500).removeClass('active');
             $this.next('.fa').slideDown(500).addClass('active');
         }
 
