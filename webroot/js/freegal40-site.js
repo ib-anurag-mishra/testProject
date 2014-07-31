@@ -1304,9 +1304,29 @@ $(document).ready(function() {
 
     var $right_scroll_button_ajax = $('.right-scroll-button-ajax');
     $right_scroll_button_ajax.on('click', function() {
+
+
+        /*
+        $.ajax({
+            type: "post",
+            data: {},
+            url: webroot + '',
+            success: function(response) {
+               
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+               
+
+            }
+        });
+        */
+
         var $siblings_carousel = $(this).siblings('.carousel-ajax');
 
         var currentScrollLeft = $siblings_carousel.scrollLeft();
+
+        console.log(currentScrollLeft);
         currentScrollLeft = currentScrollLeft + 654;
         $siblings_carousel.animate({scrollLeft: currentScrollLeft});
 
