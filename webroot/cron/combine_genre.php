@@ -20,7 +20,7 @@ require "dbconnect.php";
 $lf = new logfile();
 
 // Read values from combine_genres table and store in associative array.
-$syngenre_query    = "SELECT id, genre, expected_genre from combine_genres where update_genre=0";
+$syngenre_query    = "SELECT id, genre, expected_genre from combine_genres";
 $rs_syngenre       = mysql_query($syngenre_query) or die('Query failed: ' . mysql_error());
 $total_syngenres   = mysql_num_rows($rs_syngenre);
 
@@ -47,13 +47,13 @@ for($count=0;$count<$total_syngenres; $count++)
     
     $lf->write("\nGenre updated: From ". $current_genre_value." to ".$updated_genre_value." Total Affected Rows: ".$total_affected_rows);
     
-    if($total_affected_rows>0)
+    /*if($total_affected_rows>0)
     {
         $cGenreUpdate_query       =  "Update combine_genres set update_genre='1' where id='".$id."'";
         $rs_ugenre                =  mysql_query($cGenreUpdate_query) or die('Query failed: ' . mysql_error());
         
         $lf->write("\nupdate_genre in combine_genres set to 1 for id: ". $id);
-    }
+    }*/
 }
 
 
