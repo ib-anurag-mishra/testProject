@@ -143,7 +143,7 @@ foreach ($arr_dates AS $key => $value)
                 $tmp_cont2 = $song_download_query . '//' . mysql_num_rows($result) . "////\r\n";
                 fwrite($fh, $tmp_cont2);
 
-                echo $song_download_query."\n";
+                echo $song_download_query . "\n";
                 $song_download_result = mysql_query($song_download_query, $freegal);
 
                 $error = mysql_error($freegal);
@@ -162,34 +162,10 @@ foreach ($arr_dates AS $key => $value)
                             $total_records++;
                             $total_sold += $unit_count;
                         }
-
-                        $round_total_sales = round($total_sales, 2);
-                        if (false === strpos($round_total_sales, '.'))
-                        {
-                            $round_total_sales .= '.00';
-                        }
-                        else
-                        {
-                            $strlen = strlen(end(explode('.', $round_total_sales)));
-                            if (1 == $strlen)
-                            {
-                                $round_total_sales .= '0';
-                            }
-                        }
-
-                        $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
-                        $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
-
-                        $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1 , $freegal);
-                       
-                        $insert_query ="INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
-                        mysql_query($insert_query, $freegal);
-                        
-                        write_file($royalty_content, $file_name, $reportsFolder . "/" , $freegal);
                     }
                     else
                     {
-                        echo "No song downloaded for the Library ID : " . $q['library_id']."\n";
+                        echo "No song downloaded for the Library ID : " . $q['library_id'] . "\n";
                         continue;
                     }
                 }
@@ -198,6 +174,30 @@ foreach ($arr_dates AS $key => $value)
                     echo "Error at Line Number : " . mysql_error($freegal) . "\n";
                 }
             }
+
+            $round_total_sales = round($total_sales, 2);
+            if (false === strpos($round_total_sales, '.'))
+            {
+                $round_total_sales .= '.00';
+            }
+            else
+            {
+                $strlen = strlen(end(explode('.', $round_total_sales)));
+                if (1 == $strlen)
+                {
+                    $round_total_sales .= '0';
+                }
+            }
+
+            $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
+            $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
+
+            $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
+
+            $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
+            mysql_query($insert_query, $freegal);
+
+            write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
         }
     }
     else
