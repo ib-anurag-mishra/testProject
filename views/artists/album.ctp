@@ -233,8 +233,8 @@
 				?>
 			</ul>
 		</div>
-		<button class="left-scroll-button"></button>
-		<button class="right-scroll-button"></button>
+		<button class="left-scroll-button-ajax"></button>
+		<button class="right-scroll-button-ajax"></button>
 		<?php
 		/*
 		<div class="paging">
