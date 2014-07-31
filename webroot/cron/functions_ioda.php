@@ -386,7 +386,7 @@ function write_file($content, $file_name, $folder, $db)
             $status_message .="$file_name not uploaded on CDN \n";
         }
 
-        $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
+        $ioda_status = 1;//sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
         if ($ioda_status)
         {
             $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_send_ioda`='1' , modified=now() WHERE `report_name`='$file_name' ";
