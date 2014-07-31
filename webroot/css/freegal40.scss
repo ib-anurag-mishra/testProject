@@ -5963,17 +5963,14 @@ sub { top: 0.4em; }
 
 	}
 
-	.fq, .fa {
+	.fq {
 		padding-left: 20px;
 		margin-bottom: 16px;
 		font-size: 14px;
-
-	}
-
-	.fq {
-
 		cursor: pointer;
 	}
+
+
 
 	.fa {
 
@@ -5981,11 +5978,17 @@ sub { top: 0.4em; }
 		height: 0;
 		overflow: hidden;
 		margin-bottom: 0;
-	
+		color: rgba(0,0,0,.6);
+		font-size: 14px;
+		padding: 0;
+		line-height: 18px;
+		padding: 0;
+
 		&.active {
 
 			// display: block;
-			min-height: 100px;
+			min-height: 10px;
+			padding: 10px 10px 10px 20px;
 			margin-bottom: 16px;
 		}
 
