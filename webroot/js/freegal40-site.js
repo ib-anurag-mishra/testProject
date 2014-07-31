@@ -1558,7 +1558,7 @@ $(document).ready(function() {
     $faq_container_question.on('click',function(){
         $this = $(this);
         $faq_container_answer.slideUp(500).removeClass('active');
-        $this.next('.fa').slideDownss(500)addClass('active');
+        $this.next('.fa').slideDown(500).addClass('active');
 
     });
 
