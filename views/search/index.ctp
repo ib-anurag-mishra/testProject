@@ -368,7 +368,7 @@
 					$i++;
 				endforeach;
 			?>
-				<section style="position: relative; width: 866px; right: 21px;" class="search-results-songs-page">
+				<section style="position:relative;" class="search-results-songs-page">
 					<div class="pagination-container">
 					<?php
 						$searchString = "?q=" . urlencode( $keyword ) . "&type=" . $type;
