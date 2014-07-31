@@ -138,7 +138,7 @@
                         ?>
                                 	<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a> 
                           <?php else: ?>
-                                    <a class="top-video-login-button" href='/users/redirection_manager'> <?= __("Login"); ?></a>
+                                    <?php /*<a class="top-video-login-button" href='/users/redirection_manager'> <?= __("Login"); ?></a>*/ ?>
                           <?php endif; ?>
 							<div class="wishlist-popover">
                           <?php

@@ -124,7 +124,7 @@
 			?>
 	<h3>Albums</h3>
 	<div class="album-shadow-container">
-		<div class="album-scrollable horiz-scroll">
+		<div class="album-scrollable horiz-scroll carousel">
 			<ul style="width: 4500px">
 				<?php
 				foreach ($albumData as $album_key => $album):
@@ -147,15 +147,31 @@
 						<?php
 						if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
 						{
+							?>
+							<input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album" data-provider="<?= $album["Album"]["provider_type"] ?>" />
+							<?
 							echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
 							?>
+							<a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+							<ul>
+								<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+
+							</ul>
+							<?php
+							/*
 						<a class="add-to-playlist-button no-ajaxy"
 							href="javascript:void(0)"></a>
+							*/
+							?>
+							<?php
+							/*
 						<div class="wishlist-popover">
 							<input type="hidden" id="<?= $album['Album']['ProdID'] ?>"
 								value="album" /> <a class="add-to-playlist"
 								href="javascript:void(0)">Add To Playlist</a>
 						</div>
+						*/
+						?>
 						<?php
 						}
 						?>
@@ -217,7 +233,10 @@
 				?>
 			</ul>
 		</div>
-
+		<button class="left-scroll-button"></button>
+		<button class="right-scroll-button"></button>
+		<?php
+		/*
 		<div class="paging">
 			<?php
 			echo $paginator->prev('<< ' . __('Previous ', true), null, null, array('class' => 'disabled'));
@@ -225,6 +244,8 @@
 			echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
 			?>
 		</div>
+		*/
+		?>
 	</div>
 	<?php
 		}
@@ -239,7 +260,7 @@
 		?>
 	<h3>Videos</h3>
 	<div class="videos-shadow-container">
-		<div class="videos-scrollable horiz-scroll">
+		<div class="videos-scrollable horiz-scroll carousel">
 			<ul style="width: 15000px;">
 				<?php
 				foreach ($artistVideoList as $key => $value)
@@ -428,6 +449,8 @@
 				<?php } ?>
 			</ul>
 		</div>
+		<button class="left-scroll-button"></button>
+		<button class="right-scroll-button"></button>
 	</div>
 	<?php
 	}

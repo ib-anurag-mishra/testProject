@@ -296,7 +296,9 @@ $ieVersion = ieversion();
                 }
                 else
                 {
+                    echo    '<div style="height: 480px; text-align:center; padding-top: 200px; font-size:14px; font-weight: bold;">';
                     echo __("You have no songs in your wishlist.");
+                    echo '</div>';
                 }
                 ?>
             </div>
@@ -395,9 +397,9 @@ $ieVersion = ieversion();
                 }
                 else
                 {
-                    echo '<tr><td valign="top"><p>';
+                    echo '<div style="height: 480px; text-align:center; padding-top: 200px; font-size:14px; font-weight: bold;">';
                     ?><?php echo __("You have no videos in your wishlist."); ?><?php
-                    echo '</p></td></tr>';
+                    echo '</div>';
                 }
                 ?>
             </div>
