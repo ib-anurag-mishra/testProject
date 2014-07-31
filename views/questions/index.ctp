@@ -16,7 +16,7 @@
         <h2><?php __('FAQs'); ?></h2>
     </header>
     <div class="faq-container">
-        <ul>
+        
             <?php
             $Title = "";
             foreach ($questions as $question):
@@ -53,6 +53,6 @@
 
                 <?php $Title = $question['Section']['title']; ?>
             <?php endforeach; ?>
-        </ul>
+        
     </div>
 </section>
