@@ -1570,26 +1570,7 @@ $(document).ready(function() {
 
     });
 
-    /*
-    var $faq_container_anchor = $('.faq-container').find('li').find('a');
-    var $faq_container_paragraph = $('.faq-container').find('p');
 
-
-    $faq_container_anchor.on('click', function(e) {
-        e.preventDefault();
-        var $paragraph_siblings = $(this).siblings('p');
-
-
-
-        if ($paragraph_siblings.hasClass('active')) {
-            $paragraph_siblings.slideUp(500).removeClass('active');
-        } else {
-            $faq_container_paragraph.slideUp(500).removeClass('active');
-            $paragraph_siblings.slideDown(500).addClass('active');
-        }        
-
-    });
-    */
 
 
 
