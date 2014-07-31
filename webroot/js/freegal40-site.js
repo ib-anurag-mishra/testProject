@@ -1560,12 +1560,12 @@ $(document).ready(function() {
         $this = $(this);
         if ($this.next('.fa').hasClass('active')) {
 
-            $this.next('.fa').slideDown(500).addClass('active');
+            $this.next('.fa').addClass('active').slideDown(500)
 
         } else {
-            $faq_container.find('.fa.active').slideUp(500).removeClass('active');
+            $('.fa').removeClass('active').slideUp(500).;
             // $('.fa').slideUp(500).removeClass('active');
-            $this.next('.fa').slideDown(500).addClass('active');
+            $this.next('.fa').addClass('active').slideDown(500);
         }
 
 
