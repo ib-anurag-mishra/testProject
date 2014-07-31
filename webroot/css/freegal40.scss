@@ -5980,11 +5980,13 @@ sub { top: 0.4em; }
 		// display: none;
 		height: 0;
 		overflow: hidden;
+		margin-bottom: 0;
 	
 		&.active {
 
 			// display: block;
 			min-height: 100px;
+			margin-bottom: 16px;
 		}
 
 	}
