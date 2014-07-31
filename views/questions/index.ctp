@@ -49,7 +49,7 @@
 
                 <li class="fq"><?php echo strip_tags($questionquText); ?></li>
                 
-                <li class="fa"><?php echo $questionansText; ?></li>                
+                <li class="fa"><?php echo strip_tags($questionansText); ?></li>                
 
                 <?php $Title = $question['Section']['title']; ?>
             <?php endforeach; ?>
