@@ -35,21 +35,29 @@
                                <?
                                        if($Title=='')   
                                        {
-                                           echo '<h3>'.$questiontitleText.'</h3><ul>';
+                                           // echo '<h3>'.$questiontitleText.'</h3><ul>';
+                                            echo '<h3>'.$questiontitleText.'</h3>';
                                        }
                                        else
                                        {
-                                           echo '</ul><h3>'.$questiontitleText.'</h3><ul>';
+                                           // echo '</ul><h3>'.$questiontitleText.'</h3><ul>';
+                                            echo '<h3>'.$questiontitleText.'</h3>';
                                        }
                                }
                                ?>			
 
                              
 
-
+                <?php/*
                 <li class="fq"><?php echo strip_tags($questionquText); ?></li>
                 
-                <li class="fa"><?php echo strip_tags($questionansText); ?></li>                
+                <li class="fa"><?php echo strip_tags($questionansText); ?></li>
+                */
+                ?>
+
+                <div class="fq"><?php echo strip_tags($questionquText); ?></div>
+                
+                <div class="fa"><?php echo strip_tags($questionansText); ?></div>                                
 
                 <?php $Title = $question['Section']['title']; ?>
             <?php endforeach; ?>
