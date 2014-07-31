@@ -124,7 +124,7 @@
 			?>
 	<h3>Albums</h3>
 	<div class="album-shadow-container">
-		<div class="album-scrollable horiz-scroll carousel">
+		<div class="album-scrollable horiz-scroll carousel-ajax">
 			<ul style="width: 4500px">
 				<?php
 				foreach ($albumData as $album_key => $album):
