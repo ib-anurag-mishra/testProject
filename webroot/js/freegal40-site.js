@@ -1560,11 +1560,11 @@ $(document).ready(function() {
         $this = $(this);
         if ($this.next('.fa').hasClass('active')) {
 
-            $this.next('.fa').removeClass('active').slideUp(500);
+            $this.next('.fa').removeClass('active');
 
         } else {
-            $('.fa').removeClass('active').slideUp(500);
-            $this.next('.fa').addClass('active').slideDown(500);
+            $('.fa').removeClass('active');
+            $this.next('.fa').addClass('active');
         }
 
 
