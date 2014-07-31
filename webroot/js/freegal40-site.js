@@ -1552,6 +1552,17 @@ $(document).ready(function() {
 
 
     /* FAQ page */
+    var $faq_container_question = $('.faq-container').find('li').hasClass('fq');
+    var $faq_container_answer = $('.faq-container').find('li').hasClass('fa');
+
+    $faq_container_question.on('click',function(){
+        $this = $(this);
+        $faq_container_answer.slideUp(500).removeClass('active');
+        $this.next('.fa').slideDownss(500)addClass('active');
+
+    });
+
+    /*
     var $faq_container_anchor = $('.faq-container').find('li').find('a');
     var $faq_container_paragraph = $('.faq-container').find('p');
 
@@ -1570,6 +1581,7 @@ $(document).ready(function() {
         }        
 
     });
+    */
 
 
 
