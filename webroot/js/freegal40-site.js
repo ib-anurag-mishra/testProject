@@ -1552,24 +1552,25 @@ $(document).ready(function() {
 
 
     /* FAQ page */
-    var $faq_container_anchor = $('.faq-container').find('li').find('a');
-    var $faq_container_paragraph = $('.faq-container').find('p');
+    var $faq_container = $('.faq-container');
+    var $faq_container_question = $faq_container.find('.fq');
+    var $faq_container_answer = $faq_container.find('.fa');
 
+    $faq_container_question.on('click',function(){
+        $this = $(this);
+        if ($this.next('.fa').hasClass('active')) {
 
-    $faq_container_anchor.on('click', function(e) {
-        e.preventDefault();
-        var $paragraph_siblings = $(this).siblings('p');
+            $this.next('.fa').removeClass('active').slideUp(500);
 
-
-
-        if ($paragraph_siblings.hasClass('active')) {
-            $paragraph_siblings.slideUp(500).removeClass('active');
         } else {
-            $faq_container_paragraph.slideUp(500).removeClass('active');
-            $paragraph_siblings.slideDown(500).addClass('active');
-        }        
+            $('.fa').removeClass('active');
+            $this.next('.fa').addClass('active').slideDown(500);
+        }
+
 
     });
+
+
 
 
 
