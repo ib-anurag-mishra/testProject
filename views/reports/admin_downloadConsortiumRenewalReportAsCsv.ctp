@@ -87,7 +87,7 @@ elseif($this->data['Report']['reports_daterange'] == 'week') {
 		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
 		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 	}	  
-    $dateRange = "_for_week_of_".$startDate."_to_".$endDate;
+    $dateRange = "_for_week_of_".$this->data['Report']['date'];
 }
 elseif($this->data['Report']['reports_daterange'] == 'month') {
     $dateRange = "_for_month_of_".date("F", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
