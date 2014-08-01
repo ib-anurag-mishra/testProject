@@ -14,7 +14,7 @@
 	?>
 
 	<section class="<?= $search_category;?>">
-		<div class="faq-link">Need Help? Visit our <?=$this->Html->link( 'FAQ Section.','/questions') ?></div>
+		<div class="faq-link"> <?php __('Need help? Visit our'); echo " ".$this->Html->link( __('FAQ Section.',true),'/questions'); ?></div>
 		<div class="search-results-heading">Results for your search <?= $keyword; ?></div>
 		<div class="refine-text">Not what you're looking for? Refine your search below.</div>
 		<div class="filter-container clearfix">

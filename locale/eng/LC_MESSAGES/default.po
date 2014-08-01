@@ -559,3 +559,6 @@ msgstr "Videos"
 
 msgid "Artists"
 msgstr "Artists"
+
+msgid "FAQ Section."
+msgstr "FAQ Section."

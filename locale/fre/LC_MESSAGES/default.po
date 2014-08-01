@@ -411,3 +411,6 @@ msgstr "vidéos"
 
 msgid "Artists"
 msgstr "artistes"
+
+msgid "FAQ Section."
+msgstr "Foire aux questions."

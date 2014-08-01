@@ -406,3 +406,6 @@ msgstr "video"
 
 msgid "Artists"
 msgstr "artisti"
+
+msgid "FAQ Section."
+msgstr "Domande frequenti."
