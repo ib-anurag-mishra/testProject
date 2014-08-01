@@ -16,8 +16,7 @@
 @import "compass/css3/inline-block";
 
 
-
-$default-transition-duration: 400ms;
+$default-transition-duration: 500ms;
 $body-bg-color: #ffffff;
 $base-font-color:#000;
 $base-font: Helvetica, Arial, sans-serif;
@@ -30,7 +29,6 @@ $nav-link-color:#fff;
 	   -moz-box-sizing: border-box; 
 	   		box-sizing: border-box;
 }
-
 
 html {
 
@@ -49,7 +47,6 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	background: url(../img/site-bkg.jpg) repeat;
 	color: #000;
-
 
 }
 
@@ -483,7 +480,6 @@ button::-moz-focus-inner {
 
 
 
-
 %search-results-list {
 
 	.search-results-list {
@@ -492,7 +488,7 @@ button::-moz-focus-inner {
 		margin-top: 25px;
 		font-size: 12px;
 		font-family: Helvetica,Arial,sans-serif;
-
+		margin-bottom: 40px;
 		&:before {
 
 			content: "";
@@ -1804,30 +1800,33 @@ sub { top: 0.4em; }
 	}
         
 	.movie-announcements {
-            background: none repeat scroll 0 0 #eeeeee;
-            font-size: 13px;
-            padding: 10px;
-            font-family: Arial, Helvetica, sans-serif;
-            strong {
+        background: none repeat scroll 0 0 #eeeeee;
+        font-size: 13px;
+        padding: 10px;
+        font-family: Arial, Helvetica, sans-serif;
 
-                    font-weight: bold;
-            }
 
-            .announcments-movie-titles {
+        strong {
 
-            		color: #008fbd;
+                font-weight: bold;
+        }
 
-                    &:hover {
+		.announcements-movie-titles {
 
-                            text-decoration: underline;
-                    }
-            }
+			&:hover {
 
-            .announcments-movie-cta {
+				text-decoration: underline;
+			}
+		}
 
-                    font-weight: bold;
-                    color: #008fbd;
-            }
+		.announcments-movie-cta {
+
+			font-weight: bold;
+			color: #008fbd;
+		}
+
+
+               
 	}        
 }
 
@@ -5920,27 +5919,69 @@ sub { top: 0.4em; }
 			margin-bottom: 16px;
 			font-size: 14px;
 			
-			a {
-				text-decoration: none;
-				color: rgba(0,0,0,.8);
-				
-			}
 			
-			p {
+			// a {
+			// 	text-decoration: none;
+			// 	color: rgba(0,0,0,.8);
 				
-				display: none;
-				color: rgba(0,0,0,.6);
-				font-size: 14px;
-				padding: 10px 10px 10px 20px;
-				line-height: 18px;
+			// }
+			
+			// p {
 				
-				&.active {
-					display: block;
+			// 	display: none;
+			// 	color: rgba(0,0,0,.6);
+			// 	font-size: 14px;
+			// 	padding: 10px 10px 10px 20px;
+			// 	line-height: 18px;
+				
+			// 	&.active {
+			// 		display: block;
 					
-				}
-			}
+			// 	}
+			// }
+			
+			// &.fq {
+
+			// 	cursor: pointer;
+			// }
+
+			// &.fa {
+
+			// 	display: none;
+
+
+			// }
+
 		}
+
+
 	}
+
+	.fq {
+		padding-left: 20px;
+		margin-bottom: 16px;
+		font-size: 14px;
+		cursor: pointer;
+	}
+
+
+
+	.fa {
+
+		display: none;
+		margin-bottom: 16px;
+		color: rgba(0,0,0,.6);
+		font-size: 14px;
+		padding: 10px 10px 10px 20px;
+		line-height: 18px;
+
+
+		&.active {
+
+		}
+
+	}
+
 	
 	
 	.underline {
