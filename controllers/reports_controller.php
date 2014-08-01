@@ -11,7 +11,7 @@ Class ReportsController extends AppController {
     var $name = 'Reports';
     var $layout = 'admin';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Session', 'Library', 'Csv');
-    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler');
+    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'common');
     var $uses = array('Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron', 'Consortium', 'Territory', 'Downloadpatron', 'Downloadgenre', 'Videodownload', 'DownloadVideoPatron', 'DownloadVideoGenre','StreamingHistory');
 
     function beforeFilter() {
@@ -1949,6 +1949,15 @@ Class ReportsController extends AppController {
                     $currentPatronBothDownload = array();
                 }
 
+                foreach($genreDayStremed as $key=>$value)
+                {
+                    $genreValue =  rtim(ltrim($genreDayStremed['songs']['Genre'], "\""),"\"");
+                    $genreValue =  $this->common->getGenreSynonyms($genreValue);
+                    $genreDayStremed['songs']['Genre'] = $genreValue;
+                }
+                
+                $combin_genre_arr   =   $this->common->getGenreSynonyms();
+                
                 $this->set('streamingHours', $streamingHours);
                 $this->set('patronStreamedInfo', $patronStreaminInfo);
                 $this->set('dayStreamingInfo', $arr_day_streaming_report);
