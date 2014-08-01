@@ -1563,7 +1563,7 @@ $(document).ready(function() {
             $this.next('.fa').removeClass('active').slideUp(500);
 
         } else {
-            $('.fa').removeClass('active');
+            $('.fa').removeClass('active').slideUp(500);
             $this.next('.fa').addClass('active').slideDown(500);
         }
 
