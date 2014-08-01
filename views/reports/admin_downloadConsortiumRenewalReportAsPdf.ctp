@@ -15,8 +15,8 @@
         $displaylibraryName = "All Libraries";
     }
     else {
-        $savelibraryName = $consortium_id."_".$downloads[0]['Download']['library_id'];
-        $displaylibraryName = $consortium_id." ".$downloads[0]['Download']['library_id'];
+        $savelibraryName = $consortium_name."_".$downloads[0]['Download']['library_id'];
+        $displaylibraryName = $consortium_name." ".$downloads[0]['Download']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
     $date_arr_from = explode("/", $this->data['Report']['date_from']);
