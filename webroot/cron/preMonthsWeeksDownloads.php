@@ -271,7 +271,8 @@ if (file_exists($file_path . $file_name))  {
 
 // Create the file
 $report = fopen($file_path . $file_name, 'w') or die("Can't open file");
-$header = 'customer_id,library_name,cte,' . $allMonths[0] . ',' . $allMonths[1] . ',' . $allMonths[2] . ',' . $allMonths[3] . ',' . $allWeeks[0] . ',' . $allWeeks[1] . ',' . $allWeeks[2] . ',' . $allWeeks[3] . "\n";
+$header = 'customer_id,library_name,cte,four_months_ago,three_months_ago,two_months_ago,last_month,four_weeks_ago,three_weeks_ago,two_weeks_ago,last_week' . "\n";
+//$header = 'customer_id,library_name,cte,' . $allMonths[0] . ',' . $allMonths[1] . ',' . $allMonths[2] . ',' . $allMonths[3] . ',' . $allWeeks[0] . ',' . $allWeeks[1] . ',' . $allWeeks[2] . ',' . $allWeeks[3] . "\n";
 fwrite($report, $header);
 
 foreach ($final as $key => $value) {
