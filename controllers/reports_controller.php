@@ -1951,7 +1951,7 @@ Class ReportsController extends AppController {
 
                 foreach($genreDayStremed as $key=>$value)
                 {
-                    $genreValue =  rtim(ltrim($genreDayStremed['songs']['Genre'], "\""),"\"");
+                    $genreValue =  rtrim(ltrim($genreDayStremed['songs']['Genre'], "\""),"\"");
                     $genreValue =  $this->common->getGenreSynonyms($genreValue);
                     $genreDayStremed['songs']['Genre'] = $genreValue;
                 }
