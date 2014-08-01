@@ -1681,6 +1681,7 @@ Class ReportsController extends AppController {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date_from']."@".$this->data['Report']['date_to']);
                 }
                 $this->set('downloads', $downloads);
+                $this->set('consortium_name', $consortium_id);
                 $this->set('patronDownloads', $patronDownloads);
                 $this->set('genreDownloads', $genreDownloads);
                 if($this->data['Report']['downloadType'] == 'pdf') {
