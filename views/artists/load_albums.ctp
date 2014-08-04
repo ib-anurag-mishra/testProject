@@ -1,5 +1,4 @@
 <script type="text/javascript" src="/js/ajaxify-html5.js"></script>
-<script> 
 <?php
     foreach ($albumData as $album_key => $album):
     //hide album if library block the explicit content
