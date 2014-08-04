@@ -125,7 +125,7 @@
 	<h3>Albums</h3>
 	<div class="album-shadow-container">
 		<div class="album-scrollable horiz-scroll carousel-ajax">
-			<ul style="width: 4500px">
+			<ul  class="artist-albums" style="width: 4500px">
 				<?php
 				foreach ($albumData as $album_key => $album):
 				//hide album if library block the explicit content
@@ -250,9 +250,14 @@
                      {:count} total, starting on record {:start}, ending on {:end}'
                 );
                 
-		?>
-                
-                <input type="hidden" class="artist_details" value="album" />
+                $nextPage = $this->Paginator->params['paging']['Album']['nextPage'];
+                $currentPage = $this->Paginator->params['paging']['Album']['page'];
+                $artistText = base64_encode($artisttext);
+                if($nextPage == 1) {
+                    ?>
+                   <input type="hidden" class="artist_text" value="<?php echo $artistText; ?>" />
+                   <input type="hidden" class="next_page" value="<?php echo $currentPage+1; ?>" />
+          <?php } ?>
 	</div>
 	<?php
 		}

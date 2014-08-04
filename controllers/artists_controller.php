@@ -2088,7 +2088,7 @@ Class ArtistsController extends AppController {
                         'chk' => 2
             );
 
-            $this->paginate['limit'] = 50;
+            $this->paginate['limit'] = 10;
             $this->Album->recursive = 2;
             
             $albumData = $this->paginate('Album');
@@ -2125,7 +2125,7 @@ Class ArtistsController extends AppController {
         }
     }
     
-    function load_albums($id = null, $album = null, $page = 1) {
+    function load_albums($id = null,$page = 1) {
     
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
@@ -2138,27 +2138,10 @@ Class ArtistsController extends AppController {
             $cond = "";
         }
 
-        if (count($this->params['pass']) > 1) {
-            $count = count($this->params['pass']);
-            $id = $this->params['pass'][0];
-            for ($i = 1; $i < $count - 1; $i++) {
-                if (!is_numeric($this->params['pass'][$i])) {
-                    $id .= "/" . $this->params['pass'][$i];
-                }
-            }
-        }
-
-        if (isset($this->params['named']['page'])) {
-            $this->layout = 'ajax';
-        } else {
-            $this->layout = 'home';
-        }
+        $this->layout = 'ajax';
 
         $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
-        $this->set('artisttitle', base64_decode($id));
-        $this->set('genre', base64_decode($album));
-
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('libraryDownload', $libraryDownload);
@@ -2247,7 +2230,7 @@ Class ArtistsController extends AppController {
                         'chk' => 2
             );
 
-            $this->paginate['limit'] = 50;
+            $this->paginate['limit'] = 10;
             $this->paginate['page'] = $page;
             $this->Album->recursive = 2;
             
@@ -2258,7 +2241,6 @@ Class ArtistsController extends AppController {
                     $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
                 }
             }
-
             $this->set('albumData', $albumData);
         }
     }    

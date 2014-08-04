@@ -1320,33 +1320,26 @@ $(document).ready(function() {
             /* IB - get 50 albums at a time */
 
             var newCarouselWidth = 0;
+            if(nextPage) {
+                $.ajax({
+                    type: "post",
+                    url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
+                    success: function(response) {
+                        /* IB - append new album html */
+                        if(response){
+                            $('.artist-albums').append(newitems);  
+                        }                        
+                        /* recalculate ul width */
+                        $siblings_carousel.find('li').each(function(){
+                            newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
 
-            $.ajax({
-                type: "post",
-            data: {'prodID': ProdID, 'provider_type': Provider, 'type': type},
-            url: webroot + 'homes/addToWishlistNewHome',                
-                data: {},
-                url: webroot + 'artists/load_albums/',
-                success: function(response) {
-                    /* IB - append new album html */
-
-
-                    /* recalculate ul width */
-                    $siblings_carousel.find('li').each(function(){
-                        newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
-
-                    });
-                    $siblings_carousel.children('ul').css({width:newCarouselWidth});
-
-
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                   
-
-                }
-            });
-            
-
+                        });
+                        $siblings_carousel.children('ul').css({width:newCarouselWidth});
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                    }
+                });
+            }
         }
         currentScrollLeft = currentScrollLeft + 654;
         $siblings_carousel.animate({scrollLeft: currentScrollLeft});
