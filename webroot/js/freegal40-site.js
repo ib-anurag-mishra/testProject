@@ -1320,9 +1320,9 @@ $(document).ready(function() {
             /* IB - get 50 albums at a time */
 
             var newCarouselWidth = 0;
+            nextPage = $('.next_page').val();
             if(nextPage) {
                 artistText = $('.artist_text').val();
-                nextPage = $('.next_page').val();
                 $.ajax({
                     type: "post",
                     url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
