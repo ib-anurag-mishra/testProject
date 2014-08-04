@@ -1323,8 +1323,10 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "post",
+            data: {'prodID': ProdID, 'provider_type': Provider, 'type': type},
+            url: webroot + 'homes/addToWishlistNewHome',                
                 data: {},
-                url: webroot + '',
+                url: webroot + 'artists/load_albums/',
                 success: function(response) {
                     /* IB - append new album html */
 

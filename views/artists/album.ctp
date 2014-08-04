@@ -245,7 +245,14 @@
 			?>
 		</div>
 		*/
+                echo $this->Paginator->counter(
+                    'Page {:page} of {:pages}, showing {:current} records out of
+                     {:count} total, starting on record {:start}, ending on {:end}'
+                );
+                
 		?>
+                
+                <input type="hidden" class="artist_details" value="album" />
 	</div>
 	<?php
 		}
