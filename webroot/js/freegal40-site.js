@@ -318,7 +318,8 @@ $(document).ready(function() {
         return false;
     });    
 
-
+    /* debug */
+    $('.albums-page .album-cover-image .add-to-playlist-button ul').unbind('click');
 
     /* clickoffs */
     $(document).mouseup(function(e) {
