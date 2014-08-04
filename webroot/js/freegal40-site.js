@@ -1329,7 +1329,7 @@ $(document).ready(function() {
                     success: function(response) {
                         /* IB - append new album html */
                         if(response){
-                            $('.artist-albums').append(newitems);  
+                            $('.artist-albums').append(response);  
                         }                        
                         /* recalculate ul width */
                         $siblings_carousel.find('li').each(function(){
