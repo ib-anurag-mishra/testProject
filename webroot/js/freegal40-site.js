@@ -25,6 +25,31 @@
 }(jQuery));
 
 
+/* Enable "scrollh" event jQuery plugin */
+(function ($) {
+    $.fn.enableHScroll = function() {
+        function handler(el) {
+           var lastPos = el
+              .on('scroll', function() {
+                 var newPos = $(this).scrollLeft();
+                 if (newPos !== lastPos) {
+                     $(this).trigger('scrollh', newPos - lastPos);
+                     lastPos = newPos;
+                 }
+              })
+              .scrollLeft();
+        }
+        return this.each(function() {
+            var el = $(this);
+            if (!el.data('hScrollEnabled')) {
+                el.data('hScrollEnabled', true);                 
+                handler(el);
+            }
+        });
+    }
+}(jQuery));
+
+
 $(document).ready(function() {
 
 
@@ -1369,29 +1394,7 @@ $(document).ready(function() {
     //     // }
     // });
 
-/* Enable "scrollh" event jQuery plugin */
-(function ($) {
-    $.fn.enableHScroll = function() {
-        function handler(el) {
-           var lastPos = el
-              .on('scroll', function() {
-                 var newPos = $(this).scrollLeft();
-                 if (newPos !== lastPos) {
-                     $(this).trigger('scrollh', newPos - lastPos);
-                     lastPos = newPos;
-                 }
-              })
-              .scrollLeft();
-        }
-        return this.each(function() {
-            var el = $(this);
-            if (!el.data('hScrollEnabled')) {
-                el.data('hScrollEnabled', true);                 
-                handler(el);
-            }
-        });
-    }
-}(jQuery));
+
 
 $('.artist-albums')
     .enableHScroll()
