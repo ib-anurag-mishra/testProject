@@ -1359,14 +1359,19 @@ $(document).ready(function() {
 
     });    
 
-    var lastScrollLeft = 0;
-    $('.artist-albums').scroll(function() {
+    // var lastScrollLeft = 0;
+    // $('.artist-albums').scroll(function() {
+    //     console.log('scrolling');
+    //     // var documentScrollLeft = $('.artist-albums').scrollLeft();
+    //     // if (lastScrollLeft != documentScrollLeft) {
+    //     //     console.log('scroll x');
+    //     //     lastScrollLeft = documentScrollLeft;
+    //     // }
+    // });
+
+    $(window).scroll(function(){
         console.log('scrolling');
-        // var documentScrollLeft = $('.artist-albums').scrollLeft();
-        // if (lastScrollLeft != documentScrollLeft) {
-        //     console.log('scroll x');
-        //     lastScrollLeft = documentScrollLeft;
-        // }
+
     });
 
 
