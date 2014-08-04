@@ -1375,10 +1375,7 @@ $(document).ready(function() {
 
 
 
-    $('.artist-albums').on('scroll',function(){
-        console.log('scroll');
-
-    });
+ 
 
 
 
