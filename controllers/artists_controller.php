@@ -2242,6 +2242,7 @@ Class ArtistsController extends AppController {
                 }
             }
             $this->set('albumData', $albumData);
+            $this->set('current_page', $page);
         }
     }    
 

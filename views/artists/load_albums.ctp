@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/js/ajaxify-html5.js"></script>
+<script> 
 <?php
     foreach ($albumData as $album_key => $album):
     //hide album if library block the explicit content
@@ -85,4 +87,10 @@
     </li>
     <?php
     endforeach;
-?>
+    $totalPages = $this->Paginator->params['paging']['Album']['pageCount'];
+    $artistText = base64_encode($artisttext);
+    if($current_page+1 <= $totalPages) {
+        ?>
+       <input type="hidden" class="artist_text" value="<?php echo $artistText; ?>" />
+       <input type="hidden" class="next_page" value="<?php echo $current_page+1; ?>" />
+<?php } ?>

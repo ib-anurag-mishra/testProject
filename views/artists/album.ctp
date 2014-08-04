@@ -250,10 +250,10 @@
                      {:count} total, starting on record {:start}, ending on {:end}'
                 );
                 */
-                $nextPage = $this->Paginator->params['paging']['Album']['nextPage'];
                 $currentPage = $this->Paginator->params['paging']['Album']['page'];
+                $totalPages = $this->Paginator->params['paging']['Album']['pageCount'];
                 $artistText = base64_encode($artisttext);
-                if($nextPage == 1) {
+                if($currentPage < $totalPages) {
                     ?>
                    <input type="hidden" class="artist_text" value="<?php echo $artistText; ?>" />
                    <input type="hidden" class="next_page" value="<?php echo $currentPage+1; ?>" />
