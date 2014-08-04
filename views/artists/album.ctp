@@ -244,12 +244,12 @@
 			echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
 			?>
 		</div>
-		*/
+		
                 echo $this->Paginator->counter(
                     'Page {:page} of {:pages}, showing {:current} records out of
                      {:count} total, starting on record {:start}, ending on {:end}'
                 );
-                
+                */
                 $nextPage = $this->Paginator->params['paging']['Album']['nextPage'];
                 $currentPage = $this->Paginator->params['paging']['Album']['page'];
                 $artistText = base64_encode($artisttext);
