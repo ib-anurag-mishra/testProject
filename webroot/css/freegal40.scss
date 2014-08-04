@@ -6152,7 +6152,7 @@ sub { top: 0.4em; }
                         overflow-x: hidden;
                         // overflow-y: auto;
                         overflow-y: scroll;
-                 
+                 		-ms-overflow-style: scrollbar;
 
                         &.active {
 
