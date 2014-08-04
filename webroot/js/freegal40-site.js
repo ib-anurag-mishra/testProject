@@ -544,13 +544,13 @@ $(document).ready(function() {
 
     $(document).on('mouseenter', '.album-cover-image', function() {
         $(this).find('.preview').css('opacity', 100);
-        $(this).find('.add-to-playlist-button').css('opacity', 100);
+        $(this).find('.add-to-playlist-button, .add-to-playlist-2').css('opacity', 100);
 
     });
 
     $(document).on('mouseleave', '.album-cover-image', function() {
         $(this).find('.preview').css('opacity', 0);
-        $(this).find('.add-to-playlist-button').css('opacity', 0);
+        $(this).find('.add-to-playlist-button, .add-to-playlist-2').css('opacity', 0);
 
     });
 
