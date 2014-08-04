@@ -8,9 +8,35 @@
     $host = "192.168.100.114";
     $user = "freegal_prod";
     $pass = "}e47^B1EO9hD";
-   
-    $sql = "SElECT * FROM freegal.authtokens_copy limit 100";
+    $encodingKey = 'Xcpt3XuG5B';
+
+    $patronids = "SELECT patron_id from freegal.authtokens_copy where password is not null";
+
+ 
     $link = mysql_connect($host, $user, $pass, null);
+
+    if($link){
+		$pids = mysql_query($patronids, $link);
+     }
+	else {
+        printf("BAD: Connection Failed %s", mysql_error());
+        mysql_close($link);
+        return;
+    }
+
+	if($pids){
+		
+		while($r[]=mysql_fetch_array($pids));
+		print_r($r);exit;
+
+	}
+	else {
+        printf("BAD: Query failed - %s\n", mysql_error($link));
+        mysql_close($link);
+        return;
+    }
+    
+    exit;
 
     if($link)
         $result = mysql_query($sql, $link);
