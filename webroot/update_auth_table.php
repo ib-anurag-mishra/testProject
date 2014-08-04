@@ -36,7 +36,7 @@
     
  	for($i=0;$i<count($r);$i++){
 		$enc_pass = freegalEncrypt($r[$i]['password']);
-		$sql = "UPDATE TABLE freegal.authtokens_copy SET password =".$enc_pass." where patron_id =".$r[$i]['patron_id'];
+		$sql = "UPDATE freegal.authtokens_copy SET password =".$enc_pass." where patron_id =".$r[$i]['patron_id'];
 		if(mysql_query($sql,$link)) echo "updated".$r[$i]['patron_id'];
 		else echo "failed";
 	}
