@@ -10,7 +10,7 @@ if($this->data['Report']['library_id'] == "all") {
     $libraryName = "All_Libraries";
 }
 else {
-    $libraryName = $libraries[$this->data['Report']['library_id']]."_".$wishlists['Wishlist']['library_id'];
+    $libraryName = str_replace(" ", "_", $libraries[$this->data['Report']['library_id']])."_".$wishlists['Wishlist']['library_id'];
 }
 $date_arr = explode("/", $this->data['Report']['date']);
 $date_arr_from = explode("/", $this->data['Report']['date_from']);
