@@ -1321,8 +1321,10 @@ $(document).ready(function() {
 
             var newCarouselWidth = 0;
             nextPage = $('.next_page').val();
+            artistText = $('.artist_text').val();
+            $('.next_page').remove();
+            $('.artist_text').remove();
             if(nextPage) {
-                artistText = $('.artist_text').val();
                 $.ajax({
                     type: "post",
                     url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
