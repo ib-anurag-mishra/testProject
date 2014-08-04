@@ -1369,10 +1369,11 @@ $(document).ready(function() {
     //     // }
     // });
 
-    $(window).scroll(function(){
-        console.log('scrolling');
-
+    $('.artist-albums').on('change',function(){
+        console.log('changed');
     });
+
+
 
 
     $account_menu_dropdown.on('mouseleave', function() {
