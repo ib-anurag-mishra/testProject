@@ -1325,13 +1325,17 @@ $(document).ready(function() {
             $('.next_page').remove();
             $('.artist_text').remove();
             if(nextPage) {
+                $('#artist_loader').show();
                 $.ajax({
                     type: "post",
                     url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
                     success: function(response) {
                         /* IB - append new album html */
                         if(response){
+                            $('#artist_loader').hide();
                             $('.artist-albums').append(response);  
+                        } else {
+                            $('#artist_loader').hide();
                         }                        
                         /* recalculate ul width */
                         $siblings_carousel.find('li').each(function(){
