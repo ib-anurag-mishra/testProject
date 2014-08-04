@@ -10,7 +10,7 @@
     $pass = "}e47^B1EO9hD";
     $encodingKey = 'Xcpt3XuG5B';
 
-    $patronids = "SELECT patron_id from freegal.authtokens_copy where password is not null";
+    $patronids = "SELECT patron_id,password from freegal.authtokens_copy where password is not null";
 
  
     $link = mysql_connect($host, $user, $pass, null);
@@ -27,8 +27,6 @@
 	if($pids){
 		
 		while($r[]=mysql_fetch_array($pids));
-		print_r($r);exit;
-
 	}
 	else {
         printf("BAD: Query failed - %s\n", mysql_error($link));
@@ -36,26 +34,13 @@
         return;
     }
     
-    exit;
-
-    if($link)
-        $result = mysql_query($sql, $link);
-    else {
-        printf("BAD: Connection Failed %s", mysql_error());
-        mysql_close($link);
-        return;
-    }
-
-    if($result){
-        $status = mysql_fetch_assoc($result);
-	print_r($status);
+ 	for($i=0;$i<count($r);$i++){
+		$enc_pass = freegalEncrypt($r[$i]['password']);
+		$sql = "UPDATE TABLE freegal.authtokens_copy SET password =".$enc_pass." where patron_id =".$r[$i]['patron_id'];
+		if(mysql_query($sql,$link)) echo "updated".$r[$i]['patron_id'];
+		else echo "failed";
 	}
-    else {
-        printf("BAD: Query failed - %s\n", mysql_error($link));
-        mysql_close($link);
-        return;
-    }
-
+   
     mysql_close($link);
 
    /*
