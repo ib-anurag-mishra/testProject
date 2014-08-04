@@ -1359,9 +1359,13 @@ $(document).ready(function() {
 
     });    
 
-    $(window).on('scroll',function(){
-        console.log('scrolling');
-
+    var lastScrollLeft = 0;
+    $('.artist-albums').scroll(function() {
+        var documentScrollLeft = $('.artist-albums').scrollLeft();
+        if (lastScrollLeft != documentScrollLeft) {
+            console.log('scroll x');
+            lastScrollLeft = documentScrollLeft;
+        }
     });
 
 
