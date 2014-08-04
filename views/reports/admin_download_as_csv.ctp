@@ -199,7 +199,7 @@ if($this->data['Report']['library_id'] == "all") {
     $libraryName = "All_Libraries";
 }
 else {
-    $libraryName = str_replace(" ", "_", $libraries_download[0]['Library']['library_name']);
+    //$libraryName = str_replace(" ", "_", $libraries[$this->data['Report']['library_id']]);
 }
 $date_arr = explode("/", $this->data['Report']['date']);
 $date_arr_from = explode("/", $this->data['Report']['date_from']);
