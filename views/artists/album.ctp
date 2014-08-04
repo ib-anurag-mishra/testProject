@@ -232,7 +232,7 @@
 				endforeach;
 				?>
 			</ul>
-            <span id="artist_loader" style="display:block; position:absolute; left:0; top:0;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" alt=""/></span>
+            <span id="artist_loader" style="display:block; position:absolute; left:29px; top:0; width: 790px; height:162px;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" alt=""/></span>
 		</div>
 		<button class="left-scroll-button-ajax"></button>
 		<button class="right-scroll-button-ajax"></button>
