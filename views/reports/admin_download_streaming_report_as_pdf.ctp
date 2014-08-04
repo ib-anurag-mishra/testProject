@@ -414,7 +414,7 @@
         }
     }
     foreach($genreDayStremedInfo as $key => $genreStreamed) {
-        $genre_data[] = array($key+1, $this->getAdminTextEncode($genreStreamed['songs']['Genre']), ($genreStreamed[0]['total_streamed_songs']));
+        $genre_data[] = array($key+1, $this->getAdminTextEncode($genreStreamed['Genres']['expected_genre']), ($genreStreamed[0]['total_streamed_songs']));
     }
     
     // print colored table
