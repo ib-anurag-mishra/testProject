@@ -1359,7 +1359,7 @@ $(document).ready(function() {
 
     });    
 
-    $('.artist-albums').on('scroll',function(){
+    $(window).on('scroll',function(){
         console.log('scrolling');
 
     });
