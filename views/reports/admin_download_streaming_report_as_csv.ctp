@@ -157,7 +157,7 @@ $line = array('', 'Genre Name', 'Total Number of Tracks Streamed');
 $csv->addRow($line);
 
 foreach($genreDayStremedInfo as $key => $genreStreamed) {
-    $line = array($key+1, $this->getAdminTextEncode($genreStreamed['Genre']['expected_genre']), ($genreStreamed[0]['total_streamed_songs']));
+    $line = array($key+1, $this->getAdminTextEncode($genreStreamed['Genres']['expected_genre']), ($genreStreamed[0]['total_streamed_songs']));
     $csv->addRow($line);
 }
 
