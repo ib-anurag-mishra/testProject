@@ -294,7 +294,7 @@ $(document).ready(function() {
     });
 
 
-    $(document).on('click', '.albums-page .album-cover-image .add-to-playlist-button-2', function(e) {
+    $(document).on('click', '.albums-page .album-cover-image .add-to-playlist-button', function(e) {
         e.preventDefault();
 
         var queuelist = $(document).find('.playlist-options-test').html();
@@ -303,7 +303,7 @@ $(document).ready(function() {
 
         $(this).next('.wishlist-popover').append(queuelist);
 
-        // $('.wishlist-popover').removeClass('active');
+        $('.wishlist-popover').removeClass('active');
 
         if ($(this).next('.wishlist-popover').hasClass('active')) {
             $(this).next('.wishlist-popover').removeClass('active');
@@ -545,14 +545,12 @@ $(document).ready(function() {
     $(document).on('mouseenter', '.album-cover-image', function() {
         $(this).find('.preview').css('opacity', 100);
         $(this).find('.add-to-playlist-button').css('opacity', 100);
-        $(this).find('.add-to-playlist-button-2').css('opacity', 100);
 
     });
 
     $(document).on('mouseleave', '.album-cover-image', function() {
         $(this).find('.preview').css('opacity', 0);
         $(this).find('.add-to-playlist-button').css('opacity', 0);
-        $(this).find('.add-to-playlist-button-2').css('opacity', 0);
 
     });
 

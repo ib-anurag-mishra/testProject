@@ -31,7 +31,7 @@
 
 				if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron")):
 					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
-					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button-2 no-ajaxy'));
+					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
 					?>
 				
 				<div class="wishlist-popover">
