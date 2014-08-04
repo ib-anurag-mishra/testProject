@@ -303,7 +303,7 @@ $(document).ready(function() {
 
         $(this).next('.wishlist-popover').append(queuelist);
 
-        $('.wishlist-popover').removeClass('active');
+        // $('.wishlist-popover').removeClass('active');
 
         if ($(this).next('.wishlist-popover').hasClass('active')) {
             $(this).next('.wishlist-popover').removeClass('active');
@@ -318,8 +318,6 @@ $(document).ready(function() {
         return false;
     });    
 
-    /* debug */
-    $('.albums-page .album-cover-image .add-to-playlist-button ul').unbind('click');
 
     /* clickoffs */
     $(document).mouseup(function(e) {
