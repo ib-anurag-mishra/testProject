@@ -1373,7 +1373,7 @@ $(document).ready(function() {
 
 
 
-    $('.carousel-ajax').css({overflow-x:auto});
+    $('.carousel-ajax').css({overflowX:auto});
 
     $('.artist-albums').on('scroll',function(){
         console.log('scroll');
