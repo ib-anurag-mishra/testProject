@@ -1949,12 +1949,12 @@ Class ReportsController extends AppController {
                     $currentPatronBothDownload = array();
                 }
 
-                foreach($genreDayStremed as $key=>$value)
-                {
-                    $genreValue =  rtrim(ltrim($genreDayStremed['songs']['Genre'], "\""),"\"");
-                    $genreValue =  $this->common->getGenreSynonyms($genreValue);
-                    $genreDayStremed['songs']['Genre'] = $genreValue;
-                }
+//                foreach($genreDayStremed as $key=>$value)
+//                {
+//                    $genreValue =  rtrim(ltrim($genreDayStremed['songs']['Genre'], "\""),"\"");
+//                    $genreValue =  $this->common->getGenreSynonyms($genreValue);
+//                    $genreDayStremed['songs']['Genre'] = $genreValue;
+//                }
                 
                 $combin_genre_arr   =   $this->common->getGenreSynonyms();
                 
