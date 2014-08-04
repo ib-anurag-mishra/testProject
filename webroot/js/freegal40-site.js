@@ -294,7 +294,7 @@ $(document).ready(function() {
     });
 
 
-    $(document).on('mousedown', '.albums-page .album-cover-image .add-to-playlist-button', function(e) {
+    $(document).on('click', '.albums-page .album-cover-image .add-to-playlist-button', function(e) {
         e.preventDefault();
 
         var queuelist = $(document).find('.playlist-options-test').html();
