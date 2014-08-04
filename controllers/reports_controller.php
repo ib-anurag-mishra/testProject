@@ -937,6 +937,13 @@ Class ReportsController extends AppController {
 			} else {
 				$territory = $this->data['Report']['Territory'];
 			}
+                        
+                         if(!empty($library_id))
+                        {
+                            $libraryInfo = $this->Library->find("first", array("conditions" => array('id' => $library_id), 'fields' => array('library_name'), 'recursive' => -1));
+                            $this->set('libraryInfo', $libraryInfo);
+                        }
+                        
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
