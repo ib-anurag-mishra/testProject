@@ -15,7 +15,7 @@
         $displaylibraryName = "All Libraries";
     }
     else {
-        $savelibraryName = $libraries[$this->data['Report']['library_id']]."_".$wishlist['Download']['library_id'];
+        $savelibraryName = str_replace(" ", "_", $libraries[$this->data['Report']['library_id']])."_".$wishlist['Download']['library_id'];
         $displaylibraryName = $libraries[$this->data['Report']['library_id']]." ".$wishlist['Download']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
