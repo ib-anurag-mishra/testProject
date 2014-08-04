@@ -313,7 +313,7 @@ if (empty($getData)) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $this->getTextEncode($genreStreamed['songs']['Genre']); ?></td>
+                                            <td><?php echo $this->getTextEncode($genreStreamed['Genres']['expected_genre']); ?></td>
                                             <td align="center"><?php echo $genreStreamed[0]['total_streamed_songs']; ?></td>
                                         </tr>
         <?php
