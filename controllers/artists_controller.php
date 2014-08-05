@@ -2960,7 +2960,7 @@ Class ArtistsController extends AppController {
         }
 
         $result = array();
-        $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID', 'Album.AlbumTitle', 'Album.provider_type'), 'conditions' => array('Album.ArtistText = ' => urldecode($this->params[$index]['artist'])), 'recursive' => -1));
+        $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID', 'Album.AlbumTitle', 'Album.provider_type', 'Album.Advisory'), 'conditions' => array('Album.ArtistText = ' => urldecode($this->params[$index]['artist'])), 'recursive' => -1));
         $val = '';
         $this->Song->Behaviors->attach('Containable');
         $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
@@ -2969,7 +2969,11 @@ Class ArtistsController extends AppController {
             $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             if (count($recordCount) > 0) {
                 $val = $val . $v['Album']['ProdID'] . ",";
-                $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
+                if ($v['Album']['Advisory'] == 'T') {
+                    $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'].'<span class="explicit"> (Explicit)</span>';
+                } else {                
+                    $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
+                }
             }
         }
         $data = "<option value=''>SELECT</option>";
