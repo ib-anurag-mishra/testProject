@@ -1350,7 +1350,7 @@ $(document).ready(function() {
                             }                        
                             /* recalculate ul width */
 
-                            $siblings_carousel.find('li').each(function(){
+                            $siblings_carousel.children('ul').children('li').each(function(){
 
                                 newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
 
