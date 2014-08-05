@@ -1345,12 +1345,14 @@ $(document).ready(function() {
 
                         });
                         $siblings_carousel.children('ul').css({width:newCarouselWidth});
-                        newCarouselWidth = 0;
+
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                     }
                 });
             }
+
+            newCarouselWidth = 0;
         }
         currentScrollLeft = currentScrollLeft + 654;
         $siblings_carousel.animate({scrollLeft: currentScrollLeft});
