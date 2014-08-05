@@ -6151,7 +6151,9 @@ sub { top: 0.4em; }
 
                         overflow-x: hidden;
                         // overflow-y: auto;
-                        overflow-y: scroll;
+                        overflow-y: auto;
+                        -ms-overflow-style: scrollbar;
+
 
                         &.active {
 
