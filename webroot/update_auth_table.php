@@ -8,9 +8,9 @@
     $host = "192.168.100.114";
     $user = "freegal_prod";
     $pass = "}e47^B1EO9hD";
-    $encodingKey = 'Xcpt3XuG5B';
+    $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 
-    $patronids = "SELECT patron_id,password from freegal.authtokens_copy where password is not null";
+    $patronids = "SELECT patron_id,password,card,pin from freegal.authtokens_copy where password is not null or card is not null or pin is not null";
 
  
     $link = mysql_connect($host, $user, $pass, null);
@@ -36,9 +36,16 @@
     
  	for($i=0;$i<count($r);$i++){
 		$enc_pass = freegalEncrypt($r[$i]['password']);
-		$sql = "UPDATE freegal.authtokens_copy SET password =".$enc_pass." where patron_id =".$r[$i]['patron_id'];
-		if(mysql_query($sql,$link)) echo "updated".$r[$i]['patron_id'];
-		else echo "failed";
+		$enc_card = freegalEncrypt($r[$i]['card']);
+		$enc_pin  = freegalEncrypt($r[$i]['pin']);
+		$sql = "UPDATE freegal.authtokens_copy SET password =".$enc_pass.",card =".$enc_card.",pin =".$enc_pin." where patron_id =".$patron[$i]['patron_id'];
+		if(mysql_query($sql,$link) && $i == count($r)-1 ){
+
+			 echo "successfully updated";
+		}
+		else {
+			echo "failed"; exit;
+		}
 	}
    
     mysql_close($link);

@@ -36,7 +36,7 @@ class SoapsController extends AppController {
   private $CDN_HOST = 'libraryideas.ingest.cdn.level3.net';
   private $CDN_USER = 'libraryideas';
   private $CDN_PASS = 't837dgkZU6xCMnc';
-  private $encodingKey = 'Xcpt3XuG5B';
+  private $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token','TopAlbum'); 
