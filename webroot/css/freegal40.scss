@@ -6107,6 +6107,7 @@ sub { top: 0.4em; }
                     -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
                     box-shadow: 0 0 2px rgba(0,0,0,.5);
                     background: #fff;
+                    outline: 1px solid red;
 
                     &.active {
 
@@ -6153,7 +6154,8 @@ sub { top: 0.4em; }
                         // // overflow-y: auto;
                         overflow-y: scroll;
 	
-
+						outline: 1px solid blue;
+						
                         &.active {
 
                             display: block;
