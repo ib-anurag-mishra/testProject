@@ -320,7 +320,7 @@ $(document).ready(function() {
         // }
  
 
-        var oldList = $(this).next('ul').html();
+        var oldList = $(this).next('ul');
 
         oldList.empty();
         var queuelist = $(document).find('.playlist-options-test').find('ul').html();
