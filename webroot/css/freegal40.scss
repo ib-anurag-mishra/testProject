@@ -5952,6 +5952,7 @@ sub { top: 0.4em; }
 
 			// }
 
+
 		}
 
 
@@ -5976,10 +5977,12 @@ sub { top: 0.4em; }
 		line-height: 18px;
 
 
+
 		&.active {
 
 		}
 
+>>>>>>> aa_carousel_ajax
 	}
 
 	
@@ -6691,7 +6694,7 @@ sub { top: 0.4em; }
 		// 	height: 226px;
 		// }
 
-		.left-scroll-button {
+		.left-scroll-button,.left-scroll-button-ajax {
 
 			width: 25px;
 			height: 162px;
@@ -6701,7 +6704,7 @@ sub { top: 0.4em; }
 			background: url(../img/freegal_sprite.png) -200px 0;		
 		}
 
-		.right-scroll-button {
+		.right-scroll-button,.right-scroll-button-ajax {
 
 			width: 25px;
 			height: 162px;

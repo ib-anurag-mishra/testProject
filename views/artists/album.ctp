@@ -124,8 +124,8 @@
 			?>
 	<h3>Albums</h3>
 	<div class="album-shadow-container">
-		<div class="album-scrollable horiz-scroll carousel">
-			<ul style="width: 4500px">
+		<div class="album-scrollable horiz-scroll carousel-ajax">
+			<ul  class="artist-albums" style="width: 4500px">
 				<?php
 				foreach ($albumData as $album_key => $album):
 				//hide album if library block the explicit content
@@ -232,9 +232,10 @@
 				endforeach;
 				?>
 			</ul>
+            <span id="artist_loader" style="display:none; position:absolute; left:29px; top:0; width: 790px; height:162px; background: rgba(255,255,255,.75)"   ><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" alt="" style="margin: 60px auto" /></span>
 		</div>
-		<button class="left-scroll-button"></button>
-		<button class="right-scroll-button"></button>
+		<button class="left-scroll-button-ajax"></button>
+		<button class="right-scroll-button-ajax"></button>
 		<?php
 		/*
 		<div class="paging">
@@ -244,8 +245,20 @@
 			echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
 			?>
 		</div>
-		*/
-		?>
+		
+                echo $this->Paginator->counter(
+                    'Page {:page} of {:pages}, showing {:current} records out of
+                     {:count} total, starting on record {:start}, ending on {:end}'
+                );
+                */
+                $currentPage = $this->Paginator->params['paging']['Album']['page'];
+                $totalPages = $this->Paginator->params['paging']['Album']['pageCount'];
+                $artistText = base64_encode($artisttext);
+                if($currentPage < $totalPages) {
+                    ?>
+                   <input type="hidden" class="artist_text" value="<?php echo $artistText; ?>" />
+                   <input type="hidden" class="next_page" value="<?php echo $currentPage+1; ?>" />
+          <?php } ?>
 	</div>
 	<?php
 		}
