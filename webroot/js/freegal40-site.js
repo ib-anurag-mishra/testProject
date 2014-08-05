@@ -1323,39 +1323,46 @@ $(document).ready(function() {
         /* if there are more than 50 albums (not added in code yet - needs to be added by IB), and the scrollLeft is at the threshold, get more albums */
 
         if($siblings_carousel.children('ul').width() - currentScrollLeft < 654) {
-        
+            
             /* IB - get 50 albums at a time */
 
-            var newCarouselWidth = 0;
-            nextPage = $('.next_page').val();
-            artistText = $('.artist_text').val();
-            $('.next_page').remove();
-            $('.artist_text').remove();
-            if(nextPage) {
-                $('#artist_loader').show();
-                $.ajax({
-                    type: "post",
-                    url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
-                    success: function(response) {
-                        /* IB - append new album html */
-                        if(response){
-                            $('#artist_loader').hide();
-                            $('.artist-albums').append(response);  
-                        } else {
-                            $('#artist_loader').hide();
-                        }                        
-                        /* recalculate ul width */
-                        $siblings_carousel.find('li').each(function(){
-                            newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
+            setTimeout(function(){
 
-                        });
-                        $siblings_carousel.children('ul').css({width:newCarouselWidth});
 
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                    }
-                });
-            }
+
+
+                var newCarouselWidth = 0;
+                nextPage = $('.next_page').val();
+                artistText = $('.artist_text').val();
+                $('.next_page').remove();
+                $('.artist_text').remove();
+                if(nextPage) {
+                    $('#artist_loader').show();
+                    $.ajax({
+                        type: "post",
+                        url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
+                        success: function(response) {
+                            /* IB - append new album html */
+                            if(response){
+                                $('#artist_loader').hide();
+                                $('.artist-albums').append(response);  
+                            } else {
+                                $('#artist_loader').hide();
+                            }                        
+                            /* recalculate ul width */
+                            $siblings_carousel.find('li').each(function(){
+                                newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
+
+                            });
+                            $siblings_carousel.children('ul').css({width:newCarouselWidth});
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                        }
+                    });
+                }
+
+            },500);
 
 
         }
