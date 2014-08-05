@@ -131,6 +131,6 @@ if ($this->Session->read('library_type') == '2')
   					m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
  			 	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  				ga('create', 'UA-16162084-1', 'freegalmusic.com');
+  				ga('create', 'UA-16162084-1', 'auto');
   				ga('send', 'pageview');
 </script>
