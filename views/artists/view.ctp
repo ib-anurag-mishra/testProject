@@ -35,10 +35,12 @@
 					?>
 				
 				<?php /*<div class="wishlist-popover">*/?>
+					<div class="playlist-options">
 					<?php
 					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
-					echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));
+					// echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));
 					?>
+					</div>
 				<?php /*</div>*/ ?>
 
 				<?php endif; ?>
