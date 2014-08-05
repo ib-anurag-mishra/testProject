@@ -1314,7 +1314,8 @@ $(document).ready(function() {
 
         var currentScrollLeft = $siblings_carousel.scrollLeft();
 
-
+        console.log(currentScrollLeft);
+        
         /* if there are more than 50 albums (not added in code yet - needs to be added by IB), and the scrollLeft is at the threshold, get more albums */
 
         if($siblings_carousel.children('ul').width() - currentScrollLeft < 984) {
@@ -1352,7 +1353,7 @@ $(document).ready(function() {
                 });
             }
 
-            newCarouselWidth = 0;
+
         }
         currentScrollLeft = currentScrollLeft + 654;
         $siblings_carousel.animate({scrollLeft: currentScrollLeft});
