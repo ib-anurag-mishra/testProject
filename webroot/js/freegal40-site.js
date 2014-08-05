@@ -326,6 +326,7 @@ $(document).ready(function() {
         var queuelist = $(document).find('.playlist-options-test').find('ul').html();
         console.log(queuelist);
         // $(this).next('ul').append(queuelist).addClass('active');
+        console.log($(this).next('ul'));
         $(this).next('ul').addClass('active');        
 
        
