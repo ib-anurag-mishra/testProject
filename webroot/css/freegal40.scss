@@ -6215,8 +6215,8 @@ sub { top: 0.4em; }
                 ul {
                     position: absolute;
                     // right: -146px;
-                    left: 0;
-                    top: 0;
+                    left: 10px;
+                    top: 41px;
                     display: none;
                     background: #fff;
                     // width: 145px;
@@ -6238,6 +6238,24 @@ sub { top: 0.4em; }
 
                         display: block;
                     }
+
+
+                    li {
+
+                        float: none;
+                        padding: 0;
+
+                        a {
+
+                            padding: 5px 5px 5px 10px;
+                            text-decoration: none;
+
+                            &:hover {
+
+                                text-decoration: none;
+                            }
+                        }
+                    }                    
 
 
 
