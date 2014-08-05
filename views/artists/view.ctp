@@ -37,7 +37,7 @@
 				<div class="wishlist-popover">
 
 
-					<div class="playlist-options">
+					
 
 					<?php
 					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
