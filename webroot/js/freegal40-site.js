@@ -327,7 +327,7 @@ $(document).ready(function() {
         console.log(queuelist);
         // $(this).next('ul').append(queuelist).addClass('active');
 
-        $(this).siblings('ul').addClass('active');        
+        $(this).siblings('ul').append(queuelist).addClass('active');        
 
        
 
