@@ -2993,7 +2993,7 @@ Class ArtistsController extends AppController {
             if (count($recordCount) > 0) {
                 $val = $val . $v['Album']['ProdID'] . ",";
                 if ($v['Album']['Advisory'] == 'T') {
-                    $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'].'(Explicit)';
+                    $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'].'<span class="explicit"> (Explicit)</span>';
                 } else {                
                     $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
                 }
