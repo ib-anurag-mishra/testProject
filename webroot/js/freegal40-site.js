@@ -75,7 +75,10 @@ $(document).ready(function() {
 
 
 
+    $('.albums-page').find('.album-detail-container').find('ul').on('mouseleave',function(){
+        $(this).removeClass('active');
 
+    })
 
 
     
