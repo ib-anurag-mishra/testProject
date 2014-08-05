@@ -25,6 +25,8 @@
 }(jQuery));
 
 
+
+
 $(document).ready(function() {
 
 
@@ -1306,6 +1308,100 @@ $(document).ready(function() {
 
 
     });
+
+
+    var $left_scroll_button_ajax = $('.left-scroll-button-ajax');
+
+    $left_scroll_button_ajax.on('click', function() {
+        
+        var $siblings_carousel = $(this).siblings('.carousel-ajax');
+        
+
+        var currentScrollLeft = $siblings_carousel.scrollLeft();
+        currentScrollLeft = currentScrollLeft - 654;
+        $siblings_carousel.animate({scrollLeft: currentScrollLeft});        
+
+    });
+
+    var $right_scroll_button_ajax = $('.right-scroll-button-ajax');
+    $right_scroll_button_ajax.on('click', function() {
+
+
+
+
+        var $siblings_carousel = $(this).siblings('.carousel-ajax');
+
+        var currentScrollLeft = $siblings_carousel.scrollLeft();
+
+
+
+        currentScrollLeft = currentScrollLeft + 654;
+        $siblings_carousel.animate({scrollLeft: currentScrollLeft});
+
+        /* if there are more than 50 albums (not added in code yet - needs to be added by IB), and the scrollLeft is at the threshold, get more albums */
+
+        if($siblings_carousel.children('ul').width() - currentScrollLeft < 654) {
+            
+            /* IB - get 50 albums at a time */
+
+            setTimeout(function(){
+
+
+
+
+                var newCarouselWidth = 0;
+                nextPage = $('.next_page').val();
+                artistText = $('.artist_text').val();
+                $('.next_page').remove();
+                $('.artist_text').remove();
+                if(nextPage) {
+                    $('#artist_loader').show();
+                    $.ajax({
+                        type: "post",
+                        url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
+                        success: function(response) {
+                            /* IB - append new album html */
+                            if(response){
+                                $('#artist_loader').hide();
+                                $('.artist-albums').append(response);  
+                            } else {
+                                $('#artist_loader').hide();
+                            }                        
+                            /* recalculate ul width */
+
+                            $siblings_carousel.children('ul').children('li').each(function(){
+
+                                newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
+
+                            });
+                            $siblings_carousel.children('ul').css({width:newCarouselWidth});
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                        }
+                    });
+                }
+
+            },500);
+
+
+        }
+
+
+
+
+    });    
+
+
+
+
+
+
+ 
+
+
+
+
 
     $account_menu_dropdown.on('mouseleave', function() {
 
