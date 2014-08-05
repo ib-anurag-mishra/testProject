@@ -495,6 +495,7 @@ $(document).ready(function() {
     $('.alphabetical-filter').bindMouseWheel();
     $('.artist-list').bindMouseWheel();
     $('.album-list').bindMouseWheel();
+    $('.albums-page').find('.album-cover-image').find('ul').bindMouseWheel();
 
     /* end genres page */
 
