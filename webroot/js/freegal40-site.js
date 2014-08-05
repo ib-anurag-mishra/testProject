@@ -321,6 +321,7 @@ $(document).ready(function() {
         console.log('inside click');
 
         var oldList = $(this).next('ul');
+        console.log(oldList);
         oldList.empty();
         var queuelist = $(document).find('.playlist-options-new').find('ul').html();
         console.log(queuelist);
