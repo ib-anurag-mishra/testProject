@@ -318,10 +318,10 @@ $(document).ready(function() {
         //     $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
 
         // }
-        console.log('inside click');
+ 
 
-        var oldList = $(this).next('ul');
-        console.log(oldList);
+        var oldList = $(this).next('ul').html();
+
         oldList.empty();
         var queuelist = $(document).find('.playlist-options-test').find('ul').html();
         console.log(queuelist);
