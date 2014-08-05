@@ -6100,7 +6100,7 @@ sub { top: 0.4em; }
                     left: 10px;
                     top: 41px;
                     font-size: 12px;
-                    z-index: 100;
+                    // z-index: 100;
                     // width: 120px;
                     width: 100%;
                     -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
@@ -6152,7 +6152,6 @@ sub { top: 0.4em; }
                         overflow-x: hidden;
                         // // overflow-y: auto;
                         overflow-y: scroll;
-                        z-index: 1;
 	
 
                         &.active {
