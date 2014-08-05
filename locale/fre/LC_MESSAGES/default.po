@@ -353,7 +353,7 @@ msgid "Search for your favorite music."
 msgstr "Recherchez votre musique préférée."
 
 msgid "Need help? Visit our"
-msgstr "Besoin d'aide? Visitez notre"
+msgstr "Besoin d'aide? Regardez les"
 
 msgid "Downloads"
 msgstr "Téléchargements"
