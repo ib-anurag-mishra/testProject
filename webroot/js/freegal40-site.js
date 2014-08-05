@@ -300,7 +300,7 @@ $(document).ready(function() {
         var queuelist = $(document).find('.playlist-options-test').html();
         console.log(queuelist);
         // var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
-        var oldList = $(this).next('.playlist-options').html();
+        var oldList = $(this).next('.playlist-options');
         oldList.remove();
 
         // $(this).next('.wishlist-popover').append(queuelist);
