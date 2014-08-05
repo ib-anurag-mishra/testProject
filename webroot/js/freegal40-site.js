@@ -299,7 +299,7 @@ $(document).ready(function() {
 
         var queuelist = $(document).find('.playlist-options-test').html();
         // var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
-        var oldList = $(this).next('.playlist-options').find('ul').find('li');
+        var oldList = $(this).next('.playlist-options').html();
         oldList.remove();
 
         // $(this).next('.wishlist-popover').append(queuelist);
