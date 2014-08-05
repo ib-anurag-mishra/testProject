@@ -299,11 +299,11 @@ $(document).ready(function() {
 
         var queuelist = $(document).find('.playlist-options-test').html();
         // var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
-        var oldList = $(this).next('.playlist-options');
+        var oldList = $(this).next('.playlist-options').find('ul').find('li');
         oldList.remove();
 
         // $(this).next('.wishlist-popover').append(queuelist);
-         $(this).next('.playlist-options').append(queuelist);
+         $(this).next('.playlist-options').find('ul').append(queuelist);
 
         // $('.wishlist-popover').removeClass('active');
         $('.playlist-options').removeClass('active');
