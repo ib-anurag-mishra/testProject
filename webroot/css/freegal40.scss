@@ -6224,9 +6224,9 @@ sub { top: 0.4em; }
                     // height: 135px;
                     max-height: 200px;
 
-                    // -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-                    // -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-                    // box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    box-shadow: 0 0 2px rgba(0,0,0,.5);
 
                     overflow-x: hidden;
                     // // overflow-y: auto;
