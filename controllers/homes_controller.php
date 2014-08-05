@@ -3587,7 +3587,7 @@ STR;
 
         //check if its called for adding Album  / Song(s) to Wishlist        
         $type = $this->params["form"]["type"];
-       
+        $selectedSongs = array();
         //Check is patron is logged in or not
         if ($type == 'album') {
             $prodID = $this->params["form"]["prodID"];
