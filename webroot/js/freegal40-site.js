@@ -1314,7 +1314,6 @@ $(document).ready(function() {
 
         var currentScrollLeft = $siblings_carousel.scrollLeft();
 
-        console.log(currentScrollLeft);
 
 
         currentScrollLeft = currentScrollLeft + 654;
@@ -1350,7 +1349,10 @@ $(document).ready(function() {
                                 $('#artist_loader').hide();
                             }                        
                             /* recalculate ul width */
+                            var testCount = 0;
                             $siblings_carousel.find('li').each(function(){
+                                testCount++;
+                                console.log(testCount);
                                 newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
 
                             });
