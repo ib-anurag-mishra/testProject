@@ -10,6 +10,7 @@
     $pass = "}e47^B1EO9hD";
     $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 
+
     $patronids = "SELECT patron_id,password,card,pin from freegal.authtokens_copy where password is not null or card is not null or pin is not null";
 
  
@@ -27,6 +28,7 @@
 	if($pids){
 		
 		while($r[]=mysql_fetch_array($pids));
+		print_r($r);
 	}
 	else {
         printf("BAD: Query failed - %s\n", mysql_error($link));
@@ -35,6 +37,7 @@
     }
     
  	for($i=0;$i<count($r);$i++){
+
 		$enc_pass = freegalEncrypt($r[$i]['password']);
 		$enc_card = freegalEncrypt($r[$i]['card']);
 		$enc_pin  = freegalEncrypt($r[$i]['pin']);
