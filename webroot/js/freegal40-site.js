@@ -320,14 +320,14 @@ $(document).ready(function() {
         // }
  
 
-        var oldList = $(this).next('ul');
+        var oldList = $(this).siblings('ul');
 
         oldList.empty();
         var queuelist = $(document).find('.playlist-options-test').find('ul').html();
         console.log(queuelist);
         // $(this).next('ul').append(queuelist).addClass('active');
-        console.log($(this).next('ul'));
-        $(this).next('ul').addClass('active');        
+
+        $(this).siblings('ul').addClass('active');        
 
        
 
