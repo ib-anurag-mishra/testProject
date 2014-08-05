@@ -2156,7 +2156,8 @@ STR;
         //create logics for sorting
         $sortArray = array('date', 'song', 'artist', 'album');
         $sortOrderArray = array('asc', 'desc');
-
+        $sortOrder = '';
+        $sort = '';
         if ( $this->RequestHandler->isPost() ) {
             $sort = $this->params['form']['sort'];
             $sortOrder = $this->params['form']['sortOrder'];
@@ -2264,7 +2265,8 @@ STR;
 
         $sortArray = array('date', 'song', 'artist', 'album');
         $sortOrderArray = array('asc', 'desc');
-
+        $sortOrder = '';
+        $sort = '';
         if ( $this->RequestHandler->isPost() ) {
             $sort = $this->params['form']['sort'];
             $sortOrder = $this->params['form']['sortOrder'];
