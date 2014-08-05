@@ -1341,6 +1341,14 @@ $(document).ready(function() {
                         type: "post",
                         url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
                         success: function(response) {
+
+                            $siblings_carousel.children('ul').children('li').each(function(){
+
+                                newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
+
+                            });
+                            $siblings_carousel.children('ul').css({width:newCarouselWidth});
+                                                        
                             /* IB - append new album html */
                             if(response){
                                 $('#artist_loader').hide();
@@ -1350,12 +1358,7 @@ $(document).ready(function() {
                             }                        
                             /* recalculate ul width */
 
-                            $siblings_carousel.children('ul').children('li').each(function(){
 
-                                newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
-
-                            });
-                            $siblings_carousel.children('ul').css({width:newCarouselWidth});
 
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
