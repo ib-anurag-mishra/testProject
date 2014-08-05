@@ -75,7 +75,10 @@ $(document).ready(function() {
 
 
 
+    $('.albums-page').find('.album-detail-container').find('ul').on('mouseleave',function(){
+        $(this).removeClass('active');
 
+    })
 
 
     
@@ -297,23 +300,39 @@ $(document).ready(function() {
     $(document).on('click', '.albums-page .album-cover-image .add-to-playlist-button', function(e) {
         e.preventDefault();
 
-        var queuelist = $(document).find('.playlist-options-test').html();
-        var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
-        oldList.remove();
+        // var queuelist = $(document).find('.playlist-options-test').html();
+        // console.log(queuelist);
+        // var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
 
-        $(this).next('.wishlist-popover').append(queuelist);
+        // oldList.remove();
 
-        $('.wishlist-popover').removeClass('active');
+        // $(this).next('.wishlist-popover').append(queuelist);
 
-        if ($(this).next('.wishlist-popover').hasClass('active')) {
-            $(this).next('.wishlist-popover').removeClass('active');
-            $(this).find('.add-to-playlist-button').css({opacity: 0.5});
-        } else {
 
-            $(this).next('.wishlist-popover').addClass('active');
-            $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
+        // $('.wishlist-popover').removeClass('active');
 
-        }
+
+        // if ($(this).next('.wishlist-popover').hasClass('active')) {
+        //     $(this).next('.wishlist-popover').removeClass('active');
+        //     $(this).find('.add-to-playlist-button').css({opacity: 0.5});
+        // } else {
+
+        //     $(this).next('.wishlist-popover').addClass('active');
+        //     $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
+
+        // }
+ 
+
+        var oldList = $(this).siblings('ul');
+
+        oldList.empty();
+        var queuelist = $(document).find('.playlist-options-test').find('ul').html();
+        console.log(queuelist);
+        // $(this).next('ul').append(queuelist).addClass('active');
+
+        $(this).next('ul').append(queuelist).addClass('active');        
+
+       
 
         return false;
     });    
@@ -479,6 +498,7 @@ $(document).ready(function() {
     $('.alphabetical-filter').bindMouseWheel();
     $('.artist-list').bindMouseWheel();
     $('.album-list').bindMouseWheel();
+    $('.albums-page').find('.album-cover-image').find('ul').bindMouseWheel();
 
     /* end genres page */
 

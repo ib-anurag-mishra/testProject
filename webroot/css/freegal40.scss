@@ -6093,20 +6093,21 @@ sub { top: 0.4em; }
                         
                 .wishlist-popover {
 
-                    display: none;
+                    display: block;
                     position: absolute;
                     // left: 395px;
                     // top: 238px;
                     left: 10px;
                     top: 41px;
                     font-size: 12px;
-                    z-index: 100;
+                    // z-index: 100;
                     // width: 120px;
-                    width: 100%;
-                    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-                    -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-                    box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    width: 230px;
+                    // -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    // -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    // box-shadow: 0 0 2px rgba(0,0,0,.5);
                     background: #fff;
+                    max-height: 200px;
 
                     &.active {
 
@@ -6133,55 +6134,57 @@ sub { top: 0.4em; }
 
                     }
 
-                    .playlist-options {
-                        position: absolute;
-                        // right: -146px;
-                        left: 0;
-                        top: 0;
-                        display: none;
-                        background: #fff;
-                        // width: 145px;
-                        width: 230px;
-                        // height: 135px;
-                        max-height: 200px;
+      //               .playlist-options {
+      //                   position: absolute;
+      //                   // right: -146px;
+      //                   left: 0;
+      //                   top: 0;
+      //                   display: none;
+      //                   background: #fff;
+      //                   // width: 145px;
+      //                   width: 230px;
+      //                   // height: 135px;
+      //                   max-height: 200px;
 
-                        -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-                        -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-                        box-shadow: 0 0 2px rgba(0,0,0,.5);
+      //                   // -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+      //                   // -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+      //                   // box-shadow: 0 0 2px rgba(0,0,0,.5);
 
-                        overflow-x: hidden;
-                        // overflow-y: auto;
-                        overflow-y: scroll;
+      //                   overflow-x: hidden;
+      //                   // // overflow-y: auto;
+      //                   overflow-y: scroll;
+	
+						// z-index: 1;
 
-                        &.active {
+      //                   &.active {
 
-                            display: block;
-                        }
+      //                       display: block;
+      //                   }
 
 
 
-                        ul {
+      //                   ul {
                         
 
-                            li {
+      //                       li {
 
-                                float: none;
-                                padding: 0;
+      //                           float: none;
+      //                           padding: 0;
 
-                                a {
+      //                           a {
 
-                                    padding: 5px 5px 5px 10px;
-                                    text-decoration: none;
+      //                               padding: 5px 5px 5px 10px;
+      //                               text-decoration: none;
 
-                                    &:hover {
+      //                               &:hover {
 
-                                        text-decoration: none;
-                                    }
-                                }
-                            }
-                        }
+      //                                   text-decoration: none;
+      //                               }
+      //                           }
+      //                       }
+      //                   }
 
-                    }
+      //               }
 
 
 
@@ -6205,7 +6208,81 @@ sub { top: 0.4em; }
                             background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
                         }
                     }
-                }   
+                }
+
+
+
+                ul {
+                    position: absolute;
+                    // right: -146px;
+                    left: 10px;
+                    top: 41px;
+                    display: none;
+                    background: #fff;
+                    // width: 145px;
+                    width: 230px;
+                    // height: 135px;
+                    max-height: 200px;
+
+                    // -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    // -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    // box-shadow: 0 0 2px rgba(0,0,0,.5);
+
+                    overflow-x: hidden;
+                    // // overflow-y: auto;
+                    overflow-y: scroll;
+
+					z-index: 1;
+
+                    &.active {
+
+                        display: block;
+                    }
+
+
+                    li {
+
+                        float: none;
+                        padding: 0;
+
+                        a {
+							display: block;
+                            padding: 5px 5px 5px 10px;
+                            text-decoration: none;
+
+                            &:hover {
+
+                                text-decoration: none;
+                            }
+                        }
+                    }                    
+
+
+
+                    // ul {
+                    
+
+                    //     li {
+
+                    //         float: none;
+                    //         padding: 0;
+
+                    //         a {
+
+                    //             padding: 5px 5px 5px 10px;
+                    //             text-decoration: none;
+
+                    //             &:hover {
+
+                    //                 text-decoration: none;
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+                }
+
+
 			}
 			
 			.release-info {

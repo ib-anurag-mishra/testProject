@@ -31,15 +31,25 @@
 
 				if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron")):
 					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
+					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
 					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
 					?>
 				
-				<div class="wishlist-popover">
+					<?php /*<div class="wishlist-popover">*/?>
+
+
+
+					
+
 					<?php
-					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
-					/*echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));*/
+					// echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
+					// echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));
 					?>
-				</div>
+					<ul>
+						<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+
+					</ul> 					
+	
 
 				<?php endif; ?>
 
