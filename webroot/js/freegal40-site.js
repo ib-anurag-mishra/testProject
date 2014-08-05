@@ -303,7 +303,7 @@ $(document).ready(function() {
         oldList.remove();
 
         // $(this).next('.wishlist-popover').append(queuelist);
-         $(this).next('.playlist-options').find('ul').append(queuelist);
+         $(this).next('.playlist-options').append(queuelist);
 
         // $('.wishlist-popover').removeClass('active');
         $('.playlist-options').removeClass('active');
