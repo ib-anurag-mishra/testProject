@@ -395,11 +395,10 @@ class VideosController extends AppController {
         }
 
         $this->set( 'videosData', $videosData );
-
+        
         if ( count( $videosData ) > 0 ) {
-
-			$this->moreVideosData( $territory, $videosData[0]['Video']['ArtistText'] );
-			$this->topVideoGenre( $prefix, $territory, $videosData[0]['Video']['Genre'] );
+            $this->moreVideosData( $territory, $videosData[0]['Video']['ArtistText'] );
+            $this->topVideoGenre( $prefix, $territory, $videosData[0]['Video']['Genre'] );
         }
 
         $this->set( 'videoGenre', $videosData[0]['Video']['Genre'] );

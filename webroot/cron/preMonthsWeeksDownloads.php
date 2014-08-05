@@ -3,290 +3,11 @@ ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 date_default_timezone_set("America/New_York");
 
-// Connect to the database
-$db = new mysqli('192.168.100.114', 'freegal_prod', '}e47^B1EO9hD', 'freegal');
-//$db = new mysqli('127.0.0.1', 'root', '', 'freegal', '3306',':/Applications/MAMP/tmp/mysql/mysql.sock');//testing
-if ($db->connect_errno) {
-	die('There was an error connected to the database.' . "\n". $db->connect_error);
-}
-
-function week_range($date) {
-    $ts = strtotime($date);
-    $start = (date('w', $ts) == 0) ? $ts : strtotime('last monday', $ts);
-    return array(date('Y-m-d', $start),
-                 date('Y-m-d', strtotime('next sunday', $start)));
-}
-
-function getWeekLabels() {
-	$weekLabels = array();
-	list($startWeek, $endWeek) = week_range(date('Y-m-j', strtotime('last monday')));
-	$end = $endWeek;
-	for ($i=1; $i < 4; $i++) { 
-		list($start, $end) = week_range(date($startWeek, strtotime('last monday')));
-		$startWeek = $start;
-		$weekLabels[substr(str_replace('-', '', $startWeek), 2)] = array('start' => $startWeek . ' 00:00:00', 'end' =>  $end . ' 23:59:59');
-	}
-	ksort($weekLabels);
-	$week4start = date('Y-m-d', strtotime('last monday', strtotime($endWeek)));
-	$week4end = date('Y-m-d', strtotime('next sunday', strtotime($week4start)));
-	$weekLabels[substr(str_replace('-', '', $week4start), 2)] = array('start' => $week4start . ' 00:00:00', 'end' =>  $week4end . ' 23:59:59');
-	echo "End getWeekLabels \n";
-	return $weekLabels;
-}
-$weekLabels = getWeekLabels();
-
-// This function gets the labels and dates for each of the last four months
-function getLastFourMonthsLabels($db) {
-	$startMonth = date('Y-m-01', strtotime(date("Y-m",strtotime("-4 Months")))) . ' 00:00:00';
-	$endMonth =  date('Y-m-t', strtotime(date("Y-m",strtotime("-1 Months")))) . ' 23:59:59';
-	$sql = "SELECT
-				LEFT (downloads.created, 7) as created,
-				DATE_FORMAT(downloads.created, '%y%m') AS MONTH
-			FROM
-				downloads
-			WHERE 
-				downloads.created >= '$startMonth' AND downloads.created <= '$endMonth'
-			GROUP BY
-				MONTH (created)
-			ORDER BY
-				downloads.created ASC";
-
-	$result = $db->query($sql);
-	$months = array();
-	if ($result === FALSE) {
-		echo "there was an error with the query";
-		exit;
-	} elseif ($result && $result->num_rows) {
-		while ($row = $result->fetch_assoc()) {
-			$months[$row['created']] = $row['MONTH'];
-		}
-		$result->free();
-	}
-	echo "End getLastFourMonthsLabels \n";
-	return $months;
-}
-$months = getLastFourMonthsLabels($db);
-// print_r($months);
-// exit;
-// This function gets the library IDs of all of the libraries that are active and have a customer ID
-function getLibraryIds($db, $monthLabels, $weekLabels) {
-	$sql = "SELECT libraries.id, libraries.library_name, libraries.customer_id FROM libraries WHERE libraries.library_status = 'active' AND libraries.customer_id != 0";
-	$result = $db->query($sql);
-	if ($result === FALSE) { 
-		echo "there was an error getting the library IDs";
-	} elseif ($result && $result->num_rows) {
-		//$libids = '';
-		$weeks = array();
-		foreach ($weekLabels as $key => $value) {
-			$weeks[] = $key;
-		}
-		$months = array();
-		foreach ($monthLabels as $key => $value) {
-			$months[] = $value;
-		}
-		$libids = array();
-		while ($row = $result->fetch_assoc()) {
-			$libids[$row['id']] = array(
-				'library_name' => $row['library_name'],
-				'customer_id' => $row['customer_id'],
-				'cte' => '0',
-				$months[0] => '0',
-				$months[1] => '0',
-				$months[2] => '0',
-				$months[3] => '0',
-				$weeks[0] => '0',
-				$weeks[1] => '0',
-				$weeks[2] => '0',
-				$weeks[3] => '0'
-			);
-		}
-		$result->free();
-	}
-	echo "End getLibraryIds \n";
-	return $libids;
-}
-$final = getLibraryIds($db, $months, $weekLabels);
-
-// This function gets the start and end contract dates
-function getContractStartEnd($db) {
-	$sql = 'SELECT concat(min(libraries.library_contract_start_date), " 00:00:00") AS edge FROM libraries WHERE libraries.library_status = "active" AND libraries.customer_id != 0
-				UNION
-			SELECT concat(max(libraries.library_contract_end_date), " 23:59:59") AS edge FROM libraries WHERE libraries.library_status = "active" AND libraries.customer_id != 0';
-	$result = $db->query($sql);
-	if ($result === FALSE) { 
-		echo "there was an error with the query";
-	} elseif ($result && $result->num_rows) {
-		$minmax = array();
-		while ($row = $result->fetch_assoc()) {
-			$minmax[] = $row['edge'];
-		}
-		$result->free();
-	}
-	echo "End getContractStartEnd \n";
-	return $minmax;
-}
-list($min, $max) = getContractStartEnd($db);
-
-
-function getContractToEndPurchases($db, $final, $min, $max, $key) {
-
-	$sql = "SELECT
-				libraries.id,
-				count(libraries.id) as cte
-			FROM downloads
-			JOIN libraries ON downloads.library_id = libraries.id
-			WHERE libraries.id = $key AND downloads.created >= concat(libraries.library_contract_start_date, ' 00:00:00') AND downloads.created <= concat(libraries.library_contract_end_date, ' 23:59:59')
-			LIMIT 1
-	";
-	$result = $db->query($sql);
-	if ($result === FALSE) { 
-		echo "there was an error getting the library IDs";
-	} elseif ($result && $result->num_rows) {
-		while ($row = $result->fetch_assoc()) {
-			$final[$row['id']]['cte'] = $row['cte'];
-		}
-		$result->free();
-	}
-	echo "$key: End getContractToEndPurchases \n";
-	return $final;
-}
-foreach ($final as $key => $value) {
-	$final = getContractToEndPurchases($db, $final, $min, $max, $key);
-}
-
-function getLastFourMonthsDownloads($db, $final, $months) {
-	$allMonths = array();
-	foreach ($months as $created => $month) {	
-		$allMonths[] = $month;
-		$min = $created . '-01 00:00:00';
-		$max = date("Y-m-t", strtotime($created)) . ' 23:59:59';
-		$sql = "SELECT downloads.library_id, count(downloads.library_id) as '$month'
-				FROM downloads
-				WHERE downloads.created BETWEEN '$min' AND '$max'
-				GROUP BY downloads.library_id";
-		print_r($sql);
-		$result = $db->query($sql);
-		if ($result === FALSE) { 
-			echo "there was an error getting the library IDs";
-		} elseif ($result && $result->num_rows) {
-			while ($row = $result->fetch_assoc()) {
-				$final[$row['library_id']][$month] = $row[$month];
-			}
-			$result->free();
-		}
-	}
-	echo "End getLastFourMonthsDownloads \n";
-	return array($final, $allMonths);
-}
-//list($final, $allMonths) = getLastFourMonthsDownloads($db, $final, $months);
-
-function getAll($db, $final, $months, $weekLabels) {
-	$case_statement = '';
- 	$allMonths = array();
- 
- 	foreach ($months as $created => $month) {	
- 		$case_statement .= ', sum(CASE WHEN LEFT (downloads.created, 7) = "' . $created . '" then 1 else 0 end) "' . $month . '"';
- 		$allMonths[] = $month;
- 	}
-
-
- 
- 	$allWeeks = array();
- 	foreach ($weekLabels as $label => $range) {
- 		$case_statement .= ', sum(CASE WHEN downloads.created >= "' . $range['start'] . '" AND  downloads.created <= "' . $range['end'] . '" then 1 else 0 end) "' . $label . '"';
- 		$allWeeks[] = $label;
- 	}
-
- 	$lastWeekEnd = array_pop($weekLabels);
- 	$startMonth = date('Y-m-01', strtotime(date("Y-m",strtotime("-4 Months")))) . ' 00:00:00';
-	$max = max(date('Y-m-t', strtotime(date("Y-m",strtotime("-1 Months")))) . ' 23:59:59', $lastWeekEnd['end']);
- 	foreach ($final as $key => $value) {
- 		
-	 	$sql = <<<EOD
-				SELECT downloads.library_id $case_statement
-				FROM downloads
-				WHERE downloads.created >= "$startMonth" AND downloads.created <= "$max" AND downloads.library_id = $key
-				GROUP BY downloads.library_id
-EOD;
-	 	// echo $sql;
-	 	// exit;
-	 	$result = $db->query($sql);
-	 	if ($result === FALSE) { 
-			echo "there was an error getting the library IDs";
-		} elseif ($result && $result->num_rows) {
-			while ($row = $result->fetch_assoc()) {
-				$final[$row['library_id']][$allMonths[0]] = $row[$allMonths[0]];
-				$final[$row['library_id']][$allMonths[1]] = $row[$allMonths[1]];
-				$final[$row['library_id']][$allMonths[2]] = $row[$allMonths[2]];
-				$final[$row['library_id']][$allMonths[3]] = $row[$allMonths[3]];
-				$final[$row['library_id']][$allWeeks[0]] = $row[$allWeeks[0]];
-				$final[$row['library_id']][$allWeeks[1]] = $row[$allWeeks[1]];
-				$final[$row['library_id']][$allWeeks[2]] = $row[$allWeeks[2]];
-				$final[$row['library_id']][$allWeeks[3]] = $row[$allWeeks[3]];
-			}
-			$result->free();
-		}
- 	}
- 	
-	return array($final, $allMonths, $allWeeks);
-}
-list($final, $allMonths, $allWeeks) = getAll($db, $final, $months, $weekLabels);
-
-function getLastFourWeeksDownloads($db, $final, $weekLabels) {
-	$allWeeks = array();
-	foreach ($weekLabels as $label => $range) {	
-		$allWeeks[] = $label;
-		$min = $range['start'];
-		$max = $range['end'];
-		$sql = "SELECT libraries.id, count(libraries.id) as '$label'
-				FROM downloads
-				JOIN libraries ON downloads.library_id = libraries.id
-				WHERE downloads.created >= '$min' AND downloads.created <= '$max' AND libraries.library_status = 'active' AND libraries.customer_id != 0
-				GROUP BY downloads.library_id";
-		print_r($sql);
-		$result = $db->query($sql);
-		if ($result === FALSE) { 
-			echo "there was an error getting the library IDs";
-		} elseif ($result && $result->num_rows) {
-			while ($row = $result->fetch_assoc()) {
-				$final[$row['id']][$label] = $row[$label];
-			}
-			$result->free();
-		}
-	}
-	echo "End getLastFourMonthsDownloads \n";
-	return array($final, $allWeeks);
-}
-
-//list($final, $allWeeks) = getLastFourWeeksDownloads($db, $final, $weekLabels);
-//print_r($final);
-//exit;
-
-// Forms the name for the new file and deletes the file if it already exist
-$file_path = '../uploads/';
-$file_name = 'freegalmusic_download_' . date('ymd') . '.csv';
-if (file_exists($file_path . $file_name))  {
-	unlink($file_path . $file_name);
-}
-
-// Create the file
-$report = fopen($file_path . $file_name, 'w') or die("Can't open file");
-$header = 'customer_id,library_name,cte,' . $allMonths[0] . ',' . $allMonths[1] . ',' . $allMonths[2] . ',' . $allMonths[3] . ',' . $allWeeks[0] . ',' . $allWeeks[1] . ',' . $allWeeks[2] . ',' . $allWeeks[3] . "\n";
-fwrite($report, $header);
-
-foreach ($final as $key => $value) {
-	$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['cte'] . ',' . $value[$allMonths[0]] . ',' . $value[$allMonths[1]] . ',' . $value[$allMonths[2]] . ',' . $value[$allMonths[3]] . ',' . $value[$allWeeks[0]] . ',' . $value[$allWeeks[1]] . ',' . $value[$allWeeks[2]] . ',' . $value[$allWeeks[3]] . "\n";
-	fwrite($report, $string);
-}
-
-fclose($report);
-print_r($final);
-
 function sendMail($file_path, $file_name) {
 	$to = "ralphk@libraryideas.com";
 	$from = "no-reply@freegalmusic.com";
 	$bcc = "ralph_kelley@yahoo.com";
-	$subject ='Freegalmusic.com: Library download report (' . date('ymd') . ')';
+	$subject ='TEST - Freegalmusic.com: Library download report (' . date('ymd') . ')';
 	$message =
 			"Greetings,<br/><br/>
 			Attached is a report that contains the total number of downloads each library had during their contract period. This report also contains the total downloads for each of the previous four months and each of the previous four weeks.<br/><br/>
@@ -322,7 +43,92 @@ function sendMail($file_path, $file_name) {
 		echo "<p>Mail could not be sent!</p>\n"; 
 	}
 }
-sendMail($file_path, $file_name);
+
+// Connect to the database
+// $db = new mysqli('192.168.100.114', 'freegal_prod', '}e47^B1EO9hD', 'freegal');
+// $db = new mysqli('127.0.0.1', 'root', 'pelebertix', 'freegal', '3306',':/Applications/MAMP/tmp/mysql/mysql.sock');//testing
+// if ($db->connect_errno) {
+// 	die('There was an error connected to the database.' . "\n". $db->connect_error);
+// }
+
+require_once('salesfore_reports.php');
+
+function freegalMusicDownloads() {
+	$SalesforceReports = new salesfore_reports('127.0.0.1', 'freegal', 'root', 'pelebertix');
+	$labels = $SalesforceReports->getLabels();
+	$weeks = $SalesforceReports->getLastFourWeeks();
+	$months = $SalesforceReports->getLastFourMonths();
+	// This function gets the library IDs of all of the libraries that are active and have a customer ID
+	$final = $SalesforceReports->getLibraryIds($labels);
+	// This gets the total music downloads for each library's contract period
+	$final = $SalesforceReports->getContractToEndDownloads($final);
+	// This gets the total music downloads for each library during each period
+	$final = $SalesforceReports->getPeriodDownloads($final, $months, $weeks, $labels);
+	$file_path = '../uploads/';
+	$file_name = 'freegalmusic_download_' . date('ymd') . '.csv';
+	$report = $SalesforceReports->createReport($file_path . $file_name, $labels, $final);
+	print_r($final);
+	sendMail($file_path, $file_name);
+}
+// freegalMusicDownloads();
+
+function freegalMoviesStreams() {
+	$SalesforceReports = new salesfore_reports('127.0.0.1', 'fmovies', 'root', 'pelebertix');
+	$labels = $SalesforceReports->getLabels();
+	$weeks = $SalesforceReports->getLastFourWeeks();
+	$months = $SalesforceReports->getLastFourMonths();
+	// This function gets the library IDs of all of the libraries that are active and have a customer ID
+	$final = $SalesforceReports->getLibraryIds($labels);
+	// This gets the total movie streams for each library's contract period
+	$final = $SalesforceReports->getContractToEndDownloads($final);
+	// This gets the total movie for each library during each period
+	$final = $SalesforceReports->getPeriodDownloads($final, $months, $weeks, $labels);
+	$file_path = '../uploads/';
+	$file_name = 'freegalmovies_streaming_' . date('ymd') . '.csv';
+	$report = $SalesforceReports->createReport($file_path . $file_name, $labels, $final);
+	print_r($final);
+	sendMail($file_path, $file_name);
+}
+// freegalMoviesStreams();
+
+function freadingDownloads() {
+	$SalesforceReports = new salesfore_reports('127.0.0.1', 'freading', 'root', 'pelebertix');
+	$labels = $SalesforceReports->getLabels();
+	$weeks = $SalesforceReports->getLastFourWeeks();
+	$months = $SalesforceReports->getLastFourMonths();
+	// This function gets the library IDs of all of the libraries that are active and have a customer ID
+	$final = $SalesforceReports->getLibraryIds($labels);
+	// This gets the total book downloads for each library's contract period
+	$final = $SalesforceReports->getContractToEndDownloads($final, 'acsdownloads', 'libraryid');
+	// This gets the total book downloads for each library during each period
+	$final = $SalesforceReports->getPeriodDownloads($final, $months, $weeks, $labels, 'acsdownloads', 'libraryid');
+	$file_path = '../uploads/';
+	$file_name = 'freading_download_' . date('ymd') . '.csv';
+	$report = $SalesforceReports->createReport($file_path . $file_name, $labels, $final);
+	print_r($final);
+	sendMail($file_path, $file_name);
+}
+// freadingDownloads();
+
+function freegalMusicStreams() {
+	$SalesforceReports = new salesfore_reports('127.0.0.1', 'freegal', 'root', 'pelebertix');
+	$labels = $SalesforceReports->getLabels();
+	$weeks = $SalesforceReports->getLastFourWeeks();
+	$months = $SalesforceReports->getLastFourMonths();
+	// This function gets the library IDs of all of the libraries that are active and have a customer ID
+	$final = $SalesforceReports->getLibraryIds($labels);
+	// This gets the total music streams for each library's contract period
+	$final = $SalesforceReports->getContractToEndStreams($final);
+	// This gets the total music streams for each library during each period
+	$final = $SalesforceReports->getPeriodStreams($final, $months, $weeks, $labels);
+	$file_path = '../uploads/';
+	$file_name = 'freegalmusic_streaming_' . date('ymd') . '.csv';
+	$report = $SalesforceReports->createReport($file_path . $file_name, $labels, $final);
+	print_r($final);
+	sendMail($file_path, $file_name);
+}
+freegalMusicStreams();
+
 
 
 
