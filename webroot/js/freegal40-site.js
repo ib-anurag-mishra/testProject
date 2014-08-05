@@ -318,7 +318,7 @@ $(document).ready(function() {
         //     $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
 
         // }
-
+        console.log('inside click');
 
         var oldList = $(this).next('ul');
         oldList.empty();
