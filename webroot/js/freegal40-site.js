@@ -1345,6 +1345,7 @@ $(document).ready(function() {
 
                         });
                         $siblings_carousel.children('ul').css({width:newCarouselWidth});
+                        newCarouselWidth = 0;
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                     }
