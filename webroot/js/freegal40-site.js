@@ -299,34 +299,27 @@ $(document).ready(function() {
 
         var queuelist = $(document).find('.playlist-options-test').html();
         console.log(queuelist);
-        // var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
-        var oldList = $(this).next('.playlist-options');
+        var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
+
         oldList.remove();
 
-        // $(this).next('.wishlist-popover').append(queuelist);
-         $(this).next('input').after(queuelist);
+        $(this).next('.wishlist-popover').append(queuelist);
 
-        // $('.wishlist-popover').removeClass('active');
-        $('.playlist-options').removeClass('active');
 
-        // if ($(this).next('.wishlist-popover').hasClass('active')) {
-        //     $(this).next('.wishlist-popover').removeClass('active');
-        //     $(this).find('.add-to-playlist-button').css({opacity: 0.5});
-        // } else {
+        $('.wishlist-popover').removeClass('active');
 
-        //     $(this).next('.wishlist-popover').addClass('active');
-        //     $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
 
-        // }
-
-        if ($(this).next('.playlist-options').hasClass('active')) {
-            $(this).next('.playlist-options').removeClass('active');
+        if ($(this).next('.wishlist-popover').hasClass('active')) {
+            $(this).next('.wishlist-popover').removeClass('active');
             $(this).find('.add-to-playlist-button').css({opacity: 0.5});
         } else {
 
-            $(this).next('.playlist-options').addClass('active');
+            $(this).next('.wishlist-popover').addClass('active');
+            $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
 
-        }        
+        }
+
+       
 
         return false;
     });    
