@@ -19,16 +19,18 @@ unlink($reportsFolder . '/tmp_debug_data.txt');
 
 $arr_dates = array();
 
-$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 1), 1, date(Y))); //'2012-10-01 00:00:00';
-$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 1), 1, date(Y))); //'2012-10-31 23:59:59';
+$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
+$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
 //$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
 //$arr_dates['month']['to_date'] = '2014-06-31 23:59:59';
 
+print_r($arr_dates);
 $fetchRecordsFromTable = 'latest_downloads';
 //$fetchRecordsFromTable = 'downloads';
 
-//$libraryType = array('ALC' => '0');
-$libraryType = array('ALC' => '0', 'Unlimited' => '1');
+//$libraryType = array('ALC' => '0', 'Unlimited' => '1');
+$libraryType = array('ALC' => '0');
+
 
 //$country_curency = array('US' => 'USD');
 //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
@@ -76,7 +78,7 @@ foreach ($arr_dates AS $key => $value)
                     . "AND l.library_territory='" . $row_country['library_territory'] . "' "
                     . "GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',clp.library_id),clp.library_unlimited,clp.library_id "
                     . "ORDER BY clp.library_id;";
-
+exit;
             $result = mysql_query($query, $freegal);
             $file_name = $reportsFolder . '/tmp_debug_data.txt';
             $tmp_cont = $query . '//' . mysql_num_rows($result) . '////\r\n';
