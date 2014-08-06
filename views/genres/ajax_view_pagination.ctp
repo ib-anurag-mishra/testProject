@@ -1,7 +1,6 @@
 <?php
 if (count($artistList) > 0)
-{
-    
+{    
 ?>
 <script type="text/javascript" src="/js/ajaxify-html5.js"></script>
 <?php

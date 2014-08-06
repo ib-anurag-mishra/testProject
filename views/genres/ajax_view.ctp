@@ -25,7 +25,8 @@ var preValue= 1;
                                     $('#artist_loader').hide();                      
                                     $('#artistlistrecord').append(newitems);  
                                 }else{
-                                    $('#artist_loader').hide(); 
+                                    //$('#artist_loader').hide(); 
+                                    document.getElementById('artist_loader').innerHTML = '';
                                     return;
                                 }
                                 
