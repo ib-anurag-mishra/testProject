@@ -98,47 +98,52 @@ class SearchController extends AppController {
             /**********************************************************************************************************/
 
             $country 	= $this->Session->read( 'territory' );
-            $songs   	= $this->Solr->search( $queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country );
-            $total 	 	= $this->Solr->total;
-            $totalPages = ceil( $total / $limit );
-            $lastPage 	= isset( $songs['lastPage'] ) ? $songs['lastPage'] : '';
-            $lastPage 	= ceil($lastPage / $limit);
-            $songArray 	= array();
+            
+            if ( $typeVar == 'all' || $typeVar == 'song' || $typeVar == 'video' ) {
 
-            if ( is_array( $songs ) && count( $songs ) > 0  && !empty( $patronId ) ) {
-            	foreach ( $songs as $key => $song ) {
-            		if( isset( $song->ProdID ) && !empty( $song->ProdID ) ) {
-            			$songArray[$key] = (int) $song->ProdID;
-            		}
+	            $songs   	= $this->Solr->search( $queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country );
+	            //$total 	 	= $this->Solr->total;
+	            //$totalPages = ceil( $total / $limit );
+	            $lastPage 	= isset( $songs['lastPage'] ) ? $songs['lastPage'] : '';
+	            $lastPage 	= ceil($lastPage / $limit);
+	            $songArray 	= array();
+	
+	            if ( is_array( $songs ) && count( $songs ) > 0  && !empty( $patronId ) ) {
+	            	foreach ( $songs as $key => $song ) {
+	            		if( isset( $song->ProdID ) && !empty( $song->ProdID ) ) {
+	            			$songArray[$key] = (int) $song->ProdID;
+	            		}
+	
+	            		$songs[$key]->status = 'not';
+	            	}
+	
+	            	if ( is_array( $songArray ) && count( $songArray ) > 0 ) {
+	
+	            		if ( $typeVar == 'video' ) {
+	            			$arrayIndex	   = 'LatestVideodownload';
+	            			$downloadsUsed = $this->LatestVideodownload->find( 'all', array( 'conditions' => array( 'LatestVideodownload.ProdID IN (' . implode( ',', $songArray ) . ')', 'library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array( Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) ) ) ) );
+	            		} else {
+	            			$arrayIndex	   = 'LatestDownload';
+	            			$downloadsUsed = $this->LatestDownload->find( 'all', array( 'conditions' => array( 'LatestDownload.ProdID in (' . implode( ',', $songArray ) . ')', 'library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array( Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) ) ) ) );
+	            		}
+	            		
+	            		if ( isset( $downloadsUsed ) && is_array( $downloadsUsed ) && count( $downloadsUsed ) > 0 ) {
+	
+	            			foreach ( $downloadsUsed as $downloadKey => $downloadData ) {
+	
+	            				if ( in_array( $downloadData[$arrayIndex]['ProdID'],  $songArray ) ) {
+	
+	            					$key = array_search( $downloadData[$arrayIndex]['ProdID'], $songArray );
+	            					$songs[$key]->status = 'avail';
+	            				}
+	            			}
+	            		}
+	            	}
+	            }
 
-            		$songs[$key]->status = 'not';
-            	}
-
-            	if ( is_array( $songArray ) && count( $songArray ) > 0 ) {
-
-            		if ( $typeVar == 'video' ) {
-            			$arrayIndex	   = 'LatestVideodownload';
-            			$downloadsUsed = $this->LatestVideodownload->find( 'all', array( 'conditions' => array( 'LatestVideodownload.ProdID IN (' . implode( ',', $songArray ) . ')', 'library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array( Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) ) ) ) );
-            		} else {
-            			$arrayIndex	   = 'LatestDownload';
-            			$downloadsUsed = $this->LatestDownload->find( 'all', array( 'conditions' => array( 'LatestDownload.ProdID in (' . implode( ',', $songArray ) . ')', 'library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array( Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) ) ) ) );
-            		}
-            		
-            		if ( isset( $downloadsUsed ) && is_array( $downloadsUsed ) && count( $downloadsUsed ) > 0 ) {
-
-            			foreach ( $downloadsUsed as $downloadKey => $downloadData ) {
-
-            				if ( in_array( $downloadData[$arrayIndex]['ProdID'],  $songArray ) ) {
-
-            					$key = array_search( $downloadData[$arrayIndex]['ProdID'], $songArray );
-            					$songs[$key]->status = 'avail';
-            				}
-            			}
-            		}
-            	}
+	            $this->set( 'lastPage', $lastPage );
+	            $this->set( 'songs', $songs );
             }
-
-            $this->set( 'songs', $songs );
 
             if ( !empty( $typeVar ) && $typeVar != 'all' ) {
 
@@ -162,28 +167,28 @@ class SearchController extends AppController {
 
                     case 'genre':
                         $limit = 30;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'genre' );
+                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'genre' );
                         $genres = $this->Solr->groupSearch( $queryVar, 'genre', $facetPage, $limit );
                         $this->set( 'genres', $genres );
                         break;
 
                     case 'label':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'label' );
+                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'label' );
                         $labels = $this->Solr->groupSearch( $queryVar, 'label', $facetPage, $limit );
                         $this->set( 'labels', $labels );
                         break;
 
                     case 'artist':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'artist' );
+                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'artist' );
                         $artists = $this->Solr->groupSearch( $queryVar, 'artist', $facetPage, $limit );
                         $this->set( 'artists', $artists );
                         break;
 
                     case 'composer':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'composer' );
+                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'composer' );
                         $composers = $this->Solr->groupSearch( $queryVar, 'composer', $facetPage, $limit );
                         $this->set( 'composers', $composers );
                         break;
@@ -219,11 +224,10 @@ class SearchController extends AppController {
                 $this->set( 'videos', $videos );
             }
 
-            $this->set( 'total', $total );
-            $this->set( 'totalPages', $totalPages );
+            //$this->set( 'total', $total );
+            //$this->set( 'totalPages', $totalPages );
             $this->set( 'currentPage', $page );
             $this->set( 'facetPage', $facetPage );
-            $this->set( 'lastPage', $lastPage );
             $this->set( 'patronId', $patronId );
             $this->set( 'territory', $country );
             $this->set( 'libraryType', $this->Session->read( 'library_type' ) );
