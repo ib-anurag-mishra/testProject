@@ -42,6 +42,7 @@ echo "\n";*/
 $currentDate = date( "Y-m-d", time());
 $fetchRecordsFromTable = 'latest_downloads';
 //$fetchRecordsFromTable = 'downloads';
+
 echo "\n----------- Start ".$currentDate." -----------";
 echo "\n----------- Start ".date('Y-m-d H:i:s')." -----------";
 
@@ -418,7 +419,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 echo "\n----------------";
 
                 $condStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))." 00:00:00";
-                $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
+                $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
 
                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
 
