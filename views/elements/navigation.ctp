@@ -574,12 +574,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 								<select name="type" id="master-filter"
 									class="master-search-select">
 									<option value="all">Search All</option>
-									<option value="album">Albums</option>
-									<option value="artist">Artists</option>
-									<option value="composer">Composers</option>
-									<option value="genre">Genres</option>
-									<option value="song">Songs</option>
-									<option value="video">Videos</option>
+									<option value="album"><?php echo __('Albums', true); ?></option>
+									<option value="artist"><?php echo __('Artists', true); ?></option>
+									<option value="composer"><?php echo __('Composers', true); ?></option>
+									<option value="genre"><?php echo __('Genres', true); ?></option>
+									<option value="song"><?php echo __('Songs', true); ?></option>
+									<option value="video"><?php echo __('Videos', true); ?></option>
 								</select>
 							</div>
 
