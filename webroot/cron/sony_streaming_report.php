@@ -8,36 +8,26 @@
  * @package report
  * This cron script is intended to run on every week to generate the download report for Sony and SCP to sony server
  * */
-include 'functions.php';
-$count = '';
-ini_set('error_reporting', E_ALL);
-set_time_limit(0);
 //set timezone
 date_default_timezone_set('America/New_York');
 ini_set('memory_limit', '-1');
+ini_set('error_reporting', E_ALL);
+set_time_limit(0);
+
+include 'functions.php';
+$count = '';
+
 
 $countrys = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR','BM' => 'BMD', 'DE' => 'EUR');
-//$countrys = array('GB' => 'GBP');
+//$countrys = array('CA' => 'CAD');
 
 $lib_types = array('Unlimited');
 //$lib_types = array('ALC');
-//$currentDate = date('Y-m-d');
-//list($year, $month, $day) = explode('-', $currentDate);
-// $weekFirstDay = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"));
-// $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
-//$begin = new DateTime( '2011-10-01' );
-//$end = new DateTime( '2012-01-06' );
-//$begin = new DateTime( '2012-10-01' );
-//$end = new DateTime( '2012-12-03' );
 
-/* $interval = DateInterval::createFromDateString('1 day');
-  $period = new DatePeriod($begin, $interval, $end);
-  foreach ( $period as $dt )
-  {
-  echo $currentDate = $dt->format( "Y-m-d" );
-  echo "\n"; */
-//$currentDate = '2014-04-01';
+
 $currentDate = date("Y-m-d", time());
+//$currentDate = '2014-04-01';
+
 echo "\n----------- Start " . $currentDate . " -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -300,16 +290,14 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
             if ($currentDate == $monthFirstDate)
             {
                 echo "\n----------------";
-                echo $showStartDate = date("Ymd", strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00')));
-                echo $showEndDate = date("Ymd", strtotime('-1 second', strtotime('+1 month', strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00')))));
+                echo $showStartDate = date("Ymd", strtotime('-2 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00')));
+                echo $showEndDate = date("Ymd", strtotime('-1 second', strtotime('+1 month', strtotime('-2 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00')))));
                 echo "\n----------------";
 
-                $condStartDate = date("Y-m-d", strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00'))) . " 00:00:00";
-                $condEndDate = date("Y-m-d", strtotime('-1 second', strtotime('+1 month', strtotime('-1 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00'))))) . " 23:59:59";
+                echo $condStartDate = date("Y-m-d", strtotime('-2 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00'))) . " 00:00:00";
+                echo $condEndDate = date("Y-m-d", strtotime('-1 second', strtotime('+1 month', strtotime('-2 month', strtotime(date('m', strtotime($currentDate)) . '/01/' . date('Y', strtotime($currentDate)) . ' 00:00:00'))))) . " 23:59:59";
 
-//                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
-
-                $count = 1;
+               $count = 1;
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt'";
                 $result3 = mysql_query($sql);
 
@@ -334,7 +322,8 @@ if (($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 }
 
                 $row2['ReportCount'] = 0;
-                $report_name = $reports_dir . "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt";
+                echo $report_name = $reports_dir . "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_STREAM_" . $country . "_" . $count . ".txt";
+                exit;
                 $all_Ids = '';
 
                 
