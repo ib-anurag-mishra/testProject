@@ -168,8 +168,8 @@
 						<?php 
 							$artistText    = str_replace( '/', '@', base64_encode( $psong->ArtistText ) );
 							$providerType  = base64_encode( $psong->provider_type );
-							$songTitle	   = $this->getTextEncode( $psong->Title );
-							$linkSongTitle = str_replace( '"', '', $this->Search->truncateText( $this->getTextEncode( $psong->Title ), 25, $this ) );
+							$songTitle	   = $this->getTextEncode( $psong->AlbumTitle );
+							$linkSongTitle = str_replace( '"', '', $this->Search->truncateText( $this->getTextEncode( $psong->AlbumTitle ), 25, $this ) );
 						?>
 						<?=$this->Html->link( $linkSongTitle, array( 'controller' => 'artists', 'action' => 'view', $psong->ReferenceID, $providerType ), array( 'title' => $songTitle ) )?>
 					</div>
@@ -859,7 +859,7 @@
 											<span title='<?= str_replace( '"', '', $this->getTextEncode( $psong->Composer ) ); ?>'><?= $this->Search->truncateText( str_replace( '"', '', $this->getTextEncode( $psong->Composer ) ), 25, $this ); ?> </span>
 										</div>
 										<div class="album album-name">
-											<?php echo $this->Html->link( str_replace('"', '', $this->Search->truncateText($this->getTextEncode($psong->Title), 25, $this)), array( 'controller' => 'artists', 'action' => 'view', str_replace( '/', '@', base64_encode( $psong->ArtistText ) ), $psong->ReferenceID, base64_encode( $psong->provider_type ) ), array( 'title' => $this->getTextEncode($psong->Title) ) ); ?>
+											<?php echo $this->Html->link( str_replace('"', '', $this->Search->truncateText($this->getTextEncode($psong->AlbumTitle), 25, $this)), array( 'controller' => 'artists', 'action' => 'view', str_replace( '/', '@', base64_encode( $psong->ArtistText ) ), $psong->ReferenceID, base64_encode( $psong->provider_type ) ), array( 'title' => $this->getTextEncode($psong->AlbumTitle) ) ); ?>
 										</div>
 										<div class="song song-name" sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $territory; ?>">
 										<?php $showSongTitle = $this->Search->truncateText( $psong->SongTitle, strlen( $psong->SongTitle ), $this ); ?>
