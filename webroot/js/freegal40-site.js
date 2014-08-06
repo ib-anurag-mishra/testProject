@@ -75,6 +75,10 @@ $(document).ready(function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });   
 
+    $('.albums-page').find('.album-detail-container').find('ul').on('mouseleave',function(){
+        $(this).removeClass('active');
+
+    });
 
 
 
