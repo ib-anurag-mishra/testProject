@@ -3251,11 +3251,11 @@ STR;
     }
 
     /*
-     * @func freegalEncrypt
+     * @func freegalEncode
      * @desc This is used to encrypt a value using the key
      */
 
-	function freegalEncrypt($string, $key) {
+	function freegalEncode($string, $key) {
   		$result = '';
   		for($i=0; $i<strlen($string); $i++) {
     	$char = substr($string, $i, 1);
@@ -3268,11 +3268,11 @@ STR;
 	}
  
 	/*
-     * @func freegalDecrypt
+     * @func freegalDecode
      * @desc This is used to decrypt an encrypted value using the key
      */
 
-	function freegalDecrypt($string, $key) {
+	function freegalDecode($string, $key) {
   		$result = '';
   		$string = base64_decode($string);
  

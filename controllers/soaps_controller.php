@@ -2280,7 +2280,7 @@ STR;
       
       $insertArr['authtype'] = $authtype;
       $insertArr['email'] = $email;
-      $insertArr['password'] = $this->Commom->freegalEncode($password,$encodingKey);
+      $insertArr['password'] = $this->Common->freegalEncode($password,$encodingKey);
       
       if(0 == $cron_call) {
         $this->AuthenticationToken->save($insertArr);
