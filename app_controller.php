@@ -4,7 +4,7 @@ class AppController extends Controller
 
     var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library','Announcement');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library');
     var $view = 'Dataencode';
     var $patron_country;
     var $patron_id;
@@ -54,7 +54,7 @@ class AppController extends Controller
                 $this->Session->write("library", $libraryIDArray['Library']['id']);
                 $this->Session->write("library", $libraryIDArray['Library']['id']);
                 $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
-                $this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
+                //$this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
                 $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }
         }
@@ -70,7 +70,7 @@ class AppController extends Controller
                 $this->Session->write("lId", 1);
                 $this->Session->write("library", 1);
                 //$this->Session->write("library_type", $libraryData['Library']['test_library_type']);
-                $this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
+                //$this->Session->write("library_announcement", $libraryIDArray['Library']['library_announcement']);
                 $this->Session->write("block", (($libraryData['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }
             elseif ($this->Session->read("patron") != "" && $this->Session->read("library") != "")
@@ -144,19 +144,19 @@ class AppController extends Controller
         }
         $this->set('announcment_value', $announcmentValue);    
         
-        $isMovie = $this->Session->read("library_announcement");
-        if($isMovie == 1) {
-            $mvAnnouncment = Cache::read("moviesannouncementCache");
-            if ($mvAnnouncment === false)
-            {
-                $this->Announcement->setDataSource('movies');
-                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
-                $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
-                Cache::write("moviesannouncementCache", $mvAnnouncment);
-            }
-            $this->set('movieAnnouncmentValue', $mvAnnouncment);
-            $this->Announcement->setDataSource('default');
-        }       
+//        $isMovie = $this->Session->read("library_announcement");
+//        if($isMovie == 1) {
+//            $mvAnnouncment = Cache::read("moviesannouncementCache");
+//            if ($mvAnnouncment === false)
+//            {
+//                $this->Announcement->setDataSource('movies');
+//                $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
+//                $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
+//                Cache::write("moviesannouncementCache", $mvAnnouncment);
+//            }
+//            $this->set('movieAnnouncmentValue', $mvAnnouncment);
+//            $this->Announcement->setDataSource('default');
+//        }       
         /*
          * Below Code of Register Concert is Commented as per Request
          */
