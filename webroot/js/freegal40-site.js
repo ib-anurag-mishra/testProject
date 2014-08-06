@@ -25,6 +25,8 @@
 }(jQuery));
 
 
+
+
 $(document).ready(function() {
 
 
@@ -72,6 +74,8 @@ $(document).ready(function() {
     $album_page_album_detail_container_tracklist_container.on('mouseleave', '.tracklist', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });   
+
+
 
 
 
@@ -291,6 +295,33 @@ $(document).ready(function() {
         return false;
     });
 
+
+    $(document).on('click', '.albums-page .album-cover-image .add-to-playlist-button', function(e) {
+        e.preventDefault();
+
+        var queuelist = $(document).find('.playlist-options-test').html();
+        var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
+        oldList.remove();
+
+        $(this).next('.wishlist-popover').append(queuelist);
+
+        $('.wishlist-popover').removeClass('active');
+
+        if ($(this).next('.wishlist-popover').hasClass('active')) {
+            $(this).next('.wishlist-popover').removeClass('active');
+            $(this).find('.add-to-playlist-button').css({opacity: 0.5});
+        } else {
+
+            $(this).next('.wishlist-popover').addClass('active');
+            $(this).next('.wishlist-popover').children('.playlist-options').addClass('active');
+
+        }
+
+        return false;
+    });    
+
+
+
     /* clickoffs */
     $(document).mouseup(function(e) {
 
@@ -386,21 +417,38 @@ $(document).ready(function() {
 
 
     var totalASLiWidth = 0;
-    $('.artist-page .album-scrollable ul li').each(function() {
+    $('.artist-page .album-scrollable').children('ul').children('li').each(function() {
         totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
 
     });
 
-    $('.artist-page .album-scrollable ul').css({width: totalASLiWidth + 5});
+    $('.artist-page .album-scrollable').children('ul').css({width: totalASLiWidth + 5});
 
     var totalVSLiWidth = 0;
 
-    $('.artist-page .videos-scrollable ul li').each(function() {
+    $('.artist-page .videos-scrollable').children('ul').children('li').each(function() {
         totalVSLiWidth = totalVSLiWidth + $(this).outerWidth(true);
 
     });
 
-    $('.artist-page .videos-scrollable ul').css({width: totalVSLiWidth + 5});
+    $('.artist-page .videos-scrollable').children('ul').css({width: totalVSLiWidth + 5});
+
+
+    var totalMVLiWidth = 0;
+    $('.individual-videos-page .more-videos-scrollable').children('ul').children('li').each(function() {
+        totalMVLiWidth = totalMVLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.individual-videos-page .more-videos-scrollable').children('ul').css({width: totalMVLiWidth + 5});
+
+    var totalTVLiWidth = 0;
+    $('.individual-videos-page .top-videos-scrollable').children('ul').children('li').each(function() {
+        totalTVLiWidth = totalTVLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.individual-videos-page .top-videos-scrollable').children('ul').css({width: totalTVLiWidth + 5});          
 
 
     
@@ -1242,6 +1290,100 @@ $(document).ready(function() {
 
     });
 
+
+    var $left_scroll_button_ajax = $('.left-scroll-button-ajax');
+
+    $left_scroll_button_ajax.on('click', function() {
+        
+        var $siblings_carousel = $(this).siblings('.carousel-ajax');
+        
+
+        var currentScrollLeft = $siblings_carousel.scrollLeft();
+        currentScrollLeft = currentScrollLeft - 654;
+        $siblings_carousel.animate({scrollLeft: currentScrollLeft});        
+
+    });
+
+    var $right_scroll_button_ajax = $('.right-scroll-button-ajax');
+    $right_scroll_button_ajax.on('click', function() {
+
+
+
+
+        var $siblings_carousel = $(this).siblings('.carousel-ajax');
+
+        var currentScrollLeft = $siblings_carousel.scrollLeft();
+
+
+
+        currentScrollLeft = currentScrollLeft + 654;
+        $siblings_carousel.animate({scrollLeft: currentScrollLeft});
+
+        /* if there are more than 50 albums (not added in code yet - needs to be added by IB), and the scrollLeft is at the threshold, get more albums */
+
+        if($siblings_carousel.children('ul').width() - currentScrollLeft < 654) {
+            
+            /* IB - get 50 albums at a time */
+
+            setTimeout(function(){
+
+
+
+
+                var newCarouselWidth = 0;
+                nextPage = $('.next_page').val();
+                artistText = $('.artist_text').val();
+                $('.next_page').remove();
+                $('.artist_text').remove();
+                if(nextPage) {
+                    $('#artist_loader').show();
+                    $.ajax({
+                        type: "post",
+                        url: webroot + 'artists/load_albums/'+artistText+'/'+nextPage,
+                        success: function(response) {
+                            /* IB - append new album html */
+                            if(response){
+                                $('#artist_loader').hide();
+                                $('.artist-albums').append(response);  
+                            } else {
+                                $('#artist_loader').hide();
+                            }                        
+                            /* recalculate ul width */
+
+                            $siblings_carousel.children('ul').children('li').each(function(){
+
+                                newCarouselWidth = newCarouselWidth + $(this).outerWidth(true);
+
+                            });
+                            $siblings_carousel.children('ul').css({width:newCarouselWidth});
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                        }
+                    });
+                }
+
+            },500);
+
+
+        }
+
+
+
+
+    });    
+
+
+
+
+
+
+ 
+
+
+
+
+
     $account_menu_dropdown.on('mouseleave', function() {
 
         $(this).removeClass('active');
@@ -1506,24 +1648,28 @@ $(document).ready(function() {
 
 
     /* FAQ page */
-    var $faq_container_anchor = $('.faq-container').find('li').find('a');
-    var $faq_container_paragraph = $('.faq-container').find('p');
+    var $faq_container = $('.faq-container');
+    var $faq_container_question = $faq_container.find('.fq');
+    var $faq_container_answer = $faq_container.find('.fa');
 
 
-    $faq_container_anchor.on('click', function(e) {
-        e.preventDefault();
-        var $paragraph_siblings = $(this).siblings('p');
+    $faq_container_question.on('click',function(){
+        $this = $(this);
+        if ($this.next('.fa').hasClass('active')) {
 
+            $this.next('.fa').removeClass('active').slideUp(500);
 
-
-        if ($paragraph_siblings.hasClass('active')) {
-            $paragraph_siblings.slideUp(500).removeClass('active');
         } else {
-            $faq_container_paragraph.slideUp(500).removeClass('active');
-            $paragraph_siblings.slideDown(500).addClass('active');
-        }        
+
+            $('.fa').removeClass('active').slideUp(500);
+
+            $this.next('.fa').addClass('active').slideDown(500);
+        }
+
 
     });
+
+
 
 
 
@@ -1745,6 +1891,55 @@ $(document).ready(function() {
 
     /* */
 
+
+    $('.artist-page').find('.playlist-menu-icon').on('click',function(e){
+        e.preventDefault();
+        
+        var oldList = $(this).next('ul');
+        oldList.empty();
+        var queuelist = $(document).find('.playlist-options-new').find('ul').html();
+        $(this).next('ul').append(queuelist).addClass('active');
+
+    });
+
+    $('.artist-page').find('.playlist-menu-icon').next('ul').on('mouseleave',function(){
+        $(this).removeClass('active');
+
+    });
+
+    $('.artist-page').find('.album-container').on('mouseenter',function(){
+        $this = $(this);
+        $this.find('.playlist-menu-icon').css({opacity:.5});
+        $this.find('.album-preview').css({opacity:.5});
+
+    });
+
+    $('.artist-page').find('.album-container').on('mouseleave',function(){
+        $this = $(this);
+        $this.find('.playlist-menu-icon').css({opacity:0});
+        $this.find('.album-preview').css({opacity:0});
+
+    });    
+
+    $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });
+
+    $('.artist-page').find('.album-container').children('.album-preview').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.artist-page').find('.album-container').children('.album-preview').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });    
 
     $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
     {

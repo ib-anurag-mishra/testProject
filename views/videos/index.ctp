@@ -132,13 +132,13 @@
 							<li> 
                   <?php endif; ?>
 						<div class="video-cover-container">
-                        	<a href="/videos/details/<?= $topDownload["Videodownloads"]["ProdID"]; ?>"><img alt="" src="<?= $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
+                        	<a href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>"><img alt="" src="<?= $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
                         <?php
 								if ( $this->Session->read( 'patron' ) ):
                         ?>
                                 	<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a> 
                           <?php else: ?>
-                                    <a class="top-video-login-button" href='/users/redirection_manager'> <?= __("Login"); ?></a>
+                                    <?php /*<a class="top-video-login-button" href='/users/redirection_manager'> <?= __("Login"); ?></a>*/ ?>
                           <?php endif; ?>
 							<div class="wishlist-popover">
                           <?php
@@ -191,7 +191,7 @@
                             </div>
                         </div>
                         <div class="video-title">
-							<a title="<?= $this->getValidText( $this->getTextEncode( $topDownload['Video']['VideoTitle'] ) ); ?>" href="/videos/details/<?= $topDownload["Videodownloads"]["ProdID"]; ?>">
+							<a title="<?= $this->getValidText( $this->getTextEncode( $topDownload['Video']['VideoTitle'] ) ); ?>" href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>">
                         	<?php
 	                        	if ( isset( $topDownload['Video']['Advisory'] ) && 'T' == $topDownload['Video']['Advisory'] ) {
 	                        		$topDownload['Video']['VideoTitle'] = substr( $topDownload['Video']['VideoTitle'], 0, 10 ) . '...';
