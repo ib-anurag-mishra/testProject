@@ -157,6 +157,7 @@
 
 
                     var home07 = $('#home07');
+                    var concert07 = $('#concert07');
                     var musicVideo07 = $('#musicVideo07');
                     var newsRelease07 = $('#newsRelease07');
                     var genre07 = $('#genre07');
@@ -194,6 +195,7 @@
                         leftmyhistory07.removeClass('active');
                         leftsavedqueues07.removeClass('active');
                         leftmylib07.removeClass('active');
+                        concert07.removeClass('active');
                         home07.removeClass('active');
                         leftfqueues.addClass('active');
                     }
