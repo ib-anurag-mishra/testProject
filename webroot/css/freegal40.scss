@@ -6093,7 +6093,8 @@ sub { top: 0.4em; }
                     	opacity: 1;
                     }
 	            }
-                        
+                
+                /*        
                 .wishlist-popover {
 
                     display: none;
@@ -6209,7 +6210,59 @@ sub { top: 0.4em; }
                             background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
                         }
                     }
-                }   
+                }
+                */
+                .playlist-options {
+                    position: absolute;
+                    // right: -146px;
+                    left: 10px;
+                    top: 41px;
+                    display: none;
+                    background: #fff;
+                    // width: 145px;
+                    width: 230px;
+                    // height: 135px;
+                    max-height: 200px;
+
+                    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    box-shadow: 0 0 2px rgba(0,0,0,.5);
+
+                    overflow-x: hidden;
+                    // overflow-y: auto;
+                    overflow-y: scroll;
+             
+
+                    &.active {
+
+                        display: block;
+                    }
+
+
+
+                    ul {
+                    
+
+                        li {
+
+                            float: none;
+                            padding: 0;
+
+                            a {
+
+                                padding: 5px 5px 5px 10px;
+                                text-decoration: none;
+
+                                &:hover {
+
+                                    text-decoration: none;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
 			}
 			
 			.release-info {
