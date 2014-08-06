@@ -884,23 +884,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			{
 				$announcment_class  =   "";
 			}
-                        
-                        //$isMovie = $this->Session->read("library_announcement");
 
 			?>
-                            <div class="announcements">
-                                    <h2>
-                                            <?php __('Announcements'); ?>
-                                    </h2>
-                                    <?php //if( empty($isMovie) ) {  
-                                    ?>
-                                    <div class="announcement" style="<?php echo $announcment_class; ?>">
-                                            <?php echo $announcment_value; ?>
-                                    </div>
-                                    <?php //}
-                                     ?>
-                            </div>
-                        <!--
+			<div class="announcements">
+				<h2>
+					<?php __('Announcements'); ?>
+				</h2>
+				<div class="announcement" style="<?php echo $announcment_class; ?>">
+					<?php echo $announcment_value; ?>
+				</div>
+			</div>
+<!-- commented announcements
                         <?php 
                         if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
 
@@ -909,25 +903,25 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             $i = 0;
                         ?>
                             <div class="movie-announcements">
-                                 <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px; font-weight:bold"> 
-                                    Did you know?
+                                 <p> 
+                                    Did you know that Freegal is also a movie service?
                                   </p>
-                                  <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px;">Freegal is also a movie service!</p>
-                                  <p style="margin-bottom:14px;">Stream top movies like:</p> 
+                                  <p>You can stream full-length concerts, and top movies like  
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
-                                <p style="margin-bottom:4px;"><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
-                                    <?php echo $value['announcements']['title']; ?>
-                                </a></p>
-                                 <?php /*if($i == 1){
+                                <strong><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
+                                    <?php echo '"'.$value['announcements']['title'].'"'; ?>
+                                </a></strong>
+                                 <?php if($i == 1){
                                             echo "and";
-                                        }*/
+                                        }
                                   } ?>
-                                 
-                                 <p style="margin-top:14px;"><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here</a> to log in.</p>
+                                  .</p> 
+                                 <p><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here</a> to log in.</p>
                             </div>
-                        <?php } ?>  -->
+                        <?php } ?> 
+-->
 		</section>
 		<div class="content" style="<?php echo $section_class; ?>">
 			<span class="ajaxmessage44" id="ajaxflashMessage44"></span>

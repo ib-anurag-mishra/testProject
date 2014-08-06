@@ -32,9 +32,6 @@ class QueueListDetailsController extends AppController
     {
         $dqPlid = $this->params['form']["dqPlid"];
         $patron_id = $this->Session->read('patron');
-        if(empty($this->params['form']['hdn_remove_song'])) {
-            $this->params['form']['hdn_remove_song'] = '';
-        }
         if (!empty($patron_id))
         {
             $this->QueueDetail->setDataSource('master');

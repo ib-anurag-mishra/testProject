@@ -387,7 +387,7 @@ class VideosController extends AppController {
 
         if ( isset( $this->params['pass'][0] ) ) {
 
-            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] );
+            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params[pass][0] );
             
             $videoArtwork = $this->Token->artworkToken( $videosData[0]['File']['CdnPath'] . '/' . $videosData[0]['File']['SourceURL'] );
             
@@ -395,10 +395,11 @@ class VideosController extends AppController {
         }
 
         $this->set( 'videosData', $videosData );
-        
+
         if ( count( $videosData ) > 0 ) {
-            $this->moreVideosData( $territory, $videosData[0]['Video']['ArtistText'] );
-            $this->topVideoGenre( $prefix, $territory, $videosData[0]['Video']['Genre'] );
+
+			$this->moreVideosData( $territory, $videosData[0]['Video']['ArtistText'], $decodedId );
+			$this->topVideoGenre( $prefix, $territory, $videosData[0]['Video']['Genre'] );
         }
 
         $this->set( 'videoGenre', $videosData[0]['Video']['Genre'] );
@@ -532,7 +533,7 @@ class VideosController extends AppController {
      * @return: void
      */
 
-    public function moreVideosData( $territory, $artistText ) {
+    public function moreVideosData( $territory, $artistText, $decodedId ) {
     	 
     	$moreVideosData = array();
     	$country 		= $territory;

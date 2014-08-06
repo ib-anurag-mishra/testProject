@@ -36,7 +36,6 @@ class SoapsController extends AppController {
   private $CDN_HOST = 'libraryideas.ingest.cdn.level3.net';
   private $CDN_USER = 'libraryideas';
   private $CDN_PASS = 't837dgkZU6xCMnc';
-  private $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token','TopAlbum'); 
@@ -2280,7 +2279,7 @@ STR;
       
       $insertArr['authtype'] = $authtype;
       $insertArr['email'] = $email;
-      $insertArr['password'] = $this->Common->freegalEncode($password,$encodingKey);
+      $insertArr['password'] = $password;
       
       if(0 == $cron_call) {
         $this->AuthenticationToken->save($insertArr);
@@ -2429,8 +2428,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -2541,7 +2540,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -2665,8 +2664,8 @@ STR;
 				$insertArr['auth_method'] = $library_authentication_method;
         
         $insertArr['authtype'] = $authtype;
-        $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-       $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+        $insertArr['card'] = $card;
+        $insertArr['pin'] = $pin;
         
         if(0 == $cron_call) {
           $this->AuthenticationToken->save($insertArr);
@@ -2785,8 +2784,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
 					
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-          $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey); 
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin; 
           
           if(0 == $cron_call) { 
             $this->AuthenticationToken->save($insertArr);
@@ -2909,7 +2908,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           $insertArr['last_name'] = $last_name;
           
           if(0 == $cron_call) {
@@ -3033,7 +3032,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           $insertArr['last_name'] = $last_name;
           
           if(0 == $cron_call) {
@@ -3146,8 +3145,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3260,8 +3259,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3378,8 +3377,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3489,7 +3488,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3603,7 +3602,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3708,7 +3707,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3815,7 +3814,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3909,8 +3908,8 @@ STR;
         $insertArr['auth_method'] = $library_authentication_method;
         
         $insertArr['authtype'] = $authtype;
-        $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-       $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+        $insertArr['card'] = $card;
+        $insertArr['pin'] = $pin;
         
         if(0 == $cron_call) {
           $this->AuthenticationToken->save($insertArr);
@@ -4038,8 +4037,8 @@ STR;
                 $insertArr['auth_method'] = $library_authentication_method;
                 
                 $insertArr['authtype'] = $authtype;
-                $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-               $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+                $insertArr['card'] = $card;
+                $insertArr['pin'] = $pin;
                 
                 if(0 == $cron_call) {
                   $this->AuthenticationToken->save($insertArr);
@@ -4079,8 +4078,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
         
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -4204,8 +4203,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -4284,7 +4283,7 @@ STR;
             $insertArr['auth_method'] = $library_authentication_method;
             
             $insertArr['authtype'] = $authtype;
-            $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+            $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -4380,8 +4379,8 @@ STR;
               $insertArr['auth_method'] = $library_authentication_method;
               
               $insertArr['authtype'] = $authtype;
-              $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-             $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+              $insertArr['card'] = $card;
+              $insertArr['pin'] = $pin;
 
               if(0 == $cron_call) {
                 $this->AuthenticationToken->save($insertArr);
@@ -4485,7 +4484,7 @@ STR;
 			$insertArr['agent'] = $agent;
 			$insertArr['auth_method'] = $library_authentication_method;
 			$insertArr['authtype'] = $authtype;
-       	 		$insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+       	 		$insertArr['card'] = $card;
         		$insertArr['pin'] = $pin;
 			if(0 == $cron_call) {
           			$this->AuthenticationToken->save($insertArr);
@@ -4585,7 +4584,7 @@ STR;
 			$insertArr['agent'] = $agent;
 			$insertArr['auth_method'] = $library_authentication_method;
 			$insertArr['authtype'] = $authtype;
-       	 		$insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+       	 		$insertArr['card'] = $card;
         		$insertArr['pin'] = $pin;
 			if(0 == $cron_call) {
           			$this->AuthenticationToken->save($insertArr);

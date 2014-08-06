@@ -7,27 +7,41 @@
  * @package report
  * This cron script is intended to run on every week to generate the download report for Sony and SCP to sony server
  **/
+
+include 'functions.php';
+$count = '';
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 //set timezone
 date_default_timezone_set('America/New_York');
 ini_set('memory_limit', '-1');
 
-
-include 'functions.php';
-$count = '';
-$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR','BM' => 'BMD', 'DE' => 'EUR');
+$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
 //$countrys = array('CA' => 'CAD');
 
 $lib_types = array('Unlimited' , 'ALC');
 //$lib_types = array('ALC');
+//$currentDate = date('Y-m-d');
+//list($year, $month, $day) = explode('-', $currentDate);
+// $weekFirstDay = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"));
+// $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
 
-$currentDate = date( "Y-m-d", time());
+//$begin = new DateTime( '2011-10-01' );
+//$end = new DateTime( '2012-01-06' );
+
+//$begin = new DateTime( '2012-10-01' );
+//$end = new DateTime( '2012-12-03' );
+
+/*$interval = DateInterval::createFromDateString('1 day');
+$period = new DatePeriod($begin, $interval, $end);
+foreach ( $period as $dt )
+{
+echo $currentDate = $dt->format( "Y-m-d" );
+echo "\n";*/
 //$currentDate = '2014-02-01';
-
+$currentDate = date( "Y-m-d", time());
 $fetchRecordsFromTable = 'latest_downloads';
 //$fetchRecordsFromTable = 'downloads';
-
 echo "\n----------- Start ".$currentDate." -----------";
 echo "\n----------- Start ".date('Y-m-d H:i:s')." -----------";
 
@@ -44,7 +58,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 
         foreach($countrys as $country => $currency)
         {
- 
+            //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports1';
+            //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_12Q1';
+            //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_Oct_2012';
+//            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
             $reports_dir = SONY_REPORTFILES;
 
             if(!file_exists($reports_dir))
@@ -70,7 +87,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $showEndDate = date('Ymd', strtotime($currentDate." last sunday") );
                 $condStartDate = date('Y-m-d', strtotime($currentDate . " -$StartOfLastWeek day"))." 00:00:00";
                 $condEndDate = date('Y-m-d', strtotime($currentDate." last sunday"))." 23:59:59";
-
+//                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
 
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt'";
                 $result3 = mysql_query($sql);
@@ -396,12 +413,12 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
             if($currentDate == $monthFirstDate)
             {
                 echo "\n----------------";
-                echo $showStartDate = date("Ymd", strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')));
-                echo $showEndDate = date("Ymd", strtotime('-1 second',strtotime('+1 month',strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))));
+                echo $showStartDate = date("Ymd", strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')));
+                echo $showEndDate = date("Ymd", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))));
                 echo "\n----------------";
 
-                $condStartDate = date("Y-m-d", strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))." 00:00:00";
-                $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
+                $condStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))." 00:00:00";
+                $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
 
                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
 
@@ -433,7 +450,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $all_Ids = '';
 
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
-                 $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
+                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                 $result = mysql_query($sql);
                 
                 if($result)
@@ -445,7 +462,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     sendalert("Query failed: ".$sql);
                     die("Query failed: ". $sql. " Error: " .mysql_error());
                 }
-             
+                
                 $countno = mysql_num_rows($result);
                 $data = array();
                 $videodata = array();

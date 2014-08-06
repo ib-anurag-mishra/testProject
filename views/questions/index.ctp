@@ -16,7 +16,7 @@
         <h2><?php __('FAQs'); ?></h2>
     </header>
     <div class="faq-container">
-        
+        <ul>
             <?php
             $Title = "";
             foreach ($questions as $question):
@@ -35,35 +35,24 @@
                                <?
                                        if($Title=='')   
                                        {
-                                           // echo '<h3>'.$questiontitleText.'</h3><ul>';
-                                            echo '<h3>'.$questiontitleText.'</h3>';
+                                           echo '<h3>'.$questiontitleText.'</h3><ul>';
                                        }
                                        else
                                        {
-                                           // echo '</ul><h3>'.$questiontitleText.'</h3><ul>';
-                                            echo '<h3>'.$questiontitleText.'</h3>';
+                                           echo '</ul><h3>'.$questiontitleText.'</h3><ul>';
                                        }
                                }
-
-                               ?>     
-
-
-
-                             
-
-                <?php/*
-                <li class="fq"><?php echo strip_tags($questionquText); ?></li>
-                
-                <li class="fa"><?php echo strip_tags($questionansText); ?></li>
-                */
-                ?>
-
-                <div class="fq"><?php echo strip_tags($questionquText); ?></div>
-                
-                <div class="fa"><?php echo strip_tags($questionansText); ?></div>                                
+                               ?>			
+                <li>
+                    <a href="javascript:void(0);" class="no-ajaxy">
+                        <?php echo strip_tags($questionquText); ?>
+                    </a>
+                    <?php /*<p style="display: none;" ></p>*/?>
+                    <?php echo str_replace(array("<li>", "</li>", "<ul>", "</ul>"), array("<p style='display: none;'>", "</p>", "", ""), $questionansText); ?>
+                </li>
 
                 <?php $Title = $question['Section']['title']; ?>
             <?php endforeach; ?>
-        
+        </ul>
     </div>
 </section>

@@ -40,7 +40,7 @@
 			$html->addCrumb(__('All Genre', true), '/genres/view/');
 			if ($genre_crumb_name != "")
 			{
-				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$combineGenre);
+				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$genre_crumb_name);
 			}
 
 			echo $html->getCrumbs(' > ', __('Home', true), '/homes');
@@ -124,8 +124,8 @@
 			?>
 	<h3>Albums</h3>
 	<div class="album-shadow-container">
-		<div class="album-scrollable horiz-scroll carousel-ajax">
-			<ul  class="artist-albums" style="width: 4500px">
+		<div class="album-scrollable horiz-scroll">
+			<ul style="width: 4500px">
 				<?php
 				foreach ($albumData as $album_key => $album):
 				//hide album if library block the explicit content
@@ -147,31 +147,15 @@
 						<?php
 						if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
 						{
-							?>
-							<input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album" data-provider="<?= $album["Album"]["provider_type"] ?>" />
-							<?
 							echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
 							?>
-							<a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
-							<ul>
-								<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
-
-							</ul>
-							<?php
-							/*
 						<a class="add-to-playlist-button no-ajaxy"
 							href="javascript:void(0)"></a>
-							*/
-							?>
-							<?php
-							/*
 						<div class="wishlist-popover">
 							<input type="hidden" id="<?= $album['Album']['ProdID'] ?>"
 								value="album" /> <a class="add-to-playlist"
 								href="javascript:void(0)">Add To Playlist</a>
 						</div>
-						*/
-						?>
 						<?php
 						}
 						?>
@@ -201,7 +185,7 @@
 					</div>
 					<div class="genre">
 						<?php
-						echo __('Genre') . ": " . $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', '?genre='.$album['combineGenre']), array("title" => $this->getTextEncode($album['Genre']['Genre']))) . '<br />';
+						echo __('Genre') . ": " . $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', '?genre='.$album['Genre']['Genre']), array("title" => $this->getTextEncode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '')
 						{
 							echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank', 'style' => 'word-wrap:break-word;word-break:break-word;width:160px;'));
@@ -232,12 +216,8 @@
 				endforeach;
 				?>
 			</ul>
-            <span id="artist_loader" style="display:none; position:absolute; left:29px; top:0; width: 790px; height:162px; background: rgba(255,255,255,.75)"   ><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" alt="" style="margin: 60px auto" /></span>
 		</div>
-		<button class="left-scroll-button-ajax"></button>
-		<button class="right-scroll-button-ajax"></button>
-		<?php
-		/*
+
 		<div class="paging">
 			<?php
 			echo $paginator->prev('<< ' . __('Previous ', true), null, null, array('class' => 'disabled'));
@@ -245,20 +225,6 @@
 			echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
 			?>
 		</div>
-		
-                echo $this->Paginator->counter(
-                    'Page {:page} of {:pages}, showing {:current} records out of
-                     {:count} total, starting on record {:start}, ending on {:end}'
-                );
-                */
-                $currentPage = $this->Paginator->params['paging']['Album']['page'];
-                $totalPages = $this->Paginator->params['paging']['Album']['pageCount'];
-                $artistText = base64_encode($artisttext);
-                if($currentPage < $totalPages) {
-                    ?>
-                   <input type="hidden" class="artist_text" value="<?php echo $artistText; ?>" />
-                   <input type="hidden" class="next_page" value="<?php echo $currentPage+1; ?>" />
-          <?php } ?>
 	</div>
 	<?php
 		}
@@ -273,7 +239,7 @@
 		?>
 	<h3>Videos</h3>
 	<div class="videos-shadow-container">
-		<div class="videos-scrollable horiz-scroll carousel">
+		<div class="videos-scrollable horiz-scroll">
 			<ul style="width: 15000px;">
 				<?php
 				foreach ($artistVideoList as $key => $value)
@@ -443,7 +409,7 @@
 						<?php } ?>
 					</div>
 					<div class="genre">
-						<?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view','?genre='.$value['combineGenre']), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
+						<?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view','?genre='.$value['Genre']['Genre']), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
 					</div> <?php
 					if (!empty($value['Video']['video_label']))
 					{
@@ -462,8 +428,6 @@
 				<?php } ?>
 			</ul>
 		</div>
-		<button class="left-scroll-button"></button>
-		<button class="right-scroll-button"></button>
 	</div>
 	<?php
 	}
