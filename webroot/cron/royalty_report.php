@@ -24,7 +24,6 @@ $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m)
 //$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
 //$arr_dates['month']['to_date'] = '2014-06-31 23:59:59';
 
-print_r($arr_dates);
 $fetchRecordsFromTable = 'latest_downloads';
 //$fetchRecordsFromTable = 'downloads';
 
@@ -78,7 +77,7 @@ foreach ($arr_dates AS $key => $value)
                     . "AND l.library_territory='" . $row_country['library_territory'] . "' "
                     . "GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',clp.library_id),clp.library_unlimited,clp.library_id "
                     . "ORDER BY clp.library_id;";
-exit;
+
             $result = mysql_query($query, $freegal);
             $file_name = $reportsFolder . '/tmp_debug_data.txt';
             $tmp_cont = $query . '//' . mysql_num_rows($result) . '////\r\n';

@@ -18,25 +18,11 @@ $countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' 
 
 $lib_types = array('Unlimited' , 'ALC');
 //$lib_types = array('ALC');
-//$currentDate = date('Y-m-d');
-//list($year, $month, $day) = explode('-', $currentDate);
-// $weekFirstDay = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"));
-// $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
 
-//$begin = new DateTime( '2011-10-01' );
-//$end = new DateTime( '2012-01-06' );
 
-//$begin = new DateTime( '2012-10-01' );
-//$end = new DateTime( '2012-12-03' );
+//$currentDate = date( "Y-m-d", time());
+$currentDate = '2014-08-01';
 
-/*$interval = DateInterval::createFromDateString('1 day');
-$period = new DatePeriod($begin, $interval, $end);
-foreach ( $period as $dt )
-{
-echo $currentDate = $dt->format( "Y-m-d" );
-echo "\n";*/
-//$currentDate = '2013-12-02';
-$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -52,10 +38,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 
         foreach($countrys as $country => $currency)
         {
-            //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports1';
-            //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_12Q1';
-            //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_Oct_2012';
-//            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
+           
             $reports_dir = SONY_REPORTFILES;
 
             if(!file_exists($reports_dir))
@@ -406,16 +389,14 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
             if($currentDate == $monthFirstDate)
             {
                 echo "\n----------------";
-                echo $showStartDate = date("Ymd", strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')));
-                echo $showEndDate = date("Ymd", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))));
+                echo $showStartDate = date("Ymd", strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')));
+                echo $showEndDate = date("Ymd", strtotime('-1 second',strtotime('+1 month',strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))));
                 echo "\n----------------";
 
-                $condStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))." 00:00:00";
-                $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
+                echo $condStartDate = date("Y-m-d", strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))." 00:00:00";
+                echo $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-2 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
 
-//                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt";
-
-                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt'";;
+             $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt'";;
                 $result3 = mysql_query($sql);
                 
                 if($result3)
@@ -439,7 +420,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 }
 
                 $row2['ReportCount'] = 0;
-                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country."_SFV.txt";
+             echo   $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country."_SFV.txt";
+             exit;
                 $all_Ids = '';
 
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
