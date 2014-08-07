@@ -1,20 +1,19 @@
-# LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: FreegalMusic.com\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2013-08-07 15:19+0530\n"
+"PO-Revision-Date: 2014-08-07 15:37+0530\n"
 "Last-Translator: Rob Richmond <rob@m68interactive.com>\n"
 "Language-Team: m68 Interactive <tech@m68interactive.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"Language: fr_US\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Language: fr\n"
+"X-Generator: Poedit 1.6.7\n"
 
 #: \artists\view.ctp:200 \genres\view.ctp:74 \homes\search.ctp:198
 #: \sections\admin_index.ctp:37 \users\admin_index.ctp:94
@@ -411,3 +410,12 @@ msgstr "vidéos"
 
 msgid "Artists"
 msgstr "artistes"
+
+msgid "Albums"
+msgstr "Albums"
+
+msgid "Songs"
+msgstr "chansons"
+
+msgid "Composers"
+msgstr "compositeurs"
