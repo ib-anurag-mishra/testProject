@@ -144,6 +144,11 @@
                         <li>
 
                             <div class="song-container">
+                                <?php
+                                if ($this->Session->read("patron")) {
+                                    ?>                                  
+                                    <input type="hidden" id="<?php echo $value["Song"]["ProdID"]; ?>" value="song" data-provider="<?php echo $value["Song"]["provider_type"]; ?>" />
+                               <?php } ?>
                                 <a href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
                                     <img class="lazy"  src="<?php echo $value['songs_img']; ?>" alt="<?php echo $this->getValidText($value['Song']['Artist'] . ' - ' . $value['Song']['SongTitle']); ?>" width="250" height="250" />                                                        
                                 </a>
@@ -329,7 +334,7 @@
                                     */
                                     ?>
                                         
-                                        <input type="hidden" id="<?php echo $value["Song"]["ProdID"]; ?>" value="song" data-provider="<?php echo $value["Song"]["provider_type"]; ?>" />
+                                        
                                     <?php
                                     /*
                                     
