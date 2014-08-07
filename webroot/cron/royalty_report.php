@@ -194,7 +194,7 @@ foreach ($arr_dates AS $key => $value)
             $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
 
 
-            if (count($royalty_content[1]) > 1)
+            if (count($royalty_content[1]) > 0)
             {
                 $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
                 $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
