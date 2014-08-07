@@ -7,7 +7,7 @@
 
 			if ($genre_crumb_name != "")
 			{
-				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$genre_crumb_name);
+				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$combineGenre);
 			}
 
 			$html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
@@ -31,15 +31,20 @@
 
 				if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron")):
 					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
+					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
 					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
 					?>
 				
-				<div class="wishlist-popover">
+				<?php /*<div class="wishlist-popover"> */?>
 					<?php
-					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
-					echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));
+					// echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
+					/*echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));*/
 					?>
-				</div>
+				<?php /*</div>*/ ?>
+				<ul>
+					<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+
+				</ul> 
 
 				<?php endif; ?>
 
@@ -50,8 +55,9 @@
 			<div class="album-genre">
 				<?php echo __('Genre') . ": "; ?>
 				<span> <?php
-				echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', '?genre='.$album['Genre']['Genre']), array("title" => $this->getTextEncode($album['Genre']['Genre'])));
 
+				echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', '?genre='.$combineGenre), array("title" => $this->getTextEncode($album['Genre']['Genre'])));
+				
 				if ($album['Album']['Advisory'] == 'T'):
 
 					echo '<br />';

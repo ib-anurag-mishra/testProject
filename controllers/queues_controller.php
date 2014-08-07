@@ -221,7 +221,8 @@ class QueuesController extends AppController
 
         $sortArray = array('date', 'artist', 'album');
         $sortOrderArray = array('asc', 'desc');
-
+        $sortOrder = '';
+        $sort = '';
         if ( $this->RequestHandler->isPost() )
         {
             $sort = $this->params['form']['sort'];
@@ -306,6 +307,13 @@ class QueuesController extends AppController
     function queueListAlbums()
     {
         $this->layout = 'ajax';
+        if(empty($this->params['form']['prodID'])) {
+            $this->params['form']['prodID'] = '';
+        }
+        
+        if(empty($this->params['form']['type'])) {
+            $this->params['form']['type'] = '';
+        }        
         
         $prodID = $this->params['form']['prodID']; 
         $type = $this->params['form']['type'];

@@ -19,8 +19,9 @@ unlink($reportsFolder . '/tmp_debug_data.txt');
 
 $arr_dates = array();
 
-$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 1), 1, date(Y))); //'2012-10-01 00:00:00';
-$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 1), 1, date(Y))); //'2012-10-31 23:59:59';
+
+$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
+$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
 //$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
 //$arr_dates['month']['to_date'] = '2014-06-31 23:59:59';
 
@@ -29,10 +30,7 @@ $fetchRecordsFromTable = 'latest_downloads';
 
 //$libraryType = array('ALC' => '0');
 $libraryType = array('ALC' => '0', 'Unlimited' => '1');
-
-//$country_curency = array('US' => 'USD');
-//$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
-$country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
+//$libraryType = array('ALC' => '0');
 
 $unit_sales_rate = null;
 
@@ -42,6 +40,11 @@ foreach ($arr_dates AS $key => $value)
     {
         $unit_sales_rate = ($libTypeKey == 'ALC') ? 0.25 : 0;
     }
+
+    //$country_curency = array('US' => 'USD');
+    //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
+    $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
+
 
     $query_country = "Select distinct libraries.library_territory from libraries";
     $result_country = mysql_query($query_country, $freegal);
@@ -192,16 +195,21 @@ foreach ($arr_dates AS $key => $value)
             $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
             $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
 
-            $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
-
-            $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
-            mysql_query($insert_query, $freegal);
-
-            write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
+            if (count($royalty_content[1]) > 0)
+            {
+                $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
+                $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
+                mysql_query($insert_query, $freegal);
+                write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
+            }
+            else
+            {
+                echo $file_name . "is empty";
+            }
         }
     }
     else
     {
-        
+        echo "Error while getting the Libraries \n";
     }
 }

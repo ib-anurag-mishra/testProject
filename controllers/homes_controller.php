@@ -2156,7 +2156,8 @@ STR;
         //create logics for sorting
         $sortArray = array('date', 'song', 'artist', 'album');
         $sortOrderArray = array('asc', 'desc');
-
+        $sortOrder = '';
+        $sort = '';
         if ( $this->RequestHandler->isPost() ) {
             $sort = $this->params['form']['sort'];
             $sortOrder = $this->params['form']['sortOrder'];
@@ -2264,7 +2265,8 @@ STR;
 
         $sortArray = array('date', 'song', 'artist', 'album');
         $sortOrderArray = array('asc', 'desc');
-
+        $sortOrder = '';
+        $sort = '';
         if ( $this->RequestHandler->isPost() ) {
             $sort = $this->params['form']['sort'];
             $sortOrder = $this->params['form']['sortOrder'];
@@ -3587,7 +3589,7 @@ STR;
 
         //check if its called for adding Album  / Song(s) to Wishlist        
         $type = $this->params["form"]["type"];
-       
+        $selectedSongs = array();
         //Check is patron is logged in or not
         if ($type == 'album') {
             $prodID = $this->params["form"]["prodID"];

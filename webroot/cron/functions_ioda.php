@@ -408,7 +408,8 @@ function write_file($content, $file_name, $folder, $db)
         {
             fwrite($logFileWrite, "$file_name not uploaded on SERVER. Not deleted. \n");
         }
-        sendReportEmail("monthly", $file_name);
+
+        sendReportEmail("monthly", $file_name);        
     }
     else
     {

@@ -17,7 +17,6 @@
 
 
 $default-transition-duration: 500ms;
-
 $body-bg-color: #ffffff;
 $base-font-color:#000;
 $base-font: Helvetica, Arial, sans-serif;
@@ -30,7 +29,6 @@ $nav-link-color:#fff;
 	   -moz-box-sizing: border-box; 
 	   		box-sizing: border-box;
 }
-
 
 html {
 
@@ -49,7 +47,6 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	background: url(../img/site-bkg.jpg) repeat;
 	color: #000;
-
 
 }
 
@@ -483,7 +480,6 @@ button::-moz-focus-inner {
 
 
 
-
 %search-results-list {
 
 	.search-results-list {
@@ -492,7 +488,7 @@ button::-moz-focus-inner {
 		margin-top: 25px;
 		font-size: 12px;
 		font-family: Helvetica,Arial,sans-serif;
-
+		margin-bottom: 40px;
 		&:before {
 
 			content: "";
@@ -1809,10 +1805,7 @@ sub { top: 0.4em; }
         padding: 10px;
         font-family: Arial, Helvetica, sans-serif;
 
-		p {
 
-			padding-bottom: 10px;
-		}
         strong {
 
                 font-weight: bold;
@@ -1829,7 +1822,7 @@ sub { top: 0.4em; }
 		.announcments-movie-cta {
 
 			font-weight: bold;
-			color: #52C6EC;
+			color: #008fbd;
 		}
 
 
@@ -5926,27 +5919,72 @@ sub { top: 0.4em; }
 			margin-bottom: 16px;
 			font-size: 14px;
 			
-			a {
-				text-decoration: none;
-				color: rgba(0,0,0,.8);
-				
-			}
 			
-			p {
+			// a {
+			// 	text-decoration: none;
+			// 	color: rgba(0,0,0,.8);
 				
-				display: none;
-				color: rgba(0,0,0,.6);
-				font-size: 14px;
-				padding: 10px 10px 10px 20px;
-				line-height: 18px;
+			// }
+			
+			// p {
 				
-				&.active {
-					display: block;
+			// 	display: none;
+			// 	color: rgba(0,0,0,.6);
+			// 	font-size: 14px;
+			// 	padding: 10px 10px 10px 20px;
+			// 	line-height: 18px;
+				
+			// 	&.active {
+			// 		display: block;
 					
-				}
-			}
+			// 	}
+			// }
+			
+			// &.fq {
+
+			// 	cursor: pointer;
+			// }
+
+			// &.fa {
+
+			// 	display: none;
+
+
+			// }
+
+
 		}
+
+
 	}
+
+	.fq {
+		padding-left: 20px;
+		margin-bottom: 16px;
+		font-size: 14px;
+		cursor: pointer;
+	}
+
+
+
+	.fa {
+
+		display: none;
+		margin-bottom: 16px;
+		color: rgba(0,0,0,.6);
+		font-size: 14px;
+		padding: 10px 10px 10px 20px;
+		line-height: 18px;
+
+
+
+		&.active {
+
+		}
+
+
+	}
+
 	
 	
 	.underline {
@@ -5992,6 +6030,7 @@ sub { top: 0.4em; }
 			
 			.album-cover-image {
 				margin-bottom: 20px;
+				position: relative;
 				
 				img {
 
@@ -6019,39 +6058,55 @@ sub { top: 0.4em; }
                     text-decoration: none;
                     text-transform: uppercase;
                     width: 124px;
-                    left: 242px;
-                    top: 170px;
+                    // left: 242px;
+                    // top: 170px;
+                    left: 50%;
+                    top: 50%;
+                    -webkit-transform: translate(-62px,-13px);
+                    -moz-transform: translate(-62px,-13px);
+                    -ms-transform: translate(-62px,-13px);
+                    transform: translate(-62px,-13px);
                 }
                         
 	            .add-to-playlist-button {
-                    background: url(../img/add-to-playlist-button.png);
+                    // background: url(../img/add-to-playlist-button.png);
+                    background: url(../img/freegal_sprite.png) -340px -225px;
                     display: block;
                     position: absolute;
-                    
-                    top: 270px;
-                    left: 395px;
-                    height: 25px;
-                    width:26px;
-                    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+                    top: 10px;
+                    left: 10px;
                     opacity: 0;
-                    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-                    -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-                    box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    width: 30px;
+                    height: 30px;
+                    // top: 270px;
+                    // left: 395px;
+                    // height: 25px;
+                    // width:26px;
+                    // -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+                    // opacity: 0;
+                    // -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    // -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    // box-shadow: 0 0 2px rgba(0,0,0,.5);
+
 
                     &:hover {
                     	opacity: 1;
                     }
 	            }
-                        
+                
+                /*        
                 .wishlist-popover {
 
                     display: none;
                     position: absolute;
-                    left: 395px;
-                    top: 238px;
+                    // left: 395px;
+                    // top: 238px;
+                    left: 10px;
+                    top: 41px;
                     font-size: 12px;
                     z-index: 100;
-                    width: 120px;
+                    // width: 120px;
+                    width: 100%;
                     -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
                     -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
                     box-shadow: 0 0 2px rgba(0,0,0,.5);
@@ -6084,18 +6139,23 @@ sub { top: 0.4em; }
 
                     .playlist-options {
                         position: absolute;
-                        right: -146px;
-                        top:0px;
+                        // right: -146px;
+                        left: 0;
+                        top: 0;
                         display: none;
                         background: #fff;
-                        width: 145px;
-                        height: 135px;
+                        // width: 145px;
+                        width: 230px;
+                        // height: 135px;
+                        max-height: 200px;
+
                         -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
                         -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
                         box-shadow: 0 0 2px rgba(0,0,0,.5);
 
                         overflow-x: hidden;
-                        overflow-y: auto;
+                        // overflow-y: auto;
+                        overflow-y: scroll;
                  
 
                         &.active {
@@ -6150,7 +6210,78 @@ sub { top: 0.4em; }
                             background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
                         }
                     }
-                }   
+                }
+                */
+                ul {
+                    position: absolute;
+                    // right: -146px;
+                    left: 10px;
+                    top: 41px;
+                    display: none;
+                    background: #fff;
+                    // width: 145px;
+                    width: 230px;
+                    // height: 135px;
+                    max-height: 200px;
+
+                    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+                    box-shadow: 0 0 2px rgba(0,0,0,.5);
+
+                    overflow-x: hidden;
+                    // overflow-y: auto;
+                    overflow-y: scroll;
+             
+
+                    &.active {
+
+                        display: block;
+                    }
+
+
+                    li {
+
+                        float: none;
+                        padding: 0;
+
+                        a {
+							display: block;
+                            padding: 5px 5px 5px 10px;
+                            text-decoration: none;
+
+                            &:hover {
+
+                                text-decoration: none;
+                                background: #cfeff9;
+                                color: #000;
+                            }
+                        }
+                    }
+
+
+                    // ul {
+                    
+
+                    //     li {
+
+                    //         float: none;
+                    //         padding: 0;
+
+                    //         a {
+
+                    //             padding: 5px 5px 5px 10px;
+                    //             text-decoration: none;
+
+                    //             &:hover {
+
+                    //                 text-decoration: none;
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+                }
+
 			}
 			
 			.release-info {
@@ -6624,15 +6755,35 @@ sub { top: 0.4em; }
 		height: 330px;
 		margin-top: 20px;
 		margin-bottom: 20px;
-		&:after {
+		// &:after {
 			
-			content: "";
+		// 	content: "";
+		// 	position: absolute;
+		// 	right: 0;
+		// 	top:0;
+		// 	background: url(../img/artist/vert-tapered-shadow.png);
+		// 	width: 11px;
+		// 	height: 226px;
+		// }
+
+		.left-scroll-button,.left-scroll-button-ajax {
+
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			left: 0;
+			top: 0;
+			background: url(../img/freegal_sprite.png) -200px 0;		
+		}
+
+		.right-scroll-button,.right-scroll-button-ajax {
+
+			width: 25px;
+			height: 162px;
 			position: absolute;
 			right: 0;
-			top:0;
-			background: url(../img/artist/vert-tapered-shadow.png);
-			width: 11px;
-			height: 226px;
+			top: 0;
+			background: url(../img/freegal_sprite.png) -300px 0;
 		}
 		
 		.album-scrollable {
@@ -6640,13 +6791,15 @@ sub { top: 0.4em; }
 			height: 340px;
 			overflow-x: hidden;
 			overflow-y: hidden;
-			padding-left: 1px;
-			padding-top: 1px;
+			margin-left: 28px;
+			margin-right: 28px;
+			// padding-left: 1px;
+			// padding-top: 1px;
 			
-			&:hover {
+			// &:hover {
 				
-				overflow-x: scroll;
-			}
+			// 	overflow-x: scroll;
+			// }
 			
 			ul {
 				
@@ -6657,45 +6810,128 @@ sub { top: 0.4em; }
 					
 					display: block;
 					float: left;
-					width: 164px;
-					margin-right: 15px;
+					width: 162px;
+					margin-right: 3px;
 					
 					.album-container {
 					
 						position: relative;
 						margin-bottom: 10px;
-                                                height: 157px;
+                        height: 162px;
+
                                                 
 						img {
 							
-							border: 1px solid #fff;
-							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// border: 1px solid #fff;
+							// -webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// -moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// box-shadow: 0 0 4px rgba(0,0,0,.5);
 							
 						}
 						
-						
+						ul {
+							position: absolute;
+							left: 6px;
+							top: 26px;
+							width: 177px;
+							max-height: 131px;
+							overflow-y: scroll;
+							display: none;
+							-webkit-border-radius: 5px;
+							-moz-border-radius: 5px;
+							-ms-border-radius: 5px;
+							-o-border-radius: 5px;
+							border-radius: 5px;
+							border: 1px solid #999;
+							z-index: 1;
+
+
+
+
+							&.active {
+
+								display: block;
+							}
+
+							> li {
+								display: block;
+								background: #fff;
+								float: none;
+								margin-bottom: 0;
+								width: 100%;
+
+								a {
+
+									display: block;
+									padding: 10px;
+									text-decoration: none;
+									color: #000;
+									font-size: 11px;
+
+									&:hover {
+
+										background: #cfeff9;
+										color: #000;
+									}
+
+									&.create-new-queue-btn {
+
+										font-weight: bold;
+									}
+								}
+
+							}
+
+						}						
                         .album-preview {							
-                            background: none repeat scroll 0 0 #FFFFFF;
-                            bottom: 65px;
-                            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-                            color: #000000;
-                            display: block;
-                            font-size: 12px;
-                            font-weight: bold;
-                            height: 25px;
-                            line-height: 25px;
-                            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-                            opacity: 0;
-                            position: absolute;
+                            // background: none repeat scroll 0 0 #FFFFFF;
+                            // bottom: 65px;
+                            // box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+                            // color: #000000;
+                            // display: block;
+                            // font-size: 12px;
+                            // font-weight: bold;
+                            // height: 25px;
+                            // line-height: 25px;
+                            // -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+                            // opacity: 0;
+                            // position: absolute;
                             
-                            text-align: center;
-                            text-decoration: none;
-                            text-transform: uppercase;
-                            width: 124px;
-                            left: 20px;
-                            top:70px;
+                            // text-align: center;
+                            // text-decoration: none;
+                            // text-transform: uppercase;
+                            // width: 124px;
+                            // left: 20px;
+                            // top:70px;
+							position: absolute;
+							left: 50%;
+							top: 50%;
+							width: 100px;
+							height: 22px;
+							font-family: Arial, Helvetica;
+							background: #fff;
+							-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.5);
+							-moz-box-shadow: 0 0 4px rgba(0,0,0,0.5);
+							box-shadow: 0 0 4px rgba(0,0,0,0.5);
+							font-weight: bold;
+							margin-left: -50px;
+							margin-top: -11px;
+							font-size: 12px;
+							text-align: center;
+							text-decoration: none;   
+							line-height: 22px;
+							opacity: 0;                         
+                        }
+
+                        .playlist-menu-icon {
+
+							position: absolute;
+							left: 5px;
+							top: 5px;
+							width: 28px;
+							height: 20px;
+							background: url(../img/freegal_sprite.png) -400px 0;
+							opacity: 0;                        	
                         }
 						
                         .add-to-playlist-button {
@@ -6714,6 +6950,9 @@ sub { top: 0.4em; }
 							}					
 							
 						}
+
+
+
 
                         .wishlist-popover {
 
@@ -6887,28 +7126,47 @@ sub { top: 0.4em; }
 		height: 260px;
 		margin-top: 20px;
 		
-		&:after {
+		// &:after {
 			
-			content: "";
+		// 	content: "";
+		// 	position: absolute;
+		// 	top: 0;
+		// 	right: 0;
+		// 	background: url(../img/artist/vert-tapered-shadow.png);
+		// 	width: 11px;
+		// 	height: 226px;
+		// }
+
+		.left-scroll-button {
+
+			width: 25px;
+			height: 162px;
 			position: absolute;
+			left: 0;
 			top: 0;
-			right: 0;
-			background: url(../img/artist/vert-tapered-shadow.png);
-			width: 11px;
-			height: 226px;
+			background: url(../img/freegal_sprite.png) -200px 0;		
 		}
+
+		.right-scroll-button {
+
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			background: url(../img/freegal_sprite.png) -300px 0;
+		}	
 	
 		.videos-scrollable {
 			
 			height: 260px;
 			overflow-y: hidden;
 			overflow-x: hidden;
-			padding-left: 1px;
-			padding-top: 1px;
-			&:hover {
-				
-				overflow-x: scroll;
-			}
+			margin-left: 28px;
+			margin-right: 28px;			
+			// padding-left: 1px;
+			// padding-top: 1px;
+
 			
 			ul {
 				
@@ -6919,7 +7177,7 @@ sub { top: 0.4em; }
 				li {			
 					display: block;
 					float: left;
-					margin-right: 15px;
+					margin-right: 3px;
 				
 					.video-container {
 				
@@ -6928,10 +7186,12 @@ sub { top: 0.4em; }
 						
 						img {
 							
-							border: 1px solid #fff;
-							-webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
-							box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// border: 1px solid #fff;
+							// -webkit-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// -moz-box-shadow: 0 0 4px rgba(0,0,0,.5);
+							// box-shadow: 0 0 4px rgba(0,0,0,.5);
+							width: 288px;
+							height: 162px;
 							
 						}
 
@@ -8742,17 +9002,37 @@ sub { top: 0.4em; }
 				letter-spacing: 1px;
 			}
 		}
-		
-		&:after {
-			
+
+		.left-scroll-button {
+
+			width: 25px;
+			height: 162px;
 			position: absolute;
-			width: 11px;
-			height: 220px;
-			content: "";
-			right: 0;
-			top:31px;
-			background: url(../img/individual-video/more-videos-shadow.png);
+			left: 0;
+			top: 36px;
+			background: url(../img/freegal_sprite.png) -200px 0;		
 		}
+
+		.right-scroll-button {
+
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			right: 0;
+			top: 36px;
+			background: url(../img/freegal_sprite.png) -300px 0;
+		}		
+		
+		// &:after {
+			
+		// 	position: absolute;
+		// 	width: 11px;
+		// 	height: 220px;
+		// 	content: "";
+		// 	right: 0;
+		// 	top:31px;
+		// 	background: url(../img/individual-video/more-videos-shadow.png);
+		// }
 		
 		.more-videos-scrollable {
 			
@@ -8760,11 +9040,13 @@ sub { top: 0.4em; }
 			overflow-y: hidden;
 			height: 220px;
 			position: relative;
+			margin-left: 28px;
+			margin-right: 28px;
 			
-			&:hover {
+			// &:hover {
 				
-				overflow-x: auto;
-			}
+			// 	overflow-x: auto;
+			// }
 			
 
 			
@@ -8772,14 +9054,14 @@ sub { top: 0.4em; }
 				
 				width: 2700px;
 				height: 220px;
-				padding-left: 1px;
-				padding-top: 1px;
+				// padding-left: 1px;
+				// padding-top: 1px;
 				
 				li {
 					
 					display: block;
 					float: left;
-					margin-right: 10px;
+					margin-right: 3px;
 					
 					.video-thumb-container {
 						
@@ -8787,10 +9069,10 @@ sub { top: 0.4em; }
 						
 						img {
 							
-							border: 1px solid #fff;
-							-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-							box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// border: 1px solid #fff;
+							// -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// box-shadow: 0 0 2px rgba(0,0,0,.5);
 						}
 						
 						.download-now-button {
@@ -8996,41 +9278,63 @@ sub { top: 0.4em; }
 				letter-spacing: 1px;
 			}
 		}
-		
-		&:after {
-			
+
+		.left-scroll-button {
+
+			width: 25px;
+			height: 162px;
 			position: absolute;
-			width: 11px;
-			height: 226px;
-			content: "";
-			right: 0;
-			top:31px;
-			background: url(../img/individual-video/top-videos-shadow.png);
+			left: 0;
+			top: 36px;
+			background: url(../img/freegal_sprite.png) -200px 0;		
 		}
+
+		.right-scroll-button {
+
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			right: 0;
+			top: 36px;
+			background: url(../img/freegal_sprite.png) -300px 0;
+		}		
+		
+		// &:after {
+			
+		// 	position: absolute;
+		// 	width: 11px;
+		// 	height: 226px;
+		// 	content: "";
+		// 	right: 0;
+		// 	top:31px;
+		// 	background: url(../img/individual-video/top-videos-shadow.png);
+		// }
 		
 		.top-videos-scrollable {
 			
 			overflow-x: hidden;
 			overflow-y: hidden;
 			height: 220px;
+			margin-left: 28px;
+			margin-right: 28px;
 			
-			&:hover {
+			// &:hover {
 				
-				overflow-x: auto;
-			}
+			// 	overflow-x: auto;
+			// }
 			
 			ul {
 				
 				width: 2900px;
 				height: 220px;
-				padding-left: 1px;
-				padding-top: 1px;
+				// padding-left: 1px;
+				// padding-top: 1px;
 				
 				li {
 					
 					display: block;
 					float: left;
-					margin-right: 10px;
+					margin-right: 3px;
 					
 					.video-thumb-container {
 						
@@ -9038,10 +9342,10 @@ sub { top: 0.4em; }
 						
 						img {
 							
-							border: 1px solid #fff;
-							-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
-							-moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
-							box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// border: 1px solid #fff;
+							// -webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// -moz-box-shadow: 0 0 2px rgba(0,0,0,.5);
+							// box-shadow: 0 0 2px rgba(0,0,0,.5);
 						}
 						
 						.download-now-button {
@@ -16703,7 +17007,7 @@ sub { top: 0.4em; }
 
 .search-results-videos-page {
 	position: relative;
-
+	margin-bottom: 40px;
 	
 
 	
