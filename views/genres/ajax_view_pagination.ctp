@@ -1,8 +1,9 @@
+<?php
+if (count($artistList) > 0)
+{    
+?>
 <script type="text/javascript" src="/js/ajaxify-html5.js"></script>
 <?php
-
-if (count($artistList) > 0)
-{
 	for ($i = 0; $i < count($artistList); $i++)
 	{
 
