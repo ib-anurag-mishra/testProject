@@ -68,6 +68,6 @@
     else
     {
         ?>
-        <h2>There are currently no playlists created. Please add a new playlist to start enjoying streaming.</h1>
+        <h2><?php echo __('There are currently no playlists created. Please add a new playlist to start enjoying streaming.'); ?></h1>
         <?php } ?>
 </section>
