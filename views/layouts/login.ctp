@@ -45,7 +45,7 @@
             <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script>                                            
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
-            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.css" />
+            <?php /*<link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.css" />*/?>
              <!--[if IE 8]>
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
             <![endif]-->   
