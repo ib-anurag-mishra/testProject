@@ -26,8 +26,9 @@ $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m)
 
 $fetchRecordsFromTable = 'latest_downloads';
 //$fetchRecordsFromTable = 'downloads';
-//$libraryType = array('ALC' => '0', 'Unlimited' => '1');
-$libraryType = array('ALC' => '0');
+
+$libraryType = array('ALC' => '0', 'Unlimited' => '1');
+//$libraryType = array('ALC' => '0');
 
 $unit_sales_rate = null;
 
@@ -192,16 +193,19 @@ foreach ($arr_dates AS $key => $value)
             $royalty_content[0][] = array("H", date('Ymd', strtotime($value['from_date'])), date('Ymd', strtotime($value['to_date'])), $round_total_sales, $country_curency[$row_country['library_territory']], "Y", "ET", "3.0", "$version");
             $royalty_content[2][] = array("T", $total_records, $total_sold, 0, 0, 0, 0, 0);
 
-            $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
 
-            if (write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal))
+            if (count($royalty_content[1]) > 1)
             {
+                $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
                 $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
                 mysql_query($insert_query, $freegal);
-            }else{
-                echo $file_name."is empty";
+                write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
             }
+            else
+            {
+                echo $file_name . "is empty";
         }
+    }
     }
     else
     {
