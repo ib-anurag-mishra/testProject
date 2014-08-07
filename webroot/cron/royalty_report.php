@@ -26,14 +26,8 @@ $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m)
 
 $fetchRecordsFromTable = 'latest_downloads';
 //$fetchRecordsFromTable = 'downloads';
-
 //$libraryType = array('ALC' => '0', 'Unlimited' => '1');
 $libraryType = array('ALC' => '0');
-
-
-//$country_curency = array('US' => 'USD');
-//$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
-$country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
 
 $unit_sales_rate = null;
 
@@ -43,6 +37,11 @@ foreach ($arr_dates AS $key => $value)
     {
         $unit_sales_rate = ($libTypeKey == 'ALC') ? 0.25 : 0;
     }
+
+    //$country_curency = array('US' => 'USD');
+    //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
+    $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
+
 
     $query_country = "Select distinct libraries.library_territory from libraries";
     $result_country = mysql_query($query_country, $freegal);
