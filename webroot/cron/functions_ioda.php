@@ -408,17 +408,13 @@ function write_file($content, $file_name, $folder, $db)
         {
             fwrite($logFileWrite, "$file_name not uploaded on SERVER. Not deleted. \n");
         }
-        //sendReportEmail("monthly", $file_name);
-        fclose($logFileWrite);
-        return true;
+        sendReportEmail("monthly", $file_name);        
     }
     else
     {
         fwrite($logFileWrite, "Array is empty \n");
-        fclose($logFileWrite);
-        return false;
     }
-    
+    fclose($logFileWrite);
 }
 
 function sendReportFileIODA($src, $dst, $logFileWrite, $typeReport)
