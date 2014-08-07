@@ -386,7 +386,7 @@ function write_file($content, $file_name, $folder, $db)
             $status_message .="$file_name not uploaded on CDN \n";
         }
 
-        $ioda_status = 0; //sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
+        $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
         if ($ioda_status)
         {
             $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_send_ioda`='1' , modified=now() WHERE `report_name`='$file_name' ";
@@ -409,12 +409,16 @@ function write_file($content, $file_name, $folder, $db)
             fwrite($logFileWrite, "$file_name not uploaded on SERVER. Not deleted. \n");
         }
         //sendReportEmail("monthly", $file_name);
+        fclose($logFileWrite);
+        return true;
     }
     else
     {
         fwrite($logFileWrite, "Array is empty \n");
+        fclose($logFileWrite);
+        return false;
     }
-    fclose($logFileWrite);
+    
 }
 
 function sendReportFileIODA($src, $dst, $logFileWrite, $typeReport)

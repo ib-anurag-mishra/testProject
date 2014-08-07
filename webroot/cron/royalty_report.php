@@ -194,10 +194,13 @@ foreach ($arr_dates AS $key => $value)
 
             $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
 
-            $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
-            mysql_query($insert_query, $freegal);
-
-            write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
+            if (write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal))
+            {
+                $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
+                mysql_query($insert_query, $freegal);
+            }else{
+                echo $file_name."is empty";
+            }
         }
     }
     else
