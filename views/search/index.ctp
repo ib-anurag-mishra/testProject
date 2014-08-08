@@ -307,6 +307,11 @@
 				$i = 0;
 
 				foreach ( $albumData as $palbum ):
+
+					if ( !is_object( $palbum ) ) {
+						continue;
+					}
+
 					$albumInfo = $this->Search->getAlbumInfo( $palbum, $this );
 					extract( $albumInfo );
 		?>
