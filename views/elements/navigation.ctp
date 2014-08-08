@@ -701,6 +701,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		$genreCss = "regular";
 		$faqCss = "regular";
 		$newReleaseCss="";
+                $concertCss = "";
 
 		if($_SERVER['REQUEST_URI'] == '/homes/index' || $_SERVER['REQUEST_URI'] == '/index'  || $_SERVER['REQUEST_URI'] == '/')
 		{
@@ -726,11 +727,20 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		{
 			$faqCss = "regular active";
 		}
+                $isMovie = $this->Session->read("library_announcement");
 		?>
         <div class="inner-wrapper">
     		<ul class="clearfix">
     			<li class="regular"><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss,"id"=>'home07',"onclick"=>"setUpperNavigation('home07')"));?>
     			</li>
+                        <?php if($isMovie == 1) {
+                            $hostName = $_SERVER['SERVER_NAME'];
+                            $domain = explode('.',$hostName);
+                            $Concertlink = "http://$domain[0].".Configure::read('App.MoviesPath').'/listing/Q29uY2VydCBWaWRlb3M=';
+                        ?>
+                            <li class="regular"><?php echo $html->link(__('Concert Videos', true), $Concertlink, array("class"=>$concertCss,"id"=>'concert07',"target" => '_blank', "onclick"=>"setUpperNavigation('concert07')"));?>
+                            </li>
+                        <?php } ?>
     			<li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss,"id"=>'musicVideo07',"onclick"=>"setUpperNavigation('musicVideo07')")); ?>
     			</li>
     			<li class="most-popular"><?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ 
@@ -885,27 +895,21 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				$announcment_class  =   "";
 			}
                         
-                        //$isMovie = $this->Session->read("library_announcement");
+                       $isMovie = $this->Session->read("library_announcement");
 
 			?>
                             <div class="announcements">
                                     <h2>
                                             <?php __('Announcements'); ?>
                                     </h2>
-                                    <?php //if( empty($isMovie) ) {  
-                                    ?>
+                                    <?php if( empty($isMovie) ) {  ?>
                                     <div class="announcement" style="<?php echo $announcment_class; ?>">
                                             <?php echo $announcment_value; ?>
                                     </div>
-                                    <?php //}
-                                     ?>
+                                    <?php } ?>
                             </div>
-                        <!--
                         <?php 
                         if(!empty($movieAnnouncmentValue[0]['announcements'])) { 
-
-                            $hostName = $_SERVER['SERVER_NAME'];
-                            $domain = explode('.',$hostName);
                             $i = 0;
                         ?>
                             <div class="movie-announcements">
@@ -927,7 +931,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                  
                                  <p style="margin-top:14px;"><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" target ="_blank">Click here</a> to log in.</p>
                             </div>
-                        <?php } ?>  -->
+                        <?php } ?> 
 		</section>
 		<div class="content" style="<?php echo $section_class; ?>">
 			<span class="ajaxmessage44" id="ajaxflashMessage44"></span>
