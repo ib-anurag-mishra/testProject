@@ -404,6 +404,7 @@ class SolrComponent extends Object {
 										'group.field' => $field,
 										'group.query' => $query,
 										'group.sort' => 'provider_type desc',
+										'group.ngroups'	=> 'true'
 									);
 				$response = $this->getSearchResponse( $type, $query, $start, $limit, $additionalParams, $check );
 				$docs 	  = array();
@@ -415,6 +416,8 @@ class SolrComponent extends Object {
 							$group->doclist->docs[0]->numFound = $group->doclist->numFound;
 							$docs[] = $group->doclist->docs[0];
 						}
+
+						$docs['ngroups'] = $response->grouped->$field->ngroups;
 					}
 				}
 				return $docs;

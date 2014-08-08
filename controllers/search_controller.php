@@ -151,9 +151,10 @@ class SearchController extends AppController {
 
                     case 'album':
                         $limit = 12;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'album' );
+                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'album' );
                         $arr_albumStream = array();
-                        $albums = $this->Solr->groupSearch( $queryVar, 'album', $facetPage, $limit );
+                        $albums 		 = $this->Solr->groupSearch( $queryVar, 'album', $facetPage, $limit );
+                        $totalFacetCount = $albums['ngroups'];
 
                         foreach ( $albums as $objKey => $objAlbum ) {
                             $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
