@@ -2726,3 +2726,25 @@ function multiSongCreateNewPlaylist(queueID)
             }
         });
 }
+$(document).ready(function() {
+    scrollToSelectedGenre();
+});
+
+function scrollToSelectedGenre()
+{
+    sleep(100);
+    var to_scroll = $(document).find(".genre-column");
+    $(document).find(".genre-column li").each(function() {
+        if ($(this).find('a').hasClass('active'))
+        {
+            var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+            to_scroll.animate({
+                scrollTop: scroll_distance
+            }, 2000);
+
+            $(this).find('a').focus();
+
+        }
+    });
+}
+

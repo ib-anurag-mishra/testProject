@@ -7,7 +7,7 @@
 
 			if ($genre_crumb_name != "")
 			{
-				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/?genre=' .$combineGenre);
+				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/' .base64_encode($genre_crumb_name));
 			}
 
 			$html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
@@ -55,9 +55,8 @@
 			<div class="album-genre">
 				<?php echo __('Genre') . ": "; ?>
 				<span> <?php
+				echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre'])), array("title" => $this->getTextEncode($album['Genre']['Genre'])));
 
-				echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', '?genre='.$combineGenre), array("title" => $this->getTextEncode($album['Genre']['Genre'])));
-				
 				if ($album['Album']['Advisory'] == 'T'):
 
 					echo '<br />';
