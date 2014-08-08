@@ -921,7 +921,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
-                                <p style="margin-bottom:4px;"><a class="announcments-movie-titles" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
+                                <p style="margin-bottom:4px;"><a class="announcments-movie-titles" style="color:#008fbd;" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
                                     <?php echo $value['announcements']['title']; ?>
                                 </a></p>
                                  <?php /*if($i == 1){
