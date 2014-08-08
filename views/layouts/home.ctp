@@ -233,7 +233,7 @@
                         leftmyhistory07.removeClass('active');
                         leftmylib07.removeClass('active');
                         leftsavedqueues07.removeClass('active');
-                        concert07.addClass('active');
+                        //concert07.addClass('active');
                     }else if (pageName === 'musicVideo07') {
                         home07.removeClass('active');
                         newsRelease07.removeClass('active');
