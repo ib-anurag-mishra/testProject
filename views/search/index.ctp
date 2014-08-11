@@ -413,7 +413,7 @@
 			break;
 			case 'video':
 		?>
-		<header> <h3 class="videos-header">Videos</h3> </header>
+		<header> <h3 class="videos-header"><?php echo __( 'Videos', true ); ?></h3> </header>
 		<?php
 			if ( isset( $songs ) && is_array( $songs ) && count( $songs ) > 0 ):
 			$b = 1;
