@@ -1321,6 +1321,7 @@ Class ArtistsController extends AppController {
                         )), $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
 
             $val = '';
+            $val_provider_type = '';
 
             foreach ($songs as $k => $v) {
                 $val = $val . $v['Song']['ReferenceID'] . ",";

@@ -401,6 +401,10 @@
 		<?php
 				foreach ( $genres as $genre ):
 
+					if ( !is_object( $genre ) ) {
+						continue;
+					}
+
 					$genre_name 	 = str_replace( '"', '', $genre->Genre );
 					$genre_name_text = $this->Search->truncateText( $genre_name, 125, $this );
 					$title 			 = urlencode ($genre->Genre );
@@ -505,6 +509,11 @@
 					<ul>
 					<?php
 						foreach ( $artists as $artist ):
+
+							if ( !is_object( $artist ) ) {
+								continue;
+							}
+
 							$artist_name 	  = str_replace( '"', '', $artist->ArtistText );
 							$artist_name_text = str_replace( '/', '@', base64_encode( $artist->ArtistText ) );
 					?>
@@ -526,6 +535,11 @@
 				<?php
 					$composerFlag = 0;
 					foreach ( $composers as $composer ):
+					
+						if ( !is_object( $composer ) ) {
+							continue;
+						}
+
 						$composer_name = str_replace('"', '', $composer->Composer);
 						$composer_name = $this->Search->truncateText( $composer_name, 125, $this );
 						$composer_name = $this->getTextEncode($composer_name);
@@ -572,6 +586,10 @@
 						<?php
 							$i = 0;
 							foreach ( $albumData as $palbum ):
+
+								if ( !is_object( $palbum ) ) {
+									continue;
+								}
 						?>
 								<li>
 						<?php
@@ -639,6 +657,11 @@
 						<ul>
 						<?php
 							foreach ( $artists as $artist ):
+
+								if ( !is_object( $artist ) ) {
+									continue;
+								}
+
 								$artist_name_text = $this->Search->truncateText( $this->getTextEncode( $artist->ArtistText ), 125, $this );
 
 								if ( !empty( $artist_name_text ) ):
@@ -681,6 +704,11 @@
 						<?php
 							$composerFlag = 0;
 							foreach ( $composers as $composer ):
+
+								if ( !is_object( $composer ) ) {
+									continue;
+								}
+
 								$composer_name = $this->Search->truncateText( $this->getTextEncode( $composer->Composer ), 125, $this );
 								if ( !empty( $composer_name ) ):
 									$composerFlag  = 1;
@@ -718,6 +746,11 @@
 				<?php if ( isset( $videos ) && is_array( $videos ) && count( $videos ) > 0 ): ?>
 				<ul>
 				<?php 	foreach ( $videos as $video ):
+
+							if ( !is_object( $video ) ) {
+								continue;
+							}
+
 							$video_name_text = $this->Search->truncateText( $this->getTextEncode( $video->VideoTitle ), 125, $this );
 							$name 			 = $this->getTextEncode( $video->VideoTitle );
 							$video_name_text = ($name != "false") ? $video_name_text : ""
@@ -747,6 +780,11 @@
 				<?php if ( isset( $genres ) && is_array( $genres ) && count( $genres ) ): ?>
 				<ul>
 				<?php	foreach ( $genres as $genre ):
+
+							if ( !is_object( $genre ) ) {
+								continue;
+							}
+
 							$genre_name 	 = str_replace( '"', '', $genre->Genre );
 							$genre_name		 = $this->getTextEncode( $genre_name );
 							$genre_name_text = $this->Search->truncateText( $genre_name , 125, $this );
