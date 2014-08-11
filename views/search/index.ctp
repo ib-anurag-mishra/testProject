@@ -622,7 +622,7 @@
 		</section>
 		<section class="category-results artist-results">
 			<header>
-				<h3 class="artists-header">Artists</h3>
+				<h3 class="artists-header"><?php echo __( 'Artists', true ); ?></h3>
 				<?php 
 					if ( isset( $artists ) && !empty( $artists ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array('class' => 'see-more', 'title' => 'See More Artists'));
@@ -663,7 +663,7 @@
 		</section>
 		<section class="category-results composers-results">
 			<header>
-				<h3 class="composers-header">Composers</h3>
+				<h3 class="composers-header"><?php echo __( 'Composers', true ); ?></h3>
 				<?php 
 					if ( isset( $composers ) && !empty( $composers ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => 'See More Composers', 'class' => 'see-more' ) );
@@ -702,7 +702,7 @@
 		</section>
 		<section class="category-results videos-results">
 			<header>
-				<h3 class="videos-header">Videos</h3>
+				<h3 class="videos-header"><?php echo __( 'Videos', true ); ?></h3>
 				<?php 
 					if ( isset( $videos ) && !empty( $videos ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => 'See More Videos', 'class' => 'see-more' ) );
@@ -731,7 +731,7 @@
 		</section>
 		<section class="category-results genres-results">
 			<header>
-				<h3 class="genres-header">Genres</h3>
+				<h3 class="genres-header"><?php echo __( 'Genres', true ); ?></h3>
 				<?php 
 					if ( isset( $genres ) && !empty( $genres ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => 'See More Genres', 'class' => 'see-more' ) );
@@ -765,7 +765,7 @@
 			</div>
 		</section>
 		<section class="category-results songs-results">
-			<header> <h3 class="songs-header">Songs</h3></header>
+			<header> <h3 class="songs-header"><?php echo __( 'Songs', true ); ?></h3></header>
 			<div class="songs-results-list">
 				<div class="header-container">
 					<div class="artist-col">
