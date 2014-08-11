@@ -301,7 +301,7 @@
 		break;
 		case 'album':
 	?>
-		<header><h3 class="albums-header">Albums</h3></header>
+		<header><h3 class="albums-header"><?php echo __( 'Albums', true ); ?></h3></header>
 		<?php
 			if ( isset( $albumData ) && is_array( $albumData ) && count( $albumData ) > 0 ):
 				$i = 0;
