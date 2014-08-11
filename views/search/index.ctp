@@ -553,7 +553,7 @@
 	else: ?>
 		<section class="category-results album-results">
 			<header>
-				<h3 class="albums-header">Albums</h3>
+				<h3 class="albums-header"><?php echo __( 'Albums', true ); ?></h3>
 				<?php 
 					if ( isset( $albumData ) && !empty( $albumData ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => 'See More Albums', 'class' => 'see-more' ) );
