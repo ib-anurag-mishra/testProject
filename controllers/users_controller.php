@@ -19,14 +19,82 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','redirection','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','manage_notification','saveNotification','unsubscribe', 'isPatronLogin','savestreampopup', 'capita', 'symws', 'savenotifypopup');
+		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','redirection','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','manage_notification','saveNotification','unsubscribe', 'isPatronLogin','savestreampopup', 'capita', 'symws', 'savenotifypopup','buildAcl');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
 		$this->Cookie->domain = 'freegalmusic.com';
 	}
-	/*
-    Function Name : beforeFilter
+
+ /**
+ * Rebuild the Acl based on the current controllers in the application
+ *
+ * @return void
+ */
+    function buildAcl() {
+        $log = array();
+ 
+        $aco =& $this->Acl->Aco;
+        $root = $aco->node('controllers');
+        if (!$root) {
+            $aco->create(array('parent_id' => null, 'model' => null, 'alias' => 'controllers'));
+            $root = $aco->save();
+            $root['Aco']['id'] = $aco->id; 
+            $log[] = 'Created Aco node for controllers';
+        } else {
+            $root = $root[0];
+        }   
+ 
+        App::import('Core', 'File');
+        $Controllers = Configure::listObjects('controller');
+        $appIndex = array_search('App', $Controllers);
+        if ($appIndex !== false ) {
+            unset($Controllers[$appIndex]);
+        }
+        $baseMethods = get_class_methods('Controller');
+        $baseMethods[] = 'buildAcl';
+ 
+        // look at each controller in app/controllers
+        foreach ($Controllers as $ctrlName) {
+            App::import('Controller', $ctrlName);
+            $ctrlclass = $ctrlName . 'Controller';
+            $methods = get_class_methods($ctrlclass);
+ 
+            // find / make controller node
+            $controllerNode = $aco->node('controllers/'.$ctrlName);
+            if (!$controllerNode) {
+                $aco->create(array('parent_id' => $root['Aco']['id'], 'model' => null, 'alias' => $ctrlName));
+                $controllerNode = $aco->save();
+                $controllerNode['Aco']['id'] = $aco->id;
+                $log[] = 'Created Aco node for '.$ctrlName;
+            } else {
+                $controllerNode = $controllerNode[0];
+            }
+ 
+            //clean the methods. to remove those in Controller and private actions.
+            foreach ($methods as $k => $method) {
+                if (strpos($method, '_', 0) === 0) {
+                    unset($methods[$k]);
+                    continue;
+                }
+                if (in_array($method, $baseMethods)) {
+                    unset($methods[$k]);
+                    continue;
+                }
+                $methodNode = $aco->node('controllers/'.$ctrlName.'/'.$method);
+                if (!$methodNode) {
+                    $aco->create(array('parent_id' => $controllerNode['Aco']['id'], 'model' => null, 'alias' => $method));
+                    $methodNode = $aco->save();
+                    $log[] = 'Created Aco node for '. $method;
+                }
+            }
+        }
+        debug($log);
+    }
+
+
+   /*
+    Function Name : method_action_mapper
     Desc : This function redirects the libraries to their corresponding login page basing on the
 		   library subdomain name in the url.
    */
