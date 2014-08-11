@@ -21,45 +21,45 @@
 		
 			<?php 
 				if ( $type != 'all') {
-					echo $this->Html->link( 'All Music', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'all' ) ), array( 'title' => 'All Music' ) );	
+					echo $this->Html->link( __( 'All Music', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'all' ) ), array( 'title' => __( 'All Music', true ) ) );	
 				} else {
-					echo $this->Html->link( 'All Music', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'All Music' ) );
+					echo $this->Html->link( __( 'All Music', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'All Music', true ) ) );
 				}
 	
 				if ( $type != 'album' ) {
-					echo $this->Html->link( 'Albums', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => 'Albums' ) );
+					echo $this->Html->link( __( 'Albums', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => __( 'Albums', true ) ) );
 				} else {
-					echo $this->Html->link( 'Albums', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Albums' ) );
+					echo $this->Html->link( __( 'Albums', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Albums', true ) ) );
 				}
 	
 				if ( $type != 'artist' ) {
-					echo $this->Html->link( 'Artists', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array( 'title' => 'Artists' ) );
+					echo $this->Html->link( __( 'Artists', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array( 'title' => __( 'Artists', true ) ) );
 				} else {
-					echo $this->Html->link( 'Artists', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Artists' ) );
+					echo $this->Html->link( __( 'Artists', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Artists', true ) ) );
 				}
 	
 				if ( $type != 'composer' ) {
-					echo $this->Html->link( 'Composers', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => 'Composers' ) );
+					echo $this->Html->link( __( 'Composers', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => __( 'Composers', true ) ) );
 				} else {
-					echo $this->Html->link( 'Composers', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Composers' ) );
+					echo $this->Html->link( __( 'Composers', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Composers', true ) ) );
 				}
 	
 				if ( $type != 'genre' ) {
-					echo $this->Html->link( 'Genres', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => 'Genres' ) );
+					echo $this->Html->link( __( 'Genres', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => __( 'Genres', true ) ) );
 				} else {
-					echo $this->Html->link( 'Genres', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Genres' ) );
+					echo $this->Html->link( __( 'Genres', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Genres', true ) ) );
 				}
 	
 				if ( $type != 'video' ) {
-					echo $this->Html->link( 'Videos', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => 'Videos' ) );
+					echo $this->Html->link( __( 'Videos', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => __( 'Videos', true ) ) );
 				} else {
-					echo $this->Html->link( 'Videos', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Videos' ) );
+					echo $this->Html->link( __( 'Videos', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Videos', true ) ) );
 				}
 	
 				if ( $type != 'song' ) {
-					echo $this->Html->link( 'Songs', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'song' ) ), array( 'title' => 'Songs' ) );
+					echo $this->Html->link( __( 'Songs', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'song' ) ), array( 'title' => __( __( 'Songs', true ), true ) ) );
 				} else {
-					echo $this->Html->link( 'Songs', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Songs' ) );
+					echo $this->Html->link( __( 'Songs', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Songs', true ) ) );
 				}
 			?>
 
