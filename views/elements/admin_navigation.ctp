@@ -1,6 +1,6 @@
 <?php
 /*
- File Name : admin_navigation.php
+File Name : admin_navigation.php
 File Description : View page for adfmin navigation
 Author : m68interactive
 */
@@ -63,7 +63,7 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 	</li>
 </ul>
 <?php
-} elseif ($this->Session->read('Auth.User.type_id') == 1) {
+} elseif ($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7) {
 	?>
 <ul id="menu" class="sf-menu">
 	<li><a href="#"
