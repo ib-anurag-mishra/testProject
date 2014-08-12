@@ -507,8 +507,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managefeaturedartist() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $artists = $this->paginate( 'Featuredartist', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
         $this->set( 'artists', $artists );
+		$this->set('userTypeId',$userTypeId);
     }
 
     /*
