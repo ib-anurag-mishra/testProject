@@ -1570,6 +1570,7 @@ STR;
 
     function admin_librarytimezone()
     {     
+	$userTypeId = $this->Session->read('Auth.User.type_id');
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
@@ -1599,6 +1600,7 @@ STR;
         $librariesTimezones = $this->paginate('LibrariesTimezone');
 
         $this->set('librariesTimezones', $librariesTimezones);
+	$this->set('userTypeId',$userTypeId);
     }
 
     /*
