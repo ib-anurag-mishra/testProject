@@ -278,8 +278,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopalbums() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $topAlbums = $this->paginate( 'TopAlbum', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
         $this->set( 'topAlbums', $topAlbums );
+		$this->set('userTypeId',$userTypeId);
     }
 
 	/*
