@@ -157,6 +157,11 @@ class SearchController extends AppController {
                         $totalFacetCount = $albums['ngroups'];
 
                         foreach ( $albums as $objKey => $objAlbum ) {
+                        	
+                        	if ( !is_object( $objAlbum ) ) {
+                        		continue;
+                        	}
+
                             $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
                                     array( 'controller' => 'artists', 'action' => 'getAlbumSongs' ), array('pass' => array(base64_encode( $objAlbum->ArtistText ), $objAlbum->ReferenceID, base64_encode( $objAlbum->provider_type ), 1 ) )
                             );
@@ -206,6 +211,11 @@ class SearchController extends AppController {
             	$albums 	 	 = $this->Solr->groupSearch( $queryVar, 'album', 1, 15 );
 
                 foreach ( $albums as $objKey => $objAlbum ) {
+
+                	if ( !is_object( $objAlbum ) ) {
+                		continue;
+                	}
+
                     $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
                             array( 'controller' => 'artists', 'action' => 'getAlbumSongs' ), array( 'pass' => array( base64_encode( $objAlbum->ArtistText ), $objAlbum->ReferenceID, base64_encode( $objAlbum->provider_type ), 1 ) )
                     );

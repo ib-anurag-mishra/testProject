@@ -82,7 +82,7 @@ class SolrComponent extends Object {
 		if ( $type == 'video' ) {			
 			$conditions = ' AND DownloadStatus:1';
 		} else {
-			$conditions = ' AND (TerritoryDownloadStatus:' . $country . '_1 OR TerritoryStreamingStatus:' . $country . '_1)' . $filter;
+			$conditions = ' AND (TerritoryDownloadStatus:' . $country . '_1 OR TerritoryDownloadStatus:' . $country . '_1 OR TerritoryStreamingStatus:' . $country . '_1)' . $filter;
 		}
 		
 		if( $mobileExplicitStatus == 1 ) {
@@ -130,7 +130,7 @@ class SolrComponent extends Object {
 		switch ( $type ) {
 	
 			case 'song':
-				$queryFields['queryFields'] = 'catchSongs';
+				$queryFields['queryFields'] = 'catchSongs^10';
 				$queryFields['field'] 		= 'SongTitle';
 				break;
 	
@@ -143,7 +143,7 @@ class SolrComponent extends Object {
 				if( !empty( $check ) ) {
 					$queryFields['queryFields'] = 'Composer';
 				} else {
-					$queryFields['queryFields'] = 'catchAlbums';
+					$queryFields['queryFields'] = 'catchAlbums^10';
 				}
 	
 				$queryFields['field'] = 'rpjoin';
@@ -170,7 +170,7 @@ class SolrComponent extends Object {
 				break;
 	
 			default:
-				$queryFields['queryFields'] = 'catchSongs';
+				$queryFields['queryFields'] = 'catchSongs^10';
 				$queryFields['field'] 		= 'SongTitle';
 				break;
 		}
@@ -220,8 +220,8 @@ class SolrComponent extends Object {
 										'qf' => $queryFields
 									);
 				
-				$query 					 = $searchkeyword . ' AND Territory:' . $country . $conditions;
-				$provider_query_lastpage = ' AND (provider_type:sony OR provider_type:ioda)';
+				$query 					 = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
+				$provider_query_lastpage = ' AND (provider_type:sony OR provider_type:sony OR provider_type:ioda)';
 
 				$lastPageResponse = self::$solr->search( $query . $provider_query_lastpage, 0, 1, $additionalParams );
 
@@ -335,7 +335,7 @@ class SolrComponent extends Object {
 				$queryFields = isset( $arrGroup['queryFields'] ) ? $arrGroup['queryFields'] : '';
 				$field 		 = isset( $arrGroup['field'] ) ? $arrGroup['field'] : '';
 
-				$query = $searchkeyword . ' AND Territory:' . $country . $conditions;
+				$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
 
 				$additionalParams = array(
 										'defType' => 'edismax',
