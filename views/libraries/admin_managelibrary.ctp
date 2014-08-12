@@ -32,9 +32,11 @@ echo $paginator->counter(array(
   <table id="list">
           <tr>            
             <th class="left" style="border-right:1px solid #E0E0E0">Library Name</th>
+	<?php if($userTypeId != 7){ ?>
             <th style="border-right:1px solid #E0E0E0">Edit</th>
 	    <th>Action</th>
             <th>Cache</th>
+	<?php } ?>
           </tr>
           <?php
           foreach($libraries as $library)
@@ -42,6 +44,7 @@ echo $paginator->counter(array(
             ?>
             <tr>
                 <td class="left"><?php echo $library['Library']['library_name'];?></td>
+     		<?php if($userTypeId != 7){ ?>
                 <td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'libraryform','id'=>$library['Library']['id']));?></td>
 		
 		<?php
@@ -56,7 +59,8 @@ echo $paginator->counter(array(
 		<?php
 		}
 		?>
-                <td><?php echo $html->link('Clear Cache', array('controller'=>'clear','action'=>'library',$library['Library']['id']));?></td>
+                <td><?php echo $html->link('Clear Cache', array('controller'=>'clear','action'=>'library',$library['Library']['id']));?></td>	
+		<?php } ?>
             </tr>            
             <?php
           }

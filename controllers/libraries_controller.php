@@ -38,6 +38,7 @@ Class LibrariesController extends AppController
     function admin_managelibrary()
     {
 
+	$userTypeId = $this->Session->read('Auth.User.type_id');
 
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
@@ -76,6 +77,7 @@ Class LibrariesController extends AppController
         }
         $this->set('searchKeyword', $searchKeyword);
         $this->set('libraries', $this->paginate('Library'));
+	$this->set('userTypeId',$userTypeId);
     }
 
     /*
