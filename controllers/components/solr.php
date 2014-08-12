@@ -389,7 +389,7 @@ class SolrComponent extends Object {
 				$queryFields = isset( $arrGroup['queryFields'] ) ? $arrGroup['queryFields'] : '';
 				$field 		 = isset( $arrGroup['field'] ) ? $arrGroup['field'] : '';
 
-				$query = $searchkeyword . ' AND Territory:' . $country . $conditions;
+				$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
 
 				if ( $page == 1 ) {
 					$start = 0;
