@@ -267,20 +267,20 @@ Class CommonComponent extends Object
             Cache::write($cacheVariableName, $artistListResults,'GenreCache');    
             $this->log("cache variable $cacheVariableName  set for ".$genreValue.'_'.$territory.'_'.$artistFilter.'_'.$pageNo, "genreLogs");
          } 
-         elseif($artistFilter == 'All' && empty($artistListResults))
-         {       
-             $territoryUpper    = strtoupper($territory);
-             $genreList = Cache::read("allgenre" . $territoryUpper,'GenreCache');
-             $genreKey  = array_search($genreValue, $genreList);
-             
-             if ($genreKey!=false) {
-                 
-                 unset($genreList[$genreKey]);
-                 Cache::write("allgenre" . $territoryUpper, $genreList,'GenreCache');
-                 $this->log($genreValue." deleted from genre Cache for $territory", "cache");
-                 
-             }
-         }
+//         elseif($artistFilter == 'All' && empty($artistListResults))
+//         {       
+//             $territoryUpper    = strtoupper($territory);
+//             $genreList = Cache::read("allgenre" . $territoryUpper,'GenreCache');
+//             $genreKey  = array_search($genreValue, $genreList);
+//             
+//             if ($genreKey!=false) {
+//                 
+//                 unset($genreList[$genreKey]);
+//                 Cache::write("allgenre" . $territoryUpper, $genreList,'GenreCache');
+//                 $this->log($genreValue." deleted from genre Cache for $territory", "cache");
+//                 
+//             }
+//         }
          
         return $artistListResults;
          
