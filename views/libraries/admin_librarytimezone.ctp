@@ -25,7 +25,9 @@ echo $paginator->counter(array(
 echo '<br/>';
  echo $session->flash();
 ?></p>
+	<?php if($userTypeId != 7) { ?>
 <div style="float:right;padding-right:25px;"><?php echo $html->link('Add New Timezone', array('controller'=>'libraries','action'=>'librarytimezoneform','add'));?></div>
+	<?php } ?>
   <table id="list" style="border:1px solid #E0E0E0;">
           <tr>            
             <th class="left" style="border-right:1px solid #E0E0E0">Library Name</th>

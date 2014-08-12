@@ -1255,7 +1255,7 @@ Class LibrariesController extends AppController
 
     function admin_consortium()
     {
-
+	$userTypeId = $this->Session->read('Auth.User.type_id');
         // allwoes only admin
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
@@ -1264,6 +1264,7 @@ Class LibrariesController extends AppController
 
         $consortium = $this->Consortium->find('all', array('order' => 'consortium_key ASC'));
         $this->set('consortium', $consortium);
+	$this->set('userTypeId',$userTypeId);
     }
 
     function admin_consortiumform()
