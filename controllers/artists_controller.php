@@ -34,8 +34,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopsingles() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $topSingles = $this->paginate( 'TopSingles', array( 'prod_id != ""' ) );
         $this->set( 'topSingles', $topSingles );
+		$this->set('userTypeId',$userTypeId);
     }
 
 	/*
