@@ -529,6 +529,7 @@ Class GenresController extends AppController
 
     function admin_managegenre()
     {
+	$userTypeId = $this->Session->read('Auth.User.type_id');
         if ($this->data)
         {
             $this->Category->deleteAll(array('Language' => Configure::read('App.LANGUAGE')), false);
@@ -564,6 +565,7 @@ Class GenresController extends AppController
             $selArray[] = $selectedGenre['Category']['Genre'];
         }
         $this->set('selectedGenres', $selArray);
+	$this->set('userTypeId',$userTypeId);
         $this->layout = 'admin';
     }
     
