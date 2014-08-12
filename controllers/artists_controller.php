@@ -899,10 +899,11 @@ Class ArtistsController extends AppController {
      */
 
     function admin_manageartist() {
-
+ 		$userTypeId = $this->Session->read('Auth.User.type_id');
         $artists = $this->paginate('Artist', array('language' => Configure::read('App.LANGUAGE')));
 
         $this->set('artists', $artists);
+		$this->set('userTypeId',$userTypeId);
     }
 
     /*
