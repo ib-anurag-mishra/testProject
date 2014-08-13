@@ -12899,6 +12899,11 @@ sub { top: 0.4em; }
 			input[type="submit"] {
 				
 				// background: url(../img/login/submit-bkg.gif) no-repeat;
+				-webkit-appearance: none;
+				margin: 0;
+				padding: 0;
+				border: 0;
+				text-indent: -9999px;				
 				-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.3);
 				-moz-box-shadow: 0 1px 2px rgba(0,0,0,.3);
 				box-shadow: 0 1px 2px rgba(0,0,0,.3);
@@ -12908,7 +12913,9 @@ sub { top: 0.4em; }
 				height: 23px;
 				font-weight: bold;
 				-webkit-appearance: none;
-				border: 0;
+				position: absolute;
+				left: 350px;
+				top: 27px;
 				cursor: pointer;
 
 
@@ -12949,7 +12956,7 @@ sub { top: 0.4em; }
 
 
 
-			
+
 		}
 		
 
