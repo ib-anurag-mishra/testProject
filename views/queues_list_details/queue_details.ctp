@@ -248,7 +248,7 @@
 
 
                             <div class="album-title">
-                                <a href="/artists/view/<?php echo base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?php echo base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
                                     <?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>
                                 </a>                                                
                             </div>
