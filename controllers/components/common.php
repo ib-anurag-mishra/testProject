@@ -2111,13 +2111,13 @@ STR;
                                     PRODUCT.pid
                             FROM
                                     Songs AS Song
-                                            LEFT JOIN
+                                            INNER JOIN
                                     File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                            LEFT JOIN
+                                            INNER JOIN
                                     File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                                             LEFT JOIN
                                     Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-                                            LEFT JOIN
+                                            INNER JOIN
                              {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
                                             LEFT JOIN
                                     PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type) 
