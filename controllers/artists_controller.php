@@ -34,8 +34,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopsingles() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $topSingles = $this->paginate( 'TopSingles', array( 'prod_id != ""' ) );
         $this->set( 'topSingles', $topSingles );
+		$this->set('userTypeId',$userTypeId);
     }
 
 	/*
@@ -278,8 +280,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopalbums() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $topAlbums = $this->paginate( 'TopAlbum', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
         $this->set( 'topAlbums', $topAlbums );
+		$this->set('userTypeId',$userTypeId);
     }
 
 	/*
@@ -899,10 +903,11 @@ Class ArtistsController extends AppController {
      */
 
     function admin_manageartist() {
-
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $artists = $this->paginate('Artist', array('language' => Configure::read('App.LANGUAGE')));
 
         $this->set('artists', $artists);
+		$this->set('userTypeId',$userTypeId);
     }
 
     /*
@@ -1088,8 +1093,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managenewartist() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $artists = $this->paginate('Newartist', array('language' => Configure::read('App.LANGUAGE')));
         $this->set('artists', $artists);
+		$this->set('userTypeId',$userTypeId);
     }
 
     /*

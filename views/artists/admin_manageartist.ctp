@@ -93,9 +93,11 @@ function CheckAllChk(theForm,maincheckname)
 						<th class="left">Artist Name</th>
 						<th class="left">Territory</th>
 						<th>Artist image</th>
+						<?php if($userTypeId != 7) { ?>
 						<th>Edit</th>
 						<th><input type="checkbox" name="maincheckbox" id="maincheckbox"
 							value="1" onClick="CheckAllChk(form,this);">Delete</th>
+					<?php } ?>
 					</tr>
 
 					<?php if(count($artists)) { ?>
@@ -112,10 +114,12 @@ function CheckAllChk(theForm,maincheckname)
 							rel="image"
 							onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>')"><?php echo $artistImage;?>
 						</a></td>
+						<?php if($userTypeId != 7) { ?>
 						<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'createartist','id'=>$artist['Artist']['id']));?>
 						</td>
 						<td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$artist['Artist']['id'], 'value' => $artist['Artist']['id'], 'hiddenField' => false)); ?>
 						</td>
+					<?php } ?>
 					</tr>
 					<?php
 					}
@@ -134,10 +138,12 @@ function CheckAllChk(theForm,maincheckname)
 							</div> <?php if(count($artists)) { ?> <span style="float: right;">
 								<table>
 									<tr>
-										<td><?php echo $this->Form->button('Remove Selected', array('name' => 'remove_selected','label'=>'Remove Selected','onclick' => 'return m_delete(1)')); ?>
+<?php if($userTypeId != 7) { ?>
+<td><?php echo $this->Form->button('Remove Selected', array('name' => 'remove_selected','label'=>'Remove Selected','onclick' => 'return m_delete(1)')); ?>
 										</td>
 										<td><?php echo $this->Form->button('Remove All', array('name' => 'remove_all','label'=>'Remove All','onclick' => 'return m_delete(2)')); ?>
 										</td>
+<?php } ?>
 									</tr>
 
 								</table>

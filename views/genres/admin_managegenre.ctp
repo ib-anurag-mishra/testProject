@@ -44,7 +44,9 @@
                 endforeach;
             ?>
                 <tr>
+					<?php if($userTypeId !=7) { ?>
                     <td align="center" colspan="3"><p class="submit"><input type="submit" value="Save" /></p></td>
+					 <?php } ?>
                 </tr>
             </table>
         </div>
