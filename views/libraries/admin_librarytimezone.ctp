@@ -25,13 +25,17 @@ echo $paginator->counter(array(
 echo '<br/>';
  echo $session->flash();
 ?></p>
+	<?php if($userTypeId != 7) { ?>
 <div style="float:right;padding-right:25px;"><?php echo $html->link('Add New Timezone', array('controller'=>'libraries','action'=>'librarytimezoneform','add'));?></div>
+	<?php } ?>
   <table id="list" style="border:1px solid #E0E0E0;">
           <tr>            
             <th class="left" style="border-right:1px solid #E0E0E0">Library Name</th>
             <th class="left" style="border-right:1px solid #E0E0E0">Library Timezone</th>
+	    <?php if($userTypeId != 7) { ?>
             <th style="border-right:1px solid #E0E0E0">Edit</th>
 	    <th>Delete</th>            
+		<?php } ?>
           </tr>
           <?php
           if(count($librariesTimezones)) {
@@ -41,8 +45,10 @@ echo '<br/>';
                 <tr>
                     <td class="left"><?php echo $librariesTimezone['Library']['library_name'];?></td>
                     <td class="left"><?php echo $librariesTimezone['LibrariesTimezone']['libraries_timezone'];?></td>
+					<?php if($userTypeId != 7) { ?>
                     <td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'librarytimezoneform','edit',$librariesTimezone['LibrariesTimezone']['library_id']));?></td>		
                     <td><?php echo $html->link('Delete', array('controller'=>'libraries','action'=>'removelibrarytimezone',$librariesTimezone['Library']['id']),array('confirm' => 'Are you sure you want to remove this record ?'));?></td>
+					<?php } ?>
                 </tr>            
                 <?php
             }
