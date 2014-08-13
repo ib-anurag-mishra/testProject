@@ -1051,13 +1051,13 @@ STR;
                 $topDownloads[$key]['videoImage'] = $videoImage;
             }
             Cache::write("top_download_videos" . $territory, $topDownloads);
-            $this->log("cache written for top download   videos for $territory", "cache");
+            $this->log("cache written for top download videos for: $territory", "cache");
         }
         else
         {
             $topDownloads = Cache::read("top_download_videos" . $territory);
             Cache::write("top_download_videos" . $territory, $topDownloads);
-            $this->log("Unable to update top download  videos cache for " . $territory, "cache");
+            $this->log("Unable to update top download videos cache for: " . $territory, "cache");
         }
         // End Caching functionality for top video downloads
         return $topDownloads;
@@ -1266,13 +1266,13 @@ STR;
                 }
                 
                 Cache::write("national_us_top10_songs" . $country, $data);
-                $this->log("cache written for US top ten for $territory", "cache");
+                $this->log("cache written for US top ten for: $territory", "cache");
             }
             else
             {
                 $data = Cache::read("national_us_top10_songs" . $country);
                 Cache::write("national_us_top10_songs" . $country, $data);
-                $this->log("Unable to update US top ten for " . $territory, "cache");
+                $this->log("Unable to update US top ten for: " . $territory, "cache");
             }
         }
         $this->log("cache written for US top ten for $territory", 'debug');
@@ -2182,17 +2182,13 @@ STR;
    */
 
   function getTopAlbums($territory) {
-
     // Gets the list of the top albums that are manually set
     $TopAlbum = ClassRegistry::init('TopAlbum');
     $topAlbumsList = $TopAlbum->getTopAlbumsList($territory);
 
     if ((count($topAlbumsList) < 1) || ($topAlbumsList === false)) {
-
       $this->log('a list of top albums was not available for ' . $territory, "cache");
-
     } else {
-
       // creating a list of the album ids and provider types.
       $ids_provider_type = '';
       foreach ($topAlbumsList as $topAlbum) {
@@ -2222,17 +2218,13 @@ STR;
 
         }
         Cache::write('top_albums' . $territory, $topAlbumData);
-        $this->log('cache written for Top Albums for: ' . $territory, 'debug');
         $this->log('cache written for Top Albums for: ' . $territory, 'cache');
       }
-
     }
-
     return $topAlbumData;
   }
 
   function getAlbumSongsNew($prodId, $provider, $territory) {
-
     $countryPrefix = $this->getCountryPrefix($territory);
     $Album = ClassRegistry::init('Album');
     $albumData = $Album->findSongsForAlbum($prodId, $provider);
@@ -2301,9 +2293,8 @@ STR;
         }
         else
         {
-            $this->log("top album data is not available for" . $territory, "cache");
+            $this->log("top singles data is not available for" . $territory, "cache");
         }
-
      
         if ($ids != '')
         {
@@ -2389,28 +2380,22 @@ STR;
                         'foreignKey' => false,
                         'conditions'=> array( 'Albums.FileID = File.FileID' )
                     )
-             ))); 
-            
+             )));            
                       
             if (!empty($topSingleData))
             {
                 Cache::write("top_singles" . $territory, $topSingleData);
                 $data = $topSingleData;
-                $this->log("cache written for national top 100 songs for $territory", "cache");
+                $this->log("cache written for top_singles of territory: $territory", "cache");
             }
             else
             {
                 $data = Cache::read("top_singles" . $territory);
-                $this->log("Unable to update national 100 for " . $territory, "cache");
+                $this->log("Unable to update top_singles of territory: " . $territory, "cache");
             }
-
-            $this->log("cache written for top 100 singles for $territory", 'debug');
-            
             return $data;
-        }
-        
-    }
-    
+        }        
+    }    
     
     /*
      * Function Name : getGenreData
