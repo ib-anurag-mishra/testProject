@@ -13,7 +13,7 @@ class QueuesController extends AppController
     var $layout = 'home';
     var $helpers = array('Html', 'Form', 'Session', 'Queue', 'Token');
     var $components = array('Session', 'Auth', 'Acl', 'Queue', 'Streaming', 'Common', 'RequestHandler');
-    var $uses = array('QueueList', 'QueueDetail', 'User', 'Album', 'Song', 'StreamingHistory');
+    var $uses = array('QueueList', 'QueueDetail', 'User', 'Album', 'Song', 'StreamingHistory','Territory');
 
     function beforeFilter()
     {
@@ -26,6 +26,10 @@ class QueuesController extends AppController
         {
             $this->Auth->allow('');
         }
+        
+        if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
+            $this->Auth->allow('admin_addPlaylist','admin_managePlaylist','admin_addPlaylist');
+        }        
     }
 
     /**
@@ -442,6 +446,71 @@ class QueuesController extends AppController
         $queueData = $this->Queue->getQueueList($patron_id);
         $this->set('queueData', $queueData);
     }
+    
+    /**
+     * function name : admin_addplaylist
+     * Description   : This is used to add default playlists
+     */
+    
+    function admin_addplaylist() { 
+        ini_set('memory_limit', '1024M');
+        set_time_limit(0);
+        $territories = $this->Territory->find("all");
+        for ($m = 0; $m < count($territories); $m++) {
+            $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
+        }
+        $this->set("territories", $territoriesArray);
+        if (!empty($this->params['named'])) { //gets the values from the url in form  of array
+            $artistId = $this->params['named']['id'];
+            if (trim($artistId) != '' && is_numeric($artistId)) {
+                $this->set('formAction', 'admin_insertplaylist/id:' . $artistId);
+                $this->set('formHeader', 'Edit Top Single');
+                $getTopSingleDataObj = new TopSingles();
+                $getData = $getTopSingleDataObj->getartistdata($artistId);
+                $this->set('getData', $getData);
+                $condition = 'edit';
+                $artistName = $getData['TopSingles']['artist_name'];
+                $country = $getData['TopSingles']['territory'];
+
+                $getArtistData = array();
+                $this->set('getArtistData', $getArtistData);
+                $result = array();
+                $allAlbum = $this->Album->find('all', array(
+                    'fields' => array('Album.ProdID', 'Album.AlbumTitle'),
+                    'conditions' => array('Album.ArtistText' => $getData['TopSingles']['artist_name'], 'Album.provider_type' => $getData['TopSingles']['provider_type']),
+                    'recursive' => -1
+                ));
+
+                $val = '';
+                $this->Song->Behaviors->attach('Containable');
+                foreach ($allAlbum as $k => $v) {
+                    $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $getData['TopSingles']['territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+                    if (count($recordCount) > 0) {
+                        $result[$v['Album']['ProdID']] = $v['Album']['AlbumTitle'];
+                    }
+                }
+                $this->set('album', $result);
+            }
+        } else {
+            $this->set('formAction', 'admin_insertplaylist');
+            $this->set('formHeader', 'Add Playlist');
+            $condition = 'add';
+            $artistName = '';
+        }        
+    }
+    
+    function admin_insertplaylist() {
+        
+    }
+    
+    /**
+     * function name : admin_managePlaylist
+     * Description   : This is used to manage playlists
+     */
+    
+    function admin_manageplaylist() {
+        
+    }    
 
 }
 ?>
