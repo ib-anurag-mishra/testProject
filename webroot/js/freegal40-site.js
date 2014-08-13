@@ -1398,7 +1398,10 @@ $(document).ready(function() {
 
 
 
+    $('.search-results-albums-page .album-detail-container .add-to-playlist').on('click',function(e){
 
+        e.preventDefault();
+    });
  
 
 
