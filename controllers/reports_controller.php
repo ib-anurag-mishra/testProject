@@ -17,6 +17,9 @@ Class ReportsController extends AppController {
     function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('admin_consortium','admin_streamingreport','admin_downloadStreamingReportAsCsv','admin_getLibraryIdsStream');
+	if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
+              $this->Auth->allow('admin_libraryrenewalreport','admin_index','admin_librarywishlistreport','admin_sonyreports','admin_unlimited','admin_consortium','admin_streamingreport');
+ } 
         
         //checking for Consortium as any library is there or not which is allowed for streaming
                 $is_having_streaming_libarry  = $this->admin_getLibraryIdsStream();

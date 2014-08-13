@@ -24,6 +24,10 @@ Class GenresController extends AppController
         parent::beforeFilter();
 
         $this->Auth->allowedActions = array('view', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions', 'setGenres','album');
+	if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
+              $this->Auth->allow('admin_managegenre');
+ } 
+	
         $libraryCheckArr = array("view", "index");
     }
 
