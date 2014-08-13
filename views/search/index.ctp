@@ -351,7 +351,7 @@
 														<?=$this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
 													</span>
 													<span class="afterClick" style="display: none;">
-														<?=$this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) )?>
+														<?=$this->Html->link( 'Please Wait...', '#', array( 'class' => 'add-to-wishlist' ) )?>
 													</span>
 											<?php endif; ?>
 											</li>
