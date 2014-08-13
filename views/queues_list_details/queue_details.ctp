@@ -123,11 +123,21 @@
                                 <?php
                             }
                             ?>
+                            <?php
+                            /*
                             <div class="song-title">
                                 <?php
                                 echo $this->getValidText($this->getTextEncode($value['Songs']['SongTitle']));
                                 ?>
                             </div>
+                            */
+                            ?>
+
+                            <div class="song-title">
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Songs']['SongTitle'])); ?>" href="/artists/view/<?php echo base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
+                                    <?php echo $this->getValidText($this->getTextEncode($value['Songs']['SongTitle'])); ?>
+                                </a>
+                            </div>                            
 
                             <a class="add-to-wishlist-button no-ajaxy" href='javascript:void(0);'></a>
                             <div class="wishlist-popover <?php echo ($default_queue != 1) ? '' : 'fq'; ?>">
