@@ -18,7 +18,7 @@
 		echo '<div class="pin-number-container" id ="pass">';
 		echo $form->input('password', array('label' => $this->getTextEncode( __('Password', true)),'div' => false,'type'=>'password'));
 		echo '</div>';
-		echo $form->end(array('label' => $this->getTextEncode( __('Log In', true)),'div' => false, 'class' => 'button' ));
+		echo $form->end(array('label' => $this->getTextEncode( __('Login', true)),'div' => false, 'class' => 'button' ));
 		echo '</div>';
 		echo '<span class="forgot">';
 		echo $html->link( $this->getTextEncode( __('Forgot Password?', true)), array('controller' => 'homes', 'action' => 'forgot_password'));
