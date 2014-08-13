@@ -269,7 +269,7 @@
                                 $artistText = (strlen($value['Songs']['ArtistText']) >= 30) ? $this->getTextEncode(substr($value['Songs']['ArtistText'], 0, 30)) . ".." : $this->getTextEncode($value['Songs']['ArtistText']);
                                 ?>  
 
-                                <a href="/artists/album/<?= base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($artistText)); ?>" href="/artists/album/<?= base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
                                     <?php echo $this->getValidText($this->getTextEncode($artistText)); ?>
                                 </a>                                                
                             </div>
