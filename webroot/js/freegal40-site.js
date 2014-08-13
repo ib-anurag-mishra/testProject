@@ -1404,7 +1404,10 @@ $(document).ready(function() {
     });
  
 
+    $('.search-results-songs-page .rows .add-to-playlist').on('click',function(e){
 
+        e.preventDefault();
+    });
 
 
 
