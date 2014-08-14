@@ -1572,7 +1572,7 @@ $(document).ready(function() {
     var $row_checkbox = $('.row-checkbox');
     var $multi_select_icon = $('.multi-select-icon');
 
-    $('.row-checkbox');.on('click', function() {
+    $('.row-checkbox').on('click', function() {
         var $this = $(this);
         $this.parent('.row').toggleClass('highlighted');
         var c = 0;
