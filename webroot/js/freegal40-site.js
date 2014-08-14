@@ -1599,7 +1599,7 @@ $(document).ready(function() {
 
     var $options_menu = $('.options-menu');
 
-    $options_menu.on('mouseleave', function() {
+    $('.options-menu').on('mouseleave', function() {
         var $this = $(this);
         $this.children('.playlist-menu').removeClass('active');
         $this.removeClass('active');
@@ -1679,7 +1679,8 @@ $(document).ready(function() {
 
         if (e.offsetX > $(this).width() || e.offsetY < 0) {
 
-            $options_menu.removeClass('active');
+            // $options_menu.removeClass('active');
+            $(this).siblings('.options-menu').addClass('active');
         }
     });    
 
