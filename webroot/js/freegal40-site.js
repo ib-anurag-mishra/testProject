@@ -1670,6 +1670,19 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on('click','.menu-btn', function() {
+
+        $(this).siblings('.options-menu').addClass('active');
+    });
+
+    $('.menu-btn').on('mouseleave', function(e) {
+
+        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+
+            $options_menu.removeClass('active');
+        }
+    });    
+
     $('#bu-close').on('click',function(e){
         e.preventDefault();
         $('.browser-update').addClass('closed');
