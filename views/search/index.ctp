@@ -1,3 +1,16 @@
+ <script type="text/javascript">
+    $('.menu-btn').on('click',function() {
+        $(this).siblings('.options-menu').addClass('active');
+    });
+
+    $('.menu-btn').on('mouseleave', function(e) {
+
+        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+
+            $('.options-menu').removeClass('active');
+        }
+    });
+</script>
 <section class="search-page">
 	<div class="breadcrumbs">
 		<?php $html->addCrumb( __( 'Search Results', true ) ); ?>
