@@ -2778,6 +2778,31 @@ function reloadJqueryFunctions() {
     $('.add-to-playlist').on('mouseenter', function() {
         $(this).parents('ul').next('.playlist-menu').addClass('active');
 
-    });    
+    });
+
+
+    $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
+    {
+        e.preventDefault();
+
+
+        if ($(this).hasClass('playlist-menu-icon'))
+        {           
+            var oldList = $(this).next('ul');
+            oldList.empty();
+            var queuelist = $(document).find('.playlist-options-new').find('ul').html();
+            $(this).next('ul').append(queuelist);
+        }
+        else
+        {            
+            var queuelist = $(document).find('.playlist-options-new').html();
+            var oldList = $(this).next('.options-menu').find('.playlist-menu');
+            oldList.remove();
+
+            $(this).next('.options-menu').append(queuelist);
+        }
+        return false;
+    });
+        
 
 }
