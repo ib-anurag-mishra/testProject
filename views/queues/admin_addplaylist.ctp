@@ -88,6 +88,46 @@ if(empty($songs)){
 			</table>
 		</div>
 	</div>
+        <table id="list" class="default_songs">
+            <tbody class="songs_list">
+                <tr>
+                        <th class="left">Artist Name</th>
+                        <th class="left">Territory</th>
+                        <th>Album</th>
+                        <th>Song</th>
+                        <th><input type="checkbox" name="maincheckbox" id="maincheckbox"
+                                value="1" onClick="CheckAllChk(form,this);">Delete</th>
+                </tr>
+
+                <?php if(count($artists)) { ?>
+                <?php                
+                foreach($artists as $artist)
+                {
+                        $artistImage = $artist['Artist']['artist_image'];
+                        ?>
+                <tr class="">
+                        <td class="left"><?php echo $artist['Artist']['artist_name'];?></td>
+                        <td class="left"><?php echo $artist['Artist']['territory'];?></td>
+                        <td><a
+                                href="<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>"
+                                rel="image"
+                                onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>')"><?php echo $artistImage;?>
+                        </a></td>
+                        <td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'createartist','id'=>$artist['Artist']['id']));?>
+                        </td>
+                        <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$artist['Artist']['id'], 'value' => $artist['Artist']['id'], 'hiddenField' => false)); ?>
+                        </td>
+                </tr>
+                <?php
+                }
+                ?>
+                <?php }else{ ?>
+                <tr class="no_records">
+                        <td colspan="5" align="center">No Records available.</td>
+                </tr>
+                <?php } ?>
+           </tbody>     
+        </table>        
 </fieldset>
 <?php
 echo $form->end();
@@ -123,7 +163,7 @@ echo $session->flash();
             var data = "Name="+$("#ArtistArtistName").val()+"&Territory="+$("#ArtistTerritory").val();
             jQuery.ajax({
               type: "post",  // Request method: post, get
-              url: webroot+"admin/artists/getAutoArtist", // URL to request
+              url: webroot+"admin/artists/getPlaylistAutoArtist", // URL to request
               data: data,  // post data
               success: function(response) {
 

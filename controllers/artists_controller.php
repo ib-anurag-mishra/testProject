@@ -3224,6 +3224,53 @@ Class ArtistsController extends AppController {
         print $html;
         exit;
     }
+
+    /**
+     * @admin_getPlaylistAutoArtist
+     *  return artist names allowed to a particular territory with ajax call
+     *
+     * $name
+     *  string to be searchedin atrist name
+     *
+     * @return
+     *  
+     * */
+    function admin_getPlaylistAutoArtist() {
+        
+        if ( $this->RequestHandler->isPost() ) {
+            $index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+            $index = 'url';
+        }
+        $this->Song->Behaviors->attach('Containable');
+        $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
+        $this->Country->setTablePrefix($countryPrefix);
+        $artist = $this->Song->find('all', array(
+            'conditions' =>
+                array('Song.provider_type = Country.provider_type','Song.ProdID = Country.ProdID','Song.ArtistText LIKE' => $this->params[$index]['Name'] . "%",'Country.StreamingSalesDate !=' => '' ,'Country.StreamingSalesDate <='  => date('Y-m-d'), 'Country.StreamingStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']),
+            'fields' => array(
+                'DISTINCT Song.ArtistText',
+            ),
+            'recursive' => -1,
+            'limit' => '0,20',
+            'order' => 'Song.ArtistText'
+        ));
+        
+        $html = '<ul style="max-height: 180px; overflow: auto;">';
+        if (!empty($artist)) {
+
+            foreach ($artist AS $key => $val) {
+                $html .= '<li>' . $val['Song']['ArtistText'] . '</li>';
+            }
+        } else {
+            $html .= '<li>No record found</li>';
+        }
+        $html .= '</ul>';
+
+        print $html;
+        exit;
+    }
+    
     
     /**
      * Function Name : composer
