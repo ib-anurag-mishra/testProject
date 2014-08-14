@@ -1671,7 +1671,7 @@ $(document).ready(function() {
     // });
 
     $(document).on('click','.menu-btn', function() {
-
+        console.log('clicked');
         $(this).siblings('.options-menu').addClass('active');
     });
 
