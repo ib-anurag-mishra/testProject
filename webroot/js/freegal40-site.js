@@ -1643,7 +1643,7 @@ $(document).ready(function() {
 
     
     // var $menu_btn = $('.menu-btn');
-    $('.search-results-albums-page').on('click', '.menu-btn',function() {
+    $('.menu-btn').on('click',function() {
         console.log('clicked');
         $(this).siblings('.options-menu').addClass('active');
     });
