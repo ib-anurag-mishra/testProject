@@ -1644,7 +1644,6 @@ $(document).ready(function() {
     
     // var $menu_btn = $('.menu-btn');
     $('.menu-btn').on('click',function() {
-        console.log('clicked');
         $(this).siblings('.options-menu').addClass('active');
     });
 
