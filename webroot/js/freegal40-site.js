@@ -2763,7 +2763,6 @@ function scrollToSelectedGenre()
 function reloadJqueryFunctions() {
 
     $('.menu-btn').on('click',function() {
-        console.log('clicked inside reloadJqueryFunctions');
         $(this).siblings('.options-menu').addClass('active');
     });
 
@@ -2774,5 +2773,11 @@ function reloadJqueryFunctions() {
             $('.options-menu').removeClass('active');
         }
     });
+
+
+    $('.add-to-playlist').on('mouseenter', function() {
+        $(this).parents('ul').next('.playlist-menu').addClass('active');
+
+    });    
 
 }
