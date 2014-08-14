@@ -2268,7 +2268,8 @@ function ajaxSearch() {
             $('.loader').fadeOut(500);
             $('.content').remove('.loader');
 
-            $(document).find('.content').ajaxify().css('opacity', 100).show();
+            // $(document).find('.content').ajaxify().css('opacity', 100).show();
+            $(document).find('.content').ajaxify().show();
             $('div.ac_results').hide();
             $('#search-text').val('');
             //callSearchAjax();
