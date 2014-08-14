@@ -63,6 +63,7 @@ $menuChildren.addClass(activeClass);
 
                     // Update the content
                     $content.stop(true, true);
+                    console.log(contentHtml);
                     $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
 
                     // Update the title
