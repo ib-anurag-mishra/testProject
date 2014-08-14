@@ -455,6 +455,7 @@ class QueuesController extends AppController
     function admin_addplaylist() { 
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
+        $this->layout = 'admin';
         $territories = $this->Territory->find("all");
         for ($m = 0; $m < count($territories); $m++) {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];

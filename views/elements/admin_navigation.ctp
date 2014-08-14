@@ -163,9 +163,9 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 			</li>
 			<li><a href="#">Playlists</a>
 				<ul>
-					<li><?php echo $html->link('Add Playlist', array('controller' => 'queues', 'action' => 'addPlaylist'));?>
+					<li><?php echo $html->link('Add Playlist', array('controller' => 'queues', 'action' => 'addplaylist'));?>
 					</li>
-					<li><?php echo $html->link('Manage Playlist', array('controller' => 'queues', 'action' => 'managePlaylist'));?>
+					<li><?php echo $html->link('Manage Playlist', array('controller' => 'queues', 'action' => 'manageplaylist'));?>
 					</li>
 				</ul>
 			</li>                        
