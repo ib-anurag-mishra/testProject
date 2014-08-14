@@ -1660,7 +1660,7 @@ $(document).ready(function() {
 
 
 
-    $('.search-page').on('click',function(){
+    $('.content').on('click',function(){
 
         console.log('clicked');
     });
