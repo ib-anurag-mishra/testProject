@@ -2803,6 +2803,16 @@ function reloadJqueryFunctions() {
         }
         return false;
     });
-        
+
+
+    $('.options-menu').on('mouseleave', function() {
+        var $this = $(this);
+        $this.children('.playlist-menu').removeClass('active');
+        $this.removeClass('active');
+        if (!multipleRowsChecked) {
+            $('.multi-select-icon').removeClass('highlighted');
+        }
+    });    
+
 
 }
