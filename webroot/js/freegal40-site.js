@@ -1670,7 +1670,7 @@ $(document).ready(function() {
     //     }
     // });
 
-    $(document).on('click','.menu-btn', function() {
+    $(document).on('click','.search-results-albums-page .menu-btn', function() {
         console.log('clicked');
         $(this).siblings('.options-menu').addClass('active');
     });
