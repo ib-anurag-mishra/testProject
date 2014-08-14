@@ -1572,27 +1572,27 @@ $(document).ready(function() {
     var $row_checkbox = $('.row-checkbox');
     var $multi_select_icon = $('.multi-select-icon');
 
-    $row_checkbox.on('click', function() {
+    $('.row-checkbox');.on('click', function() {
         var $this = $(this);
         $this.parent('.row').toggleClass('highlighted');
         var c = 0;
-        $row_checkbox.each(function() {
+        $('.row-checkbox');.each(function() {
             if ($this.is(':checked')) {
                 c++;
             }
             if (c >= 2) {
-                $multi_select_icon.addClass('highlighted');
+                $('.multi-select-icon').addClass('highlighted');
                 multipleRowsChecked = true;
             } else {
-                $multi_select_icon.removeClass('highlighted');
+                $('.multi-select-icon').removeClass('highlighted');
                 multipleRowsChecked = false;
             }
         });
     });
 
-    var $add_to_playlist = $('.add-to-playlist')
+    var $add_to_playlist = $('.add-to-playlist');
 
-    $add_to_playlist.on('mouseenter', function() {
+    $('.add-to-playlist').on('mouseenter', function() {
         $(this).parents('ul').next('.playlist-menu').addClass('active');
 
     });
@@ -1608,35 +1608,35 @@ $(document).ready(function() {
         }
     });
 
-    $multi_select_icon.on('click', function() {
+    $('.multi-select-icon').on('click', function() {
 
         $(this).siblings('.options-menu').addClass('active');
         $multi_select_icon.addClass('highlighted');
 
     });
 
-    $multi_select_icon.on('mouseleave', function(e) {
+    $('.multi-select-icon').on('mouseleave', function(e) {
         var $this = $(this);
 
         if (e.offsetX > $this.width() || e.offsetY < 0) {
 
-            $options_menu.removeClass('active');
+            $('.options-menu').removeClass('active');
             $this.removeClass('highlighted');
         }
     });
 
     var $select_all = $('.select-all');
-    $select_all.on('click', function(e) {
+    $('.select-all').on('click', function(e) {
         e.preventDefault();
-        $row_checkbox.each(function() {
+        $('.row-checkbox').each(function() {
             $(this).prop('checked', true);
         });
     });
 
     var $clear_all = $('.clear-all'); 
-    $clear_all.on('click', function(e) {
+    $('.clear-all').on('click', function(e) {
         e.preventDefault();
-        $row_checkbox.each(function() {
+        $('.row-checkbox').each(function() {
             $(this).prop('checked', false);
         });
     });
