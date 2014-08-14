@@ -1657,25 +1657,25 @@ $(document).ready(function() {
     // });
 
 
-    $('.menu-btn').on('click', function() {
+    // $('.menu-btn').on('click', function() {
 
-        $(this).siblings('.options-menu').addClass('active');
-    });
+    //     $(this).siblings('.options-menu').addClass('active');
+    // });
 
-    $('.menu-btn').on('mouseleave', function(e) {
+    // $('.menu-btn').on('mouseleave', function(e) {
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+    //     if (e.offsetX > $(this).width() || e.offsetY < 0) {
 
-            $options_menu.removeClass('active');
-        }
-    });
+    //         $options_menu.removeClass('active');
+    //     }
+    // });
 
     $(document).on('click','.menu-btn', function() {
 
         $(this).siblings('.options-menu').addClass('active');
     });
 
-    $('.menu-btn').on('mouseleave', function(e) {
+    $(document).on('mouseleave','.menu-btn', function(e) {
 
         if (e.offsetX > $(this).width() || e.offsetY < 0) {
 
