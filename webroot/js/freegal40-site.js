@@ -1645,7 +1645,7 @@ $(document).ready(function() {
     // var $menu_btn = $('.menu-btn');
     console.log('inside doc ready');
     var mb_length = $(document).find('.menu-btn').length;
-    console.log(mb_length);
+    console.log('mp_length = ' + mb_length);
     // $('.menu-btn').on('click',function() {
     //     $(this).siblings('.options-menu').addClass('active');
     // });
@@ -1658,7 +1658,8 @@ $(document).ready(function() {
     //     }
     // });
 
-
+    var sp_length = $('.content').find('.search-page').length;
+    console.log('sp_length = ' + sp_length);
 
     $('.content').on('click','.menu-btn',function(){
 
