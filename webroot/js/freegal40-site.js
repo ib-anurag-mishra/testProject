@@ -2810,6 +2810,28 @@ function reloadJqueryFunctions() {
         return false;
     });
 
+    var multipleRowsChecked = false;
+    var $row_checkbox = $('.row-checkbox');
+    var $multi_select_icon = $('.multi-select-icon');
+
+    $('.row-checkbox').on('click', function() {
+        var $this = $(this);
+        $this.parent('.row').toggleClass('highlighted');
+        var c = 0;
+        $('.row-checkbox').each(function() {
+            if ($this.is(':checked')) {
+                c++;
+            }
+            if (c >= 2) {
+                $('.multi-select-icon').addClass('highlighted');
+                multipleRowsChecked = true;
+            } else {
+                $('.multi-select-icon').removeClass('highlighted');
+                multipleRowsChecked = false;
+            }
+        });
+    });
+
 
     $('.options-menu').on('mouseleave', function() {
         var $this = $(this);
