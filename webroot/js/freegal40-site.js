@@ -1658,18 +1658,12 @@ $(document).ready(function() {
     //     }
     // });
 
-    $('.content').on('click','.menu-btn',function() {
+    $(document).on('click','.menu-btn',function() {
         console.log('clicked');
         $(this).siblings('.options-menu').addClass('active');
     });
 
-    $('.content').on('mouseleave','.menu-btn', function(e) {
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
-
-            $('.options-menu').removeClass('active');
-        }
-    });
 
 
 
