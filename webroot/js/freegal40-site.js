@@ -2760,9 +2760,10 @@ function scrollToSelectedGenre()
 }
 
 
-function reloadJqueryFuncs() {
+function reloadJqueryFunctions() {
 
     $('.menu-btn').on('click',function() {
+        console.log('clicked inside reloadJqueryFunctions');
         $(this).siblings('.options-menu').addClass('active');
     });
 

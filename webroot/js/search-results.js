@@ -111,9 +111,9 @@ $menuChildren.addClass(activeClass);
                     $('.content').remove('.loader');
                     $(document).ready(function(){
 
-                        reloadJqueryFuncs();
+                        reloadJqueryFunctions();
                     });
-                    
+
                callSearchPageAjax();
            },
            failure:function(){
