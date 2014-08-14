@@ -1576,7 +1576,7 @@ $(document).ready(function() {
         var $this = $(this);
         $this.parent('.row').toggleClass('highlighted');
         var c = 0;
-        $('.row-checkbox');.each(function() {
+        $('.row-checkbox').each(function() {
             if ($this.is(':checked')) {
                 c++;
             }
@@ -1604,14 +1604,14 @@ $(document).ready(function() {
         $this.children('.playlist-menu').removeClass('active');
         $this.removeClass('active');
         if (!multipleRowsChecked) {
-            $multi_select_icon.removeClass('highlighted');
+            $('.multi-select-icon').removeClass('highlighted');
         }
     });
 
     $('.multi-select-icon').on('click', function() {
 
         $(this).siblings('.options-menu').addClass('active');
-        $multi_select_icon.addClass('highlighted');
+        $('.multi-select-icon').addClass('highlighted');
 
     });
 
