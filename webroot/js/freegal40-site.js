@@ -2766,7 +2766,7 @@ function scrollToSelectedGenre()
 
 function reloadJqueryFunctions() {
 
-    console.log('inside reloadJqueryFunctions');
+
 
     $('.menu-btn').on('click',function() {
         $(this).siblings('.options-menu').addClass('active');
