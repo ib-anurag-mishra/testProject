@@ -3245,13 +3245,15 @@ Class ArtistsController extends AppController {
         $this->Song->Behaviors->attach('Containable');
         $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
         $this->Country->setTablePrefix($countryPrefix);
+        $this->Song->unbindModel(array('hasOne' => array('Participant')));
+        $this->Song->unbindModel(array('hasOne' => array('Genre')));
+        $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));        
         $artist = $this->Song->find('all', array(
             'conditions' =>
                 array('Song.provider_type = Country.provider_type','Song.ProdID = Country.ProdID','Song.ArtistText LIKE' => $this->params[$index]['Name'] . "%",'Country.StreamingSalesDate !=' => '' ,'Country.StreamingSalesDate <='  => date('Y-m-d'), 'Country.StreamingStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']),
             'fields' => array(
                 'DISTINCT Song.ArtistText',
             ),
-            'recursive' => 0,
             'limit' => '0,20',
             'order' => 'Song.ArtistText'
         ));
