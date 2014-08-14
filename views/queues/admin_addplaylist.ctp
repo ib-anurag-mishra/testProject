@@ -88,8 +88,8 @@ if(empty($songs)){
 			</table>
 		</div>
 	</div>
-        <table id="list" class="default_songs">
-            <tbody class="songs_list">
+        <table id="list">
+            <tbody class="default_songs">
                 <tr>
                         <th class="left">Artist Name</th>
                         <th class="left">Territory</th>
@@ -105,7 +105,7 @@ if(empty($songs)){
                 {
                         $artistImage = $artist['Artist']['artist_image'];
                         ?>
-                <tr class="">
+                <tr class="songs_list">
                         <td class="left"><?php echo $artist['Artist']['artist_name'];?></td>
                         <td class="left"><?php echo $artist['Artist']['territory'];?></td>
                         <td><a
@@ -234,6 +234,7 @@ echo $session->flash();
 			success: function(response) {
 					$('#getSongs').text('');
 					$('#getSongs').html(response);
+                                        populateList();
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
 		});
@@ -257,7 +258,39 @@ echo $session->flash();
             $('#getSongs select.select_fields option').remove();
             getSongs();
         });
-    }  
+    }
+    
+    function populateList() {
+       
+        $('#ArtistSong').change(function() {
+            var songProdId = escape($('#ArtistSong').val());
+            var albumName  = $("#ArtistAlbum option").is("selected").text() 
+            var albumData = escape($('#ArtistAlbum').val());
+            var albumProdId = albumData.split("-")[0];
+            var providerType = albumData.split("-")[1];
+            if(songProdId) {
+                $('.no_records').remove();
+                $('.default_songs').append(
+                '<tr class="songs_list">
+                        <td class="left"><?php echo $artist['Artist']['artist_name'];?></td>
+                        <td class="left"><?php echo $artist['Artist']['territory'];?></td>
+                        <td><a
+                                href="<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>"
+                                rel="image"
+                                onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>')"><?php echo $artistImage;?>
+                        </a></td>
+                        <td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'createartist','id'=>$artist['Artist']['id']));?>
+                        </td>
+                        <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$artist['Artist']['id'], 'value' => $artist['Artist']['id'], 'hiddenField' => false)); ?>
+                        </td>
+                </tr>')                
+                
+            }
+            $('#getSongs select.select_fields option').remove();
+            getSongs();
+        });        
+        
+    }
 
 
 </script>
