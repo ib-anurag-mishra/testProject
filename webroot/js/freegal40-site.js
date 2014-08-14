@@ -1658,12 +1658,12 @@ $(document).ready(function() {
     //     }
     // });
 
-    $(document).on('click',function() {
+
+
+    $('.search-page').on('click',function(){
+
         console.log('clicked');
-
     });
-
-
 
 
 
