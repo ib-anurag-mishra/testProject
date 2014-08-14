@@ -1,3 +1,10 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		console.log('inside doc ready in search/index');
+
+	});
+</script>
+
 <section class="search-page">
 	<div class="breadcrumbs">
 		<?php $html->addCrumb( __( 'Search Results', true ) ); ?>
