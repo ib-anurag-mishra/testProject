@@ -210,7 +210,7 @@ echo $session->flash();
                
 		jQuery.ajax({
 			type: "post",  // Request method: post, get
-			url: webroot+"admin/artists/getAlbums", // URL to request
+			url: webroot+"admin/artists/getAlbumsForDefaultQueues", // URL to request
 			data: data,  // post data
 			success: function(response) {
 					$('#getAlbum').text('');
