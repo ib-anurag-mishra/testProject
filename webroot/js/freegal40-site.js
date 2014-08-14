@@ -1660,7 +1660,7 @@ $(document).ready(function() {
 
 
 
-    $('.content').on('click',function(){
+    $('.content').on('click','.menu-btn',function(){
 
         console.log('clicked');
     });
