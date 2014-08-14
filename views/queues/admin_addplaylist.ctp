@@ -229,7 +229,7 @@ echo $session->flash();
                     
 		jQuery.ajax({
 			type: "post",  // Request method: post, get
-			url: webroot+"admin/artists/getSongs", // URL to request
+			url: webroot+"admin/artists/getAlbumStreamSongs", // URL to request
 			data: data,  // post data
 			success: function(response) {
 					$('#getSongs').text('');

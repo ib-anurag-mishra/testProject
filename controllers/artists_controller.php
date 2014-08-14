@@ -23,7 +23,7 @@ Class ArtistsController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
 		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-                    $this->Auth->allow('admin_managetopalbums','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete');
+                    $this->Auth->allow('admin_managetopalbums','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete');
                 }
     }
 
@@ -3218,6 +3218,55 @@ Class ArtistsController extends AppController {
         print "<select class='select_fields' id='ArtistSong' name='songProdID'>" . $data . "</select>";
         exit;
     }
+    
+    
+     /**
+     * @getAlbumStreamSongs
+     *  return songs in the selected album
+     *
+     * $name
+     *  string to be searchedin atrist name
+     *
+     * @return
+     *  
+     * */
+    function admin_getAlbumStreamSongs() {
+        Configure::write('debug', 0);
+
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+	$alb_det = explode('-', $this->params[$index]['albumProdId']);
+        if (isset($alb_det[0])) {
+            $albumProdId = $alb_det[0];
+        }
+        if (isset($alb_det[1])) {
+            $provider_type = $alb_det[1];
+        }
+		
+        $territory   = $this->params[$index]['Territory'];
+        $result = array();
+      
+        $val = '';
+        
+        $this->Song->unbindModel(array('hasOne' => array('Participant')));
+        $this->Song->unbindModel(array('hasOne' => array('Genre')));
+        $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));  
+        $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
+        $this->Country->setTablePrefix($countryPrefix);
+        $songs = $this->Song->find('all', array('fields' => array('Song.ProdID','Song.provider_type'), 'conditions' => array('Song.ReferenceID' => $albumProdId,'Song.provider_type' => $provider_type, 'Song.provider_type = Country.provider_type',"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",'Country.StreamingSalesDate !=' => '' ,'Country.StreamingSalesDate <='  => date('Y-m-d'), 'Country.StreamingStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']),'limit' => 1));
+        $data = "<option value=''>SELECT</option>";
+        foreach ($songs as $k => $v) {
+			$result[$v['Song']['ProdID']] = $v['Song']['SongTitle'];
+        }
+		foreach ($result as $k => $v) {
+		$data = $data . "<option value='" . $k. "'>" . $v . "</option>";
+		}
+        print "<select class='select_fields' id='ArtistSong' name='songProdID'>" . $data . "</select>";
+        exit;
+    }    
 
     /**
      * @getAutoArtist
