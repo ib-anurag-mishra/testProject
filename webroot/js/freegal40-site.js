@@ -1642,13 +1642,27 @@ $(document).ready(function() {
     });
 
     
-    var $menu_btn = $('.menu-btn');
-    $menu_btn.on('click', function() {
+    // var $menu_btn = $('.menu-btn');
+    // $menu_btn.on('click', function() {
+
+    //     $(this).siblings('.options-menu').addClass('active');
+    // });
+
+    // $menu_btn.on('mouseleave', function(e) {
+
+    //     if (e.offsetX > $(this).width() || e.offsetY < 0) {
+
+    //         $options_menu.removeClass('active');
+    //     }
+    // });
+
+
+    $('.menu-btn').on('click', function() {
 
         $(this).siblings('.options-menu').addClass('active');
     });
 
-    $menu_btn.on('mouseleave', function(e) {
+    $('.menu-btn').on('mouseleave', function(e) {
 
         if (e.offsetX > $(this).width() || e.offsetY < 0) {
 
