@@ -2274,6 +2274,10 @@ function ajaxSearch() {
             $(document).find('.content').ajaxify().css('opacity', 100).show();
             $('div.ac_results').hide();
             $('#search-text').val('');
+            $(document).ready(function(){
+
+                reloadJqueryFunctions();
+            });
             //callSearchAjax();
         },
         error: function(response) {
@@ -2761,6 +2765,8 @@ function scrollToSelectedGenre()
 
 
 function reloadJqueryFunctions() {
+
+    console.log('inside reloadJqueryFunctions');
 
     $('.menu-btn').on('click',function() {
         $(this).siblings('.options-menu').addClass('active');
