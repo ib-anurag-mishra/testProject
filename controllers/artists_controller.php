@@ -3251,7 +3251,7 @@ Class ArtistsController extends AppController {
             'fields' => array(
                 'DISTINCT Song.ArtistText',
             ),
-            'recursive' => -1,
+            'recursive' => 0,
             'limit' => '0,20',
             'order' => 'Song.ArtistText'
         ));
