@@ -2183,7 +2183,7 @@ function documentHtml(html) {
 
 function callSearchAjax() {
     $("#headerSearchSubmit").click(function(event) {
-        console.log('called ajaxsearch');
+        // console.log('called ajaxsearch');
         ajaxSearch();
         return false;
     });
