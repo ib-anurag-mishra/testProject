@@ -1646,17 +1646,31 @@ $(document).ready(function() {
     console.log('inside doc ready');
     var mb_length = $(document).find('.menu-btn').length;
     console.log(mb_length);
-    $('.menu-btn').on('click',function() {
+    // $('.menu-btn').on('click',function() {
+    //     $(this).siblings('.options-menu').addClass('active');
+    // });
+
+    // $('.menu-btn').on('mouseleave', function(e) {
+
+    //     if (e.offsetX > $(this).width() || e.offsetY < 0) {
+
+    //         $('.options-menu').removeClass('active');
+    //     }
+    // });
+
+    $('.content').on('click','.menu-btn',function() {
+        console.log('clicked');
         $(this).siblings('.options-menu').addClass('active');
     });
 
-    $('.menu-btn').on('mouseleave', function(e) {
+    $('.content').on('mouseleave','.menu-btn', function(e) {
 
         if (e.offsetX > $(this).width() || e.offsetY < 0) {
 
             $('.options-menu').removeClass('active');
         }
     });
+
 
 
 
