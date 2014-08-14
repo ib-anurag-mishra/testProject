@@ -38,7 +38,7 @@ Class LibrariesController extends AppController
     function admin_managelibrary()
     {
 
-
+	$userTypeId = $this->Session->read('Auth.User.type_id');
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
@@ -76,6 +76,7 @@ Class LibrariesController extends AppController
         }
         $this->set('searchKeyword', $searchKeyword);
         $this->set('libraries', $this->paginate('Library'));
+	$this->set('userTypeId',$userTypeId);
     }
 
     /*
@@ -1254,6 +1255,7 @@ Class LibrariesController extends AppController
     function admin_consortium()
     {
 
+	$userTypeId = $this->Session->read('Auth.User.type_id');
         // allwoes only admin
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
@@ -1262,6 +1264,7 @@ Class LibrariesController extends AppController
 
         $consortium = $this->Consortium->find('all', array('order' => 'consortium_key ASC'));
         $this->set('consortium', $consortium);
+		$this->set('userTypeId',$userTypeId);
     }
 
     function admin_consortiumform()
@@ -1567,7 +1570,8 @@ STR;
      */
 
     function admin_librarytimezone()
-    {     
+    { 
+	$userTypeId = $this->Session->read('Auth.User.type_id');    
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
@@ -1597,6 +1601,7 @@ STR;
         $librariesTimezones = $this->paginate('LibrariesTimezone');
 
         $this->set('librariesTimezones', $librariesTimezones);
+	$this->set('userTypeId',$userTypeId);
     }
 
     /*
