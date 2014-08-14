@@ -64,7 +64,7 @@ $menuChildren.addClass(activeClass);
                     // Update the content
                     $content.stop(true, true);
                     $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
-                    
+
 
                     // Update the title
                     document.title = $data.find('.document-title:first').text();
@@ -109,6 +109,11 @@ $menuChildren.addClass(activeClass);
                     $('.loader').fadeOut(500);
                     
                     $('.content').remove('.loader');
+                    $(document).ready(function(){
+
+                        reloadJqueryFuncs();
+                    });
+                    
                callSearchPageAjax();
            },
            failure:function(){
