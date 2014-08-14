@@ -1643,6 +1643,7 @@ $(document).ready(function() {
 
     
     // var $menu_btn = $('.menu-btn');
+    console.log('inside doc ready');
     var mb_length = $(document).find('.menu-btn').length;
     console.log(mb_length);
     $('.menu-btn').on('click',function() {
