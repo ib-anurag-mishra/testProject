@@ -1658,9 +1658,9 @@ $(document).ready(function() {
     //     }
     // });
 
-    $(document).on('click','.menu-btn',function() {
+    $(document).on('click',function() {
         console.log('clicked');
-        $(this).siblings('.options-menu').addClass('active');
+
     });
 
 
