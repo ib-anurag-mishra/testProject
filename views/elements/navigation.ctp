@@ -921,9 +921,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
-                                <p style="margin-bottom:8px;"><a class="announcments-movie-titles" style="color:#008fbd;" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" target ="_blank">
-                                    <?php echo $value['announcements']['title']; ?>
-                                </a></p>
+                                <p style="margin-bottom:8px;">
+                                    <a class="announcments-movie-titles" style="color:#008fbd;" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" onClick="_gaq.push(['_trackEvent', 'Announcements', 'Click', '<?php echo $value['announcements']['title']; ?>']);" target ="_blank">
+                                    <?php echo $value['announcements']['title']; ?></a>
+                                </p>
                                  <?php /*if($i == 1){
                                             echo "and";
                                         }*/
