@@ -2786,6 +2786,23 @@ function reloadJqueryFunctions() {
 
     });
 
+    $('.multi-select-icon').on('click', function() {
+
+        $(this).siblings('.options-menu').addClass('active');
+        $('.multi-select-icon').addClass('highlighted');
+
+    });
+
+    $('.multi-select-icon').on('mouseleave', function(e) {
+        var $this = $(this);
+
+        if (e.offsetX > $this.width() || e.offsetY < 0) {
+
+            $('.options-menu').removeClass('active');
+            $this.removeClass('highlighted');
+        }
+    });    
+
 
     $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
     {
@@ -2811,8 +2828,7 @@ function reloadJqueryFunctions() {
     });
 
     var multipleRowsChecked = false;
-    var $row_checkbox = $('.row-checkbox');
-    var $multi_select_icon = $('.multi-select-icon');
+
 
     $('.row-checkbox').on('click', function() {
         var $this = $(this);
