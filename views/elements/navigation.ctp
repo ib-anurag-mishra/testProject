@@ -738,7 +738,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             $domain = explode('.',$hostName);
                             $Concertlink = "http://$domain[0].".Configure::read('App.MoviesPath').'/listing/Q29uY2VydCBWaWRlb3M=';
                         ?>
-                            <li class="regular"><?php echo $html->link(__('Concert Videos', true), $Concertlink, array("class"=>$concertCss,"id"=>'concert07',"target" => '_blank', "onclick"=>"setUpperNavigation('concert07') _gaq.push(['_trackEvent', 'Top Nav', 'Click', 'Concert Videos'])"));?>
+                            <li class="regular"><?php echo $html->link(__('Concert Videos', true), $Concertlink, array("class"=>$concertCss,"id"=>'concert07',"target" => '_blank', "onclick"=>"setUpperNavigation('concert07'); _gaq.push(['_trackEvent', 'Top Nav', 'Click', 'Concert Videos'])"));?>
                             </li>
                         <?php } ?>
     			<li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss,"id"=>'musicVideo07',"onclick"=>"setUpperNavigation('musicVideo07')")); ?>
