@@ -260,8 +260,7 @@ echo $session->flash();
         });
     }
     
-    function populateList() {
-       
+    $(document).ready(function() {    
         $('#ArtistSong').change(function() {
             var songProdId = escape($('#ArtistSong').val());
             var albumName  = $("#ArtistAlbum option").is("selected").text() 
@@ -273,8 +272,7 @@ echo $session->flash();
                 $('.default_songs').append('<tr class="songs_list"><td class="left">'+albumName+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songProdId+'</td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></tr>');
             }
         });        
-        
-    }
+    });
 
 
 </script>
