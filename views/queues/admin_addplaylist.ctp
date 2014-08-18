@@ -270,14 +270,7 @@ echo $session->flash();
             var providerType = albumData.split("-")[1];
             if(songProdId) {
                 $('.no_records').remove();
-                $('.default_songs').append(
-                "<tr class='songs_list'>
-                        <td class='left'>"+albumName+"</td>
-                        <td class='left'>"+$('#ArtistTerritory').val()+"</td>
-                        <td>"+albumName+"</td>
-                        <td>"+songProdId+"</td>
-                        <input type='checkbox' value='"+albumData+"-"+songProdId+'"+"name='data[Info][]'>         
-                </tr>") 
+                $('.default_songs').append('<tr class="songs_list"><td class="left">'+albumName+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songProdId+'</td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></tr>');
             }
         });        
         
