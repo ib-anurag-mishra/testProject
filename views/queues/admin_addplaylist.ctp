@@ -262,7 +262,7 @@ echo $session->flash();
     
     function populateList() {  
         $('#ArtistSong').change(function() {
-            var artistNameText = escape($("#ArtistArtistName").val());
+            var artistNameText = $("#ArtistArtistName").val();
             var songProdId = escape($('#ArtistSong').val());
             var songName = $("#ArtistSong option:selected").text();
             var albumName  = $("#ArtistAlbum option:selected").text(); 
@@ -271,7 +271,7 @@ echo $session->flash();
             var providerType = albumData.split("-")[1];
             if(songProdId) {
                 $('.no_records').remove();
-                $('.default_songs').append('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></tr>');
+                $('.default_songs').append('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
             }
         });        
     }    
