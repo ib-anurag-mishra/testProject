@@ -274,6 +274,75 @@ echo $session->flash();
                 $('.default_songs').append('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
             }
         });        
+    }
+    
+    function m_delete(flagVar) { // Delete the contact
+
+            var k2=0;
+            if(flagVar == 1){
+
+                for (var i=0;i<document.artistAdminManageartistForm.elements.length;i++)
+                {
+                        var e1 = document.artistAdminManageartistForm.elements[i];
+
+                        if((e1.type=="checkbox")&&(e1.name=='data[Info][ ]'))
+                        {
+                                if(e1.checked==true)
+                                        {
+                                                k2++;
+                                        }
+                        }
+                }
+
+            }else{
+
+                k2 = 1;
+            }	
+
+            if(k2==0)
+            {
+                    alert('Please select at least one recode for remove.');
+                    return false;
+            }
+            else
+            {
+                    if(flagVar == 1){
+                        var x=confirm('Are you sure you want to remove all selected records ?');
+                    }else if(flagVar == 2){
+                        var x=confirm('Are you sure you want to remove all records ?');
+                    }
+
+                    if(x==false)
+                    {
+                            return false;
+                    }
+                    else(x==true)
+                    {
+
+                            document.getElementById('artistSelectedOpt').value = flagVar;                        
+                            return true;
+
+                    }
+            }
+    }
+
+
+    function CheckAllChk(theForm,maincheckname)
+    {
+            for(var z=0; z<theForm.length;z++)
+            {
+                    if(theForm[z].type =='checkbox')
+                    {
+                            if(maincheckname.checked == true)
+                            {
+                                    theForm[z].checked=true;
+                            }		   
+                            else
+                            {
+                                    theForm[z].checked=false;
+                            }
+                    }
+            }	
     }    
 
 
