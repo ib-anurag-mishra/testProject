@@ -2,7 +2,7 @@
 
 App::import('Core', 'HttpSocket');
 
-class CheckBrokenLinkShell extends Shell {
+class CheckBrokenLinksShell extends Shell {
 	
 	public function main() {
 
