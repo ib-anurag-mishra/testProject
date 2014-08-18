@@ -387,7 +387,8 @@ Class LibrariesController extends AppController
                             'Library.library_unlimited',
                             'Library.library_type',
                             'Library.library_streaming_hours',
-			    'Library.optout_email_notification'
+			    'Library.optout_email_notification',
+                            'Library.library_status'
                         ),
                         'contain' => array(
                             'User' => array(
@@ -646,6 +647,10 @@ Class LibrariesController extends AppController
                                                     if (strtotime(date('Y-m-d')) < strtotime($this->data['Library']['library_contract_start_date']))
                                                     {
                                                         $this->data['Library']['library_status'] = 'inactive';
+                                                    }
+                                                    else
+                                                    {
+                                                         $this->data['Library']['library_status'] = $getData['Library']['library_status'];
                                                     }
                                                     $this->Library->create();
                                                     if ($this->Library->save($this->data['Library']))
