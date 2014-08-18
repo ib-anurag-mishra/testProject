@@ -1,7 +1,7 @@
 <?php
 $this->pageTitle = 'Content';
 //echo $this->Form->create('queue', array('type' => 'post','name' => 'artistAdminaddplaylistForm','url' => array('controller' => 'queues', 'action' => 'admin_deleteartists')));
-echo $form->create('queue', array('type' => 'post','name' => 'QueueAdminInsertplaylistForm','controller' => 'Artist','action' => $formAction,  'enctype' => 'multipart/form-data'));
+echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminInsertplaylistForm','controller' => 'Artist','action' => $formAction,  'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
 	$getData['TopSingles']['artist_name'] = "";
@@ -301,9 +301,9 @@ echo $session->flash();
             var k2=0;
             if(flagVar == 1){
 
-                for (var i=0;i<document.queueAdminInsertplaylistForm.elements.length;i++)
+                for (var i=0;i<document.artistAdminInsertplaylistForm.elements.length;i++)
                 {
-                        var e1 = document.queueAdminInsertplaylistForm.elements[i];
+                        var e1 = document.artistAdminInsertplaylistForm.elements[i];
 
                         if((e1.type=="checkbox")&&(e1.name=='data[Info][ ]'))
                         {
