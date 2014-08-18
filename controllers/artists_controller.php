@@ -3256,7 +3256,7 @@ Class ArtistsController extends AppController {
         $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));  
         $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
         $this->Country->setTablePrefix($countryPrefix);
-        $songs = $this->Song->find('all', array('fields' => array('Song.ProdID','Song.provider_type'), 'conditions' => array('Song.ReferenceID' => $albumProdId,'Song.provider_type' => $provider_type, 'Song.provider_type = Country.provider_type',"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",'Country.StreamingSalesDate !=' => '' ,'Country.StreamingSalesDate <='  => date('Y-m-d'), 'Country.StreamingStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']),'limit' => 1));
+        $songs = $this->Song->find('all', array('fields' => array('Song.ProdID','Song.SongTitle'), 'conditions' => array('Song.ReferenceID' => $albumProdId,'Song.provider_type' => $provider_type, 'Song.provider_type = Country.provider_type',"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",'Country.StreamingSalesDate !=' => '' ,'Country.StreamingSalesDate <='  => date('Y-m-d'), 'Country.StreamingStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']),'limit' => 1));
         $data = "<option value=''>SELECT</option>";
         foreach ($songs as $k => $v) {
 			$result[$v['Song']['ProdID']] = $v['Song']['SongTitle'];
