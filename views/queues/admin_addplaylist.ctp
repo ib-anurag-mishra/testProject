@@ -80,11 +80,6 @@ if(empty($songs)){
 						</div>
 					</td>
 				</tr>
-				<tr>
-					<td align="center" colspan="2"><p class="submit">
-							<input type="submit" value="Save" />
-						</p></td>
-				</tr>
 			</table>
 		</div>
 	</div>
@@ -121,6 +116,17 @@ if(empty($songs)){
                 <?php
                 }
                 ?>
+                <?php if(count($artists)) { ?> <span  class="remove_options"  style="float: right;">
+                    <table>
+                            <tr>
+                                    <td><?php echo $this->Form->button('Remove Selected', array('name' => 'remove_selected','label'=>'Remove Selected','onclick' => 'return m_delete(1)')); ?>
+                                    </td>
+                                    <td><?php echo $this->Form->button('Remove All', array('name' => 'remove_all','label'=>'Remove All','onclick' => 'return m_delete(2)')); ?>
+                                    </td>
+                            </tr>
+
+                    </table>
+                </span> <?php } ?>                
                 <?php }else{ ?>
                 <tr class="no_records">
                         <td colspan="5" align="center">No Records available.</td>
@@ -272,6 +278,9 @@ echo $session->flash();
             if(songProdId) {
                 $('.no_records').remove();
                 $('.default_songs').append('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
+                if(!$('.remove_options').length) {
+                    $('.default_songs').append('<span style="float: right;"><table><tbody><tr><td><button onclick="return m_delete(1)" label="Remove Selected" name="remove_selected" type="submit">Remove Selected</button></td><td><button onclick="return m_delete(2)" label="Remove All" name="remove_all" type="submit">Remove All</button></td></tr></tbody></table></span>'); 
+                }    
             }
         });        
     }
