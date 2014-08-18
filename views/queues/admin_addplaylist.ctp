@@ -1,5 +1,6 @@
 <?php
 $this->pageTitle = 'Content';
+echo $this->Form->create('artist', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','url' => array('controller' => 'artists', 'action' => $formAction)));
 if(empty($getData))
 {
 	$getData['TopSingles']['artist_name'] = "";
@@ -20,7 +21,6 @@ if(empty($songs)){
     $songs  = "";
 }
 ?>
-<?php echo $this->Form->create('artist', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','url' => array('controller' => 'artists', 'action' => $formAction))); ?>
 <fieldset>
 	<legend>
 		<?php echo $formHeader;?>
