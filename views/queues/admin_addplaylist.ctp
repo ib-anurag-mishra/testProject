@@ -1,6 +1,7 @@
 <?php
 $this->pageTitle = 'Content';
-echo $this->Form->create('artist', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','url' => array('controller' => 'artists', 'action' => $formAction)));
+//echo $this->Form->create('artist', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','url' => array('controller' => 'artists', 'action' => $formAction)));
+echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
 	$getData['TopSingles']['artist_name'] = "";
