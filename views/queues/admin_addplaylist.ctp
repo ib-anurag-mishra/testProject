@@ -1,6 +1,5 @@
 <?php
 $this->pageTitle = 'Content';
-echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
 	$getData['TopSingles']['artist_name'] = "";
@@ -21,6 +20,7 @@ if(empty($songs)){
     $songs  = "";
 }
 ?>
+<?php echo $this->Form->create('artist', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','url' => array('controller' => 'artists', 'action' => $formAction))); ?>
 <fieldset>
 	<legend>
 		<?php echo $formHeader;?>
@@ -136,6 +136,7 @@ if(empty($songs)){
                         <td colspan="5" align="center">No Records available.</td>
                 </tr>
                 <?php } ?>
+                <?php echo $this->Form->hidden('selectedOpt'); ?>
            </tbody>     
         </table>        
 </fieldset>
@@ -299,9 +300,9 @@ echo $session->flash();
             var k2=0;
             if(flagVar == 1){
 
-                for (var i=0;i<document.artistAdminManageartistForm.elements.length;i++)
+                for (var i=0;i<document.artistAdminDefaultQueueForm.elements.length;i++)
                 {
-                        var e1 = document.artistAdminManageartistForm.elements[i];
+                        var e1 = document.artistAdminDefaultQueueForm.elements[i];
 
                         if((e1.type=="checkbox")&&(e1.name=='data[Info][ ]'))
                         {
