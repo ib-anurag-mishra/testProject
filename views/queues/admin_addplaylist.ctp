@@ -263,7 +263,7 @@ echo $session->flash();
     function populateList() {  
         $('#ArtistSong').change(function() {
             var songProdId = escape($('#ArtistSong').val());
-            var albumName  = $("#ArtistAlbum option").is("selected").text() 
+            var albumName  = $("#ArtistSong option:selected").text(); 
             var albumData = escape($('#ArtistAlbum').val());
             var albumProdId = albumData.split("-")[0];
             var providerType = albumData.split("-")[1];
