@@ -272,22 +272,13 @@ echo $session->flash();
                 $('.no_records').remove();
                 $('.default_songs').append(
                 '<tr class="songs_list">
-                        <td class="left"><?php echo $artist['Artist']['artist_name'];?></td>
-                        <td class="left"><?php echo $artist['Artist']['territory'];?></td>
-                        <td><a
-                                href="<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>"
-                                rel="image"
-                                onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>')"><?php echo $artistImage;?>
-                        </a></td>
-                        <td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'createartist','id'=>$artist['Artist']['id']));?>
-                        </td>
-                        <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$artist['Artist']['id'], 'value' => $artist['Artist']['id'], 'hiddenField' => false)); ?>
-                        </td>
-                </tr>')                
-                
+                        <td class="left">'+albumName+'</td>
+                        <td class="left">'+$("#ArtistTerritory").val()+'</td>
+                        <td>'+albumName+'</td>
+                        <td>'+songProdId+'</td>
+                        <input type="checkbox" value="'+albumData+"-"+songProdId+'" name="data[Info][]">         
+                </tr>') 
             }
-            $('#getSongs select.select_fields option').remove();
-            getSongs();
         });        
         
     }
