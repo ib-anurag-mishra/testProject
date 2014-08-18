@@ -1,7 +1,7 @@
 <?php
 $this->pageTitle = 'Content';
-//echo $this->Form->create('artist', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','url' => array('controller' => 'artists', 'action' => $formAction)));
-echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','controller' => 'Artist','action' => $formAction,  'enctype' => 'multipart/form-data'));
+echo $this->Form->create('queue', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','url' => array('controller' => 'queues', 'action' => 'admin_deleteartists')));
+//echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminDefaultQueueForm','controller' => 'Artist','action' => $formAction,  'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
 	$getData['TopSingles']['artist_name'] = "";
