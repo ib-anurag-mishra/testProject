@@ -9,7 +9,7 @@
 Class ArtistsController extends AppController {
 
 	var $name 		= 'Artists';
-	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token', 'TopAlbum','TopSingles');
+	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token', 'TopAlbum','TopSingles' ,'QueueList' , 'QueueDetail');
 	var $layout 	= 'admin';
 	var $helpers 	= array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo', 'Genre', 'Token');
 	var $components = array('Session', 'Auth', 'Downloads', 'CdnUpload', 'Streaming', 'Common','Solr', 'RequestHandler');
@@ -561,9 +561,44 @@ Class ArtistsController extends AppController {
     }
     
     function admin_insertplaylist() {
-       print_r($this->data);
-       print_r($this->params);
-       print_r($this->request->params);exit;
+        
+        if(!empty($this->params['named'])) {
+            
+        } else {
+            $songsList = $this->params['data']['Info'];
+            $queueName = $this->params['data']['Artist']['queue_name'];
+            $patronId = $this->Session->read('Auth.User.id');
+            $this->data['QueueList']['queue_name'] = $queueName;
+            $this->data['QueueList']['created'] = date('Y-m-d H:i:s');
+            $this->data['QueueList']['patron_id'] = $patronId;
+            $this->data['QueueList']['queue_type'] = 1;
+            $this->QueueList->setDataSource('master');
+            if ($this->QueueList->save($this->data['QueueList'])) {
+                $this->QueueList->setDataSource('default');
+                $queueId = $this->QueueList->getLastInsertID();
+                $detailArray = array();
+                foreach($songsList as $value) {
+                    $data = explode('-',$value);
+                    $detailArray[] = array('queue_id' => $queueId,'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                }
+                $this->QueueDetail->setDataSource('master');
+                if($this->QueueDetail->saveMany($detailArray)) {
+                    $this->QueueDetail->setDataSource('default');
+                    $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
+                    $this->redirect('addplaylist/id:'.$queueId);                
+                } else {
+                    $this->QueueDetail->setDataSource('default');
+                    $this->Session->setFlash('Error occured while adding songs to playlist', 'modal', array('class' => 'modal problem'));
+                    $this->redirect('addplaylist/id:'.$queueId);                    
+                }
+            } else {
+                $this->QueueList->setDataSource('default');
+                $this->Session->setFlash('Error occured while creating playlist', 'modal', array('class' => 'modal problem'));
+                $this->redirect('addplaylist');            
+            }
+
+        }    
+
     }
     
     /**
