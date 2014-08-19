@@ -1,7 +1,7 @@
 <?php
 $this->pageTitle = 'Content';
 //echo $this->Form->create('queue', array('type' => 'post','name' => 'artistAdminaddplaylistForm','url' => array('controller' => 'queues', 'action' => 'admin_deleteartists')));
-echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminInsertplaylistForm','controller' => 'Artist','action' => $formAction,  'enctype' => 'multipart/form-data'));
+echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminInsertplaylistForm','controller' => 'Queues','action' => $formAction,  'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
 	$getData['TopSingles']['artist_name'] = "";
@@ -144,8 +144,14 @@ if(empty($songs)){
                 </tr>                
                 <?php echo $this->Form->hidden('selectedOpt'); ?>
            </tbody>     
-        </table>        
+        </table> 
+        <?php if(count($artists)) { ?>     
+            <div class="save_playlist" style="float:right;position:relative;top:10px;left:-20px;">
+                <?php echo $this->Form->button('Save Playlist', array('name' => 'save_playlist','label'=>'Save Playlist','onclick' => 'return CheckAllChk(form,this,1)')); ?>
+            </div>
+        <?php } ?>    
 </fieldset>
+   
 <?php
 echo $form->end();
 echo $session->flash();
@@ -297,6 +303,10 @@ echo $session->flash();
                 if(!checkremove) {
                     $('.default_songs').append('<td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return m_delete(1)" label="Remove Selected" name="remove_selected" type="submit">Remove Selected</button></td><td><button onclick="return m_delete(2)" label="Remove All" name="remove_all" type="submit">Remove All</button></td></tr></tbody></table></span></td>'); 
                 }
+                
+                if(!$('.save_playlist').length) {
+                    $('fieldset').append('<div class="save_playlist" style="float:right;position:relative;top:10px;left:-20px;"><button type="submit" name="save_playlist" label="Save Playlist" onclick="return CheckAllChk(form,this,1)">Save Playlist</button></div>');
+                }    
             }
         });        
     }
@@ -352,12 +362,15 @@ echo $session->flash();
     }
 
 
-    function CheckAllChk(theForm,maincheckname)
+    function CheckAllChk(theForm,maincheckname,save)
     {
             for(var z=0; z<theForm.length;z++)
             {
                     if(theForm[z].type =='checkbox')
                     {
+                            if(save == 1) {
+                                maincheckname.checked == true;
+                            }    
                             if(maincheckname.checked == true)
                             {
                                     theForm[z].checked=true;
@@ -367,7 +380,8 @@ echo $session->flash();
                                     theForm[z].checked=false;
                             }
                     }
-            }	
+            }
+            return false;
     }    
 
 

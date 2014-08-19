@@ -28,7 +28,7 @@ class QueuesController extends AppController
         }
         
         if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-            $this->Auth->allow('admin_addPlaylist','admin_managePlaylist','admin_addPlaylist');
+            $this->Auth->allow('admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist');
         }        
     }
 
@@ -501,7 +501,8 @@ class QueuesController extends AppController
     }
     
     function admin_insertplaylist() {
-        
+       print_r($this->data);
+       print_r($this->request->params);exit;
     }
     
     /**
