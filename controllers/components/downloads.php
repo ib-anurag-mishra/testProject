@@ -139,6 +139,17 @@ Class DownloadsComponent extends Object
         function generateReportLibraryLT100Downloads(){
             
             $libraryInstance = ClassRegistry::init('Library');
-            $libList          = $libraryInstance->getLibHavingLessThan100Downloads();
+            $libList         = $libraryInstance->getLibHavingLessThan100Downloads();
+            
+            $mailContent     =   '';
+            
+            foreach($libList as $key=>$value)
+            {                
+                $mailContent .= $value['Library']['library_name']." (id: ".$value['Library']['id'].") has ".$value['Library']['library_available_downloads']." remaining downloads.\n\n\n\n";
+            }
+            
+            echo mail('kushal.pogul@infobeans.com',"Remaining Library Downloads",$mailContent,'From:no-reply@freegalmusic.com');
+            
+            exit;
         }
 }
