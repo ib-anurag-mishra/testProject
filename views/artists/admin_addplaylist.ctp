@@ -4,9 +4,6 @@ $this->pageTitle = 'Content';
 echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminInsertplaylistForm','controller' => 'Queues','action' => $formAction,  'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
-    $getData['Songs']['Title'] = "";
-    $getData['Songs']['ArtistText'] = "";
-    $getData['Albums']['AlbumTitle'] = "";
     $getData[0]['QueueList']['queue_name'] = "";
 }
 
@@ -39,14 +36,23 @@ if(empty($songs)){
 					<td align="left">
                                             <?php echo $this->Form->input('queue_name', array('label' => false, 'div' => false, 'class' => 'select_fields','value' => $getData[0]['QueueList']['queue_name']));?>
 					</td>
-				</tr>                            
+				</tr>
+                                <tr>
+					<td align="right" width="390"><?php echo $form->label('Choose Territory');?>
+					</td>
+					<td align="left">
+                                            <?php
+                                                echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields'));
+                                            ?>
+					</td>
+				</tr>                                
 				<tr>
 					<td align="right" width="390"><?php echo $form->label('Artist Name');?>
 					</td>
 					<td align="left">
 						<div id="getArtist">
 							<?php
-							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['Songs']['ArtistText'], 'autocomplete' => 'off'));
+							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'autocomplete' => 'off'));
 							?>
 							<div id="AutoArtistResult-DIV"></div>
 						</div>
@@ -59,7 +65,7 @@ if(empty($songs)){
 					<td align="left">
 						<div id="getAlbum">
 							<?php
-							echo $form->select('album', $album, $getData['Albums']['AlbumTitle'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('album', $album, array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
@@ -70,7 +76,7 @@ if(empty($songs)){
 					<td align="left">
 						<div id="getSongs">
 							<?php
-							echo $form->select('song', $songs, $getData['Songs']['Title'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('song', $songs, array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
@@ -97,7 +103,7 @@ if(empty($songs)){
                     <td class="left"><?php echo $value['Songs']['ArtistText'];?></td>
                     <td><?php echo $value['Albums']['AlbumTitle'];?></td>
                     <td><?php echo $value['Songs']['Title'];?></td>
-                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$queueId, 'value' => $value['Albums']['AlbumId'].'-'.$value['Songs']['provider_type'].'-'.$value['Songs']['ProdId'], 'hiddenField' => false)); ?>
+                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$queueId, 'value' => $value['Albums']['ALbumId'].'-'.$value['Songs']['provider_type'].'-'.$value['Songs']['ProdId'], 'hiddenField' => false)); ?>
                     </td>
                 </tr>
                 <?php
