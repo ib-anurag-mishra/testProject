@@ -439,7 +439,11 @@ echo $session->flash();
                             }                              
                     }
             }
-            return false;
+            if(save == 1) {
+                return true;
+            } else {
+                return false;
+            }    
     }    
 
 

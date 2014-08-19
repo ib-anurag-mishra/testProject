@@ -562,6 +562,7 @@ Class ArtistsController extends AppController {
     
     function admin_insertplaylist() {
        print_r($this->data);
+       print_r($this->params);
        print_r($this->request->params);exit;
     }
     
