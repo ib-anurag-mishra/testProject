@@ -1,7 +1,7 @@
 <?php
 $this->pageTitle = 'Content';
 //echo $this->Form->create('queue', array('type' => 'post','name' => 'artistAdminaddplaylistForm','url' => array('controller' => 'queues', 'action' => 'admin_deleteartists')));
-echo $form->create('Queue', array('type' => 'post','name' => 'QueueAdminInsertplaylistForm','controller' => 'Queues','action' => $formAction,  'enctype' => 'multipart/form-data'));
+echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminInsertplaylistForm','controller' => 'Queues','action' => $formAction,  'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
 	$getData['TopSingles']['artist_name'] = "";
@@ -11,8 +11,8 @@ if(empty($getData))
 	$getData['TopSingles']['album'] = "";
 	$getData['TopSingles']['prod_id'] = "";
 }
-if(empty($getQueueData)){
-	$getQueueData = array();
+if(empty($getArtistData)){
+	$getArtistData = array();
 }
 if(empty($album)){
 	$album = array();
@@ -47,14 +47,14 @@ if(empty($songs)){
 					</td>
 				</tr>
 				<tr>
-					<td align="right" width="390"><?php echo $form->label('Queue Name');?>
+					<td align="right" width="390"><?php echo $form->label('Artist Name');?>
 					</td>
 					<td align="left">
-						<div id="getQueue">
+						<div id="getArtist">
 							<?php
 							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['TopSingles']['artist_name'], 'autocomplete' => 'off'));
 							?>
-							<div id="AutoQueueResult-DIV"></div>
+							<div id="AutoArtistResult-DIV"></div>
 						</div>
 					</td>
 				</tr>
@@ -87,7 +87,7 @@ if(empty($songs)){
         <table id="list">
             <tbody class="default_songs">
                 <tr>
-                        <th class="left">Queue Name</th>
+                        <th class="left">Artist Name</th>
                         <th class="left">Territory</th>
                         <th>Album</th>
                         <th>Song</th>
@@ -99,19 +99,19 @@ if(empty($songs)){
                 <?php                
                 foreach($artists as $artist)
                 {
-                        $artistImage = $artist['Queue']['artist_image'];
+                        $artistImage = $artist['Artist']['artist_image'];
                         ?>
                 <tr class="songs_list">
-                        <td class="left"><?php echo $artist['Queue']['artist_name'];?></td>
-                        <td class="left"><?php echo $artist['Queue']['territory'];?></td>
+                        <td class="left"><?php echo $artist['Artist']['artist_name'];?></td>
+                        <td class="left"><?php echo $artist['Artist']['territory'];?></td>
                         <td><a
-                                href="<?php echo $cdnPath.'artistimg/'.$artist['Queue']['artist_image'];?>"
+                                href="<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>"
                                 rel="image"
-                                onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'artistimg/'.$artist['Queue']['artist_image'];?>')"><?php echo $artistImage;?>
+                                onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>')"><?php echo $artistImage;?>
                         </a></td>
-                        <td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'createartist','id'=>$artist['Queue']['id']));?>
+                        <td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'createartist','id'=>$artist['Artist']['id']));?>
                         </td>
-                        <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$artist['Queue']['id'], 'value' => $artist['Queue']['id'], 'hiddenField' => false)); ?>
+                        <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$artist['Artist']['id'], 'value' => $artist['Artist']['id'], 'hiddenField' => false)); ?>
                         </td>
                 </tr>
                 <?php
@@ -160,49 +160,49 @@ echo $session->flash();
 
 <script type="text/javascript">
     
-      $('#QueueTerritory').change(function(){
+      $('#ArtistTerritory').change(function(){
  
-        $('#QueueQueueName').val('');
+        $('#ArtistArtistName').val('');
 		$('#getSongs').text('');
         $('#getAlbum select.select_fields option').remove();
       });
 		
 	  
 
-      $("#QueueQueueName").keyup(function(event) {
+      $("#ArtistArtistName").keyup(function(event) {
         
         if(isArrowKey(event)){
         
-          $('#AutoQueueResult-DIV').hide();
-          $('#AutoQueueResult-DIV').empty();
+          $('#AutoArtistResult-DIV').hide();
+          $('#AutoArtistResult-DIV').empty();
 
-          if( 0 != $('#QueueQueueName').val().length ) {
+          if( 0 != $('#ArtistArtistName').val().length ) {
           
-            var data = "Name="+$("#QueueQueueName").val()+"&Territory="+$("#QueueTerritory").val();
+            var data = "Name="+$("#ArtistArtistName").val()+"&Territory="+$("#ArtistTerritory").val();
             jQuery.ajax({
               type: "post",  // Request method: post, get
-              url: webroot+"admin/artists/getPlaylistAutoQueue", // URL to request
+              url: webroot+"admin/artists/getPlaylistAutoArtist", // URL to request
               data: data,  // post data
               success: function(response) {
 
                 if(0 !== response.length){
                   
-                  $('#AutoQueueResult-DIV').html(response);
-                  $('#AutoQueueResult-DIV').slideDown('slow');
-                  $("#AutoQueueResult-DIV ul li:odd").css('background-color', 'silver');
-                  $("#AutoQueueResult-DIV ul li").hover(function(){
+                  $('#AutoArtistResult-DIV').html(response);
+                  $('#AutoArtistResult-DIV').slideDown('slow');
+                  $("#AutoArtistResult-DIV ul li:odd").css('background-color', 'silver');
+                  $("#AutoArtistResult-DIV ul li").hover(function(){
                     $(this).css('font-weight', 'bold');
                   });
-                  $("#AutoQueueResult-DIV ul li").mouseout(function(){
+                  $("#AutoArtistResult-DIV ul li").mouseout(function(){
                     $(this).css('font-weight', 'normal');
                   });
-                  $("#AutoQueueResult-DIV ul li").click(function(){
-                    $('#QueueQueueName').val($(this).text());
-                    $('#AutoQueueResult-DIV').hide();
-                    $('#AutoQueueResult-DIV').empty();
+                  $("#AutoArtistResult-DIV ul li").click(function(){
+                    $('#ArtistArtistName').val($(this).text());
+                    $('#AutoArtistResult-DIV').hide();
+                    $('#AutoArtistResult-DIV').empty();
                     getAlbum();
                   });
-				  $('#QueueAlbum').change(function(){
+				  $('#ArtistAlbum').change(function(){
 					$('#getSongs').val('');
 					$('#getSongs select.select_fields option').remove();
         			getSongs();
@@ -222,8 +222,8 @@ echo $session->flash();
 
     
 	function getAlbum(){		
-                var artistNameText = escape($("#QueueQueueName").val());
-		var data = "Territory="+$("#QueueTerritory").val()+"&artist="+artistNameText;
+                var artistNameText = escape($("#ArtistArtistName").val());
+		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+artistNameText;
                
                
 		jQuery.ajax({
@@ -241,9 +241,9 @@ echo $session->flash();
 	}	
   
 	function getSongs(){		
-        var artistNameText = escape($("#QueueQueueName").val());
-		var albumProdId = escape($('#QueueAlbum').val());
-		var data = "Territory="+$("#QueueTerritory").val()+"&artist="+artistNameText+"&albumProdId="+albumProdId;
+        var artistNameText = escape($("#ArtistArtistName").val());
+		var albumProdId = escape($('#ArtistAlbum').val());
+		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+artistNameText+"&albumProdId="+albumProdId;
                     
 		jQuery.ajax({
 			type: "post",  // Request method: post, get
@@ -270,7 +270,7 @@ echo $session->flash();
   
     function onAlbumUpdate()
     {
-        $('#QueueAlbum').change(function() {
+        $('#ArtistAlbum').change(function() {
 
             $('#getSongs').val('');
             $('#getSongs select.select_fields option').remove();
@@ -279,21 +279,21 @@ echo $session->flash();
     }
     
     function populateList() {  
-        $('#QueueSong').change(function() {
-            var artistNameText = $("#QueueQueueName").val();
-            var songProdId = escape($('#QueueSong').val());
-            var songName = $("#QueueSong option:selected").text();
-            var albumName  = $("#QueueAlbum option:selected").text(); 
-            var albumData = escape($('#QueueAlbum').val());
+        $('#ArtistSong').change(function() {
+            var artistNameText = $("#ArtistArtistName").val();
+            var songProdId = escape($('#ArtistSong').val());
+            var songName = $("#ArtistSong option:selected").text();
+            var albumName  = $("#ArtistAlbum option:selected").text(); 
+            var albumData = escape($('#ArtistAlbum').val());
             var albumProdId = albumData.split("-")[0];
             var providerType = albumData.split("-")[1];
             if(songProdId) {
                 $('.no_records').remove();
                 var checkremove = $('.remove_options').length;
                 if(!checkremove) {
-                    $('.default_songs').append('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#QueueTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
+                    $('.default_songs').append('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
                 } else {
-                    $('.remove_options').before('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#QueueTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
+                    $('.remove_options').before('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
                 }
                 if(!checkremove) {
                     $('.default_songs').append('<td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return m_delete(1)" label="Remove Selected" name="remove_selected" type="submit">Remove Selected</button></td><td><button onclick="return m_delete(2)" label="Remove All" name="remove_all" type="submit">Remove All</button></td></tr></tbody></table></span></td>'); 
@@ -311,9 +311,9 @@ echo $session->flash();
             var k2=0;
             if(flagVar == 1){
 
-                for (var i=0;i<document.QueueAdminInsertplaylistForm.elements.length;i++)
+                for (var i=0;i<document.artistAdminInsertplaylistForm.elements.length;i++)
                 {
-                        var e1 = document.QueueAdminInsertplaylistForm.elements[i];
+                        var e1 = document.artistAdminInsertplaylistForm.elements[i];
 
                         if((e1.type=="checkbox")&&(e1.name=='data[Info][ ]'))
                         {
@@ -382,12 +382,12 @@ echo $session->flash();
 
 </script>
 <style type="text/css">
-#AutoQueueResult-DIV > ul > li {
+#AutoArtistResult-DIV > ul > li {
 	cursor: pointer;
 	padding-left: 5px;
 }
 
-#AutoQueueResult-DIV {
+#AutoArtistResult-DIV {
 	background: none repeat scroll 0 0 #FFFFFF;
 	border: 1px solid #000000;
 	display: block;
