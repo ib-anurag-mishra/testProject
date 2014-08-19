@@ -424,11 +424,20 @@ class Library extends AppModel
     Desc : Get Library having less than 100 downloads
     */	
         
-        function getLibHavingLessThan100Downloads(){        
+        function getLibHavingLessThan100Downloads(){ 
+            
+         $this->unBindModel(array('belongsTo' => array('User'), 'hasMany' => array('LibraryPurchase')));   
+            
         return $this->find('all', array('conditions' => 
                                                     array('library_available_downloads <= 100',
                                                           'library_status' => 'active',
-                                                         )
+                                                         ),
+                                        'fields' => array(
+						'Library.id',
+						'Library.library_name',
+						'Library.library_available_downloads',
+                                                'Library.library_status',
+                                                        ),
                                        )                                        
                                         
                           );
