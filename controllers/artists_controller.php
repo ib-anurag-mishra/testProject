@@ -522,41 +522,48 @@ Class ArtistsController extends AppController {
         }
         $this->set("territories", $territoriesArray);
         if (!empty($this->params['named'])) { //gets the values from the url in form  of array
-            $artistId = $this->params['named']['id'];
-            if (trim($artistId) != '' && is_numeric($artistId)) {
-                $this->set('formAction', 'admin_insertplaylist/id:' . $artistId);
-                $this->set('formHeader', 'Edit Top Single');
-                $getTopSingleDataObj = new TopSingles();
-                $getData = $getTopSingleDataObj->getartistdata($artistId);
+            $queueId = $this->params['named']['id'];
+            if (trim($queueId) != '' && is_numeric($queueId)) {
+                $this->set('formAction', 'admin_insertplaylist/id:' . $queueId);
+                $this->set('formHeader', 'Edit Play list');
+                $getData = $this->QueueDetail->find('all',
+                                        array('fields' => array('Songs.Title', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type', 'Albums.AlbumTitle'),
+                                              'group' => array('Songs.ProdID', 'Songs.provider_type'),
+                                              'joins' => array(
+                                                              array(
+                                                                              'type' => 'INNER',
+                                                                              'table' => 'Songs',
+                                                                              'alias' => 'Songs',
+                                                                              'foreignKey' => false,
+                                                                              'conditions' => array('QueueDetail.song_prodid=Songs.ProdID', 'QueueDetail.song_providertype=Songs.provider_type'),
+                                                              ),
+                                                              array(
+                                                                              'type' => 'INNER',
+                                                                              'table' => 'Albums',
+                                                                              'alias' => 'Albums',
+                                                                              'foreignKey' => false,
+                                                                              'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),
+                                                              ),
+                                                              array(
+                                                                              'type' => 'INNER',
+                                                                              'table' => strtolower($territory) . '_countries',
+                                                                              'alias' => 'Countries',
+                                                                              'foreignKey' => false,
+                                                                              'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type',),
+                                                              )
+                                                         ),
+                                              'conditions' => array('QueueDetail.id' => $queueId)
+                                            )
+                                       );
+                $this->QueueDetail->lastQuery();exit;
                 $this->set('getData', $getData);
+                $this->set('queueId',$queueId);
                 $condition = 'edit';
-                $artistName = $getData['TopSingles']['artist_name'];
-                $country = $getData['TopSingles']['territory'];
-
-                $getArtistData = array();
-                $this->set('getArtistData', $getArtistData);
-                $result = array();
-                $allAlbum = $this->Album->find('all', array(
-                    'fields' => array('Album.ProdID', 'Album.AlbumTitle'),
-                    'conditions' => array('Album.ArtistText' => $getData['TopSingles']['artist_name'], 'Album.provider_type' => $getData['TopSingles']['provider_type']),
-                    'recursive' => -1
-                ));
-
-                $val = '';
-                $this->Song->Behaviors->attach('Containable');
-                foreach ($allAlbum as $k => $v) {
-                    $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $getData['TopSingles']['territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
-                    if (count($recordCount) > 0) {
-                        $result[$v['Album']['ProdID']] = $v['Album']['AlbumTitle'];
-                    }
-                }
-                $this->set('album', $result);
             }
         } else {
             $this->set('formAction', 'admin_insertplaylist');
             $this->set('formHeader', 'Add Playlist');
             $condition = 'add';
-            $artistName = '';
         }        
     }
     
