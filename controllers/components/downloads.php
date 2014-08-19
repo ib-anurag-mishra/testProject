@@ -146,8 +146,8 @@ Class DownloadsComponent extends Object
             
             if(count($libList)>0)
             {  
-                $mailContent     .=   'Hi,\n\n';
-                $mailContent     .=   'Following is list of libraries having remaining library downloads less than or equal to 100:\n\n';
+                $mailContent     .=   "Hi,\n\n";
+                $mailContent     .=   "Following is list of libraries having remaining library downloads less than or equal to 100:\n\n";
                 $sr_no            = 1;
                 
                 foreach($libList as $key=>$value)
@@ -159,8 +159,8 @@ Class DownloadsComponent extends Object
             }
             else
             {
-                $mailContent     .=   'Hi,\n\n';
-                $mailContent     .=   'Right now there are no libraries having reamining library downloads less than or equal to 100.\n\n';
+                $mailContent     .=   "Hi,\n\n";
+                $mailContent     .=   "Right now there are no libraries having reamining library downloads less than or equal to 100.\n\n";
             }
             
             echo mail('kushal.pogul@infobeans.com',"List of Library having Remaining Downloads <= 100",$mailContent,'From:no-reply@freegalmusic.com');
