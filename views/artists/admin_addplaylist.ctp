@@ -364,7 +364,7 @@ echo $session->flash();
             for(var z=0; z<theForm.length;z++)
             {
                 if(theForm[z].type =='checkbox') {
-                    if(theForm[z].name == "data[Info][ ]")
+                    if(theForm[z].name == "data[Info][]")
                     {
                         if(theForm[z].checked==true)
                         {
