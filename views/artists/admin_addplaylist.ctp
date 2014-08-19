@@ -122,9 +122,9 @@ if(empty($songs)){
                     <span style="float: right;">
                         <table>
                                 <tr>
-                                        <td><?php echo $this->Form->button('Remove Selected', array('name' => 'remove_selected','label'=>'Remove Selected','onclick' => 'return m_delete(1)')); ?>
+                                        <td><?php echo $this->Form->button('Remove Selected', array('name' => 'remove_selected','label'=>'Remove Selected','onclick' => 'return removeFromlist(form,1)')); ?>
                                         </td>
-                                        <td><?php echo $this->Form->button('Remove All', array('name' => 'remove_all','label'=>'Remove All','onclick' => 'return m_delete(2)')); ?>
+                                        <td><?php echo $this->Form->button('Remove All', array('name' => 'remove_all','label'=>'Remove All','onclick' => 'return removeFromlist(form,2)')); ?>
                                         </td>
                                 </tr>
 
@@ -296,7 +296,7 @@ echo $session->flash();
                     $('.remove_options').before('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
                 }
                 if(!checkremove) {
-                    $('.default_songs').append('<td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return m_delete(1)" label="Remove Selected" name="remove_selected" type="submit">Remove Selected</button></td><td><button onclick="return m_delete(2)" label="Remove All" name="remove_all" type="submit">Remove All</button></td></tr></tbody></table></span></td>'); 
+                    $('.default_songs').append('<td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return removeFromlist(form,1)" label="Remove Selected" name="remove_selected" type="submit">Remove Selected</button></td><td><button onclick="return removeFromlist(form,2)" label="Remove All" name="remove_all" type="submit">Remove All</button></td></tr></tbody></table></span></td>'); 
                 }
                 
                 if(!$('.save_playlist').length) {
@@ -356,6 +356,64 @@ echo $session->flash();
             }
     }
 
+
+    function removeFromlist(theForm,flagVar)
+    {
+        var k2=0;
+        if(flagVar == 1){  
+            for(var z=0; z<theForm.length;z++)
+            {
+                if((theForm[z].type=="checkbox")&&(theForm[z].name=='data[Info][ ]'))
+                {
+                    if(theForm[z].checked==true)
+                    {
+                            k2++;
+                    }
+                }
+            }
+        } else {
+            k2 = 1;
+        }
+
+        if(k2==0)
+        {
+                alert('Please select at least one recode for remove.');
+                return false;
+        }
+        else
+        {
+                if(flagVar == 1){
+                    var x=confirm('Are you sure you want to remove all selected records ?');
+                }else if(flagVar == 2){
+                    var x=confirm('Are you sure you want to remove all records ?');
+                }
+
+                if(x==false)
+                {
+                        return false;
+                }
+                else(x==true)
+                {
+                    
+                    if(flagVar == 1){
+                        for(var z=0; z<theForm.length;z++)
+                        {
+                            if((theForm[z].type=="checkbox")&&(theForm[z].name=='data[Info][ ]'))
+                            {
+                                if(theForm[z].checked==true)
+                                {
+                                        theForm[z].parent().remove();
+                                }
+                            }
+                        }                        
+                    } else {
+                        $(".songs_list").remove();
+                    }
+                    return false;
+
+                }
+        }        
+    } 
 
     function CheckAllChk(theForm,maincheckname,save)
     {
