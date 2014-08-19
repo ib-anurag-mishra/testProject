@@ -12,7 +12,7 @@ class SolrComponent extends Object {
 	/**
 	 * Used for runtime configuration of model
 	 */
-	static $_defaults2 = array( 'server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicvideos/' ); //108.166.39.24//192.168.100.24//192.168.100.24
+	static $_defaults2 = array( 'server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicvideosstage/' ); //108.166.39.24//192.168.100.24//192.168.100.24
 
 	/**
 	 * Solr client object
@@ -160,7 +160,7 @@ class SolrComponent extends Object {
 				break;
 	
 			case 'video':
-				$queryFields['queryFields'] = "CVideoTitle^100 CArtistText^80 CTitle^60";
+				$queryFields['queryFields'] = "catchVideos^10";
 				$queryFields['field'] 		= 'VideoTitle';
 				break;
 	
@@ -389,7 +389,27 @@ class SolrComponent extends Object {
 				$queryFields = isset( $arrGroup['queryFields'] ) ? $arrGroup['queryFields'] : '';
 				$field 		 = isset( $arrGroup['field'] ) ? $arrGroup['field'] : '';
 
-				$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
+				if ( $type == 'album' ) {
+					
+					if ( preg_match( '/tribute/i', $searchkeyword ) && preg_match( '/karaoke/i', $searchkeyword ) ) {
+
+						$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
+
+					} else if ( preg_match( '/tribute/i', $searchkeyword ) && !preg_match( '/karaoke/i', $searchkeyword ) ) {
+						
+						$query = '(' . $searchkeyword . ') AND !(karaoke*) AND Territory:' . $country . $conditions;
+
+					} else if( !preg_match( '/tribute/i', $searchkeyword ) && preg_match( '/karaoke/i', $searchkeyword ) ) {
+						
+						$query = '(' . $searchkeyword . ') AND !(tribute*) AND Territory:' . $country . $conditions;
+
+					} else {
+						$query = '(' . $searchkeyword . ') AND !(tribute*) AND !(karaoke*) AND Territory:' . $country . $conditions;
+					}
+					
+				} else {
+					$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
+				}
 
 				if ( $page == 1 ) {
 					$start = 0;
@@ -450,7 +470,7 @@ class SolrComponent extends Object {
 					$arrAuto 	 = $this->solrSearchFileds( $type );					
 					$queryFields = isset( $arrAuto['queryFields'] ) ? $arrAuto['queryFields'] : '';
 					$field 		 = isset( $arrAuto['field'] ) ? $arrAuto['field'] : '';
-					$query	 	 = $searchkeyword . ' AND Territory:' . $country . $conditions;
+					$query	 	 = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
 
 					$additionalParams = array(
 											'defType' => 'edismax',

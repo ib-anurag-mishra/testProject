@@ -346,7 +346,7 @@
 										<ul>
 											<li>
 											<?php												
-                                                                                                $wishlistInfo = $wishlist->getWishlistData($palbum->ProdID);
+												$wishlistInfo = $wishlist->getWishlistData($palbum->ProdID);
 
 												if ( $wishlistInfo == 'Added To Wishlist' ):
 											?> 
