@@ -138,7 +138,7 @@ Class DownloadsComponent extends Object
         
         function generateReportLibraryLT100Downloads(){
             
-            $downloadInstance = ClassRegistry::init('Download');
-            $libList          = $downloadInstance->getLibHavingLessThan100Downloads();
+            $libraryInstance = ClassRegistry::init('Library');
+            $libList          = $libraryInstance->getLibHavingLessThan100Downloads();
         }
 }

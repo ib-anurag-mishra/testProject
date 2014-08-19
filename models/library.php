@@ -417,5 +417,20 @@ class Library extends AppModel
 	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
 	    $results = $this->find('count', compact('conditions','recursive', 'group'));
 	    return $results;
-	}	
+	}
+        
+    /*
+    Function Name : getLibHavingLessThan100Downloads
+    Desc : Get Library having less than 100 downloads
+    */	
+        
+        function getLibHavingLessThan100Downloads(){        
+        return $this->find('all', array('conditions' => 
+                                                    array('library_available_downloads <= 100',
+                                                          'library_status' => 'active',
+                                                         )
+                                       )                                        
+                                        
+                          );
+    }
 }
