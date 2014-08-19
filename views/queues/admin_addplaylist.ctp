@@ -137,11 +137,6 @@ if(empty($songs)){
                         <td colspan="5" align="center">No Records available.</td>
                 </tr>
                 <?php } ?>
-                <tr>
-                        <td align="right" colspan="5"><p class="submit">
-                                        <input type="submit" value="Save Playlist" />
-                                </p></td>
-                </tr>                
                 <?php echo $this->Form->hidden('selectedOpt'); ?>
            </tbody>     
         </table> 
