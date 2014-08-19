@@ -165,6 +165,15 @@ msgstr "maintenant en streaming"
 msgid "Create and Store Playlists"
 msgstr "Créer et stocker Playlists"
 
+msgid "Playlist"
+msgstr "playlist"
+
+msgid "Streaming Time"
+msgstr "Time Streaming"
+
+msgid "Streaming History"
+msgstr "Streaming Histoire"
+
 #: \elements\navigation.ctp:56
 msgid "Newly Added"
 msgstr "Récemment ajouté"

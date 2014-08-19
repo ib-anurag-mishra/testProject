@@ -176,6 +176,15 @@ msgstr "Ahora Streaming"
 msgid "Create and Store Playlists"
 msgstr "Crear y almacenar listas de reproducción"
 
+msgid "Playlist"
+msgstr "Playlist"
+
+msgid "Streaming Time"
+msgstr "Streaming Tiempo"
+
+msgid "Streaming History"
+msgstr "Historia Streaming"
+
 #: \elements\navigation.ctp:100 \genres\view.ctp:79
 #: \homes\advance_search.ctp:2
 msgid "Advanced Search"

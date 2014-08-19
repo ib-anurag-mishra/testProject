@@ -165,6 +165,15 @@ msgstr ""
 msgid "Create and Store Playlists"
 msgstr ""
 
+msgid "Playlist"
+msgstr ""
+
+msgid "Streaming Time"
+msgstr ""
+
+msgid "Streaming History"
+msgstr ""
+
 #: \elements\navigation.ctp:100 \genres\view.ctp:79
 #: \homes\advance_search.ctp:2
 msgid "Advanced Search"
