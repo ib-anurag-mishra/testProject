@@ -544,13 +544,6 @@ Class ArtistsController extends AppController {
                                                                               'foreignKey' => false,
                                                                               'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),
                                                               ),
-                                                              array(
-                                                                              'type' => 'INNER',
-                                                                              'table' => strtolower($territory) . '_countries',
-                                                                              'alias' => 'Countries',
-                                                                              'foreignKey' => false,
-                                                                              'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type',),
-                                                              )
                                                          ),
                                               'conditions' => array('QueueDetail.id' => $queueId)
                                             )
