@@ -159,6 +159,12 @@ msgstr ""
 msgid "Newly Added"
 msgstr ""
 
+msgid "Now Streaming"
+msgstr ""
+
+msgid "Create and Store Playlists"
+msgstr ""
+
 #: \elements\navigation.ctp:100 \genres\view.ctp:79
 #: \homes\advance_search.ctp:2
 msgid "Advanced Search"

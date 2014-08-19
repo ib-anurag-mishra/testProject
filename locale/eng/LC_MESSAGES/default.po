@@ -172,6 +172,12 @@ msgstr "Featured Artist"
 msgid "Newly Added"
 msgstr "Newly Added"
 
+msgid "Now Streaming"
+msgstr "Now Streaming"
+
+msgid "Create and Store Playlists"
+msgstr "Create and Store Playlists"
+
 #: \elements\navigation.ctp:100 \homes\advance_search.ctp:2
 msgid "Advanced Search"
 msgstr "Advanced Search"

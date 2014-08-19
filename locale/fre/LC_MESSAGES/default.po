@@ -159,6 +159,12 @@ msgstr "Voir le tout"
 msgid "Featured Artist"
 msgstr "Artiste Présenté"
 
+msgid "Now Streaming"
+msgstr "maintenant en streaming"
+
+msgid "Create and Store Playlists"
+msgstr "Créer et stocker Playlists"
+
 #: \elements\navigation.ctp:56
 msgid "Newly Added"
 msgstr "Récemment ajouté"

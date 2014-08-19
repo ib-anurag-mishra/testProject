@@ -170,6 +170,12 @@ msgstr "Artistas Presentados"
 msgid "Newly Added"
 msgstr "Nuevas Adiciones"
 
+msgid "Now Streaming"
+msgstr "Ahora Streaming"
+
+msgid "Create and Store Playlists"
+msgstr "Crear y almacenar listas de reproducción"
+
 #: \elements\navigation.ctp:100 \genres\view.ctp:79
 #: \homes\advance_search.ctp:2
 msgid "Advanced Search"
