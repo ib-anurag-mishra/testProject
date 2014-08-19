@@ -348,7 +348,7 @@ msgid "Search for your favorite music."
 msgstr "Cerca la tua musica preferita."
 
 msgid "Need help? Visit our"
-msgstr "Hai bisogno di aiuto? Visita il nostro"
+msgstr "Hai bisogno di aiuto? Visita le nostre"
 
 msgid "Downloads"
 msgstr "download"

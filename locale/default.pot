@@ -116,6 +116,9 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
+msgid "Need help? Visit our"
+msgstr ""
+
 #: \elements\footer.ctp:27
 msgid "Also available in"
 msgstr ""
