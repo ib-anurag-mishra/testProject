@@ -154,14 +154,15 @@ Class DownloadsComponent extends Object
                 {                
                     $mailContent .= $sr_no.") ".$value['Library']['library_name']." (id: ".$value['Library']['id'].") has ".$value['Library']['library_available_downloads']." remaining downloads.\n\n";
                     $sr_no++;
-                }
-                                
+                }                                
             }
             else
             {
                 $mailContent     .=   "Hi,\n\n";
                 $mailContent     .=   "Right now there are no libraries having reamining library downloads less than or equal to 100.\n\n";
             }
+            
+            $mailContent     .=   "Thanks\n\n";
             
             echo mail('kushal.pogul@infobeans.com',"List of Library having Remaining Downloads <= 100",$mailContent,'From:no-reply@freegalmusic.com');
             
