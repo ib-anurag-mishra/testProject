@@ -364,7 +364,7 @@ echo $session->flash();
                     if(theForm[z].type =='checkbox')
                     {
                             if(save == 1) {
-                                maincheckname.checked == true;
+                                theForm[z].checked=true;
                             }    
                             if(maincheckname.checked == true)
                             {
