@@ -11,6 +11,14 @@ if(empty($queueId)) {
     $queueId = '';
 }
 
+if(empty($getData['Albums']['AlbumTitle'])) {
+    $getData['Albums']['AlbumTitle'] = '';
+}
+
+if(empty($getData['Songs']['Title'])) {
+    $getData['Songs']['Title'] = '';
+}
+
 if(empty($getArtistData)){
 	$getArtistData = array();
 }
@@ -65,7 +73,7 @@ if(empty($songs)){
 					<td align="left">
 						<div id="getAlbum">
 							<?php
-							echo $form->select('album', $album, array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('album', $album, array('label' => false,'value' => $getData['Albums']['AlbumTitle'],  'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
@@ -76,7 +84,7 @@ if(empty($songs)){
 					<td align="left">
 						<div id="getSongs">
 							<?php
-							echo $form->select('song', $songs, array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('song', $songs,$getData['Songs']['Title'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
