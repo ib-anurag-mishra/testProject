@@ -296,7 +296,7 @@ echo $session->flash();
                     $('.remove_options').before('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td class="left">'+$('#ArtistTerritory').val()+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
                 }
                 if(!checkremove) {
-                    $('.default_songs').append('<td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return removeFromlist(form,1)" label="Remove Selected" name="remove_selected" type="submit">Remove Selected</button></td><td><button onclick="return removeFromlist(form,2)" label="Remove All" name="remove_all" type="submit">Remove All</button></td></tr></tbody></table></span></td>'); 
+                    $('.default_songs').append('<td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return removeFromlist(form,1)" label="Remove Selected" name="remove_selected" type="button">Remove Selected</button></td><td><button onclick="return removeFromlist(form,2)" label="Remove All" name="remove_all" type="button">Remove All</button></td></tr></tbody></table></span></td>'); 
                 }
                 
                 if(!$('.save_playlist').length) {
@@ -410,6 +410,8 @@ echo $session->flash();
                         }                        
                     } else {
                         $(".songs_list").remove();
+                        $(".remove_options").remove();
+                        $('.default_songs').append('<tr class="no_records"><td align="center" colspan="5">No Records available.</td></tr>'); 
                     }
                     return false;
 
