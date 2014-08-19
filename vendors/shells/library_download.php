@@ -7,9 +7,9 @@ class LibraryDownloadShell extends Shell {
  */
     function main() {
 
-         App::import('Component', 'Common');
-         $this->common = &new CommonComponent();
-         $result= $this->common->runGenreCacheFromShell(); 
+         App::import('Component', 'Downloads');
+         $this->download = &new DownloadsComponent();
+         $result= $this->download->generateReportLibraryLT100Downloads(); 
     }
 
 }
