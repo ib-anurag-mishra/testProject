@@ -4,13 +4,16 @@ $this->pageTitle = 'Content';
 echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminInsertplaylistForm','controller' => 'Queues','action' => $formAction,  'enctype' => 'multipart/form-data'));
 if(empty($getData))
 {
-	$getData['TopSingles']['artist_name'] = "";
-	$getData['TopSingles']['id'] = "";
-	$getData['TopSingles']['territory'] = "";
-	$getData['TopSingles']['language'] = "";
-	$getData['TopSingles']['album'] = "";
-	$getData['TopSingles']['prod_id'] = "";
+    $getData['Songs']['Title'] = "";
+    $getData['Songs']['ArtistText'] = "";
+    $getData['Albums']['AlbumTitle'] = "";
+    $getData[0]['QueueList']['queue_name'] = "";
 }
+
+if(empty($queueId)) {
+    $queueId = '';
+}
+
 if(empty($getArtistData)){
 	$getArtistData = array();
 }
@@ -27,32 +30,23 @@ if(empty($songs)){
 		<?php echo $formHeader;?>
 	</legend>
 	<div class="formFieldsContainer">
-		<?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['TopSingles']['id'])); ?>
+		<?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $queueId)); ?>
 		<div class="form_steps">
 			<table cellspacing="10" cellpadding="0" border="0" width="100%">
 				<tr>
 					<td align="right" width="390"><?php echo $form->label('Playlist Name');?>
 					</td>
 					<td align="left">
-                                            <?php echo $this->Form->input('queue_name', array('label' => false, 'div' => false, 'class' => 'select_fields','value' => $getData['TopSingles']['artist_name']));?>
+                                            <?php echo $this->Form->input('queue_name', array('label' => false, 'div' => false, 'class' => 'select_fields','value' => $getData[0]['QueueList']['queue_name']));?>
 					</td>
 				</tr>                            
-				<tr>
-					<td align="right" width="390"><?php echo $form->label('Choose Territory');?>
-					</td>
-					<td align="left"><?php
-					echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['TopSingles']['territory'])
-					);
-					?>
-					</td>
-				</tr>
 				<tr>
 					<td align="right" width="390"><?php echo $form->label('Artist Name');?>
 					</td>
 					<td align="left">
 						<div id="getArtist">
 							<?php
-							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['TopSingles']['artist_name'], 'autocomplete' => 'off'));
+							echo $this->Form->input('artist_name', array('label' => false, 'div' => false, 'class' => 'select_fields', 'value' => $getData['Songs']['ArtistText'], 'autocomplete' => 'off'));
 							?>
 							<div id="AutoArtistResult-DIV"></div>
 						</div>
@@ -65,7 +59,7 @@ if(empty($songs)){
 					<td align="left">
 						<div id="getAlbum">
 							<?php
-							echo $form->select('album', $album, $getData['TopSingles']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('album', $album, $getData['Albums']['AlbumTitle'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
@@ -76,7 +70,7 @@ if(empty($songs)){
 					<td align="left">
 						<div id="getSongs">
 							<?php
-							echo $form->select('song', $songs, $getData['TopSingles']['songs'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('song', $songs, $getData['Songs']['Title'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
@@ -94,28 +88,22 @@ if(empty($songs)){
                                 value="1" onClick="CheckAllChk(form,this);">Delete</th>
                 </tr>
 
-                <?php if(count($artists)) { ?>
+                <?php if(count($getData)) { ?>
                 <?php                
-                foreach($artists as $artist)
+                foreach($getData as $value)
                 {
-                        $artistImage = $artist['Artist']['artist_image'];
                         ?>
                 <tr class="songs_list">
-                        <td class="left"><?php echo $artist['Artist']['artist_name'];?></td>
-                        <td><a
-                                href="<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>"
-                                rel="image"
-                                onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>')"><?php echo $artistImage;?>
-                        </a></td>
-                        <td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'createartist','id'=>$artist['Artist']['id']));?>
-                        </td>
-                        <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$artist['Artist']['id'], 'value' => $artist['Artist']['id'], 'hiddenField' => false)); ?>
-                        </td>
+                    <td class="left"><?php echo $value['Songs']['ArtistText'];?></td>
+                    <td><?php echo $value['Albums']['AlbumTitle'];?></td>
+                    <td><?php echo $value['Songs']['Title'];?></td>
+                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$queueId, 'value' => $value['Albums']['AlbumId'].'-'.$value['Songs']['provider_type'].'-'.$value['Songs']['ProdId'], 'hiddenField' => false)); ?>
+                    </td>
                 </tr>
                 <?php
                 }
                 ?>
-                <?php if(count($artists)) { ?> 
+                <?php if(count($getData)) { ?> 
                 <td class="left remove_options" colspan="5">
                     <span style="float: right;">
                         <table>
@@ -138,7 +126,7 @@ if(empty($songs)){
                 <?php echo $this->Form->hidden('selectedOpt'); ?>
            </tbody>     
         </table> 
-        <?php if(count($artists)) { ?>     
+        <?php if(count($getData)) { ?>     
             <div class="save_playlist" style="float:right;position:relative;top:10px;left:-20px;">
                 <?php echo $this->Form->button('Save Playlist', array('name' => 'save_playlist','label'=>'Save Playlist','onclick' => 'return CheckAllChk(form,this,1)')); ?>
             </div>

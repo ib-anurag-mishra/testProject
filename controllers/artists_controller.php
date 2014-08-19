@@ -527,9 +527,16 @@ Class ArtistsController extends AppController {
                 $this->set('formAction', 'admin_insertplaylist/id:' . $queueId);
                 $this->set('formHeader', 'Edit Play list');
                 $getData = $this->QueueDetail->find('all',
-                                        array('fields' => array('Songs.Title', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type', 'Albums.AlbumTitle'),
+                                        array('fields' => array('Songs.Title', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle','QueueList.queue_name'),
                                               'group' => array('Songs.ProdID', 'Songs.provider_type'),
                                               'joins' => array(
+                                                                array(
+                                                                                'type' => 'INNER',
+                                                                                'table' => 'queue_lists',
+                                                                                'alias' => 'QueueList',
+                                                                                'foreignKey' => false,
+                                                                                'conditions' => array('QueueList.queue_id = QueueDetail.queue_id'),
+                                                                ),                                                  
                                                               array(
                                                                               'type' => 'INNER',
                                                                               'table' => 'Songs',
@@ -548,7 +555,6 @@ Class ArtistsController extends AppController {
                                               'conditions' => array('QueueDetail.id' => $queueId)
                                             )
                                        );
-                $this->QueueDetail->lastQuery();exit;
                 $this->set('getData', $getData);
                 $this->set('queueId',$queueId);
                 $condition = 'edit';
@@ -561,11 +567,11 @@ Class ArtistsController extends AppController {
     }
     
     function admin_insertplaylist() {
-        
+        $songsList = $this->params['data']['Info'];
         if(!empty($this->params['named'])) {
+            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named'])));
             
         } else {
-            $songsList = $this->params['data']['Info'];
             $queueName = $this->params['data']['Artist']['queue_name'];
             $patronId = $this->Session->read('Auth.User.id');
             $this->data['QueueList']['queue_name'] = $queueName;
