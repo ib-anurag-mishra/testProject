@@ -122,9 +122,9 @@ if(empty($songs)){
                     <span style="float: right;">
                         <table>
                                 <tr>
-                                        <td><?php echo $this->Form->button('Remove Selected', array('name' => 'remove_selected','label'=>'Remove Selected','onclick' => 'return removeFromlist(form,1)')); ?>
+                                        <td><?php echo $this->Form->button('Remove Selected', array('name' => 'remove_selected','type' => 'button',  'label'=>'Remove Selected','onclick' => 'return removeFromlist(form,1)')); ?>
                                         </td>
-                                        <td><?php echo $this->Form->button('Remove All', array('name' => 'remove_all','label'=>'Remove All','onclick' => 'return removeFromlist(form,2)')); ?>
+                                        <td><?php echo $this->Form->button('Remove All', array('name' => 'remove_all','type' => 'button','label'=>'Remove All','onclick' => 'return removeFromlist(form,2)')); ?>
                                         </td>
                                 </tr>
 
