@@ -136,19 +136,29 @@ Class DownloadsComponent extends Object
 		}
 	}
         
-        function generateReportLibraryLT100Downloads(){
+        function generateReportLibraryLT100Downloads()
+        {
             
             $libraryInstance = ClassRegistry::init('Library');
             $libList         = $libraryInstance->getLibHavingLessThan100Downloads();
             
-            $mailContent     =   '';
+            $mailContent     = '';
             
-            foreach($libList as $key=>$value)
-            {                
-                $mailContent .= $value['Library']['library_name']." (id: ".$value['Library']['id'].") has ".$value['Library']['library_available_downloads']." remaining downloads.\n\n\n\n";
+            if(count($libList)>0)
+            {  
+                $mailContent     =   'Hi,\n\nFollowing is list of libraries having remaining library downloads less than or equal to 100:\n\n';
+                
+                foreach($libList as $key=>$value)
+                {                
+                    $mailContent .= $value['Library']['library_name']." (id: ".$value['Library']['id'].") has ".$value['Library']['library_available_downloads']." remaining downloads.\n\n";
+                }
+            }
+            else
+            {
+                $mailContent     .=   'Hi,\n\nRight now there are no libraries having reamining library downloads less than or equal to 100.\n\n';
             }
             
-            echo mail('kushal.pogul@infobeans.com',"Remaining Library Downloads",$mailContent,'From:no-reply@freegalmusic.com');
+            echo mail('kushal.pogul@infobeans.com',"List of Library having Remaining Downloads <= 100",$mailContent,'From:no-reply@freegalmusic.com');
             
             exit;
         }

@@ -3266,8 +3266,5 @@ Class ArtistsController extends AppController {
             $this->set('facetPage',$facetPage);
         }
     }
-    function generate_report() {
-    $result =   $this->Downloads->generateReportLibraryLT100Downloads();
-    }
 }
 ?>
