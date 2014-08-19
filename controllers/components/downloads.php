@@ -135,4 +135,10 @@ Class DownloadsComponent extends Object
 			return false;
 		}
 	}
+        
+        function generateReportLibraryLT100Downloads(){
+            
+            $downloadInstance = ClassRegistry::init('Download');
+            $libList          = $downloadInstance->getLibHavingLessThan100Downloads();
+        }
 }

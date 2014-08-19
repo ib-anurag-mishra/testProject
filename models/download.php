@@ -495,6 +495,17 @@ class Download extends AppModel
                                         )
                         );
     }
+    
+    
+    function getLibHavingLessThan100Downloads(){        
+        return $this->find('all', array('conditions' => 
+                                                    array('library_available_downloads <= 100',
+                                                          'library_status' => 'active',
+                                                         )
+                                       )                                        
+                                        
+                          );
+    }
   
 }
 ?>
