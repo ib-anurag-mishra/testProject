@@ -45,7 +45,11 @@ class CheckBrokenLinksShell extends Shell {
 		}
 
 		if ( $msgBody != '' ) {
-			mail( 'kiran.pyati@infobeans.com', 'Notification for Broken Link(s)', $msgBody );
+
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+			mail( 'kiran.pyati@infobeans.com', 'Notification for Broken Link(s)', $msgBody, $headers );
 			echo $msgBody;
 		}
 	}
@@ -60,7 +64,7 @@ class CheckBrokenLinksShell extends Shell {
 		foreach ( $pageLinks as $currLink ) {
 
 			//LOOP THROUGH ATTRIBUTES FOR CURRENT LINK
-			foreach ( $currLink->attributes as $attributeName=>$attributeValue ) {
+			foreach ( $currLink->attributes as $attributeName => $attributeValue ) {
 
 				//IF CURRENT ATTRIBUTE CONTAINS THE WEBSITE ADDRESS
 				if ( $attributeName == $attrName ) {
