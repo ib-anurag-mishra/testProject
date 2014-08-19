@@ -363,11 +363,13 @@ echo $session->flash();
         if(flagVar == 1){  
             for(var z=0; z<theForm.length;z++)
             {
-                if((theForm[z].type=="checkbox")&&(theForm[z].name=='data[Info][ ]'))
-                {
-                    if(theForm[z].checked==true)
+                if(theForm[z].type =='checkbox') {
+                    if((theForm[z].type=="checkbox")&&(theForm[z].name=='data[Info][ ]'))
                     {
-                            k2++;
+                        if(theForm[z].checked==true)
+                        {
+                                k2++;
+                        }
                     }
                 }
             }
