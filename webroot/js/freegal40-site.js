@@ -887,7 +887,7 @@ $(document).ready(function() {
 
 
 
-    $('.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable').bindMouseWheel();
+    
 
     $(document).on('mouseenter', '.playlist-options', function() {
 
@@ -927,7 +927,7 @@ $(document).ready(function() {
 
     $('.queue-detail-page .playlist-scrollable .add-to-wishlist-button,.now-streaming-page .playlist-scrollable .add-to-wishlist-button').on('mouseleave',function(e){
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY > $(this).height()) {
-            console.log(e.offsetY);
+
             $(this).next('.wishlist-popover').removeClass('active');
         }
 
@@ -937,7 +937,7 @@ $(document).ready(function() {
 
     $('.now-streaming-page .playlist-scrollable .add-to-wishlist-button').on('mouseleave',function(e){
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY > $(this).height()) {
-            console.log(e.offsetY);
+
             $(this).next('.wishlist-popover').removeClass('active');
         }
 
