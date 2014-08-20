@@ -496,13 +496,13 @@ Class StreamingComponent extends Object
 		$song = $songInstance->find('first',array(
 				'joins' => array(
 						array(
-								'table' => strtolower($libraryTerritory).'_countries',
-								'alias' => 'Country',
-								'type' => 'INNER',
-								'conditions' => array(
-										'Country.ProdID = Song.ProdID',
-										'Country.provider_type = Song.provider_type',
-								)
+                                                        'table' => strtolower($libraryTerritory).'_countries',
+                                                        'alias' => 'Country',
+                                                        'type' => 'INNER',
+                                                        'conditions' => array(
+                                                                        'Country.ProdID = Song.ProdID',
+                                                                        'Country.provider_type = Song.provider_type',
+                                                        )
 						)
 				),
 				'conditions' => array(
@@ -589,9 +589,14 @@ Class StreamingComponent extends Object
 	function getSeconds($durationString){
 
 		if(isset($durationString)){
-			sscanf($durationString, "%d:%d", $minutes, $seconds);
-			$time_seconds = $minutes * 60 + $seconds;
+			                    
+                        sscanf($durationString, "%d:%d:%d", $hours, $minutes, $seconds);        
+                        
+                        //handle the condition when hours not present
+                        $time_seconds = isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;                     
+			
 			return $time_seconds;
+                        
 		} else {
 			return 0;
 		}
