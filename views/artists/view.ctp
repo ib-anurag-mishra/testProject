@@ -194,19 +194,29 @@
 				<div class="song<?php echo $class; echo $cs; ?>">
 					<?php
 
-					if (strlen($albumSong['Song']['SongTitle']) >= 44):
+					// if (strlen($albumSong['Song']['SongTitle']) >= 44):
 					
-						echo $this->Html->tag('a', substr($albumSong['Song']['SongTitle'], 0, 44) . '...', array('style' => 'text-decoration:none;', 'title' => $this->getTextEncode($albumSong['Song']['SongTitle'])));
+					// 	echo $this->Html->tag('a', substr($albumSong['Song']['SongTitle'], 0, 44) . '...', array('style' => 'text-decoration:none;', 'title' => $this->getTextEncode($albumSong['Song']['SongTitle'])));
 					
-					else:
+					// else:
 					
-						if($this->getTextEncode($albumSong['Song']['SongTitle'])):
-							echo $this->Html->tag('a', $this->getTextEncode($albumSong['Song']['SongTitle']), array('style' => 'text-decoration:none;', 'title' => $this->getTextEncode($albumSong['Song']['SongTitle'])));
-						else:
-							echo $this->Html->tag('a', $albumSong['Song']['SongTitle'], array('style' => 'text-decoration:none;', 'title' => $albumSong['Song']['SongTitle']));
-						endif;
+					// 	if($this->getTextEncode($albumSong['Song']['SongTitle'])):
+					// 		echo $this->Html->tag('a', $this->getTextEncode($albumSong['Song']['SongTitle']), array('style' => 'text-decoration:none;', 'title' => $this->getTextEncode($albumSong['Song']['SongTitle'])));
+					// 	else:
+					// 		echo $this->Html->tag('a', $albumSong['Song']['SongTitle'], array('style' => 'text-decoration:none;', 'title' => $albumSong['Song']['SongTitle']));
+					// 	endif;
 							
+					// endif;
+
+
+
+					
+					if($this->getTextEncode($albumSong['Song']['SongTitle'])):
+						echo $this->Html->tag('a', $this->getTextEncode($albumSong['Song']['SongTitle']), array('style' => 'text-decoration:none;', 'title' => $this->getTextEncode($albumSong['Song']['SongTitle'])));
+					else:
+						echo $this->Html->tag('a', $albumSong['Song']['SongTitle'], array('style' => 'text-decoration:none;', 'title' => $albumSong['Song']['SongTitle']));
 					endif;
+					
 
 					if ($albumSong['Song']['Advisory'] == 'T'):
 						echo '<span class="explicit"> (Explicit)</span>';
