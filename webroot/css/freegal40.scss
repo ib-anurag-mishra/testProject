@@ -13539,7 +13539,7 @@ sub { top: 0.4em; }
 
 
 		position: relative;
-		
+		margin-bottom: 40px;
 
 		
 		
@@ -13765,7 +13765,11 @@ sub { top: 0.4em; }
 							font-size: 12px;
 							line-height: 40px;
 							
-							width: 128px;
+							// width: 128px;
+							width: 267px;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
 							position: absolute;
 							left: 41px;
 							top: 0;
@@ -13925,7 +13929,11 @@ sub { top: 0.4em; }
 							font-size: 12px;
 							line-height: 40px;
 							
-							width: 147px;
+							// width: 147px;
+							width: 203px;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
 							position: absolute;
 							left: 369px;
 							top:0;
