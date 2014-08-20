@@ -14150,7 +14150,10 @@ sub { top: 0.4em; }
 			
 				
 				font-size: 12px;
-				margin-top: 10px;
+				// margin-top: 10px;
+				position: absolute;
+				top: 20px;
+				right: 0;
 				text-align: right;
 				
 				a {
@@ -14162,9 +14165,12 @@ sub { top: 0.4em; }
 			
 			.button-container {
 				
-				position: relative;
+				position: absolute;
 				width: 200px;
 				margin-top: 10px;
+				right: 0;
+				top: 42px;
+
 
 				
 				.gear-icon {
@@ -14192,7 +14198,7 @@ sub { top: 0.4em; }
 				display: none;
 				position: absolute;
 				right: 2px;
-				top:105px;
+				top:95px;
 				background: #fff;
 				width: 124px;
 	
