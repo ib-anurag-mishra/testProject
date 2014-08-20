@@ -939,6 +939,21 @@ $(document).ready(function() {
 
     // });
 
+    /*
+    $('.top-songs-filter-icon').on('mouseleave', function(e) {
+        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
+            $('.top-songs-filter-menu').removeClass('active');
+        }
+    });
+    */
+
+    $('.queue-detail-page .playlist-scrollable .add-to-wishlist-button').on('mouseleave',function(e){
+        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
+            $(this).next('.wishlist-popover').removeClass('active');
+        }
+
+    });
+
     $('.now-streaming-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
 
     $(document).on('scroll', '.now-streaming-page .playlist-scrollable', function() {
