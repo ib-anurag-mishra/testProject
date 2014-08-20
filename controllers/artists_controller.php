@@ -583,8 +583,7 @@ Class ArtistsController extends AppController {
                 foreach($songsList as $value) {
                     $data = explode('-',$value);
                     $detailArray[] = array('queue_id' => $queueId,'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
-                } print_r($detailArray);exit;
-                 
+                } 
                 $this->QueueDetail->setDataSource('master');
                 if($this->QueueDetail->saveAll($detailArray)) {
                     $this->QueueDetail->setDataSource('default');
