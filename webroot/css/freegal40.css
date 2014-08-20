@@ -10972,9 +10972,6 @@ sub {
 /* line 14328, freegal40.scss */
 .queue-detail-page .now-playing-container .playlist-shadow-container {
   position: relative;
-  height: 481px;
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
 /* line 14336, freegal40.scss */
 .queue-detail-page .now-playing-container .playlist-shadow-container:after {
@@ -10985,20 +10982,6 @@ sub {
   background: url(../img/now-streaming/tapered-shadow.png);
   width: 846px;
   height: 11px;
-}
-/* line 14347, freegal40.scss */
-.queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  height: 481px;
-}
-/* line 14354, freegal40.scss */
-.queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable:hover {
-  overflow-y: scroll;
-}
-/* line 14359, freegal40.scss */
-.queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container {
-  height: 2000px;
 }
 /* line 14363, freegal40.scss */
 .queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row {

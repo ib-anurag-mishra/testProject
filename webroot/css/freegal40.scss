@@ -14329,9 +14329,9 @@ sub { top: 0.4em; }
 			
 			position: relative;
 
-			height: 481px;
-			overflow-x: hidden;
-			overflow-y: hidden;
+			// height: 481px;
+			// overflow-x: hidden;
+			// overflow-y: hidden;
 			
 			&:after {
 				
@@ -14347,18 +14347,18 @@ sub { top: 0.4em; }
 			.playlist-scrollable {
 			
 			
-				overflow-x: hidden;
-				overflow-y: hidden;
-				height: 481px;
+				// overflow-x: hidden;
+				// overflow-y: hidden;
+				// height: 481px;
 				
-				&:hover {
-					overflow-y: scroll;
+				// &:hover {
+				// 	overflow-y: scroll;
 					
-				}
+				// }
 				
 				.row-container {
 					
-					height: 2000px;
+					// height: 2000px;
 				
 					.row {
 						padding-top: 10px;
