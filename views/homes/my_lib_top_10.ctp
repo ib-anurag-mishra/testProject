@@ -12,7 +12,7 @@
         <h2> <?php echo __('My Library Top 10', true); ?>  </h2>
 
     </header>
-    <h3>Albums</h3>
+    <h3><?php __('Albums') ?></h3>
     <div class="album-shadow-container">
         <div class="album-scrollable horiz-scroll carousel">
             <ul style="width:1650px;">
@@ -117,7 +117,7 @@
         <button class="left-scroll-button" type="button"></button>
         <button class="right-scroll-button" type="button"></button>
     </div>
-    <h3>Songs</h3>
+    <h3><?php __('Songs') ?></h3>
     <div class="songs-shadow-container">
         <div class="songs-scrollable carousel horiz-scroll">
             <ul style="width:1650px;">
@@ -391,7 +391,7 @@
         <button class="right-scroll-button" type="button"></button>
 
     </div>
-    <h3>Videos</h3>
+    <h3><?php __('Videos') ?></h3>
     <div class="videos-shadow-container">
         <div class="videos-scrollable horiz-scroll carousel">
             <ul>
