@@ -14333,16 +14333,16 @@ sub { top: 0.4em; }
 			// overflow-x: hidden;
 			// overflow-y: hidden;
 			
-			&:after {
+			// &:after {
 				
-				position: absolute;
-				content: "";
-				bottom: 0;
-				left: 0;
-				background: url(../img/now-streaming/tapered-shadow.png);
-				width: 846px;
-				height: 11px;
-			}
+			// 	position: absolute;
+			// 	content: "";
+			// 	bottom: 0;
+			// 	left: 0;
+			// 	background: url(../img/now-streaming/tapered-shadow.png);
+			// 	width: 846px;
+			// 	height: 11px;
+			// }
 			
 			.playlist-scrollable {
 			
