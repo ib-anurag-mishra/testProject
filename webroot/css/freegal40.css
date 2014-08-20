@@ -10570,7 +10570,7 @@ sub {
 .now-streaming-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row .wishlist-popover {
   position: absolute;
   left: 317px;
-  top: -127px;
+  top: -75px;
   background: #fff;
   display: none;
   -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
