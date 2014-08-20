@@ -104,10 +104,11 @@
                    $artistName= $this->getTextEncode($artistName);
                 endif;
                                 
-                                
+                /*                
 				if (strlen($artistName) >= 90):
 				    $artistName = substr($artistName, 0, 90) . ' ...';
 				endif;
+				*/
 
 				echo $this->Html->link($this->getTextEncode($artistName), array('controller' => 'artists', 'action' => 'album', base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist'])), array('title' => $this->getTextEncode($artistNames)));
 				?>
