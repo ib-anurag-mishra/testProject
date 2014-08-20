@@ -449,15 +449,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<?php if(!$this->Session->read("patron")){ 
                                                             if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
 					<div class="forgot-password">
-						<?php __('Forgot your password?') ?> <a href="/homes/forgot_password"><?php __('Click here
-							to reset it.') ?></a>
+						<?php __('Forgot your password?'); ?> <a href="/homes/forgot_password"><?php __('Click here
+							to reset it.'); ?></a>
 					</div>
 					<?php }  
 					}else if($this->Session->read("patron")){
                                                                 if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
 					<div class="forgot-password">
-						<?php __('Need to change your password?') ?> <a href="/users/my_account"><?php __('Click
-							here to reset it.') ?></a>
+						<?php __('Need to change your password?'); ?> <a href="/users/my_account"><?php __('Click
+							here to reset it.'); ?></a>
 					</div>
 					<?php    }
 					}
@@ -573,20 +573,20 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							<div class="select-arrow-fix">
 								<select name="type" id="master-filter"
 									class="master-search-select">
-									<option value="all"><?php __('Search All') ?></option>
-									<option value="album"><?php __('Albums') ?></option>
-									<option value="artist"><?php __('Artists') ?></option>
-									<option value="composer"><?php __('Composers') ?></option>
-									<option value="genre"><?php __('Genres') ?></option>
-									<option value="song"><?php __('Songs') ?></option>
-									<option value="video"><?php __('Videos') ?></option>
+									<option value="all"><?php __('Search All'); ?></option>
+									<option value="album"><?php __('Albums'); ?></option>
+									<option value="artist"><?php __('Artists'); ?></option>
+									<option value="composer"><?php __('Composers'); ?></option>
+									<option value="genre"><?php __('Genres'); ?></option>
+									<option value="song"><?php __('Songs'); ?></option>
+									<option value="video"><?php __('Videos'); ?></option>
 								</select>
 							</div>
 
 							<div class="master-search-field-container">
-								<input type="text" placeholder="<?php __('Press enter or go...') ?>"
+								<input type="text" placeholder="<?php __('Press enter or go...'); ?>"
 									class="search-text" id="search-text" name="q"> <a class="go"
-									href="javascript:void(0)" id="headerSearchSubmit"><?php __('Go') ?></a>
+									href="javascript:void(0)" id="headerSearchSubmit"><?php __('Go'); ?></a>
 							</div>
 						</form>
 					</div>
@@ -914,10 +914,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                         ?>
                             <div class="movie-announcements">
                                  <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px; font-weight:bold"> 
-                                    <?php __('Did you know?') ?>
+                                    <?php __('Did you know?'); ?>
                                   </p>
-                                  <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px;"><?php __('Freegal is also a movie service!') ?></p>
-                                  <p style="margin-bottom:14px;"><?php __('Stream top movies like') ?>:</p> 
+                                  <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px;"><?php __('Freegal is also a movie service!'); ?></p>
+                                  <p style="margin-bottom:14px;"><?php __('Stream top movies like'); ?>:</p> 
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
@@ -930,7 +930,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         }*/
                                   } ?>
                                  
-                                 <p style="margin-top:14px;"><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" onClick="ga('send', 'event', 'Announcements', 'Click', 'Click here to log in.');" target ="_blank"><?php __('Click here') ?></a> <?php __('to log in') ?>.</p>
+                                 <p style="margin-top:14px;"><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" onClick="ga('send', 'event', 'Announcements', 'Click', 'Click here to log in.');" target ="_blank"><?php __('Click here') ?></a> <?php __('to log in'); ?>.</p>
                             </div>
                         <?php } ?> 
 		</section>
