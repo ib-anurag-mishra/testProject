@@ -923,14 +923,30 @@ $(document).ready(function() {
     });
 
 
-    $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
+    // $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
 
-    $(document).on('scroll', '.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable', function() {
+    // $(document).on('scroll', '.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable', function() {
 
-        $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').removeClass('top');
+    //     $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').removeClass('top');
 
 
-        $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').each(function() {
+    //     $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').each(function() {
+    //         if ($(this).position().top >= -22 && $(this).position().top <= 130) {
+    //             $(this).find('.wishlist-popover').addClass('top');
+    //         }
+
+    //     });
+
+    // });
+
+    $('.now-streaming-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
+
+    $(document).on('scroll', '.now-streaming-page .playlist-scrollable', function() {
+
+        $('.now-streaming-page .playlist-scrollable .wishlist-popover').removeClass('top');
+
+
+        $('.now-streaming-page .playlist-scrollable .row').each(function() {
             if ($(this).position().top >= -22 && $(this).position().top <= 130) {
                 $(this).find('.wishlist-popover').addClass('top');
             }
