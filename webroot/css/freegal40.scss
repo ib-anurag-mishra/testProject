@@ -13967,7 +13967,11 @@ sub { top: 0.4em; }
 							
 							font-size: 12px;
 							line-height: 40px;
-							width: 158px;
+							// width: 158px;
+							width: 187px;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
 							position: absolute;
 							left: 585px;
 							top:0;
