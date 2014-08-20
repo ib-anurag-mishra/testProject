@@ -6362,6 +6362,7 @@ sub { top: 0.4em; }
 				font-size: 16px;
 				color: rgba(0,0,0,.5);
 				margin-bottom: 10px;
+
 				
 				
 			}
@@ -6514,6 +6515,10 @@ sub { top: 0.4em; }
 					&.artist {
 						
 						left: 345px;
+						width: 160px;
+						white-space: nowrap;
+						overflow:hidden;
+						text-overflow: ellipsis;
 						
 						a {
 							
