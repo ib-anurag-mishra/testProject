@@ -6,7 +6,7 @@ echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminInsert
 if(empty($queue_name)) {
     $queue_name = "";
 }
-$albubName = "";
+$albumName = "";
 $songName = "";
 
 if(empty($queueId)) {

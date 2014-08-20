@@ -526,17 +526,11 @@ Class ArtistsController extends AppController {
             if (trim($queueId) != '' && is_numeric($queueId)) {
                 $this->set('formAction', 'admin_insertplaylist/id:' . $queueId);
                 $this->set('formHeader', 'Edit Play list');
+                $queueName = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('id' => $queueId)));
                 $getData = $this->QueueDetail->find('all',
-                                        array('fields' => array('Songs.Title', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle','QueueList.queue_name'),
+                                        array('fields' => array('Songs.Title', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle'),
                                               'group' => array('Songs.ProdID', 'Songs.provider_type'),
                                               'joins' => array(
-                                                                array(
-                                                                                'type' => 'INNER',
-                                                                                'table' => 'queue_lists',
-                                                                                'alias' => 'QueueList',
-                                                                                'foreignKey' => false,
-                                                                                'conditions' => array('QueueList.queue_id = QueueDetail.queue_id'),
-                                                                ),                                                  
                                                               array(
                                                                               'type' => 'INNER',
                                                                               'table' => 'Songs',
@@ -555,6 +549,8 @@ Class ArtistsController extends AppController {
                                               'conditions' => array('QueueDetail.id' => $queueId)
                                             )
                                        );
+                print_r($getData);exit;
+                    
                 $queue_name = $getData[0]['QueueList']['queue_name'];
                 $this->set('queue_name' , $queue_name);
                 $this->set('getData', $getData);
