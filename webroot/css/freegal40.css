@@ -10599,7 +10599,7 @@ sub {
 }
 /* line 13847, freegal40.scss */
 .now-streaming-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row .wishlist-popover a:last-child {
-  padding: 5px 5px 10px 10px;
+  padding: 10px 10px 10px 10px;
 }
 /* line 13852, freegal40.scss */
 .now-streaming-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row .wishlist-popover a.add-to-playlist {
