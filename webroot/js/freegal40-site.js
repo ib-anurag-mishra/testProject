@@ -949,24 +949,33 @@ $(document).ready(function() {
 
     $('.queue-detail-page .playlist-scrollable .add-to-wishlist-button').on('mouseleave',function(e){
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY > $(this).height()) {
+            console.log(e.offsetY);
             $(this).next('.wishlist-popover').removeClass('active');
         }
 
     });
 
-    $('.now-streaming-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
+    // $('.now-streaming-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
 
-    $(document).on('scroll', '.now-streaming-page .playlist-scrollable', function() {
+    // $(document).on('scroll', '.now-streaming-page .playlist-scrollable', function() {
 
-        $('.now-streaming-page .playlist-scrollable .wishlist-popover').removeClass('top');
+    //     $('.now-streaming-page .playlist-scrollable .wishlist-popover').removeClass('top');
 
 
-        $('.now-streaming-page .playlist-scrollable .row').each(function() {
-            if ($(this).position().top >= -22 && $(this).position().top <= 130) {
-                $(this).find('.wishlist-popover').addClass('top');
-            }
+    //     $('.now-streaming-page .playlist-scrollable .row').each(function() {
+    //         if ($(this).position().top >= -22 && $(this).position().top <= 130) {
+    //             $(this).find('.wishlist-popover').addClass('top');
+    //         }
 
-        });
+    //     });
+
+    // });
+
+    $('.now-streaming-page .playlist-scrollable .add-to-wishlist-button').on('mouseleave',function(e){
+        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY > $(this).height()) {
+            console.log(e.offsetY);
+            $(this).next('.wishlist-popover').removeClass('active');
+        }
 
     });
 
