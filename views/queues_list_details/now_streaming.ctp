@@ -212,7 +212,8 @@
                                                         $artistText = $this->getTextEncode($value['Song']['ArtistText']);
                                                 }
                                                 ?>
-                        <?php/* 
+                        <?php
+                        /* 
 						<div class="album-title">
                                                     <a href="/artists/album/<?php echo base64_encode($value['Song']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
                                                 </div>
