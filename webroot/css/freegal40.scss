@@ -14468,7 +14468,9 @@ sub { top: 0.4em; }
 							left: 41px;
 							top: 0;
 							height: 40px;
+							white-space: nowrap;
 							overflow: hidden;
+							text-overflow: ellipsis;
 							
 							&.playing {
 								
@@ -14657,7 +14659,9 @@ sub { top: 0.4em; }
 							left: 369px;
 							top:0;
 							height: 40px;
+							white-space: nowrap;
 							overflow: hidden;
+							text-overflow: ellipsis;
 							
 							&.playing {
 								
@@ -14693,7 +14697,9 @@ sub { top: 0.4em; }
 							left: 585px;
 							top:0;
 							height: 40px;
+							white-space: nowrap;
 							overflow: hidden;
+							text-overflow: ellipsis;
 							
 							&.playing {
 								
