@@ -4,7 +4,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 ?>
 <section class="top-albums">
 	<header>
-		<h2>Top Albums</h2>
+		<h2><?php __('Top Albums') ?></h2>
 	</header>
 	<div class="top-albums-carousel-container">
 		<div class="top-albums-carousel carousel">
@@ -112,7 +112,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 <!-- Top Singles code start here -->
 <section class="top-songs">
 	<header>
-		<h2>Top Singles</h2>
+		<h2><?php __('Top Singles') ?></h2>
 	</header>
 	<div class="top-singles-carousel-container">
 		<div class="top-singles-carousel carousel">
@@ -310,7 +310,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
 
 <section class="featured-artists" id="featured-artists-section">
-	<h2>Featured Artists &amp; Composers</h2>
+	<h2><?php __('Featured Artists & Composers') ?></h2>
 	<div class="featured-artists-grid clearfix"
 		id="featured-artists-grid-div">
 		<?php
