@@ -123,7 +123,7 @@ class SolrComponent extends Object {
 		}
 	}
 	
-	public function solrSearchFileds( $type, $check = 0 ) {
+	public function solrSearchFileds( $type, $check = 0, $fieldFlag = false ) {
 	
 		$queryFields = array();
 	
@@ -145,8 +145,13 @@ class SolrComponent extends Object {
 				} else {
 					$queryFields['queryFields'] = 'catchAlbums^10';
 				}
-	
-				$queryFields['field'] = 'rpjoin';
+				
+				if ( $fieldFlag === true ) {
+					$queryFields['field'] = 'AlbumTitle';
+				} else {
+					$queryFields['field'] = 'rpjoin';					
+				}
+
 				break;
 	
 			case 'artist':
@@ -467,7 +472,7 @@ class SolrComponent extends Object {
 
 				if ( $type != 'all' ) {
 
-					$arrAuto 	 = $this->solrSearchFileds( $type );					
+					$arrAuto 	 = $this->solrSearchFileds( $type, 0, true );					
 					$queryFields = isset( $arrAuto['queryFields'] ) ? $arrAuto['queryFields'] : '';
 					$field 		 = isset( $arrAuto['field'] ) ? $arrAuto['field'] : '';
 					$query	 	 = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
@@ -475,25 +480,55 @@ class SolrComponent extends Object {
 					$additionalParams = array(
 											'defType' => 'edismax',
 											'qf' => $queryFields,
-											'facet' => 'true',
-											'facet.field' => array( $field ),
-											'facet.query' => $query,
-											'facet.mincount' => 1,
-											'facet.limit' => $limit
+											'group' => 'true',
+											'group.field' => array( $field ),
+											'group.query' => $query,
+											'group.mincount' => 1,
+											'group.limit' => $limit
 										);
 
-					$response 	= $this->getSearchResponse( $type, $query, 0, 0, $additionalParams );
+					$response 	= $this->getSearchResponse( $type, $query, 0, $limit, $additionalParams );
 					$arr_result = array();
 
+					switch ( $type ) {
+						case 'album':
+							$textField = 'AlbumTitle';
+							break;
+
+						case 'artist':
+							$textField = 'ArtistText';
+							break;
+
+						case 'song':
+							$textField = 'SongTitle';
+							break;
+
+						case 'composer':
+							$textField = 'Composer';
+							break;
+
+						case 'genre':
+							$textField = 'Genre';
+							break;
+
+						case 'video':
+							$textField = 'VideoTitle';
+							break;
+					}
+
 					if ( $response->getHttpStatus() == 200 ) {
-						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
-							if ( $allmusic == 1 ) {
-								$arr_result[$response->response->numFound][$type] = $response->facet_counts->facet_fields->$field;
-							} else {
-								return $response->facet_counts->facet_fields->$field;
+						
+						if ( !empty( $response->grouped->$field->groups ) ) {
+						
+							foreach ( $response->grouped->$field->groups as $group ) {
+
+								if ( isset( $group->doclist->docs[0]->$textField ) && !empty( $group->doclist->docs[0]->$textField )) {
+									$arr_result[] = $group->doclist->docs[0]->$textField;
+								}
 							}
 						}
 					}
+
 					return $arr_result;
 				}
 			} else {

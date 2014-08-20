@@ -384,33 +384,23 @@ class SearchController extends AppController {
                 		}
                 	}
                 }
+
                 break;
 
             case 'album':
-                foreach ( $data as $record => $count ) {
-                    if ( stripos( $record, $queryVar ) !== false ) {
+           	case 'artist':
+           	case 'composer':
+           	case 'song':
+           	case 'label':
+           	case 'video':
+           	case 'genre':
+                foreach ( $data as $record ) {
 
-                        $record    = trim( $record, '"' );
-                        $record    = preg_replace( "/\n/", '', $record );
-                        $keyword   = str_replace( array( ' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?' ), array( '\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?' ), $record );
-                        $records[] = "<div class='ac_first' style='font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . ucfirst( $name ) . "</div><div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|" . $rank;
-                    }
+                    $record    = trim( $record, '"' );
+                    $record    = preg_replace( "/\n/", '', $record );
+					$records[] = "<div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|";
                 }
-                break;
 
-                case 'artist':
-                case 'composer':
-                case 'song':
-              	case 'label':
-              	case 'video':
-              	case 'genre':
-                	foreach ( $data as $record => $count ) {
-                		if ( stripos( $record, $queryVar ) !== false ) {
-                			$record = trim( $record, '"' );
-                			$record = preg_replace( "/\n/", '', $record );
-                			$records[] = $record;
-                		}
-                	}
                 break;
         }
 
