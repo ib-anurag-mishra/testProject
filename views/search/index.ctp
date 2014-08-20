@@ -14,7 +14,7 @@
 	?>
 
 	<section class="<?= $search_category;?>">
-		<div class="faq-link">Need Help? Visit our <?=$this->Html->link( 'FAQ Section.','/questions') ?></div>
+		<div class="faq-link"><?php echo __('Need help? Visit our', true)." "; ?> <?= $this->Html->link( 'FAQ Section.','/questions') ?></div>
 		<div class="search-results-heading">Results for your search <?= $keyword; ?></div>
 		<div class="refine-text">Not what you're looking for? Refine your search below.</div>
 		<div class="filter-container clearfix">
@@ -356,7 +356,7 @@
 											<?php endif; ?>
 											</li>
 											<?php if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ): ?>
-													<li> <?=$this->Html->link( 'Add to Playlist', 'JavaScript:void(0)', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
+													<li> <?=$this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
 										</ul>
 													<ul class="playlist-menu"><li><?=$this->Html->link( 'Create New Playlist', '#' )?></li></ul>
 											<?php endif; ?>

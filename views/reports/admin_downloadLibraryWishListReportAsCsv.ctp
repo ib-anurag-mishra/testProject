@@ -10,7 +10,7 @@ if($this->data['Report']['library_id'] == "all") {
     $libraryName = "All_Libraries";
 }
 else {
-    $libraryName = "LibraryID_".$wishlists['Wishlist']['library_id'];
+    $libraryName = str_replace(" ", "_", $libraries[$this->data['Report']['library_id']])."_".$wishlists['Wishlist']['library_id'];
 }
 $date_arr = explode("/", $this->data['Report']['date']);
 $date_arr_from = explode("/", $this->data['Report']['date_from']);
@@ -20,13 +20,13 @@ if($this->data['Report']['reports_daterange'] == 'day') {
 }
 elseif($this->data['Report']['reports_daterange'] == 'week') {
 	if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
-		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
-		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+		$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
+		$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
 	}else{	  
-		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
-		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+		$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
+		$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 	}	  
-   $dateRange = "_for_week_of_".$startDate."_to_".$endDate;
+   $dateRange = "_for_week_of_".str_replace("-", "_", $startDate)."_to_".str_replace("-", "_", $endDate);
 }
 elseif($this->data['Report']['reports_daterange'] == 'month') {
     $dateRange = "_for_month_of_".date("F", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
@@ -62,10 +62,10 @@ if($this->data['Report']['library_id'] == "all") {
 }
 else {
     $libraryDetails = $library->getLibraryDetails($this->data['Report']['library_id']);
-    $line = array('Library Name', 'Patron ID', 'Artists Name', 'Track Title', 'WishListed On');
+    $line = array('Library Name', 'ID', 'Artists Name', 'Track Title', 'WishListed On');
     $csv->addRow($line);
     foreach($wishlists as $key => $wishlist) {
-        $line = array($libraryDetails['Library']['library_name'], $wishlist['Wishlist']['patron_id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
+        $line = array($libraryDetails['Library']['library_name'], $wishlist['Currentpatrons']['id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
         $csv->addRow($line);
     }
     $line = array('', '', '', '', '');

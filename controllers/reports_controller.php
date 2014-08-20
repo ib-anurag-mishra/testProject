@@ -11,12 +11,15 @@ Class ReportsController extends AppController {
     var $name = 'Reports';
     var $layout = 'admin';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Session', 'Library', 'Csv');
-    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler');
+    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'common');
     var $uses = array('Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron', 'Consortium', 'Territory', 'Downloadpatron', 'Downloadgenre', 'Videodownload', 'DownloadVideoPatron', 'DownloadVideoGenre','StreamingHistory');
 
     function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('admin_consortium','admin_streamingreport','admin_downloadStreamingReportAsCsv','admin_getLibraryIdsStream');
+	if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
+              $this->Auth->allow('admin_libraryrenewalreport','admin_index','admin_librarywishlistreport','admin_sonyreports','admin_unlimited','admin_consortium','admin_streamingreport');
+ } 
         
         //checking for Consortium as any library is there or not which is allowed for streaming
                 $is_having_streaming_libarry  = $this->admin_getLibraryIdsStream();
@@ -498,6 +501,13 @@ Class ReportsController extends AppController {
 			} else {
 				$territory = $this->data['Report']['Territory'];
 			}
+                        
+                        if(!empty($library_id))
+                        {
+                            $libraryInfo = $this->Library->find("first", array("conditions" => array('id' => $library_id), 'fields' => array('library_name'), 'recursive' => -1));
+                            $this->set('libraryInfo', $libraryInfo);
+                        }
+                        
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
@@ -930,6 +940,13 @@ Class ReportsController extends AppController {
 			} else {
 				$territory = $this->data['Report']['Territory'];
 			}
+                        
+                         if(!empty($library_id))
+                        {
+                            $libraryInfo = $this->Library->find("first", array("conditions" => array('id' => $library_id), 'fields' => array('library_name'), 'recursive' => -1));
+                            $this->set('libraryInfo', $libraryInfo);
+                        }
+                        
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
@@ -1657,10 +1674,10 @@ Class ReportsController extends AppController {
                 $this->Report->setValidation('reports_manual');
             }
 			$all_Ids = '';
-			$sql = "SELECT id from libraries where library_apikey = '".$consortium_id."'";
-			$result = mysql_query($sql);
-			while ($row = mysql_fetch_assoc($result)) {
-				$all_Ids = $all_Ids.$row["id"].",";
+			$result = $this->Library->find('all', array("conditions" => array('Library.library_apikey' => $consortium_id),'fields' => array('Library.id'), 'recursive' => -1));
+			
+			foreach($result as $k =>$v){
+				$all_Ids = $all_Ids.$v["Library"]["id"].",";
 			}
 			$libraryData = $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
 			$this->set('libraries_download', $libraryData);
@@ -1678,9 +1695,10 @@ Class ReportsController extends AppController {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumYearsDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date_from']."@".$this->data['Report']['date_to']);
                 }
                 $this->set('downloads', $downloads);
+                $this->set('consortium_name', $consortium_id);
                 $this->set('patronDownloads', $patronDownloads);
                 $this->set('genreDownloads', $genreDownloads);
                 if($this->data['Report']['downloadType'] == 'pdf') {
@@ -1948,6 +1966,15 @@ Class ReportsController extends AppController {
                     $currentPatronBothDownload = array();
                 }
 
+//                foreach($genreDayStremed as $key=>$value)
+//                {
+//                    $genreValue =  rtrim(ltrim($genreDayStremed['songs']['Genre'], "\""),"\"");
+//                    $genreValue =  $this->common->getGenreSynonyms($genreValue);
+//                    $genreDayStremed['songs']['Genre'] = $genreValue;
+//                }
+                
+                $combin_genre_arr   =   $this->common->getGenreSynonyms();
+                
                 $this->set('streamingHours', $streamingHours);
                 $this->set('patronStreamedInfo', $patronStreaminInfo);
                 $this->set('dayStreamingInfo', $arr_day_streaming_report);

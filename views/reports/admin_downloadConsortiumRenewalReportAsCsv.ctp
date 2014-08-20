@@ -28,16 +28,11 @@ $csv->addRow($line);
 $line = array('Library Downloads Report');
 $csv->addRow($line);
 
-$line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
+$line = array('', 'Library Name', 'ID', 'Artists Name', 'Track title', 'Download');
 $csv->addRow($line);
 
 foreach($downloads as $key => $download) {
-	if($download['Download']['email']!=''){
-		$patron = $download['Download']['email'];
-	}
-	else{
-		$patron = $download['Download']['patron_id'];
-	}
+    $patron = $download['Currentpatrons']['id'];
     $libraryName = $library->getLibraryName($download['Download']['library_id']);
     $line = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     $csv->addRow($line);
@@ -49,16 +44,11 @@ $csv->addRow($line);
 $line = array('Patron Downloads Report');
 $csv->addRow($line);
 
-$line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+$line = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
 $csv->addRow($line);
 
 foreach($patronDownloads as $key => $patronDownload) {
-	if($patronDownload['Download']['email']!=''){
-		$patron_id = $patronDownload['Download']['email'];
-	}
-	else{
-		$patron_id = $patronDownload['Download']['patron_id'];
-	}
+    $patron_id = $patronDownload['Currentpatrons']['id'];
     $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
     $csv->addRow($line);
 }
@@ -81,7 +71,7 @@ if($this->data['Report']['library_id'] == "all") {
     $libraryName = "All_Libraries";
 }
 else {
-    $libraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
+    $libraryName = str_replace(" ","_",$consortium_name)."_".$downloads[0]['Download']['library_id'];
 }
 $date_arr = explode("/", $this->data['Report']['date']);
 $date_arr_from = explode("/", $this->data['Report']['date_from']);
@@ -91,13 +81,13 @@ if($this->data['Report']['reports_daterange'] == 'day') {
 }
 elseif($this->data['Report']['reports_daterange'] == 'week') {
 	if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
-		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
-		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+		$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
+		$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
 	}else{	  
-		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
-		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+		$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
+		$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 	}	  
-    $dateRange = "_for_week_of_".$startDate."_to_".$endDate;
+    $dateRange = "_for_week_of_".str_replace("-", "_", $startDate)."_to_".str_replace("-", "_", $endDate);
 }
 elseif($this->data['Report']['reports_daterange'] == 'month') {
     $dateRange = "_for_month_of_".date("F", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));

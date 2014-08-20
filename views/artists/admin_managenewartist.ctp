@@ -14,8 +14,10 @@ Author : m68interactive
 				<th class="left">Artist Name</th>
 				<th class="left">Territory</th>
 				<th>Artist image</th>
+				<?php if($userTypeId !=7) { ?>
 				<th>Edit</th>
 				<th>Delete</th>
+				<?php } ?>
 			</tr>
 			<?php
 			foreach($artists as $artist)
@@ -30,10 +32,12 @@ Author : m68interactive
 					rel="image"
 					onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'newartistimg/'.$artist['Newartist']['artist_image'];?>')"><?php echo $artistImage;?>
 				</a></td>
+				<?php if($userTypeId !=7) { ?>
 				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'addnewartist','id'=>$artist['Newartist']['id']));?>
 				</td>
 				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'deletenewartists','id'=>$artist['Newartist']['id']));?>
 				</td>
+				<?php } ?>
 			</tr>
 			<?php
 			}

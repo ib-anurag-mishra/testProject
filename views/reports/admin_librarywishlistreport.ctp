@@ -180,7 +180,7 @@
                                         <tr>
                                             <th>&nbsp;</th>
                                             <th>Library Name</th>
-                                            <th>Patron ID</th>
+                                            <th>ID</th>
                                             <th>Artists Name</th>
                                             <th>Track Title</th>
                                             <th>WishListed On</th>
@@ -193,7 +193,7 @@
                                             <tr>
                                                 <td><?php echo $i; ?></td>
                                                 <td><?php echo $libraryDetails['Library']['library_name']; ?></td>
-                                                <td><?php echo $wishlist['Wishlist']['patron_id']; ?></td>
+                                                <td><?php echo $wishlist['Currentpatrons']['id']; ?></td>
                                                 <td><?php echo $wishlist['Wishlist']['artist']; ?></td>
                                                 <td><?php echo $wishlist['Wishlist']['track_title']; ?></td>
                                                 <td><?php echo date("Y-m-d", strtotime($wishlist['Wishlist']['created'])); ?></td>
@@ -246,7 +246,8 @@
 <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript">
     $(function() {
-        $("#ReportDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3});
+        //$("#ReportDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3});
+        $("#ReportDate").datepicker({showWeek: true, firstDay: 1, maxDate: '+0D', numberOfMonths: 3});
         var dates = $('#ReportDateFrom, #ReportDateTo').datepicker({
                 defaultDate: "-1w",
                 changeMonth: true,

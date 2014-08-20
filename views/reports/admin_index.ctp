@@ -250,7 +250,7 @@
                                 <tr>
 				    <th>&nbsp;</th>
                                     <th>Library Name</th>
-                                    <th>Patron ID</th>
+                                    <th>ID</th>
                                     <th>Artists Name</th>
                                     <th>Track Title</th>
                                     <th>Download</th>
@@ -262,13 +262,7 @@
                                     <tr>
 										<td><?php echo $i; ?></td>
                                         <td><?php echo $this->getTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
-                                        <td><?php
-											if($download['Download']['email']!=''){
-												echo $download['Download']['email'];
-											}else{
-												echo $download['Download']['patron_id'];
-											}?>
-										</td>
+                                        <td><?php echo $download['Currentpatrons']['id'];?></td>
                                         <td><?php echo $this->getTextEncode($download['Download']['artist']); ?></td>
                                         <td><?php echo $this->getTextEncode($download['Download']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
@@ -289,7 +283,7 @@
                                 <tr>
 				    <th>&nbsp;</th>
                                     <th>Library Name</th>
-                                    <th>Patron ID</th>
+                                    <th>ID</th>
                                     <th>Artists Name</th>
                                     <th>Video Title</th>
                                     <th>Download</th>
@@ -301,13 +295,7 @@
                                     <tr>
 										<td><?php echo $i; ?></td>
                                         <td><?php echo $this->getTextEncode($library->getLibraryName($download['Videodownload']['library_id'])); ?></td>
-                                        <td><?php
-											if($download['Videodownload']['email']!=''){
-												echo $download['Videodownload']['email'];
-											}else{
-												echo $download['Videodownload']['patron_id'];
-											}?>
-										</td>
+                                         <td><?php echo $download['Currentpatrons']['id'];?></td>
                                         <td><?php echo $this->getTextEncode($download['Videodownload']['artist']); ?></td>
                                         <td><?php echo $this->getTextEncode($download['Videodownload']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Videodownload']['created'])); ?></td>
@@ -326,7 +314,7 @@
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
 				    <th>&nbsp;</th>
-                                    <th>Patron ID</th>
+                                    <th>ID</th>
                                     <th>Library Name</th>
                                     <th>Total Number of Tracks Downloaded</th>
                                 </tr>
@@ -336,13 +324,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-										<td><?php
-										if(isset($patronDownload['Downloadpatron']['email']) && $patronDownload['Downloadpatron']['email']!=''){
-											echo $patronDownload['Downloadpatron']['email'];
-										}else{
-											echo $patronDownload['Downloadpatron']['patron_id'];
-										}?>
-										</td>
+                                        <td><?php echo $patronDownload['Currentpatrons']['id'];?></td>
                                         <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
@@ -360,7 +342,7 @@
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
 				    <th>&nbsp;</th>
-                                    <th>Patron ID</th>
+                                    <th>ID</th>
                                     <th>Library Name</th>
                                     <th>Total Number of Videos Downloaded</th>
                                 </tr>
@@ -370,13 +352,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-										<td><?php
-										if(isset($patronDownload['DownloadVideoPatron']['email']) && $patronDownload['DownloadVideoPatron']['email']!=''){
-											echo $patronDownload['DownloadVideoPatron']['email'];
-										}else{
-											echo $patronDownload['DownloadVideoPatron']['patron_id'];
-										}?>
-										</td>
+                                         <td><?php echo $patronDownload['Currentpatrons']['id'];?></td>
                                         <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
