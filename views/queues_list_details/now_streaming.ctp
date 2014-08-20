@@ -107,7 +107,9 @@
                                                 } else {
                                                         $artistText = $this->getTextEncode($value['Songs']['ArtistText']);
                                                 }
-                                                ?> 
+                                                ?>
+                        <?php
+                        /*
 						<div class="album-title">
                                                     <a href="/artists/album/<?php echo base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
                                                 </div>
@@ -116,6 +118,8 @@
                                                 </div>                                                
                                                 
 						<div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>
+                        */
+                        ?>
 						<div class="wishlist-popover">
                                                         <?php
                                                                 if($libraryDownload == '1' && $patronDownload == '1') {
@@ -147,6 +151,14 @@
                                                         <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"];?>)"><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
 						</div>
+                        <div class="album-title">
+                                                    <a href="/artists/album/<?php echo base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
+                                                </div>
+                        <div class="artist-name">
+                                                    <a href="/artists/view/<?=base64_encode($value['Songs']['ArtistText']);?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
+                                                </div>                                                
+                                                
+                        <div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>                        
 					</div>
 					<?php 
 					}
