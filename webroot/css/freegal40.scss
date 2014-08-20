@@ -14095,8 +14095,9 @@ sub { top: 0.4em; }
 		
 		.col-2 {
 			
-			float: left;
+			// float: left;
 			margin-left: 10px;
+			width: 695px;
 			
 			.queue-name {
 				
@@ -14143,6 +14144,7 @@ sub { top: 0.4em; }
 		.col-3 {
 			
 			float: right;
+
 			
 			.faq-link {
 			
