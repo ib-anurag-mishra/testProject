@@ -10897,6 +10897,7 @@ sub {
 /* line 14221, freegal40.scss */
 .queue-detail-page .now-playing-container {
   position: relative;
+  margin-bottom: 40px;
 }
 /* line 14231, freegal40.scss */
 .queue-detail-page .now-playing-container .playlist-filter-container {
