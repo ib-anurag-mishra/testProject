@@ -555,6 +555,8 @@ Class ArtistsController extends AppController {
                                               'conditions' => array('QueueDetail.id' => $queueId)
                                             )
                                        );
+                $queue_name = $getData[0]['QueueList']['queue_name'];
+                $this->set('queue_name' , $queue_name);
                 $this->set('getData', $getData);
                 $this->set('queueId',$queueId);
                 $condition = 'edit';

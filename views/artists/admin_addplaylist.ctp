@@ -2,22 +2,17 @@
 $this->pageTitle = 'Content';
 //echo $this->Form->create('queue', array('type' => 'post','name' => 'artistAdminaddplaylistForm','url' => array('controller' => 'queues', 'action' => 'admin_deleteartists')));
 echo $form->create('Artist', array('type' => 'post','name' => 'artistAdminInsertplaylistForm','controller' => 'Queues','action' => $formAction,  'enctype' => 'multipart/form-data'));
-if(empty($getData))
-{
-    $getData[0]['QueueList']['queue_name'] = "";
+
+if(empty($queue_name)) {
+    $queue_name = "";
 }
+$albubName = "";
+$songName = "";
 
 if(empty($queueId)) {
     $queueId = '';
 }
 
-if(empty($getData['Albums']['AlbumTitle'])) {
-    $getData['Albums']['AlbumTitle'] = '';
-}
-
-if(empty($getData['Songs']['Title'])) {
-    $getData['Songs']['Title'] = '';
-}
 
 if(empty($getArtistData)){
 	$getArtistData = array();
@@ -42,7 +37,7 @@ if(empty($songs)){
 					<td align="right" width="390"><?php echo $form->label('Playlist Name');?>
 					</td>
 					<td align="left">
-                                            <?php echo $this->Form->input('queue_name', array('label' => false, 'div' => false, 'class' => 'select_fields','value' => $getData[0]['QueueList']['queue_name']));?>
+                                            <?php echo $this->Form->input('queue_name', array('label' => false, 'div' => false, 'class' => 'select_fields','value' => $queue_name));?>
 					</td>
 				</tr>
                                 <tr>
@@ -73,7 +68,7 @@ if(empty($songs)){
 					<td align="left">
 						<div id="getAlbum">
 							<?php
-							echo $form->select('album', $album, array('label' => false,'value' => $getData['Albums']['AlbumTitle'],  'div' => false, 'class' => 'select_fields'));
+							echo $form->select('album', $album, $albumName, array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
@@ -84,7 +79,7 @@ if(empty($songs)){
 					<td align="left">
 						<div id="getSongs">
 							<?php
-							echo $form->select('song', $songs,$getData['Songs']['Title'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+							echo $form->select('song', $songs,$songName, array('label' => false, 'div' => false, 'class' => 'select_fields'));
 							?>
 						</div>
 					</td>
