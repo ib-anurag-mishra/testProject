@@ -923,29 +923,7 @@ $(document).ready(function() {
     });
 
 
-    // $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
 
-    // $(document).on('scroll', '.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable', function() {
-
-    //     $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').removeClass('top');
-
-
-    //     $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').each(function() {
-    //         if ($(this).position().top >= -22 && $(this).position().top <= 130) {
-    //             $(this).find('.wishlist-popover').addClass('top');
-    //         }
-
-    //     });
-
-    // });
-
-    /*
-    $('.top-songs-filter-icon').on('mouseleave', function(e) {
-        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
-            $('.top-songs-filter-menu').removeClass('active');
-        }
-    });
-    */
 
     $('.queue-detail-page .playlist-scrollable .add-to-wishlist-button,.now-streaming-page .playlist-scrollable .add-to-wishlist-button').on('mouseleave',function(e){
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY > $(this).height()) {
@@ -955,21 +933,7 @@ $(document).ready(function() {
 
     });
 
-    // $('.now-streaming-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
 
-    // $(document).on('scroll', '.now-streaming-page .playlist-scrollable', function() {
-
-    //     $('.now-streaming-page .playlist-scrollable .wishlist-popover').removeClass('top');
-
-
-    //     $('.now-streaming-page .playlist-scrollable .row').each(function() {
-    //         if ($(this).position().top >= -22 && $(this).position().top <= 130) {
-    //             $(this).find('.wishlist-popover').addClass('top');
-    //         }
-
-    //     });
-
-    // });
 
     $('.now-streaming-page .playlist-scrollable .add-to-wishlist-button').on('mouseleave',function(e){
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY > $(this).height()) {
