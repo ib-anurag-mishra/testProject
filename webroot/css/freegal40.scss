@@ -6491,6 +6491,10 @@ sub { top: 0.4em; }
 					&.song {
 						
 						left: 15px;
+						width: 245px;
+						white-space: nowrap;
+						overflow:hidden;
+						text-overflow: ellipsis;						
 						
 						&.logged_in {
 							
