@@ -7,7 +7,7 @@
 
 			if ($genre_crumb_name != "")
 			{
-				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/' .base64_encode($genre_crumb_name));
+				$html->addCrumb(__($this->getTextEncode($genre_crumb_name), true), '/genres/view/' .base64_encode($genre_crumb_name));
 			}
 
 			$html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
@@ -50,7 +50,7 @@
 
 			</div>
 			
-			<div class="release-info">Release Information</div>
+			<div class="release-info"><?php __('Release Information'); ?></div>
 
 			<div class="album-genre">
 				<?php echo __('Genre') . ": "; ?>
@@ -114,9 +114,9 @@
 
 			</div>
 			<div class="tracklist-header">
-				<span class="song">Song</span>
-				<span class="artist">Artist</span>
-				<span class="time">Time</span>
+				<span class="song"><?php __('Songs'); ?></span>
+				<span class="artist"><?php __('Artist'); ?></span>
+				<span class="time"><?php __('Time'); ?></span>
 			</div>
 
 			<?php
