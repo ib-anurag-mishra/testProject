@@ -949,6 +949,7 @@ $(document).ready(function() {
 
     $('.queue-detail-page .playlist-scrollable .add-to-wishlist-button').on('mouseleave',function(e){
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
+            console.log(e.offsetY);
             $(this).next('.wishlist-popover').removeClass('active');
         }
 
