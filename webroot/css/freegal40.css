@@ -10464,33 +10464,6 @@ sub {
 /* line 13642, freegal40.scss */
 .now-streaming-page .now-playing-container .playlist-shadow-container {
   position: relative;
-  height: 481px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-/* line 13650, freegal40.scss */
-.now-streaming-page .now-playing-container .playlist-shadow-container:after {
-  position: absolute;
-  content: "";
-  bottom: 0;
-  left: 0;
-  background: url(../img/now-streaming/tapered-shadow.png);
-  width: 846px;
-  height: 11px;
-}
-/* line 13661, freegal40.scss */
-.now-streaming-page .now-playing-container .playlist-shadow-container .playlist-scrollable {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  height: 481px;
-}
-/* line 13668, freegal40.scss */
-.now-streaming-page .now-playing-container .playlist-shadow-container .playlist-scrollable:hover {
-  overflow-y: scroll;
-}
-/* line 13673, freegal40.scss */
-.now-streaming-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container {
-  height: 2000px;
 }
 /* line 13677, freegal40.scss */
 .now-streaming-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row {
