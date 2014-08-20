@@ -14176,19 +14176,22 @@ sub { top: 0.4em; }
 				.gear-icon {
 					float: right;
 
-					background: url(../img/queue-details/gear-off.png);
+					// background: url(../img/queue-details/gear-off.png);
+					background: url(../img/freegal_sprite.png) -510px 0;
 					width: 55px;
 					height: 42px;
 					cursor: pointer;
 					margin-left: 2px;
 					&:hover {
 						
-						background: url(../img/queue-details/gear-hover.png);
+						// background: url(../img/queue-details/gear-hover.png);
+						background: url(../img/freegal_sprite.png) -510px -41px;
 					}
 					
 					&:active {
 						
-						background: url(../img/queue-details/gear-clicked.png);
+						// background: url(../img/queue-details/gear-clicked.png);
+						background: url(../img/freegal_sprite.png) -510px -82px;
 					}					
 				}
 			}
