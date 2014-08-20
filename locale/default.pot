@@ -116,6 +116,9 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
+msgid "Need help? Visit our"
+msgstr ""
+
 #: \elements\footer.ctp:27
 msgid "Also available in"
 msgstr ""
@@ -154,6 +157,21 @@ msgstr ""
 
 #: \elements\navigation.ctp:56
 msgid "Newly Added"
+msgstr ""
+
+msgid "Now Streaming"
+msgstr ""
+
+msgid "Create and Store Playlists"
+msgstr ""
+
+msgid "Playlist"
+msgstr ""
+
+msgid "Streaming Time"
+msgstr ""
+
+msgid "Streaming History"
 msgstr ""
 
 #: \elements\navigation.ctp:100 \genres\view.ctp:79

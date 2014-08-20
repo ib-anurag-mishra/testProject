@@ -265,7 +265,7 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                        <th>Patron ID</th>
+                                        <th>ID</th>
                                         <?php if(!is_numeric($library_id)):?>
                                         <th>Library Name</th>
                                         <?php endif; ?>
@@ -281,15 +281,8 @@ if (empty($getData)) {
                                                 <td><?php echo $i; ?></td>
                                                 <td>
                                                     <?php
-                                                            if (isset($patronStramed['user']['email']) && $patronStramed['user']['email'] != '')
-                                                            {
-                                                                echo $patronStramed['user']['email'];
-                                                            }
-                                                            else
-                                                            {
-                                                                echo $patronStramed['StreamingHistory']['patron_id'];
-                                                            }
-                                                            ?>
+                                                           echo $patronStramed['Currentpatrons']['id'];
+                                                    ?>
                                                 </td>
                                                 <?php if (!is_numeric($library_id)): ?>
                                                     <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
@@ -320,7 +313,7 @@ if (empty($getData)) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $this->getTextEncode($genreStreamed['songs']['Genre']); ?></td>
+                                            <td><?php echo $this->getTextEncode($genreStreamed['Genres']['expected_genre']); ?></td>
                                             <td align="center"><?php echo $genreStreamed[0]['total_streamed_songs']; ?></td>
                                         </tr>
         <?php

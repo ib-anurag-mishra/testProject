@@ -4,6 +4,9 @@
 File Description : View page for adfmin navigation
 Author : m68interactive
 */
+
+$userTypeId = $this->Session->read('Auth.User.type_id');
+
 if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') == '') {
 	?>
 <ul id="menu" class="sf-menu">
@@ -63,9 +66,10 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 	</li>
 </ul>
 <?php
-} elseif ($this->Session->read('Auth.User.type_id') == 1) {
+} elseif ($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7) {
 	?>
 <ul id="menu" class="sf-menu">
+	<?php if($userTypeId != 7) { ?>
 	<li><a href="#"
 	<?php if ($this->pageTitle == "Admin") echo "class=\"current\""; ?>>Users</a>
 		<ul>
@@ -79,21 +83,28 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 			</li>
 		</ul>
 	</li>
+	<?php } ?>
 	<li><a href="#"
 	<?php if ($this->pageTitle == "Libraries") echo "class=\"current\""; ?>>Libraries</a>
 		<ul>
+			<?php if($userTypeId != 7) { ?>
 			<li><?php echo $html->link('Add Library', array('controller' => 'libraries', 'action' => 'libraryform'));?>
 			</li>
+			<?php } ?>
 			<li><?php echo $html->link('Manage Library', array('controller' => 'libraries', 'action' => 'managelibrary'));?>
 			</li>
 			<li><?php echo $html->link('Manage Library Timezone', array('controller' => 'libraries', 'action' => 'librarytimezone'));?>
 			</li>
+			<?php if($userTypeId != 7) { ?>
 			<li><?php echo $html->link('Add Consortium', array('controller' => 'libraries', 'action' => 'addconsortium'));?>
 			</li>
+			<?php } ?>
 			<li><?php echo $html->link('Manage Consortium', array('controller' => 'libraries', 'action' => 'consortium'));?>
 			</li>
+			<?php if($userTypeId != 7) { ?>
 			<li><?php echo $html->link('mdlogin/mndlogin Cards', array('controller' => 'libraries', 'action' => 'card'));?>
 			</li>
+			<?php } ?>
 		</ul>
 	</li>
 	<li><a href="#"
@@ -101,32 +112,40 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 		<ul>
 			<li><a href="#">Artist Slideshow</a>
 				<ul>
+					<?php if($userTypeId != 7) { ?>
 					<li><?php echo $html->link('Add Artist', array('controller' => 'artists', 'action' => 'createartist'));?>
 					</li>
+					<?php } ?>
 					<li><?php echo $html->link('Manage Slideshows', array('controller' => 'artists', 'action' => 'manageartist'));?>
 					</li>
 				</ul>
 			</li>
 			<li><a href="#">Top Albums</a>
 				<ul>
+					<?php if($userTypeId != 7) { ?>
 					<li><?php echo $html->link('Add Top Album', array('controller' => 'artists', 'action' => 'topalbumform'));?>
 					</li>
+					<?php } ?>
 					<li><?php echo $html->link('Manage Top Albums', array('controller' => 'artists', 'action' => 'managetopalbums'));?>
 					</li>
 				</ul>
 			</li>
 			<li><a href="#">Top Singles</a>
 				<ul>
+					<?php if($userTypeId != 7) { ?>
 					<li><?php echo $html->link('Add Top Single', array('controller' => 'artists', 'action' => 'topsingleform'));?>
 					</li>
+					<?php } ?>
 					<li><?php echo $html->link('Manage Top Singles', array('controller' => 'artists', 'action' => 'managetopsingles'));?>
 					</li>
 				</ul>
 			</li>
 			<li><a href="#">Newly Added Artist</a>
 				<ul>
+					<?php if($userTypeId != 7) { ?>
 					<li><?php echo $html->link('Add Artist', array('controller' => 'artists', 'action' => 'addnewartist'));?>
 					</li>
+					<?php } ?>
 					<li><?php echo $html->link('Manage Newly Added Artist', array('controller' => 'artists', 'action' => 'managenewartist'));?>
 					</li>
 				</ul>
@@ -137,6 +156,7 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 					</li>
 				</ul>
 			</li>
+			<?php if($userTypeId != 7) { ?>
 			<li><a href="#">Manage Pages</a>
 				<ul>
 					<li><?php echo $html->link('Manage FAQs', array('controller' => 'questions', 'action' => 'index'));?>
@@ -161,6 +181,7 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 			</li>
 			<li><?php echo $html->link('Add Language', array('controller' => 'homes', 'action' => 'language'));?>
 			</li>
+			<?php } ?>
 		</ul>
 	</li>
 	<li><a href="#"

@@ -20,6 +20,9 @@ Class UsersController extends AppController
 	function beforeFilter(){
 		parent::beforeFilter();
 		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','redirection','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','manage_notification','saveNotification','unsubscribe', 'isPatronLogin','savestreampopup', 'capita', 'symws', 'savenotifypopup');
+		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
+              	$this->Auth->allow('admin_index','admin_logout');
+ 		} 
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';

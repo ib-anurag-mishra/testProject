@@ -15,8 +15,8 @@
         $displaylibraryName = "All Libraries";
     }
     else {
-        $savelibraryName = "LibraryID_".$wishlist['Download']['library_id'];
-        $displaylibraryName = "LibraryID ".$wishlist['Download']['library_id'];
+        $savelibraryName = str_replace(" ", "_", $libraries[$this->data['Report']['library_id']])."_".$wishlist['Download']['library_id'];
+        $displaylibraryName = $libraries[$this->data['Report']['library_id']]." ".$wishlist['Download']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
     $date_arr_from = explode("/", $this->data['Report']['date_from']);
@@ -27,11 +27,11 @@
     }
     elseif($this->data['Report']['reports_daterange'] == 'week') {
 		if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
-			$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
-			$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+			$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
+			$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
 		}else{	  
-			$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
-			$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+			$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
+			$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 		}	  
         $savedateRange = "_for_week_of_".$startDate."_to_".$endDate;
         $displaydateRange = " for week of ".$startDate." to ".$endDate;
@@ -62,7 +62,7 @@
     // set default header data
     // set header and footer fonts
     $tcpdf->setHeaderFont(array($textfont,'',12));
-    $tcpdf->xheadertext = $displaylibraryName.' WishList Report generated on '.$displaydateRange;
+    $tcpdf->xheadertext = $displaylibraryName.' WishList Report generated '.$displaydateRange;
     $tcpdf->xfootertext = 'Copyright © %d FreegalMusic.com. All rights reserved.';
     
     //set margins
@@ -126,6 +126,10 @@
                     $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
                     $tcpdf->Ln();
             }
+            $tcpdf->SetFillColor(224, 235, 255);
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetFont('');
+            
             $tcpdf->Cell($w[0], 6, $row[0], 'LR', 0, 'L', $fill, '', 3);
             $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
             $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
@@ -149,11 +153,11 @@
     else {
         $libraryDetails = $library->getLibraryDetails($this->data['Report']['library_id']);
         //Column titles
-        $header = array('Library Name', 'Patron ID', 'Artists Name', 'Track Title', 'WishListed On');
+        $header = array('Library Name', 'ID', 'Artists Name', 'Track Title', 'WishListed On');
         
         //Data loading
         foreach($wishlists as $key => $wishlist) {
-            $data[] = array($libraryDetails['Library']['library_name'], $wishlist['Wishlist']['patron_id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
+            $data[] = array($libraryDetails['Library']['library_name'], $wishlist['Currentpatrons']['id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
         }
         
         // print colored table
@@ -187,6 +191,11 @@
                     $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
                     $tcpdf->Ln();
             }
+            
+            $tcpdf->SetFillColor(224, 235, 255);
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetFont('');
+            
             $tcpdf->Cell($w[0], 6, $row[0], 'LR', 0, 'L', $fill, '', 3);
             $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
             $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);

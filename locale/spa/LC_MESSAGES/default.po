@@ -170,6 +170,21 @@ msgstr "Artistas Presentados"
 msgid "Newly Added"
 msgstr "Nuevas Adiciones"
 
+msgid "Now Streaming"
+msgstr "Ahora Streaming"
+
+msgid "Create and Store Playlists"
+msgstr "Crear y almacenar listas de reproducción"
+
+msgid "Playlist"
+msgstr "Playlist"
+
+msgid "Streaming Time"
+msgstr "Streaming Tiempo"
+
+msgid "Streaming History"
+msgstr "Historia Streaming"
+
 #: \elements\navigation.ctp:100 \genres\view.ctp:79
 #: \homes\advance_search.ctp:2
 msgid "Advanced Search"
@@ -515,7 +530,7 @@ msgid "Search for your favorite music."
 msgstr "Busca tu música favorita."
 
 msgid "Need help? Visit our"
-msgstr "¿Necesitas ayuda? Visita nuestra"
+msgstr "¿Necesita ayuda? Visite nuestra"
 
 msgid "Downloads"
 msgstr "Descargas"

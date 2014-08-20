@@ -563,6 +563,8 @@ class AppController extends Controller
         //Allow superadmins to everything
         $adminType->id = 1;
         $this->Acl->allow($adminType, 'controllers');
+	$adminType->id = 7;
+	$this->Acl->allow($adminType, 'controllers');
         //allow finance admin nothing for now
         $adminType->id = 2;
         $this->Acl->deny($adminType, 'controllers');

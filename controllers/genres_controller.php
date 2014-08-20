@@ -24,6 +24,10 @@ Class GenresController extends AppController
         parent::beforeFilter();
 
         $this->Auth->allowedActions = array('view', 'ajax_view', 'ajax_view_pagination', 'callToAllFunctions', 'setGenres','album');
+	if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
+              $this->Auth->allow('admin_managegenre');
+ } 
+	
         $libraryCheckArr = array("view", "index");
     }
 
@@ -345,6 +349,7 @@ Class GenresController extends AppController
 
     function admin_managegenre()
     {
+	$userTypeId = $this->Session->read('Auth.User.type_id');
         if ($this->data)
         {
             $this->Category->deleteAll(array('Language' => Configure::read('App.LANGUAGE')), false);
@@ -380,6 +385,7 @@ Class GenresController extends AppController
             $selArray[] = $selectedGenre['Category']['Genre'];
         }
         $this->set('selectedGenres', $selArray);
+	$this->set('userTypeId',$userTypeId);
         $this->layout = 'admin';
     }
     

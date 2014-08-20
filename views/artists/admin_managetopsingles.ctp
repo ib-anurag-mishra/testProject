@@ -9,8 +9,10 @@
 				<th class="left">Territory</th>
 				<th class="left">Album</th>
 				<th class="left">Song</th>
+				<?php if($userTypeId != 7) { ?>
 				<th>Edit</th>
 				<th>Delete</th>
+				<?php } ?>
 			</tr>
 			<?php
 			foreach($topSingles as $topSingle)
@@ -25,10 +27,12 @@
 				</td>
 				<td class="left"><?php echo $topSingle['TopSingles']['prod_id'];?>
 				</td>
+				<?php if($userTypeId != 7) { ?>
 				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'topsingleform','id'=>$topSingle['TopSingles']['id']));?>
 				</td>
 				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'topsingledelete','id'=>$topSingle['TopSingles']['id']));?>
 				</td>
+				<?php } ?>
 			</tr>
 
 			<?php

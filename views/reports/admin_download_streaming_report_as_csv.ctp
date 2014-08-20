@@ -95,9 +95,9 @@ $line = array('Library Streaming Report');
 $csv->addRow($line);
 
 if($this->data['Report']['library_id'] == "all") {
-    $line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+    $line = array('', 'Library Name', 'ID', 'Artists Name', 'Track title', 'Streamed date');
 }else{
-    $line = array('', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+    $line = array('', 'ID', 'Artists Name', 'Track title', 'Streamed date');
 }
 $csv->addRow($line);
 if($this->data['Report']['library_id'] == "all") {
@@ -126,26 +126,22 @@ $line = array('Patron Streaming Report');
 $csv->addRow($line);
 
 if($this->data['Report']['library_id'] == "all") {
-    $line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+    $line = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
 }else{
-    $line = array('', 'Patron ID', 'Total Number of Tracks Downloaded');
+    $line = array('', 'ID', 'Total Number of Tracks Downloaded');
 }
 $csv->addRow($line);
 
 if($this->data['Report']['library_id'] == "all") {
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-            if($patronStreamed['StreamingHistory']['patron_id']!=''){
-                    $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
-            }
+            $patron_id = $patronStreamed['Currentpatrons']['id'];
 
         $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])),($patronStreamed[0]['total_streamed_songs']));
         $csv->addRow($line);
     }
 }else{
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-            if($patronStreamed['StreamingHistory']['patron_id']!=''){
-                    $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
-            }
+            $patron_id = $patronStreamed['Currentpatrons']['id'];
 
         $line = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
         $csv->addRow($line);
@@ -161,7 +157,7 @@ $line = array('', 'Genre Name', 'Total Number of Tracks Streamed');
 $csv->addRow($line);
 
 foreach($genreDayStremedInfo as $key => $genreStreamed) {
-    $line = array($key+1, $this->getAdminTextEncode($genreStreamed['songs']['Genre']), ($genreStreamed[0]['total_streamed_songs']));
+    $line = array($key+1, $this->getAdminTextEncode($genreStreamed['Genres']['expected_genre']), ($genreStreamed[0]['total_streamed_songs']));
     $csv->addRow($line);
 }
 
@@ -181,13 +177,13 @@ if($this->data['Report']['reports_daterange'] == 'day') {
 }
 elseif($this->data['Report']['reports_daterange'] == 'week') {
 	if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
-		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));
-		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+		$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));
+		$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
 	}else{
-		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));
-		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+		$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));
+		$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 	}
-    $dateRange = "_for_week_of_".$startDate."_to_".$endDate;
+    $dateRange = "_for_week_of_".str_replace("-", "_", $startDate)."_to_".str_replace("-", "_", $endDate);
 }
 elseif($this->data['Report']['reports_daterange'] == 'month') {
     $dateRange = "_for_month_of_".date("F", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
