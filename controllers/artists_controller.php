@@ -526,7 +526,7 @@ Class ArtistsController extends AppController {
             if (trim($queueId) != '' && is_numeric($queueId)) {
                 $this->set('formAction', 'admin_insertplaylist/id:' . $queueId);
                 $this->set('formHeader', 'Edit Play list');
-                $queueName = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('id' => $queueId)));
+                $queueName = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $queueId)));
                 $getData = $this->QueueDetail->find('all',
                                         array('fields' => array('Songs.Title', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle'),
                                               'group' => array('Songs.ProdID', 'Songs.provider_type'),
@@ -549,9 +549,7 @@ Class ArtistsController extends AppController {
                                               'conditions' => array('QueueDetail.id' => $queueId)
                                             )
                                        );
-                print_r($getData);exit;
-                    
-                $queue_name = $getData[0]['QueueList']['queue_name'];
+                $queue_name = $queueName['QueueList']['queue_name'];
                 $this->set('queue_name' , $queue_name);
                 $this->set('getData', $getData);
                 $this->set('queueId',$queueId);
@@ -569,6 +567,7 @@ Class ArtistsController extends AppController {
         if(!empty($this->params['named'])) {
             $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named'])));
             
+            
         } else {
             $queueName = $this->params['data']['Artist']['queue_name'];
             $patronId = $this->Session->read('Auth.User.id');
@@ -584,9 +583,10 @@ Class ArtistsController extends AppController {
                 foreach($songsList as $value) {
                     $data = explode('-',$value);
                     $detailArray[] = array('queue_id' => $queueId,'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
-                }
+                } print_r($detailArray);exit;
+                 
                 $this->QueueDetail->setDataSource('master');
-                if($this->QueueDetail->saveMany($detailArray)) {
+                if($this->QueueDetail->saveAll($detailArray)) {
                     $this->QueueDetail->setDataSource('default');
                     $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
                     $this->redirect('addplaylist/id:'.$queueId);                
