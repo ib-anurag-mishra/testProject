@@ -8,7 +8,7 @@ if(empty($queue_name)) {
 }
 
 if(empty($getData)) {
-    $getData = "";
+    $getData = array();
 }
 
 $albumName = "";
@@ -111,7 +111,7 @@ if(empty($songs)){
                     <td class="left"><?php echo $value['Songs']['ArtistText'];?></td>
                     <td><?php echo $value['Albums']['AlbumTitle'];?></td>
                     <td><?php echo $value['Songs']['Title'];?></td>
-                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$queueId, 'value' => $value['Albums']['ALbumId'].'-'.$value['Songs']['provider_type'].'-'.$value['Songs']['ProdId'], 'hiddenField' => false)); ?>
+                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$queueId, 'value' => trim($value['Albums']['ALbumId']).'-'.trim($value['Songs']['provider_type']).'-'.trim($value['Songs']['ProdId']), 'hiddenField' => false)); ?>
                     </td>
                 </tr>
                 <?php

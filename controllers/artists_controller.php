@@ -546,7 +546,7 @@ Class ArtistsController extends AppController {
                                                                               'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),
                                                               ),
                                                          ),
-                                              'conditions' => array('QueueDetail.id' => $queueId)
+                                              'conditions' => array('QueueDetail.queue_id' => $queueId)
                                             )
                                        );
                 $queue_name = $queueName['QueueList']['queue_name'];
@@ -564,9 +564,80 @@ Class ArtistsController extends AppController {
     
     function admin_insertplaylist() {
         $songsList = $this->params['data']['Info'];
-        if(!empty($this->params['named'])) {
-            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named'])));
-            
+        if(!empty($this->params['named']) && is_numeric($this->params['named'])) {
+            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('id','song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named'])));
+            $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named'])));
+            $queueName = $this->params['data']['Artist']['queue_name'];
+            if(trim($queueName) != trim($queueData['QueueList']['queue_name'])) {
+                $update = array('queue_id' => $this->params['named'], 'queue_name' => $queueName);
+                $this->QueueList->setDataSource('master');
+                $this->QueueList->save($update);
+                $this->QueueList->setDataSource('default');
+            }
+            if(empty($playlistSongs)) {
+                if(!empty($songsList)) {
+                    $detailArray = array();
+                    foreach($songsList as $value) {
+                        $data = explode('-',$value);
+                        $detailArray[] = array('queue_id' => $this->params['named'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                    } 
+                    $this->QueueDetail->setDataSource('master');
+                    if($this->QueueDetail->saveAll($detailArray)) {
+                        $this->QueueDetail->setDataSource('default');
+                        $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']);                
+                    } else {
+                        $this->QueueDetail->setDataSource('default');
+                        $this->Session->setFlash('Error occured while updating songs in playlist', 'modal', array('class' => 'modal problem'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']);                    
+                    }
+                } else {
+                    $this->Session->setFlash('There are no songs to save in the playlist', 'modal', array('class' => 'modal problem'));
+                    $this->redirect('addplaylist/id:'.$this->params['named']);                    
+                }
+            } else {
+                
+                $songsInDB = array();
+                foreach($playlistSongs as $id => $val) {
+                    $songsInDB[$id] = trim($val['QueueDetail']['album_prodid']).'-'.trim($val['QueueDetail']['song_providertype']).'-'.trim($val['QueueDetail']['song_prodid']);
+                }
+                $songToAdd = array();
+                foreach($songsList as $key => $value) {
+                    if(!in_array($value,$songsInDB)) {
+                        $songToAdd[] = $songsList[$key]; 
+                    }
+                }
+                $songToDel = array();
+                foreach($songsInDB as $k => $v) {
+                    if(!in_array($v,$songsList)) {
+                        $songToDel[] = $k;
+                    }
+                }
+                $this->QueueDetail->setDataSource('master');
+                if(!empty($songToDel)) {
+                    $this->QueueDetail->deleteAll(array('id' => $songToDel));
+                }
+                $this->QueueDetail->setDataSource('default');
+                if(!empty($songToAdd)) {
+                    foreach($songToAdd as $value) {
+                        $data = explode('-',$value);
+                        $detailArray[] = array('queue_id' => $this->params['named'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                    }                 
+                    $this->QueueDetail->setDataSource('master');
+                    if($this->QueueDetail->saveAll($detailArray)) {
+                        $this->QueueDetail->setDataSource('default');
+                        $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']);                
+                    } else {
+                        $this->QueueDetail->setDataSource('default');
+                        $this->Session->setFlash('Error occured while updating songs in playlist', 'modal', array('class' => 'modal problem'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']);                    
+                    }
+                } else {
+                    $this->Session->setFlash('There are no changes to be updated in playlist!', 'modal', array('class' => 'modal success'));
+                    $this->redirect('addplaylist/id:'.$this->params['named']);                    
+                }
+            }
             
         } else {
             $queueName = $this->params['data']['Artist']['queue_name'];
@@ -587,7 +658,7 @@ Class ArtistsController extends AppController {
                 $this->QueueDetail->setDataSource('master');
                 if($this->QueueDetail->saveAll($detailArray)) {
                     $this->QueueDetail->setDataSource('default');
-                    $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
+                    $this->Session->setFlash('Songs added successfully to playlist!', 'modal', array('class' => 'modal success'));
                     $this->redirect('addplaylist/id:'.$queueId);                
                 } else {
                     $this->QueueDetail->setDataSource('default');
@@ -3265,9 +3336,9 @@ Class ArtistsController extends AppController {
             if (count($recordCount) > 0) {
                 $val = $val . $v['Album']['ProdID'] . ",";
                 if ($v['Album']['Advisory'] == 'T') {
-                    $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'].'<span class="explicit"> (Explicit)</span>';
+                    $result[trim($v['Album']['ProdID']) . '-' . trim($v['Album']['provider_type'])] = $v['Album']['AlbumTitle'].'<span class="explicit"> (Explicit)</span>';
                 } else {                
-                    $result[$v['Album']['ProdID'] . '-' . $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
+                    $result[trim($v['Album']['ProdID']) . '-' . trim($v['Album']['provider_type'])] = $v['Album']['AlbumTitle'];
                 }
             }
         }
