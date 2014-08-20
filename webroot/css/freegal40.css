@@ -10800,7 +10800,7 @@ sub {
   background: url(../img/queue-details/play-queue-off.png);
   width: 137px;
   height: 42px;
-  margin-top: 52px;
+  margin-top: 20px;
 }
 /* line 14131, freegal40.scss */
 .queue-detail-page .col-container .col-2 .play-queue-btn:hover {
