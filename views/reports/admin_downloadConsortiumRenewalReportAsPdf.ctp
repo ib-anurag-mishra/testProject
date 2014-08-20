@@ -15,8 +15,8 @@
         $displaylibraryName = "All Libraries";
     }
     else {
-        $savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
-        $displaylibraryName = "LibraryID ".$downloads[0]['Download']['library_id'];
+        $savelibraryName = $consortium_name."_".$downloads[0]['Download']['library_id'];
+        $displaylibraryName = $consortium_name." ".$downloads[0]['Download']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
     $date_arr_from = explode("/", $this->data['Report']['date_from']);
@@ -148,29 +148,19 @@
     $tcpdf->AddPage();
     
     //Column titles
-    $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
-    $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+    $header = array('','Library Name', 'ID', 'Artists Name', 'Track title', 'Download');
+    $patron_header = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
     
     //Data loading
     foreach($downloads as $key => $download) {
-		if($download['Download']['email']!=''){
-			$patron = $download['Download']['email'];
-		}
-		else{
-			$patron = $download['Download']['patron_id'];
-		}
+	$patron = $download['Currentpatrons']['id'];
         $libraryName = $library->getLibraryName($download['Download']['library_id']);
         $data[] = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     }
     
     foreach($patronDownloads as $key => $patronDownload) {
-		if($patronDownload['Download']['email']!=''){
-			$patron_id = $patronDownload['Download']['email'];
-		}
-		else{
-			$patron_id = $patronDownload['Download']['patron_id'];
-		}
+	$patron_id = $patronDownload['Currentpatrons']['id'];
         $patron_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
     }
     

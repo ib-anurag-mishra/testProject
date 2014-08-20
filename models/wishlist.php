@@ -48,10 +48,10 @@ class Wishlist extends AppModel
 			$endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
 		}
 		if($libraryID == "all") {
-			return $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY library_id'), 'fields' => array('library_id', 'COUNT(library_id) AS totalWishlistedSongs')));
+			return $this->find('all', array('conditions' => array('Wishlist.created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY library_id'), 'fields' => array('Currentpatrons.id', 'library_id', 'COUNT(library_id) AS totalWishlistedSongs'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Wishlist.patron_id', 'Currentpatrons.libid = Wishlist.library_id')))));
 		}
 		else {
-			return $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" and library_id = '.$libraryID)));
+			return $this->find('all', array('conditions' => array('Wishlist.created BETWEEN "'.$startDate.'" and "'.$endDate.'" and library_id = '.$libraryID), 'fields'=>array('Wishlist.*', 'Currentpatrons.id'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Wishlist.patron_id', 'Currentpatrons.libid = Wishlist.library_id')))));
 		}
 	}
 }

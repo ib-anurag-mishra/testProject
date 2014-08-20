@@ -344,9 +344,15 @@ class StreamingHistory extends AppModel {
 									'type' => 'left',
 									'conditions' => array('user.id=StreamingHistory.patron_id')
 							),
+                                                        array(
+									'table' => 'currentpatrons',
+									'alias' => 'Currentpatrons',
+									'type' => 'left',
+									'conditions' => array('Currentpatrons.patronid = StreamingHistory.patron_id', 'Currentpatrons.libid = StreamingHistory.library_id')
+							),
 					),
 					'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type'),
-					'fields'=>array('StreamingHistory.patron_id','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id','user.email'),
+					'fields'=>array('Currentpatrons.id','StreamingHistory.patron_id','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id','user.email'),
 					'group' => array('StreamingHistory.patron_id'),
 					'recursive' => -1));
 		}else{
@@ -366,9 +372,15 @@ class StreamingHistory extends AppModel {
 									'type' => 'left',
 									'conditions' => array('user.id=StreamingHistory.patron_id')
 							),
+                                                        array(
+									'table' => 'currentpatrons',
+									'alias' => 'Currentpatrons',
+									'type' => 'left',
+									'conditions' => array('Currentpatrons.patronid = StreamingHistory.patron_id', 'Currentpatrons.libid = StreamingHistory.library_id')
+							),
 					),
 					'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type'),
-					'fields'=>array('StreamingHistory.patron_id','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id','user.email'),
+					'fields'=>array('Currentpatrons.id', 'StreamingHistory.patron_id','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id','user.email'),
 					'group' => array('StreamingHistory.patron_id'),
 					'recursive' => -1));
 		}
@@ -412,10 +424,10 @@ class StreamingHistory extends AppModel {
 			return $this->find('all', array(
 					'joins' => array(
 							array(
-									'table' => 'Songs',
-									'alias' => 'songs',
+									'table' => 'Genre',
+									'alias' => 'Genres',
 									'type' => 'left',
-									'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
+									'conditions' => array('StreamingHistory.ProdID=Genres.ProdID')
 							),
 							array(
 									'table' => strtolower($territory).'_countries',
@@ -424,19 +436,19 @@ class StreamingHistory extends AppModel {
 									'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
 							)
 					),
-					'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type','StreamingHistory.provider_type=songs.provider_type'),
-					'fields'=>array('songs.Genre','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
-					'group' => array('songs.Genre'),
+					'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type','StreamingHistory.provider_type=Genres.provider_type'),
+					'fields'=>array('Genres.expected_genre','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
+					'group' => array('Genres.expected_genre'),
 					'recursive' => -1));
 		}else{
 			$lib_condition = "StreamingHistory.library_id=$libraryID";
 			return $this->find('all', array(
 					'joins' => array(
 							array(
-									'table' => 'Songs',
-									'alias' => 'songs',
+									'table' => 'Genre',
+									'alias' => 'Genres',
 									'type' => 'left',
-									'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
+									'conditions' => array('StreamingHistory.ProdID=Genres.ProdID')
 							),
 							array(
 									'table' => strtolower($territory).'_countries',
@@ -445,9 +457,9 @@ class StreamingHistory extends AppModel {
 									'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
 							)
 					),
-					'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type','StreamingHistory.provider_type=songs.provider_type'),
-					'fields'=>array('songs.Genre','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
-					'group' => array('songs.Genre'),
+					'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type','StreamingHistory.provider_type=Genres.provider_type'),
+					'fields'=>array('Genres.expected_genre','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
+					'group' => array('Genres.expected_genre'),
 					'recursive' => -1));
 		}
 	}
