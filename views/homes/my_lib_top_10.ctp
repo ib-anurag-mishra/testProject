@@ -49,7 +49,7 @@
                                         ?> 
                                         <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
                                         <ul>
-                                            <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+                                            <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                         </ul>
                                         <?php
@@ -343,7 +343,7 @@
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                     */
                                     ?>
-                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
+                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="<?php __('Add to Wishlist'); ?>"></a>
                                     
                                     
                                 <?php } ?>

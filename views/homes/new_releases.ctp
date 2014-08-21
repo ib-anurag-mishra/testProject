@@ -39,7 +39,7 @@
                                     ?>
                                     <a class="playlist-menu-icon add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                                     <ul>
-                                        <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+                                        <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                     </ul>                                     
                                     <?php
