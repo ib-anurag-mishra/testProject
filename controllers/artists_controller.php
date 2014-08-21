@@ -596,7 +596,13 @@ Class ArtistsController extends AppController {
                     $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
                 }
             } else {
-                
+                if(empty($songsList)) {
+                    $this->QueueDetail->setDataSource('master');
+                    $this->QueueDetail->deleteAll(array('queue_id' => $this->params['named']['id']));
+                    $this->QueueDetail->setDataSource('default');
+                    $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
+                    $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                }
                 $songsInDB = array();
                 foreach($playlistSongs as $id => $val) {
                     $songsInDB[$val['QueueDetail']['id']] = trim($val['QueueDetail']['album_prodid']).'-'.trim($val['QueueDetail']['song_providertype']).'-'.trim($val['QueueDetail']['song_prodid']);
