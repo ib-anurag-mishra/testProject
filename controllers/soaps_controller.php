@@ -535,19 +535,17 @@ class SoapsController extends AppController {
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-    $library_territory = $this->getLibraryTerritory($libraryId);
-	$countryPrefix = $this->Common->getCountryPrefix($library_territory);
- 
+    $library_territory = $this->getLibraryTerritory($libraryId);	
     $featuredCache = Cache::read("top_albums".$library_territory);
     if (($artists = $featuredCache) === false || $featuredCache == null) {
-      	$featured = $this->Common->getTopAlbums($territory);
+      	$featured = $this->Common->getTopAlbums($library_territory);
     }
     else {    
     	$featured = $featuredCache;
 	}
     
     if(empty($featured)){
-      throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
+      throw new SOAPFault('Soap:client', 'No top albums found for your library.');
     }
  
     foreach($featured as $key => $val) {
