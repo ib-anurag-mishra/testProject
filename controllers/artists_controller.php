@@ -694,17 +694,20 @@ Class ArtistsController extends AppController {
     
     function admin_deletePlaylist() {
         $deleteQueueId = $this->params['named']['id'];
-        $this->QueueList->setDataSource('master');
-        if ($this->QueueList->deleteAll(array('queue_id' => $deleteQueueId,true))) {
+        $this->QueueDetail->setDataSource('master');
             //Configure::write('Cache.disable', false);
             //$this->Common->getTopAlbums($territory);
+        $this->QueueDetail->deleteAll(array('queue_id' => $deleteQueueId,false));
+        if($this->QueueList->deleteAll(array('queue_id' => $deleteQueueId,false))) {
+            $this->QueueDetail->setDataSource('default');
             $this->Session->setFlash('Playlist deleted successfully!', 'modal', array('class' => 'modal success'));
             $this->redirect('manageplaylist');
         } else {
-            $this->QueueList->setDataSource('default');
+            $this->QueueDetail->setDataSource('default');
             $this->Session->setFlash('Error occured while deleteting the Playlist', 'modal', array('class' => 'modal problem'));
             $this->redirect('manageplaylist');
         }
+        $this->QueueDetail->setDataSource('default');
     }
     
     /**
