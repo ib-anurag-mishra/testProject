@@ -51,8 +51,8 @@ Class ArtistsController extends AppController {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $this->set("territories", $territoriesArray);
-        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
-            $artistId = $this->params['named']['id']['id'];
+        if (!empty($this->params['named'])) { //gets the values from the url in form  of array
+            $artistId = $this->params['named']['id'];
             if (trim($artistId) != '' && is_numeric($artistId)) {
                 $this->set('formAction', 'admin_updatetopsingle/id:' . $artistId);
                 $this->set('formHeader', 'Edit Top Single');
@@ -257,7 +257,7 @@ Class ArtistsController extends AppController {
      */
 
     function admin_topsingledelete() {
-        $deleteTopSingleId = $this->params['named']['id']['id'];
+        $deleteTopSingleId = $this->params['named']['id'];
         $deleteObj = new TopSingles();
 		$getData = $deleteObj->gettopsingledata($deleteTopSingleId);
 		$territory = $getData['TopSingles']['territory'];
@@ -295,8 +295,8 @@ Class ArtistsController extends AppController {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $this->set("territories", $territoriesArray);
-        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
-            $artistId = $this->params['named']['id']['id'];
+        if (!empty($this->params['named'])) { //gets the values from the url in form  of array
+            $artistId = $this->params['named']['id'];
             if (trim($artistId) != '' && is_numeric($artistId)) {
                 $this->set('formAction', 'admin_updatetopalbum/id:' . $artistId);
                 $this->set('formHeader', 'Edit Top Album');
@@ -482,7 +482,7 @@ Class ArtistsController extends AppController {
      */
 
     function admin_topalbumdelete() {
-        $deleteArtistUserId = $this->params['named']['id']['id'];
+        $deleteArtistUserId = $this->params['named']['id'];
         $deleteObj = new TopAlbum();
 		$getData = $deleteObj->getartistdata($deleteArtistUserId);
 		$territory = $getData['TopAlbum']['territory'];
@@ -521,8 +521,8 @@ Class ArtistsController extends AppController {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $this->set("territories", $territoriesArray);
-        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
-            $queueId = $this->params['named']['id']['id'];
+        if (!empty($this->params['named'])) { //gets the values from the url in form  of array
+            $queueId = $this->params['named']['id'];
             if (trim($queueId) != '' && is_numeric($queueId)) {
                 $this->set('formAction', 'admin_insertplaylist/id:' . $queueId);
                 $this->set('formHeader', 'Edit Play list');
@@ -564,12 +564,12 @@ Class ArtistsController extends AppController {
     
     function admin_insertplaylist() {
         $songsList = $this->params['data']['Info'];
-        if(!empty($this->params['named']['id']['id']) && is_numeric($this->params['named']['id'])) {
-            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('id','song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named']['id'])));
-            $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named']['id'])));
+        if(!empty($this->params['named']) && is_numeric($this->params['named'])) {
+            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('id','song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named'])));
+            $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named'])));
             $queueName = $this->params['data']['Artist']['queue_name'];
             if(trim($queueName) != trim($queueData['QueueList']['queue_name'])) {
-                $update = array('queue_id' => $this->params['named']['id'], 'queue_name' => $queueName);
+                $update = array('queue_id' => $this->params['named'], 'queue_name' => $queueName);
                 $this->QueueList->setDataSource('master');
                 $this->QueueList->save($update);
                 $this->QueueList->setDataSource('default');
@@ -579,21 +579,21 @@ Class ArtistsController extends AppController {
                     $detailArray = array();
                     foreach($songsList as $value) {
                         $data = explode('-',$value);
-                        $detailArray[] = array('queue_id' => $this->params['named']['id'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                        $detailArray[] = array('queue_id' => $this->params['named'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
                     } 
                     $this->QueueDetail->setDataSource('master');
                     if($this->QueueDetail->saveAll($detailArray)) {
                         $this->QueueDetail->setDataSource('default');
                         $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
-                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
+                        $this->redirect('addplaylist/id:'.$this->params['named']);                
                     } else {
                         $this->QueueDetail->setDataSource('default');
                         $this->Session->setFlash('Error occured while updating songs in playlist', 'modal', array('class' => 'modal problem'));
-                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                        $this->redirect('addplaylist/id:'.$this->params['named']);                    
                     }
                 } else {
                     $this->Session->setFlash('There are no songs to save in the playlist', 'modal', array('class' => 'modal problem'));
-                    $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                    $this->redirect('addplaylist/id:'.$this->params['named']);                    
                 }
             } else {
                 
@@ -621,21 +621,21 @@ Class ArtistsController extends AppController {
                 if(!empty($songToAdd)) {
                     foreach($songToAdd as $value) {
                         $data = explode('-',$value);
-                        $detailArray[] = array('queue_id' => $this->params['named']['id'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                        $detailArray[] = array('queue_id' => $this->params['named'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
                     }                 
                     $this->QueueDetail->setDataSource('master');
                     if($this->QueueDetail->saveAll($detailArray)) {
                         $this->QueueDetail->setDataSource('default');
                         $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
-                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
+                        $this->redirect('addplaylist/id:'.$this->params['named']);                
                     } else {
                         $this->QueueDetail->setDataSource('default');
                         $this->Session->setFlash('Error occured while updating songs in playlist', 'modal', array('class' => 'modal problem'));
-                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                        $this->redirect('addplaylist/id:'.$this->params['named']);                    
                     }
                 } else {
                     $this->Session->setFlash('There are no changes to be updated in playlist!', 'modal', array('class' => 'modal success'));
-                    $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                    $this->redirect('addplaylist/id:'.$this->params['named']);                    
                 }
             }
             
@@ -697,8 +697,8 @@ Class ArtistsController extends AppController {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $this->set("territories", $territoriesArray);
-        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
-            $artistId = $this->params['named']['id']['id'];
+        if (!empty($this->params['named'])) { //gets the values from the url in form  of array
+            $artistId = $this->params['named']['id'];
             if (trim($artistId) != '' && is_numeric($artistId)) {
                 $this->set('formAction', 'admin_updatefeaturedartist/id:' . $artistId);
                 $this->set('formHeader', 'Edit Featured Artist');
@@ -906,7 +906,7 @@ Class ArtistsController extends AppController {
      */
 
     function admin_delete() {
-        $deleteArtistUserId = $this->params['named']['id']['id'];
+        $deleteArtistUserId = $this->params['named']['id'];
         $deleteObj = new Featuredartist();
         if ($deleteObj->del($deleteArtistUserId)) {
             $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
@@ -938,8 +938,8 @@ Class ArtistsController extends AppController {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $this->set("territories", $territoriesArray);
-        if (!empty($this->params['named']['id']['id'])) { //gets the values from the url in form  of array
-            $artistId = $this->params['named']['id']['id'];
+        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
+            $artistId = $this->params['named']['id'];
             if (trim($artistId) != '' && is_numeric($artistId)) {
                 $this->set('formAction', 'admin_createartist/id:' . $artistId);
                 $this->set('formHeader', 'Edit Artist');
@@ -1146,8 +1146,8 @@ Class ArtistsController extends AppController {
         }
 
         $errorMsg = '';
-        if (!empty($this->params['named']['id']['id'])) { //gets the values from the url in form  of array
-            $artistId = $this->params['named']['id']['id'];
+        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
+            $artistId = $this->params['named']['id'];
             if (trim($artistId) != '' && is_numeric($artistId)) {
                 $this->set('formAction', 'admin_addnewartist/id:' . $artistId);
                 $this->set('formHeader', 'Edit New Artsit');
@@ -1275,7 +1275,7 @@ Class ArtistsController extends AppController {
      */
 
     function admin_deletenewartists() {
-        $deleteArtistUserId = $this->params['named']['id']['id'];
+        $deleteArtistUserId = $this->params['named']['id'];
         $deleteObj = new Newartist();
         $data = $this->Newartist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
         $fileName = $data[0]['Newartist']['artist_image'];
@@ -2643,7 +2643,7 @@ Class ArtistsController extends AppController {
             }
         }
 
-        if (isset($this->params['named']['id']['page'])) {
+        if (isset($this->params['named']['page'])) {
             $this->layout = 'ajax';
         } else {
             $this->layout = 'home';
@@ -2759,7 +2759,7 @@ Class ArtistsController extends AppController {
                 }
             $this->set('albumData', $albumData);
 
-            if (isset($this->params['named']['id']['page'])) {
+            if (isset($this->params['named']['page'])) {
                 $this->autoLayout = false;
                 $this->autoRender = false;
 
@@ -2919,7 +2919,7 @@ Class ArtistsController extends AppController {
             }
         }
 
-        if (isset($this->params['named']['id']['page']))
+        if (isset($this->params['named']['page']))
         {
             $this->layout = 'ajax';
         }
@@ -3010,7 +3010,7 @@ Class ArtistsController extends AppController {
 
             $this->set('albumData', $albumData);
 
-            if (isset($this->params['named']['id']['page']))
+            if (isset($this->params['named']['page']))
             {
                 $this->autoLayout = false;
                 $this->autoRender = false;
