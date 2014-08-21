@@ -113,7 +113,7 @@ class CacheController extends AppController {
        $this->setVideoCacheVar();    
        $this->setAppMyMusicVideoList(); 
        $this->setAnnouncementCache();
-       //$this->setMoviesAnnouncements();
+       $this->setMoviesAnnouncements();
        $this->setTopArtist();
     }
     
@@ -215,11 +215,10 @@ class CacheController extends AppController {
      */
     
     function setMoviesAnnouncements() {
-        $this->Announcement->setDataSource('movies');
-        $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 2";
-        $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
-        Cache::write("moviesannouncementCache", $mvAnnouncment); 
-        $this->Announcement->setDataSource('default');
+        $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 4";
+        $db = ConnectionManager::getDataSource('movies');
+        $mvAnnouncment = $db->query($mvAannouncmentQquery);                
+        Cache::write("moviesannouncementCache", $mvAnnouncment);
     }
     
     /**
