@@ -565,7 +565,7 @@ Class ArtistsController extends AppController {
     function admin_insertplaylist() {
         $songsList = $this->params['data']['Info'];
         if(!empty($this->params['named']['id']) && is_numeric($this->params['named']['id'])) {
-            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('id','song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named']['id'])));
+            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('id','song_prodid','song_providertype','album_prodid'),'conditions' => array('queue_id' => $this->params['named']['id'])));
             $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named']['id'])));
             $queueName = $this->params['data']['Artist']['queue_name'];
             if(trim($queueName) != trim($queueData['QueueList']['queue_name'])) {
@@ -599,7 +599,7 @@ Class ArtistsController extends AppController {
                 
                 $songsInDB = array();
                 foreach($playlistSongs as $id => $val) {
-                    $songsInDB[$id] = trim($val['QueueDetail']['album_prodid']).'-'.trim($val['QueueDetail']['song_providertype']).'-'.trim($val['QueueDetail']['song_prodid']);
+                    $songsInDB[$val['QueueDetail']['id']] = trim($val['QueueDetail']['album_prodid']).'-'.trim($val['QueueDetail']['song_providertype']).'-'.trim($val['QueueDetail']['song_prodid']);
                 }
                 $songToAdd = array();
                 foreach($songsList as $key => $value) {
