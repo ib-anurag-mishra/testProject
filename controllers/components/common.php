@@ -1291,7 +1291,7 @@ STR;
                         AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $albumAdvisory                
                     group by Albums.AlbumTitle
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 100
+                    LIMIT 250
 STR;
 
 
@@ -1306,10 +1306,19 @@ STR;
                 {
                     $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);                    
                     $album_img = Configure::read('App.Music_Path') . $album_img;
-                    $data[$key]['albumImage'] = $album_img;
-                    $data[$key]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
-                    );
+                    
+                    
+                    if($this->file_exists_remote($album_img))
+                    {
+                        $data[$key]['albumImage'] = $album_img;
+                        $data[$key]['albumSongs'] = $this->requestAction(
+                                array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
+                        );
+                    }
+                    else
+                    {
+                        unset($data[$key]);
+                    }
                 }
                 Cache::delete($cacheVariableName . $country);
                 Cache::write($cacheVariableName . $country, $data);
@@ -3267,7 +3276,7 @@ STR;
   		return base64_encode($result);
 	}
  
-	/*
+    /*
      * @func freegalDecode
      * @desc This is used to decrypt an encrypted value using the key
      */
@@ -3285,5 +3294,30 @@ STR;
  
   		return $result;
 	}
+        
+    /*
+     * @func file_exists_remote
+     * @desc Check if file exists on Remote server
+     */        
+        
+        function file_exists_remote($url) {
+            
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_NOBODY, true);
+            //Check connection only
+            $result = curl_exec($curl);
+            //Actual request
+            $ret = false;
+            if ($result !== false) {
+             $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+             //Check HTTP status code
+             if ($statusCode == 200) {
+              $ret = true;  
+             }
+            }
+            curl_close($curl);
+            return $ret;
+            
+       }  
 
 }
