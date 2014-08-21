@@ -3276,7 +3276,7 @@ STR;
   		return base64_encode($result);
 	}
  
-	/*
+    /*
      * @func freegalDecode
      * @desc This is used to decrypt an encrypted value using the key
      */
@@ -3295,6 +3295,10 @@ STR;
   		return $result;
 	}
         
+    /*
+     * @func file_exists_remote
+     * @desc Check if file exists on Remote server
+     */        
         
         function file_exists_remote($url) {
             
