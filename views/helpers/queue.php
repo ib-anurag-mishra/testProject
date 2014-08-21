@@ -34,7 +34,7 @@ class QueueHelper extends AppHelper
         $str = <<<EOD
            <div class="playlist-options">
                     <ul>
-                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">__('Create New Playlist')</a></li>
 EOD;
         if (!empty($queueList))
         {
@@ -70,7 +70,7 @@ EOD;
         $str = <<<EOD
                 
                     <ul class="playlist-menu">
-                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">__('Create New Playlist')</a></li>
 EOD;
         if (!empty($queueList))
         {
@@ -103,7 +103,7 @@ EOD;
         $str = <<<EOD
            <div class="playlist-options">
                     <ul>
-                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">__('Create New Playlist')</a></li>
 EOD;
 
         if (!empty($queueList))
@@ -157,7 +157,7 @@ EOD;
         $str = <<<EOD
            <div class="playlist-options">
                     <ul>
-                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">__('Create New Playlist')</a></li>
 EOD;
 
         if (!empty($queueList))
@@ -201,7 +201,7 @@ EOD;
         $artistText = base64_encode($artistText);
 
         $str = <<<EOD
-       <a onclick="loadSong('$streamUrl','$songTitle','$artistText',$songLength,$songProdId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>        
+       <a onclick="loadSong('$streamUrl','$songTitle','$artistText',$songLength,$songProdId,'$providerType');"  class="album-preview" href="javascript:void(0);" >__('Stream Now')</a>        
 EOD;
         return $str;
     }
@@ -256,7 +256,7 @@ EOD;
 
                     if ($value["Song"]["Advisory"] == 'T')
                     {
-                        $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' (Explicit)';
+                        $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' ' . __('(Explicit)');
                     }
 
                     $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
@@ -276,7 +276,7 @@ EOD;
         }
         if(empty($top)){
         $str = <<<EOD
-            <a onclick="javascript:loadAlbumSong('{$playList}');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+            <a onclick="javascript:loadAlbumSong('{$playList}');"  class="album-preview" href="javascript:void(0);" >__('Stream Now')</a>
 EOD;
             return $str;
         }else if($top == 1){
@@ -288,14 +288,14 @@ EOD;
        }else if($top == 2){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumSong('{$playList}');" class="stream-artist">Stream Album</button>
+            <button onclick="javascript:loadAlbumSong('{$playList}');" class="stream-artist">__('Stream Album')</button>
 EOD;
             return $str;  
             
        }else if($top == 3){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumSong('{$playList}');" class="stream-artist">Stream Artist</button>
+            <button onclick="javascript:loadAlbumSong('{$playList}');" class="stream-artist">__('Stream Artist')</button>
 EOD;
             return $str;  
             
@@ -355,7 +355,7 @@ EOD;
         
         if(empty($flag)){
             $str = <<<EOD
-       <a onclick="javascript:loadAlbumData('$albumSongs');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+       <a onclick="javascript:loadAlbumData('$albumSongs');"  class="album-preview" href="javascript:void(0);" >__('Stream Now')</a>
 EOD;
             return $str;
         }else if ($flag == 1){
@@ -366,21 +366,21 @@ EOD;
             */
 
             $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable">Stream Now</button>
+                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable">__('Stream Now')</button>
 EOD;
             return $str;            
             
         }else if($flag == 2){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Artist</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">__('Stream Artist')</button>
 EOD;
             return $str;
             
        }else if($flag == 3){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-now-btn">Stream Now</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-now-btn">__('Stream Now')</button>
 EOD;
             return $str;
             
@@ -397,7 +397,7 @@ EOD;
         $artistName = base64_encode($artistName);
         $provider_type = base64_encode($provider_type);
         $str = <<<EOD
-            <button onclick="javascript:loadfeaturedSongs('$artistName','$provider_type',$flag);" class="stream-artist">Stream Artist</button>
+            <button onclick="javascript:loadfeaturedSongs('$artistName','$provider_type',$flag);" class="stream-artist">__('Stream Artist')</button>
 EOD;
             return $str;        
     }
@@ -412,7 +412,7 @@ EOD;
         $artistText = base64_encode($artistText);        
         
         $str = <<<EOD
-       <a onclick="javascript:loadNationalAlbumData('$artistText',$prodId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+       <a onclick="javascript:loadNationalAlbumData('$artistText',$prodId,'$providerType');"  class="album-preview" href="javascript:void(0);" >__('Stream Now')</a>
 EOD;
         return $str;
     } 
