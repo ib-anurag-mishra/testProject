@@ -4,7 +4,7 @@ class AppController extends Controller
 
     var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library', 'Announcement');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download', 'Library');
     var $view = 'Dataencode';
     var $patron_country;
     var $patron_id;
@@ -149,13 +149,12 @@ class AppController extends Controller
             $mvAnnouncment = Cache::read("moviesannouncementCache");
             if ($mvAnnouncment === false)
             {
-                $this->Announcement->setDataSource('movies');
                 $mvAannouncmentQquery = "SELECT * from announcements ORDER BY id DESC LIMIT 4";
-                $mvAnnouncment = $this->Announcement->query($mvAannouncmentQquery);
+                $db = ConnectionManager::getDataSource('movies');
+                $mvAnnouncment = $db->query($mvAannouncmentQquery);                
                 Cache::write("moviesannouncementCache", $mvAnnouncment);
             }
             $this->set('movieAnnouncmentValue', $mvAnnouncment);
-            $this->Announcement->setDataSource('default');
         }       
         /*
          * Below Code of Register Concert is Commented as per Request
