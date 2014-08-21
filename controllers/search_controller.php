@@ -285,7 +285,6 @@ class SearchController extends AppController {
 
         $queryVar 	  = null;
         $typeVar  	  = 'all';
-        $words	 	  = explode( " ", $queryVar );
         $exactMatch   = array();
         $partialMatch = array();
         $noMatch	  = array();
@@ -295,6 +294,8 @@ class SearchController extends AppController {
         	$queryVar = $searchedString;
         }
         
+        $words = explode( " ", $queryVar );
+
         if ( ! empty( $searchedType ) ) {
         	$arrSearchType = array( 'all', 'song', 'album', 'genre', 'label', 'artist', 'composer', 'video' );
         
