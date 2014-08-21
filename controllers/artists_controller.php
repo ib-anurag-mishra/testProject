@@ -23,7 +23,7 @@ Class ArtistsController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
 		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-                    $this->Auth->allow('admin_managetopalbums','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete');
+                    $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete');
                 }
     }
 
@@ -686,13 +686,35 @@ Class ArtistsController extends AppController {
 
     }
     
+    
+    /**
+     * Function Name : deletePlaylist
+     * Description          : This function is used to delete defau;t playlists 
+     */
+    
+    function admin_deletePlaylist() {
+        $deleteQueueId = $this->params['named']['id'];
+        $this->QueueList->setDataSource('master');
+        if ($this->QueueList->deleteAll(array('queue_id' => $deleteQueueId,true))) {
+            //Configure::write('Cache.disable', false);
+            //$this->Common->getTopAlbums($territory);
+            $this->Session->setFlash('Playlist deleted successfully!', 'modal', array('class' => 'modal success'));
+            $this->redirect('manageplaylist');
+        } else {
+            $this->QueueList->setDataSource('default');
+            $this->Session->setFlash('Error occured while deleteting the Playlist', 'modal', array('class' => 'modal problem'));
+            $this->redirect('manageplaylist');
+        }
+    }
+    
     /**
      * function name : admin_managePlaylist
      * Description   : This is used to manage playlists
      */
     
     function admin_manageplaylist() {
-        
+        $queueLists = $this->paginate('QueueList', array( 'queue_type' => 1));
+        $this->set('queueLists', $queueLists);        
     }    
 
     /*

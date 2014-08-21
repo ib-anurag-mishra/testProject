@@ -1,33 +1,18 @@
 <?php $this->pageTitle = 'Content'; ?>
-
 <form>
 	<fieldset>
-		<legend>Top Singles Listing</legend>
+		<legend>Freegal Playlists Listing</legend>
 		<table id="list">
-			<tr>
-				<th class="left">Artist Name</th>
-				<th class="left">Territory</th>
-				<th class="left">Album</th>
-				<th class="left">Song</th>
-				<th>Edit</th>
-				<th>Delete</th>
-			</tr>
 			<?php
-			foreach($topSingles as $topSingle)
+			foreach($queueLists as $queueLists)
 			{
 				?>
 			<tr>
-				<td class="left"><?php echo $topSingle['TopSingles']['artist_name'];?>
+				<td class="left"><?php echo $queueLists['QueueList']['queue_name'];?>
 				</td>
-				<td class="left"><?php echo $topSingle['TopSingles']['territory'];?>
+				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'addplaylist','id'=>$queueLists['QueueList']['queue_id']));?>
 				</td>
-				<td class="left"><?php $data = $album->getAlbum($topSingle['TopSingles']['album']);echo $data[0]['Album']['AlbumTitle'];?>
-				</td>
-				<td class="left"><?php echo $topSingle['TopSingles']['prod_id'];?>
-				</td>
-				<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'topsingleform','id'=>$topSingle['TopSingles']['id']));?>
-				</td>
-				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'topsingledelete','id'=>$topSingle['TopSingles']['id']));?>
+				<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'deletePlaylist','id'=>$queueLists['QueueList']['queue_id']));?>
 				</td>
 			</tr>
 
