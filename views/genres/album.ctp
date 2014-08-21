@@ -163,7 +163,7 @@ function Get_Sales_date($sales_date_array, $country) {
         <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
 	<div class="search-results-heading"><?php echo $keyword; ?></div> 
 	<header>
-                <h3 class="albums-header">Albums</h3>
+                <h3 class="albums-header"><?php __('Albums'); ?></h3>
         </header> 
                 <?php
                 if (!empty($albumData)) {
@@ -248,7 +248,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     <li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);">Add to Playlist</a></li>
                                                 </ul>
                                                 <ul class="playlist-menu">
-                                                    <li><a href="#">Create New Playlist</a></li>                                                                 
+                                                    <li><a href="#"><?php __('Create New Playlist'); ?></a></li>                                                                 
                                                 </ul>
                                         <?php } ?>    
                                         </section>

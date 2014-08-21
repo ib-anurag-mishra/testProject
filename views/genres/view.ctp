@@ -176,9 +176,9 @@ $totalRows = count($genresAll);
 
     <div class="genres-container">
         <header style="margin-bottom:0px;">
-	 	<div class="genres-header">Genres</div>
+	 	<div class="genres-header"><?php __('Genres'); ?></div>
 		<div class="a-z-header">A - Z</div>
-		<div class="artist-header">Artist</div>
+		<div class="artist-header"><?php __('Artist'); ?></div>
 							</header>
     <section class="genre-filter-container clearfix">
             <div class="genre-column">
@@ -252,7 +252,7 @@ $totalRows = count($genresAll);
                         <li><a   href="javascript:void(0);" <?php
                             if ($selectedAlpha == "All")
                             {
-                                ?>class=" selected active" <?php } ?> data-letter="All"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/All', '', '')">ALL</a></li>                                            
+                                ?>class=" selected active" <?php } ?> data-letter="All"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/All', '', '')"><?php __('ALL'); ?></a></li>                                            
                         
                        <?php  if(!in_array('spl',$artistsNoAlpha)){ ?>
                         <li><a   href="javascript:void(0);" <?php
