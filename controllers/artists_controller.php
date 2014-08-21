@@ -521,7 +521,7 @@ Class ArtistsController extends AppController {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $this->set("territories", $territoriesArray);
-        if (!empty($this->params['named'])) { //gets the values from the url in form  of array
+        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
             $queueId = $this->params['named']['id'];
             if (trim($queueId) != '' && is_numeric($queueId)) {
                 $this->set('formAction', 'admin_insertplaylist/id:' . $queueId);
@@ -564,9 +564,9 @@ Class ArtistsController extends AppController {
     
     function admin_insertplaylist() {
         $songsList = $this->params['data']['Info'];
-        if(!empty($this->params['named']) && is_numeric($this->params['named'])) {
-            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('id','song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named'])));
-            $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named'])));
+        if(!empty($this->params['named']['id']) && is_numeric($this->params['named']['id'])) {
+            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('id','song_prodid','song_providertype','album_prodid'),'conditions' => array('id' => $this->params['named']['id'])));
+            $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named']['id'])));
             $queueName = $this->params['data']['Artist']['queue_name'];
             if(trim($queueName) != trim($queueData['QueueList']['queue_name'])) {
                 $update = array('queue_id' => $this->params['named'], 'queue_name' => $queueName);
@@ -579,21 +579,21 @@ Class ArtistsController extends AppController {
                     $detailArray = array();
                     foreach($songsList as $value) {
                         $data = explode('-',$value);
-                        $detailArray[] = array('queue_id' => $this->params['named'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                        $detailArray[] = array('queue_id' => $this->params['named']['id'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
                     } 
                     $this->QueueDetail->setDataSource('master');
                     if($this->QueueDetail->saveAll($detailArray)) {
                         $this->QueueDetail->setDataSource('default');
                         $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
-                        $this->redirect('addplaylist/id:'.$this->params['named']);                
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
                     } else {
                         $this->QueueDetail->setDataSource('default');
                         $this->Session->setFlash('Error occured while updating songs in playlist', 'modal', array('class' => 'modal problem'));
-                        $this->redirect('addplaylist/id:'.$this->params['named']);                    
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
                     }
                 } else {
                     $this->Session->setFlash('There are no songs to save in the playlist', 'modal', array('class' => 'modal problem'));
-                    $this->redirect('addplaylist/id:'.$this->params['named']);                    
+                    $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
                 }
             } else {
                 
@@ -621,21 +621,21 @@ Class ArtistsController extends AppController {
                 if(!empty($songToAdd)) {
                     foreach($songToAdd as $value) {
                         $data = explode('-',$value);
-                        $detailArray[] = array('queue_id' => $this->params['named'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                        $detailArray[] = array('queue_id' => $this->params['named']['id'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
                     }                 
                     $this->QueueDetail->setDataSource('master');
                     if($this->QueueDetail->saveAll($detailArray)) {
                         $this->QueueDetail->setDataSource('default');
                         $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
-                        $this->redirect('addplaylist/id:'.$this->params['named']);                
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
                     } else {
                         $this->QueueDetail->setDataSource('default');
                         $this->Session->setFlash('Error occured while updating songs in playlist', 'modal', array('class' => 'modal problem'));
-                        $this->redirect('addplaylist/id:'.$this->params['named']);                    
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
                     }
                 } else {
                     $this->Session->setFlash('There are no changes to be updated in playlist!', 'modal', array('class' => 'modal success'));
-                    $this->redirect('addplaylist/id:'.$this->params['named']);                    
+                    $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
                 }
             }
             
