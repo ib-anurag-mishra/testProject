@@ -188,7 +188,8 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 					<li><?php echo $html->link('Manage Playlist', array('controller' => 'artists', 'action' => 'manageplaylist'));?>
 					</li>
 				</ul>
-			</li>                        
+			</li>
+                        <?php } ?>
 		</ul>
 	</li>
 	<li><a href="#"
