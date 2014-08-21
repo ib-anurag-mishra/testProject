@@ -619,11 +619,16 @@ Class ArtistsController extends AppController {
                         $songToDel[] = $k;
                     }
                 }
-                $this->QueueDetail->setDataSource('master');
+                
                 if(!empty($songToDel)) {
+                    $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->deleteAll(array('id' => $songToDel));
+                    $this->QueueDetail->setDataSource('default');
+                    if(empty($songToAdd)) {
+                        $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                         
+                    }
                 }
-                $this->QueueDetail->setDataSource('default');
                 if(!empty($songToAdd)) {
                     foreach($songToAdd as $value) {
                         $data = explode('-',$value);
