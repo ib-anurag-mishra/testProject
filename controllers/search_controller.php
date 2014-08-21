@@ -283,10 +283,14 @@ class SearchController extends AppController {
         $searchedString = isset( $this->params['url']['q'] ) ? trim( $this->params['url']['q'] ) : '';
         $searchedType	= isset( $this->params['url']['type'] ) ? trim( $this->params['url']['type'] ) : '';
 
-        $records  = array();
-        $queryVar = null;
-        $typeVar  = 'all';
-        
+        $queryVar 	  = null;
+        $typeVar  	  = 'all';
+        $words	 	  = explode( " ", $queryVar );
+        $exactMatch   = array();
+        $partialMatch = array();
+        $noMatch	  = array();
+        $records  	  = array();
+
         if ( ! empty( $searchedString ) ) {
         	$queryVar = $searchedString;
         }
@@ -299,44 +303,31 @@ class SearchController extends AppController {
         	}
         }
 
-        if ( $typeVar != 'all' ) {
-            $data = $this->Solr->getAutoCompleteData( $queryVar, $typeVar, 10 );
-        }
-
         switch ( $typeVar ) {
 
             case 'all':
                 $arr_data	 = array(); 
 
                 // each indiviual filter call
-                $arr_data[] = $this->Solr->getAutoCompleteData( $queryVar, 'album', 18, '1' );
-                $arr_data[] = $this->Solr->getAutoCompleteData( $queryVar, 'artist', 18, '1' );
-                $arr_data[] = $this->Solr->getAutoCompleteData( $queryVar, 'composer', 18, '1' );
-                $arr_data[] = $this->Solr->getAutoCompleteData( $queryVar, 'genre', 18, '1' );
-                $arr_data[] = $this->Solr->getAutoCompleteData( $queryVar, 'song', 18, '1' );
+                $arr_data[]['album'] 	= $this->Solr->getAutoCompleteData( $queryVar, 'album',    10 );
+                $arr_data[]['artist'] 	= $this->Solr->getAutoCompleteData( $queryVar, 'artist',   10 );
+                $arr_data[]['composer'] = $this->Solr->getAutoCompleteData( $queryVar, 'composer', 10 );
+                $arr_data[]['genre'] 	= $this->Solr->getAutoCompleteData( $queryVar, 'genre',    10 );
+                $arr_data[]['song'] 	= $this->Solr->getAutoCompleteData( $queryVar, 'song',     10 );
 
                 if ( is_array( $arr_data ) && count( $arr_data ) > 0 ) {
-                	// formates array
-                	foreach ( $arr_data as $key1 => $val1 ) {
-                		foreach ( $val1 as $key2 => $val2 ) {
-                			$arr_result[$key2] = $val2;
-                		}
-                	}
 
-                	//sort an array in decending order of match result count
-                	krsort($arr_result);
-
-                	//get 3 elements of each filter
-                	$arr_show  = $arr_result;
                 	$in_basket = 0;
 
-                	foreach ( $arr_result as $key1 => $val1 ) {
+                	foreach ( $arr_data as $key1 => $val1 ) {
 
                 		foreach ( $val1 as $key2 => $val2 ) {
-
-                			$val2 = array_slice( $val2, 0, 3, true );
-                			$in_basket = $in_basket + count( $val2 );
-                			$arr_show[$key1][$key2] = $val2;
+                			
+                			if ( count( $val2 ) > 0 ) {
+	                			$val2 = array_slice( $val2, 0, 3, true );
+	                			$in_basket = $in_basket + count( $val2 );
+	                			$arr_show[$key1][$key2] = $val2;
+                			}
                 		}
                 	}
 
@@ -346,43 +337,48 @@ class SearchController extends AppController {
                 	//get remaining elements from most revelant filter
                 	if ( 0 != $to_be_in_basket ) {
 
-                		foreach ( $arr_result as $key1 => $val1 ) {
+                		foreach ( $arr_data as $key1 => $val1 ) {
                 			
                 			if ( $to_be_in_basket == 0 ) {
                 				break;
                 			}
 
                 			foreach ( $val1 as $key2 => $val2 ) {
+                				
+                				if ( count( $val2 ) > 0 ) {
+	                				$val2 = array_slice( $val2, 3, $to_be_in_basket, true );
+	                				$to_be_in_basket = $to_be_in_basket - count( $val2 );
+	                				$arr_show[$key1][$key2] = array_merge( $arr_show[$key1][$key2], $val2 );
+                				}
 
-                				$val2 = array_slice( $val2, 3, $to_be_in_basket, true );
-                				$to_be_in_basket = $to_be_in_basket - count( $val2 );
-                				$arr_show[$key1][$key2] = array_merge( $arr_show[$key1][$key2], $val2 );
                 				break;
                 			}
                 		}
                 	}
 
                 	$rank = 1;
+
                 	foreach ( $arr_show as $key => $val ) {
                 		foreach ( $val as $name => $value ) {
-                			foreach ( $value as $record => $count ) {
-
-                				if ( $name == 'album' ) {
-                					$keyword   = str_replace( array( ' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?' ), array( '\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?' ), $record );
-                				}
+                			foreach ( $value as $record ) {
 
                 				$regex = "/^$queryVar/i";
                 				$str   = "<div class='ac_first' style='font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . ucfirst( $name ) . "</div><div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|" . $rank;
 
                 				if ( preg_match( $regex, $record ) ) {
-                					array_unshift( $records, $str );
+                					$exactMatch[] = $str;
+                				} else if ( $this->matchPartialString( $record, $words ) === true ) {
+                					$partialMatch[] = $str;
                 				} else {
-                			 		$records[] =  $str;
+                			 		$noMatch[] =  $str;
                 				}
+
                 				$rank++;
                 			}
                 		}
                 	}
+                	
+                	$records = array_merge( $exactMatch, $partialMatch, $noMatch );
                 }
 
                 break;
@@ -394,17 +390,42 @@ class SearchController extends AppController {
            	case 'label':
            	case 'video':
            	case 'genre':
+           		
+           		$data = $this->Solr->getAutoCompleteData( $queryVar, $typeVar, 10 );
+
                 foreach ( $data as $record ) {
 
-                    $record    = trim( $record, '"' );
-                    $record    = preg_replace( "/\n/", '', $record );
-					$records[] = "<div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|";
+                    $record = trim( $record, '"' );
+                    $record = preg_replace( "/\n/", '', $record );
+                    $regex  = "/^$queryVar/i";
+					$str	= "<div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|";
+					
+					if ( preg_match( $regex, $record ) ) {
+						$exactMatch[] = $str;
+					} else if ( $this->matchPartialString( $record, $words ) === true ) {
+						$partialMatch[] = $str;
+					} else {
+						$noMatch[] =  $str;
+					}
                 }
+                
+                $records = array_merge( $exactMatch, $partialMatch, $noMatch );
 
                 break;
         }
 
         $this->set('type', $typeVar);
         $this->set('records', $records);
+    }
+    
+    public function matchPartialString ( $string, $words ) {
+
+    	foreach ($words as $value) {
+    		if (stripos($string, $value) !== false) {
+    			return true;
+    		}
+    	}
+
+    	return false;
     }
 }
