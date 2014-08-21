@@ -118,7 +118,8 @@ if(empty($songs)){
                 }
                 ?>
                 <?php if(count($getData)) { ?> 
-                <td class="left remove_options" colspan="5">
+                <tr class="remove_options">
+                <td class="left" colspan="5">
                     <span style="float: right;">
                         <table>
                                 <tr>
@@ -130,7 +131,8 @@ if(empty($songs)){
 
                         </table>
                     </span> 
-                </td>    
+                </td>
+                </tr>
                     <?php } ?>                
                 <?php }else{ ?>
                 <tr class="no_records">
@@ -296,7 +298,7 @@ echo $session->flash();
                     $('.remove_options').before('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
                 }
                 if(!checkremove) {
-                    $('.default_songs').append('<td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return removeFromlist(form,1)" label="Remove Selected" name="remove_selected" type="button">Remove Selected</button></td><td><button onclick="return removeFromlist(form,2)" label="Remove All" name="remove_all" type="button">Remove All</button></td></tr></tbody></table></span></td>'); 
+                    $('.default_songs').append('<tr class="remove_options"><td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return removeFromlist(form,1)" label="Remove Selected" name="remove_selected" type="button">Remove Selected</button></td><td><button onclick="return removeFromlist(form,2)" label="Remove All" name="remove_all" type="button">Remove All</button></td></tr></tbody></table></span></td></tr>'); 
                 }
                 
                 if(!$('.save_playlist').length) {
