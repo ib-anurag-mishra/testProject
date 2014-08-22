@@ -40,12 +40,16 @@
 				$i = 1;
 				foreach ($language as $k => $v)
 				{
+                                        $current_page   =   $_SERVER[ 'REQUEST_URI' ];
+
 					if(strstr($_SERVER[ 'REQUEST_URI' ], '/users/'))        // If Login Page
                                         {
+                                            $current_page   = explode( "/", $current_page);
+                                            echo $html->link(__($this->getTextEncode($v), true), array('controller' => $current_page[1], 'action' => $current_page[2]));
                                             ?>
-                                                <a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" class="no-ajaxy" href="<?php echo $_SERVER['REQUEST_URI']."/".$k ?>" id="<?php echo $k; ?>">
+                                                <!--<a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" class="no-ajaxy" href="<?php echo $_SERVER['REQUEST_URI']."/".$k ?>" id="<?php echo $k; ?>">
                                                 <?php echo $this->getTextEncode($v); ?>
-                                                </a>
+                                                </a>-->
                                              <?php
                                         }
                                         else            // For other pages
