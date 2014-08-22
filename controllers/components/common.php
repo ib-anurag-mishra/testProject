@@ -3362,6 +3362,7 @@ STR;
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => $id,
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
+				'Country.StreamingStatus' => 1,
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
                 'Country.Territory' => $country, $cond,
