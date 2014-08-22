@@ -2838,6 +2838,40 @@ STR;
         }
         //--------------------------------Default Freegal Queues End--------------------------------------------------------------
     }
+    
+    
+    function setAdminDefaultQueuesCache() {
+        
+        //--------------------------------Default Freegal Queues Start----------------------------------------------------               
+        $cond = array('queue_type' => 1, 'status' => '1');
+        $queuelistInstance = ClassRegistry::init('QueueList');
+        //Unbinded User model
+        $queuelistInstance->unbindModel(
+                array('belongsTo' => array('User'), 'hasMany' => array('QueueDetail'))
+        );
+        //fetched the default list
+        $queueData = $queuelistInstance->find('all', array(
+            'conditions' => $cond,
+            'fields' => array('queue_id', 'queue_name', 'queue_type'),
+            'order' => 'QueueList.created DESC',
+            'limit' => 100
+        ));
+
+        //freegal Query Cache set
+        if ((count($queueData) < 1) || ($queueData === false))
+        {
+            Cache::write("defaultqueuelist", Cache::read("defaultqueuelist"));
+            $this->log("Freegal Defaut Queues returns null ", "cache");
+        }
+        else
+        {
+            Cache::delete("defaultqueuelist");
+            Cache::write("defaultqueuelist", $queueData);
+
+            //library top 10 cache set
+            $this->log("Freegal Defaut Queues cache set", "cache");
+        }        
+    }
 
     /**
      * @function setLibraryTopTenCache

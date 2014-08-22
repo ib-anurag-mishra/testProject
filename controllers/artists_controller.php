@@ -699,8 +699,8 @@ Class ArtistsController extends AppController {
     function admin_deletePlaylist() {
         $deleteQueueId = $this->params['named']['id'];
         $this->QueueDetail->setDataSource('master');
-            //Configure::write('Cache.disable', false);
-            //$this->Common->getTopAlbums($territory);
+        Configure::write('Cache.disable', false);
+        $this->Common->setAdminDefaultQueuesCache();
         $this->QueueDetail->deleteAll(array('queue_id' => $deleteQueueId,false));
         if($this->QueueList->deleteAll(array('queue_id' => $deleteQueueId,false))) {
             $this->QueueDetail->setDataSource('default');
