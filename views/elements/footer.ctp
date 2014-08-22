@@ -40,7 +40,15 @@
 				$i = 1;
 				foreach ($language as $k => $v)
 				{
-					echo '<a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" href="javascript:void(0)" id=' . $k . ' onClick="changeLang(' . $k . ');">';
+					if(strstr($_SERVER[ 'REQUEST_URI' ], '/users/'))        // If Login Page
+                                        {
+                                            echo '<a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" class="no-ajaxy" href="<?php echo $_SERVER['REQUEST_URI']."/".$k ?>" id=' . $k . ' >';
+                                        }
+                                        else            // For other pages
+                                        {
+                                            echo '<a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" href="javascript:void(0)" id=' . $k . ' onClick="changeLang(' . $k . ');">';
+                                        }
+                                        
 					?>
 			<?php echo $this->getTextEncode($v); ?>
 			<?php
