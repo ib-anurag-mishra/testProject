@@ -111,7 +111,7 @@ if(empty($songs)){
                     <td class="left"><?php echo $value['Songs']['ArtistText'];?></td>
                     <td><?php echo $value['Albums']['AlbumTitle'];?></td>
                     <td><?php echo $value['Songs']['Title'];?></td>
-                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','class' => "songCheck", 'id'=>$queueId, 'value' => trim($value['Albums']['ALbumId']).'-'.trim($value['Songs']['provider_type']).'-'.trim($value['Songs']['ProdId']), 'hiddenField' => false)); ?>
+                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','div' => false,'class' => "songCheck", 'id'=>$queueId, 'value' => trim($value['Albums']['ALbumId']).'-'.trim($value['Songs']['provider_type']).'-'.trim($value['Songs']['ProdId']), 'hiddenField' => false)); ?>
                     </td>
                 </tr>
                 <?php
@@ -410,9 +410,9 @@ echo $session->flash();
                 else(x==true)
                 {
                     if(flagVar == 1){
-                        $(".songCheck :checked").parent().parent().parent().remove();
-                        
-                        $("input[@name='data[Info][ ]' @type='checkbox']:checked").parent().parent().parent().remove();
+                        $('#list .songs_list :checked').each(function() {
+                            $(this).parent().parent().remove();
+                        });
                     } else {
                         $(".songs_list").remove();
                         $(".remove_options").remove();
