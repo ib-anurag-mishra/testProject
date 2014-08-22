@@ -296,7 +296,7 @@ echo $session->flash();
             var albumProdId = albumData.split("-")[0];
             var providerType = albumData.split("-")[1];
 
-            if(!songProdId || songProdId == '') {
+            if(!trim(songProdId) || trim(songProdId) == '') {
                 alert('ProdId is missing for this song,Please select another one');
                 return false;
             }
@@ -428,7 +428,7 @@ echo $session->flash();
     {
         if(save == 1) {
             var queueName = $('#ArtistQueueName').val();
-            if(!queueName || queueName == '') {
+            if(!trim(queueName) || trim(queueName) == '') {
                 alert('Please add playlist name');
                 return false;
             }
