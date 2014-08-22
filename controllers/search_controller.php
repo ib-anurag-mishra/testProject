@@ -102,8 +102,6 @@ class SearchController extends AppController {
             if ( $typeVar == 'all' || $typeVar == 'song' || $typeVar == 'video' ) {
 
 	            $songs   	= $this->Solr->search( $queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country );
-	            //$total 	 	= $this->Solr->total;
-	            //$totalPages = ceil( $total / $limit );
 	            $lastPage 	= isset( $songs['lastPage'] ) ? $songs['lastPage'] : '';
 	            $lastPage 	= ceil($lastPage / $limit);
 	            $songArray 	= array();
@@ -151,7 +149,6 @@ class SearchController extends AppController {
 
                     case 'album':
                         $limit = 12;
-                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'album' );
                         $arr_albumStream = array();
                         $albums 		 = $this->Solr->groupSearch( $queryVar, 'album', $facetPage, $limit );
                         $totalFacetCount = $albums['ngroups'];
@@ -173,28 +170,24 @@ class SearchController extends AppController {
 
                     case 'genre':
                         $limit = 30;
-                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'genre' );
                         $genres = $this->Solr->groupSearch( $queryVar, 'genre', $facetPage, $limit );
                         $this->set( 'genres', $genres );
                         break;
 
                     case 'label':
                         $limit = 18;
-                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'label' );
                         $labels = $this->Solr->groupSearch( $queryVar, 'label', $facetPage, $limit );
                         $this->set( 'labels', $labels );
                         break;
 
                     case 'artist':
                         $limit = 18;
-                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'artist' );
                         $artists = $this->Solr->groupSearch( $queryVar, 'artist', $facetPage, $limit );
                         $this->set( 'artists', $artists );
                         break;
 
                     case 'composer':
                         $limit = 18;
-                        //$totalFacetCount = $this->Solr->getFacetSearchTotal( $queryVar, 'composer' );
                         $composers = $this->Solr->groupSearch( $queryVar, 'composer', $facetPage, $limit );
                         $this->set( 'composers', $composers );
                         break;
@@ -359,26 +352,28 @@ class SearchController extends AppController {
 
                 	$rank = 1;
 
-                	foreach ( $arr_show as $key => $val ) {
-                		foreach ( $val as $name => $value ) {
-                			foreach ( $value as $record ) {
-
-                				$regex = "/^$queryVar/i";
-                				$str   = "<div class='ac_first' style='font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . ucfirst( $name ) . "</div><div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|" . $rank;
-
-                				if ( preg_match( $regex, $record ) ) {
-                					$exactMatch[] = $str;
-                				} else if ( $this->matchPartialString( $record, $words ) === true ) {
-                					$partialMatch[] = $str;
-                				} else {
-                			 		$noMatch[] =  $str;
-                				}
-
-                				$rank++;
-                			}
-                		}
+                	if ( isset( $arr_show ) && count( $arr_show ) > 0 ) {
+	                	foreach ( $arr_show as $key => $val ) {
+	                		foreach ( $val as $name => $value ) {
+	                			foreach ( $value as $record ) {
+	
+	                				$regex = "/^$queryVar/i";
+	                				$str   = "<div class='ac_first' style='font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . ucfirst( $name ) . "</div><div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|" . $rank;
+	
+	                				if ( preg_match( $regex, $record ) ) {
+	                					$exactMatch[] = $str;
+	                				} else if ( $this->matchPartialString( $record, $words ) === true ) {
+	                					$partialMatch[] = $str;
+	                				} else {
+	                			 		$noMatch[] =  $str;
+	                				}
+	
+	                				$rank++;
+	                			}
+	                		}
+	                	}
                 	}
-                	
+
                 	$records = array_merge( $exactMatch, $partialMatch, $noMatch );
                 }
 
@@ -391,7 +386,7 @@ class SearchController extends AppController {
            	case 'label':
            	case 'video':
            	case 'genre':
-           		
+
            		$data = $this->Solr->getAutoCompleteData( $queryVar, $typeVar, 10 );
 
                 foreach ( $data as $record ) {
