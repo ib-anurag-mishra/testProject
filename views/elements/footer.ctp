@@ -40,13 +40,12 @@
 				$i = 1;
 				foreach ($language as $k => $v)
 				{
-                                        $current_page   =   $_SERVER[ 'REQUEST_URI' ];
+                                        $current_page   =   $this->here;
 
-					if(strstr($_SERVER[ 'REQUEST_URI' ], '/users/'))        // If Login Page
-                                        {
-                                            $current_page   = explode( "/", $current_page);
+					if(strstr($current_page, '/users/'))        // If Login Page
+                                        {                                            
                                             ?>
-                                                <a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" class="no-ajaxy" href="<?php echo $_SERVER['REQUEST_URI']."?langType=".$k ?>" id="<?php echo $k; ?>">
+                                                <a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" class="no-ajaxy" href="<?php echo $current_page."?langType=".$k ?>" id="<?php echo $k; ?>">
                                                 <?php echo $this->getTextEncode($v); ?>
                                                 </a>
                                              <?php
