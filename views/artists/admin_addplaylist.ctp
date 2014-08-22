@@ -111,7 +111,7 @@ if(empty($songs)){
                     <td class="left"><?php echo $value['Songs']['ArtistText'];?></td>
                     <td><?php echo $value['Albums']['AlbumTitle'];?></td>
                     <td><?php echo $value['Songs']['Title'];?></td>
-                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','id'=>$queueId, 'value' => trim($value['Albums']['ALbumId']).'-'.trim($value['Songs']['provider_type']).'-'.trim($value['Songs']['ProdId']), 'hiddenField' => false)); ?>
+                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','class' => "songCheck", 'id'=>$queueId, 'value' => trim($value['Albums']['ALbumId']).'-'.trim($value['Songs']['provider_type']).'-'.trim($value['Songs']['ProdId']), 'hiddenField' => false)); ?>
                     </td>
                 </tr>
                 <?php
@@ -293,9 +293,9 @@ echo $session->flash();
                 $('.no_records').remove();
                 var checkremove = $('.remove_options').length;
                 if(!checkremove) {
-                    $('.default_songs').append('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
+                    $('.default_songs').append('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" class= "songCheck" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
                 } else {
-                    $('.remove_options').before('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
+                    $('.remove_options').before('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" class= "songCheck" value="'+albumData+'-'+songProdId+'" name="data[Info][]"></td></tr>');
                 }
                 if(!checkremove) {
                     $('.default_songs').append('<tr class="remove_options"><td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return removeFromlist(form,1)" label="Remove Selected" name="remove_selected" type="button">Remove Selected</button></td><td><button onclick="return removeFromlist(form,2)" label="Remove All" name="remove_all" type="button">Remove All</button></td></tr></tbody></table></span></td></tr>'); 
@@ -398,18 +398,8 @@ echo $session->flash();
                 }
                 else(x==true)
                 {
-                    
                     if(flagVar == 1){
-                        for(var z=0; z<theForm.length;z++)
-                        {
-                            if((theForm[z].type=="checkbox")&&(theForm[z].name=='data[Info][]'))
-                            {
-                                if(theForm[z].checked==true)
-                                {
-                                        theForm[z].parent().remove();
-                                }
-                            }
-                        }                        
+                        $(".songCheck :checked").parent().parent().parent().remove();
                     } else {
                         $(".songs_list").remove();
                         $(".remove_options").remove();
