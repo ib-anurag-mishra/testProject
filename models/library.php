@@ -433,11 +433,12 @@ class Library extends AppModel
                                                           'library_status' => 'active',
                                                          ),
                                         'fields' => array(
-						'Library.id',
-						'Library.library_name',
-						'Library.library_available_downloads',
-                                                'Library.library_status',
+                                                            'Library.id',
+                                                            'Library.library_name',
+                                                            'Library.library_available_downloads',
+                                                            'Library.library_status',
                                                         ),
+                                         'order' => array('Library.library_available_downloads ASC')
                                        )                                        
                                         
                           );
