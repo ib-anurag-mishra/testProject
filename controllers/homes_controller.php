@@ -2959,18 +2959,34 @@ STR;
 
     function language() {
 
-        $this->layout = false;
-        $language = $this->params['form']['lang'];
-        $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
-        $this->Session->write('Config.language', $langDetail['Language']['short_name']);
-        $page = $this->Session->read('Config.language');
-        $pageDetails = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $page)));
-        if (count($pageDetails) != 0) {
-            print $pageDetails[0]['Page']['page_content'];
-        } else {
-            print "Coming Soon....";
+        if(!empty($this->params['url']['langType']))
+        {           
+            $language = $this->params['url']['langType'];
+            $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+            $this->Session->write('Config.language', $langDetail['Language']['short_name']);
+            $page = $this->Session->read('Config.language');
+            $pageDetails = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $page)));
+            if (count($pageDetails) != 0) {
+                print $pageDetails[0]['Page']['page_content'];
+            } else {
+                print "Coming Soon....";
+            }            
         }
-        exit;
+        else 
+        {
+            $this->layout = false;
+            $language = $this->params['form']['lang'];
+            $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+            $this->Session->write('Config.language', $langDetail['Language']['short_name']);
+            $page = $this->Session->read('Config.language');
+            $pageDetails = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $page)));
+            if (count($pageDetails) != 0) {
+                print $pageDetails[0]['Page']['page_content'];
+            } else {
+                print "Coming Soon....";
+            }
+            exit;
+        }
     }
 
     /*
