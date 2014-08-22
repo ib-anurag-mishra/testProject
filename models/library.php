@@ -428,7 +428,7 @@ class Library extends AppModel
             
          $this->unBindModel(array('belongsTo' => array('User'), 'hasMany' => array('LibraryPurchase')));   
             
-        return $this->find('all', array('conditions' => 
+         return $this->find('all', array('conditions' => 
                                                     array('library_available_downloads <= 100',
                                                           'library_status' => 'active',
                                                          ),

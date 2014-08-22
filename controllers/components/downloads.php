@@ -164,7 +164,16 @@ Class DownloadsComponent extends Object
             
             $mailContent     .=   "Thanks\n\n";
             
-            echo mail('kushal.pogul@infobeans.com',"List of Libraries having Remaining Downloads <= 100",$mailContent,'From:no-reply@freegalmusic.com');
+            $mail_response = mail('kushal.pogul@infobeans.com',"List of Libraries having Remaining Downloads <= 100",$mailContent,'From:no-reply@freegalmusic.com');
+            
+            if($mail_response)
+            {
+                echo "Mail Sent";
+            }
+            else 
+            {
+                echo "Problem in sending Mail.";
+            } 
             
             exit;
         }
