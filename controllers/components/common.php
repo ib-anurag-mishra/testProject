@@ -3354,8 +3354,8 @@ STR;
         	
             $id = $artist;
 			$Song = ClassRegistry::init('Song');
-        	$this->Song->Behaviors->attach('Containable');
-        	$songs = $this->Song->find('all', array(
+        	$Song->Behaviors->attach('Containable');
+        	$songs = Song->find('all', array(
             'fields' => array(
                 'DISTINCT Song.ReferenceID',
                 'Song.provider_type',
