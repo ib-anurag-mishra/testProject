@@ -1473,6 +1473,19 @@ STR;
         				$playlist = reset($streamsongs[$a]);
 					$albumsongs =  array_merge($albumsongs,$playlist);
 				}
+					if(empty($albumsongs)) {
+				 		$albumsongs = array();
+						$artistAlbums = $this->getStreamArtist($v['Featuredartist']['artist_name']);
+					$i = 0;
+					foreach ($artistAlbums as $index => $value) {
+						if($i == 4) break;
+						if(!empty($value['albumSongs'][$value['Album']['ProdID']])) {
+						$albumsongs = array_merge($albumsongs,$value['albumSongs'][$value['Album']['ProdID']]);
+						$i++;
+					}
+					}	
+					}
+					
         			$featured[$k]['albumSongs'] = $albumsongs;
         
                 }
@@ -3318,6 +3331,128 @@ STR;
             curl_close($curl);
             return $ret;
             
+       }
+
+	/*
+     * @func getStreamArtist
+     * @desc get streaming songs from artist
+     */        
+        
+        function getStreamArtist($artist) {
+            
+            $country = $this->Session->read('territory');
+        	$patId = $this->Session->read('patron');
+        	$libId = $this->Session->read('library');
+        	$libType = $this->Session->read('library_type');
+
+        	if ($this->Session->read('block') == 'yes') {
+            	$cond = array('Song.Advisory' => 'F');
+        	} else {
+            	$cond = "";
+        	}
+
+        	
+            $id = $artist;
+			$Song = ClassRegistry::init('Song');
+        	$this->Song->Behaviors->attach('Containable');
+        	$songs = $this->Song->find('all', array(
+            'fields' => array(
+                'DISTINCT Song.ReferenceID',
+                'Song.provider_type',
+                'Country.SalesDate'),
+            'conditions' => array('Song.ArtistText' => $id,
+                'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
+                "Song.Sample_FileID != ''",
+                "Song.FullLength_FIleID != ''",
+                'Country.Territory' => $country, $cond,
+                'Song.provider_type = Country.provider_type'),
+            'contain' => array(
+                'Country' => array(
+                    'fields' => array('Country.Territory')
+                )),
+            'recursive' => 0,
+            'order' => array(
+                'Country.SalesDate DESC'
+            ))
+        );
+
+        $val = '';
+        $val_provider_type = '';
+
+        if (!empty($songs)) {
+            foreach ($songs as $k => $v) {
+                if (empty($val)) {
+                    $val .= $v['Song']['ReferenceID'];
+                    $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                } else {
+                    $val .= ',' . $v['Song']['ReferenceID'];
+                    $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                }
+            }
+
+            $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
+			$Album = ClassRegistry::init('Album');
+	
+            $albumData = $Album->find('all',
+                    array(
+                        'conditions' =>
+                        array(
+                            'and' =>
+                            array(
+                                $condition
+                            ),
+                            "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+                        ),
+                        'fields' => array(
+                            'Album.ProdID',
+                            'Album.Title',
+                            'Album.ArtistText',
+                            'Album.AlbumTitle',
+                            'Album.Advisory',
+                            'Album.Artist',
+                            'Album.ArtistURL',
+                            'Album.Label',
+                            'Album.Copyright',
+                            'Album.provider_type',
+                            'Files.CdnPath',
+                            'Files.SaveAsName',
+                            'Files.SourceURL',
+                            'Genre.Genre'
+                        ),
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
+                            ),
+                            'Files' => array(
+                                'fields' => array(
+                                    'Files.CdnPath',
+                                    'Files.SaveAsName',
+                                    'Files.SourceURL'
+                                ),
+                            )
+                        ),
+                        'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+                        'cache' => 'yes',
+                        'chk' => 2
+            ));
+            
+            if ($libType == 2) {
+                foreach ($albumData as $key => $value) {
+                   
+				$albumData[$key]['albumSongs'] =  $this->requestAction(
+                         	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']),0,$country))
+                    	);
+	
+                }
+            }
+
+            foreach ($albumData as $key => $value) {
+                    $albumData[$key]['combineGenre'] = $this->getGenreForSelection($albumData[$key]['Genre']['Genre']);
+                }
+        }
+		return $albumData;            
        }  
 
 }
