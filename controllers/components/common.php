@@ -3355,13 +3355,14 @@ STR;
             $id = $artist;
 			$Song = ClassRegistry::init('Song');
         	$Song->Behaviors->attach('Containable');
-        	$songs = Song->find('all', array(
+        	$songs = $Song->find('all', array(
             'fields' => array(
                 'DISTINCT Song.ReferenceID',
                 'Song.provider_type',
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => $id,
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
+				'Country.StreamingStatus' => 1,
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
                 'Country.Territory' => $country, $cond,
@@ -3434,6 +3435,7 @@ STR;
                             )
                         ),
                         'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+						'limit' => '15',
                         'cache' => 'yes',
                         'chk' => 2
             ));
