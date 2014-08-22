@@ -588,6 +588,7 @@ Class ArtistsController extends AppController {
                     $this->QueueDetail->setDataSource('master');
                     if($this->QueueDetail->saveAll($detailArray)) {
                         $this->QueueDetail->setDataSource('default');
+                        $this->Common->refreshQueueSongs($this->params['named']['id']);
                         $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
                         $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
                     } else {
@@ -603,6 +604,7 @@ Class ArtistsController extends AppController {
                 if(empty($songsList)) {
                     $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->deleteAll(array('queue_id' => $this->params['named']['id']));
+                    $this->Common->refreshQueueSongs($this->params['named']['id']);
                     $this->QueueDetail->setDataSource('default');
                     $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
                     $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
@@ -627,6 +629,7 @@ Class ArtistsController extends AppController {
                 if(!empty($songToDel)) {
                     $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->deleteAll(array('id' => $songToDel));
+                    $this->Common->refreshQueueSongs($this->params['named']['id']);
                     $this->QueueDetail->setDataSource('default');
                     if(empty($songToAdd)) {
                         $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
@@ -641,6 +644,7 @@ Class ArtistsController extends AppController {
                     $this->QueueDetail->setDataSource('master');
                     if($this->QueueDetail->saveAll($detailArray)) {
                         $this->QueueDetail->setDataSource('default');
+                        $this->Common->refreshQueueSongs($this->params['named']['id']);
                         $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
                         $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
                     } else {
@@ -664,6 +668,7 @@ Class ArtistsController extends AppController {
             $this->QueueList->setDataSource('master');
             if ($this->QueueList->save($this->data['QueueList'])) {
                 $this->QueueList->setDataSource('default');
+                $this->Common->setAdminDefaultQueuesCache();
                 $queueId = $this->QueueList->getLastInsertID();
                 $detailArray = array();
                 foreach($songsList as $value) {
@@ -673,6 +678,7 @@ Class ArtistsController extends AppController {
                 $this->QueueDetail->setDataSource('master');
                 if($this->QueueDetail->saveAll($detailArray)) {
                     $this->QueueDetail->setDataSource('default');
+                    $this->Common->refreshQueueSongs($queueId);
                     $this->Session->setFlash('Songs added successfully to playlist!', 'modal', array('class' => 'modal success'));
                     $this->redirect('addplaylist/id:'.$queueId);                
                 } else {

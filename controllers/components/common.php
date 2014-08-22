@@ -2872,6 +2872,25 @@ STR;
             $this->log("Freegal Defaut Queues cache set", "cache");
         }        
     }
+    
+    function refreshQueueSongs($defaultQueueId){
+        
+        $territoryInstance = ClassRegistry::init('Territory');
+        $territories = $territoryInstance->find("all");
+        for ($m = 0; $m < count($territories); $m++) {
+            $eachQueueDetails = $this->Queue->getQueueDetails($defaultQueueId, $territories[$m]['Territory']['Territory']);
+            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false))
+            {
+                $this->log("Freegal Defaut Queues " . $defaultQueueName . "( " . $defaultQueueId . " )" . " returns null ", "cache");
+            }
+            else
+            {
+                Cache::write("defaultqueuelistdetails".$territories[$m]['Territory']['Territory'].$defaultQueueId, $eachQueueDetails);
+                $this->log("Freegal Defaut Queues " . $defaultQueueName . "( " . $defaultQueueId . " )" . " cache set", "cache");
+            }
+        }
+        
+    }
 
     /**
      * @function setLibraryTopTenCache
