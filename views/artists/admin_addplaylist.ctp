@@ -245,6 +245,12 @@ echo $session->flash();
 	function getSongs(){		
         var artistNameText = escape($("#ArtistArtistName").val());
 		var albumProdId = escape($('#ArtistAlbum').val());
+                var albumId = albumProdId.split("-")[0];
+                var providerType = albumProdId.split("-")[1]; 
+                if(!albumId.length || !providerType.length) {
+                    alert('Meta data is missing for this Album. Please Select another Album');
+                    return false;
+                }
 		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+artistNameText+"&albumProdId="+albumProdId;
                     
 		jQuery.ajax({
@@ -289,6 +295,10 @@ echo $session->flash();
             var albumData = escape($('#ArtistAlbum').val());
             var albumProdId = albumData.split("-")[0];
             var providerType = albumData.split("-")[1];
+            if(!songProdId.length) {
+                alert('ProdId is missing for this song,Please select another one');
+                return false;
+            }
             if(songProdId) {
                 $('.no_records').remove();
                 var checkremove = $('.remove_options').length;
@@ -415,6 +425,13 @@ echo $session->flash();
 
     function CheckAllChk(theForm,maincheckname,save)
     {
+        if(save == 1) {
+            var queueName = $('#ArtistQueueName').val();
+            if(!queueName.length) {
+                alert('Please add playlist name');
+                return false;
+            }
+        }
             for(var z=0; z<theForm.length;z++)
             {
                     if(theForm[z].type =='checkbox')
