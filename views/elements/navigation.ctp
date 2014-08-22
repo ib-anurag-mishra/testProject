@@ -591,6 +591,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							</div>
 						</form>
 					</div>
+                    <?php
+                    /*
 					<div class="master-music-search-results">
 						<ul>
 							<li>
@@ -680,6 +682,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							</li>
 						</ul>
 					</div>
+                    */?>
 				</div>
 
 			</div>
