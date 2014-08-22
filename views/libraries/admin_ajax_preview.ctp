@@ -1272,11 +1272,11 @@ div.code-coverage-results span.result-good {
 						<li>
 							Weekly Downloads <span id="downloads_used">0</span>/5				
 							<img src="/img/question.png" alt="Download Limits" width="12" height="14" id="qtip" />|
-							<a href="#">FAQ</a>|
-							<a href="#">My Wishlist</a>|
-							<a href="#">Recent Downloads</a>|					
-							<a href="#">My Account</a>|
-							<a href="#">Logout</a>				
+							<a href="#"><?php __('FAQ'); ?></a>|
+							<a href="#"><?php __('My Wishlist'); ?></a>|
+							<a href="#"><?php __('Recent Downloads'); ?></a>|					
+							<a href="#"><?php __('My Account'); ?></a>|
+							<a href="#"><?php __('Logout'); ?></a>				
 						</li>
 						<li><img src="/img/freegal_logo.png"></li>
 					</ul>
@@ -1285,10 +1285,10 @@ div.code-coverage-results span.result-good {
 			<div id="content">
 				<div class="navigation">
 					<ul class="menu" id="nav">
-						<li class="parent item1"><a href="#">Home</a></li>
-						<li class="parent item2"><a href="#"><span>Genre</span></a>
+						<li class="parent item1"><a href="#"><?php __('Home'); ?></a></li>
+						<li class="parent item2"><a href="#"><span><?php __('Genre'); ?></span></a>
 					<ul>
-						<li class="parent item8"><a href="#">See All</a></li>
+						<li class="parent item8"><a href="#"><?php __('See All'); ?></a></li>
 						<li class="parent item"><a href="#">Pop / Rock</a></li>
 						<li class="parent item"><a href="#">Latin Rock</a></li>
 						<li class="parent item"><a href="#">Classical</a></li>
@@ -1298,14 +1298,14 @@ div.code-coverage-results span.result-good {
 						<li class="parent item"><a href="#">Alternative/Indie</a></li>
 					</ul>
 		</li>
-		<li class="item3"><a href="#"><span>Featured Artist</span></a>
+		<li class="item3"><a href="#"><span><?php __('Featured Artist'); ?></span></a>
 			<ul>
 				<li class="parent item">
 					<a href="#">John Mayer</a>
 				</li>
 			</ul>
 		</li>
-		<li class="item4"><a href="#"><span>Newly Added</span></a>
+		<li class="item4"><a href="#"><span><?php __('Newly Added'); ?></span></a>
 			<ul>
 				<li class="parent item">
 					<a href="#">Avril Lavigne</a>
@@ -1315,7 +1315,7 @@ div.code-coverage-results span.result-good {
 		<li id="search">
 
 			<form controller="Home" class="search_form" id="HomeSearchForm" method="get"  accept-charset="utf-8"><div class="input text"><input name="search" type="text" size="24" id="autoComplete" value="" /></div>
-			<div class="submit"><input type="submit" value="GO" /></div></form>			<a>Advanced Search</a>		</li>	
+			<div class="submit"><input type="submit" value="GO" /></div></form>			<a><?php __('Advanced Search'); ?></a>		</li>	
 	</ul>
 </div>
 <div id="artist_slideshow">
@@ -1324,11 +1324,11 @@ div.code-coverage-results span.result-good {
 	</div>
 </div>
 <div id="ticker">
-	Upcoming Releases
+	<?php __('Upcoming Releases'); ?>
 	<ul id="marquee" class="marquee">
 </div>
 <div id="suggestions">
-    Suggestions
+    <?php __('Suggestions'); ?>
     <div id="suggestionsBox">
 
         <table cellspacing="0" cellpadding="0">
@@ -1393,7 +1393,7 @@ div.code-coverage-results span.result-good {
             <a href="#"><img src="http://music.freegalmusic.com/freegalmusic/test/EN/newartistimg/NAavril_lavigne.jpg" alt="Newly Added Artist" height="215" width="300" /></a></div>
     <div id="artist_search">
 		<div id="artist_links">
-		Artist Search
+		<?php __('Artist Search'); ?>
 		<a href="#bottom">#</a>
 		<a href="#bottom">A</a>
 		<a href="#bottom">B</a>
@@ -1464,10 +1464,10 @@ div.code-coverage-results span.result-good {
 
 	<div id="footer">
 	<div id="copyright" style="float:left;">
-		&copy; 2010 Library Ideas, LLCAll Rights Reserved
+		&copy; 2010 Library Ideas, LLC <?php __('All Rights Reserved'); ?>
 	</div>	
-	<a>About Freegal Music</a>	|
-	<a>Terms &amp; Conditions</a>	|
+	<a><?php __('About Freegal Music'); ?></a>	|
+	<a><?php __('Terms & Conditions'); ?></a>	|
 
 	<a>FAQ</a></div>
 </body>

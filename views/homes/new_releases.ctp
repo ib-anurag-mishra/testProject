@@ -1,14 +1,14 @@
 <section class="my-top-100-page">
     <div class="breadcrumbs">
         <?php
-        $html->addCrumb('New Releases', '/homes/new_releases');
+        $html->addCrumb(__('New Releases', true), '/homes/new_releases');
         echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
         ?>
     </div>
     <header>
         <h2><?php __('New Releases'); ?></h2>
     </header>
-    <h3>Albums</h3>
+    <h3><?php __('Albums'); ?></h3>
     <div class="album-shadow-container">
         <div class="album-scrollable horiz-scroll carousel">
             <ul style="width:16500px;">
@@ -39,7 +39,7 @@
                                     ?>
                                     <a class="playlist-menu-icon add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                                     <ul>
-                                        <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+                                        <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                     </ul>                                     
                                     <?php
@@ -103,7 +103,7 @@
         <button class="right-scroll-button" type="button"></button>
     </div>
 
-<h3>Videos</h3>
+<h3><?php __('Videos'); ?></h3>
 <div class="videos-shadow-container">
     <div class="videos-scrollable horiz-scroll carousel">
         <ul style="width:29100px;">

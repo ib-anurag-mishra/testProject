@@ -309,36 +309,36 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	<div class="rename-queue-dialog-box">
 		<div class="close"></div>
 		<header>
-			Rename '<span>Playlist Name</span>'
+			<?php __('Rename'); ?> '<span><?php __('Playlist Name'); ?></span>'
 		</header>
 		<form id="FormRename" action="#">
 			<div class="rename-form-container">
-				<label id="RenameQueueMessage"></label> <label for="name">Name:</label>
+				<label id="RenameQueueMessage"></label> <label for="name"><?php __('Name'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
-				<label for="description">Description:</label>
+				<label for="description"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
 				<input type="hidden" id="rqPlid" name="rqPlid" value="" /> <input
 					type="hidden" name="hid_action" value="rename_queue" />
 			</div>
 			<div class="buttons-container clearfix">
-				<div class="text-close">Close</div>
+				<div class="text-close"><?php __('Close'); ?></div>
 				<input type="submit" class="save" value="Save Changes" />
 			</div>
 		</form>
 	</div>
 	<div class="create-queue-dialog-box">
 		<div class="close"></div>
-		<header>Create Playlist</header>
+		<header><?php __('Create Playlist'); ?></header>
 		<form id="FormDelete" action="#">
 			<div class="rename-form-container">
-				<label id="CreateQueueMessage"></label> <label for="name">Name:</label>
+				<label id="CreateQueueMessage"></label> <label for="name"><?php __('Name'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-				<label for="description">Description:</label>
+				<label for="description"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
 			</div>
 			<div class="buttons-container clearfix">
-				<div class="text-close">Close</div>
-				<input type="submit" class="save" value="Create New Playlist" />
+				<div class="text-close"><?php __('Close'); ?></div>
+				<input type="submit" class="save" value="<?php __('Create New Playlist'); ?>" />
 			</div>
 		</form>
 	</div>
@@ -349,14 +349,14 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		<form action="#">
 			<div class="confirm-text">
 				<p>
-					Are you sure you want to delete '<span>Queue Name</span>'?
+					<?php __('Are you sure you want to delete'); ?> '<span>Queue Name</span>'?
 				</p>
 			</div>
 			<div class="buttons-container clearfix">
-				<div class="text-close">Close</div>
+				<div class="text-close"><?php __('Close'); ?></div>
 				<input type="hidden" name="hid_action" value="delete_queue" /> <input
 					type="hidden" id="dqPlid" name="dqPlid" value="" /> <input
-					type="submit" class="save" value="Delete Playlist" />
+					type="submit" class="save" value="<?php __('Delete Playlist'); ?>" />
 			</div>
 		</form>
 	</div>
@@ -449,15 +449,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<?php if(!$this->Session->read("patron")){ 
                                                             if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
 					<div class="forgot-password">
-						Forgot your password? <a href="/homes/forgot_password">Click here
-							to reset it.</a>
+						<?php __('Forgot your password?'); ?> <a href="/homes/forgot_password"><?php __('Click here
+							to reset it.'); ?></a>
 					</div>
 					<?php }  
 					}else if($this->Session->read("patron")){
                                                                 if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
 					<div class="forgot-password">
-						Need to change your password? <a href="/users/my_account">Click
-							here to reset it.</a>
+						<?php __('Need to change your password?'); ?> <a href="/users/my_account"><?php __('Click
+							here to reset it.'); ?></a>
 					</div>
 					<?php    }
 					}
@@ -467,7 +467,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 						if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
 
 						{
-							$streamTime = 'UNLIMITED';
+							$streamTime = __('UNLIMITED', true);
 							$libraryunlimited = 1;
 
 						}else if($this->Session->read('library_type')==2){
@@ -501,7 +501,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					</span>
 					<?php if($this->Session->read('library_type')==2){ ?>
 					<div class="streaming-time-remaining">
-						Streaming Time Remaining:&nbsp;</span><span
+						<?php __('Streaming Time Remaining'); ?>:&nbsp;</span><span
 							id="remaining_stream_time"><?php echo $streamTime; ?> </span>
 					</div>
 					<?php
@@ -538,18 +538,18 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<?php } ?>
 					<div class="my-account-menu-container<?php echo isset( $class ) ? $class : ''; ?>">
 						<?php if($this->Session->read("patron")){  ?>
-						<button class="my-account-menu">My Account</button>
+						<button class="my-account-menu"><?php __('My Account'); ?></button>
 
 						<ul class="account-menu-dropdown">
 							<?php 
                                                                 if($isLibaryExistInTimzone ==1){ ?>
 							<li class="dropdown-item"><a href="/users/manage_notification"
-								id="notifications">Notifications</a>
+								id="notifications"><?php __('Notifications'); ?></a>
 							</li>
 							<?php }   
                                                                 if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
 							<li class="dropdown-item"><a href="/users/my_account"
-								id="change-password">Change Password</a>
+								id="change-password"><?php __('Change Password'); ?></a>
 							</li>
 							<?php } ?>
 							<li class="dropdown-item"><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy','id' => 'logout'));?>
@@ -573,20 +573,20 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							<div class="select-arrow-fix">
 								<select name="type" id="master-filter"
 									class="master-search-select">
-									<option value="all">Search All</option>
-									<option value="album">Albums</option>
-									<option value="artist">Artists</option>
-									<option value="composer">Composers</option>
-									<option value="genre">Genres</option>
-									<option value="song">Songs</option>
-									<option value="video">Videos</option>
+									<option value="all"><?php __('Search All'); ?></option>
+									<option value="album"><?php __('Albums'); ?></option>
+									<option value="artist"><?php __('Artists'); ?></option>
+									<option value="composer"><?php __('Composers'); ?></option>
+									<option value="genre"><?php __('Genres'); ?></option>
+									<option value="song"><?php __('Songs'); ?></option>
+									<option value="video"><?php __('Videos'); ?></option>
 								</select>
 							</div>
 
 							<div class="master-search-field-container">
-								<input type="text" placeholder="Press enter or go..."
+								<input type="text" placeholder="<?php __('Press enter or go...'); ?>"
 									class="search-text" id="search-text" name="q"> <a class="go"
-									href="javascript:void(0)" id="headerSearchSubmit">Go</a>
+									href="javascript:void(0)" id="headerSearchSubmit"><?php __('Go'); ?></a>
 							</div>
 						</form>
 					</div>
@@ -683,11 +683,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
 			</div>
 			<?php if($this->Session->read("patron")){ ?>
-			<div class="plays-tooltip">The download usage counter is located in
+			<div class="plays-tooltip"><?php __('The download usage counter is located in
 				the upper right corner of freegalmusic.com displaying your weekly
 				allotment. For instance, 1/3 means that you have a weekly limit of 3
 				downloads, and you have used 1 of those downloads. The download
-				counter resets each week at Monday 12:01 AM (Eastern Time, USA).</div>
+				counter resets each week at Monday 12:01 AM (Eastern Time, USA).'); ?></div>
 			<?php  } ?>
 		</div>
 	</header>
@@ -832,7 +832,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				$defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
 				?>
 			<div class="streaming">
-				<h2>Streaming</h2>
+				<h2><?php __('Streaming'); ?></h2>
 				<ul>
 					<?php if(!empty($defaultQueues)){  ?>
 
@@ -914,10 +914,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                         ?>
                             <div class="movie-announcements">
                                  <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px; font-weight:bold"> 
-                                    Did you know?
+                                    <?php __('Did you know?'); ?>
                                   </p>
-                                  <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px;">Freegal is also a movie service!</p>
-                                  <p style="margin-bottom:14px;">Stream top movies like:</p> 
+                                  <p style="margin-bottom:5px; border-bottom: 1px solid #000;padding-bottom: 3px;"><?php __('Freegal is also a movie service!'); ?></p>
+                                  <p style="margin-bottom:14px;"><?php __('Stream top movies like'); ?>:</p> 
                                  <?php foreach($movieAnnouncmentValue as $value) { 
                                             $i++;
                                   ?>   
@@ -930,7 +930,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         }*/
                                   } ?>
                                  
-                                 <p style="margin-top:14px;"><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" onClick="ga('send', 'event', 'Announcements', 'Click', 'Click here to log in.');" target ="_blank">Click here</a> to log in.</p>
+                                 <p style="margin-top:14px;"><a class="announcments-movie-cta" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/users/redirection_manager'; ?>" onClick="ga('send', 'event', 'Announcements', 'Click', 'Click here to log in.');" target ="_blank"><?php __('Click here') ?></a> <?php __('to log in'); ?>.</p>
                             </div>
                         <?php } ?> 
 		</section>

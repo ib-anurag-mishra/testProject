@@ -21,7 +21,7 @@ include 'header-sidebar.php';
 											<button class="wishlist-icon toggleable"></button>
 
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -56,7 +56,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon added-to-wishlist toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -91,7 +91,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -126,7 +126,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -161,7 +161,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -196,7 +196,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -231,7 +231,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -266,7 +266,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -301,7 +301,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -336,7 +336,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -371,7 +371,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -406,7 +406,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -441,7 +441,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -476,7 +476,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -511,7 +511,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -546,7 +546,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -581,7 +581,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -616,7 +616,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -651,7 +651,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -686,7 +686,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -721,7 +721,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -756,7 +756,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -791,7 +791,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -826,7 +826,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -861,7 +861,7 @@ include 'header-sidebar.php';
 											<button class="playlist-menu-icon toggleable"></button>
 											<button class="wishlist-icon toggleable"></button>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -915,7 +915,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">Happy (Gru's Theme from Despic..</a></div>
 											<div class="artist-name"><a href="#">Pharrel Williams</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -947,7 +947,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">All Of Me</a></div>
 											<div class="artist-name"><a href="#">John Legend</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -981,7 +981,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">Say Something</a></div>
 											<div class="artist-name"><a href="#">A Great Big World &amp; Christina .. </a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -1013,7 +1013,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">All Of Me</a></div>
 											<div class="artist-name"><a href="#">John Legend</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -1047,7 +1047,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">Happy (Gru's Theme from Despic..</a></div>
 											<div class="artist-name"><a href="#">Pharrel Williams</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -1079,7 +1079,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">All Of Me</a></div>
 											<div class="artist-name"><a href="#">John Legend</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -1113,7 +1113,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">Happy (Gru's Theme from Despic..</a></div>
 											<div class="artist-name"><a href="#">Pharrel Williams</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -1145,7 +1145,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">All Of Me</a></div>
 											<div class="artist-name"><a href="#">John Legend</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -1179,7 +1179,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">Happy (Gru's Theme from Despic..</a></div>
 											<div class="artist-name"><a href="#">Pharrel Williams</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -1211,7 +1211,7 @@ include 'header-sidebar.php';
 											<div class="song-title"><a href="#">All Of Me</a></div>
 											<div class="artist-name"><a href="#">John Legend</a></div>
 											<ul>
-												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+												<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?> ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
 												<li><a href="#">Pop</a></li>
 												<li><a href="#">Day After Christmas</a></li>
@@ -1257,7 +1257,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1272,7 +1272,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1287,7 +1287,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1302,7 +1302,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1317,7 +1317,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1332,7 +1332,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1347,7 +1347,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1362,7 +1362,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1377,7 +1377,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1392,7 +1392,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1407,7 +1407,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1422,7 +1422,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1437,7 +1437,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1452,7 +1452,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1467,7 +1467,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1482,7 +1482,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1497,7 +1497,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1512,7 +1512,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1527,7 +1527,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1542,7 +1542,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1560,7 +1560,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1575,7 +1575,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1590,7 +1590,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1605,7 +1605,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1620,7 +1620,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
+										<button class="stream-artist"><?php __('Stream Album'); ?></button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>

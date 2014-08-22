@@ -41,7 +41,7 @@ $ieVersion =  ieversion();
 </div>
 <br class="clr">
 <header>
-        <h2>My Account</h2>
+        <h2><?php __('My Account'); ?></h2>
 
 </header>
 <?php
@@ -54,7 +54,7 @@ $ieVersion =  ieversion();
 ?>
 		<div class="forms-wrapper">
 			<div class="account-info-wrapper">
-				<h3>Account Information</h3>
+				<h3><?php __('Account Information'); ?></h3>
                                     <?php echo $this->Form->create('User', array( 'controller' => 'User','action' => 'my_account')); ?>
                                     <?php if( isset($getData) && (count($getData) > 0) ) { ?>
                         		<?php echo $this->Form->hidden( 'id', array( 'label' => false ,'value' => $getData['User']['id'])); ?>
@@ -87,14 +87,14 @@ $ieVersion =  ieversion();
 ?>
                     
 			<div class="email-notification-wrapper">
-				<h3>Email Notification</h3>
+				<h3><?php __('Email Notification'); ?></h3>
                                 <?php echo $this->Form->create('User', array( 'controller' => 'User','action' => 'manage_notification')); ?>
                                 <div>
                                 <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave)); ?>
-                                Add your email address here to receive twice-weekly email reminders of your available downloads.
+                                <?php __('Add your email address here to receive twice-weekly email reminders of your available downloads.'); ?>
                                 </div>
                                 <div id="show_newsletterboxField" <?php if($notificationAlreadySave != 'true'){ ?> style="display:none;" <?php } ?>>
-                                <?php echo $this->Form->label('Notification Email');?>
+                                <?php echo $this->Form->label(__('Notification Email', true));?>
                                 <?php echo $this->Form->input('NewsletterEmail',array('label' => false ,'value' => $notificationEmail, 'div' => false, 'class' => 'form_fields'));?>
                                 </div>    
                                 <div>

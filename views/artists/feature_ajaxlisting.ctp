@@ -33,7 +33,7 @@ if(!empty($featuredArtists))
                         }
                     }
                     ?>                     
-                    <a title="More by <?php echo $this->getTextEncode($ArtistText); ?>" class="more-by-artist" 
+                    <a title="<?php __('More by'); ?> <?php echo $this->getTextEncode($ArtistText); ?>" class="more-by-artist" 
                        href="/artists/album/<?= base64_encode($this->getTextEncode($v['Featuredartist']['artist_name'])); ?>">
                            <?php echo $this->getTextEncode($ArtistText); ?>
                     </a>

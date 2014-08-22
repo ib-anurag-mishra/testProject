@@ -106,7 +106,7 @@
 		if (!empty($albumData))
 		{
 			?>
-	<h3>Albums</h3>
+	<h3><?php __('Albums'); ?></h3>
 	<div class="album-shadow-container">
 		<div class="album-scrollable horiz-scroll">
 			<ul style="width: 4500px">
@@ -223,7 +223,7 @@
 	if (!empty($artistVideoList))
 	{
 		?>
-	<h3>Videos</h3>
+	<h3><?php __('Videos'); ?></h3>
 	<div class="videos-shadow-container">
 		<div class="videos-scrollable horiz-scroll">
 			<ul style="width: 15000px;">

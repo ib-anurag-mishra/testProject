@@ -211,7 +211,7 @@
 									if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 
 										if ( $psong->status != 'avail' ):
-											$hrefTitle = "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.";
+											$hrefTitle = "<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>";
 								?>
 									<div class="top-100-download-now-button">
 										<form method="Post" id="form<?= $psong->ProdID; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -269,7 +269,7 @@
 								<li> <?=$this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?> </li>
 							</ul>
 							<ul class="playlist-menu">
-								<li><?=$this->Html->link( 'Create New Playlist', '#')?></li>
+								<li><?=$this->Html->link(__('Create New Playlist', true), '#')?></li>
 							</ul>
 						<?php endif; ?>
 					</section>
@@ -358,7 +358,7 @@
 											<?php if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ): ?>
 													<li> <?=$this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
 										</ul>
-													<ul class="playlist-menu"><li><?=$this->Html->link( 'Create New Playlist', '#' )?></li></ul>
+													<ul class="playlist-menu"><li><?=$this->Html->link(__('Create New Playlist', true), '#' )?></li></ul>
 											<?php endif; ?>
 									</section>
 							<?php endif; ?>
@@ -450,7 +450,7 @@
 						?>
 						</div>
 						<?php if ( isset( $patronId ) && !empty( $patronId ) ): ?>
-								<span class="wishlist-btn" title="Add to Wishlist" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></span>
+								<span class="wishlist-btn" title="<?php __('Add to Wishlist'); ?>" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></span>
 						<?php
 								$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
 								if ( $sales_date <= date( 'Y-m-d' ) ):
@@ -585,9 +585,9 @@
 							<?php
 									  	if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ):
 											echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1 );
-											echo $this->Html->link('', '#', array( 'title' => 'Add to a Playlist or Create a New Playlist', 'class' => 'playlist-menu-icon toggleable no-ajaxy' ) );
+											echo $this->Html->link('', '#', array( 'title' => __('Add to a Playlist or Create a New Playlist', true), 'class' => 'playlist-menu-icon toggleable no-ajaxy' ) );
 							?>
-											<ul><li><?php echo $this->Html->link( 'Create New Playlist...', '#', array( 'class' => 'create-new-playlist' ) );?></li></ul>
+											<ul><li><?php echo $this->Html->link( __('Create New Playlist', true) . '...', '#', array( 'class' => 'create-new-playlist' ) );?></li></ul>
 									<?php 
 									  	endif;
 										
@@ -870,7 +870,7 @@
 										</span>
 										</div>
 										<?php if ( isset( $patronId ) && !empty( $patronId ) ):
-												echo $this->Html->link( '', '#', array( 'title' => 'Add To a Playlist, Wishlist, or Download', 'class' => 'menu-btn no-ajaxy' ) );
+												echo $this->Html->link( '', '#', array( 'title' => __('Add To a Playlist, Wishlist, or Download', true), 'class' => 'menu-btn no-ajaxy' ) );
 										?>
 												<section class="options-menu">
 													<input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>" />
@@ -882,7 +882,7 @@
 
 																if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 																	if ( $psong->status != 'avail' ):
-																		$titleSong = "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.";
+																		$titleSong = "<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>";
 														?>
 																		<div class="top-100-download-now-button">
 																			<form method="Post" id="form<?= $psong->ProdID; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -937,7 +937,7 @@
 														<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
 																<li> <?php echo $this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) );?> </li>
 																</ul>
-																<ul class="playlist-menu"> <li> <?php echo $this->Html->link( 'Create New Playlist', '#', array( 'class' => 'no-ajaxy' ) );?> </li> </ul>
+																<ul class="playlist-menu"> <li> <?php echo $this->Html->link(__('Create New Playlist', true), '#', array( 'class' => 'no-ajaxy' ) );?> </li> </ul>
 														<?php endif; ?>
 												</section>
 												<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>

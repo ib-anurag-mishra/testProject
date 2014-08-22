@@ -112,7 +112,7 @@
     </section> <!-- end .featured-videos -->
     <section class="video-top-genres">
         <header class="clearfix">
-            <h3><?php echo __('Top Videos', true); ?></h3>
+            <h3><?php __('Top Videos'); ?></h3>
         </header>
 
 

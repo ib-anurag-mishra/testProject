@@ -64,8 +64,8 @@ foreach ($albumData as $album_key => $album):
 <section class="tracklist-container">
 
 	<div class="tracklist-header">
-		<span class="song">Song</span><span class="artist">Artist</span><span
-			class="time">Time</span>
+		<span class="song"><?php __('Song'); ?></span><span class="artist"><?php __('Artist'); ?></span><span
+			class="time"><?php __('Time'); ?></span>
 	</div>
 
 	<?php

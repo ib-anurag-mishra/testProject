@@ -126,9 +126,9 @@
 	<a class='upgradeFlash' href="javascript:void(0);"></a>
 	<div style="display:none;">
 		<div id="upgradeFlash_div">   
-			This site requires Flash player version 9 or more to play the sample audio files.
-			Please <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank">click here</a> 
-			to upgrade your Flash Player.<br /><br />
+			<?php __('This site requires Flash player version 9 or more to play the sample audio files.'); ?>
+			<?php __('Please'); ?> <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank"><?php __('click here'); ?></a> 
+			<?php __('to upgrade your Flash Player.'); ?><br /><br />
 		</div>
 	</div>
 	<?php
@@ -140,7 +140,7 @@
 				<div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
 					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
 				</div>
-				<b>You need to accept the terms and conditions to browse the site.</b><br />
+				<b><?php __('You need to accept the terms and conditions to browse the site.'); ?></b><br />
 				<div style="overflow:auto;height:200px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;"><?php echo $page->getPageContent('terms'); ?></div><br />
 				<input type="button" value="Accept" onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');"> <input type="button" value="Deny" onclick="Javascript: history.back();">
 			</div>

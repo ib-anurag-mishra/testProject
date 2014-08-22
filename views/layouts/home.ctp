@@ -607,7 +607,7 @@
 			    			if($('#doNotShowCheck').is(':checked')) {
 						 		var data = {pid: pid, lid: lid};
 						 		var url = "users/savenotifypopup";
-					 	 		$('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
+					 	 		$('#noti_content').html('<span style="padding-top:15px;"><b><?php __('You will never shown this subscription form again. Thank You.'); ?></b></span>');
 			    	}
 			    			else {
 								var data = {notificationClose: 1};
@@ -648,12 +648,12 @@
                             var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
 							if($('#doNotShowCheck').is(':checked') && !$('#userNewsletterEmailField').val() ) {
 								var url = "users/savenotifypopup";
-								$('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
+								$('#noti_content').html('<span style="padding-top:15px;"><b><?php __('You will never shown this subscription form again. Thank You.'); ?></b></span>');
 							}
 							else {
 								var url = "users/saveNotification";
 							
-                            	$('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
+                            	$('#noti_content').html('<span style="padding-top:15px;"><b><?php __('Your subscription has been done successfully.'); ?></b></span>');
 							}
                             jQuery.ajax({
                                 type: "post", // Request method: post, get
@@ -782,9 +782,9 @@
         <a class='upgradeFlash' href="#"></a>
         <div style="display:none;">
             <div id="upgradeFlash_div">   
-                This site requires Flash player version 9 or more to play the sample audio files.
-                Please <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank">click here</a> 
-                to upgrade your Flash Player.<br /><br />
+                <?php __('This site requires Flash player version 9 or more to play the sample audio files.'); ?>
+                <?php __('Please'); ?> <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank"><?php __('click here'); ?></a> 
+                <?php __('to upgrade your Flash Player.'); ?><br /><br />
             </div>
         </div>
 
@@ -801,15 +801,15 @@
                         <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
                     </div>
 
-                    <b>You need to accept the terms and conditions to browse the site.</b><br />
+                    <b><?php __('You need to accept the terms and conditions to browse the site.'); ?></b><br />
                     <div style="overflow:auto;height:200px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
                         <?php echo $page->getPageContent('terms'); ?>
                     </div>
 
                     <br />
-                    <input type="button" value="Accept" 
+                    <input type="button" value="<?php __('Accept'); ?>" 
                            onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>', '<?php echo base64_encode($this->Session->read('patron')); ?>');"> 
-                    <input type="button" value="Deny" onclick="Javascript: history.back();">
+                    <input type="button" value="<?php __('Deny'); ?>" onclick="Javascript: history.back();">
                 </div>
             </div>
             <?php
@@ -828,10 +828,10 @@
                         <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:125px;bottom:0;left:305px;right:0;z-index:10000;">
                             <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
                         </div>
-                        <b>Email Notification</b><br />
+                        <b><?php __('Email Notification'); ?></b><br />
 
                         <div style="height:135px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
-                            Please add your email address here to receive twice-weekly email reminders of your available downloads.
+                            <?php __('Please add your email address here to receive twice-weekly email reminders of your available downloads.'); ?>
                             <br /><br /><br />
                             <div >
 								<div id="emaildiv">
@@ -839,12 +839,12 @@
                                 	<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
 								</div><br/>
 								<div>
-									<input type="checkbox" name="doNotShow" value="no" id="doNotShowCheck"> Do not show this message again
+									<input type="checkbox" name="doNotShow" value="no" id="doNotShowCheck"> <?php __('Do not show this message again'); ?>
 								</div>
                             </div>
                         </div>
                         <br/>
-                        <input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
+                        <input type="button" value="<?php __('Submit'); ?>" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
 
                     </span>
                 </div>
@@ -867,11 +867,11 @@
                 <div id="streamApproval_div">
                     <span id="stream_content">
                         <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
-                            <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                            <?php echo $html->image('ajax-loader-big.gif', array('alt' => __('Loading', true) . '...')); ?>
                         </div>
                         <?php echo $page->getPageContent('stream_123'); ?>
                         <br />
-                        <center><input type="button" value="OK" id="colorboxOKBtn"></center>
+                        <center><input type="button" value="<?php __('OK'); ?>" id="colorboxOKBtn"></center>
                     </span>
 
                 </div>
@@ -892,7 +892,7 @@
                         </div>
                         <?php echo $page->getPageContent('stream_123'); ?>
                         <br />
-                        <center><input type="button" value="OK" id="colorboxOKBtn"></center>
+                        <center><input type="button" value="<?php __('OK'); ?>" id="colorboxOKBtn"></center>
                     </span>
 
                 </div>

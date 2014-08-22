@@ -10,7 +10,7 @@
 				$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/' .base64_encode($genre_crumb_name));
 			}
 
-			$html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
+			$html->addCrumb($this->getTextEncode($artistName), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
 			$html->addCrumb($this->getTextEncode($albumData[0]['Album']['AlbumTitle']), '/artists/view/' . str_replace('/', '@', base64_encode($artistName)) . '/' . $album . '/' . base64_encode($albumData[0]['Album']['provider_type']));
 			echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 			?>
@@ -42,7 +42,7 @@
 					?>
 				<?php /*</div>*/ ?>
 				<ul>
-					<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+					<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
 				</ul> 
 
@@ -50,7 +50,7 @@
 
 			</div>
 			
-			<div class="release-info">Release Information</div>
+			<div class="release-info"><?php __('Release Information'); ?></div>
 
 			<div class="album-genre">
 				<?php echo __('Genre') . ": "; ?>
@@ -114,9 +114,9 @@
 
 			</div>
 			<div class="tracklist-header">
-				<span class="song">Song</span>
-				<span class="artist">Artist</span>
-				<span class="time">Time</span>
+				<span class="song"><?php __('Songs'); ?></span>
+				<span class="artist"><?php __('Artist'); ?></span>
+				<span class="time"><?php __('Time'); ?></span>
 			</div>
 
 			<?php
@@ -269,7 +269,7 @@
 							<?php
 							echo $this->Html->link('Download Now', 'javascript:void(0)', array(
 								'class' => 'add-to-wishlist',
-								'title' => '"IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."',
+								'title' => '<?php __('"IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."'); ?>',
 								'onclick' => 'return wishlistDownloadOthersHome("' . $albumSong["Song"]['ProdID'] . '", "0", "' . $albumSong['Full_Files']['CdnPath'] . '", "' . $albumSong['Full_Files']['SaveAsName'] . '", "' . $albumSong["Song"]["provider_type"] . '");'
 							));
 							?>
@@ -324,7 +324,7 @@
 				
 				else:
 					
-				echo $this->Html->link('Login', array('controller' => 'users', 'action' => 'redirection_manager'), array('class' => 'genre-download-now-button'));
+				echo $this->Html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'), array('class' => 'genre-download-now-button'));
 
 				endif; ?>
 

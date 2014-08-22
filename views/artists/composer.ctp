@@ -111,7 +111,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 			Need help? Visit our <a href="/questions">FAQ section.</a>
 		</div>
 	</header>
-	<h3>Albums</h3>
+	<h3><?php __('Albums'); ?></h3>
 	<div class="composer-albums">
 		<?php 
 		if (!empty($albumData)) {
@@ -198,11 +198,11 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 						?>
 						</li>
 						<?php if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) { ?>
-						<li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);">Add to Playlist</a>
+						<li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);"><?php __('Add to Playlist'); ?></a>
 						</li>
 					</ul>
 					<ul class="playlist-menu">
-						<li><a href="#">Create New Playlist</a></li>
+						<li><a href="#"><?php __('Create New Playlist'); ?></a></li>
 					</ul>
 					<?php } ?>
 				</section>
