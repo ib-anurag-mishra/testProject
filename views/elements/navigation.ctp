@@ -75,6 +75,7 @@ function renameQueue()
                 document.getElementById('ajaxflashMessage44').innerHTML = '' ;
                 document.getElementById('ajaxflashMessage44').innerHTML = response ;
                 $('#ajaxflashMessage44').css('display','block');
+                $('#ajaxflashMessage44').fadeOut(5000);
                 
                 $('.rename-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
