@@ -431,18 +431,22 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					?>
 			<h1 class="logo"
 				style="width: 350px; height: 108px; position: absolute; left: 0; top: 0;">
-				<a href="/homes/index"><img
+				<a href="/homes/index"><!-- <img
 					src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo"
-					width="157" height="108"> </a>
+					width="157" height="108"> --> 
+                    <?php echo $this->Html->image('logo.png', array('width' => '157', 'height' => '108'));?>
+                </a>
 			</h1>
 			<?php }
 			} else {
 				?>
 			<h1 class="logo"
 				style="width: 350px; height: 108px; position: absolute; left: 0; top: 0;">
-				<a href="/homes/index"><img
+				<a href="/homes/index"><!-- <img
 					src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo"
-					width="157" height="108" /> </a>
+					width="157" height="108" />  -->
+                    <?php echo $this->Html->image('logo.png', array('width' => '157', 'height' => '108'));?>
+                </a>
 			</h1>
 			<?php } ?>
 			<div class="header-right-col" style="right: 10px;">
