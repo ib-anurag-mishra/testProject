@@ -319,56 +319,6 @@ echo $session->flash();
         });        
     }
     
-    function m_delete(flagVar) { // Delete the contact
-
-            var k2=0;
-            if(flagVar == 1){
-
-                for (var i=0;i<document.artistAdminInsertplaylistForm.elements.length;i++)
-                {
-                        var e1 = document.artistAdminInsertplaylistForm.elements[i];
-
-                        if((e1.type=="checkbox")&&(e1.name=='data[Info][ ]'))
-                        {
-                                if(e1.checked==true)
-                                        {
-                                                k2++;
-                                        }
-                        }
-                }
-
-            }else{
-
-                k2 = 1;
-            }	
-
-            if(k2==0)
-            {
-                    alert('Please select at least one recode for remove.');
-                    return false;
-            }
-            else
-            {
-                    if(flagVar == 1){
-                        var x=confirm('Are you sure you want to remove all selected records ?');
-                    }else if(flagVar == 2){
-                        var x=confirm('Are you sure you want to remove all records ?');
-                    }
-
-                    if(x==false)
-                    {
-                            return false;
-                    }
-                    else(x==true)
-                    {
-
-                            document.getElementById('artistSelectedOpt').value = flagVar;                        
-                            return true;
-
-                    }
-            }
-    }
-
 
     function removeFromlist(theForm,flagVar)
     {
