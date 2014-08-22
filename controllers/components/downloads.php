@@ -172,8 +172,8 @@ Class DownloadsComponent extends Object
             }
             else 
             {
-                echo "Problem in sending mail.";
-            }
+                echo "Problem in sending Mail.";
+            } 
             
             exit;
         }
