@@ -247,7 +247,7 @@ echo $session->flash();
 		var albumProdId = escape($('#ArtistAlbum').val());
                 var albumId = albumProdId.split("-")[0];
                 var providerType = albumProdId.split("-")[1]; 
-                if(albumProdId == '' || albumId || providerType) {
+                if(albumProdId == '' || !albumId || !providerType) {
                     alert('Meta data is missing for this Album. Please Select another Album');
                     return false;
                 }
