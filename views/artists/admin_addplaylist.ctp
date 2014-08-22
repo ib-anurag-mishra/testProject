@@ -400,6 +400,8 @@ echo $session->flash();
                 {
                     if(flagVar == 1){
                         $(".songCheck :checked").parent().parent().parent().remove();
+                        
+                        $("input[@name='data[Info][]' @type='checkbox']:checked").parent().parent().parent().remove();
                     } else {
                         $(".songs_list").remove();
                         $(".remove_options").remove();
