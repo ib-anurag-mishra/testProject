@@ -13,6 +13,9 @@ Class ArtistsController extends AppController {
 	var $layout 	= 'admin';
 	var $helpers 	= array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo', 'Genre', 'Token');
 	var $components = array('Session', 'Auth', 'Downloads', 'CdnUpload', 'Streaming', 'Common','Solr', 'RequestHandler');
+        
+        var $artistPageBrokenImages = array();
+        var $brokenImageArtistURL ='';
 
     /*
       Function Name : beforeFilter
@@ -20,11 +23,13 @@ Class ArtistsController extends AppController {
      */
 
     function beforeFilter() {
-		parent::beforeFilter();
-		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
-		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-                    $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete');
-                }
+
+        parent::beforeFilter();
+        $this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
+        if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
+            $this->Auth->allow('admin_managetopalbums','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete','admin_manageartist','admin_managenewartist');
+        }
+
     }
 
 
@@ -34,10 +39,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopsingles() {
-		$userTypeId = $this->Session->read('Auth.User.type_id');
+	$userTypeId = $this->Session->read('Auth.User.type_id');
         $topSingles = $this->paginate( 'TopSingles', array( 'prod_id != ""' ) );
         $this->set( 'topSingles', $topSingles );
-		$this->set('userTypeId',$userTypeId);
+	$this->set('userTypeId',$userTypeId);
     }
 
 	/*
@@ -1560,9 +1565,27 @@ Class ArtistsController extends AppController {
               $albumData = $this->paginate('Album'); //getting the Albums for the artist
         }       
         
-        if (!empty($albumData)) {            
+        if (!empty($albumData)) {  
+            
             if ($libType == 2) {
                 $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
+            }
+            
+            foreach ($albumData as $album) {  
+                $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+                $albumArtwork = Configure::read('App.Music_Path') .$albumArtwork;
+                //check image file exist or not for each entry
+                if(!$this->Common->checkImageFileExist($albumArtwork)){              
+                    //write broken image entry in the log files                    
+                    if($this->Session->read("subdomain")){
+                        $brokenImageAlbumsURL = $this->Session->read("subdomain").'.freegalmusic.com/artists/view/'.base64_encode($album['Album']['ArtistText']).'/'.$album['Album']['ProdID'].'/'.base64_encode($album['Album']['provider_type']);
+                    }else{
+                        $brokenImageAlbumsURL = 'www.freegalmusic.com/artists/view/'.base64_encode($album['Album']['ArtistText']).'/'.$album['Album']['ProdID'].'/'.base64_encode($album['Album']['provider_type']); 
+                    }                    
+                    $this->log($country.' : ' .' Albums Details : '. $albumArtwork.' : Album URL : '. $brokenImageAlbumsURL); 
+                    //send broken image alert message
+                    $this->__sendBrokenImageAlert($country,$albumArtwork,$brokenImageAlbumsURL,'Album-Details');                  
+                }
             }
         }
 
@@ -2697,7 +2720,7 @@ Class ArtistsController extends AppController {
         } else {
             $this->layout = 'home';
         }
-
+        $artistTextEncode = $id;
         $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
@@ -2806,7 +2829,28 @@ Class ArtistsController extends AppController {
             foreach ($albumData as $key => $value) {
                     $albumData[$key]['combineGenre'] = $this->Common->getGenreForSelection($albumData[$key]['Genre']['Genre']);
                 }
-            $this->set('albumData', $albumData);
+            $this->set('albumData', $albumData);            
+            
+           
+            if(!empty($albumData)){
+                 foreach ($albumData as $key => $value) {
+                     $albumArtwork = $this->Token->artworkToken($value['Files']['CdnPath'] . "/" . $value['Files']['SourceURL']);
+                     $albumArtwork = Configure::read('App.Music_Path') .$albumArtwork;                    
+                      //check image file exist or not for each entry
+                      if(!$this->Common->checkImageFileExist($albumArtwork)){              
+                            //write broken image entry in the log files                    
+                            if($this->Session->read("subdomain")){
+                                $this->brokenImageArtistURL  = $this->Session->read("subdomain").'.freegalmusic.com/artists/album/'.$artistTextEncode;
+                            }else{
+                                $this->brokenImageArtistURL  = 'www.freegalmusic.com/artists/album/'.$artistTextEncode; 
+                            }                    
+                            $this->log($country.' : ' .' Video Details : '. $albumArtwork.' : Album URL : '. $this->brokenImageArtistURL ); 
+
+                            $this->artistPageBrokenImages[] = $albumArtwork;                  
+                      }                     
+                 }                
+            }      
+            
 
             if (isset($this->params['named']['page'])) {
                 $this->autoLayout = false;
@@ -2825,11 +2869,31 @@ Class ArtistsController extends AppController {
 
                 if (!empty($decodedId)) {
                     $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
-                    Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
+                    Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);                                 
                 }
+            }            
+            
+            if(!empty($artistVideoList)){
+                foreach ($artistVideoList as $key => $value) { 
+                     //check image file exist or not for each entry
+                     if(!$this->Common->checkImageFileExist($value['videoAlbumImage'])){              
+                           //write broken image entry in the log files                    
+                           if($this->Session->read("subdomain")){
+                               $this->brokenImageArtistURL  = $this->Session->read("subdomain").'.freegalmusic.com/artists/album/'.$artistTextEncode;
+                           }else{
+                               $this->brokenImageArtistURL  = 'www.freegalmusic.com/artists/album/'.$artistTextEncode; 
+                           }                    
+                           $this->log($country.' : ' .' Video Details : '. $value['videoAlbumImage'].' : Album URL : '. $this->brokenImageArtistURL ); 
+
+                           $this->artistPageBrokenImages[] = $value['videoAlbumImage'];                  
+                     }                     
+                }                
             } 
-            $this->set('artistVideoList', $artistVideoList);
+            
+            $this->set('artistVideoList', $artistVideoList);          
         }
+        
+        $this->__sendBrokenImageAlertForArtistAlbums($country);
     }
     
     function load_albums($id = null,$page = 1) {
@@ -3628,6 +3692,49 @@ Class ArtistsController extends AppController {
             $this->set('arr_albumStream', $arr_albumStream);
             $this->set('composertext', $composer_text);
             $this->set('facetPage',$facetPage);
+        }
+    }
+    
+    /* Function : __sendBrokenImageAlert
+     * Desc: reponsible to send broken image alert
+     * 
+     * @param $country string
+     * @param $albumArtwork string
+     * @param $brokenImageAlbumsURL  string
+     * 
+     */
+    function __sendBrokenImageAlert($country,$albumArtwork,$brokenImageAlbumsURL){
+        
+        $content ='';
+        $content .='Territory : '.$country.'<br />';
+        $content .='Website Page : Album Details'.'<br />';
+        $content .='Album Image URL : '.$albumArtwork.'<br />';
+        $content .='Album URL : '.$brokenImageAlbumsURL.'<br />';
+        $content .='Date-Time : '.date('Y-m-d H:i:s').'<br />';
+        $this->Common->sendBrokenImageAlert($content);
+    }
+    
+    /* Function : __sendBrokenImageAlert
+     * Desc: reponsible to send broken image alert
+     * 
+     * @param $country string
+     * 
+     */
+     function __sendBrokenImageAlertForArtistAlbums($country){
+        //print_r($this->videoPageBrokenImages);die;
+         
+        if(!empty($this->brokenImageArtistURL )){
+            $content ='';
+            $content .='Territory : '.$country.'<br />';
+            $content .='Website Page : Video Details'.'<br />';
+            foreach( $this->artistPageBrokenImages  as $albumArtwork){
+                $content .='Image URL : '.$albumArtwork.'<br />';
+            }       
+            $content .='Location : '.$this->brokenImageArtistURL .'<br />';
+            $content .='Date-Time : '.date('Y-m-d H:i:s').'<br />';
+            
+            //echo $content; die;
+            $this->Common->sendBrokenImageAlert($content);
         }
     }
 }

@@ -87,12 +87,12 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 					</div>
 				</li>
 				<?php
-				if ($count == 25)
-				{
-					break;
-				}
-				$count++;
-					}
+                                        if ($count == 25)
+                                        {
+                                                break;
+                                        }
+                                        $count++;
+                                    }
 				}
 				else
 				{
