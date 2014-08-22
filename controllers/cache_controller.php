@@ -89,33 +89,57 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
+        global $brokenImages;
+        
+        $brokenImages = array();
         $this->writeLibraryTop10songsCache();
         $territoriesList = $this->Common->getTerritories();       
-        foreach($territoriesList as $territory){            
-            $this->setGenre($territory);
-	    $this->setTopSingles($territory);
-            $this->setFeaturedVideos($territory);
-            $this->setTopVideoDownloads($territory);
-	    $this->setTopAlbums($territory);
-            $this->setUsTop10Songs($territory);
-            $this->setUsTop10Albums($territory);
-            $this->setUsTop10Videos($territory);
-            $this->setNewReleaseAlbums($territory);
-            $this->setNewReleaseVideos($territory);
-            $this->setFeaturedArtists($territory);
-	    $this->setFeaturedSongsInCache($territory);
-            $this->setDifferentGenreData($territory);
-            //$this->getArtistText($territory);
-            $this->setDefaultQueues($territory);   
+        foreach($territoriesList as $territory){ 
             
+            $this->setGenre($territory);
+	    $this->setTopSingles($territory); 
+            $this->setFeaturedVideos($territory);          
+            $this->setTopVideoDownloads($territory); 
+	    $this->setTopAlbums($territory);
+            $this->setUsTop10Songs($territory);       
+            $this->setUsTop10Albums($territory);           
+            $this->setUsTop10Videos($territory);       
+            $this->setNewReleaseAlbums($territory);
+            $this->setNewReleaseVideos($territory);                      
+            $this->setFeaturedArtists($territory);            
+	    $this->setFeaturedSongsInCache($territory);
+            $this->setDifferentGenreData($territory);           
+            $this->setDefaultQueues($territory);
         }
+      
        $this->setLibraryTopTenCache();
+       
        $this->setVideoCacheVar();    
        $this->setAppMyMusicVideoList(); 
        $this->setAnnouncementCache();
        //$this->setMoviesAnnouncements();
        $this->setTopArtist();
+       
+       $this->sendBrokenImagesEmail(); 
+       
     }
+   
+    /* Function : sendBrokenImagesEmail
+     * Desc: reponsible to send broken image alert          
+     * 
+     */
+    function sendBrokenImagesEmail(){
+        global $brokenImages;
+        if(!empty($brokenImages)){
+            foreach( $brokenImages  as $albumArtwork){
+                $content .= $albumArtwork.'<br />';
+            }  
+        }
+        $this->Common->sendBrokenImageAlert($content);       
+    }
+    
+    
+    
     
     function setGenre($territory){ 
         $this->Common->getGenres($territory);
@@ -124,12 +148,27 @@ class CacheController extends AppController {
     function setTopSingles($territory){
        $this->Common->getTopSingles($territory); 
     }
+    
+    
+    /*
+     * Function Name: setFeaturedVideos
+     * Desc: cache read & write featured videos for index action
+     *
+     * @param: $prefix string   
+     * 
+     * @return: array
+     */
     function setFeaturedVideos($territory){
-        $this->Common->getFeaturedVideos($territory);
+        
+       $prefix = strtolower( $territory ) . '_'; 
+       $this->Common->featuredVideos($prefix, $territory,false,'_none_explicit');
+       $this->Common->featuredVideos($prefix, $territory,true,'');
+       
     }
     
     function setTopVideoDownloads($territory){
-        $this->Common->getTopVideoDownloads($territory);
+        $prefix = strtolower( $territory ) . '_';
+        $this->Common->topDownloadVideos($prefix, $territory);
     }
     
     function setTopAlbums($territory) {
@@ -230,7 +269,9 @@ class CacheController extends AppController {
     
     function setFeaturedArtists($territory){
         
-        $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
+        $featuresArtists = $this->Common->getFeaturedArtists($territory,1);    
+       
+        
         if(!empty($featuresArtists)){
             Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
             $this->log("cache written for featured artists for ".$territory.'_'.'1', 'debug');

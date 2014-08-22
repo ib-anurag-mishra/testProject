@@ -9,8 +9,8 @@
 Class CommonComponent extends Object
 {
 
-    var $components = array('Session', 'Streaming', 'Queue');
-    var $uses = array('Token');
+    var $components = array('Session', 'Streaming', 'Queue','Email');
+    var $uses = array('Token','FeaturedVideo');
 
     /*
      * Function Name : getGenres
@@ -538,7 +538,7 @@ STR;
     function getNationalTop100Albums($territory)
     {
         set_time_limit(0);
-        $tokeninstance = ClassRegistry::init('Token');
+        $tokeninstance = ClassRegistry::init('Token');        
         $countryPrefix = $this->getCountryPrefix($territory);
         $country = $territory;
         if (!empty($country))
@@ -689,6 +689,105 @@ STR;
         $this->log("cache written for national top 100 albums for $territory", 'debug');
         return $data;
     }
+    
+    
+     /*
+     * Function Name: featuredVideos
+     * Desc: cache read & write featured videos for index action
+     *
+     * @param: $prefix string
+     * @param: $territory string
+     * @param: $explicitContent string
+     * @param: $cacheVariableSuffix string
+     * 
+     * @return: array
+     */
+
+    public function featuredVideos( $prefix, $territory,$explicitContent,$cacheVariableSuffix ) {
+        
+         set_time_limit(0);
+          global $brokenImages;
+         $tokeninstance = ClassRegistry::init('Token');
+         $FeaturedVideo = ClassRegistry::init('FeaturedVideo');
+    	
+         $featuredVideos = $FeaturedVideo->fetchFeaturedVideo( $prefix, $territory, $explicitContent );
+
+         if ( !empty( $featuredVideos ) ) {
+
+                foreach ( $featuredVideos as $key => $featureVideo ) {
+
+                        $videoArtwork = $tokeninstance->artworkToken( $featureVideo['File']['CdnPath'] . '/' . $featureVideo['File']['SourceURL'] );
+                        $videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
+
+                        $featuredVideos[$key]['videoImage'] = $videoImage;
+
+                        //check image file exist or not for each entry
+                        if(!$this->checkImageFileExist($featuredVideos[$key]['videoImage'])){              
+                            //write broken image entry in the log files
+                            $this->log($territory.' : ' .' Featured Videos : '. $featuredVideos[$key]['videoImage'], 'check_images');
+                            $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .' Featured Videos : '. $featuredVideos[$key]['videoImage'];
+                            //unset the broken images variable in the array
+                            unset($featuredVideos[$key]);             
+                        }                            
+                }
+                
+                Cache::write( 'featured_videos' . $cacheVariableSuffix . $territory, $featuredVideos );
+                $this->log("Updated featured videos $cacheVariableSuffix cache for " . $territory, "cache");
+         }
+           
+    	return $featuredVideos;
+    }
+    
+    
+      /**
+     * Function Name: topDownloadVideos
+     * Desc: cache read & write top download videos for index action
+     *
+     * @param: Two and type String
+     * @return: array
+     */
+
+    public function topDownloadVideos( $prefix, $territory ) {    	
+    	
+        set_time_limit(0);
+        global $brokenImages;
+        $tokeninstance = ClassRegistry::init('Token');
+        $Videodownload = ClassRegistry::init('Videodownload');        
+        $topDownloads = $Videodownload->fetchVideodownloadTopDownloadedVideos( $prefix );
+
+        if ( !empty( $topDownloads ) ) {
+
+                foreach ( $topDownloads as $key => $topDownload ) {
+
+                        $videoArtwork = $tokeninstance->artworkToken( $topDownload['File']['CdnPath'] . '/' . $topDownload['File']['SourceURL'] );
+                        $videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
+
+                        $topDownloads[$key]['videoImage'] = $videoImage;
+                        
+                        //check image file exist or not for each entry
+                        if(!$this->checkImageFileExist($topDownloads[$key]['videoImage'])){              
+                            //write broken image entry in the log files
+                            $this->log($territory.' : ' .' Top Download Videos : '. $topDownloads[$key]['videoImage'], 'check_images');
+                            $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .' Top Download Videos : '. $topDownloads[$key]['videoImage'];
+                            //unset the broken images variable in the array
+                            unset($topDownloads[$key]);             
+                        }                        
+                }
+                
+                Cache::write( 'top_download_videos' . $territory, $topDownloads );
+                $this->log("Updated top download videos cache for " . $territory, "cache");    
+        }
+       
+        return $topDownloads;
+        
+    }
+    
+    
+    
+    
+    
+    
+    
 
     /*
      * Function Name : getFeaturedVideos
@@ -791,6 +890,7 @@ STR;
     function getUsTop10Songs($territory)
     {
         set_time_limit(0);
+         global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
@@ -912,8 +1012,18 @@ STR;
                         $data[$key]['streamUrl'] = $streamUrl;
                         $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
                     }
+                    
+                    //check image file exist or not for each entry
+                    if(!$this->checkImageFileExist($data[$key]['songs_img'])){              
+                       //write broken image entry in the log files
+                       $this->log($country.' :  Top10 Songs : '. $data[$key]['songs_img'], 'check_images');
+                       $brokenImages[] = date('Y-m-d H:i:s').' : ' .$country.' : ' .' Top10 Songs : '. $data[$key]['songs_img'];
+                       //unset the broken images variable in the array
+                       unset($data[$key]);             
+                    }                  
+                    
                 }
-                Cache::delete("national_us_top10_songs" . $country);
+                
                 Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("cache written for US top ten for $territory", "cache");
             }
@@ -937,6 +1047,7 @@ STR;
     function getUsTop10Albums($territory)
     {
         set_time_limit(0);
+         global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
@@ -1052,8 +1163,17 @@ STR;
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
+                    
+                    //check image file exist or not for each entry
+                    if($this->checkImageFileExist($data[$key]['album_img'])){              
+                       //write broken image entry in the log files
+                       $this->log($country.' :  Top10 Albums : '. $data[$key]['album_img'], 'check_images');
+                       $brokenImages[] = date('Y-m-d H:i:s').' : ' .$country.' : ' .' Top10 Albums : '. $data[$key]['album_img'];
+                       //unset the broken images variable in the array
+                       unset($data[$key]);             
+                    }
                 }
-                Cache::delete("national_us_top10_albums" . $country);
+                
                 Cache::write("national_us_top10_albums" . $country, $data);
                 $this->log("cache written for US top ten Album for $territory", "cache");
             }
@@ -1077,6 +1197,7 @@ STR;
     function getUsTop10Videos($territory)
     {
         set_time_limit(0);
+         global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
@@ -1183,8 +1304,18 @@ STR;
                     $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    
+                    
+                     //check image file exist or not for each entry
+                    if(!$this->checkImageFileExist($data[$key]['videoAlbumImage'])){              
+                       //write broken image entry in the log files
+                       $this->log($country.' :  Top10 Videos : '. $data[$key]['videoAlbumImage'], 'check_images');
+                       $brokenImages[] = date('Y-m-d H:i:s').' : ' .$country.' : ' .' Top10 Videos : '. $data[$key]['videoAlbumImage'];
+                       //unset the broken images variable in the array
+                       unset($data[$key]);             
+                    }
                 }
-                Cache::delete("national_us_top10_videos" . $country);
+                
                 Cache::write("national_us_top10_videos" . $country, $data);
                 $this->log("cache written for US top ten video for $territory", "cache");
             }
@@ -1208,6 +1339,7 @@ STR;
     function getNewReleaseAlbums($territory, $explicitContent = false)
     {
         set_time_limit(0);
+         global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $songInstance = ClassRegistry::init('Song');
@@ -1309,9 +1441,18 @@ STR;
                     $data[$key]['albumImage'] = $album_img;
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
-                    );
+                    );                    
+                    
+                    //check image file exist or not for each entry
+                    if(!$this->checkImageFileExist($data[$key]['albumImage'])){              
+                       //write broken image entry in the log files
+                       $this->log($territory.' : ' .' New Release Albums '. $data[$key]['albumImage'], 'check_images');
+                       $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .' New Release Albums '. $data[$key]['albumImage'];
+                       //unset the broken images variable in the array
+                       unset($data[$key]);             
+                    }  
                 }
-                Cache::delete($cacheVariableName . $country);
+                
                 Cache::write($cacheVariableName . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
             }
@@ -1340,7 +1481,10 @@ STR;
 
     function getNewReleaseVideos($territory)
     {
+        
         set_time_limit(0);
+        
+        global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
@@ -1387,15 +1531,25 @@ STR;
             $this->log("new release album for $territory", "cachequery");
             $this->log($sql_video_new_release, "cachequery");
 
-            if (!empty($data))
-            {
+            if (!empty($data)) {
+                
                 foreach ($data as $key => $value)
                 {                    
                     $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    
+                    
+                    //check image file exist or not for each entry
+                    if(!$this->checkImageFileExist($data[$key]['videoAlbumImage'])){              
+                       //write broken image entry in the log files
+                       $this->log($territory.' : ' .' New Release Videos '. $data[$key]['videoAlbumImage'], 'check_images');
+                       $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .' New Release Videos '. $data[$key]['videoAlbumImage'];
+                       //unset the broken images variable in the array
+                       unset($data[$key]);             
+                    }  
                 }
-                Cache::delete("new_releases_videos" . $country);
+                
                 Cache::write("new_releases_videos" . $country, $data);
                 $this->log("cache written for new releases videos for $territory", "cache");
             }
@@ -1419,6 +1573,7 @@ STR;
     function getFeaturedArtists($territory,$page = 0, $limit = 20)
     {
     	set_time_limit(0);
+         global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
     	if(isset($page)){
     		if($page <= 0)
@@ -1442,33 +1597,51 @@ STR;
                     'Featuredartist.id' => 'DESC'),
                 'limit' => "$offset,$limit"
                 )
-        );        
+        ); 
+       
         
         if ((count($featured) < 1) || ($featured === false))
         {
             $this->log("featured artist data is not available for" . $territory, "cache");
         }
-        if(!empty($featured)){
-            foreach ($featured as $k => $v)
-            {                
-            	$albumids = explode(',',$v['Featuredartist']['album']);
-               	if($v['Featuredartist']['album']!=0){
-			$streamsongs = array();
-                 	for ($i=0; $i<count($albumids); $i++){
-        				$streamsongs[$i] =  $this->requestAction(
-                         	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Featuredartist']['artist_name']), $albumids[$i], base64_encode($v['Featuredartist']['provider_type']),0,$territory))
-                    	);
-					}
-        			$albumsongs = array();
-    				for($a =0; $a<count($streamsongs);$a++){
-        				$playlist = reset($streamsongs[$a]);
-					$albumsongs =  array_merge($albumsongs,$playlist);
-				}
-        			$featured[$k]['albumSongs'] = $albumsongs;
         
+       
+        if(!empty($featured)){
+            
+            foreach ($featured as $k => $v) {         
+                
+            	$albumids = explode(',',$v['Featuredartist']['album']);
+               	if($v['Featuredartist']['album']!=0) {
+                    
+                    $streamsongs = array();
+                    for ($i=0; $i<count($albumids); $i++){
+                                    $streamsongs[$i] =  $this->requestAction(
+                                                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Featuredartist']['artist_name']), $albumids[$i], base64_encode($v['Featuredartist']['provider_type']),0,$territory))
+                                                        );
+                    }
+                    $albumsongs = array();
+                    for($a =0; $a<count($streamsongs);$a++){
+                            $playlist = reset($streamsongs[$a]);
+                            $albumsongs =  array_merge($albumsongs,$playlist);
+                    }
+                    
+                    $featured[$k]['albumSongs'] = $albumsongs;        
                 }
+                
+                $featureImageURL =  Configure::read('App.CDN') . 'featuredimg/' . $featured[$k]['Featuredartist']['artist_image'].'<br>';
+                
+                 //check image file exist or not for each Artist
+                if(!$this->checkImageFileExist($featureImageURL)){              
+                    //write broken image entry in the log files
+                    $this->log($territory.' : ' .' Feature Artist and Composer : '. $featured[$k]['Featuredartist']['artist_name'], 'check_images');
+                    $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'Feature Artist and Composer : '. $featured[$k]['Featuredartist']['artist_name'];
+                 
+                    //unset the broken images variable in the array
+                    unset($featured[$k]);             
+                }                
             }
         }
+       
         return $featured;
     }
     
@@ -1620,7 +1793,8 @@ STR;
    */
 
   function getTopAlbums($territory) {
-
+     
+      global $brokenImages;
     // Gets the list of the top albums that are manually set
     $TopAlbum = ClassRegistry::init('TopAlbum');
     $topAlbumsList = $TopAlbum->getTopAlbumsList($territory);
@@ -1645,28 +1819,60 @@ STR;
 
       // Gets the album info for each album on the list
       if ($ids_provider_type != '') {
-        $Album = ClassRegistry::init('Album');
-        $topAlbumData = $Album->getTopAlbumData($territory, $ids_provider_type);
+            $Album = ClassRegistry::init('Album');
+            $topAlbumData = $Album->getTopAlbumData($territory, $ids_provider_type);
       } else {
-        $topAlbumData = array();
+            $topAlbumData = array();
       }
 
       if (!empty($topAlbumData)) {
-        $Token = ClassRegistry::init('Token');
-        $musicPath = Configure::read('App.Music_Path');
-        foreach ($topAlbumData as $key => $data) {                
-          $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Files']['CdnPath'] . '/' . $data['Files']['SourceURL']);;
-          $topAlbumData[$key]['albumSongs'] = $this->getAlbumSongsNew($data['Album']['ProdID'], $data['Album']['provider_type'], $territory);
+            $Token = ClassRegistry::init('Token');
+            $musicPath = Configure::read('App.Music_Path');  
+        
+            foreach ($topAlbumData as $key => $data) { 
 
-        }
-        Cache::write('top_albums' . $territory, $topAlbumData);
-        $this->log('cache written for Top Albums for: ' . $territory, 'debug');
-        $this->log('cache written for Top Albums for: ' . $territory, 'cache');
+                $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Files']['CdnPath'] . '/' . $data['Files']['SourceURL']);;
+                $topAlbumData[$key]['albumSongs'] = $this->getAlbumSongsNew($data['Album']['ProdID'], $data['Album']['provider_type'], $territory);          
+
+                //check image file exist or not for each entry
+                if(!$this->checkImageFileExist($topAlbumData[$key]['topAlbumImage'])){              
+                    //write broken image entry in the log files
+                    $this->log($territory.' : ' .' Top Albums : '. $topAlbumData[$key]['topAlbumImage'], 'check_images');
+                     $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'Top Albums : '. $topAlbumData[$key]['topAlbumImage'];
+                    //unset the broken images variable in the array
+                    unset($topAlbumData[$key]);             
+                }          
+            } 
+            
+            Cache::write('top_albums' . $territory, $topAlbumData);
+            $this->log('cache written for Top Albums for: ' . $territory, 'debug');
+            $this->log('cache written for Top Albums for: ' . $territory, 'cache');
+        
       }
-
+      
     }
-
     return $topAlbumData;
+  }
+  
+  /* @FunctionName : checkImageFileExist
+   * @Desc         : check the images exist or not using CURL
+   * 
+   * @param ImageURL String 
+   * @return Boolean
+   */
+  function checkImageFileExist($imageURL) {      
+     
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL,$imageURL);
+      // don't download content
+      curl_setopt($ch, CURLOPT_NOBODY, 1);
+      curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      if(curl_exec($ch)!==FALSE) {
+          return true;
+      }else{
+          return false;
+      }      
   }
 
   function getAlbumSongsNew($prodId, $provider, $territory) {
@@ -1974,6 +2180,7 @@ STR;
     function getLibraryTopTenSongs($territory, $libId)
     {
         set_time_limit(0);
+        global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
         $latestDownloadInstance = ClassRegistry::init('LatestDownload');
@@ -2153,17 +2360,27 @@ STR;
                 $songs_img = Configure::read('App.Music_Path') . $songs_img;
                 $topDownload[$key]['songs_img'] = $songs_img;
                     
-                    $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+
+                if (!empty($filePath))
+                {
+                    $songPath = explode(':', $filePath);
+                    $streamUrl = trim($songPath[1]);
+                    $topDownload[$key]['streamUrl'] = $streamUrl;
+                    $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                }
                     
-                    if (!empty($filePath))
-                    {
-                        $songPath = explode(':', $filePath);
-                        $streamUrl = trim($songPath[1]);
-                        $topDownload[$key]['streamUrl'] = $streamUrl;
-                        $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
-                    }
+                   //check image file exist or not for each entry
+                if(!$this->checkImageFileExist($topDownload[$key]['songs_img'])){              
+                    //write broken image entry in the log files
+                    $this->log($territory.' : ' .' LibraryID '. $libId .' Top10 Songs : '. $topDownload[$key]['songs_img'], 'check_images');
+                    $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'LibraryID '. $libId .' Top10 Songs : '. $topDownload[$key]['songs_img'];
+                    //unset the broken images variable in the array
+                    unset($topDownload[$key]);             
+                }       
+                    
             }
-            Cache::delete("lib" . $libId);
+           
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
@@ -2180,6 +2397,7 @@ STR;
     function getLibraryTop10Albums($territory, $libId)
     {
         set_time_limit(0);
+         global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');         
         $albumInstance = ClassRegistry::init('Album');
         $latestDownloadInstance = ClassRegistry::init('LatestDownload');
@@ -2208,6 +2426,7 @@ STR;
         $sony_ids_str = '';
         $ioda_ids_str = '';
         $ids_provider_type = '';
+        $ids_provider_type_album ='';
         foreach ($topDownloaded_albums as $k => $v)
         {
             if ($maintainLatestDownload)
@@ -2343,7 +2562,7 @@ STR;
             $this->log("topDownloaded_query albums returns null for lib: $libId $country", "cache");
         }
         else
-        {
+        {            
             foreach ($topDownload as $key => $value)
             {                
                 $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
@@ -2352,8 +2571,18 @@ STR;
                     $topDownload[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
+                    
+            
+               //check image file exist or not for each entry
+               if(!$this->checkImageFileExist($topDownload[$key]['album_img'])){              
+                   //write broken image entry in the log files
+                   $this->log($territory.' : ' .' LibraryID '. $libId .' Top10 Albums : '. $topDownload[$key]['album_img'], 'check_images');
+                   $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'LibraryID '. $libId .' Top10 Albums : '. $topDownload[$key]['album_img'];
+                   //unset the broken images variable in the array
+                   unset($topDownload[$key]);             
+               }                     
             }
-            Cache::delete("lib_album" . $libId);
+            
             Cache::write("lib_album" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 albums cache set for lib: $libId $country", "cache");
@@ -2370,6 +2599,7 @@ STR;
     function getLibraryTop10Videos($territory, $libId)
     {
         set_time_limit(0);
+        global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $latestVideoDownloadInstance = ClassRegistry::init('LatestVideodownload');
         $videodownloadInstance = ClassRegistry::init('Videodownload');
@@ -2399,6 +2629,7 @@ STR;
         $sony_ids_str = '';
         $ioda_ids_str = '';
         $ids_provider_type = '';
+        $ids_provider_type_video = '';
         foreach ($topDownloaded_videos as $k => $v)
         {
             if ($maintainLatestDownload)
@@ -2531,8 +2762,18 @@ STR;
                 $albumArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                
+                
+                //check image file exist or not for each entry
+               if(!$this->checkImageFileExist($topDownload[$key]['videoAlbumImage'])){              
+                   //write broken image entry in the log files
+                   $this->log($territory.' : ' .' LibraryID '. $libId .' Top10 Video : '. $topDownload[$key]['videoAlbumImage'], 'check_images');
+                   $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .' LibraryID '. $libId .' Top10 Video : '. $topDownload[$key]['videoAlbumImage'];
+                   //unset the broken images variable in the array
+                   unset($topDownload[$key]);             
+               }
             }
-            Cache::delete("lib_video" . $libId);
+            
             Cache::write("lib_video" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
@@ -2573,6 +2814,27 @@ STR;
             $countryInstance->setTablePrefix($countryPrefix);
         }
         return $countryPrefix;
+    }
+    
+    
+    /* Function : sendBrokenImageAlert
+     * Desc: reponsible to send broken image alert
+     * 
+     * @param $content string    
+     * 
+     */
+     function sendBrokenImageAlert($content) {         
+        
+        $this->Email->to = 'narendra.nagesh@infobeans.com';
+        $this->Email->from = Configure::read('App.adminEmail');
+        $this->Email->fromName = Configure::read('App.fromName');
+        $this->Email->subject = 'FreegalMusic - Broken Images information';
+        $this->Email->smtpHostNames = Configure::read('App.SMTP');
+        $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
+        $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
+        $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
+        $result = $this->Email->send($content);
+     
     }
 
     /**
