@@ -2959,7 +2959,7 @@ STR;
 
     function language() {
 
-        if(!empty($this->params['url']['langType']))
+        if(!empty($this->params['url']['langType']) && $this->params['url']['langType']>=1 && $this->params['url']['langType']<=4)
         {           
             $language = $this->params['url']['langType'];
             $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));

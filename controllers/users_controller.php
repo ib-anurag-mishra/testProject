@@ -28,7 +28,7 @@ Class UsersController extends AppController
 		$this->Cookie->path = '/';
 		$this->Cookie->domain = 'freegalmusic.com';
                 
-                if(!empty($this->params['url']['langType']))
+                if(!empty($this->params['url']['langType']) && $this->params['url']['langType']>=1 && $this->params['url']['langType']<=4)
                 {
                     $langContent = $this->requestAction('/homes/language?langType='.$this->params['url']['langType']);
                 }
