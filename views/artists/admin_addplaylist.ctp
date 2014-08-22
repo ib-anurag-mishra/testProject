@@ -247,7 +247,7 @@ echo $session->flash();
 		var albumProdId = escape($('#ArtistAlbum').val());
                 var albumId = albumProdId.split("-")[0];
                 var providerType = albumProdId.split("-")[1]; 
-                if(!albumId.length || !providerType.length) {
+                if(albumId || providerType) {
                     alert('Meta data is missing for this Album. Please Select another Album');
                     return false;
                 }
@@ -295,7 +295,7 @@ echo $session->flash();
             var albumData = escape($('#ArtistAlbum').val());
             var albumProdId = albumData.split("-")[0];
             var providerType = albumData.split("-")[1];
-            if(!songProdId.length) {
+            if(!songProdId) {
                 alert('ProdId is missing for this song,Please select another one');
                 return false;
             }
@@ -427,7 +427,7 @@ echo $session->flash();
     {
         if(save == 1) {
             var queueName = $('#ArtistQueueName').val();
-            if(!queueName.length) {
+            if(!queueName) {
                 alert('Please add playlist name');
                 return false;
             }
