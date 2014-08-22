@@ -42,17 +42,22 @@
 				{
 					if(strstr($_SERVER[ 'REQUEST_URI' ], '/users/'))        // If Login Page
                                         {
-                                            echo '<a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" class="no-ajaxy" href="<?php echo $_SERVER['REQUEST_URI']."/".$k ?>" id=' . $k . ' >';
+                                            ?>
+                                                <a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" class="no-ajaxy" href="<?php echo $_SERVER['REQUEST_URI']."/".$k ?>" id="<?php echo $k; ?>">
+                                                <?php echo $this->getTextEncode($v); ?>
+                                                </a>
+                                             <?php
                                         }
                                         else            // For other pages
                                         {
                                             echo '<a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" href="javascript:void(0)" id=' . $k . ' onClick="changeLang(' . $k . ');">';
+                                            echo $this->getTextEncode($v);
+                                            echo '</a>';
                                         }
                                         
 					?>
-			<?php echo $this->getTextEncode($v); ?>
-			<?php
-			echo '</a> ';
+			
+			<?php			
 			if ($i > 0 && $i < count($language))
 			{
 				echo "| ";
