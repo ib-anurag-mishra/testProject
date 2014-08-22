@@ -3355,7 +3355,7 @@ STR;
             $id = $artist;
 			$Song = ClassRegistry::init('Song');
         	$Song->Behaviors->attach('Containable');
-        	$songs = Song->find('all', array(
+        	$songs = $Song->find('all', array(
             'fields' => array(
                 'DISTINCT Song.ReferenceID',
                 'Song.provider_type',
@@ -3434,6 +3434,7 @@ STR;
                             )
                         ),
                         'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+						'limit' => '15',
                         'cache' => 'yes',
                         'chk' => 2
             ));
