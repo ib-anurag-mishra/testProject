@@ -159,7 +159,7 @@ Class DownloadsComponent extends Object
             else
             {
                 $mailContent     .=   "Hi,\n\n";
-                $mailContent     .=   "Right now there are no libraries having reamining library downloads less than or equal to 100.\n\n";
+                $mailContent     .=   "Right now there are no libraries having remaining library downloads less than or equal to 100.\n\n";
             }
             
             $mailContent     .=   "Thanks\n\n";
