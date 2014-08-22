@@ -296,7 +296,7 @@ echo $session->flash();
             var albumProdId = albumData.split("-")[0];
             var providerType = albumData.split("-")[1];
 
-            if(!trim(songProdId) || trim(songProdId) == '') {
+            if(!songProdId || songProdId == '') {
                 alert('ProdId is missing for this song,Please select another one');
                 return false;
             }
@@ -428,34 +428,35 @@ echo $session->flash();
     {
         if(save == 1) {
             var queueName = $('#ArtistQueueName').val();
-            if(!trim(queueName) || trim(queueName) == '') {
+            var rexp = /^[0-9a-zA-Z]+$/
+            if(!rexp.test(queueName)){
                 alert('Please add playlist name');
                 return false;
             }
         }
-            for(var z=0; z<theForm.length;z++)
-            {
-                    if(theForm[z].type =='checkbox')
-                    {
-  
-                            if(maincheckname.checked == true)
-                            {
-                                    theForm[z].checked=true;
-                            }		   
-                            else
-                            {
-                                    theForm[z].checked=false;
-                            }
-                            if(save == 1) {
+        for(var z=0; z<theForm.length;z++)
+        {
+                if(theForm[z].type =='checkbox')
+                {
+
+                        if(maincheckname.checked == true)
+                        {
                                 theForm[z].checked=true;
-                            }                              
-                    }
-            }
-            if(save == 1) {
-                return true;
-            } else {
-                return false;
-            }    
+                        }		   
+                        else
+                        {
+                                theForm[z].checked=false;
+                        }
+                        if(save == 1) {
+                            theForm[z].checked=true;
+                        }                              
+                }
+        }
+        if(save == 1) {
+            return true;
+        } else {
+            return false;
+        }    
     }    
 
 
