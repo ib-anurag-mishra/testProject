@@ -190,7 +190,6 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 				</ul>
 			</li>
                         <?php } ?>
-
 		</ul>
 	</li>
 	<li><a href="#"
