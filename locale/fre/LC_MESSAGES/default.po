@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreegalMusic.com\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2014-08-25 17:33+0530\n"
+"PO-Revision-Date: 2014-08-11 13:02+0530\n"
 "Last-Translator: Rob Richmond <rob@m68interactive.com>\n"
 "Language-Team: m68 Interactive <tech@m68interactive.com>\n"
 "MIME-Version: 1.0\n"
@@ -52,8 +52,14 @@ msgid "Download"
 msgstr "Télécharger"
 
 #: \artists\view.ctp:138;141 \homes\index.ctp:305;308
-msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
-msgstr "IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez sur \"Annuler\" par la suite"
+msgid ""
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press `Cancel` or "
+"not."
+msgstr ""
+"IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger "
+"Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez "
+"sur \"Annuler\" par la suite"
 
 #: \artists\view.ctp:138;141 \genres\index.ctp:113;116
 #: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
@@ -69,399 +75,11 @@ msgstr "Veuillez patienter…"
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
 #: \homes\search.ctp:141
-msgid "You have already downloaded this song. Get it from your recent downloads"
-msgstr "Vous avez déjà téléchargé cette chanson. Obtenez-la à partir de vos téléchargements récents."
-
-#: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
-#: \homes\search.ctp:141
-msgid "Downloaded"
-msgstr "Téléchargé"
-
-#: \artists\view.ctp:158;176 \genres\index.ctp:133;150
-#: \homes\index.ctp:209;227;326;344 \homes\my_wishlist.ctp:92
-#: \homes\search.ctp:150;170
-msgid "Limit Exceeded"
-msgstr "Limite dépassée"
-
-#: \artists\view.ctp:163 \genres\index.ctp:138 \homes\index.ctp:215;332
-#: \homes\search.ctp:157
-msgid "Added to Wishlist"
-msgstr "Ajoutée àla liste de voeux"
-
-#: \artists\view.ctp:167 \homes\index.ctp:219;336
-msgid "Add To Wishlist"
-msgstr "Ajouter à la liste de voeux"
-
-#: \artists\view.ctp:182 \genres\index.ctp:156;156
-#: \homes\index.ctp:233;233;350;350 \homes\search.ctp:177;177
-msgid "Coming Soon"
-msgstr "Prochainement"
-
-#: \elements\footer.ctp:19
-msgid "All Rights Reserved"
-msgstr "Tous droits réservés"
-
-#: \elements\footer.ctp:21
-msgid "About"
-msgstr "Environ"
-
-#: \elements\footer.ctp:23
-msgid "Terms & Conditions"
-msgstr "Termes et Conditions"
-
-#: \elements\footer.ctp:25 \elements\header.ctp:53
-msgid "FAQ"
-msgstr "FAQ"
-
-#: \elements\footer.ctp:27
-msgid "Also available in"
-msgstr "Egalement disponible dans…"
-
-#: \elements\header.ctp:49
-msgid "Weekly Downloads"
-msgstr "Téléchargements hebdomadaires"
-
-#: \elements\header.ctp:56
-msgid "My Wishlist"
-msgstr "Ma liste de voeux"
-
-#: \elements\header.ctp:59
-msgid "Recent Downloads"
-msgstr "Téléchargements récents"
-
-#: \elements\header.ctp:62
-msgid "My Account"
-msgstr "Mon compte"
-
-#: \elements\header.ctp:65
-msgid "Logout"
-msgstr "Déconnexion"
-
-#: \elements\navigation.ctp:19
-msgid "Home"
-msgstr "Accueil"
-
-#: \elements\navigation.ctp:23
-msgid "See All"
-msgstr "Voir le tout"
-
-#: \elements\navigation.ctp:37
-msgid "Featured Artist"
-msgstr "Artiste Présenté"
-
-msgid "Now Streaming"
-msgstr "maintenant en streaming"
-
-msgid "Create and Store Playlists"
-msgstr "Créer et stocker Playlists"
-
-msgid "Playlist"
-msgstr "playlist"
-
-msgid "Streaming Time"
-msgstr "Time Streaming"
-
-msgid "Streaming History"
-msgstr "Streaming Histoire"
-
-#: \elements\navigation.ctp:56
-msgid "Newly Added"
-msgstr "Récemment ajouté"
-
-#: \elements\navigation.ctp:100 \genres\view.ctp:79
-#: \homes\advance_search.ctp:2
-msgid "Advanced Search"
-msgstr "Recherche avancée"
-
-#: \genres\index.ctp:113;116 \homes\search.ctp:130;133
-msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
-msgstr "IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez sur \"Annuler\" par la suite"
-
-#: \genres\index.ctp:142
-msgid "Add To wishlist"
-msgstr "Ajouter à la liste de voeux"
-
-#: \genres\index.ctp:174
-msgid "View All Genres"
-msgstr "Voir tous les genres"
-
-#: \genres\view.ctp:79
-msgid "Can't find what you are looking for, try our"
-msgstr "Vous ne trouvez pas ce que vous cherchez, essayez"
-
-#: \homes\forgot_password.ctp:2
-msgid "Forgot Password"
-msgstr "Etes-vous sûr(e) de vouloir effacer"
-
-#: \homes\index.ctp:113
-msgid "Upcoming Releases"
-msgstr "Prochainement"
-
-#: \homes\index.ctp:128
-msgid "MyLib Top 10"
-msgstr "Mon Top 10"
-
-#: \homes\index.ctp:129
-msgid "National Top 10"
-msgstr "Top 10 National"
-
-#: \homes\index.ctp:188;191
-msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
-msgstr "IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez sur \"Annuler\" par la suite"
-
-#: \homes\index.ctp:246
-msgid "No songs have been downloaded yet."
-msgstr "Aucune chanson n'a été téléchargée"
-
-#: \homes\index.ctp:412
-msgid "Artist Search"
-msgstr "Recherche d'artiste"
-
-#: \homes\limits.ctp:5
-msgid "English"
-msgstr "Anglais"
-
-#: \homes\limits.ctp:6
-msgid "Spanish"
-msgstr "Espagnol"
-
-#: \homes\my_history.ctp:16
-msgid "Download History"
-msgstr "Historique de téléchargements"
-
-#: \homes\my_history.ctp:24 \homes\my_wishlist.ctp:15 \homes\search.ctp:29
-msgid "Track"
-msgstr "Piste"
-
-#: \homes\my_history.ctp:27
-msgid "Date"
-msgstr "Date"
-
-#: \homes\my_history.ctp:99
-msgid "No downloaded songs from this week or last week."
-msgstr "Pas de chansons téléchargée cette semaine ou la semaine dernière"
-
-#: \homes\my_wishlist.ctp:4
-msgid "Wishlist"
-msgstr "Liste de voeux"
-
-#: \homes\my_wishlist.ctp:12 \homes\search.ctp:26
-msgid "Album"
-msgstr "Album"
-
-#: \homes\search.ctp:2
-msgid "Search Results"
-msgstr "Résultats de la recherche"
-
-#: \homes\search.ctp:23
-msgid "Composer"
-msgstr "Composer"
-
-#: \homes\terms.ctp:2
-msgid "Terms &amp; Conditions"
-msgstr "Termes et Conditions"
-
-#: \layouts\admin.ctp:6 \layouts\login.ctp:6
-msgid "Freegal Music : The New Music Library :"
-msgstr "Freegal Music : La Nouvelle Mediathèque"
-
-#: \layouts\default.ctp:6 \layouts\home.ctp:6
-msgid "Freegal Music : Your New Music Library :"
-msgstr "Freegal Music: Votre nouvelle bibliotheque musicale"
-
-#: \questions\admin_add.ctp:36 \questions\admin_edit.ctp:36
-#: \questions\admin_index.ctp:5 \questions\admin_view.ctp:3
-#: \questions\index.ctp:3
-msgid "FAQs"
-msgstr "FAQs"
-
-#: \users\idlogin.ctp:6 \users\ihdlogin.ctp:6 \users\ildlogin.ctp:12
-#: \users\ilhdlogin.ctp:12 \users\ilogin.ctp:6 \users\indlogin.ctp:6
-#: \users\inhdlogin.ctp:6 \users\inhlogin.ctp:6 \users\inlogin.ctp:6
-#: \users\plogin.ctp:6 \users\sdlogin.ctp:12 \users\slogin.ctp:12
-#: \users\sndlogin.ctp:9 \users\snlogin.ctp:9
-msgid "Card Number"
-msgstr "Numéro de carte"
-
-#: \users\idlogin.ctp:9 \users\ihdlogin.ctp:9 \users\ildlogin.ctp:15
-#: \users\ilhdlogin.ctp:15 \users\ilogin.ctp:9 \users\indlogin.ctp:8
-#: \users\inhdlogin.ctp:8 \users\inhlogin.ctp:9 \users\inlogin.ctp:7
-#: \users\login.ctp:13 \users\plogin.ctp:9 \users\sdlogin.ctp:15
-#: \users\slogin.ctp:15 \users\sndlogin.ctp:11 \users\snlogin.ctp:10
-msgid "Login"
-msgstr "Connexion"
-
-#: \users\login.ctp:7 \users\my_account.ctp:21
-msgid "Email"
-msgstr "Adresse email"
-
-#: \users\login.ctp:9 \users\my_account.ctp:25
-msgid "Password"
-msgstr "Effacer"
-
-#: \users\login.ctp:11
-msgid "Forgot Password?"
-msgstr "Etes-vous sûr(e) de vouloir effacer?"
-
-#: \users\my_account.ctp:4
-msgid "Manage Account"
-msgstr "Gerer le compte"
-
-#: \users\my_account.ctp:13
-msgid "First Name"
-msgstr "Prénom"
-
-#: \users\my_account.ctp:17
-msgid "Last Name"
-msgstr "Nom de famille"
-
-#: \users\my_account.ctp:29
-msgid "Save"
-msgstr "Sauvegarder"
-
-msgid "National Top 100"
-msgstr "National Top 100"
-
-msgid "Featured"
-msgstr "Sélection"
-
-msgid "What's Happening"
-msgstr "ce qui se produit"
-
-msgid "Featured Videos"
-msgstr "Featured Videos"
-
-msgid "Top Videos"
-msgstr "Top Vidéos"
-
-msgid "My Library Top 10"
-msgstr "Ma bibliothèque Top 10"
-
-msgid "US Top 10"
-msgstr "Top 10 américain"
-
-msgid "New Releases"
-msgstr "Nouveautés"
-
-msgid "Search for your favorite music."
-msgstr "Recherchez votre musique préférée."
-
-msgid "Need help? Visit our"
-msgstr "Besoin d'aide? Regardez les"
-
-msgid "Downloads"
-msgstr "Téléchargements"
-
-msgid "Release Information"
-msgstr "Informations sur les droits"
-
-msgid "More Videos By"
-msgstr "Plus de vidéos par"
-
-msgid "Music Videos"
-msgstr "Vidéo Clips"
-
-msgid "News"
-msgstr "nouvelles"
-
-msgid "Most Popular"
-msgstr "Les plus populaires"
-
-msgid "Browse"
-msgstr "feuilleter"
-
-msgid "Freegal Queues"
-msgstr "Les files d'attente Freegal"
-
-msgid "My Queues"
-msgstr "mes files d'attente"
-
-msgid "History"
-msgstr "histoire"
-
-msgid "My Downloads"
-msgstr "mes Téléchargements"
-
-msgid "My Playlists"
-msgstr "mes Playlists"
-
-msgid "Announcements"
-msgstr "annonces"
-
-msgid "Genres"
-msgstr "Genres"
-
-msgid "Browse A-Z"
-msgstr "Parcorir A à Z"
-
-msgid "Song"
-msgstr "chanson"
-
-msgid "Music"
-msgstr "Musique"
-
-msgid "Videos"
-msgstr "vidéos"
-
-msgid "Artists"
-msgstr "artistes"
-
-#: \artists\view.ctp:200 \genres\view.ctp:74 \homes\search.ctp:198
-#: \sections\admin_index.ctp:37 \users\admin_index.ctp:94
-msgid "previous"
-msgstr "précédent"
-
-#: \artists\view.ctp:202 \genres\view.ctp:76 \homes\search.ctp:202
-#: \sections\admin_index.ctp:40 \users\admin_index.ctp:96
-msgid "next"
-msgstr "suivant"
-
-#: \artists\view.ctp:51 \elements\navigation.ctp:20
-msgid "Genre"
-msgstr "Genre"
-
-#: \artists\view.ctp:57
-msgid "Label"
-msgstr "Label"
-
-#: \artists\view.ctp:66
-msgid "Tracks"
-msgstr "Pistes"
-
-#: \artists\view.ctp:67 \homes\my_history.ctp:21 \homes\my_wishlist.ctp:9
-#: \homes\search.ctp:20
-msgid "Artist"
-msgstr "Artiste"
-
-#: \artists\view.ctp:68
-msgid "Time"
-msgstr "Durée"
-
-#: \artists\view.ctp:69 \homes\my_history.ctp:30 \homes\my_wishlist.ctp:18
-#: \homes\search.ctp:31
-msgid "Download"
-msgstr "Télécharger"
-
-#: \artists\view.ctp:138;141 \homes\index.ctp:305;308
-msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
-msgstr "IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez sur \"Annuler\" par la suite"
-
-#: \artists\view.ctp:138;141 \genres\index.ctp:113;116
-#: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
-#: \homes\my_wishlist.ctp:81;84 \homes\search.ctp:130;133
-msgid "Download Now"
-msgstr "Télécharger maintenant"
-
-#: \artists\view.ctp:145 \genres\index.ctp:120;143
-#: \homes\index.ctp:195;220;312;337 \homes\my_history.ctp:91
-#: \homes\my_wishlist.ctp:87 \homes\search.ctp:137;162
-msgid "Please Wait..."
-msgstr "Veuillez patienter…"
-
-#: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
-#: \homes\search.ctp:141
-msgid "You have already downloaded this song. Get it from your recent downloads"
-msgstr "Vous avez déjà téléchargé cette chanson. Obtenez-la à partir de vos téléchargements récents."
+msgid ""
+"You have already downloaded this song. Get it from your recent downloads"
+msgstr ""
+"Vous avez déjà téléchargé cette chanson. Obtenez-la à partir de vos "
+"téléchargements récents."
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
 #: \homes\search.ctp:141
@@ -550,8 +168,13 @@ msgid "Advanced Search"
 msgstr "Recherche avancée"
 
 #: \genres\index.ctp:113;116 \homes\search.ctp:130;133
-msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
-msgstr "IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez sur \"Annuler\" par la suite"
+msgid ""
+"IMPORTANT: Please note that once you press `Download Now` you have used up "
+"one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr ""
+"IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger "
+"Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez "
+"sur \"Annuler\" par la suite"
 
 #: \genres\index.ctp:142
 msgid "Add To wishlist"
@@ -582,8 +205,14 @@ msgid "National Top 10"
 msgstr "Top 10 National"
 
 #: \homes\index.ctp:188;191
-msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
-msgstr "IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez sur \"Annuler\" par la suite"
+msgid ""
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press \"Cancel\" or "
+"not."
+msgstr ""
+"IMPORTANT:  Veuillez noter qu'une fois que vous appuyez sur \"Télécharger "
+"Maintenant\", vous utilisez un de vos téléchargements, même si vous appuyez "
+"sur \"Annuler\" par la suite"
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
@@ -794,9 +423,12 @@ msgstr "compositeurs"
 msgid "There are no Playlists currently being played."
 msgstr "Il n'y a pas de listes de lecture en cours de lecture."
 
-msgid "There are currently no playlists created. Please add a new playlist to start enjoying streaming."
-msgstr "Il n'y a aucun listes de lecture créées. S'il vous plaît ajouter une nouvelle liste de lecture pour commencer à profiter de streaming."
+msgid ""
+"There are currently no playlists created. Please add a new playlist to start "
+"enjoying streaming."
+msgstr ""
+"Il n'y a aucun listes de lecture créées. S'il vous plaît ajouter une "
+"nouvelle liste de lecture pour commencer à profiter de streaming."
 
 msgid "All Music"
 msgstr "Toute la musique"
-
