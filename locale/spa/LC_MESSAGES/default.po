@@ -1,22 +1,19 @@
-<<<<<<< HEAD
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: Mon Aug 25 2014 11:41:49 GMT+0530 (IST)\n"
+"PO-Revision-Date: 2014-08-25 17:13+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"Language: Unknown locale\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Loco-Source-Locale: en_IN\n"
-"X-Generator: Loco - https://localise.biz/\n"
-"X-Loco-Parser: loco_parse_po\n"
-"X-Loco-Target-Locale: zz_ZZ"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.7\n"
+"Language: es\n"
 
 #: \artists\admin_manageartist.ctp:31
 #: \artists\admin_managefeaturedartist.ctp:32
@@ -67,12 +64,8 @@ msgid "Download"
 msgstr "Baja"
 
 #: \artists\view.ctp:138;141 \homes\index.ctp:305;308
-msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
-"one of your downloads, regardless of whether you then press `Cancel` or not."
-msgstr ""
-"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
-"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
+msgstr "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
 
 #: \artists\view.ctp:138;141 \genres\index.ctp:113;116
 #: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
@@ -193,12 +186,8 @@ msgid "Advanced Search"
 msgstr "Búsqueda Avanzada"
 
 #: \genres\index.ctp:113;116 \homes\search.ctp:130;133
-msgid ""
-"IMPORTANT: Please note that once you press `Download Now` you have used up "
-"one of your downloads, regardless of whether you then press 'Cancel' or not."
-msgstr ""
-"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
-"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
 
 #: \genres\index.ctp:142
 msgid "Add To wishlist"
@@ -229,12 +218,8 @@ msgid "National Top 10"
 msgstr "Top 10 Nacional"
 
 #: \homes\index.ctp:188;191
-msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
-"one of your downloads, regardless of whether you then press \"Cancel\" or not."
-msgstr ""
-"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
-"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
+msgstr "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
@@ -300,12 +285,8 @@ msgstr "Freegal Music : Your New Music Library :"
 #: \sections\admin_index.ctp:32 \users\admin_index.ctp:55
 #: \users\admin_managepatron.ctp:41 \users\admin_manageuser.ctp:41
 #, c-format
-msgid ""
-"Page %page% of %pages%, showing %current% records out of %count% total, "
-"starting on record %start%, ending on %end%"
-msgstr ""
-"Page %page% of %pages%, showing %current% records out of %count% total, "
-"starting on record %start%, ending on %end%"
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
 
 #: \questions\admin_add.ctp:36
 #, c-format
@@ -599,23 +580,6 @@ msgstr "Videos"
 
 msgid "Artists"
 msgstr "Artistas"
-=======
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
-#
-msgid ""
-msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2014-08-08 14:59+0530\n"
-"Last-Translator: \n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.7\n"
-"Language: es\n"
 
 #: \artists\admin_manageartist.ctp:31
 #: \artists\admin_managefeaturedartist.ctp:32
@@ -666,13 +630,8 @@ msgid "Download"
 msgstr "Baja"
 
 #: \artists\view.ctp:138;141 \homes\index.ctp:305;308
-msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
-"up one of your downloads, regardless of whether you then press `Cancel` or "
-"not."
-msgstr ""
-"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
-"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
+msgstr "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
 
 #: \artists\view.ctp:138;141 \genres\index.ctp:113;116
 #: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
@@ -688,8 +647,7 @@ msgstr "Espere, por favor"
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
 #: \homes\search.ctp:141
-msgid ""
-"You have already downloaded this song. Get it from your recent downloads"
+msgid "You have already downloaded this song. Get it from your recent downloads"
 msgstr "Usted ya bajó ésta canción.  Búsquela en sus bajadas recientes."
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
@@ -779,12 +737,8 @@ msgid "Advanced Search"
 msgstr "Búsqueda Avanzada"
 
 #: \genres\index.ctp:113;116 \homes\search.ctp:130;133
-msgid ""
-"IMPORTANT: Please note that once you press `Download Now` you have used up "
-"one of your downloads, regardless of whether you then press 'Cancel' or not."
-msgstr ""
-"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
-"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
 
 #: \genres\index.ctp:142
 msgid "Add To wishlist"
@@ -815,13 +769,8 @@ msgid "National Top 10"
 msgstr "Top 10 Nacional"
 
 #: \homes\index.ctp:188;191
-msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
-"up one of your downloads, regardless of whether you then press \"Cancel\" or "
-"not."
-msgstr ""
-"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
-"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
+msgstr "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
@@ -886,12 +835,8 @@ msgstr "Freegal Music : Your New Music Library :"
 #: \libraries\admin_managelibrary.ctp:8 \questions\admin_index.ctp:39
 #: \sections\admin_index.ctp:32 \users\admin_index.ctp:55
 #: \users\admin_managepatron.ctp:41 \users\admin_manageuser.ctp:41
-msgid ""
-"Page %page% of %pages%, showing %current% records out of %count% total, "
-"starting on record %start%, ending on %end%"
-msgstr ""
-"Page %page% of %pages%, showing %current% records out of %count% total, "
-"starting on record %start%, ending on %end%"
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
 
 #: \questions\admin_add.ctp:36
 msgid "Add %s"
@@ -1189,12 +1134,9 @@ msgstr "álbumes"
 msgid "There are no Playlists currently being played."
 msgstr "No hay listas de reproducción que se está reproduciendo actualmente."
 
-msgid ""
-"There are currently no playlists created. Please add a new playlist to start "
-"enjoying streaming."
-msgstr ""
-"Actualmente no hay listas de reproducción creadas. Por favor, añada una "
-"nueva lista de reproducción para empezar a disfrutar de streaming."
+msgid "There are currently no playlists created. Please add a new playlist to start enjoying streaming."
+msgstr "Actualmente no hay listas de reproducción creadas. Por favor, añada una nueva lista de reproducción para empezar a disfrutar de streaming."
 
 msgid "All Music"
 msgstr "Toda la Música"
+

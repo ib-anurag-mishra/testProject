@@ -3,19 +3,18 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-09 05:58+0000\n"
-"PO-Revision-Date: Mon Aug 25 2014 11:37:38 GMT+0530 (IST)\n"
+"PO-Revision-Date: 2014-08-25 17:13+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"Language: Unknown locale\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Loco-Source-Locale: en_IN\n"
-"X-Generator: Loco - https://localise.biz/\n"
+"X-Generator: Poedit 1.6.7\n"
 "X-Loco-Parser: loco_parse_po\n"
-"X-Loco-Target-Locale: zz_ZZ"
+"X-Loco-Target-Locale: zz_ZZ\n"
 
 #: \artists\admin_manageartist.ctp:31
 #: \artists\admin_managefeaturedartist.ctp:32
@@ -67,11 +66,13 @@ msgstr "Download"
 
 #: \artists\view.ctp:138;141 \homes\index.ctp:305;308
 msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
-"one of your downloads, regardless of whether you then press `Cancel` or not."
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press `Cancel` or "
+"not."
 msgstr ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
-"one of your downloads, regardless of whether you then press `Cancel` or not."
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press `Cancel` or "
+"not."
 
 #: \artists\view.ctp:138;141 \genres\index.ctp:113;116
 #: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
@@ -87,8 +88,10 @@ msgstr "Please Wait..."
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
 #: \homes\search.ctp:141
-msgid "You have already downloaded this song. Get it from your recent downloads"
-msgstr "You have already downloaded this song. Get it from your recent downloads"
+msgid ""
+"You have already downloaded this song. Get it from your recent downloads"
+msgstr ""
+"You have already downloaded this song. Get it from your recent downloads"
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
 #: \homes\search.ctp:141
@@ -216,11 +219,13 @@ msgstr "National Top 10"
 
 #: \homes\index.ctp:188;191
 msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
-"one of your downloads, regardless of whether you then press \"Cancel\" or not."
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press \"Cancel\" or "
+"not."
 msgstr ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
-"one of your downloads, regardless of whether you then press \"Cancel\" or not"
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press \"Cancel\" or "
+"not"
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
