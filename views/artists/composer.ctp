@@ -111,12 +111,17 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 			Need help? Visit our <a href="/questions">FAQ section.</a>
 		</div>
 	</header>
-	<h3><?php __('Albums'); ?></h3>
+	<h3>Albums</h3>
 	<div class="composer-albums">
 		<?php 
 		if (!empty($albumData)) {
 			$i = 0;
 			foreach ($albumData as $palbum) {
+				
+				if ( !is_object( $palbum ) ) {
+					continue;
+				}
+
 				$albumDetails = $album->getImage( $palbum->ReferenceID, $palbum->provider_type );
 
 				if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {					                                        
@@ -130,11 +135,11 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 				} else {
 
 				}
-				$album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
+				$album_title = truncate_text($this->getTextEncode($palbum->AlbumTitle), 24, $this, false);
 				$album_genre = str_replace('"', '', $palbum->Genre);
 				$album_label = $palbum->Label;
 				$album_copyright = $palbum->Copyright;
-				$tilte = urlencode($palbum->Title);
+				$tilte = urlencode($palbum->AlbumTitle);
 				$linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
 				$linkProviderType = base64_encode($palbum->provider_type);
 				if (!empty($album_label)) {
@@ -153,7 +158,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 			<div class="cover-image">
 				<a
 					href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>"
-					title="<?php echo $this->getTextEncode($palbum->Title); ?>"> <img
+					title="<?php echo $this->getTextEncode($palbum->AlbumTitle); ?>"> <img
 					src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>"
 					width="162" height="162" />
 				</a>
@@ -162,7 +167,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 				<div class="album-title">
 					<strong><a
 						href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>"
-						title="<?php echo $this->getTextEncode($palbum->Title); ?>"><?php echo $album_title; ?>
+						title="<?php echo $this->getTextEncode($palbum->AlbumTitle); ?>"><?php echo $album_title; ?>
 							<?php echo $explicit; ?> </a> </strong>
 				</div>
 				<div class="genre">
@@ -198,11 +203,11 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 						?>
 						</li>
 						<?php if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) { ?>
-						<li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);"><?php __('Add to Playlist'); ?></a>
+						<li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);">Add to Playlist</a>
 						</li>
 					</ul>
 					<ul class="playlist-menu">
-						<li><a href="#"><?php __('Create New Playlist'); ?></a></li>
+						<li><a href="#">Create New Playlist</a></li>
 					</ul>
 					<?php } ?>
 				</section>

@@ -36,7 +36,6 @@ class SoapsController extends AppController {
   private $CDN_HOST = 'libraryideas.ingest.cdn.level3.net';
   private $CDN_USER = 'libraryideas';
   private $CDN_PASS = 't837dgkZU6xCMnc';
-  private $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4','Token','TopAlbum'); 
@@ -535,17 +534,98 @@ class SoapsController extends AppController {
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-    $library_territory = $this->getLibraryTerritory($libraryId);	
-    $featuredCache = Cache::read("top_albums".$library_territory);
+    $library_territory = $this->getLibraryTerritory($libraryId);
+	$countryPrefix = $this->Common->getCountryPrefix($library_territory);
+ 
+    $featuredCache = Cache::read("featured".$library_territory);
     if (($artists = $featuredCache) === false || $featuredCache == null) {
-      	$featured = $this->Common->getTopAlbums($library_territory);
+      
+      //get all featured artist and make array
+     $featured = $this->TopAlbum->find('all', array('conditions' => array('TopAlbum.territory' => $library_territory,'TopAlbum.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1,'order' => array(
+                'TopAlbum.id' => 'DESC')));
+
+      foreach($featured as $k => $v){
+        if($v['TopAlbum']['album'] != 0){
+          if(empty($ids)){
+            $ids .= $v['TopAlbum']['album'];
+            $ids_provider_type .= "(" . $v['TopAlbum']['album'] .",'" . $v['TopAlbum']['provider_type'] ."')";
+          } else {
+            $ids .= ','.$v['TopAlbum']['album'];
+            $ids_provider_type .= ','. "(" . $v['TopAlbum']['album'] .",'" . $v['TopAlbum']['provider_type'] ."')";
+          }	
+        }
+      }
+
+      $featured = array();
+      if($ids != ''){     
+        $this->Album->recursive = 2;
+        $featured =  $this->Album->find('all',array(
+	'joins' => array(
+                    array(
+                        'type' => 'INNER',
+                        'table' => 'top_albums',
+                        'alias' => 'ta',
+                        'conditions' => array('Album.ProdID = ta.album','ta.territory' => $library_territory)
+                    )
+                ),	
+	'conditions' =>
+          array('and' =>
+            array(
+              array("Country.Territory" => $library_territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
+            ), "1 = 1 GROUP BY Album.ProdID"
+          ),
+          'fields' => array(
+            'Album.ProdID',
+            'Album.Title',
+            'Album.ArtistText',
+            'Album.AlbumTitle',
+            'Album.Artist',
+            'Album.ArtistURL',
+            'Album.Label',
+            'Album.Copyright',
+            'Album.Advisory',
+            'Album.provider_type'
+          ),
+          'contain' => array(
+            'Genre' => array(
+              'fields' => array(
+                'Genre.Genre'
+              )
+            ),
+            'Country' => array(
+              'fields' => array(
+                'Country.Territory'
+              )
+            ),
+            'Files' => array(
+              'fields' => array(
+                'Files.CdnPath' ,
+                'Files.SaveAsName',
+                'Files.SourceURL'
+              ),
+            )
+          ), 'order' => 'ta.id DESC', 'limit' => 20
+        ));
+                    
+      }
+        
+      if(!(empty($featured))) {     
+        foreach($featured as $k => $v){
+
+          $albumArtwork = $this->Token->artworkToken( $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+          $image =  Configure::read('App.Music_Path').$albumArtwork;
+          $featured[$k]['featuredImage'] = $image;
+        }
+      }  
+                     
+      Cache::write("featured".$library_territory, $featured);
     }
     else {    
-    	$featured = $featuredCache;
+    $featured = $featuredCache;
 	}
     
     if(empty($featured)){
-      throw new SOAPFault('Soap:client', 'No top albums found for your library.');
+      throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
     }
  
     foreach($featured as $key => $val) {
@@ -553,7 +633,7 @@ class SoapsController extends AppController {
       $obj = new FreegalFeaturedAlbumFreegal4Type;
       $obj->AlbumProdId      = $this->getProductAutoID($val['Album']['ProdID'], $val['Album']['provider_type']);
       $obj->AlbumTitle       = $this->getTextUTF($val['Album']['AlbumTitle']);
-      $obj->FileURL          = $val['topAlbumImage'];
+      $obj->FileURL          = $val['featuredImage'];
       
       if('T' == $val['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; }
       
@@ -2199,7 +2279,7 @@ STR;
       
       $insertArr['authtype'] = $authtype;
       $insertArr['email'] = $email;
-      $insertArr['password'] = $this->Common->freegalEncode($password,$encodingKey);
+      $insertArr['password'] = $password;
       
       if(0 == $cron_call) {
         $this->AuthenticationToken->save($insertArr);
@@ -2348,8 +2428,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -2460,7 +2540,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -2584,8 +2664,8 @@ STR;
 				$insertArr['auth_method'] = $library_authentication_method;
         
         $insertArr['authtype'] = $authtype;
-        $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-       $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+        $insertArr['card'] = $card;
+        $insertArr['pin'] = $pin;
         
         if(0 == $cron_call) {
           $this->AuthenticationToken->save($insertArr);
@@ -2704,8 +2784,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
 					
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-          $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey); 
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin; 
           
           if(0 == $cron_call) { 
             $this->AuthenticationToken->save($insertArr);
@@ -2828,7 +2908,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           $insertArr['last_name'] = $last_name;
           
           if(0 == $cron_call) {
@@ -2952,7 +3032,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           $insertArr['last_name'] = $last_name;
           
           if(0 == $cron_call) {
@@ -3065,8 +3145,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3179,8 +3259,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3297,8 +3377,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3408,7 +3488,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3522,7 +3602,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3627,7 +3707,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3734,7 +3814,7 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+          $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -3828,8 +3908,8 @@ STR;
         $insertArr['auth_method'] = $library_authentication_method;
         
         $insertArr['authtype'] = $authtype;
-        $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-       $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+        $insertArr['card'] = $card;
+        $insertArr['pin'] = $pin;
         
         if(0 == $cron_call) {
           $this->AuthenticationToken->save($insertArr);
@@ -3957,8 +4037,8 @@ STR;
                 $insertArr['auth_method'] = $library_authentication_method;
                 
                 $insertArr['authtype'] = $authtype;
-                $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-               $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+                $insertArr['card'] = $card;
+                $insertArr['pin'] = $pin;
                 
                 if(0 == $cron_call) {
                   $this->AuthenticationToken->save($insertArr);
@@ -3998,8 +4078,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
         
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -4123,8 +4203,8 @@ STR;
 					$insertArr['auth_method'] = $library_authentication_method;
           
           $insertArr['authtype'] = $authtype;
-          $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-         $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -4203,7 +4283,7 @@ STR;
             $insertArr['auth_method'] = $library_authentication_method;
             
             $insertArr['authtype'] = $authtype;
-            $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+            $insertArr['card'] = $card;
           
           if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
@@ -4299,8 +4379,8 @@ STR;
               $insertArr['auth_method'] = $library_authentication_method;
               
               $insertArr['authtype'] = $authtype;
-              $insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
-             $insertArr['pin'] = $this->Common->freegalEncode($pin,$encodingKey);
+              $insertArr['card'] = $card;
+              $insertArr['pin'] = $pin;
 
               if(0 == $cron_call) {
                 $this->AuthenticationToken->save($insertArr);
@@ -4404,7 +4484,7 @@ STR;
 			$insertArr['agent'] = $agent;
 			$insertArr['auth_method'] = $library_authentication_method;
 			$insertArr['authtype'] = $authtype;
-       	 		$insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+       	 		$insertArr['card'] = $card;
         		$insertArr['pin'] = $pin;
 			if(0 == $cron_call) {
           			$this->AuthenticationToken->save($insertArr);
@@ -4504,7 +4584,7 @@ STR;
 			$insertArr['agent'] = $agent;
 			$insertArr['auth_method'] = $library_authentication_method;
 			$insertArr['authtype'] = $authtype;
-       	 		$insertArr['card'] = $this->Common->freegalEncode($card,$encodingKey);
+       	 		$insertArr['card'] = $card;
         		$insertArr['pin'] = $pin;
 			if(0 == $cron_call) {
           			$this->AuthenticationToken->save($insertArr);
@@ -6417,8 +6497,8 @@ STR;
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->Title                = $this->getTextUTF($val->AlbumTitle);
+      $sobj->SongArtist           = $this->getTextUTF($val->ArtistText);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
       $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration); 
@@ -6503,8 +6583,8 @@ STR;
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->Title                = $this->getTextUTF($val->AlbumTitle);
+      $sobj->SongArtist           = $this->getTextUTF($val->ArtistText);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
       $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration); 
@@ -6662,8 +6742,8 @@ STR;
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->Title                = $this->getTextUTF($val->AlbumTitle);
+      $sobj->SongArtist           = $this->getTextUTF($val->ArtistText);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
       $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration);
@@ -6745,8 +6825,8 @@ STR;
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->VideoTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->Title                = $this->getTextUTF($val->VideoTitle);
+      $sobj->SongArtist           = $this->getTextUTF($val->ArtistText);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = '';
       $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration);

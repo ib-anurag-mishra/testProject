@@ -94,7 +94,7 @@ class ServicesController extends AppController {
 
 				if($artist != '') {
 					$artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');
-					$solrArtistSearch = 'CArtistText:'.strtolower($artist).' '.$solrCheckCondition.' ';
+					$solrArtistSearch = 'ArtistText:'.strtolower($artist).' '.$solrCheckCondition.' ';
 				}
 				else {
 					$artistSearch = '';
@@ -105,7 +105,7 @@ class ServicesController extends AppController {
 					$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode)');    
 					$this->set('composer', $composer);
 					$preCondition4 = array('Participant.Role' => 'Composer'); 
-					$solrComposerSearch = 'CComposer:'.strtolower($composer).' '.$solrCheckCondition.' ';
+					$solrComposerSearch = 'Composer:'.strtolower($composer).' '.$solrCheckCondition.' ';
 					$role = '2';
 				}
 				else {
@@ -117,7 +117,7 @@ class ServicesController extends AppController {
 				
 				if($song != '') {
 					$songSearch = array('match(Song.SongTitle) against ("+'.$song.'*" in boolean mode)');
-					$solrSongSearch = 'CSongTitle:'.strtolower($song).' '.$solrCheckCondition.' ';
+					$solrSongSearch = 'SongTitle:'.strtolower($song).' '.$solrCheckCondition.' ';
 				}
 				else {
 					$songSearch = '';
@@ -126,7 +126,7 @@ class ServicesController extends AppController {
 				
 				if($album != '') {
 					$albumSearch = array('match(Song.Title) against ("+'.$album.'*" in boolean mode)');
-					$solrAlbumSearch = 'CTitle:'.strtolower($album).' '.$solrCheckCondition.' ';
+					$solrAlbumSearch = 'AlbumTitle:'.strtolower($album).' '.$solrCheckCondition.' ';
 				}
 				else {
 					$albumSearch = '';
@@ -135,7 +135,7 @@ class ServicesController extends AppController {
 				
 				if($genre != '') {
 					$genreSearch = array('match(Song.Genre) against ("+'.$genre.'*" in boolean mode)'); 
-					$solrGenreSearch = 'CGenre:'.strtolower($genre).' '.$solrCheckCondition.' ';	
+					$solrGenreSearch = 'Genre:'.strtolower($genre).' '.$solrCheckCondition.' ';	
 				}
 				else {
 					$genreSearch = '';
@@ -197,8 +197,8 @@ class ServicesController extends AppController {
                     if(!empty($v->ReferenceID)){
 					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
                     }
-                    if(!empty($v->Title)){
-					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+                    if(!empty($v->AlbumTitle)){
+					$result[$k]['Song']['Title'] = $this->textEncode($v->AlbumTitle);
                     }
                     if(!empty($v->SongTitle)){
 					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
@@ -209,8 +209,8 @@ class ServicesController extends AppController {
                     if(!empty($v->provider_type)){
 					$result[$k]['Song']['provider_type'] = $this->textEncode($v->provider_type);
                     }
-                    if(!empty($v->Artist)){
-					$result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
+                    if(!empty($v->ArtistText)){
+					$result[$k]['Song']['Artist'] = $this->textEncode($v->ArtistText);
                     }
                     if(!empty($v->Advisory)){
 					$result[$k]['Song']['Advisory'] = $v->Advisory;
@@ -384,7 +384,7 @@ class ServicesController extends AppController {
 				$searchString = str_replace("$", " ", $searchString);
 				$solrCheckCondition = "AND";
 				if($genre != '') {
-					$solrGenreSearch = 'CGenre:'.strtolower($searchString).'* '.$solrCheckCondition.' ';	
+					$solrGenreSearch = 'Genre:'.strtolower($searchString).'* '.$solrCheckCondition.' ';	
 				}
 				else {
 					$solrGenreSearch = '';
@@ -432,8 +432,8 @@ class ServicesController extends AppController {
                     if(!empty($v->ReferenceID)){
 					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
                     }
-                    if(!empty($v->Title)){
-					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+                    if(!empty($v->AlbumTitle)){
+					$result[$k]['Song']['Title'] = $this->textEncode($v->AlbumTitle);
                     }
                     if(!empty($v->SongTitle)){
 					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
@@ -444,8 +444,8 @@ class ServicesController extends AppController {
                     if(!empty($v->provider_type)){
 					$result[$k]['Song']['provider_type'] = $this->textEncode($v->provider_type);
                     }
-                    if(!empty($v->Artist)){
-					$result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
+                    if(!empty($v->ArtistText)){
+					$result[$k]['Song']['Artist'] = $this->textEncode($v->ArtistText);
                     }
                     if(!empty($v->Advisory)){
 					$result[$k]['Song']['Advisory'] = $v->Advisory;
@@ -547,7 +547,7 @@ class ServicesController extends AppController {
 				$searchString = str_replace("$", " ", $searchString);
 				$solrCheckCondition = "AND";
 				if($this->params['pass'][3] != '') {
-					$solrGenreSearch = 'CGenre:'.strtolower($searchString).'* '.$solrCheckCondition.' ';	
+					$solrGenreSearch = 'Genre:'.strtolower($searchString).'* '.$solrCheckCondition.' ';	
 				}
 				else {
 					$solrGenreSearch = '';
@@ -596,8 +596,8 @@ class ServicesController extends AppController {
                     if(!empty($v->ReferenceID)){
 					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
                     }
-                    if(!empty($v->Title)){
-					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+                    if(!empty($v->AlbumTitle)){
+					$result[$k]['Song']['Title'] = $this->textEncode($v->AlbumTitle);
                     }
                     if(!empty($v->SongTitle)){
 					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
@@ -608,8 +608,8 @@ class ServicesController extends AppController {
                     if(!empty($v->provider_type)){
 					$result[$k]['Song']['provider_type'] = $this->textEncode($v->provider_type);
                     }
-                    if(!empty($v->Artist)){
-					$result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
+                    if(!empty($v->ArtistText)){
+					$result[$k]['Song']['Artist'] = $this->textEncode($v->ArtistText);
                     }
                     if(!empty($v->Advisory)){
 					$result[$k]['Song']['Advisory'] = $v->Advisory;
