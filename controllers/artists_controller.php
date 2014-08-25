@@ -2615,21 +2615,23 @@ Class ArtistsController extends AppController {
                  foreach ($albumData as $key => $value) {
                      $albumArtwork = $this->Token->artworkToken($value['Files']['CdnPath'] . "/" . $value['Files']['SourceURL']);
                      $albumArtwork = Configure::read('App.Music_Path') .$albumArtwork;                    
-                      //check image file exist or not for each entry
-                      if(!$this->Common->checkImageFileExist($albumArtwork)){              
-                            //write broken image entry in the log files                    
-                            if($this->Session->read("subdomain")){
-                                $this->brokenImageArtistURL  = $this->Session->read("subdomain").'.freegalmusic.com/artists/album/'.$artistTextEncode;
-                            }else{
-                                $this->brokenImageArtistURL  = 'www.freegalmusic.com/artists/album/'.$artistTextEncode; 
-                            }                    
-                            $this->log($country.' : ' .' Video Details : '. $albumArtwork.' : Album URL : '. $this->brokenImageArtistURL ); 
 
-                            $this->artistPageBrokenImages[] = $albumArtwork;                  
-                      }                     
-                 }                
-            }      
-            
+                     //check image file exist or not for each entry
+                      if(!$this->Common->checkImageFileExist($albumArtwork)) {
+
+                            //write broken image entry in the log files
+                            if($this->Session->read("subdomain")) {
+                                $this->brokenImageArtistURL  = $this->Session->read("subdomain").'.freegalmusic.com/artists/album/'.$artistTextEncode;
+                            } else {
+                                $this->brokenImageArtistURL  = 'www.freegalmusic.com/artists/album/'.$artistTextEncode;
+                            }
+                            
+                            $this->log($country.' : ' .' Video Details : '. $albumArtwork.' : Album URL : '. $this->brokenImageArtistURL );
+
+                            $this->artistPageBrokenImages[] = $albumArtwork;
+                      }
+                 }
+            }
 
             if (isset($this->params['named']['page'])) {
                 $this->autoLayout = false;
@@ -2666,10 +2668,10 @@ Class ArtistsController extends AppController {
 
                            $this->artistPageBrokenImages[] = $value['videoAlbumImage'];                  
                      }                     
-                }                
-            } 
-            
-            $this->set('artistVideoList', $artistVideoList);          
+                }
+            }
+
+            $this->set('artistVideoList', $artistVideoList);
         }
         
         $this->__sendBrokenImageAlertForArtistAlbums($country);

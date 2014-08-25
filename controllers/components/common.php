@@ -2823,17 +2823,22 @@ STR;
      * @param $content string    
      * 
      */
-     function sendBrokenImageAlert($content) {         
-        
-        $this->Email->to = 'narendra.nagesh@infobeans.com';
-        $this->Email->from = Configure::read('App.adminEmail');
-        $this->Email->fromName = Configure::read('App.fromName');
-        $this->Email->subject = 'FreegalMusic - Broken Images information';
-        $this->Email->smtpHostNames = Configure::read('App.SMTP');
-        $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
-        $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
-        $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
-        $result = $this->Email->send($content);
+     function sendBrokenImageAlert($content) {
+
+     	$to = "narendra.nagesh@infobeans.com";
+     	$subject = "FreegalMusic - Broken Images information";
+     	
+     	$message = $content;
+     	
+     	// Always set content-type when sending HTML email
+     	$headers = "MIME-Version: 1.0" . "\r\n";
+     	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+     	
+     	// More headers
+     	$headers .= 'From: <no-reply@freegalmusic.com>' . "\r\n";
+     	$headers .= 'Cc: kiran.pyati@infobeans.com' . "\r\n";
+     	
+     	mail($to,$subject,$message,$headers);
      
     }
 
