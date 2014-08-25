@@ -176,9 +176,11 @@ $totalRows = count($genresAll);
 
     <div class="genres-container">
         <header style="margin-bottom:0px;">
+
 	 	<div class="genres-header"><?php __('Genres'); ?></div>
 		<div class="a-z-header">A - Z</div>
 		<div class="artist-header"><?php __('Artist'); ?></div>
+
 							</header>
     <section class="genre-filter-container clearfix">
             <div class="genre-column">

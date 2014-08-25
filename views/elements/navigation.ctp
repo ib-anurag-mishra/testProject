@@ -578,13 +578,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							<div class="select-arrow-fix">
 								<select name="type" id="master-filter"
 									class="master-search-select">
-									<option value="all"><?php __('Search All'); ?></option>
-									<option value="album"><?php __('Albums'); ?></option>
-									<option value="artist"><?php __('Artists'); ?></option>
-									<option value="composer"><?php __('Composers'); ?></option>
-									<option value="genre"><?php __('Genres'); ?></option>
-									<option value="song"><?php __('Songs'); ?></option>
-									<option value="video"><?php __('Videos'); ?></option>
+
+									<option value="all"><?php echo __('Search All', true); ?></option>
+									<option value="album"><?php echo __('Albums', true); ?></option>
+									<option value="artist"><?php echo __('Artists', true); ?></option>
+									<option value="composer"><?php  echo __('Composers', true);  ?></option>
+									<option value="genre"><?php echo __('Genres', true); ?></option>
+									<option value="song"><?php echo __('Songs', true); ?></option>
+									<option value="video"><?php echo __('Videos', true); ?></option>
+
 								</select>
 							</div>
 
