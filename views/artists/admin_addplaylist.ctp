@@ -309,7 +309,7 @@ echo $session->flash();
                     $('.remove_options').before('<tr class="songs_list"><td class="left">'+artistNameText+'</td><td>'+albumName+'</td><td>'+songName+'</td><td><input type="checkbox" class= "songCheck" value="'+albumData+'-'+songProdId+'" name="data[Info][ ]"></td></tr>');
                 }
                 if(!checkremove) {
-                    $('.default_songs').append('<tr class="remove_options"><td colspan="5" class="left remove_options"><span style="float: right;"><table><tbody><tr><td><button onclick="return removeFromlist(form,1)" label="Remove Selected" name="remove_selected" type="button">Remove Selected</button></td><td><button onclick="return removeFromlist(form,2)" label="Remove All" name="remove_all" type="button">Remove All</button></td></tr></tbody></table></span></td></tr>'); 
+                    $('.default_songs').append('<tr class="remove_options"><td colspan="5" class="left"><span style="float: right;"><table><tbody><tr><td><button onclick="return removeFromlist(form,1)" label="Remove Selected" name="remove_selected" type="button">Remove Selected</button></td><td><button onclick="return removeFromlist(form,2)" label="Remove All" name="remove_all" type="button">Remove All</button></td></tr></tbody></table></span></td></tr>'); 
                 }
                 
                 if(!$('.save_playlist').length) {
