@@ -114,7 +114,8 @@ EOD;
 				libraries.library_territory,
 				sum(
 					CASE
-					WHEN '$fullstart' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date OR '$fullend' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date THEN
+					WHEN clp.library_unlimited = '1' AND '$fullstart' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date
+					OR   clp.library_unlimited = '1' AND '$fullend' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date THEN
 						1
 					ELSE
 						0
@@ -122,7 +123,13 @@ EOD;
 				) 'Total',
 				sum(
 					CASE
-					WHEN clp.library_contract_start_date = (SELECT min(contract_library_purchases.library_contract_start_date) FROM contract_library_purchases WHERE contract_library_purchases.library_id = libraries.id) AND clp.library_contract_start_date LIKE '$date%' THEN
+					WHEN clp.library_unlimited = '1'
+					AND clp.library_contract_start_date = (
+						SELECT min(contract_library_purchases.library_contract_start_date) 
+						FROM contract_library_purchases 
+						WHERE contract_library_purchases.library_id = libraries.id
+					) 
+					AND clp.library_contract_start_date LIKE '$date%' THEN
 						1
 					ELSE
 						0
@@ -130,22 +137,13 @@ EOD;
 				) 'New',
 				sum(
 					CASE
-					WHEN clp.library_contract_start_date = (
-						SELECT max(contract_library_purchases.library_contract_start_date)
-						FROM contract_library_purchases
-						WHERE contract_library_purchases.library_id = libraries.id
-					)
+					WHEN clp.library_unlimited = '1'
 					AND clp.library_contract_start_date LIKE '$date%'
 					AND (
-						SELECT max(contract_library_purchases.library_contract_end_date)
+						SELECT min(contract_library_purchases.library_contract_start_date)
 						FROM contract_library_purchases
-						WHERE contract_library_purchases.library_contract_end_date != (
-							SELECT max(contract_library_purchases.library_contract_end_date)
-							FROM contract_library_purchases
-							WHERE contract_library_purchases.library_id = libraries.id
-						)
-						AND contract_library_purchases.library_id = libraries.id
-					) < clp.library_contract_start_date THEN
+						WHERE contract_library_purchases.library_id = libraries.id
+					) != clp.library_contract_start_date THEN
 						1
 					ELSE
 						0
@@ -158,7 +156,8 @@ EOD;
 						FROM contract_library_purchases
 						WHERE contract_library_purchases.library_id = libraries.id
 					)
-					AND clp.library_contract_end_date LIKE '$date%' THEN
+					AND clp.library_contract_end_date LIKE '$date%'
+					AND clp.library_unlimited = '1' THEN
 						1
 					ELSE
 						0
@@ -167,9 +166,6 @@ EOD;
 			FROM
 				libraries
 			LEFT JOIN contract_library_purchases AS clp ON libraries.id = clp.library_id
-			WHERE
-				libraries.library_unlimited = '1' AND
-				libraries.customer_id != 0
 			GROUP BY libraries.library_territory
 			ORDER BY libraries.library_territory
 EOD;
@@ -198,7 +194,8 @@ EOD;
 				libraries.library_territory,
 				sum(
 					CASE
-					WHEN '$fullstart' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date OR '$fullend' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date THEN
+					WHEN clp.library_unlimited = '0' AND '$fullstart' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date
+					OR   clp.library_unlimited = '0' AND '$fullend' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date THEN
 						1
 					ELSE
 						0
@@ -206,7 +203,12 @@ EOD;
 				) 'Total',
 				sum(
 					CASE
-					WHEN clp.library_contract_start_date = (SELECT min(contract_library_purchases.library_contract_start_date) FROM contract_library_purchases WHERE contract_library_purchases.library_id = libraries.id) AND clp.library_contract_start_date LIKE '$date%' THEN
+					WHEN clp.library_unlimited = '0' AND clp.library_contract_start_date = (
+						SELECT min(contract_library_purchases.library_contract_start_date) 
+						FROM contract_library_purchases 
+						WHERE contract_library_purchases.library_id = libraries.id
+					) 
+					AND clp.library_contract_start_date LIKE '$date%' THEN
 						1
 					ELSE
 						0
@@ -214,22 +216,13 @@ EOD;
 				) 'New',
 				sum(
 					CASE
-					WHEN clp.library_contract_start_date = (
-						SELECT max(contract_library_purchases.library_contract_start_date)
-						FROM contract_library_purchases
-						WHERE contract_library_purchases.library_id = libraries.id
-					)
+					WHEN clp.library_unlimited = '0'
 					AND clp.library_contract_start_date LIKE '$date%'
 					AND (
-						SELECT max(contract_library_purchases.library_contract_end_date)
+						SELECT min(contract_library_purchases.library_contract_start_date)
 						FROM contract_library_purchases
-						WHERE contract_library_purchases.library_contract_end_date != (
-							SELECT max(contract_library_purchases.library_contract_end_date)
-							FROM contract_library_purchases
-							WHERE contract_library_purchases.library_id = libraries.id
-						)
-						AND contract_library_purchases.library_id = libraries.id
-					) < clp.library_contract_start_date THEN
+						WHERE contract_library_purchases.library_id = libraries.id
+					) != clp.library_contract_start_date THEN
 						1
 					ELSE
 						0
@@ -242,7 +235,8 @@ EOD;
 						FROM contract_library_purchases
 						WHERE contract_library_purchases.library_id = libraries.id
 					)
-					AND clp.library_contract_end_date LIKE '$date%' THEN
+					AND clp.library_contract_end_date LIKE '$date%'
+					AND clp.library_unlimited = '0' THEN
 						1
 					ELSE
 						0
@@ -251,8 +245,6 @@ EOD;
 			FROM
 				libraries
 			LEFT JOIN contract_library_purchases AS clp ON libraries.id = clp.library_id
-			WHERE
-				libraries.library_unlimited = '0' AND libraries.customer_id != 0
 			GROUP BY libraries.library_territory
 			ORDER BY libraries.library_territory
 EOD;
@@ -358,11 +350,11 @@ EOD;
 
 } // end class
 
-function sendMail($file_path, $file_name) {
+function sendMail($file_path, $file_name, $previousMonth) {
 	$to = "ralphk@libraryideas.com";
 	$from = "no-reply@freegalmusic.com";
 	$bcc = "ralph_kelley@yahoo.com";
-	$subject ='Library subscriptions report (' . date('ym') . ')';
+	$subject ='Library subscriptions report (' . $previousMonth . ')';
 	$message =
 			"Greetings,<br/><br/>
 			Attached is a report that contains the total number of library subcriptions for this month.<br/><br/>
@@ -399,11 +391,12 @@ function sendMail($file_path, $file_name) {
 	}
 }
 
-function sonyReport() {
+function sonyReport($previousMonth) {
 	//$dbconfig = array('host' => '192.168.100.114', 'user' => 'freegal_prod', 'pass' => '}e47^B1EO9hD');
 	$dbconfig = array('host' => '127.0.0.1', 'user' => 'root', 'pass' => 'pelebertix');
-	$previousMonth = date("Y-m", strtotime("previous month"));
-	$previousMonth = '2014-07';//**********This is for testing**********//
+	//$previousMonth = date("Y-m", strtotime("previous month"));
+	//$previousMonth = '2014-07';//**********This is for testing**********//
+		
 	
 	$sections = array(
 		'Freegal Music Streaming' => '0',
@@ -448,7 +441,7 @@ function sonyReport() {
 		$worksheet_ms->writeString(0, 0, "Territory", $header_tag);
 		$worksheet_ms->writeString(0, 1, "Total Libraries", $header_tag);
 		$worksheet_ms->writeString(0, 2, "New Libraries", $header_tag );
-		$worksheet_ms->writeString(0, 3, "Existing Libraries", $header_tag );
+		$worksheet_ms->writeString(0, 3, "Renewed Libraries", $header_tag );
 		$worksheet_ms->writeString(0, 4, "Cancelled Libraries", $header_tag);
 
 		
@@ -488,7 +481,65 @@ function sonyReport() {
 	} // end foreach
 
 	$workbook->close();
-
-	sendMail($file_path, $file_name);
+	sendMail($file_path, $file_name, $previousMonth);
 }
-sonyReport();
+$backReports = array(
+	'2010-05',
+	'2010-06',
+	'2010-07',
+	'2010-08',
+	'2010-09',
+	'2010-10',
+	'2010-11',
+	'2010-12',
+	'2011-01',
+	'2011-02',
+	'2011-03',
+	'2011-04',
+	'2011-05',
+	'2011-06',
+	'2011-07',
+	'2011-08',
+	'2011-09',
+	'2011-10',
+	'2011-11',
+	'2011-12',
+	'2012-01',
+	'2012-02',
+	'2012-03',
+	'2012-04',
+	'2012-05',
+	'2012-06',
+	'2012-07',
+	'2012-08',
+	'2012-09',
+	'2012-10',
+	'2012-11',
+	'2012-12',
+	'2013-01',
+	'2013-02',
+	'2013-03',
+	'2013-04',
+	'2013-05',
+	'2013-06',
+	'2013-07',
+	'2013-08',
+	'2013-09',
+	'2013-10',
+	'2013-11',
+	'2013-12',
+	'2014-01',
+	'2014-02',
+	'2014-03',
+	'2014-04',
+	'2014-05',
+	'2014-06',
+	'2014-07'
+);
+//$backReports = array('2014-06','2014-07');
+foreach ($backReports as $key => $previousMonth) {
+	sonyReport($previousMonth);
+
+}
+
+
