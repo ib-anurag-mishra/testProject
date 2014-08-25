@@ -574,7 +574,7 @@ Class ArtistsController extends AppController {
             $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named']['id'])));
             $queueName = $this->params['data']['Artist']['queue_name'];
             if(trim($queueName) != trim($queueData['QueueList']['queue_name'])) {
-                $update = array('queue_id' => $this->params['named']['id'], 'queue_name' => $queueName);
+                $update = array('queue_id' => $this->params['named']['id'], 'queue_name' => trim($queueName));
                 $this->QueueList->setDataSource('master');
                 $this->QueueList->save($update);
                 $this->QueueList->setDataSource('default');
@@ -662,7 +662,7 @@ Class ArtistsController extends AppController {
         } else {
             $queueName = $this->params['data']['Artist']['queue_name'];
             $patronId = $this->Session->read('Auth.User.id');
-            $this->data['QueueList']['queue_name'] = $queueName;
+            $this->data['QueueList']['queue_name'] = trim($queueName);
             $this->data['QueueList']['created'] = date('Y-m-d H:i:s');
             $this->data['QueueList']['patron_id'] = $patronId;
             $this->data['QueueList']['queue_type'] = 1;
