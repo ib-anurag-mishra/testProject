@@ -379,7 +379,7 @@ echo $session->flash();
         if(save == 1) {
             var queueName = $('#ArtistQueueName').val();
             var rexp = /^[0-9a-zA-Z]+$/;
-            var regexp = /^$|\s+/;
+            var regexp = /^\s*$/;
             if(regexp.test(queueName)){
                 alert('Please add a playlist name');
                 return false;
