@@ -1,18 +1,37 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2013-08-07 15:19+0530\n"
+"PO-Revision-Date: Mon Aug 25 2014 11:40:46 GMT+0530 (IST)\n"
 "Last-Translator: Jessica <jessica@m68interactive.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"Language: Unknown locale\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Loco-Source-Locale: en_IN\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Loco-Target-Locale: zz_ZZ"
+
+#: \genres\index.ctp:174
+msgid "View All Genres"
+msgstr ""
+
+#: \genres\view.ctp:79
+msgid "Can't find what you are looking for, try our"
+msgstr ""
+
+#: \layouts\default.ctp:6 \layouts\home.ctp:6
+msgid "Freegal Music : Your New Music Library :"
+msgstr ""
+
+#: \users\my_account.ctp:4
+msgid "Manage Account"
+msgstr ""
 
 #: \artists\view.ctp:200 \genres\view.ctp:74 \homes\search.ctp:198
 #: \sections\admin_index.ctp:37 \users\admin_index.ctp:94
@@ -52,9 +71,8 @@ msgstr "Scarica"
 
 #: \artists\view.ctp:138;141 \homes\index.ctp:305;308
 msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
-"up one of your downloads, regardless of whether you then press `Cancel` or "
-"not."
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
+"one of your downloads, regardless of whether you then press `Cancel` or not."
 msgstr ""
 "IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a "
 "prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
@@ -73,8 +91,7 @@ msgstr "Attendere prego..."
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
 #: \homes\search.ctp:141
-msgid ""
-"You have already downloaded this song. Get it from your recent downloads"
+msgid "You have already downloaded this song. Get it from your recent downloads"
 msgstr ""
 "Hai già scaricato questa canzone. Puoi ottenerla di nuovo nella sezione dei "
 "download recenti."
@@ -192,14 +209,6 @@ msgstr ""
 msgid "Add To wishlist"
 msgstr "Aggiungi alle Prenotazioni"
 
-#: \genres\index.ctp:174
-msgid "View All Genres"
-msgstr ""
-
-#: \genres\view.ctp:79
-msgid "Can't find what you are looking for, try our"
-msgstr ""
-
 #: \homes\forgot_password.ctp:2
 msgid "Forgot Password"
 msgstr "Password Dimenticata"
@@ -218,9 +227,8 @@ msgstr "Top 10 Nazionali"
 
 #: \homes\index.ctp:188;191
 msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
-"up one of your downloads, regardless of whether you then press \"Cancel\" or "
-"not."
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
+"one of your downloads, regardless of whether you then press \"Cancel\" or not."
 msgstr ""
 "IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a "
 "prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
@@ -281,10 +289,6 @@ msgstr "Termini & Condizioni"
 msgid "Freegal Music : The New Music Library :"
 msgstr "MP3 Downolad: La nuova biblioteca musicale"
 
-#: \layouts\default.ctp:6 \layouts\home.ctp:6
-msgid "Freegal Music : Your New Music Library :"
-msgstr ""
-
 #: \questions\admin_add.ctp:36 \questions\admin_edit.ctp:36
 #: \questions\admin_index.ctp:5 \questions\admin_view.ctp:3
 #: \questions\index.ctp:3
@@ -318,10 +322,6 @@ msgstr "Password"
 #: \users\login.ctp:11
 msgid "Forgot Password?"
 msgstr "Password Dimenticata?"
-
-#: \users\my_account.ctp:4
-msgid "Manage Account"
-msgstr ""
 
 #: \users\my_account.ctp:13
 msgid "First Name"

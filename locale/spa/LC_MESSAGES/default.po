@@ -1,18 +1,21 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2013-08-07 15:19+0530\n"
+"PO-Revision-Date: Mon Aug 25 2014 11:41:49 GMT+0530 (IST)\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"Language: Unknown locale\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Loco-Source-Locale: en_IN\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Loco-Target-Locale: zz_ZZ"
 
 #: \artists\admin_manageartist.ctp:31
 #: \artists\admin_managefeaturedartist.ctp:32
@@ -64,9 +67,8 @@ msgstr "Baja"
 
 #: \artists\view.ctp:138;141 \homes\index.ctp:305;308
 msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
-"up one of your downloads, regardless of whether you then press `Cancel` or "
-"not."
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
+"one of your downloads, regardless of whether you then press `Cancel` or not."
 msgstr ""
 "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
 "usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
@@ -85,8 +87,7 @@ msgstr "Espere, por favor"
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
 #: \homes\search.ctp:141
-msgid ""
-"You have already downloaded this song. Get it from your recent downloads"
+msgid "You have already downloaded this song. Get it from your recent downloads"
 msgstr "Usted ya bajó ésta canción.  Búsquela en sus bajadas recientes."
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
@@ -228,9 +229,8 @@ msgstr "Top 10 Nacional"
 
 #: \homes\index.ctp:188;191
 msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
-"up one of your downloads, regardless of whether you then press \"Cancel\" or "
-"not."
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
+"one of your downloads, regardless of whether you then press \"Cancel\" or not."
 msgstr ""
 "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
 "usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
@@ -298,6 +298,7 @@ msgstr "Freegal Music : Your New Music Library :"
 #: \libraries\admin_managelibrary.ctp:8 \questions\admin_index.ctp:39
 #: \sections\admin_index.ctp:32 \users\admin_index.ctp:55
 #: \users\admin_managepatron.ctp:41 \users\admin_manageuser.ctp:41
+#, c-format
 msgid ""
 "Page %page% of %pages%, showing %current% records out of %count% total, "
 "starting on record %start%, ending on %end%"
@@ -306,6 +307,7 @@ msgstr ""
 "starting on record %start%, ending on %end%"
 
 #: \questions\admin_add.ctp:36
+#, c-format
 msgid "Add %s"
 msgstr "Add %s"
 
@@ -340,6 +342,7 @@ msgstr "Delete"
 #: \questions\view.ctp:40 \sections\admin_add.ctp:20
 #: \sections\admin_edit.ctp:20 \sections\admin_index.ctp:23
 #: \sections\admin_view.ctp:31;64
+#, c-format
 msgid "Are you sure you want to delete # %s?"
 msgstr "Are you sure you want to delete # %s?"
 
@@ -348,6 +351,7 @@ msgstr "Are you sure you want to delete # %s?"
 #: \questions\view.ctp:41;43 \sections\admin_add.ctp:21;22
 #: \sections\admin_edit.ctp:21;22 \sections\admin_index.ctp:47
 #: \sections\admin_view.ctp:32;34
+#, c-format
 msgid "List %s"
 msgstr "List %s"
 
@@ -370,6 +374,7 @@ msgstr "Sections"
 #: \questions\view.ctp:42;44 \sections\admin_add.ctp:23
 #: \sections\admin_edit.ctp:23 \sections\admin_index.ctp:46;48
 #: \sections\admin_view.ctp:33;35;73
+#, c-format
 msgid "New %s"
 msgstr "New %s"
 
@@ -383,6 +388,7 @@ msgstr "Section"
 
 #: \questions\admin_edit.ctp:36 \questions\admin_view.ctp:35
 #: \questions\view.ctp:39 \sections\admin_view.ctp:30
+#, c-format
 msgid "Edit %s"
 msgstr "Edit %s"
 
@@ -419,6 +425,7 @@ msgstr "Last Modified"
 
 #: \questions\admin_view.ctp:36 \questions\view.ctp:40
 #: \sections\admin_view.ctp:31
+#, c-format
 msgid "Delete %s"
 msgstr "Delete %s"
 
@@ -431,10 +438,12 @@ msgid "Modified"
 msgstr "Modified"
 
 #: \sections\admin_add.ctp:5
+#, c-format
 msgid "Admin Add %s"
 msgstr "Admin Add %s"
 
 #: \sections\admin_edit.ctp:5
+#, c-format
 msgid "Admin Edit %s"
 msgstr "Admin Edit %s"
 
@@ -455,6 +464,7 @@ msgid " Last Modified"
 msgstr " Last Modified"
 
 #: \sections\admin_view.ctp:40
+#, c-format
 msgid "Related %s"
 msgstr "Related %s"
 
