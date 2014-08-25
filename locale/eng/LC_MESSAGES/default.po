@@ -581,3 +581,13 @@ msgstr "Videos"
 
 msgid "Artists"
 msgstr "Artists"
+
+msgid ""
+"There are currently no playlists created. Please add a new playlist to start "
+"enjoying streaming."
+msgstr ""
+"There are currently no playlists created. Please add a new playlist to start "
+"enjoying streaming."
+
+msgid "All Music"
+msgstr "All Music"
