@@ -111,7 +111,7 @@ if(empty($songs)){
                     <td class="left"><?php echo $value['Songs']['ArtistText'];?></td>
                     <td><?php echo $value['Albums']['AlbumTitle'];?></td>
                     <td><?php echo $value['Songs']['Title'];?></td>
-                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','class' => "songCheck", 'id'=>$queueId, 'value' => trim($value['Albums']['ALbumId']).'-'.trim($value['Songs']['provider_type']).'-'.trim($value['Songs']['ProdId']), 'hiddenField' => false)); ?>
+                    <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','div' => false,'class' => "songCheck", 'id'=>$queueId, 'value' => trim($value['Albums']['ALbumId']).'-'.trim($value['Songs']['provider_type']).'-'.trim($value['Songs']['ProdId']), 'hiddenField' => false)); ?>
                     </td>
                 </tr>
                 <?php
@@ -247,7 +247,7 @@ echo $session->flash();
 		var albumProdId = escape($('#ArtistAlbum').val());
                 var albumId = albumProdId.split("-")[0];
                 var providerType = albumProdId.split("-")[1]; 
-                if(albumProdId == '' || albumId || providerType) {
+                if(albumProdId == '' || !albumId || !providerType) {
                     alert('Meta data is missing for this Album. Please Select another Album');
                     return false;
                 }
@@ -318,56 +318,6 @@ echo $session->flash();
         });        
     }
     
-    function m_delete(flagVar) { // Delete the contact
-
-            var k2=0;
-            if(flagVar == 1){
-
-                for (var i=0;i<document.artistAdminInsertplaylistForm.elements.length;i++)
-                {
-                        var e1 = document.artistAdminInsertplaylistForm.elements[i];
-
-                        if((e1.type=="checkbox")&&(e1.name=='data[Info][ ]'))
-                        {
-                                if(e1.checked==true)
-                                        {
-                                                k2++;
-                                        }
-                        }
-                }
-
-            }else{
-
-                k2 = 1;
-            }	
-
-            if(k2==0)
-            {
-                    alert('Please select at least one recode for remove.');
-                    return false;
-            }
-            else
-            {
-                    if(flagVar == 1){
-                        var x=confirm('Are you sure you want to remove all selected records ?');
-                    }else if(flagVar == 2){
-                        var x=confirm('Are you sure you want to remove all records ?');
-                    }
-
-                    if(x==false)
-                    {
-                            return false;
-                    }
-                    else(x==true)
-                    {
-
-                            document.getElementById('artistSelectedOpt').value = flagVar;                        
-                            return true;
-
-                    }
-            }
-    }
-
 
     function removeFromlist(theForm,flagVar)
     {
@@ -409,9 +359,9 @@ echo $session->flash();
                 else(x==true)
                 {
                     if(flagVar == 1){
-                        $(".songCheck :checked").parent().parent().parent().remove();
-                        
-                        $("input[@name='data[Info][ ]' @type='checkbox']:checked").parent().parent().parent().remove();
+                        $('#list .songs_list :checked').each(function() {
+                            $(this).parent().parent().remove();
+                        });
                     } else {
                         $(".songs_list").remove();
                         $(".remove_options").remove();
@@ -427,7 +377,8 @@ echo $session->flash();
     {
         if(save == 1) {
             var queueName = $('#ArtistQueueName').val();
-            if(!queueName || queueName == '') {
+            var rexp = /^[0-9a-zA-Z]+$/
+            if(!rexp.test(queueName)){
                 alert('Please add playlist name');
                 return false;
             }

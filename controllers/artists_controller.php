@@ -34,8 +34,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopsingles() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $topSingles = $this->paginate( 'TopSingles', array( 'prod_id != ""' ) );
         $this->set( 'topSingles', $topSingles );
+		$this->set('userTypeId',$userTypeId);
     }
 
 	/*
@@ -278,8 +280,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopalbums() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $topAlbums = $this->paginate( 'TopAlbum', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
         $this->set( 'topAlbums', $topAlbums );
+		$this->set('userTypeId',$userTypeId);
     }
 
 	/*
@@ -569,7 +573,7 @@ Class ArtistsController extends AppController {
             $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named']['id'])));
             $queueName = $this->params['data']['Artist']['queue_name'];
             if(trim($queueName) != trim($queueData['QueueList']['queue_name'])) {
-                $update = array('queue_id' => $this->params['named'], 'queue_name' => $queueName);
+                $update = array('queue_id' => $this->params['named']['id'], 'queue_name' => $queueName);
                 $this->QueueList->setDataSource('master');
                 $this->QueueList->save($update);
                 $this->QueueList->setDataSource('default');
@@ -584,6 +588,7 @@ Class ArtistsController extends AppController {
                     $this->QueueDetail->setDataSource('master');
                     if($this->QueueDetail->saveAll($detailArray)) {
                         $this->QueueDetail->setDataSource('default');
+                        $this->Common->refreshQueueSongs($this->params['named']['id']);
                         $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
                         $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
                     } else {
@@ -599,6 +604,7 @@ Class ArtistsController extends AppController {
                 if(empty($songsList)) {
                     $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->deleteAll(array('queue_id' => $this->params['named']['id']));
+                    $this->Common->refreshQueueSongs($this->params['named']['id']);
                     $this->QueueDetail->setDataSource('default');
                     $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
                     $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
@@ -623,6 +629,7 @@ Class ArtistsController extends AppController {
                 if(!empty($songToDel)) {
                     $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->deleteAll(array('id' => $songToDel));
+                    $this->Common->refreshQueueSongs($this->params['named']['id']);
                     $this->QueueDetail->setDataSource('default');
                     if(empty($songToAdd)) {
                         $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
@@ -637,6 +644,7 @@ Class ArtistsController extends AppController {
                     $this->QueueDetail->setDataSource('master');
                     if($this->QueueDetail->saveAll($detailArray)) {
                         $this->QueueDetail->setDataSource('default');
+                        $this->Common->refreshQueueSongs($this->params['named']['id']);
                         $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
                         $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
                     } else {
@@ -660,6 +668,7 @@ Class ArtistsController extends AppController {
             $this->QueueList->setDataSource('master');
             if ($this->QueueList->save($this->data['QueueList'])) {
                 $this->QueueList->setDataSource('default');
+                $this->Common->setAdminDefaultQueuesCache();
                 $queueId = $this->QueueList->getLastInsertID();
                 $detailArray = array();
                 foreach($songsList as $value) {
@@ -669,6 +678,7 @@ Class ArtistsController extends AppController {
                 $this->QueueDetail->setDataSource('master');
                 if($this->QueueDetail->saveAll($detailArray)) {
                     $this->QueueDetail->setDataSource('default');
+                    $this->Common->refreshQueueSongs($queueId);
                     $this->Session->setFlash('Songs added successfully to playlist!', 'modal', array('class' => 'modal success'));
                     $this->redirect('addplaylist/id:'.$queueId);                
                 } else {
@@ -695,8 +705,8 @@ Class ArtistsController extends AppController {
     function admin_deletePlaylist() {
         $deleteQueueId = $this->params['named']['id'];
         $this->QueueDetail->setDataSource('master');
-            //Configure::write('Cache.disable', false);
-            //$this->Common->getTopAlbums($territory);
+        Configure::write('Cache.disable', false);
+        $this->Common->setAdminDefaultQueuesCache();
         $this->QueueDetail->deleteAll(array('queue_id' => $deleteQueueId,false));
         if($this->QueueList->deleteAll(array('queue_id' => $deleteQueueId,false))) {
             $this->QueueDetail->setDataSource('default');
@@ -1112,10 +1122,11 @@ Class ArtistsController extends AppController {
      */
 
     function admin_manageartist() {
-
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $artists = $this->paginate('Artist', array('language' => Configure::read('App.LANGUAGE')));
 
         $this->set('artists', $artists);
+		$this->set('userTypeId',$userTypeId);
     }
 
     /*
@@ -1301,8 +1312,10 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managenewartist() {
+		$userTypeId = $this->Session->read('Auth.User.type_id');
         $artists = $this->paginate('Newartist', array('language' => Configure::read('App.LANGUAGE')));
         $this->set('artists', $artists);
+		$this->set('userTypeId',$userTypeId);
     }
 
     /*
