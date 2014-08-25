@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
@@ -598,3 +599,593 @@ msgstr "Videos"
 
 msgid "Artists"
 msgstr "Artistas"
+=======
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2011-05-09 12:04+0000\n"
+"PO-Revision-Date: 2014-08-08 14:59+0530\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.7\n"
+"Language: es\n"
+
+#: \artists\admin_manageartist.ctp:31
+#: \artists\admin_managefeaturedartist.ctp:32
+#: \artists\admin_managenewartist.ctp:31 \artists\view.ctp:200
+#: \genres\view.ctp:74 \homes\search.ctp:198
+#: \libraries\admin_managelibrary.ctp:44 \questions\admin_index.ctp:44
+#: \reports\admin_sonyreports.ctp:67 \sections\admin_index.ctp:37
+#: \users\admin_index.ctp:94 \users\admin_managepatron.ctp:87
+#: \users\admin_manageuser.ctp:88
+msgid "previous"
+msgstr "antes"
+
+#: \artists\admin_manageartist.ctp:33
+#: \artists\admin_managefeaturedartist.ctp:34
+#: \artists\admin_managenewartist.ctp:33 \artists\view.ctp:202
+#: \genres\view.ctp:76 \homes\search.ctp:202
+#: \libraries\admin_managelibrary.ctp:46 \questions\admin_index.ctp:47
+#: \reports\admin_sonyreports.ctp:69 \sections\admin_index.ctp:40
+#: \users\admin_index.ctp:96 \users\admin_managepatron.ctp:89
+#: \users\admin_manageuser.ctp:90
+msgid "next"
+msgstr "siguiente"
+
+#: \artists\view.ctp:51 \elements\navigation.ctp:20
+msgid "Genre"
+msgstr "Géneros"
+
+#: \artists\view.ctp:57
+msgid "Label"
+msgstr "Título"
+
+#: \artists\view.ctp:66
+msgid "Tracks"
+msgstr "Canción"
+
+#: \artists\view.ctp:67 \homes\my_history.ctp:21 \homes\my_wishlist.ctp:9
+#: \homes\search.ctp:20
+msgid "Artist"
+msgstr "Artista"
+
+#: \artists\view.ctp:68
+msgid "Time"
+msgstr "duración"
+
+#: \artists\view.ctp:69 \homes\my_history.ctp:30 \homes\my_wishlist.ctp:18
+#: \homes\search.ctp:31
+msgid "Download"
+msgstr "Baja"
+
+#: \artists\view.ctp:138;141 \homes\index.ctp:305;308
+msgid ""
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press `Cancel` or "
+"not."
+msgstr ""
+"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
+"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+
+#: \artists\view.ctp:138;141 \genres\index.ctp:113;116
+#: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
+#: \homes\my_wishlist.ctp:81;84 \homes\search.ctp:130;133
+msgid "Download Now"
+msgstr "Baja la Canción"
+
+#: \artists\view.ctp:145 \genres\index.ctp:120;143
+#: \homes\index.ctp:195;220;312;337 \homes\my_history.ctp:91
+#: \homes\my_wishlist.ctp:87 \homes\search.ctp:137;162
+msgid "Please Wait..."
+msgstr "Espere, por favor"
+
+#: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
+#: \homes\search.ctp:141
+msgid ""
+"You have already downloaded this song. Get it from your recent downloads"
+msgstr "Usted ya bajó ésta canción.  Búsquela en sus bajadas recientes."
+
+#: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
+#: \homes\search.ctp:141
+msgid "Downloaded"
+msgstr "bajaedas"
+
+#: \artists\view.ctp:158;176 \genres\index.ctp:133;150
+#: \homes\index.ctp:209;227;326;344 \homes\my_wishlist.ctp:92
+#: \homes\search.ctp:150;170
+msgid "Limit Exceeded"
+msgstr "Límite Excedido"
+
+#: \artists\view.ctp:163 \genres\index.ctp:138 \homes\index.ctp:215;332
+#: \homes\search.ctp:157
+msgid "Added to Wishlist"
+msgstr "Añadido a su Lista Deseos"
+
+#: \artists\view.ctp:167 \homes\index.ctp:219;336
+msgid "Add To Wishlist"
+msgstr "Añadir a mi lista deseos"
+
+#: \artists\view.ctp:182 \genres\index.ctp:156;156
+#: \homes\index.ctp:233;233;350;350 \homes\search.ctp:177;177
+msgid "Coming Soon"
+msgstr "Viene Pronto"
+
+#: \elements\footer.ctp:19
+msgid "All Rights Reserved"
+msgstr "All Rights Reserved"
+
+#: \elements\footer.ctp:21
+msgid "About"
+msgstr "Sobre"
+
+#: \elements\footer.ctp:23
+msgid "Terms & Conditions"
+msgstr "Térmions & Condiciones"
+
+#: \elements\footer.ctp:25 \elements\header.ctp:53
+msgid "FAQ"
+msgstr "FAQ"
+
+#: \elements\footer.ctp:27
+msgid "Also available in"
+msgstr "También está disponible en"
+
+#: \elements\header.ctp:49
+msgid "Weekly Downloads"
+msgstr "Bajadas Semanles"
+
+#: \elements\header.ctp:56
+msgid "My Wishlist"
+msgstr "Lista de Deseos"
+
+#: \elements\header.ctp:59
+msgid "Recent Downloads"
+msgstr "Bajada Recientes"
+
+#: \elements\header.ctp:62
+msgid "My Account"
+msgstr "Mi Cuenta"
+
+#: \elements\header.ctp:65
+msgid "Logout"
+msgstr "Desconectarse"
+
+#: \elements\navigation.ctp:19
+msgid "Home"
+msgstr "Inicio"
+
+#: \elements\navigation.ctp:23
+msgid "See All"
+msgstr "Vea todos"
+
+#: \elements\navigation.ctp:37
+msgid "Featured Artist"
+msgstr "Artistas Presentados"
+
+#: \elements\navigation.ctp:56
+msgid "Newly Added"
+msgstr "Nuevas Adiciones"
+
+#: \elements\navigation.ctp:100 \genres\view.ctp:79
+#: \homes\advance_search.ctp:2
+msgid "Advanced Search"
+msgstr "Búsqueda Avanzada"
+
+#: \genres\index.ctp:113;116 \homes\search.ctp:130;133
+msgid ""
+"IMPORTANT: Please note that once you press `Download Now` you have used up "
+"one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr ""
+"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
+"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+
+#: \genres\index.ctp:142
+msgid "Add To wishlist"
+msgstr "Añadir a mi lista deseos"
+
+#: \genres\index.ctp:174
+msgid "View All Genres"
+msgstr "Vea todos los géneros"
+
+#: \genres\view.ctp:79
+msgid "Can't find what you are looking for, try our"
+msgstr " ¿No encuentra lo que busca?  Pruebe nuestro"
+
+#: \homes\forgot_password.ctp:2
+msgid "Forgot Password"
+msgstr "Olvidé mi clave"
+
+#: \homes\index.ctp:113
+msgid "Upcoming Releases"
+msgstr "Próximos lanzamientos"
+
+#: \homes\index.ctp:128
+msgid "MyLib Top 10"
+msgstr "MiLib Top 10"
+
+#: \homes\index.ctp:129
+msgid "National Top 10"
+msgstr "Top 10 Nacional"
+
+#: \homes\index.ctp:188;191
+msgid ""
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press \"Cancel\" or "
+"not."
+msgstr ""
+"IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha "
+"usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+
+#: \homes\index.ctp:246
+msgid "No songs have been downloaded yet."
+msgstr "Aún no ha bajado canciones."
+
+#: \homes\index.ctp:412
+msgid "Artist Search"
+msgstr "Búsqueda de Artista"
+
+#: \homes\limits.ctp:5
+msgid "English"
+msgstr "Ingles"
+
+#: \homes\limits.ctp:6
+msgid "Spanish"
+msgstr "Español"
+
+#: \homes\my_history.ctp:16
+msgid "Download History"
+msgstr "Historia de Bajados"
+
+#: \homes\my_history.ctp:24 \homes\my_wishlist.ctp:15 \homes\search.ctp:29
+msgid "Track"
+msgstr "Canción"
+
+#: \homes\my_history.ctp:27
+msgid "Date"
+msgstr "Fecha"
+
+#: \homes\my_history.ctp:99
+msgid "No downloaded songs from this week or last week."
+msgstr "No canciónes bajaedas esta semana o la semana pasada"
+
+#: \homes\my_wishlist.ctp:4
+msgid "Wishlist"
+msgstr "Deseos"
+
+#: \homes\my_wishlist.ctp:12 \homes\search.ctp:26
+msgid "Album"
+msgstr "Álbum"
+
+#: \homes\search.ctp:2
+msgid "Search Results"
+msgstr "Resultado de su Búsqueda"
+
+#: \homes\search.ctp:23
+msgid "Composer"
+msgstr "Compositor"
+
+#: \homes\terms.ctp:2
+msgid "Terms &amp; Conditions"
+msgstr "Térmions & Condiciones"
+
+#: \layouts\admin.ctp:6 \layouts\login.ctp:6
+msgid "Freegal Music : The New Music Library :"
+msgstr "Freegal Music : The New Music Library :"
+
+#: \layouts\default.ctp:6 \layouts\home.ctp:6
+msgid "Freegal Music : Your New Music Library :"
+msgstr "Freegal Music : Your New Music Library :"
+
+#: \libraries\admin_managelibrary.ctp:8 \questions\admin_index.ctp:39
+#: \sections\admin_index.ctp:32 \users\admin_index.ctp:55
+#: \users\admin_managepatron.ctp:41 \users\admin_manageuser.ctp:41
+msgid ""
+"Page %page% of %pages%, showing %current% records out of %count% total, "
+"starting on record %start%, ending on %end%"
+msgstr ""
+"Page %page% of %pages%, showing %current% records out of %count% total, "
+"starting on record %start%, ending on %end%"
+
+#: \questions\admin_add.ctp:36
+msgid "Add %s"
+msgstr "Add %s"
+
+#: \questions\admin_add.ctp:36 \questions\admin_edit.ctp:36
+#: \questions\admin_index.ctp:5 \questions\admin_view.ctp:3
+#: \questions\index.ctp:3
+msgid "FAQs"
+msgstr "FAQs"
+
+#: \questions\admin_add.ctp:43 \questions\admin_edit.ctp:44
+#: \sections\admin_add.ctp:15 \sections\admin_edit.ctp:15
+msgid "Submit"
+msgstr "Submit"
+
+#: \questions\admin_add.ctp:46 \questions\admin_edit.ctp:47
+#: \questions\admin_index.ctp:10;51 \questions\admin_view.ctp:33
+#: \questions\view.ctp:37 \sections\admin_add.ctp:18
+#: \sections\admin_edit.ctp:18 \sections\admin_index.ctp:7;44
+#: \sections\admin_view.ctp:28;47
+msgid "Actions"
+msgstr "Actions"
+
+#: \questions\admin_add.ctp:48 \questions\admin_edit.ctp:49
+#: \questions\admin_index.ctp:30 \sections\admin_add.ctp:20
+#: \sections\admin_edit.ctp:20 \sections\admin_index.ctp:23
+#: \sections\admin_view.ctp:64
+msgid "Delete"
+msgstr "Delete"
+
+#: \questions\admin_add.ctp:48 \questions\admin_edit.ctp:49
+#: \questions\admin_index.ctp:30 \questions\admin_view.ctp:36
+#: \questions\view.ctp:40 \sections\admin_add.ctp:20
+#: \sections\admin_edit.ctp:20 \sections\admin_index.ctp:23
+#: \sections\admin_view.ctp:31;64
+msgid "Are you sure you want to delete # %s?"
+msgstr "Are you sure you want to delete # %s?"
+
+#: \questions\admin_add.ctp:49;50 \questions\admin_edit.ctp:50;51
+#: \questions\admin_index.ctp:54 \questions\admin_view.ctp:37;39
+#: \questions\view.ctp:41;43 \sections\admin_add.ctp:21;22
+#: \sections\admin_edit.ctp:21;22 \sections\admin_index.ctp:47
+#: \sections\admin_view.ctp:32;34
+msgid "List %s"
+msgstr "List %s"
+
+#: \questions\admin_add.ctp:49 \questions\admin_edit.ctp:50
+#: \questions\admin_view.ctp:37 \questions\view.ctp:41
+#: \sections\admin_add.ctp:22 \sections\admin_edit.ctp:22
+#: \sections\admin_index.ctp:47 \sections\admin_view.ctp:34;40
+msgid "Questions"
+msgstr "Questions"
+
+#: \questions\admin_add.ctp:50 \questions\admin_edit.ctp:51
+#: \questions\admin_index.ctp:54 \questions\admin_view.ctp:39
+#: \questions\view.ctp:43 \sections\admin_add.ctp:21
+#: \sections\admin_edit.ctp:21 \sections\admin_view.ctp:32
+msgid "Sections"
+msgstr "Sections"
+
+#: \questions\admin_add.ctp:51 \questions\admin_edit.ctp:52
+#: \questions\admin_index.ctp:53;55 \questions\admin_view.ctp:38;40
+#: \questions\view.ctp:42;44 \sections\admin_add.ctp:23
+#: \sections\admin_edit.ctp:23 \sections\admin_index.ctp:46;48
+#: \sections\admin_view.ctp:33;35;73
+msgid "New %s"
+msgstr "New %s"
+
+#: \questions\admin_add.ctp:51 \questions\admin_edit.ctp:52
+#: \questions\admin_index.ctp:55 \questions\admin_view.ctp:5;40
+#: \questions\view.ctp:9;44 \sections\admin_add.ctp:5
+#: \sections\admin_edit.ctp:5 \sections\admin_index.ctp:46
+#: \sections\admin_view.ctp:3;30;31;33
+msgid "Section"
+msgstr "Section"
+
+#: \questions\admin_edit.ctp:36 \questions\admin_view.ctp:35
+#: \questions\view.ctp:39 \sections\admin_view.ctp:30
+msgid "Edit %s"
+msgstr "Edit %s"
+
+#: \questions\admin_index.ctp:28 \sections\admin_index.ctp:21
+#: \sections\admin_view.ctp:62
+msgid "View"
+msgstr "View"
+
+#: \questions\admin_index.ctp:29 \sections\admin_index.ctp:22
+#: \sections\admin_view.ctp:63
+msgid "Edit"
+msgstr "Edit"
+
+#: \questions\admin_index.ctp:53 \questions\admin_view.ctp:10;35;36;38
+#: \questions\view.ctp:2;14;39;40;42 \sections\admin_add.ctp:23
+#: \sections\admin_edit.ctp:23 \sections\admin_index.ctp:48
+#: \sections\admin_view.ctp:35;44;73
+msgid "Question"
+msgstr "Question"
+
+#: \questions\admin_view.ctp:15 \questions\view.ctp:19
+#: \sections\admin_view.ctp:45
+msgid "Answer"
+msgstr "Answer"
+
+#: \questions\admin_view.ctp:20 \questions\view.ctp:24
+#: \sections\admin_view.ctp:15
+msgid "Created"
+msgstr "Created"
+
+#: \questions\admin_view.ctp:25 \sections\admin_view.ctp:46
+msgid "Last Modified"
+msgstr "Last Modified"
+
+#: \questions\admin_view.ctp:36 \questions\view.ctp:40
+#: \sections\admin_view.ctp:31
+msgid "Delete %s"
+msgstr "Delete %s"
+
+#: \questions\view.ctp:4
+msgid "Id"
+msgstr "Id"
+
+#: \questions\view.ctp:29
+msgid "Modified"
+msgstr "Modified"
+
+#: \sections\admin_add.ctp:5
+msgid "Admin Add %s"
+msgstr "Admin Add %s"
+
+#: \sections\admin_edit.ctp:5
+msgid "Admin Edit %s"
+msgstr "Admin Edit %s"
+
+#: \sections\admin_index.ctp:3
+msgid "FAQ Sections"
+msgstr "FAQ Sections"
+
+#: \sections\admin_index.ctp:8 \sections\admin_view.ctp:10
+msgid "Language"
+msgstr "Lengua"
+
+#: \sections\admin_view.ctp:5
+msgid "Title"
+msgstr "Title"
+
+#: \sections\admin_view.ctp:20
+msgid " Last Modified"
+msgstr " Last Modified"
+
+#: \sections\admin_view.ctp:40
+msgid "Related %s"
+msgstr "Related %s"
+
+#: \users\idlogin.ctp:6 \users\ihdlogin.ctp:6 \users\ildlogin.ctp:12
+#: \users\ilhdlogin.ctp:12 \users\ilogin.ctp:6 \users\indlogin.ctp:6
+#: \users\inhdlogin.ctp:6 \users\inhlogin.ctp:6 \users\inlogin.ctp:6
+#: \users\plogin.ctp:6 \users\sdlogin.ctp:12 \users\slogin.ctp:12
+#: \users\sndlogin.ctp:9 \users\snlogin.ctp:9
+msgid "Card Number"
+msgstr "Número de Tarjeta"
+
+#: \users\idlogin.ctp:9 \users\ihdlogin.ctp:9 \users\ildlogin.ctp:15
+#: \users\ilhdlogin.ctp:15 \users\ilogin.ctp:9 \users\indlogin.ctp:8
+#: \users\inhdlogin.ctp:8 \users\inhlogin.ctp:9 \users\inlogin.ctp:7
+#: \users\login.ctp:13 \users\plogin.ctp:9 \users\sdlogin.ctp:15
+#: \users\slogin.ctp:15 \users\sndlogin.ctp:11 \users\snlogin.ctp:10
+msgid "Login"
+msgstr "Comenzar"
+
+#: \users\login.ctp:7 \users\my_account.ctp:21
+msgid "Email"
+msgstr "Email"
+
+#: \users\login.ctp:9 \users\my_account.ctp:25
+msgid "Password"
+msgstr "Clave"
+
+#: \users\login.ctp:11
+msgid "Forgot Password?"
+msgstr "Olvidé mi clave"
+
+#: \users\my_account.ctp:4
+msgid "Manage Account"
+msgstr "Maneje su cuenta"
+
+#: \users\my_account.ctp:13
+msgid "First Name"
+msgstr "Primer Nombre"
+
+#: \users\my_account.ctp:17
+msgid "Last Name"
+msgstr "Apellido"
+
+#: \users\my_account.ctp:29
+msgid "Save"
+msgstr "Salvar"
+
+msgid "National Top 100"
+msgstr "Nacional Top 100"
+
+msgid "Featured"
+msgstr "Destacado"
+
+msgid "What's Happening"
+msgstr "¿Qué está pasando"
+
+msgid "Featured Videos"
+msgstr "Los videos del momento"
+
+msgid "Top Videos"
+msgstr "Top Videos"
+
+msgid "My Library Top 10"
+msgstr "Mi Biblioteca Top 10"
+
+msgid "US Top 10"
+msgstr "EE.UU. Top 10"
+
+msgid "New Releases"
+msgstr "Nuevos lanzamientos"
+
+msgid "Search for your favorite music."
+msgstr "Busca tu música favorita."
+
+msgid "Need help? Visit our"
+msgstr "¿Necesitas ayuda? Visita nuestra"
+
+msgid "Downloads"
+msgstr "Descargas"
+
+msgid "Release Information"
+msgstr "Información del lanzamiento"
+
+msgid "More Videos By"
+msgstr "Más Videos de"
+
+msgid "Music Videos"
+msgstr "Videos Musicales"
+
+msgid "News"
+msgstr "noticias"
+
+msgid "Most Popular"
+msgstr "Los más populares"
+
+msgid "Browse"
+msgstr "Busque"
+
+msgid "Freegal Queues"
+msgstr "Mis colas"
+
+msgid "My Queues"
+msgstr "My Queues"
+
+msgid "History"
+msgstr "historia"
+
+msgid "My Downloads"
+msgstr "Mis descargas"
+
+msgid "My Playlists"
+msgstr "Mis listas de reproducción"
+
+msgid "Announcements"
+msgstr "Noticias"
+
+msgid "Genres"
+msgstr "Géneros"
+
+msgid "Browse A-Z"
+msgstr "Navegar A-Z"
+
+msgid "Song"
+msgstr "canción"
+
+msgid "Music"
+msgstr "música"
+
+msgid "Videos"
+msgstr "Videos"
+
+msgid "Artists"
+msgstr "Artistas"
+
+msgid "Songs"
+msgstr "cancións"
+
+msgid "Composers"
+msgstr "Compositores"
+
+msgid "Albums"
+msgstr "álbumes"
+
+msgid "There are no Playlists currently being played."
+msgstr "No hay listas de reproducción que se está reproduciendo actualmente."
+>>>>>>> Feature_4.1.8_genrelanguage

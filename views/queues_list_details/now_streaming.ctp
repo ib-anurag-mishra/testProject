@@ -290,7 +290,7 @@
                 <?php }    
                 }else{ ?>
 
-                <h2> There are no Playlists currently being played. </h2>
+                <h2> <?php echo __('There are no Playlists currently being played.'); ?> </h2>
 		
                 <?php } ?>                
 
