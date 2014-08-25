@@ -14,52 +14,52 @@
 	?>
 
 	<section class="<?= $search_category;?>">
-		<div class="faq-link"><?php echo __('Need help? Visit our', true)." "; ?> <?= $this->Html->link( 'FAQ Section.','/questions') ?></div>
+		<div class="faq-link">Need Help? Visit our <?=$this->Html->link( 'FAQ Section.','/questions') ?></div>
 		<div class="search-results-heading">Results for your search <?= $keyword; ?></div>
 		<div class="refine-text">Not what you're looking for? Refine your search below.</div>
 		<div class="filter-container clearfix">
 		
 			<?php 
 				if ( $type != 'all') {
-					echo $this->Html->link( 'All Music', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'all' ) ), array( 'title' => 'All Music' ) );	
+					echo $this->Html->link( __( 'All Music', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'all' ) ), array( 'title' => __( 'All Music', true ) ) );	
 				} else {
-					echo $this->Html->link( 'All Music', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'All Music' ) );
+					echo $this->Html->link( __( 'All Music', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'All Music', true ) ) );
 				}
 	
 				if ( $type != 'album' ) {
-					echo $this->Html->link( 'Albums', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => 'Albums' ) );
+					echo $this->Html->link( __( 'Albums', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => __( 'Albums', true ) ) );
 				} else {
-					echo $this->Html->link( 'Albums', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Albums' ) );
+					echo $this->Html->link( __( 'Albums', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Albums', true ) ) );
 				}
 	
 				if ( $type != 'artist' ) {
-					echo $this->Html->link( 'Artists', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array( 'title' => 'Artists' ) );
+					echo $this->Html->link( __( 'Artists', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array( 'title' => __( 'Artists', true ) ) );
 				} else {
-					echo $this->Html->link( 'Artists', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Artists' ) );
+					echo $this->Html->link( __( 'Artists', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Artists', true ) ) );
 				}
 	
 				if ( $type != 'composer' ) {
-					echo $this->Html->link( 'Composers', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => 'Composers' ) );
+					echo $this->Html->link( __( 'Composers', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => __( 'Composers', true ) ) );
 				} else {
-					echo $this->Html->link( 'Composers', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Composers' ) );
+					echo $this->Html->link( __( 'Composers', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Composers', true ) ) );
 				}
 	
 				if ( $type != 'genre' ) {
-					echo $this->Html->link( 'Genres', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => 'Genres' ) );
+					echo $this->Html->link( __( 'Genres', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => __( 'Genres', true ) ) );
 				} else {
-					echo $this->Html->link( 'Genres', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Genres' ) );
+					echo $this->Html->link( __( 'Genres', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Genres', true ) ) );
 				}
 	
 				if ( $type != 'video' ) {
-					echo $this->Html->link( 'Videos', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => 'Videos' ) );
+					echo $this->Html->link( __( 'Videos', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => __( 'Videos', true ) ) );
 				} else {
-					echo $this->Html->link( 'Videos', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Videos' ) );
+					echo $this->Html->link( __( 'Videos', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Videos', true ) ) );
 				}
 	
 				if ( $type != 'song' ) {
-					echo $this->Html->link( 'Songs', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'song' ) ), array( 'title' => 'Songs' ) );
+					echo $this->Html->link( __( 'Songs', true ), array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'song' ) ), array( 'title' => __( __( 'Songs', true ), true ) ) );
 				} else {
-					echo $this->Html->link( 'Songs', 'javascript:void(0)', array( 'class' => 'active', 'title' => 'Songs' ) );
+					echo $this->Html->link( __( 'Songs', true ), 'javascript:void(0)', array( 'class' => 'active', 'title' => __( 'Songs', true ) ) );
 				}
 			?>
 
@@ -301,7 +301,7 @@
 		break;
 		case 'album':
 	?>
-		<header><h3 class="albums-header">Albums</h3></header>
+		<header><h3 class="albums-header"><?php echo __( 'Albums', true ); ?></h3></header>
 		<?php
 			if ( isset( $albumData ) && is_array( $albumData ) && count( $albumData ) > 0 ):
 				$i = 0;
@@ -413,7 +413,7 @@
 			break;
 			case 'video':
 		?>
-		<header> <h3 class="videos-header">Videos</h3> </header>
+		<header> <h3 class="videos-header"><?php echo __( 'Videos', true ); ?></h3> </header>
 		<?php
 			if ( isset( $songs ) && is_array( $songs ) && count( $songs ) > 0 ):
 			$b = 1;
@@ -553,7 +553,7 @@
 	else: ?>
 		<section class="category-results album-results">
 			<header>
-				<h3 class="albums-header">Albums</h3>
+				<h3 class="albums-header"><?php echo __( 'Albums', true ); ?></h3>
 				<?php 
 					if ( isset( $albumData ) && !empty( $albumData ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => 'See More Albums', 'class' => 'see-more' ) );
@@ -622,7 +622,7 @@
 		</section>
 		<section class="category-results artist-results">
 			<header>
-				<h3 class="artists-header">Artists</h3>
+				<h3 class="artists-header"><?php echo __( 'Artists', true ); ?></h3>
 				<?php 
 					if ( isset( $artists ) && !empty( $artists ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array('class' => 'see-more', 'title' => 'See More Artists'));
@@ -663,7 +663,7 @@
 		</section>
 		<section class="category-results composers-results">
 			<header>
-				<h3 class="composers-header">Composers</h3>
+				<h3 class="composers-header"><?php echo __( 'Composers', true ); ?></h3>
 				<?php 
 					if ( isset( $composers ) && !empty( $composers ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => 'See More Composers', 'class' => 'see-more' ) );
@@ -702,7 +702,7 @@
 		</section>
 		<section class="category-results videos-results">
 			<header>
-				<h3 class="videos-header">Videos</h3>
+				<h3 class="videos-header"><?php echo __( 'Videos', true ); ?></h3>
 				<?php 
 					if ( isset( $videos ) && !empty( $videos ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => 'See More Videos', 'class' => 'see-more' ) );
@@ -731,7 +731,7 @@
 		</section>
 		<section class="category-results genres-results">
 			<header>
-				<h3 class="genres-header">Genres</h3>
+				<h3 class="genres-header"><?php echo __( 'Genres', true ); ?></h3>
 				<?php 
 					if ( isset( $genres ) && !empty( $genres ) ) {
 						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => 'See More Genres', 'class' => 'see-more' ) );
@@ -765,7 +765,7 @@
 			</div>
 		</section>
 		<section class="category-results songs-results">
-			<header> <h3 class="songs-header">Songs</h3></header>
+			<header> <h3 class="songs-header"><?php echo __( 'Songs', true ); ?></h3></header>
 			<div class="songs-results-list">
 				<div class="header-container">
 					<div class="artist-col">
