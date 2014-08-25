@@ -348,9 +348,9 @@ echo $session->flash();
         else
         {
                 if(flagVar == 1){
-                    var x=confirm('Are you sure you want to remove all records ?');
-                }else if(flagVar == 2){
                     var x=confirm('Are you sure you want to remove all selected records ?');
+                }else if(flagVar == 2){
+                    var x=confirm('Are you sure you want to remove all records ?');
                 }
 
                 if(x==false)
