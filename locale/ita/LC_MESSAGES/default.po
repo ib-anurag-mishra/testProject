@@ -1,22 +1,19 @@
-<<<<<<< HEAD
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: Mon Aug 25 2014 11:40:46 GMT+0530 (IST)\n"
+"PO-Revision-Date: 2014-08-25 17:25+0530\n"
 "Last-Translator: Jessica <jessica@m68interactive.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"Language: Unknown locale\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Loco-Source-Locale: en_IN\n"
-"X-Generator: Loco - https://localise.biz/\n"
-"X-Loco-Parser: loco_parse_po\n"
-"X-Loco-Target-Locale: zz_ZZ"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.7\n"
+"Language: it\n"
 
 #: \genres\index.ctp:174
 msgid "View All Genres"
@@ -71,12 +68,8 @@ msgid "Download"
 msgstr "Scarica"
 
 #: \artists\view.ctp:138;141 \homes\index.ctp:305;308
-msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
-"one of your downloads, regardless of whether you then press `Cancel` or not."
-msgstr ""
-"IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a "
-"prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
+msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
+msgstr "IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
 
 #: \artists\view.ctp:138;141 \genres\index.ctp:113;116
 #: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
@@ -93,9 +86,7 @@ msgstr "Attendere prego..."
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
 #: \homes\search.ctp:141
 msgid "You have already downloaded this song. Get it from your recent downloads"
-msgstr ""
-"Hai già scaricato questa canzone. Puoi ottenerla di nuovo nella sezione dei "
-"download recenti."
+msgstr "Hai già scaricato questa canzone. Puoi ottenerla di nuovo nella sezione dei download recenti."
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
 #: \homes\search.ctp:141
@@ -199,12 +190,8 @@ msgid "Advanced Search"
 msgstr "Ricerca Avanzata"
 
 #: \genres\index.ctp:113;116 \homes\search.ctp:130;133
-msgid ""
-"IMPORTANT: Please note that once you press `Download Now` you have used up "
-"one of your downloads, regardless of whether you then press 'Cancel' or not."
-msgstr ""
-"IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a "
-"prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
+msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr "IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
 
 #: \genres\index.ctp:142
 msgid "Add To wishlist"
@@ -227,12 +214,8 @@ msgid "National Top 10"
 msgstr "Top 10 Nazionali"
 
 #: \homes\index.ctp:188;191
-msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used up "
-"one of your downloads, regardless of whether you then press \"Cancel\" or not."
-msgstr ""
-"IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a "
-"prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
+msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
+msgstr "IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
@@ -422,23 +405,6 @@ msgstr "video"
 
 msgid "Artists"
 msgstr "artisti"
-=======
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
-#
-msgid ""
-msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2014-08-08 14:56+0530\n"
-"Last-Translator: Jessica <jessica@m68interactive.com>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.7\n"
-"Language: it\n"
 
 #: \artists\view.ctp:200 \genres\view.ctp:74 \homes\search.ctp:198
 #: \sections\admin_index.ctp:37 \users\admin_index.ctp:94
@@ -477,13 +443,8 @@ msgid "Download"
 msgstr "Scarica"
 
 #: \artists\view.ctp:138;141 \homes\index.ctp:305;308
-msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
-"up one of your downloads, regardless of whether you then press `Cancel` or "
-"not."
-msgstr ""
-"IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a "
-"prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
+msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
+msgstr "IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
 
 #: \artists\view.ctp:138;141 \genres\index.ctp:113;116
 #: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
@@ -499,11 +460,8 @@ msgstr "Attendere prego..."
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
 #: \homes\search.ctp:141
-msgid ""
-"You have already downloaded this song. Get it from your recent downloads"
-msgstr ""
-"Hai già scaricato questa canzone. Puoi ottenerla di nuovo nella sezione dei "
-"download recenti."
+msgid "You have already downloaded this song. Get it from your recent downloads"
+msgstr "Hai già scaricato questa canzone. Puoi ottenerla di nuovo nella sezione dei download recenti."
 
 #: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
 #: \homes\search.ctp:141
@@ -592,12 +550,8 @@ msgid "Advanced Search"
 msgstr "Ricerca Avanzata"
 
 #: \genres\index.ctp:113;116 \homes\search.ctp:130;133
-msgid ""
-"IMPORTANT: Please note that once you press `Download Now` you have used up "
-"one of your downloads, regardless of whether you then press 'Cancel' or not."
-msgstr ""
-"IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a "
-"prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
+msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr "IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
 
 #: \genres\index.ctp:142
 msgid "Add To wishlist"
@@ -628,13 +582,8 @@ msgid "National Top 10"
 msgstr "Top 10 Nazionali"
 
 #: \homes\index.ctp:188;191
-msgid ""
-"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
-"up one of your downloads, regardless of whether you then press \"Cancel\" or "
-"not."
-msgstr ""
-"IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a "
-"prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
+msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
+msgstr "IMPORTANTE: Quando clicci \"Scarica Ora\" utilizzi uno dei tuoi download, a prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
@@ -850,3 +799,4 @@ msgstr "Attualmente non ci sono le playlist create. Si prega di aggiungere una n
 
 msgid "All Music"
 msgstr "All Music"
+
