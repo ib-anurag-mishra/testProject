@@ -20,11 +20,11 @@ unlink($reportsFolder . '/tmp_debug_data.txt');
 $arr_dates = array();
 
 
-$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
-$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
+//$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
+//$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
 
-//$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
-//$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime($arr_dates['month']['from_date']));;
+$arr_dates['month']['from_date'] = '2014-01-01 00:00:00';
+$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime($arr_dates['month']['from_date']));;
 
 $fetchRecordsFromTable = 'latest_downloads';
 //$fetchRecordsFromTable = 'downloads';
@@ -33,9 +33,9 @@ $fetchRecordsFromTable = 'latest_downloads';
 $libraryType = array('ALC' => '0', 'Unlimited' => '1');
 //$libraryType = array('ALC' => '0');
 
-////$country_curency = array('US' => 'USD');
+$country_curency = array('US' => 'USD');
 //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
-$country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
+//$country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
 
 $unit_sales_rate = null;
 
@@ -101,7 +101,7 @@ foreach ($arr_dates AS $key => $value)
                                     . "JOIN libraries ON downloads.library_id = libraries.id  "
                                     . "Where downloads.created >= '" . $value['from_date'] . "' AND downloads.created <= '" . $value['to_date'] . "' "
                                     . "AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country['library_territory'] . "' "
-                                    . "AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
+                                    . "AND library_id = " . $q['library_id'] . " GROUP BY downloads.ProdID ";
                         }
                         else
                         {
@@ -113,7 +113,7 @@ foreach ($arr_dates AS $key => $value)
                                     . "JOIN libraries ON downloads.library_id = libraries.id  "
                                     . "Where downloads.created >= '" . $value['from_date'] . "' AND downloads.created <= '" . $q['library_contract_end_date'] . " 23:59:59' "
                                     . "AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country['library_territory'] . "' "
-                                    . "AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
+                                    . "AND library_id = " . $q['library_id'] . " GROUP BY downloads.ProdID ";
                         }
                     }
                     else
@@ -127,7 +127,7 @@ foreach ($arr_dates AS $key => $value)
                                     . "JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id "
                                     . "Where downloads.created >= '" . $q['library_contract_start_date'] . " 00:00:00' AND downloads.created <= '" . $value['to_date'] . "' "
                                     . "AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country['library_territory'] . "' "
-                                    . "AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
+                                    . "AND library_id = " . $q['library_id'] . " GROUP BY downloads.ProdID ";
                         }
                         else
                         {
@@ -138,7 +138,7 @@ foreach ($arr_dates AS $key => $value)
                                     . "JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id  "
                                     . "Where downloads.created between '" . $q['library_contract_start_date'] . " 00:00:00' and '" . $q['library_contract_end_date'] . " 23:59:59' "
                                     . "AND downloads.provider_type='ioda' AND libraries.library_territory = '" . $row_country['library_territory'] . "' "
-                                    . "AND library_id = " . $q['library_id'] . " GROUP BY Songs.ProdID ";
+                                    . "AND library_id = " . $q['library_id'] . " GROUP BY downloads.ProdID ";
                         }
                     }
 
