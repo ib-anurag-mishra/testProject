@@ -372,7 +372,8 @@ function write_file($content, $file_name, $folder, $db)
 
         $status_message = '';
 
-        $cdn_status = sendFile($file, $file_name);
+       // $cdn_status = sendFile($file, $file_name);
+         $cdn_status = 0;
         if ($cdn_status)
         {
             $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_cdn_uploaded`='1' , modified=now() WHERE `report_name`='$file_name' ";
@@ -386,7 +387,8 @@ function write_file($content, $file_name, $folder, $db)
             $status_message .="$file_name not uploaded on CDN \n";
         }
 
-        $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
+        //$ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
+          $ioda_status = 0;
         if ($ioda_status)
         {
             $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_send_ioda`='1' , modified=now() WHERE `report_name`='$file_name' ";
@@ -409,7 +411,7 @@ function write_file($content, $file_name, $folder, $db)
             fwrite($logFileWrite, "$file_name not uploaded on SERVER. Not deleted. \n");
         }
 
-        sendReportEmail("monthly", $file_name);        
+       // sendReportEmail("monthly", $file_name);        
     }
     else
     {
