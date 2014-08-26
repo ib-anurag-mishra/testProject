@@ -1637,20 +1637,20 @@ STR;
                     $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'Feature Artist and Composer : '. $featured[$k]['Featuredartist']['artist_name'];
                  
                     //unset the broken images variable in the array
-                    unset($featured[$k]);             
+                    unset($featured[$k]);
                 }                
             }
         }
-       
+
         return $featured;
     }
-    
+
     /**
      * Function name : writeFeaturedSongsInCache
      * Function Description This is used to write random songs related to a composer or artist into cache.
      *  
      */ 
-    
+
     function writeFeaturedSongsInCache($territory){
         $featuredInstance = ClassRegistry::init('Featuredartist');
         $featured = $featuredInstance->find('all', array(
@@ -1681,16 +1681,17 @@ STR;
      *  
      */
     
-    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0, $territory = null){
-        
+    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0, $territory = null) {
+
         if(!empty($territory)) {
             $country = $territory;
             $countryPrefix = $this->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
         } else {
             $country = $this->Session->read('territory'); 
         }        
-        
+
         $songInstance = Classregistry::init('Song');
+
         if(empty($flag)){
             $cond = array('Song.ArtistText' => $artistComposer , 'Song.provider_type = Country.provider_type' , 'Song.provider_type' => $provider);
         }else{
