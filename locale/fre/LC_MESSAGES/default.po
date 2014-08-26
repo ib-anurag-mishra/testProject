@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreegalMusic.com\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2014-08-26 11:33+0530\n"
+"PO-Revision-Date: 2014-08-26 12:16+0530\n"
 "Last-Translator: Rob Richmond <rob@m68interactive.com>\n"
 "Language-Team: m68 Interactive <tech@m68interactive.com>\n"
 "MIME-Version: 1.0\n"
@@ -435,3 +435,15 @@ msgstr "Toute la musique"
 
 msgid "Saved Playlists"
 msgstr "enregistrés playlists"
+
+msgid "Need Help? Visit our"
+msgstr "Besoin d'aide? Visitez notre"
+
+msgid "FAQ Section."
+msgstr "Section FAQ."
+
+msgid "Results for your search"
+msgstr "Résultats pour votre recherche"
+
+msgid "Not what you're looking for? Refine your search below."
+msgstr "Pas ce que vous cherchez? Affiner votre recherche ci-dessous."
