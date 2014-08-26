@@ -421,11 +421,7 @@ class VideosController extends AppController {
             //check image file exist or not for each entry
             if(!$this->Common->checkImageFileExist($videosData[0]['videoImage'])){              
                 //write broken image entry in the log files                    
-                if($this->Session->read("subdomain")){
-                    $this->brokenImageVideoURL = $this->Session->read("subdomain").'.freegalmusic.com/videos/details/'.$this->params['pass'][0];
-                }else{
-                    $this->brokenImageVideoURL = 'www.freegalmusic.com/videos/details/'.$this->params['pass'][0]; 
-                }                    
+                $this->brokenImageVideoURL =  getenv('SERVER_NAME') . '/videos/details/'.$this->params['pass'][0];
                 $this->log($territory.' : ' .' Video Details : '. $videosData[0]['videoImage'].' : Album URL : '. $this->brokenImageVideoURL); 
                 
                 $this->videoPageBrokenImages[] = $videosData[0]['videoImage'];                  
@@ -493,12 +489,8 @@ class VideosController extends AppController {
             foreach ( $topVideoGenreData as $key => $value ) {
        
                 if(!$this->Common->checkImageFileExist($value['videoImage'] )){              
-                    //write broken image entry in the log files                    
-                    if($this->Session->read("subdomain")){
-                        $this->brokenImageVideoURL = $this->Session->read("subdomain").'.freegalmusic.com/videos/details/'.$this->params['pass'][0];
-                    }else{
-                        $this->brokenImageVideoURL = 'www.freegalmusic.com/videos/details/'.$this->params['pass'][0]; 
-                    }                    
+                    //write broken image entry in the log files
+                    $this->brokenImageVideoURL = getenv('SERVER_NAME') . '/videos/details/'.$this->params['pass'][0];
                     $this->log($territory.' : ' .' Video Details : '. $value['videoImage'].' : Album URL : '. $this->brokenImageVideoURL); 
 
                     $this->videoPageBrokenImages[] = $value['videoImage'];               
@@ -550,11 +542,7 @@ class VideosController extends AppController {
        
                 if(!$this->Common->checkImageFileExist($value['videoAlbumImage'] )){              
                     //write broken image entry in the log files                    
-                    if($this->Session->read("subdomain")){
-                        $this->brokenImageVideoURL = $this->Session->read("subdomain").'.freegalmusic.com/videos/details/'.$this->params['pass'][0];
-                    }else{
-                        $this->brokenImageVideoURL = 'www.freegalmusic.com/videos/details/'.$this->params['pass'][0]; 
-                    }                    
+                    $this->brokenImageVideoURL = getenv('SERVER_NAME') . '/videos/details/'.$this->params['pass'][0];
                     $this->log($territory.' : ' .' Video Details : '. $value['videoAlbumImage'].' : Album URL : '. $this->brokenImageVideoURL); 
 
                     $this->videoPageBrokenImages[] = $value['videoAlbumImage'];               

@@ -1565,6 +1565,19 @@ Class ArtistsController extends AppController {
             if ($libType == 2) {
                 $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
             }
+            
+            foreach ($albumData as $album) {  
+                $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+                $albumArtwork = Configure::read('App.Music_Path') .$albumArtwork;
+                //check image file exist or not for each entry
+                if(!$this->Common->checkImageFileExist($albumArtwork)){              
+                    //write broken image entry in the log files                    
+                    $brokenImageAlbumsURL = getenv('SERVER_NAME') . '/artists/view/'.base64_encode($album['Album']['ArtistText']).'/'.$album['Album']['ProdID'].'/'.base64_encode($album['Album']['provider_type']);
+                    $this->log($country.' : ' .' Albums Details : '. $albumArtwork.' : Album URL : '. $brokenImageAlbumsURL); 
+                    //send broken image alert message
+                    $this->__sendBrokenImageAlert($country,$albumArtwork,$brokenImageAlbumsURL,'Album-Details');                  
+                }
+            }
         }
 
         //check for provider if null
@@ -2815,11 +2828,7 @@ Class ArtistsController extends AppController {
                       if(!$this->Common->checkImageFileExist($albumArtwork)) {
 
                             //write broken image entry in the log files
-                            if($this->Session->read("subdomain")) {
-                                $this->brokenImageArtistURL  = $this->Session->read("subdomain").'.freegalmusic.com/artists/album/'.$artistTextEncode;
-                            } else {
-                                $this->brokenImageArtistURL  = 'www.freegalmusic.com/artists/album/'.$artistTextEncode;
-                            }
+                            $this->brokenImageArtistURL  = getenv('SERVER_NAME') . '/artists/album/'.$artistTextEncode;
                             
                             $this->log($country.' : ' .' Video Details : '. $albumArtwork.' : Album URL : '. $this->brokenImageArtistURL );
 
@@ -2855,11 +2864,7 @@ Class ArtistsController extends AppController {
                      //check image file exist or not for each entry
                      if(!$this->Common->checkImageFileExist($value['videoAlbumImage'])){              
                            //write broken image entry in the log files                    
-                           if($this->Session->read("subdomain")){
-                               $this->brokenImageArtistURL  = $this->Session->read("subdomain").'.freegalmusic.com/artists/album/'.$artistTextEncode;
-                           }else{
-                               $this->brokenImageArtistURL  = 'www.freegalmusic.com/artists/album/'.$artistTextEncode; 
-                           }                    
+                           $this->brokenImageArtistURL  = getenv('SERVER_NAME') . '/artists/album/'.$artistTextEncode;
                            $this->log($country.' : ' .' Video Details : '. $value['videoAlbumImage'].' : Album URL : '. $this->brokenImageArtistURL ); 
 
                            $this->artistPageBrokenImages[] = $value['videoAlbumImage'];                  
