@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2014-08-26 11:37+0530\n"
+"PO-Revision-Date: 2014-08-26 12:17+0530\n"
 "Last-Translator: Jessica <jessica@m68interactive.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -446,3 +446,15 @@ msgstr "All Music"
 
 msgid "Saved Playlists"
 msgstr "salvate Playlist"
+
+msgid "Need Help? Visit our"
+msgstr "Hai bisogno di aiuto? Visita il nostro"
+
+msgid "FAQ Section."
+msgstr "Sezione FAQ."
+
+msgid "Results for your search"
+msgstr "Risultati per la ricerca"
+
+msgid "Not what you're looking for? Refine your search below."
+msgstr "Non è quello che stai cercando? Affina la tua ricerca qui sotto."

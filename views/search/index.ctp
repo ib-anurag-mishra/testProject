@@ -14,9 +14,9 @@
 	?>
 
 	<section class="<?= $search_category;?>">
-		<div class="faq-link">Need Help? Visit our <?=$this->Html->link( 'FAQ Section.','/questions') ?></div>
-		<div class="search-results-heading">Results for your search <?= $keyword; ?></div>
-		<div class="refine-text">Not what you're looking for? Refine your search below.</div>
+		<div class="faq-link"><?php echo __( 'Need Help? Visit our', true ); ?> <?=$this->Html->link( __( 'FAQ Section.', true ),'/questions') ?></div>
+		<div class="search-results-heading"><?php echo __( 'Results for your search', true ); ?> <?= $keyword; ?></div>
+		<div class="refine-text"><?php echo __( "Not what you're looking for? Refine your search below.", true ); ?></div>
 		<div class="filter-container clearfix">
 		
 			<?php 
@@ -769,19 +769,19 @@
 			<div class="songs-results-list">
 				<div class="header-container">
 					<div class="artist-col">
-						<span class="artist">Artist</span>
+						<span class="artist"><?php echo __( 'Artists', true ); ?></span>
 					</div>
 					<div class="artist-border header-border"></div>
 					<div class="composer-col">
-						<span class="composer">Composer</span>
+						<span class="composer"><?php echo __( 'Composers', true ); ?></span>
 					</div>
 					<div class="composer-border header-border"></div>
 					<div class="album-col">
-						<span class="album">Album</span>
+						<span class="album"><?php echo __( 'Albums', true ); ?></span>
 					</div>
 					<div class="album-border header-border"></div>
 					<div class="song-col">
-						<span class="song">Song</span>
+						<span class="song"><?php echo __( 'Songs', true ); ?></span>
 					</div>
 					<?php 
 						if ( isset( $patronId ) && !empty( $patronId ) ):
