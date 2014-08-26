@@ -533,7 +533,7 @@ Class ArtistsController extends AppController {
                 $this->set('formHeader', 'Edit Play list');
                 $queueName = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $queueId)));
                 $getData = $this->QueueDetail->find('all',
-                                        array('fields' => array('Songs.Title', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle'),
+                                        array('fields' => array('Songs.SongTitle', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle'),
                                               'group' => array('Songs.ProdID', 'Songs.provider_type'),
                                               'joins' => array(
                                                               array(
