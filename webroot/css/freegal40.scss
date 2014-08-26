@@ -16099,7 +16099,8 @@ sub { top: 0.4em; }
 
 		content: "";
 		position:absolute;
-		left: 20px;
+		// left: 20px;
+		left: 12px;
 		top:11px;
 		background:url(../img/freegal_sprite.png) -110px -20px;
 		width: 12px;
@@ -16124,8 +16125,10 @@ sub { top: 0.4em; }
     #query {
 		@extend %form-reset;
 		height: 30px;
-		margin-left: 50px;
-		width: 234px;
+		// margin-left: 50px;
+		margin-left: 30px;
+		// width: 234px;
+		width: 174px;
 		border: 0 none;
         outline: 0 none;
         padding: 0;
@@ -16133,7 +16136,8 @@ sub { top: 0.4em; }
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
 		@include border-radius(20px);
-		padding-right: 60px;
+		// padding-right: 60px;
+		padding-right: 47px;
 
     }
 
@@ -16142,7 +16146,8 @@ sub { top: 0.4em; }
 		@extend %form-reset;
 		cursor:pointer;
 		height: 30px;
-		width: 55px;
+		// width: 55px;
+		width: 42px;
 		color:#fff;
 		background: #63c9eb;
 		@include background-image(linear-gradient(#63c9eb, #58bee0));
