@@ -1756,8 +1756,5 @@ STR;
         exit;
     }
     
-    function generate_report() {
-    $result =   $this->Downloads->generateReportLibraryLT100Downloads();
-    }
 
 }
