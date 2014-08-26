@@ -181,7 +181,15 @@ if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth
 			</li>
 			<li><?php echo $html->link('Add Language', array('controller' => 'homes', 'action' => 'language'));?>
 			</li>
-			<?php } ?>
+			<li><a href="#">Playlists</a>
+				<ul>
+					<li><?php echo $html->link('Add Playlist', array('controller' => 'artists', 'action' => 'addplaylist'));?>
+					</li>
+					<li><?php echo $html->link('Manage Playlist', array('controller' => 'artists', 'action' => 'manageplaylist'));?>
+					</li>
+				</ul>
+			</li>                        
+                    <?php } ?>
 		</ul>
 	</li>
 	<li><a href="#"
