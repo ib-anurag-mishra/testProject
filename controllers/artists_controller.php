@@ -532,7 +532,7 @@ Class ArtistsController extends AppController {
                 $this->set('formHeader', 'Edit Play list');
                 $queueName = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $queueId)));
                 $getData = $this->QueueDetail->find('all',
-                                        array('fields' => array('Songs.Title', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle'),
+                                        array('fields' => array('Songs.SongTitle', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle'),
                                               'group' => array('Songs.ProdID', 'Songs.provider_type'),
                                               'joins' => array(
                                                               array(
@@ -573,7 +573,7 @@ Class ArtistsController extends AppController {
             $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named']['id'])));
             $queueName = $this->params['data']['Artist']['queue_name'];
             if(trim($queueName) != trim($queueData['QueueList']['queue_name'])) {
-                $update = array('queue_id' => $this->params['named']['id'], 'queue_name' => $queueName);
+                $update = array('queue_id' => $this->params['named']['id'], 'queue_name' => trim($queueName));
                 $this->QueueList->setDataSource('master');
                 $this->QueueList->save($update);
                 $this->QueueList->setDataSource('default');
@@ -604,8 +604,8 @@ Class ArtistsController extends AppController {
                 if(empty($songsList)) {
                     $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->deleteAll(array('queue_id' => $this->params['named']['id']));
-                    $this->Common->refreshQueueSongs($this->params['named']['id']);
                     $this->QueueDetail->setDataSource('default');
+                    $this->Common->refreshQueueSongs($this->params['named']['id']);
                     $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
                     $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
                 }
@@ -629,8 +629,8 @@ Class ArtistsController extends AppController {
                 if(!empty($songToDel)) {
                     $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->deleteAll(array('id' => $songToDel));
-                    $this->Common->refreshQueueSongs($this->params['named']['id']);
                     $this->QueueDetail->setDataSource('default');
+                    $this->Common->refreshQueueSongs($this->params['named']['id']);
                     if(empty($songToAdd)) {
                         $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
                         $this->redirect('addplaylist/id:'.$this->params['named']['id']);                         
@@ -661,7 +661,7 @@ Class ArtistsController extends AppController {
         } else {
             $queueName = $this->params['data']['Artist']['queue_name'];
             $patronId = $this->Session->read('Auth.User.id');
-            $this->data['QueueList']['queue_name'] = $queueName;
+            $this->data['QueueList']['queue_name'] = trim($queueName);
             $this->data['QueueList']['created'] = date('Y-m-d H:i:s');
             $this->data['QueueList']['patron_id'] = $patronId;
             $this->data['QueueList']['queue_type'] = 1;
