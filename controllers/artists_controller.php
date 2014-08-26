@@ -2800,7 +2800,34 @@ Class ArtistsController extends AppController {
                 }
             }
 
-            $this->set('albumData', $albumData);
+            foreach ($albumData as $key => $value) {
+                    $albumData[$key]['combineGenre'] = $this->Common->getGenreForSelection($albumData[$key]['Genre']['Genre']);
+                }
+            $this->set('albumData', $albumData);            
+            
+           
+            if(!empty($albumData)){
+                 foreach ($albumData as $key => $value) {
+                     $albumArtwork = $this->Token->artworkToken($value['Files']['CdnPath'] . "/" . $value['Files']['SourceURL']);
+                     $albumArtwork = Configure::read('App.Music_Path') .$albumArtwork;                    
+
+                     //check image file exist or not for each entry
+                      if(!$this->Common->checkImageFileExist($albumArtwork)) {
+
+                            //write broken image entry in the log files
+                            if($this->Session->read("subdomain")) {
+                                $this->brokenImageArtistURL  = $this->Session->read("subdomain").'.freegalmusic.com/artists/album/'.$artistTextEncode;
+                            } else {
+                                $this->brokenImageArtistURL  = 'www.freegalmusic.com/artists/album/'.$artistTextEncode;
+                            }
+                            
+                            $this->log($country.' : ' .' Video Details : '. $albumArtwork.' : Album URL : '. $this->brokenImageArtistURL );
+
+                            $this->artistPageBrokenImages[] = $albumArtwork;
+                      }
+                 }
+            }
+
 
             if (isset($this->params['named']['page'])) {
                 $this->autoLayout = false;
@@ -2821,7 +2848,25 @@ Class ArtistsController extends AppController {
                     $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
                     Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
                 }
-            } 
+            }            
+            
+            if(!empty($artistVideoList)){
+                foreach ($artistVideoList as $key => $value) { 
+                     //check image file exist or not for each entry
+                     if(!$this->Common->checkImageFileExist($value['videoAlbumImage'])){              
+                           //write broken image entry in the log files                    
+                           if($this->Session->read("subdomain")){
+                               $this->brokenImageArtistURL  = $this->Session->read("subdomain").'.freegalmusic.com/artists/album/'.$artistTextEncode;
+                           }else{
+                               $this->brokenImageArtistURL  = 'www.freegalmusic.com/artists/album/'.$artistTextEncode; 
+                           }                    
+                           $this->log($country.' : ' .' Video Details : '. $value['videoAlbumImage'].' : Album URL : '. $this->brokenImageArtistURL ); 
+
+                           $this->artistPageBrokenImages[] = $value['videoAlbumImage'];                  
+                     }                     
+                }
+            }
+
             $this->set('artistVideoList', $artistVideoList);
         }
     }

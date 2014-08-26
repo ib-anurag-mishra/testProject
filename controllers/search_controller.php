@@ -9,8 +9,11 @@ class SearchController extends AppController {
 
     var $name 		= 'Search';
     var $helpers 	= array( 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Song', 'Language', 'Album', 'Session', 'WishlistVideo', 'Mvideo', 'Search', 'Queue', 'Token' );
-    var $components = array( 'Auth', 'Downloads', 'Solr', 'Session' );
-    var $uses 		= array( 'Searchrecord','LatestDownload','LatestVideodownload' );
+    var $components = array( 'Auth', 'Downloads', 'Solr', 'Session', 'Common' );
+    var $uses 		= array( 'Searchrecord','LatestDownload','LatestVideodownload', 'Token' );
+    
+    var $artistPageBrokenImages = array();
+    var $brokenImageSearchURL   ='';
 
     /*
       Function Name : beforeFilter
@@ -105,7 +108,35 @@ class SearchController extends AppController {
 	            $lastPage 	= isset( $songs['lastPage'] ) ? $songs['lastPage'] : '';
 	            $lastPage 	= ceil($lastPage / $limit);
 	            $songArray 	= array();
-	
+
+	            if ( is_array( $songs ) && count( $songs ) > 0 ) {
+	            	if ( $typeVar == 'video' ) {
+	            		foreach ( $songs as $key => $song ) {
+
+	            			if ( !is_object( $song ) ) {
+	            				continue;
+	            			}
+
+	            			$albumArtwork = $this->Token->artworkToken( $song->ACdnPath . "/" . $song->ASourceURL );
+	            			$albumArtwork = Configure::read( 'App.Music_Path' ) . $albumArtwork;
+
+	            			//check image file exist or not for each entry
+	            			if( !$this->Common->checkImageFileExist( $albumArtwork ) ) {
+
+	            				//write broken image entry in the log files
+	            				$this->brokenImageSearchURL  = getenv('SERVER_NAME') . '/search?q=' . $queryVar . '&type=video';
+
+	            				$this->log($country.' : ' .' Search Albums : '. $albumArtwork.' : Search URL : '. $this->brokenImageSearchURL );
+
+	            				$this->artistPageBrokenImages[] = $albumArtwork;
+
+	            				unset( $objKey );
+	            				continue;
+	            			}
+	            		}
+	            	}
+	            }
+
 	            if ( is_array( $songs ) && count( $songs ) > 0  && !empty( $patronId ) ) {
 	            	foreach ( $songs as $key => $song ) {
 	            		if( isset( $song->ProdID ) && !empty( $song->ProdID ) ) {
@@ -159,6 +190,23 @@ class SearchController extends AppController {
                         		continue;
                         	}
 
+                        	$albumArtwork = $this->Token->artworkToken( $objAlbum->ACdnPath . "/" . $objAlbum->ASourceURL );
+                        	$albumArtwork = Configure::read( 'App.Music_Path' ) . $albumArtwork;
+
+                        	//check image file exist or not for each entry
+                        	if( !$this->Common->checkImageFileExist( $albumArtwork ) ) {
+
+                        		//write broken image entry in the log files
+                        		$this->brokenImageSearchURL  = getenv('SERVER_NAME') . '/search?q=' . $queryVar . '&type=' . $typeVar;
+
+                        		$this->log($country.' : ' .' Search Albums : '. $albumArtwork.' : Search URL : '. $this->brokenImageSearchURL );
+
+                        		$this->artistPageBrokenImages[] = $albumArtwork;
+
+                        		unset( $objKey );
+                        		continue;
+                        	}
+
                             $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
                                     array( 'controller' => 'artists', 'action' => 'getAlbumSongs' ), array('pass' => array(base64_encode( $objAlbum->ArtistText ), $objAlbum->ReferenceID, base64_encode( $objAlbum->provider_type ), 1 ) )
                             );
@@ -209,6 +257,23 @@ class SearchController extends AppController {
                 		continue;
                 	}
 
+                	$albumArtwork = $this->Token->artworkToken( $objAlbum->ACdnPath . "/" . $objAlbum->ASourceURL );
+                	$albumArtwork = Configure::read( 'App.Music_Path' ) . $albumArtwork;
+
+                	//check image file exist or not for each entry
+                	if( !$this->Common->checkImageFileExist( $albumArtwork ) ) {
+
+                		//write broken image entry in the log files
+                		$this->brokenImageSearchURL  = getenv('SERVER_NAME') . '/search?q=' . $queryVar . '&type=album';
+
+                		$this->log($country.' : ' .' Search Albums : '. $albumArtwork.' : Search URL : '. $this->brokenImageSearchURL );
+
+                		$this->artistPageBrokenImages[] = $albumArtwork;
+
+                		unset( $objKey );
+                		continue;
+                	}
+
                     $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
                             array( 'controller' => 'artists', 'action' => 'getAlbumSongs' ), array( 'pass' => array( base64_encode( $objAlbum->ArtistText ), $objAlbum->ReferenceID, base64_encode( $objAlbum->provider_type ), 1 ) )
                     );
@@ -228,8 +293,6 @@ class SearchController extends AppController {
                 $this->set( 'videos', $videos );
             }
 
-            //$this->set( 'total', $total );
-            //$this->set( 'totalPages', $totalPages );
             $this->set( 'currentPage', $page );
             $this->set( 'facetPage', $facetPage );
             $this->set( 'patronId', $patronId );
@@ -238,6 +301,8 @@ class SearchController extends AppController {
         }
 
         $this->set( 'keyword', htmlspecialchars( $queryVar ) );
+
+        $this->__sendBrokenImageAlertForSearch( $country );
 
         if ( isset( $this->params['isAjax'] ) && $this->params['isAjax'] && $layout == 'ajax' ) {
             $this->layout = 'ajax';
@@ -423,5 +488,24 @@ class SearchController extends AppController {
     	}
 
     	return false;
+    }
+    
+    public function __sendBrokenImageAlertForSearch( $country ) {
+    
+    	if( !empty($this->brokenImageSearchURL ) ) {
+    
+    		$content  = '';
+    		$content .= 'Territory : '.$country.'<br />';
+    		$content .= 'Website Page : Video Details'.'<br />';
+    
+    		foreach( $this->artistPageBrokenImages  as $albumArtwork ) {
+    			$content .='Image URL : '.$albumArtwork.'<br />';
+    		}
+    
+    		$content .='Location : '.$this->brokenImageSearchURL .'<br />';
+    		$content .='Date-Time : '.date('Y-m-d H:i:s').'<br />';
+    
+    		$this->Common->sendBrokenImageAlert( $content );
+    	}
     }
 }

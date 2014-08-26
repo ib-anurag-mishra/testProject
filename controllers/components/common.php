@@ -1653,20 +1653,20 @@ STR;
                     $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'Feature Artist and Composer : '. $featured[$k]['Featuredartist']['artist_name'];
                  
                     //unset the broken images variable in the array
-                    unset($featured[$k]);             
+                    unset($featured[$k]);
                 }                
             }
         }
-       
+
         return $featured;
     }
-    
+
     /**
      * Function name : writeFeaturedSongsInCache
      * Function Description This is used to write random songs related to a composer or artist into cache.
      *  
      */ 
-    
+
     function writeFeaturedSongsInCache($territory){
         $featuredInstance = ClassRegistry::init('Featuredartist');
         $featured = $featuredInstance->find('all', array(
@@ -1697,16 +1697,17 @@ STR;
      *  
      */
     
-    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0, $territory = null){
-        
+    function getRandomSongs($artistComposer , $provider,  $flag = 0, $ajax = 0, $territory = null) {
+
         if(!empty($territory)) {
             $country = $territory;
             $countryPrefix = $this->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
         } else {
             $country = $this->Session->read('territory'); 
         }        
-        
+
         $songInstance = Classregistry::init('Song');
+
         if(empty($flag)){
             $cond = array('Song.ArtistText' => $artistComposer , 'Song.provider_type = Country.provider_type' , 'Song.provider_type' => $provider);
         }else{
@@ -2839,17 +2840,22 @@ STR;
      * @param $content string    
      * 
      */
-     function sendBrokenImageAlert($content) {         
-        
-        $this->Email->to = 'narendra.nagesh@infobeans.com';
-        $this->Email->from = Configure::read('App.adminEmail');
-        $this->Email->fromName = Configure::read('App.fromName');
-        $this->Email->subject = 'FreegalMusic - Broken Images information';
-        $this->Email->smtpHostNames = Configure::read('App.SMTP');
-        $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
-        $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
-        $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
-        $result = $this->Email->send($content);
+     function sendBrokenImageAlert($content) {
+
+     	$to = "narendra.nagesh@infobeans.com";
+     	$subject = "FreegalMusic - Broken Images information";
+     	
+     	$message = $content;
+     	
+     	// Always set content-type when sending HTML email
+     	$headers = "MIME-Version: 1.0" . "\r\n";
+     	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+     	
+     	// More headers
+     	$headers .= 'From: <no-reply@freegalmusic.com>' . "\r\n";
+     	$headers .= 'Cc: kiran.pyati@infobeans.com' . "\r\n";
+     	
+     	mail($to,$subject,$message,$headers);
      
     }
 
