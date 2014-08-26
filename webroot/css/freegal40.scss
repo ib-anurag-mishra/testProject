@@ -16099,7 +16099,6 @@ sub { top: 0.4em; }
 
 		content: "";
 		position:absolute;
-		// left: 20px;
 		left: 12px;
 		top:11px;
 		background:url(../img/freegal_sprite.png) -110px -20px;
@@ -16114,7 +16113,6 @@ sub { top: 0.4em; }
 		height: 30px;
 		margin-left: 50px;
 		width: 237px;
-		
 		font-weight: bold;
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
@@ -16146,7 +16144,6 @@ sub { top: 0.4em; }
 		@extend %form-reset;
 		cursor:pointer;
 		height: 30px;
-		// width: 55px;
 		width: 42px;
 		color:#fff;
 		background: #63c9eb;
