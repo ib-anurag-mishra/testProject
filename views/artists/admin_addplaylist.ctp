@@ -110,7 +110,7 @@ if(empty($songs)){
                 <tr class="songs_list">
                     <td class="left"><?php echo $value['Songs']['ArtistText'];?></td>
                     <td><?php echo $value['Albums']['AlbumTitle'];?></td>
-                    <td><?php echo $value['Songs']['Title'];?></td>
+                    <td><?php echo $value['Songs']['SongTitle'];?></td>
                     <td><?php echo $this->Form->input("Info. ", array('type'=>'checkbox','div' => false,'class' => "songCheck", 'id'=>$queueId, 'value' => trim($value['Albums']['ALbumId']).'-'.trim($value['Songs']['provider_type']).'-'.trim($value['Songs']['ProdId']), 'hiddenField' => false)); ?>
                     </td>
                 </tr>
