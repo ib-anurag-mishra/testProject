@@ -355,7 +355,7 @@ EOD;
         
         if(empty($flag)){
             $str = <<<EOD
-       <a onclick="javascript:loadAlbumData('$albumSongs');"  class="album-preview" href="javascript:void(0);" >__('Stream Now')</a>
+       <a onclick="javascript:loadAlbumData('$albumSongs');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
 EOD;
             return $str;
         }else if ($flag == 1){
@@ -366,21 +366,21 @@ EOD;
             */
 
             $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable">__('Stream Now')</button>
+                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable">Stream Now</button>
 EOD;
             return $str;            
             
         }else if($flag == 2){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">__('Stream Artist')</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Artist</button>
 EOD;
             return $str;
             
        }else if($flag == 3){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-now-btn">__('Stream Now')</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-now-btn">Stream Now</button>
 EOD;
             return $str;
             

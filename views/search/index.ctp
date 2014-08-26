@@ -812,19 +812,19 @@
 			<div class="songs-results-list">
 				<div class="header-container">
 					<div class="artist-col">
-						<span class="artist">Artist</span>
+						<span class="artist"><?php echo __( 'Artists', true ); ?></span>
 					</div>
 					<div class="artist-border header-border"></div>
 					<div class="composer-col">
-						<span class="composer">Composer</span>
+						<span class="composer"><?php echo __( 'Composers', true ); ?></span>
 					</div>
 					<div class="composer-border header-border"></div>
 					<div class="album-col">
-						<span class="album">Album</span>
+						<span class="album"><?php echo __( 'Albums', true ); ?></span>
 					</div>
 					<div class="album-border header-border"></div>
 					<div class="song-col">
-						<span class="song">Song</span>
+						<span class="song"><?php echo __( 'Songs', true ); ?></span>
 					</div>
 					<?php 
 						if ( isset( $patronId ) && !empty( $patronId ) ):
