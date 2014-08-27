@@ -327,6 +327,7 @@ $ieVersion = ieversion();
                             </div>
                             <div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>" href="javascript:void(0)">
                                     <?php
+                                    /*
                                     if (strlen($wishlistResultsVideo['WishlistVideo']['track_title']) >= 15)
                                     {
                                         echo '<a title="' . htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']) . '">' . $this->getTextEncode(substr($wishlistResultsVideo['WishlistVideo']['track_title'], 0, 15)) . '...</a>';
@@ -335,6 +336,8 @@ $ieVersion = ieversion();
                                     {
                                         echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']);
                                     }
+                                    */
+                                    echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']);
                                     ?>
                                 </a></div>
 
