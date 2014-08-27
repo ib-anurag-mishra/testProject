@@ -23,7 +23,7 @@ Class LibrariesController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview', 'admin_libraryform', 'admin_managelibrary', 'admin_ajax_validate', 'admin_doajaxfileupload', 'admin_deactivate', 'admin_activate', 'patron', 'admin_consortium', 'admin_consortiumform', 'admin_addconsortium', 'admin_card', 'admin_get_libraries', 'sendCardImoprtErrorEmail', 'admin_librarytimezone', 'admin_removelibrarytimezone', 'admin_librarytimezoneform', 'admin_libajax');
+        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview', 'admin_libraryform', 'admin_managelibrary', 'admin_ajax_validate', 'admin_doajaxfileupload', 'admin_deactivate', 'admin_activate', 'patron', 'admin_consortium', 'admin_consortiumform', 'admin_addconsortium', 'admin_card', 'admin_get_libraries', 'sendCardImoprtErrorEmail', 'admin_librarytimezone', 'admin_removelibrarytimezone', 'admin_librarytimezoneform', 'admin_libajax', 'generate_report');
         $this->Cookie->name = 'baker_id';
         $this->Cookie->time = 3600; // or '1 hour'
         $this->Cookie->path = '/';
@@ -1760,5 +1760,6 @@ STR;
         }
         exit;
     }
+    
 
 }

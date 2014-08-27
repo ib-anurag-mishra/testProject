@@ -176,9 +176,9 @@ $totalRows = count($genresAll);
 
     <div class="genres-container">
         <header style="margin-bottom:0px;">
-	 	<div class="genres-header">Genres</div>
+	 	<div class="genres-header"><?php echo __('Genres', true); ?></div>
 		<div class="a-z-header">A - Z</div>
-		<div class="artist-header">Artist</div>
+		<div class="artist-header"><?php echo __('Artist', true); ?></div>
 							</header>
     <section class="genre-filter-container clearfix">
             <div class="genre-column">
@@ -477,7 +477,9 @@ $totalRows = count($genresAll);
                         ?> 
 
                     </ul>
-                    <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
+                    <span id="artist_loader" style="display:none;"   ><!-- <img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/> -->
+                    <?php echo $this->Html->image('aritst-ajax-loader.gif', array('style' => 'padding-left:115px;padding-buttom:25px;border:0;'))?>
+                    </span>
                 </div>
         </div>
     </section>

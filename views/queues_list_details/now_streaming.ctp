@@ -9,9 +9,13 @@
                 ?>
                 </div>
 		<div class="col-container clearfix">
+            <?php
+            /*
 			<div class="col-1">
 				<img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" />
 			</div>
+            */
+            ?>
 			<div class="col-2">
 				<div class="queue-name">
 					<?php echo $queue_list_array[0]['QueueList']['queue_name'];?>
@@ -103,7 +107,9 @@
                                                 } else {
                                                         $artistText = $this->getTextEncode($value['Songs']['ArtistText']);
                                                 }
-                                                ?> 
+                                                ?>
+                        <?php
+                        /*
 						<div class="album-title">
                                                     <a href="/artists/album/<?php echo base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
                                                 </div>
@@ -112,6 +118,8 @@
                                                 </div>                                                
                                                 
 						<div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>
+                        */
+                        ?>
 						<div class="wishlist-popover">
                                                         <?php
                                                                 if($libraryDownload == '1' && $patronDownload == '1') {
@@ -143,6 +151,14 @@
                                                         <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"];?>)"><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
 						</div>
+                        <div class="album-title">
+                                                    <a href="/artists/album/<?php echo base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
+                                                </div>
+                        <div class="artist-name">
+                                                    <a href="/artists/view/<?=base64_encode($value['Songs']['ArtistText']);?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
+                                                </div>                                                
+                                                
+                        <div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>                        
 					</div>
 					<?php 
 					}
@@ -207,7 +223,9 @@
                                                 } else {
                                                         $artistText = $this->getTextEncode($value['Song']['ArtistText']);
                                                 }
-                                                ?> 
+                                                ?>
+                        <?php
+                        /* 
 						<div class="album-title">
                                                     <a href="/artists/album/<?php echo base64_encode($value['Song']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
                                                 </div>
@@ -216,6 +234,8 @@
                                                 </div>                                                
                                                 
 						<div class="time"><?php echo $this->Song->getSongDurationTime($value['Song']['FullLength_Duration']);?></div>
+                        */
+                        ?>
 						<div class="wishlist-popover">
                                                         <?php
                                                                 if($libraryDownload == '1' && $patronDownload == '1') {
@@ -251,6 +271,14 @@
                                                         </span>
                                                         </form>
 						</div>
+                        <div class="album-title">
+                                                    <a href="/artists/album/<?php echo base64_encode($value['Song']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
+                                                </div>
+                        <div class="artist-name">
+                                                    <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
+                                                </div>                                                
+                                                
+                        <div class="time"><?php echo $this->Song->getSongDurationTime($value['Song']['FullLength_Duration']);?></div>                        
 					</div>
 					<?php 
 					}
@@ -262,7 +290,7 @@
                 <?php }    
                 }else{ ?>
 
-                <h2> There are no Playlists currently being played. </h2>
+                <h2> <?php echo __('There are no Playlists currently being played.'); ?> </h2>
 		
                 <?php } ?>                
 

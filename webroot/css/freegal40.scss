@@ -6021,6 +6021,7 @@ sub { top: 0.4em; }
 	.album-detail-container {
 		
         width:100%;
+        margin-bottom: 40px;
 		
 		.album-detail {
 			float: left;
@@ -6362,6 +6363,7 @@ sub { top: 0.4em; }
 				font-size: 16px;
 				color: rgba(0,0,0,.5);
 				margin-bottom: 10px;
+
 				
 				
 			}
@@ -6490,6 +6492,10 @@ sub { top: 0.4em; }
 					&.song {
 						
 						left: 15px;
+						width: 245px;
+						white-space: nowrap;
+						overflow:hidden;
+						text-overflow: ellipsis;						
 						
 						&.logged_in {
 							
@@ -6514,6 +6520,10 @@ sub { top: 0.4em; }
 					&.artist {
 						
 						left: 345px;
+						width: 160px;
+						white-space: nowrap;
+						overflow:hidden;
+						text-overflow: ellipsis;
 						
 						a {
 							
@@ -13529,7 +13539,7 @@ sub { top: 0.4em; }
 
 
 		position: relative;
-		
+		margin-bottom: 40px;
 
 		
 		
@@ -13633,36 +13643,36 @@ sub { top: 0.4em; }
 			
 			position: relative;
 
-			height: 481px;
-			overflow-x: hidden;
-			overflow-y: hidden;
+			// height: 481px;
+			// overflow-x: hidden;
+			// overflow-y: hidden;
 			
-			&:after {
+			// &:after {
 				
-				position: absolute;
-				content: "";
-				bottom: 0;
-				left: 0;
-				background: url(../img/now-streaming/tapered-shadow.png);
-				width: 846px;
-				height: 11px;
-			}
+			// 	position: absolute;
+			// 	content: "";
+			// 	bottom: 0;
+			// 	left: 0;
+			// 	background: url(../img/now-streaming/tapered-shadow.png);
+			// 	width: 846px;
+			// 	height: 11px;
+			// }
 			
 			.playlist-scrollable {
 			
 			
-				overflow-x: hidden;
-				overflow-y: hidden;
-				height: 481px;
+				// overflow-x: hidden;
+				// overflow-y: hidden;
+				// height: 481px;
 				
-				&:hover {
-					overflow-y: scroll;
+				// &:hover {
+				// 	overflow-y: scroll;
 					
-				}
+				// }
 				
 				.row-container {
 					
-					height: 2000px;
+					// height: 2000px;
 				
 					.row {
 						padding-top: 10px;
@@ -13755,7 +13765,11 @@ sub { top: 0.4em; }
 							font-size: 12px;
 							line-height: 40px;
 							
-							width: 128px;
+							// width: 128px;
+							width: 267px;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
 							position: absolute;
 							left: 41px;
 							top: 0;
@@ -13799,7 +13813,7 @@ sub { top: 0.4em; }
 						.wishlist-popover {
 							position: absolute;
 							left: 317px;
-							top:-127px;
+							top:-90px;
 							background: #fff;
 							display: none;
 							-webkit-box-shadow: 0 0 2px rgba(0,0,0,.5);
@@ -13832,7 +13846,7 @@ sub { top: 0.4em; }
 								
 								&:last-child {
 									
-									padding: 5px 5px 10px 10px;
+									padding: 10px 10px 10px 10px;
 								}
 								
 								&.add-to-playlist {
@@ -13915,7 +13929,11 @@ sub { top: 0.4em; }
 							font-size: 12px;
 							line-height: 40px;
 							
-							width: 147px;
+							// width: 147px;
+							width: 203px;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
 							position: absolute;
 							left: 369px;
 							top:0;
@@ -13949,7 +13967,11 @@ sub { top: 0.4em; }
 							
 							font-size: 12px;
 							line-height: 40px;
-							width: 158px;
+							// width: 158px;
+							width: 187px;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
 							position: absolute;
 							left: 585px;
 							top:0;
@@ -14057,6 +14079,7 @@ sub { top: 0.4em; }
 		
 		.col-1 {
 			float: left;
+
 			
 			img {
 				
@@ -14072,8 +14095,9 @@ sub { top: 0.4em; }
 		
 		.col-2 {
 			
-			float: left;
+			// float: left;
 			margin-left: 10px;
+			width: 645px;
 			
 			.queue-name {
 				
@@ -14102,7 +14126,7 @@ sub { top: 0.4em; }
 				background: url(../img/queue-details/play-queue-off.png);
 				width: 137px;
 				height: 42px;
-				margin-top: 52px;
+				margin-top: 20px;
 				
 				&:hover {
 					
@@ -14120,12 +14144,16 @@ sub { top: 0.4em; }
 		.col-3 {
 			
 			float: right;
+
 			
 			.faq-link {
 			
 				
 				font-size: 12px;
-				margin-top: 10px;
+				// margin-top: 10px;
+				position: absolute;
+				top: 20px;
+				right: 0;
 				text-align: right;
 				
 				a {
@@ -14137,27 +14165,33 @@ sub { top: 0.4em; }
 			
 			.button-container {
 				
-				position: relative;
+				position: absolute;
 				width: 200px;
 				margin-top: 10px;
+				right: 0;
+				top: 42px;
+
 
 				
 				.gear-icon {
 					float: right;
 
-					background: url(../img/queue-details/gear-off.png);
+					// background: url(../img/queue-details/gear-off.png);
+					background: url(../img/freegal_sprite.png) -510px 0;
 					width: 55px;
 					height: 42px;
 					cursor: pointer;
 					margin-left: 2px;
 					&:hover {
 						
-						background: url(../img/queue-details/gear-hover.png);
+						// background: url(../img/queue-details/gear-hover.png);
+						background: url(../img/freegal_sprite.png) -510px -41px;
 					}
 					
 					&:active {
 						
-						background: url(../img/queue-details/gear-clicked.png);
+						// background: url(../img/queue-details/gear-clicked.png);
+						background: url(../img/freegal_sprite.png) -510px -82px;
 					}					
 				}
 			}
@@ -14167,7 +14201,7 @@ sub { top: 0.4em; }
 				display: none;
 				position: absolute;
 				right: 2px;
-				top:105px;
+				top:95px;
 				background: #fff;
 				width: 124px;
 	
@@ -14212,7 +14246,7 @@ sub { top: 0.4em; }
 
 
 		position: relative;
-		
+		margin-bottom: 40px;
 
 		
 		
@@ -14318,36 +14352,36 @@ sub { top: 0.4em; }
 			
 			position: relative;
 
-			height: 481px;
-			overflow-x: hidden;
-			overflow-y: hidden;
+			// height: 481px;
+			// overflow-x: hidden;
+			// overflow-y: hidden;
 			
-			&:after {
+			// &:after {
 				
-				position: absolute;
-				content: "";
-				bottom: 0;
-				left: 0;
-				background: url(../img/now-streaming/tapered-shadow.png);
-				width: 846px;
-				height: 11px;
-			}
+			// 	position: absolute;
+			// 	content: "";
+			// 	bottom: 0;
+			// 	left: 0;
+			// 	background: url(../img/now-streaming/tapered-shadow.png);
+			// 	width: 846px;
+			// 	height: 11px;
+			// }
 			
 			.playlist-scrollable {
 			
 			
-				overflow-x: hidden;
-				overflow-y: hidden;
-				height: 481px;
+				// overflow-x: hidden;
+				// overflow-y: hidden;
+				// height: 481px;
 				
-				&:hover {
-					overflow-y: scroll;
+				// &:hover {
+				// 	overflow-y: scroll;
 					
-				}
+				// }
 				
 				.row-container {
 					
-					height: 2000px;
+					// height: 2000px;
 				
 					.row {
 						padding-top: 10px;
@@ -14445,7 +14479,9 @@ sub { top: 0.4em; }
 							left: 41px;
 							top: 0;
 							height: 40px;
+							white-space: nowrap;
 							overflow: hidden;
+							text-overflow: ellipsis;
 							
 							&.playing {
 								
@@ -14634,7 +14670,9 @@ sub { top: 0.4em; }
 							left: 369px;
 							top:0;
 							height: 40px;
+							white-space: nowrap;
 							overflow: hidden;
+							text-overflow: ellipsis;
 							
 							&.playing {
 								
@@ -14670,7 +14708,9 @@ sub { top: 0.4em; }
 							left: 585px;
 							top:0;
 							height: 40px;
+							white-space: nowrap;
 							overflow: hidden;
+							text-overflow: ellipsis;
 							
 							&.playing {
 								
@@ -16059,7 +16099,7 @@ sub { top: 0.4em; }
 
 		content: "";
 		position:absolute;
-		left: 20px;
+		left: 12px;
 		top:11px;
 		background:url(../img/freegal_sprite.png) -110px -20px;
 		width: 12px;
@@ -16073,7 +16113,6 @@ sub { top: 0.4em; }
 		height: 30px;
 		margin-left: 50px;
 		width: 237px;
-		
 		font-weight: bold;
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
@@ -16084,8 +16123,10 @@ sub { top: 0.4em; }
     #query {
 		@extend %form-reset;
 		height: 30px;
-		margin-left: 50px;
-		width: 234px;
+		// margin-left: 50px;
+		margin-left: 30px;
+		// width: 234px;
+		width: 174px;
 		border: 0 none;
         outline: 0 none;
         padding: 0;
@@ -16093,7 +16134,8 @@ sub { top: 0.4em; }
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
 		@include border-radius(20px);
-		padding-right: 60px;
+		// padding-right: 60px;
+		padding-right: 47px;
 
     }
 
@@ -16102,7 +16144,7 @@ sub { top: 0.4em; }
 		@extend %form-reset;
 		cursor:pointer;
 		height: 30px;
-		width: 55px;
+		width: 42px;
 		color:#fff;
 		background: #63c9eb;
 		@include background-image(linear-gradient(#63c9eb, #58bee0));

@@ -11,9 +11,9 @@ class QueuesController extends AppController
 
     var $name = 'Queues';
     var $layout = 'home';
-    var $helpers = array('Html', 'Form', 'Session', 'Queue', 'Token');
+    var $helpers = array('Html', 'Form', 'Session', 'Queue', 'Token','Language');
     var $components = array('Session', 'Auth', 'Acl', 'Queue', 'Streaming', 'Common', 'RequestHandler');
-    var $uses = array('QueueList', 'QueueDetail', 'User', 'Album', 'Song', 'StreamingHistory');
+    var $uses = array('QueueList', 'QueueDetail', 'User', 'Album', 'Song', 'StreamingHistory','Territory');
 
     function beforeFilter()
     {
@@ -26,6 +26,7 @@ class QueuesController extends AppController
         {
             $this->Auth->allow('');
         }
+     
     }
 
     /**
@@ -442,6 +443,6 @@ class QueuesController extends AppController
         $queueData = $this->Queue->getQueueList($patron_id);
         $this->set('queueData', $queueData);
     }
-
+    
 }
 ?>

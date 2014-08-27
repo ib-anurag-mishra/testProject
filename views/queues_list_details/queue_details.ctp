@@ -7,9 +7,13 @@
         ?>
     </div>
     <div class="col-container clearfix">
+        <?php
+        /*
         <div class="col-1">
             <img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" />
         </div>
+        */
+        ?>
         <div class="col-2">
             <div class="queue-name">
                 <?php echo empty($queue_list_array[0]['QueueList']['queue_name']) ? $queue_name : $queue_list_array[0]['QueueList']['queue_name']; ?>
