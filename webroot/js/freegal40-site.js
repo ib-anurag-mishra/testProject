@@ -30,7 +30,13 @@
 $(document).ready(function() {
 
     console.log('in doc ready');
-    sendMessageToComponent('test');
+    
+
+
+    setTimeout(function() {
+          // Do something after 5 seconds
+          sendMessageToComponent('test');
+    }, 1000);    
 
 
     var $music_search_results = $('.master-music-search-results');
