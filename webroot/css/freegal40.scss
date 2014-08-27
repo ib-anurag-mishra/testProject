@@ -10422,10 +10422,13 @@ sub { top: 0.4em; }
 						font-size: 12px;
 						line-height: 40px;
 						
-						width: 128px;
+						width: 262px;
 						position: absolute;
 						left: 114px;
 						top: 0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;						
 						
 						&.playing {
 							
@@ -10579,6 +10582,9 @@ sub { top: 0.4em; }
 						position: absolute;
 						left: 572px;
 						top: 0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;						
 						
 						&.playing {
 							
@@ -10619,6 +10625,9 @@ sub { top: 0.4em; }
 						position: absolute;
 						left: 394px;
 						top:0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;						
 						&.playing {
 							
 							font-weight: bold;
