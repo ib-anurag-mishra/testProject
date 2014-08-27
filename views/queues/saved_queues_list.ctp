@@ -7,7 +7,7 @@
         ?>
     </div>
     <header class="clearfix">
-        <h2>Saved Playlists</h2>
+        <h2><?php echo __('Saved Playlists'); ?></h2>
         <div class="create-new-queue-btn no-ajaxy"></div>
         <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
     </header>
@@ -68,6 +68,6 @@
     else
     {
         ?>
-        <h2>There are currently no playlists created. Please add a new playlist to start enjoying streaming.</h1>
+        <h2><?php echo __('There are currently no playlists created. Please add a new playlist to start enjoying streaming.'); ?></h2>
         <?php } ?>
 </section>
