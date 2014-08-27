@@ -206,6 +206,7 @@ $ieVersion = ieversion();
                             </div>
                             <div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']); ?>" href="javascript:void(0)">
                                     <?php
+                                    /*
                                     if (strlen($wishlistResults[$i]['wishlists']['track_title']) >= 15)
                                     {
 
@@ -215,9 +216,12 @@ $ieVersion = ieversion();
                                     {
                                         echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
                                     }
+                                    */
+                                    echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
                                     ?></a></div>
                             <div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['album'])); ?>" href="/artists/view/<?= base64_encode($wishlistResults[$i]['Song']['ArtistText']); ?>/<?= $wishlistResults[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($wishlistResults[$i]['Song']['provider_type']); ?>">
                                     <?php
+                                    /*
                                     if (strlen($wishlistResults[$i]['wishlists']['album']) >= 15)
                                     {
                                         echo '<a title="' . $this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['album'])) . '">' . $this->getTextEncode(substr($wishlistResults[$i]['wishlists']['album'], 0, 15)) . '...</a>';
@@ -226,10 +230,13 @@ $ieVersion = ieversion();
                                     {
                                         echo $this->getTextEncode($wishlistResults[$i]['wishlists']['album']);
                                     }
+                                    */
+                                    echo $this->getTextEncode($wishlistResults[$i]['wishlists']['album']);
                                     ?>
                                 </a></div>
                             <div class="artist-name"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['artist'])); ?>" href="/artists/album/<?= base64_encode($wishlistResults[$i]['Song']['ArtistText']); ?>">
                                     <?php
+                                    /*
                                     if (strlen($wishlistResults[$i]['wishlists']['artist']) >= 15)
                                     {
                                         echo '<a title="' . $this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['artist'])) . '">' . $this->getTextEncode(substr($wishlistResults[$i]['wishlists']['artist'], 0, 15)) . '...</a>';
@@ -239,6 +246,9 @@ $ieVersion = ieversion();
                                         $ArtistName = $wishlistResults[$i]['wishlists']['artist'];
                                         echo $this->getTextEncode($ArtistName);
                                     }
+                                    */
+                                    $ArtistName = $wishlistResults[$i]['wishlists']['artist'];
+                                    echo $this->getTextEncode($ArtistName);                                    
                                     ?>
                                 </a></div>
 
