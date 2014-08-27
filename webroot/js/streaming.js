@@ -14,11 +14,7 @@ function sendMessageFromComponent(message) {
 	flash.updatePlayerMessageText(message);
 }
 
-$(document).ready(function() {
 
-    sendMessageFromComponent('test');
-
-});
 
 
 function getTotalPlayerLoadedTime() {
