@@ -2841,7 +2841,7 @@ STR;
     
     
     function setAdminDefaultQueuesCache() {
-        
+        Configure::write('Cache.disable', false);
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
         $queuelistInstance = ClassRegistry::init('QueueList');
@@ -2874,7 +2874,7 @@ STR;
     }
     
     function refreshQueueSongs($defaultQueueId){
-        
+        Configure::write('Cache.disable', false);
         $territoryInstance = ClassRegistry::init('Territory');
         $territories = $territoryInstance->find("all");
         for ($m = 0; $m < count($territories); $m++) {
