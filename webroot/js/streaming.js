@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     sendMessageFromComponent('test');
 
-};
+}
 
 
 function getTotalPlayerLoadedTime() {
