@@ -30,6 +30,7 @@
 $(document).ready(function() {
 
     console.log('in doc ready');
+    sendMessageToComponent('test');
 
 
     var $music_search_results = $('.master-music-search-results');
