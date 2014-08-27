@@ -3,10 +3,13 @@ var params = {};
 var attributes = {};
 attributes.id = "fmp_player";
 swfobject.switchOffAutoHideShow();
-swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0", false, flashvars, params, attributes,sendMessageToComponent('test'));
+swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0", false, flashvars, params, attributes);
 // swfobject.embedSWF("/swf/fmp-test.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
 
 console.log('in streaming.js');
+
+var playerVersion = swfobject.getFlashPlayerVersion();
+console.log(playerVersion);
 function sendMessageToComponent(message) {
 
 	var flash =	document.getElementById("fmp_player");
