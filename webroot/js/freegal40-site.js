@@ -29,6 +29,8 @@
 
 $(document).ready(function() {
 
+    sendMessageToPlayer('test');
+
 
     var $music_search_results = $('.master-music-search-results');
     var $preview = $('.preview');

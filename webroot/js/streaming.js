@@ -7,6 +7,12 @@ swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100",
 // swfobject.embedSWF("/swf/fmp-test.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
 
 
+function sendMessageToPlayer(message) {
+
+	var flash =	document.getElementById("fmp_player");
+
+	flash.getMessageFromComponent(message);
+}
 
 
 function getTotalPlayerLoadedTime() {
