@@ -29,7 +29,7 @@
 
 $(document).ready(function() {
 
-    sendMessageToPlayer('test');
+    getMessageFromComponent('test');
 
 
     var $music_search_results = $('.master-music-search-results');
