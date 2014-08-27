@@ -9,7 +9,7 @@
 Class ArtistsController extends AppController {
 
 	var $name 		= 'Artists';
-	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token', 'TopAlbum','TopSingles');
+	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token', 'TopAlbum','TopSingles' ,'QueueList' , 'QueueDetail');
 	var $layout 	= 'admin';
 	var $helpers 	= array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo', 'Genre', 'Token');
 	var $components = array('Session', 'Auth', 'Downloads', 'CdnUpload', 'Streaming', 'Common','Solr', 'RequestHandler');
@@ -22,8 +22,9 @@ Class ArtistsController extends AppController {
     function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
-		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
-                    $this->Auth->allow('admin_managetopalbums','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete','admin_manageartist','admin_managenewartist');
+
+		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
+                    $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete');
                 }
     }
 
@@ -510,6 +511,225 @@ Class ArtistsController extends AppController {
         $artists = $this->paginate( 'Featuredartist', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
         $this->set( 'artists', $artists );
     }
+    
+    /**
+     * function name : admin_addplaylist
+     * Description   : This is used to add default playlists
+     */
+    
+    function admin_addplaylist() { 
+        ini_set('memory_limit', '1024M');
+        set_time_limit(0);
+        $this->layout = 'admin';
+        $territories = $this->Territory->find("all");
+        for ($m = 0; $m < count($territories); $m++) {
+            $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
+        }
+        $this->set("territories", $territoriesArray);
+        if (!empty($this->params['named']['id'])) { //gets the values from the url in form  of array
+            $queueId = $this->params['named']['id'];
+            if (trim($queueId) != '' && is_numeric($queueId)) {
+                $this->set('formAction', 'admin_insertplaylist/id:' . $queueId);
+                $this->set('formHeader', 'Edit Play list');
+                $queueName = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $queueId)));
+                $getData = $this->QueueDetail->find('all',
+                                        array('fields' => array('Songs.SongTitle', 'Songs.ArtistText', 'Songs.ProdId','Songs.provider_type','Albums.ProdID as ALbumId','Albums.AlbumTitle'),
+                                              'group' => array('Songs.ProdID', 'Songs.provider_type'),
+                                              'joins' => array(
+                                                              array(
+                                                                              'type' => 'INNER',
+                                                                              'table' => 'Songs',
+                                                                              'alias' => 'Songs',
+                                                                              'foreignKey' => false,
+                                                                              'conditions' => array('QueueDetail.song_prodid=Songs.ProdID', 'QueueDetail.song_providertype=Songs.provider_type'),
+                                                              ),
+                                                              array(
+                                                                              'type' => 'INNER',
+                                                                              'table' => 'Albums',
+                                                                              'alias' => 'Albums',
+                                                                              'foreignKey' => false,
+                                                                              'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),
+                                                              ),
+                                                         ),
+                                              'conditions' => array('QueueDetail.queue_id' => $queueId)
+                                            )
+                                       );
+                $queue_name = $queueName['QueueList']['queue_name'];
+                $this->set('queue_name' , $queue_name);
+                $this->set('getData', $getData);
+                $this->set('queueId',$queueId);
+                $condition = 'edit';
+            }
+        } else {
+            $this->set('formAction', 'admin_insertplaylist');
+            $this->set('formHeader', 'Add Playlist');
+            $condition = 'add';
+        }        
+    }
+    
+    function admin_insertplaylist() {
+        $songsList = $this->params['data']['Info'];
+        if(!empty($this->params['named']['id']) && is_numeric($this->params['named']['id'])) {
+            $playlistSongs = $this->QueueDetail->find('all',array('fields' => array('id','song_prodid','song_providertype','album_prodid'),'conditions' => array('queue_id' => $this->params['named']['id'])));
+            $queueData = $this->QueueList->find('first', array('fields' => array('queue_name'),'conditions' => array('queue_id' => $this->params['named']['id'])));
+            $queueName = $this->params['data']['Artist']['queue_name'];
+            if(trim($queueName) != trim($queueData['QueueList']['queue_name'])) {
+                $update = array('queue_id' => $this->params['named']['id'], 'queue_name' => trim($queueName));
+                $this->QueueList->setDataSource('master');
+                $this->QueueList->save($update);
+                $this->QueueList->setDataSource('default');
+            }
+            if(empty($playlistSongs)) {
+                if(!empty($songsList)) {
+                    $detailArray = array();
+                    foreach($songsList as $value) {
+                        $data = explode('-',$value);
+                        $detailArray[] = array('queue_id' => $this->params['named']['id'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                    } 
+                    $this->QueueDetail->setDataSource('master');
+                    if($this->QueueDetail->saveAll($detailArray)) {
+                        $this->QueueDetail->setDataSource('default');
+                        $this->Common->refreshQueueSongs($this->params['named']['id']);
+                        $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
+                    } else {
+                        $this->QueueDetail->setDataSource('default');
+                        $this->Session->setFlash('Error occured while updating songs in playlist', 'modal', array('class' => 'modal problem'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                    }
+                } else {
+                    $this->Session->setFlash('There are no songs to save in the playlist', 'modal', array('class' => 'modal problem'));
+                    $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                }
+            } else {
+                if(empty($songsList)) {
+                    $this->QueueDetail->setDataSource('master');
+                    $this->QueueDetail->deleteAll(array('queue_id' => $this->params['named']['id']));
+                    $this->QueueDetail->setDataSource('default');
+                    $this->Common->refreshQueueSongs($this->params['named']['id']);
+                    $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
+                    $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                }
+                $songsInDB = array();
+                foreach($playlistSongs as $id => $val) {
+                    $songsInDB[$val['QueueDetail']['id']] = trim($val['QueueDetail']['album_prodid']).'-'.trim($val['QueueDetail']['song_providertype']).'-'.trim($val['QueueDetail']['song_prodid']);
+                }
+                $songToAdd = array();
+                foreach($songsList as $key => $value) {
+                    if(!in_array($value,$songsInDB)) {
+                        $songToAdd[] = $songsList[$key]; 
+                    }
+                }
+                $songToDel = array();
+                foreach($songsInDB as $k => $v) {
+                    if(!in_array($v,$songsList)) {
+                        $songToDel[] = $k;
+                    }
+                }
+                
+                if(!empty($songToDel)) {
+                    $this->QueueDetail->setDataSource('master');
+                    $this->QueueDetail->deleteAll(array('id' => $songToDel));
+                    $this->QueueDetail->setDataSource('default');
+                    $this->Common->refreshQueueSongs($this->params['named']['id']);
+                    if(empty($songToAdd)) {
+                        $this->Session->setFlash('Songs deleted successfully from playlist!', 'modal', array('class' => 'modal success'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                         
+                    }
+                }
+                if(!empty($songToAdd)) {
+                    foreach($songToAdd as $value) {
+                        $data = explode('-',$value);
+                        $detailArray[] = array('queue_id' => $this->params['named']['id'],'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                    }                 
+                    $this->QueueDetail->setDataSource('master');
+                    if($this->QueueDetail->saveAll($detailArray)) {
+                        $this->QueueDetail->setDataSource('default');
+                        $this->Common->refreshQueueSongs($this->params['named']['id']);
+                        $this->Session->setFlash('Songs updated successfully in playlist!', 'modal', array('class' => 'modal success'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                
+                    } else {
+                        $this->QueueDetail->setDataSource('default');
+                        $this->Session->setFlash('Error occured while updating songs in playlist', 'modal', array('class' => 'modal problem'));
+                        $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                    }
+                } else {
+                    $this->Session->setFlash('There are no changes to be updated in playlist!', 'modal', array('class' => 'modal success'));
+                    $this->redirect('addplaylist/id:'.$this->params['named']['id']);                    
+                }
+            }
+            
+        } else {
+            $queueName = $this->params['data']['Artist']['queue_name'];
+            $patronId = $this->Session->read('Auth.User.id');
+            $this->data['QueueList']['queue_name'] = trim($queueName);
+            $this->data['QueueList']['created'] = date('Y-m-d H:i:s');
+            $this->data['QueueList']['patron_id'] = $patronId;
+            $this->data['QueueList']['queue_type'] = 1;
+            $this->QueueList->setDataSource('master');
+            if ($this->QueueList->save($this->data['QueueList'])) {
+                $this->QueueList->setDataSource('default');
+                $this->Common->setAdminDefaultQueuesCache();
+                $queueId = $this->QueueList->getLastInsertID();
+                $detailArray = array();
+                foreach($songsList as $value) {
+                    $data = explode('-',$value);
+                    $detailArray[] = array('queue_id' => $queueId,'song_prodid' => $data[2],'song_providertype' => $data[1] , 'album_prodid' => $data[0], 'album_providertype' => $data[1]);
+                } 
+                $this->QueueDetail->setDataSource('master');
+                if($this->QueueDetail->saveAll($detailArray)) {
+                    $this->QueueDetail->setDataSource('default');
+                    $this->Common->refreshQueueSongs($queueId);
+                    $this->Session->setFlash('Songs added successfully to playlist!', 'modal', array('class' => 'modal success'));
+                    $this->redirect('addplaylist/id:'.$queueId);                
+                } else {
+                    $this->QueueDetail->setDataSource('default');
+                    $this->Session->setFlash('Error occured while adding songs to playlist', 'modal', array('class' => 'modal problem'));
+                    $this->redirect('addplaylist/id:'.$queueId);                    
+                }
+            } else {
+                $this->QueueList->setDataSource('default');
+                $this->Session->setFlash('Error occured while creating playlist', 'modal', array('class' => 'modal problem'));
+                $this->redirect('addplaylist');            
+            }
+
+        }    
+
+    }
+    
+    
+    /**
+     * Function Name : deletePlaylist
+     * Description          : This function is used to delete defau;t playlists 
+     */
+    
+    function admin_deletePlaylist() {
+        $deleteQueueId = $this->params['named']['id'];
+        $this->QueueDetail->setDataSource('master');
+        Configure::write('Cache.disable', false);
+        $this->Common->setAdminDefaultQueuesCache();
+        $this->QueueDetail->deleteAll(array('queue_id' => $deleteQueueId,false));
+        if($this->QueueList->deleteAll(array('queue_id' => $deleteQueueId,false))) {
+            $this->QueueDetail->setDataSource('default');
+            $this->Session->setFlash('Playlist deleted successfully!', 'modal', array('class' => 'modal success'));
+            $this->redirect('manageplaylist');
+        } else {
+            $this->QueueDetail->setDataSource('default');
+            $this->Session->setFlash('Error occured while deleteting the Playlist', 'modal', array('class' => 'modal problem'));
+            $this->redirect('manageplaylist');
+        }
+        $this->QueueDetail->setDataSource('default');
+    }
+    
+    /**
+     * function name : admin_managePlaylist
+     * Description   : This is used to manage playlists
+     */
+    
+    function admin_manageplaylist() {
+        $queueLists = $this->paginate('QueueList', array( 'queue_type' => 1));
+        $this->set('queueLists', $queueLists);        
+    }    
 
     /*
       Function Name : admin_artistform
@@ -3131,6 +3351,54 @@ Class ArtistsController extends AppController {
         print "<select class='select_fields' id='ArtistAlbum' name='album'>" . $data . "</select>";
         exit;
     }
+    
+    
+    /**
+     * @admin_getAlbumsForDefaultQueues
+     *  return streamed albums with ajax call
+     *
+     * $name
+     *  string to be searchedin atrist name
+     *
+     * @return
+     *  
+     * */
+    function admin_getAlbumsForDefaultQueues() {
+        Configure::write('debug', 0);
+
+        if ( $this->RequestHandler->isPost() ) {
+            $index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+            $index = 'url';
+        }
+
+        $result = array();
+        $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID', 'Album.AlbumTitle', 'Album.provider_type', 'Album.Advisory'), 'conditions' => array('Album.ArtistText = ' => urldecode($this->params[$index]['artist'])), 'recursive' => -1));
+        $val = '';
+        $this->Song->Behaviors->attach('Containable');
+        $this->Song->unbindModel(array('hasOne' => array('Participant')));
+        $this->Song->unbindModel(array('hasOne' => array('Genre')));
+        $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));  
+        $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
+        $this->Country->setTablePrefix($countryPrefix);
+        foreach ($allAlbum as $k => $v) {
+            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.provider_type = Country.provider_type','Country.StreamingSalesDate !=' => '' ,'Country.StreamingSalesDate <='  => date('Y-m-d'), 'Country.StreamingStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))),'limit' => 1));
+            if (count($recordCount) > 0) {
+                $val = $val . $v['Album']['ProdID'] . ",";
+                if ($v['Album']['Advisory'] == 'T') {
+                    $result[trim($v['Album']['ProdID']) . '-' . trim($v['Album']['provider_type'])] = $v['Album']['AlbumTitle'].'<span class="explicit"> (Explicit)</span>';
+                } else {                
+                    $result[trim($v['Album']['ProdID']) . '-' . trim($v['Album']['provider_type'])] = $v['Album']['AlbumTitle'];
+                }
+            }
+        }
+        $data = "<option value=''>SELECT</option>";
+        foreach ($result as $k => $v) {
+            $data = $data . "<option value='" . $k . "'>" . $v . "</option>";
+        }
+        print "<select class='select_fields' id='ArtistAlbum' name='album'>" . $data . "</select>";
+        exit;
+    }    
 
      /**
      * @getSongs
@@ -3177,6 +3445,55 @@ Class ArtistsController extends AppController {
         print "<select class='select_fields' id='ArtistSong' name='songProdID'>" . $data . "</select>";
         exit;
     }
+    
+    
+     /**
+     * @getAlbumStreamSongs
+     *  return songs in the selected album
+     *
+     * $name
+     *  string to be searchedin atrist name
+     *
+     * @return
+     *  
+     * */
+    function admin_getAlbumStreamSongs() {
+        Configure::write('debug', 0);
+
+        if ( $this->RequestHandler->isPost() ) {
+        	$index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+        	$index = 'url';
+        }
+	$alb_det = explode('-', $this->params[$index]['albumProdId']);
+        if (isset($alb_det[0])) {
+            $albumProdId = $alb_det[0];
+        }
+        if (isset($alb_det[1])) {
+            $provider_type = $alb_det[1];
+        }
+		
+        $territory   = $this->params[$index]['Territory'];
+        $result = array();
+      
+        $val = '';
+        
+        $this->Song->unbindModel(array('hasOne' => array('Participant')));
+        $this->Song->unbindModel(array('hasOne' => array('Genre')));
+        $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));  
+        $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
+        $this->Country->setTablePrefix($countryPrefix);
+        $songs = $this->Song->find('all', array('fields' => array('Song.ProdID','Song.SongTitle'), 'conditions' => array('Song.ReferenceID' => $albumProdId,'Song.provider_type' => $provider_type, 'Song.provider_type = Country.provider_type',"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",'Country.StreamingSalesDate !=' => '' ,'Country.StreamingSalesDate <='  => date('Y-m-d'), 'Country.StreamingStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory'])));
+        $data = "<option value=''>SELECT</option>";
+        foreach ($songs as $k => $v) {
+			$result[$v['Song']['ProdID']] = $v['Song']['SongTitle'];
+        }
+		foreach ($result as $k => $v) {
+		$data = $data . "<option value='" . $k. "'>" . $v . "</option>";
+		}
+        print "<select class='select_fields' id='ArtistSong' name='songProdID'>" . $data . "</select>";
+        exit;
+    }    
 
     /**
      * @getAutoArtist
@@ -3231,6 +3548,54 @@ Class ArtistsController extends AppController {
         print $html;
         exit;
     }
+
+    /**
+     * @admin_getPlaylistAutoArtist
+     *  return artist names allowed to a particular territory with ajax call
+     *
+     * $name
+     *  string to be searchedin atrist name
+     *
+     * @return
+     *  
+     * */
+    function admin_getPlaylistAutoArtist() {
+        
+        if ( $this->RequestHandler->isPost() ) {
+            $index = 'form';
+        } else if ( $this->RequestHandler->isGet() ) {
+            $index = 'url';
+        }
+        $countryPrefix = strtolower($this->params[$index]['Territory']) . "_";
+        $this->Country->setTablePrefix($countryPrefix);
+        $this->Song->unbindModel(array('hasOne' => array('Participant')));
+        $this->Song->unbindModel(array('hasOne' => array('Genre')));
+        $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));        
+        $artist = $this->Song->find('all', array(
+            'conditions' =>
+                array('Song.provider_type = Country.provider_type','Song.ProdID = Country.ProdID','Song.ArtistText LIKE' => $this->params[$index]['Name'] . "%",'Country.StreamingSalesDate !=' => '' ,'Country.StreamingSalesDate <='  => date('Y-m-d'), 'Country.StreamingStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $this->params[$index]['Territory']),
+            'fields' => array(
+                'DISTINCT Song.ArtistText',
+            ),
+            'limit' => '0,20',
+            'order' => 'Song.ArtistText'
+        ));
+        
+        $html = '<ul style="max-height: 180px; overflow: auto;">';
+        if (!empty($artist)) {
+
+            foreach ($artist AS $key => $val) {
+                $html .= '<li>' . $val['Song']['ArtistText'] . '</li>';
+            }
+        } else {
+            $html .= '<li>No record found</li>';
+        }
+        $html .= '</ul>';
+
+        print $html;
+        exit;
+    }
+    
     
     /**
      * Function Name : composer

@@ -5,14 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2013-08-07 15:19+0530\n"
+"PO-Revision-Date: 2014-08-27 11:40+0530\n"
 "Last-Translator: Jessica <jessica@m68interactive.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.7\n"
+"Language: it\n"
 
 #: \artists\view.ctp:200 \genres\view.ctp:74 \homes\search.ctp:198
 #: \sections\admin_index.ctp:37 \users\admin_index.ctp:94
@@ -405,19 +406,56 @@ msgid "Announcements"
 msgstr "Annunci"
 
 msgid "Genres"
-msgstr "generi"
+msgstr "Generi"
 
 msgid "Browse A-Z"
 msgstr "Sfoglia A-Z"
 
 msgid "Song"
-msgstr "canzone"
+msgstr "Canzone"
 
 msgid "Music"
 msgstr "musica"
 
 msgid "Videos"
-msgstr "video"
+msgstr "Videos"
 
 msgid "Artists"
-msgstr "artisti"
+msgstr "Artisti"
+
+msgid "Songs"
+msgstr "Canzoni"
+
+msgid "Composers"
+msgstr "Compositori"
+
+msgid "Albums"
+msgstr "Album"
+
+msgid "There are no Playlists currently being played."
+msgstr "Non ci sono brani attualmente in riproduzione."
+
+msgid ""
+"There are currently no playlists created. Please add a new playlist to start "
+"enjoying streaming."
+msgstr ""
+"Attualmente non ci sono le playlist create. Si prega di aggiungere una nuova "
+"playlist per iniziare a godere in streaming."
+
+msgid "All Music"
+msgstr "All Music"
+
+msgid "Saved Playlists"
+msgstr "salvate Playlist"
+
+msgid "Need Help? Visit our"
+msgstr "Hai bisogno di aiuto? Visita il nostro"
+
+msgid "FAQ Section."
+msgstr "Sezione FAQ."
+
+msgid "Results for your search"
+msgstr "Risultati per la ricerca"
+
+msgid "Not what you're looking for? Refine your search below."
+msgstr "Non è quello che stai cercando? Affina la tua ricerca qui sotto."

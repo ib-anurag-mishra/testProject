@@ -135,4 +135,46 @@ Class DownloadsComponent extends Object
 			return false;
 		}
 	}
+        
+        function generateReportLibraryLT100Downloads()
+        {
+            
+            $libraryInstance = ClassRegistry::init('Library');
+            $libList         = $libraryInstance->getLibHavingLessThan100Downloads();
+            
+            $mailContent     = '';
+            
+            if(count($libList)>0)
+            {  
+                $mailContent     .=   "Hi,\n\n";
+                $mailContent     .=   "Following is list of libraries having remaining library downloads less than or equal to 100:\n\n";
+                $sr_no            = 1;
+                
+                foreach($libList as $key=>$value)
+                {                
+                    $mailContent .= $sr_no.") ".$value['Library']['library_name']." (id: ".$value['Library']['id'].") has ".$value['Library']['library_available_downloads']." remaining downloads.\n\n";
+                    $sr_no++;
+                }                                
+            }
+            else
+            {
+                $mailContent     .=   "Hi,\n\n";
+                $mailContent     .=   "Right now there are no libraries having remaining library downloads less than or equal to 100.\n\n";
+            }
+            
+            $mailContent     .=   "Thanks\n\n";
+            
+            $mail_response = mail('tech@libraryideas.com, kushal.pogul@infobeans.com',"List of Libraries having Remaining Downloads <= 100",$mailContent,'From:no-reply@freegalmusic.com');
+            
+            if($mail_response)
+            {
+                echo "Mail Sent";
+            }
+            else 
+            {
+                echo "Problem in sending Mail.";
+            } 
+            
+            exit;
+        }
 }
