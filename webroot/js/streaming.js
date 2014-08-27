@@ -11,7 +11,7 @@ function sendMessageFromComponent(message) {
 
 	var flash =	document.getElementById("fmp_player");
 
-	flash.updatePlayerMessageText(message);
+	flash.updatePlayerMessageJS(message);
 }
 
 
