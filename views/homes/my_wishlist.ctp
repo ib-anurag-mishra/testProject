@@ -289,7 +289,7 @@ $ieVersion = ieversion();
                                 ?>
 
                             </div>						
-                            <a class="delete-btn songdelete" href="#" title="Remove Item From Wishlist">Remove Item From Wishlist</a>
+                            <a class="delete-btn songdelete no-ajaxy" href="#" title="Remove Item From Wishlist">Remove Item From Wishlist</a>
                         </div>
                         <?php
                     }
