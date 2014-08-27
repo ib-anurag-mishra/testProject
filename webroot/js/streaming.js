@@ -14,6 +14,12 @@ function sendMessageFromComponent(message) {
 	flash.updatePlayerMessageText(message);
 }
 
+$(document).ready(function() {
+
+    sendMessageFromComponent('test');
+
+};
+
 
 function getTotalPlayerLoadedTime() {
 	var flash =	document.getElementById("fmp_player");
