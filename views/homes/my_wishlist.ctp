@@ -149,7 +149,7 @@ $ieVersion = ieversion();
             <?php
         }
         ?>  
-        <div class="download-button filter" ><?php echo __('Download'); ?></div>
+        <div class="download-button filter" ><?php echo __('Options'); ?></div>
 
     </nav>
     <div class="my-wishlist-shadow-container">
