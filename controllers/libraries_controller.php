@@ -650,7 +650,9 @@ Class LibrariesController extends AppController
                                                     }
                                                     else
                                                     {
-                                                         $this->data['Library']['library_status'] = $getData['Library']['library_status'];
+                                                        if(!empty($getData['Library']['library_status'])) {
+                                                            $this->data['Library']['library_status'] = $getData['Library']['library_status'];
+                                                        }
                                                     }
                                                     $this->Library->create();
                                                     if ($this->Library->save($this->data['Library']))
