@@ -99,7 +99,7 @@ if ($this->Session->read('library_type') == '2')
 
 </div>
 <div class="player-strings" style="display: none;">
-	<input type="hidden" id="player-message-text" value="TEST: To stream music, put cursor over album cover, or create a playlist, or press the play button on a song." />
+	<input type="hidden" id="player-message-text" value="<?php echo __('TEST: To stream music, put cursor over album cover, or create a playlist, or press the play button on a song.'); ?>" />
 </div>
 <?php } ?>
 <?php } ?>
