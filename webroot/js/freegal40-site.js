@@ -35,7 +35,7 @@ $(document).ready(function() {
 
     setTimeout(function() {
           // Do something after 5 seconds
-          sendMessageToComponent('test');
+          sendMessageToComponent('test 2');
     }, 1000);    
 
 
