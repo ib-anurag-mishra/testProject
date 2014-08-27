@@ -5,14 +5,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 05:58+0000\n"
-"PO-Revision-Date: 2013-08-07 15:18+0530\n"
+"PO-Revision-Date: 2014-08-27 11:39+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.7\n"
 
 #: \artists\admin_manageartist.ctp:31
 #: \artists\admin_managefeaturedartist.ctp:32
@@ -574,3 +574,28 @@ msgstr "Videos"
 
 msgid "Artists"
 msgstr "Artists"
+
+msgid ""
+"There are currently no playlists created. Please add a new playlist to start "
+"enjoying streaming."
+msgstr ""
+"There are currently no playlists created. Please add a new playlist to start "
+"enjoying streaming."
+
+msgid "All Music"
+msgstr "All Music"
+
+msgid "Saved Playlists"
+msgstr "Saved Playlists"
+
+msgid "Need Help? Visit our"
+msgstr "Need Help? Visit our"
+
+msgid "FAQ Section."
+msgstr "FAQ Section."
+
+msgid "Results for your search"
+msgstr "Results for your search"
+
+msgid "Not what you're looking for? Refine your search below."
+msgstr "Not what you're looking for? Refine your search below."

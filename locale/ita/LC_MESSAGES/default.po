@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2014-08-08 14:56+0530\n"
+"PO-Revision-Date: 2014-08-27 11:40+0530\n"
 "Last-Translator: Jessica <jessica@m68interactive.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -434,3 +434,28 @@ msgstr "Album"
 
 msgid "There are no Playlists currently being played."
 msgstr "Non ci sono brani attualmente in riproduzione."
+
+msgid ""
+"There are currently no playlists created. Please add a new playlist to start "
+"enjoying streaming."
+msgstr ""
+"Attualmente non ci sono le playlist create. Si prega di aggiungere una nuova "
+"playlist per iniziare a godere in streaming."
+
+msgid "All Music"
+msgstr "All Music"
+
+msgid "Saved Playlists"
+msgstr "salvate Playlist"
+
+msgid "Need Help? Visit our"
+msgstr "Hai bisogno di aiuto? Visita il nostro"
+
+msgid "FAQ Section."
+msgstr "Sezione FAQ."
+
+msgid "Results for your search"
+msgstr "Risultati per la ricerca"
+
+msgid "Not what you're looking for? Refine your search below."
+msgstr "Non è quello che stai cercando? Affina la tua ricerca qui sotto."

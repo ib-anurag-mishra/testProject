@@ -10,7 +10,7 @@ class QueueDetailsController extends AppController{
 
 	var $name = 'QueuesDetails';
 	var $layout = 'home';
-	var $helpers = array( 'Html', 'Form', 'Session', 'Wishlist',);
+	var $helpers = array( 'Html', 'Form', 'Session', 'Wishlist','Language');
 	var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Downloads');
 	var $uses = array( 'Queuelist','QueuelistDetails','User','Album','Song', 'Wishlist');
 
