@@ -10714,6 +10714,7 @@ sub { top: 0.4em; }
 						top:12px;
 						opacity: .5;
 						text-indent: -9999px;
+						display: block;
 						
 						&:hover,&.hovered {
 							
@@ -11157,6 +11158,8 @@ sub { top: 0.4em; }
 						right: 15px;
 						top:12px;
 						opacity: .5;
+						text-indent: -9999px;
+						display: block;
 						
 						&:hover,&.hovered {
 							

@@ -390,7 +390,7 @@ $ieVersion = ieversion();
                                     <span id="vdownload_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                                 </p>
                             </div>
-                            <div class="delete-btn videodelete"></div>
+                            <a class="delete-btn videodelete no-ajaxy" title="Remove Item From Wishlist">Remove Item From Wishlist</a>
                         </div>
                         <?php
                     endforeach;
