@@ -32,11 +32,7 @@ $(document).ready(function() {
     console.log('in doc ready');
     
 
-
-    setTimeout(function() {
-          // Do something after 5 seconds
-          sendMessageToComponent('test 2');
-    }, 1000);    
+  
 
 
     var $music_search_results = $('.master-music-search-results');
