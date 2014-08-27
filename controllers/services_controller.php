@@ -828,7 +828,8 @@ class ServicesController extends AppController {
 					$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 					$insertArr['patronid'] = $patronId;
 					$insertArr['session_id'] = session_id();
-					$this->Currentpatron->save($insertArr);						
+					$this->Currentpatron->save($insertArr);
+                                        $this->log("services/login: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
 				}
 				Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 				$this->Session->write("library", $existingLibraries['0']['Library']['id']);
