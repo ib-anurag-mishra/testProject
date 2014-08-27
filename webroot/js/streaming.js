@@ -3,7 +3,7 @@ var params = {};
 var attributes = {};
 attributes.id = "fmp_player";
 swfobject.switchOffAutoHideShow();
-swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
+swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", "11.7", false, flashvars, params, attributes,sendMessageFromComponent('test'));
 // swfobject.embedSWF("/swf/fmp-test.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
 
 
