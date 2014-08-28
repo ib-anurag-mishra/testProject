@@ -45,7 +45,7 @@
 					<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
 
 				</ul> 
-
+				<a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
 				<?php endif; ?>
 
 			</div>
