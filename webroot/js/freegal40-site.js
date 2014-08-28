@@ -68,11 +68,13 @@ $(document).ready(function() {
     $album_page_album_detail_container.on('mouseenter', '.album-cover-image', function() {
         $(this).find('.album-preview').css({opacity: 1});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.wishlist-icon').css({opacity: 1});
     });
 
     $album_page_album_detail_container.on('mouseleave', '.album-cover-image', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.wishlist-icon').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
