@@ -8,7 +8,7 @@
     <header>
         <h2><?php __('New Releases'); ?></h2>
     </header>
-    <h3>Albums</h3>
+    <h3><?php __('Albums'); ?></h3>
     <div class="album-shadow-container">
         <div class="album-scrollable horiz-scroll carousel">
             <ul style="width:16500px;">
@@ -103,7 +103,7 @@
         <button class="right-scroll-button" type="button"></button>
     </div>
 
-<h3>Videos</h3>
+<h3><?php __('Videos'); ?></h3>
 <div class="videos-shadow-container">
     <div class="videos-scrollable horiz-scroll carousel">
         <ul style="width:29100px;">

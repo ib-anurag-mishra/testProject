@@ -122,7 +122,7 @@
 		if (!empty($albumData))
 		{
 			?>
-	<h3>Albums</h3>
+	<h3><?php __('Albums'); ?></h3>
 	<div class="album-shadow-container">
 		<div class="album-scrollable horiz-scroll carousel-ajax">
 			<ul  class="artist-albums" style="width: 4500px">
@@ -154,7 +154,7 @@
 							?>
 							<a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
 							<ul>
-								<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+								<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
 							</ul>
 							<?php
@@ -271,7 +271,7 @@
 	if (!empty($artistVideoList))
 	{
 		?>
-	<h3>Videos</h3>
+	<h3><?php __('Videos'); ?></h3>
 	<div class="videos-shadow-container">
 		<div class="videos-scrollable horiz-scroll carousel">
 			<ul style="width: 15000px;">
