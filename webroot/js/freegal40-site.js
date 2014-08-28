@@ -2086,7 +2086,7 @@ $(document).ready(function() {
 
     });    
 
-    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist, .album-info .add-to-wishlist , .songs .add-to-wishlist , .songs-results-list .add-to-wishlist').on('click', function(e)
+    $(document).find('.add-all-to-wishlist , .top-songs .add-to-wishlist, .album-info .add-to-wishlist , .songs .add-to-wishlist , .songs-results-list .add-to-wishlist').on('click', function(e)
     {
         if ($(this).hasClass('wishlist-icon'))
         {
