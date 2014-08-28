@@ -2056,6 +2056,36 @@ $(document).ready(function() {
 
     });
 
+
+    $('.albums-page').find('.album-detail-container .wishlist-icon').on('click',function(e){
+        e.preventDefault();
+
+        var ProdID = $(this).siblings('input[type="hidden"]').attr('id');
+        var Provider = $(this).siblings('input[type="hidden"]').attr('data-provider');
+        var type = $(this).siblings('input[type="hidden"]').attr('value');
+
+
+        $.ajax({
+            type: "post",
+            data: {'prodID': ProdID, 'provider_type': Provider, 'type': type},
+            url: webroot + 'homes/addToWishlistNewHome',
+            success: function(response)
+            {
+               
+                
+                displayMessage(response);
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // log the error to the console
+                console.log(
+                        "The following error occured: " +
+                        textStatus, errorThrown);
+            }
+        });
+
+    });    
+
     $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist, .album-info .add-to-wishlist , .songs .add-to-wishlist , .songs-results-list .add-to-wishlist').on('click', function(e)
     {
         if ($(this).hasClass('wishlist-icon'))
