@@ -1960,6 +1960,7 @@ $(document).ready(function() {
         $this = $(this);
         $this.find('.playlist-menu-icon').css({opacity:.5});
         $this.find('.album-preview').css({opacity:.5});
+        $this.find('.wishlist-icon').css({opacity:.5});
 
     });
 
@@ -1967,6 +1968,7 @@ $(document).ready(function() {
         $this = $(this);
         $this.find('.playlist-menu-icon').css({opacity:0});
         $this.find('.album-preview').css({opacity:0});
+        $this.find('.wishlist-icon').css({opacity:0});
 
     });    
 
@@ -1988,7 +1990,17 @@ $(document).ready(function() {
     $('.artist-page').find('.album-container').children('.album-preview').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
-    });    
+    });
+
+    $('.artist-page').find('.album-container').children('.wishlist-icon').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.artist-page').find('.album-container').children('.wishlist-icon').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });          
 
     $(document).find('.top-songs .menu-btn ,  .top-single-container .playlist-menu-icon,  .playlist-menu-icon,  .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon , .songs-results-list .menu-btn ,  .songs-results-list .multi-select-icon').on('click', function(e)
     {
