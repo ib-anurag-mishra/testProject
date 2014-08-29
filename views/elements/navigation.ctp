@@ -541,12 +541,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							<?php 
                                                                 if($isLibaryExistInTimzone ==1){ ?>
 							<li class="dropdown-item"><a href="/users/manage_notification"
-								id="notifications">Notifications</a>
+								id="notifications"><?php __('Notifications'); ?></a>
 							</li>
 							<?php }   
                                                                 if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
 							<li class="dropdown-item"><a href="/users/my_account"
-								id="change-password">Change Password</a>
+								id="change-password"><?php __('Change Password'); ?></a>
 							</li>
 							<?php } ?>
 							<li class="dropdown-item"><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy','id' => 'logout'));?>
