@@ -464,7 +464,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 						if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
 
 						{
-							$streamTime = 'UNLIMITED';
+							$streamTime = __('UNLIMITED', true);
 							$libraryunlimited = 1;
 
 						}else if($this->Session->read('library_type')==2){
@@ -498,7 +498,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					</span>
 					<?php if($this->Session->read('library_type')==2){ ?>
 					<div class="streaming-time-remaining">
-						Streaming Time Remaining:&nbsp;</span><span
+						<?php __('Streaming Time Remaining'); ?>:&nbsp;</span><span
 							id="remaining_stream_time"><?php echo $streamTime; ?> </span>
 					</div>
 					<?php
@@ -535,7 +535,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<?php } ?>
 					<div class="my-account-menu-container<?php echo isset( $class ) ? $class : ''; ?>">
 						<?php if($this->Session->read("patron")){  ?>
-						<button class="my-account-menu">My Account</button>
+						<button class="my-account-menu"><?php __('My Account'); ?></button>
 
 						<ul class="account-menu-dropdown">
 							<?php 
@@ -582,7 +582,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
 							<div class="master-search-field-container">
 								<input type="text" placeholder="<?php __('Press enter or go'); ?>..." class="search-text" id="search-text" name="q"> 
-                                <a class="go" href="javascript:void(0)" id="headerSearchSubmit">Go</a>
+                                <a class="go" href="javascript:void(0)" id="headerSearchSubmit"><?php __('Go'); ?></a>
 							</div>
 						</form>
 					</div>

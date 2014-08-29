@@ -1,7 +1,7 @@
 <section class="my-top-100-page">
     <div class="breadcrumbs">
         <?php
-        $html->addCrumb('New Releases', '/homes/new_releases');
+        $html->addCrumb(__('New Releases', true), '/homes/new_releases');
         echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
         ?>
     </div>

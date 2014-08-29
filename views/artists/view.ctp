@@ -337,7 +337,7 @@
 				
 				else:
 					
-				echo $this->Html->link('Login', array('controller' => 'users', 'action' => 'redirection_manager'), array('class' => 'genre-download-now-button'));
+				echo $this->Html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'), array('class' => 'genre-download-now-button'));
 
 				endif; ?>
 
