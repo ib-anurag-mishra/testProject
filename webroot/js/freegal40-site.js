@@ -87,6 +87,14 @@ $(document).ready(function() {
 
     });
 
+    $('.albums-page').find('.album-cover-image').find('.add-to-playlist').on('mouseleave',function(){
+        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+            $(this).next('ul').removeClass('active');
+
+        }
+
+    });
+
 
 
 
