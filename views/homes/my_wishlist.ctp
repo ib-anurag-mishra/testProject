@@ -186,7 +186,7 @@ $ieVersion = ieversion();
 
                                     if ('T' == $wishlistResults[$i]['Song']['Advisory'])
                                     {
-                                        $song_title = $wishlistResults[$i]['wishlists']['track_title'] . '(' __('Explicit', true) . ')';
+                                        $song_title = $wishlistResults[$i]['wishlists']['track_title'] . '('  . __('Explicit', true) . ')';
                                     }
                                     else
                                     {
