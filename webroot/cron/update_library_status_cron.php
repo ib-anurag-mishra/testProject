@@ -17,11 +17,11 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 	if($line['library_status_updated_by'] == 'cron') {
 		$currDate = strtotime(date("Y-m-d"));
 		$contractEndDate = strtotime($line['library_contract_end_date']);
-		if($contractEndDate > $currDate) {
+		if($contractEndDate >= $currDate) {
 			$status = "active";
 		}
 		else {
-			$status = "active";
+			$status = "inactive";
 		}
 		$sql = "UPDATE libraries SET library_status='$status' WHERE id=".$line['id'];
 		$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
