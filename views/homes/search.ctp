@@ -117,7 +117,7 @@ if(isset($searchtype)){
 							echo $this->getTextEncode($searchResult['Song']['SongTitle']); 
 					 	}
 						if ($searchResult['Song']['Advisory'] == 'T') {
-							echo '<font class="explicit"> (Explicit)</font>';
+							echo '<font class="explicit"> (' . __('Explicit', true) . ')</font>';
 						}
 						if($searchResult['Country']['SalesDate'] <= date('Y-m-d')) {							
                                                         $songUrl = $this->Token->regularToken($searchResult['Sample_Files']['CdnPath']."/".$searchResult['Sample_Files']['SaveAsName']);
@@ -144,7 +144,7 @@ if(isset($searchtype)){
 											<span class="beforeClick" id="song_<?php echo $searchResult["Song"]["ProdID"]; ?>">
 												<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $searchResult["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 											</span>
-											<span class="afterClick" id="downloading_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
+											<span class="afterClick" id="downloading_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait");?>...</span>
 											<span id="download_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 										</form>
 									</p>
@@ -170,7 +170,7 @@ if(isset($searchtype)){
 										else { ?>
 											<p>
 											<span class="beforeClick" id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>","<?php echo $searchResult["Song"]["provider_type"]; ?>");'><?php __("Add To Wishlist");?></a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-											<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
+											<span class="afterClick" style="display:none;float:left"><?php __("Please Wait");?>...</span>
 
 											</p>
 								<?php

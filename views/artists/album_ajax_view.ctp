@@ -19,7 +19,7 @@ foreach ($albumData as $album_key => $album):
 		<div class="wishlist-popover">
 			<input type="hidden" id="<?= $album['Album']['ProdID'] ?>"
 				value="album" /> <a class="add-to-playlist"
-				href="javascript:void(0)">Add To Playlist</a>
+				href="javascript:void(0)"><?php __('Add To Playlist'); ?></a>
 		</div>
 		<?php
 		}
@@ -46,7 +46,7 @@ foreach ($albumData as $album_key => $album):
 		if ($album['Album']['Advisory'] == 'T')
 		{
 			echo '<br />';
-			echo '<font class="explicit"> (Explicit)</font>';
+			echo '<font class="explicit"> (' . __('Explicit', true) . ')</font>';
 		}
 		?> </span>
 	</div>
@@ -150,7 +150,7 @@ foreach ($albumData as $album_key => $album):
 			}
 			if ($albumSong['Song']['Advisory'] == 'T')
 			{
-				echo '<span class="explicit"> (Explicit)</span>';
+				echo '<span class="explicit"> (' . __('Explicit', true) . ')</span>';
 			}
 			?>
 		</div>
@@ -216,7 +216,7 @@ foreach ($albumData as $album_key => $album):
                                             <![endif]-->
 				</span> <span class="afterClick"
 					id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>"
-					style="display: none;"><a class="add-to-wishlist"><?php __("Please Wait.."); ?>
+					style="display: none;"><a class="add-to-wishlist"><?php __('Please Wait'); ?>...
 						<span
 						id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>"
 						style="float: right; padding-right: 8px; padding-top: 2px;"><?php echo $html->image('ajax-loader_black.gif'); ?>
@@ -249,7 +249,7 @@ foreach ($albumData as $album_key => $album):
 			if ($streamingFlag == 1)
 			{
 				?>
-			<a class="add-to-playlist" href="javascript:void(0);">Add To Playlist</a>
+			<a class="add-to-playlist" href="javascript:void(0);"><?php __('Add To Playlist'); ?></a>
 			<?php } ?>
 			<?php
 			$wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);

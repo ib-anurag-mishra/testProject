@@ -77,32 +77,32 @@
 					case 'song':
 		?>
 		<div class="songs">
-			<header><h3 class="songs-header">Songs</h3></header>
+			<header><h3 class="songs-header"><?php __('Songs'); ?></h3></header>
 			<div class="header-container">
 				<div class="song-header">
-					<span class="song">Song</span>
+					<span class="song"><?php __('Song'); ?></span>
 				</div>
 				<div class="song-border header-border"></div>
 				<div class="artist-header">
-					<span class="artist">Artist</span>
+					<span class="artist"><?php __('Artist'); ?></span>
 				</div>
 				<div class="artist-border header-border"></div>
 				<div class="album-header">
-					<span class="album">Album</span>
+					<span class="album"><?php __('Album'); ?></span>
 				</div>
 				<div class="album-border header-border"></div>
-				<div class="time-header">Time</div>
+				<div class="time-header"><?php __('Time'); ?></div>
 					<?php 
 					if ( isset( $patronId ) && !empty( $patronId ) ):
-						echo $this->Html->link( '', '#', array( 'class' => 'multi-select-icon no-ajaxy', 'title' => 'Select All, Clear All, Add to Wishlist, Add to Playlist' ) );
+						echo $this->Html->link( '', '#', array( 'class' => 'multi-select-icon no-ajaxy', 'title' => __('Select All, Clear All, Add to Wishlist, Add to Playlist', true) ) );
 					?>
 						<section class="options-menu">
 							<ul>
-								<li><?=$this->Html->link( 'Select All', '#', array( 'class' => 'select-all no-ajaxy' ) )?></li>
-								<li><?=$this->Html->link( 'Clear All', '#', array( 'class' => 'clear-all no-ajaxy' ) )?></li>
-								<li><?=$this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-all-to-wishlist no-ajaxy' ) )?></li>
+								<li><?=$this->Html->link( __('Select All', true), '#', array( 'class' => 'select-all no-ajaxy' ) )?></li>
+								<li><?=$this->Html->link( __('Clear All', true), '#', array( 'class' => 'clear-all no-ajaxy' ) )?></li>
+								<li><?=$this->Html->link( __('Add to Wishlist', true), '#', array( 'class' => 'add-all-to-wishlist no-ajaxy' ) )?></li>
 								<?php if ( isset( $libraryType ) && $libraryType == 2 ): ?>
-										<li><?=$this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
+										<li><?=$this->Html->link( __('Add to Playlist', true), '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
 								<?php endif; ?>
 							</ul>
 							<ul class="playlist-menu"></ul>
@@ -142,7 +142,7 @@
 					if ( isset( $patronId ) && !empty( $patronId ) ) {
 						if ( isset( $libraryType ) && $libraryType == 2 && $StreamFlag === 1 ) {
 							if ( $psong->Advisory == 'T' ) {
-								$song_title = $psong->SongTitle . '(Explicit)';
+								$song_title = $psong->SongTitle . '('. __('Explicit', true) . ')';
 							} else {
 								$song_title = $psong->SongTitle;
 							}
@@ -180,7 +180,7 @@
 							$linkSongTitle = $this->Search->truncateText( $this->getTextEncode( $psong->SongTitle ), 21, $this );
 	
 							if ($psong->Advisory == 'T') {
-								$linkSongTitle .= '<font class="explicit"> (Explicit)</font>';
+								$linkSongTitle .= '<font class="explicit"> (' . __('Explicit', true) . ')</font>';
 							}
 						?>
 						<span title="<?= $songTitle; ?>"><?= $linkSongTitle; ?></span>
@@ -199,7 +199,7 @@
 						?>
 					</div>
 					<?php if ( isset( $patronId ) && !empty( $patronId ) ): ?>
-						<?=$this->Html->link( '', '#', array( 'class' => 'menu-btn no-ajaxy', 'title' => 'Add to Wishlist, Playlist, or Download' ) )?>
+						<?=$this->Html->link( '', '#', array( 'class' => 'menu-btn no-ajaxy', 'title' => __('Add to Wishlist, Playlist, or Download', true) ) )?>
 						<section class="options-menu">
 							<input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>" />
 							<ul>
@@ -211,7 +211,7 @@
 									if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 
 										if ( $psong->status != 'avail' ):
-											$hrefTitle = "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.";
+											$hrefTitle = __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.", true);
 								?>
 									<div class="top-100-download-now-button">
 										<form method="Post" id="form<?= $psong->ProdID; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -226,19 +226,19 @@
                                                 <![endif]-->
 											</span>
 											<span class="afterClick" id="downloading_<?= $psong->ProdID; ?>" style="display: none;">
-												<span class="add-to-wishlist"><?php __("Please Wait.."); ?>
+												<span class="add-to-wishlist"><?php __("Please Wait"); ?>...
 													<span id="wishlist_loader_<?= $psong->ProdID; ?>" style="float: right; padding-right: 8px; padding-top: 2px;"><?= $html->image( 'ajax-loader_black.gif' ); ?></span>
 												</span> 
 											</span>
 										</form>
 									</div> 
 									<?php else: ?>
-										<?=$this->Html->link( 'Downloaded', array( 'controller' => 'homes', 'action' => 'my_history' ), array( 'class' => 'top-100-download-now-button', 'title' => 'You have already downloaded this song. Get it from your recent downloads' ) )?>
+										<?=$this->Html->link( __('Downloaded', true), array( 'controller' => 'homes', 'action' => 'my_history' ), array( 'class' => 'top-100-download-now-button', 'title' => __('You have already downloaded this song. Get it from your recent downloads', true) ) )?>
 									<?php
 										endif;
 									  else:
 									?>
-										<?=$this->Html->link( 'Limit Met', 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) )?>
+										<?=$this->Html->link( __('Limit Met', true), 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) )?>
 								<?php
 									endif;
 								 else:
@@ -247,7 +247,7 @@
 									 	$salesDate = date( "F d Y", strtotime( $sales_date ) );
 									 }
 								?>
-									<?=$this->Html->link( 'Coming Soon', 'javascript:void(0)', array( 'class' => 'top-100-download-now-button', 'title' => 'Coming Soon ( ' . $salesDate . ' )' ) )?>								
+									<?=$this->Html->link( __('Coming Soon', true), 'javascript:void(0)', array( 'class' => 'top-100-download-now-button', 'title' => 'Coming Soon ( ' . $salesDate . ' )' ) )?>								
 								<?php endif; ?>
 							</li>
 							<li>
@@ -255,21 +255,21 @@
 								$wishlistInfo = $wishlist->getWishlistData( $psong->ProdID );
 								if ( $wishlistInfo == 'Added To Wishlist' ):
 							?> 
-									<?=$this->Html->link( 'Added to Wishlist', '#' )?>
+									<?=$this->Html->link( __('Added to Wishlist', true), '#' )?>
 							<?php else: ?> 
 								<span class="beforeClick" id="wishlist<?= $psong->ProdID ?>">
-									<?=$this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
+									<?=$this->Html->link( __('Add to Wishlist', true), '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
 								</span>
 								<span class="afterClick" style="display: none;">
-									<?=$this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) )?>
+									<?=$this->Html->link( __('Please Wait', true) . '...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) )?>
 								</span>
 						 	<?php endif; ?>
 							</li>
 							<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
-								<li> <?=$this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?> </li>
+								<li> <?=$this->Html->link(__('Add to Playlist', true), '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?> </li>
 							</ul>
 							<ul class="playlist-menu">
-								<li><?=$this->Html->link( 'Create New Playlist', '#')?></li>
+								<li><?=$this->Html->link(__('Create New Playlist', true), '#')?></li>
 							</ul>
 						<?php endif; ?>
 					</section>
@@ -345,20 +345,20 @@
 
 												if ( $wishlistInfo == 'Added To Wishlist' ):
 											?> 
-													<?=$this->Html->link( 'Added to Wishlist', '#' )?>
+													<?=$this->Html->link( __('Added to Wishlist', true), '#' )?>
 											<?php else: ?> 
 													<span class="beforeClick" id="wishlist<?= $palbum->ReferenceID ?>">
-														<?=$this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
+														<?=$this->Html->link(__('Add to Wishlist', true), '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) )?>
 													</span>
 													<span class="afterClick" style="display: none;">
-														<?=$this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) )?>
+														<?=$this->Html->link(__('Please Wait', true) . '...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) )?>
 													</span>
 											<?php endif; ?>
 											</li>
 											<?php if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ): ?>
-													<li> <?=$this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
+													<li> <?=$this->Html->link(__('Add to Playlist', true), '#', array( 'class' => 'add-to-playlist no-ajaxy' ) )?></li>
 										</ul>
-													<ul class="playlist-menu"><li><?=$this->Html->link( 'Create New Playlist', '#' )?></li></ul>
+													<ul class="playlist-menu"><li><?=$this->Html->link(__('Create New Playlist', true), '#' )?></li></ul>
 											<?php endif; ?>
 									</section>
 							<?php endif; ?>
@@ -379,7 +379,7 @@
 		<?php else: ?>
 		<div class="album-detail-container">
 			<div style="color: red; padding: 50px;">
-				<span>No Albums Found</span>
+				<span><?php __('No Albums Found'); ?></span>
 			</div>
 		</div>
 		<?php
@@ -387,7 +387,7 @@
 			break;
 			case 'genre':
 		?>
-		<header> <h3 class="genres-header"> More Genres Like <span><?= $keyword; ?> </span> </h3> </header>
+		<header> <h3 class="genres-header"> <?php __('More Genres Like'); ?> <span><?= $keyword; ?> </span> </h3> </header>
 		<div class="search-results-list">
 		<?php
 			if ( isset( $genres ) && is_array( $genres ) && count( $genres ) > 0 ):
@@ -405,7 +405,7 @@
 			</ul>
 		<?php else: ?>
 			<div style="color: red; padding: 50px;">
-				<span>No Genres Found</span>
+				<span><?php __('No Genres Found'); ?></span>
 			</div>
 		<?php endif; ?>
 		</div>
@@ -443,14 +443,14 @@
 							by <?=$this->Html->link( $linkArtist, array( 'controller' => 'artists', 'action' => 'album', $artistText, base64_encode( $psong->Genre ) ) ); ?>
 						</div>
 						<div class="release-date">
-							Released on
+							<?php __('Released on'); ?>
 						<?php
 							$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
 							echo date( "M d, Y", strtotime( $sales_date ) );
 						?>
 						</div>
 						<?php if ( isset( $patronId ) && !empty( $patronId ) ): ?>
-								<span class="wishlist-btn" title="Add to Wishlist" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></span>
+								<span class="wishlist-btn" title="<?php __('Add to Wishlist'); ?>" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></span>
 						<?php
 								$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
 								if ( $sales_date <= date( 'Y-m-d' ) ):
@@ -475,10 +475,10 @@
 												</form>
 											</div>
 								<?php 	else:
-											echo $this->Html->link( '', array('controller' => 'homes', 'action' => 'my_history' ), array( 'title' => 'You have already download this video. Get it from your recent downloads', 'class' => 'download-btn video-downloaded') );
+											echo $this->Html->link( '', array('controller' => 'homes', 'action' => 'my_history' ), array( 'title' => __('You have already download this video. Get it from your recent downloads', true), 'class' => 'download-btn video-downloaded') );
 								 		endif;
 									else:
-								  		echo $this->Html->link( '', '#', array( 'class' => 'download-btn download-limit-met', 'title' => 'Your download limit has been met.' ) );
+								  		echo $this->Html->link( '', '#', array( 'class' => 'download-btn download-limit-met', 'title' => __('Your download limit has been met.', true) ) );
 									endif;
 								endif;
 							endif;
@@ -488,13 +488,13 @@
 		<?php endforeach;
 			else:
 		?>
-				<div style="color: red; padding: 50px;"> <span>No Videos Found</span> </div>
+				<div style="color: red; padding: 50px;"> <span><?php __('No Videos Found'); ?></span> </div>
 		<?php endif;
 		break;
 
 		case 'artist':
 		?>
-			<header> <h3 class="artists-header"> More Artists Like <span><?= $keyword; ?> </span> </h3> </header>
+			<header> <h3 class="artists-header"> <?php __('More Artists Like'); ?> <span><?= $keyword; ?> </span> </h3> </header>
 			<div class="search-results-list">
 			<?php if (isset( $artists ) && is_array( $artists ) && count( $artists ) > 0 ): ?>
 					<ul>
@@ -507,14 +507,14 @@
 					<?php endforeach; ?>
 					</ul>
 			<?php else: ?>
-			<div style="color: red; padding: 50px;"> <span>No Artists Found</span> </div>
+			<div style="color: red; padding: 50px;"> <span><?php __('No Artists Found'); ?></span> </div>
 			<?php endif; ?>
 		</div>
 	<?php
 			break;
 		case 'composer':
 	?>
-		<header> <h3 class="composers-header"> More Composers Like <span><?= $keyword; ?> </span> </h3> </header>
+		<header> <h3 class="composers-header"> <?php __('More Composers Like'); ?> <span><?= $keyword; ?> </span> </h3> </header>
 		<div class="search-results-list">
 		<?php if ( isset( $composers ) && is_array( $composers ) && count( $composers ) > 0 ): ?>
 				<ul>
@@ -534,13 +534,13 @@
 
 					if ( $composerFlag == 0 ):
 				?>
-						<li> <div style="color: red;"> <span>No Composers Found</span> </div> </li>
+						<li> <div style="color: red;"> <span><?php __('No Composers Found'); ?></span> </div> </li>
 			  <?php endif; ?>
 			</ul>
 			<?php
 				else:
 			?>
-			<div style="color: red; padding: 50px;"> <span>No Composers Found</span> </div>
+			<div style="color: red; padding: 50px;"> <span><?php __('No Composers Found'); ?></span> </div>
 			<?php
 				endif
 			?>
@@ -556,7 +556,7 @@
 				<h3 class="albums-header"><?php echo __( 'Albums', true ); ?></h3>
 				<?php 
 					if ( isset( $albumData ) && !empty( $albumData ) ) {
-						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => 'See More Albums', 'class' => 'see-more' ) );
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'album' ) ), array( 'title' => __('See More Albums', true), 'class' => 'see-more' ) );
 					}
 				?>
 			</header>
@@ -585,13 +585,13 @@
 							<?php
 									  	if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ):
 											echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1 );
-											echo $this->Html->link('', '#', array( 'title' => 'Add to a Playlist or Create a New Playlist', 'class' => 'playlist-menu-icon toggleable no-ajaxy' ) );
+											echo $this->Html->link('', '#', array( 'title' => __('Add to a Playlist or Create a New Playlist', true), 'class' => 'playlist-menu-icon toggleable no-ajaxy' ) );
 							?>
-											<ul><li><?php echo $this->Html->link( 'Create New Playlist...', '#', array( 'class' => 'create-new-playlist' ) );?></li></ul>
+											<ul><li><?php echo $this->Html->link(__('Create New Playlist', true) . '...', '#', array( 'class' => 'create-new-playlist' ) );?></li></ul>
 									<?php 
 									  	endif;
 										
-										echo $this->Html->link( '', '#', array( 'class' => 'wishlist-icon toggleable no-ajaxy', 'title' => 'Add to Wishlist' ) );
+										echo $this->Html->link( '', '#', array( 'class' => 'wishlist-icon toggleable no-ajaxy', 'title' => __('Add to Wishlist', true) ) );
 									endif;
 									?>
 									</div>
@@ -600,7 +600,7 @@
 											<?php echo $this->Html->link( $album_title, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType), array( 'title' => $this->getTextEncode( $palbum->Title ) ) );?>
 										</p>
 										<p class="artist">
-											Genre: <span> <?= $html->link( $this->getTextEncode( $album_genre ), array( 'controller' => 'genres', 'action' => 'view', base64_encode( $album_genre ) ), array( "title" => $this->getTextEncode( $album_genre ) ) ); ?></span>
+											<?php __('Genre'); ?>: <span> <?= $html->link( $this->getTextEncode( $album_genre ), array( 'controller' => 'genres', 'action' => 'view', base64_encode( $album_genre ) ), array( "title" => $this->getTextEncode( $album_genre ) ) ); ?></span>
 										</p>
 										<p class="label"> <?= $album_label_str; ?> </p>
 									</div>
@@ -616,7 +616,7 @@
 		<?php 
 			else: 
 		?>
-				<ul> <li> <div style="color: red;"> <span>No Albums Found</span> </div> </li> </ul>
+				<ul> <li> <div style="color: red;"> <span><?php __('No Albums Found'); ?></span> </div> </li> </ul>
 	 <?php endif ?>
 			</div>
 		</section>
@@ -625,7 +625,7 @@
 				<h3 class="artists-header"><?php echo __( 'Artists', true ); ?></h3>
 				<?php 
 					if ( isset( $artists ) && !empty( $artists ) ) {
-						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array('class' => 'see-more', 'title' => 'See More Artists'));
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'artist' ) ), array('class' => 'see-more', 'title' => __('See More Artists', true)));
 				 	}
 				?>
 			</header>
@@ -655,7 +655,7 @@
 				?>
 				<ul>
 					<li>
-						<div style="color: red;"> <span>No Artists Found</span> </div>
+						<div style="color: red;"> <span><?php __('No Artists Found'); ?></span> </div>
 					</li>
 				</ul>
 				<?php endif; ?>
@@ -666,7 +666,7 @@
 				<h3 class="composers-header"><?php echo __( 'Composers', true ); ?></h3>
 				<?php 
 					if ( isset( $composers ) && !empty( $composers ) ) {
-						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => 'See More Composers', 'class' => 'see-more' ) );
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'composer' ) ), array( 'title' => __('See More Composers', true), 'class' => 'see-more' ) );
 				 	} 
 				 ?>
 			</header>
@@ -688,13 +688,13 @@
 
 							if ( $composerFlag == 0 ):
 						?>
-								<li> <div style="color: red;"> <span>No Composers Found</span> </div> </li>
+								<li> <div style="color: red;"> <span><?php __('No Composers Found'); ?></span> </div> </li>
 					  <?php endif; ?>
 						</ul>
 				<?php else: ?>
 				<ul>
 					<li>
-						<div style="color: red;"> <span>No Composers Found</span> </div>
+						<div style="color: red;"> <span><?php __('No Composers Found'); ?></span> </div>
 					</li>
 				</ul>
 				<?php endif; ?>
@@ -705,7 +705,7 @@
 				<h3 class="videos-header"><?php echo __( 'Videos', true ); ?></h3>
 				<?php 
 					if ( isset( $videos ) && !empty( $videos ) ) {
-						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => 'See More Videos', 'class' => 'see-more' ) );
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'video' ) ), array( 'title' => __('See More Videos', true), 'class' => 'see-more' ) );
 					} 
 				?>
 			</header>
@@ -723,7 +723,7 @@
 				<?php else: ?>
 				<ul>
 					<li>
-						<div style="color: red;"> <span>No Videos Found</span> </div>
+						<div style="color: red;"> <span><?php __('No Videos Found'); ?></span> </div>
 					</li>
 				</ul>
 				<?php endif; ?>
@@ -734,7 +734,7 @@
 				<h3 class="genres-header"><?php echo __( 'Genres', true ); ?></h3>
 				<?php 
 					if ( isset( $genres ) && !empty( $genres ) ) {
-						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => 'See More Genres', 'class' => 'see-more' ) );
+						echo $this->Html->link( '', array( 'controller' => 'search', 'action' => 'index', '?' => array( 'q' => $keyword, 'type' => 'genre' ) ), array( 'title' => __('See More Genres', true), 'class' => 'see-more' ) );
 					} 
 				?>
 			</header>
@@ -758,7 +758,7 @@
 				<?php else: ?>
 				<ul>
 					<li>
-						<div style="color: red;"> <span>No Genres Found</span> </div>
+						<div style="color: red;"> <span><?php __('No Genres Found'); ?></span> </div>
 					</li>
 				</ul>
 				<?php endif; ?>
@@ -785,15 +785,15 @@
 					</div>
 					<?php 
 						if ( isset( $patronId ) && !empty( $patronId ) ):
-							echo $this->Html->link( '', '#', array( 'title' => 'Select All, Clear All, Add to Wishlist, or Add to Playlist', 'class' => 'multi-select-icon no-ajaxy' ) );
+							echo $this->Html->link( '', '#', array( 'title' => __('Select All, Clear All, Add to Wishlist, or Add to Playlist', true), 'class' => 'multi-select-icon no-ajaxy' ) );
 					?>
 							<section class="options-menu">
 								<ul>
-									<li><?php echo $this->Html->link( 'Select All', '#', array( 'class' => 'select-all no-ajaxy' ) ); ?></li>
-									<li><?php echo $this->Html->link( 'Clear All', '#', array( 'class' => 'clear-all no-ajaxy' ) ); ?></li>
-									<li><?php echo $this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-all-to-wishlist no-ajaxy' ) ); ?></li>
+									<li><?php echo $this->Html->link(__('Select All', true), '#', array( 'class' => 'select-all no-ajaxy' ) ); ?></li>
+									<li><?php echo $this->Html->link(__('Clear All', true), '#', array( 'class' => 'clear-all no-ajaxy' ) ); ?></li>
+									<li><?php echo $this->Html->link(__('Add to Wishlist', true), '#', array( 'class' => 'add-all-to-wishlist no-ajaxy' ) ); ?></li>
 									<?php if ( isset( $libraryType ) && $libraryType == 2 ): ?>
-											<li> <?php echo $this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) ); ?> </li>
+											<li> <?php echo $this->Html->link(__('Add to Playlist', true), '#', array( 'class' => 'add-to-playlist no-ajaxy' ) ); ?> </li>
 									<?php endif; ?>
 								</ul>
 								<ul class="playlist-menu"></ul>
@@ -834,7 +834,7 @@
 											if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ) {
 												
 												if ( $psong->Advisory == 'T' ) {
-													$song_title = $psong->SongTitle . '(Explicit)';
+													$song_title = $psong->SongTitle . '(' . __('Explicit', true) . ')';
 												} else {
 													$song_title = $psong->SongTitle;
 												}
@@ -870,7 +870,7 @@
 										</span>
 										</div>
 										<?php if ( isset( $patronId ) && !empty( $patronId ) ):
-												echo $this->Html->link( '', '#', array( 'title' => 'Add To a Playlist, Wishlist, or Download', 'class' => 'menu-btn no-ajaxy' ) );
+												echo $this->Html->link( '', '#', array( 'title' => __('Add To a Playlist, Wishlist, or Download', true), 'class' => 'menu-btn no-ajaxy' ) );
 										?>
 												<section class="options-menu">
 													<input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>" />
@@ -882,7 +882,7 @@
 
 																if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 																	if ( $psong->status != 'avail' ):
-																		$titleSong = "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.";
+																		$titleSong = __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.", true);
 														?>
 																		<div class="top-100-download-now-button">
 																			<form method="Post" id="form<?= $psong->ProdID; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -890,24 +890,24 @@
 																				<input type="hidden" name="ProviderType" value="<?= $psong->provider_type; ?>" />
 																				<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $psong->ProdID; ?>"> 
 																					<![if !IE]>
-																						<?php echo $this->Html->link( 'Download Now', 'javascript:void(0)', array( 'class' => 'no-ajaxy top-10-download-now-button', 'title' => $titleSong, 'onclick' => "return wishlistDownloadOthersHome('{$psong->ProdID}', '0', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}', '{$psong->provider_type}')", 'escape' => false ) ); ?> 
+																						<?php echo $this->Html->link(__('Download Now', true), 'javascript:void(0)', array( 'class' => 'no-ajaxy top-10-download-now-button', 'title' => $titleSong, 'onclick' => "return wishlistDownloadOthersHome('{$psong->ProdID}', '0', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}', '{$psong->provider_type}')", 'escape' => false ) ); ?> 
 																					<![endif]>
 																					<!--[if IE]>
 						                                                            	<?php echo $this->Html->link( 'Download Now', 'javascript:void(0)', array( 'class' => 'no-ajaxy top-10-download-now-button', 'id' => 'song_download_' . $psong->ProdID, 'title' => $titleSong, 'onclick' => "wishlistDownloadIEHome('{$psong->ProdID}', '0', '{$psong->provider_type}', '{$productInfo[0]['Full_Files']['CdnPath']}', '{$productInfo[0]['Full_Files']['SaveAsName']}')", 'escape' => false ) ); ?>
 		                                                                            <![endif]-->
 																				</span>
 																				<span class="afterClick" id="downloading_<?= $psong->ProdID; ?>" style="display: none;">
-																					<span class="add-to-wishlist"><?php __("Please Wait.."); ?>
+																					<span class="add-to-wishlist"><?php __('Please Wait'); ?>...
 																						<span id="wishlist_loader_<?= $psong->ProdID; ?>" style="float: right; padding-right: 8px; padding-top: 2px;"><?= $html->image( 'ajax-loader_black.gif' ); ?> </span> 
 																					</span>
 																				</span>
 																			</form>
 																		</div>
 														<?php 		else:
-														 				echo $this->Html->link( 'Downloaded', array( 'controller' => 'homes', 'action' => 'my_history' ), array( 'title' => 'You have already downloaded this song. Get it from your recent downloads', 'class' => 'top-100-download-now-button' ) );
+														 				echo $this->Html->link(__('Downloaded', true), array( 'controller' => 'homes', 'action' => 'my_history' ), array( 'title' => __('You have already downloaded this song. Get it from your recent downloads', true), 'class' => 'top-100-download-now-button' ) );
 																	endif;
 																else:
-																	echo $this->Html->link( 'Limit Met', 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) );
+																	echo $this->Html->link(__('Limit Met', true), 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) );
 																endif;
 															else:
 																$sales_date = $this->Search->getSalesDate( $psong->TerritorySalesDate, $territory );
@@ -915,7 +915,7 @@
 																	$sales_date = date( "F d Y", strtotime( $sales_date ) );
 																}
 
-															 	echo $this->Html->link( $this->Html->tag( 'span', 'Coming Soon ( ' . $sales_date . ' )', array( 'title' => 'Coming Soon' ) ), 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) );
+															 	echo $this->Html->link( $this->Html->tag( 'span', 'Coming Soon ( ' . $sales_date . ' )', array( 'title' => __('Coming Soon', true) ) ), 'javascript:void(0)', array( 'class' => 'top-100-download-now-button' ) );
 														 	endif; ?>
 														</li>
 														<li>
@@ -923,21 +923,21 @@
 															$wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
 						
 															if ( $wishlistInfo == 'Added To Wishlist' ):
-																echo $this->Html->link( 'Added to Wishlist', '#' );
+																echo $this->Html->link(__('Added to Wishlist', true), '#' );
 															else:
 														?>
 																<span class="beforeClick" id="wishlist<?= $psong->ProdID ?>">
-																	<?php echo $this->Html->link( 'Add to Wishlist', '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) );?>
+																	<?php echo $this->Html->link(__('Add to Wishlist', true), '#', array( 'class' => 'add-to-wishlist no-ajaxy' ) );?>
 																</span> 
 																<span class="afterClick" style="display: none;">
-																	<?php echo $this->Html->link( 'Please Wait...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) );?>
+																	<?php echo $this->Html->link(__('Please Wait', true) . '...', 'JavaScript:void(0)', array( 'class' => 'add-to-wishlist' ) );?>
 																</span>
 														<?php endif; ?>
 														</li>
 														<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
 																<li> <?php echo $this->Html->link( 'Add to Playlist', '#', array( 'class' => 'add-to-playlist no-ajaxy' ) );?> </li>
 																</ul>
-																<ul class="playlist-menu"> <li> <?php echo $this->Html->link( 'Create New Playlist', '#', array( 'class' => 'no-ajaxy' ) );?> </li> </ul>
+																<ul class="playlist-menu"> <li> <?php echo $this->Html->link(__('Create New Playlist', true), '#', array( 'class' => 'no-ajaxy' ) );?> </li> </ul>
 														<?php endif; ?>
 												</section>
 												<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>

@@ -186,7 +186,7 @@ $ieVersion = ieversion();
 
                                     if ('T' == $wishlistResults[$i]['Song']['Advisory'])
                                     {
-                                        $song_title = $wishlistResults[$i]['wishlists']['track_title'] . '(Explicit)';
+                                        $song_title = $wishlistResults[$i]['wishlists']['track_title'] . '(' __('Explicit', true) . ')';
                                     }
                                     else
                                     {
@@ -257,7 +257,7 @@ $ieVersion = ieversion();
                                             {
                                                 ?>
                                                 <![if !IE]>
-                                                <a href='javascript:void(0);' title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadOthersHome("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>");'><?php __('Download'); ?></a>
+                                                <a href='javascript:void(0);' title="<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press \'Cancel\' or not.'); ?>" onclick='return wishlistDownloadOthersHome("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>");'><?php __('Download'); ?></a>
                                                 <![endif]>
                                                 <!--[if IE]>
                                                         <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>" , "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download'); ?></a>
@@ -275,7 +275,7 @@ $ieVersion = ieversion();
                                                 <![endif]-->							
                                             <?php } ?>
                                         </span>
-                                        <span class="afterClick" id="downloading_<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>" style="display:none;float:left;"><?php __('Please Wait..'); ?></span>
+                                        <span class="afterClick" id="downloading_<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>" style="display:none;float:left;"><?php __('Please Wait'); ?>...</span>
                                         <span id="wishlist_loader_<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                                     </p>
                                     <?php
@@ -386,7 +386,7 @@ $ieVersion = ieversion();
                                             <![endif]-->
                                         <?php } ?>
                                     </span>
-                                    <span class="afterClick" id="vdownloading_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>"style="display:none;float:left;"><?php __("Please Wait..."); ?></span>
+                                    <span class="afterClick" id="vdownloading_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>"style="display:none;float:left;"><?php __("Please Wait"); ?>...</span>
                                     <span id="vdownload_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                                 </p>
                             </div>
