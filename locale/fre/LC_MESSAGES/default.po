@@ -452,7 +452,7 @@ msgid "Saved Playlists"
 msgstr "enregistrés playlists"
 
 msgid "Need Help? Visit our"
-msgstr "Besoin d'aide? Visitez notre"
+msgstr "Besoin d'aide? Regardez les"
 
 msgid "FAQ Section."
 msgstr "Section FAQ."
