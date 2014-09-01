@@ -217,9 +217,11 @@ foreach ($arr_dates AS $key => $value)
                     $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
                     mysql_query($insert_query, $freegal);
                     write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
+                    
                 }
                 else
                 {
+                    
                     echo $file_name . "is empty";
                 }
             }
