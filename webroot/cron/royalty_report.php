@@ -205,6 +205,7 @@ foreach ($arr_dates AS $key => $value)
                 }
                 else
                 {
+                    
                     echo $file_name . "is empty";
                 }
             }

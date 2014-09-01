@@ -353,6 +353,7 @@ function write_file($content, $file_name, $folder, $db)
     
     $outputFile = "iodareports_output_" . date('Y_m_d_h_i_s') . ".txt";
     $logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the file!");
+    
 
     if (count($content[1]) > 1)
     {
