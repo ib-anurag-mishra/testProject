@@ -20,20 +20,13 @@ unlink($reportsFolder . '/tmp_debug_data.txt');
 $arr_dates = array();
 
 
-<<<<<<< HEAD
-//$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
-//$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
-=======
+
 $arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
 $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
 
 
-//$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
-//$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime($arr_dates['month']['from_date']));;
->>>>>>> ec591bf60a2c0ef915aa7052361877b8781b8d7d
-
-$arr_dates['month']['from_date'] = '2013-12-01 00:00:00';
-$arr_dates['month']['to_date'] = '2013-12-31 23:59:59';
+//$arr_dates['month']['from_date'] = '2013-12-01 00:00:00';
+//$arr_dates['month']['to_date'] = '2013-12-31 23:59:59';
 
 //$fetchRecordsFromTable = 'latest_downloads';
 $fetchRecordsFromTable = 'downloads';
@@ -53,14 +46,6 @@ foreach ($arr_dates AS $key => $value)
     foreach ($libraryType as $libTypeKey => $libTypeValue)
     {
         $unit_sales_rate = ($libTypeKey == 'ALC') ? 0.25 : 0;
-<<<<<<< HEAD
-    
-
-    //$country_curency = array('US' => 'USD');
-    //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
-    $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
-=======
->>>>>>> ec591bf60a2c0ef915aa7052361877b8781b8d7d
 
         $query_country = "Select distinct libraries.library_territory from libraries";
         $result_country = mysql_query($query_country, $freegal);
@@ -232,4 +217,4 @@ foreach ($arr_dates AS $key => $value)
         }
     }
 }
-}
+
