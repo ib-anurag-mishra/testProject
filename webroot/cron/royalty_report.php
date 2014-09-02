@@ -20,12 +20,15 @@ unlink($reportsFolder . '/tmp_debug_data.txt');
 $arr_dates = array();
 
 //correct code
-//$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
-//$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
+$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
+$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
 
 //this code used for debugging
 //$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
 //$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime($arr_dates['month']['from_date']));;
+
+$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
+$arr_dates['month']['to_date'] = '2014-06-31 00:00:00';
 
 //$fetchRecordsFromTable = 'latest_downloads';
 $fetchRecordsFromTable = 'downloads';
