@@ -412,22 +412,19 @@ class VideosController extends AppController {
 
         if ( isset( $this->params['pass'][0] ) ) {
 
-            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] );
-            
-            $videoArtwork = $this->Token->artworkToken( $videosData[0]['File']['CdnPath'] . '/' . $videosData[0]['File']['SourceURL'] );
-            
+            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] ); 
+            $videoArtwork = $this->Token->artworkToken( $videosData[0]['File']['CdnPath'] . '/' . $videosData[0]['File']['SourceURL'] );            
             $videosData[0]['videoImage'] = Configure::read( 'App.Music_Path' ) . $videoArtwork;            
             
             //check image file exist or not for each entry
             if(!$this->Common->checkImageFileExist($videosData[0]['videoImage'])){              
                 //write broken image entry in the log files                    
                 $this->brokenImageVideoURL =  getenv('SERVER_NAME') . '/videos/details/'.$this->params['pass'][0];
-                $this->log($territory.' : ' .' Video Details : '. $videosData[0]['videoImage'].' : Album URL : '. $this->brokenImageVideoURL); 
-                
+                $this->log($territory.' : ' .' Video Details : '. $videosData[0]['videoImage'].' : Album URL : '. $this->brokenImageVideoURL);                
                 $this->videoPageBrokenImages[] = $videosData[0]['videoImage'];                  
             }
         }
-
+                
         $this->set( 'videosData', $videosData );
         
         if ( count( $videosData ) > 0 ) {

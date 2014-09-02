@@ -3345,9 +3345,9 @@ Class ArtistsController extends AppController {
      * 
      */
      function __sendBrokenImageAlertForArtistAlbums($country){
-        //print_r($this->videoPageBrokenImages);die;
+        //print_r($this->artistPageBrokenImages);die;
          
-        if(!empty($this->brokenImageArtistURL )){
+        if(!empty($this->artistPageBrokenImages )){
             $content ='';
             $content .='Territory : '.$country.'<br />';
             $content .='Website Page : Video Details'.'<br />';
