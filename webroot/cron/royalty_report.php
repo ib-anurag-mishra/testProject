@@ -19,23 +19,25 @@ unlink($reportsFolder . '/tmp_debug_data.txt');
 
 $arr_dates = array();
 
+//correct code
+//$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
+//$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
 
-$arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
-$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
-
-
+//this code used for debugging
 //$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
 //$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime($arr_dates['month']['from_date']));;
 
-$fetchRecordsFromTable = 'latest_downloads';
-//$fetchRecordsFromTable = 'downloads';
+//$fetchRecordsFromTable = 'latest_downloads';
+$fetchRecordsFromTable = 'downloads';
 
 //$libraryType = array('ALC' => '0');
 $libraryType = array('ALC' => '0', 'Unlimited' => '1');
-//$libraryType = array('ALC' => '0');
+//$libraryType = array('Unlimited' => '1');
 
 ////$country_curency = array('US' => 'USD');
 //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
+
+//this is the correct code
 $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
 
 $unit_sales_rate = null;
@@ -199,7 +201,7 @@ foreach ($arr_dates AS $key => $value)
                 {
                     $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
                     $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
-                    mysql_query($insert_query, $freegal);
+                   // mysql_query($insert_query, $freegal);
                     write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
                 }
                 else
