@@ -3350,7 +3350,7 @@ Class ArtistsController extends AppController {
         if(!empty($this->artistPageBrokenImages )){
             $content ='';
             $content .='Territory : '.$country.'<br />';
-            $content .='Website Page : Video Details'.'<br />';
+            $content .='Website Page : Artist Details'.'<br />';
             foreach( $this->artistPageBrokenImages  as $albumArtwork){
                 $content .='Image URL : '.$albumArtwork.'<br />';
             }       

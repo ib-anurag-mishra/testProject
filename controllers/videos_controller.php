@@ -648,12 +648,11 @@ class VideosController extends AppController {
             $content ='';
             $content .='Territory : '.$country.'<br />';
             $content .='Website Page : Video Details'.'<br />';
+             $content .='Location : '.$this->brokenImageVideoURL.'<br />';
+            $content .='Date-Time : '.date('Y-m-d H:i:s').'<br /><br />';
             foreach( $this->videoPageBrokenImages as $albumArtwork){
                 $content .='Image URL : '.$albumArtwork.'<br />';
-            }       
-            $content .='Location : '.$this->brokenImageVideoURL.'<br />';
-            $content .='Date-Time : '.date('Y-m-d H:i:s').'<br />';
-            
+            }           
             //echo $content; die;
             $this->Common->sendBrokenImageAlert($content);
         }
