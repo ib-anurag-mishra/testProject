@@ -4,7 +4,7 @@
     include 'functions.php';
     $memcache = new Memcache;
     $memcache->addServer('10.209.137.72', 11211);     
-    $url = "http://10.181.60.3/cache/runGenreCache";
+    $url = "http://10.209.128.244/cache/runGenreCache";
     print $url;
     $ch=curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
