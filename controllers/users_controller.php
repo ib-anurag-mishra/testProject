@@ -3069,15 +3069,13 @@ function login($library = null){
 						$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 					} elseif($resultAnalysis[0] == "success"){
 						//writing to memcache and writing to both the memcached servers
-						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-						if(count($currentPatron) > 0){
-						// do nothing
-						} else {
+						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId), 'fields' => array('count(*) as total_records')));
+						if($currentPatron[0][0]['total_records'] === 0){
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/indlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron)."]", "currentpatrons");
+                                                        $this->log("users/indlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".$currentPatron[0][0]['total_records']."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -3788,15 +3786,13 @@ function login($library = null){
 							$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 						}elseif($resultAnalysis[0] == "success"){
 							//writing to memcache and writing to both the memcached servers
-							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-							if(count($currentPatron) > 0){
-							// do nothing
-							} else {
+							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId), 'fields' => array('count(*) as total_records')));
+							if($currentPatron[0][0]['total_records'] === 0){
 								$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 								$insertArr['patronid'] = $patronId;
 								$insertArr['session_id'] = session_id();
 								$this->Currentpatron->save($insertArr);
-                                                                $this->log("users/sdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron)."]", "currentpatrons");
+                                                                $this->log("users/sdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".$currentPatron[0][0]['total_records']."]", "currentpatrons");
 							}
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());
@@ -4014,15 +4010,13 @@ function login($library = null){
 					}elseif($resultAnalysis[0] == "success"){
 
 						//writing to memcache and writing to both the memcached servers
-						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-						if(count($currentPatron) > 0){
-						// do nothing
-						} else {
+						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId), 'fields' => array('count(*) as total_records')));
+						if($currentPatron[0][0]['total_records'] === 0){
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/sndlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron)."]", "currentpatrons");
+                                                        $this->log("users/sndlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".$currentPatron[0][0]['total_records']."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
