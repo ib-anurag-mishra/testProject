@@ -23,24 +23,28 @@ $arr_dates = array();
 $arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-01 00:00:00';
 $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
 
-//this code used for debugging
-//$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
-//$arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime($arr_dates['month']['from_date']));;
 
-$arr_dates['month']['from_date'] = '2014-06-01 00:00:00';
-$arr_dates['month']['to_date'] = '2014-06-31 00:00:00';
+
+
+//$arr_dates['month']['from_date'] = '2013-12-01 00:00:00';
+//$arr_dates['month']['to_date'] = '2013-12-31 23:59:59';
+
+
+echo $arr_dates['month']['from_date'] = '2014-02-01 00:00:00';
+echo ' -- ';
+echo $arr_dates['month']['to_date'] = '2014-02-28  23:59:59';
 
 //$fetchRecordsFromTable = 'latest_downloads';
 $fetchRecordsFromTable = 'downloads';
 
 //$libraryType = array('ALC' => '0');
-$libraryType = array('ALC' => '0', 'Unlimited' => '1');
-//$libraryType = array('Unlimited' => '1');
+//$libraryType = array('ALC' => '0', 'Unlimited' => '1');
+$libraryType = array('Unlimited' => '1');
+
+//$libraryType = array('ALC' => '0');
 
 ////$country_curency = array('US' => 'USD');
 //$country_curency = array('CA' => 'CAD', 'US' => 'USD', 'AU' => 'AUD', 'IT' => 'EUR', 'NZ' => 'NZD');
-
-//this is the correct code
 $country_curency = array('CA' => 'USD', 'US' => 'USD', 'AU' => 'USD', 'IT' => 'USD', 'NZ' => 'USD', 'BM' => 'USD', 'DE' => 'USD');
 
 $unit_sales_rate = null;
@@ -59,6 +63,9 @@ foreach ($arr_dates AS $key => $value)
         {
             while ($row_country = mysql_fetch_assoc($result_country))
             {
+                echo  $outputFile23 = IMPORTLOGS."ca_debug_" . date('Y_m_d_h_i_s') . ".txt";die;
+                $logFileWrite23 = fopen($outputFile23, 'w') or die("Can't Open the file!"); 
+                
                 $royalty_content = array(
                     array(
                         array("RECORD_TYPE", "PERIOD_START_DATE", "PERIOD_END_DATE", "TOTAL_SALES", "ISO_CURRENCY_CODE", "INVOICE_REQUIRED", "TIMEZONE", "SPEC_NUMBER", "VERSION_NUMBER")
@@ -93,7 +100,7 @@ foreach ($arr_dates AS $key => $value)
                 $total_sales = 0.0;
                 $total_records = 0;
                 $total_sold = 0;
-
+                
                 while ($q = mysql_fetch_assoc($result))
                 {
                     if (strtotime($q['library_contract_start_date']) <= strtotime($value['from_date']))
@@ -159,6 +166,7 @@ foreach ($arr_dates AS $key => $value)
                     {
                         if (mysql_num_rows($song_download_result) > 0)
                         {
+                            $abcd = 0;
                             while ($row = mysql_fetch_assoc($song_download_result))
                             {
                                 $unit_count = $row['unit_count'];
@@ -169,6 +177,7 @@ foreach ($arr_dates AS $key => $value)
                                 $royalty_content[1][] = array("D", $row['ProdID'], $row['ISRC'], $row['ReferenceID'], $row['UPC'], $row['SongTitle'], $row['AlbumTitle'], $artistText, 'S', 1, 't', $unit_count, $unit_sales_rate, $sales, $row['library_territory'], 'Library Ideas ', '10753', $row['ProdID'], $row['ProductID'], $retail_price, $country_curency[$row_country['library_territory']], '0.00', '0.00', '0.00', '0.00', date('Y-m-d', strtotime($row['created'])), '', '');
                                 $total_records++;
                                 $total_sold += $unit_count;
+                                 $abcd += $unit_count;
                             }
                         }
                         else
@@ -181,6 +190,12 @@ foreach ($arr_dates AS $key => $value)
                     {
                         echo "Error at Line Number : " . mysql_error($freegal) . "\n";
                     }
+                    
+                  $titleString = 'Libid=> '.$q['library_id'].'  count=> '. $abcd;
+                   
+                  fwrite($fh, $titleString . "\n");
+                   
+                   
                 }
 
                 $round_total_sales = round($total_sales, 2);
@@ -205,11 +220,10 @@ foreach ($arr_dates AS $key => $value)
                     $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
                     $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
                    // mysql_query($insert_query, $freegal);
-                    write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
+                   // write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
                 }
                 else
                 {
-                    
                     echo $file_name . "is empty";
                 }
             }
