@@ -193,7 +193,7 @@
 							<b> <?php
 							if (strlen($album['Album']['AlbumTitle']) >= 50)
 							{
-								$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50) . '...';
+								$album['Album']['AlbumTitle'] = mb_substr($album['Album']['AlbumTitle'], 0, 50, 'UTF-8') . '...';
 							}
 							?> <?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>
 						</b>
