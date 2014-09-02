@@ -374,7 +374,7 @@ function write_file($content, $file_name, $folder, $db)
 
         $status_message = '';
 
-        $cdn_status = sendFile($file, $file_name);        
+        //$cdn_status = sendFile($file, $file_name);        
         $cdn_status = 0;
         
         if ($cdn_status)
@@ -391,7 +391,7 @@ function write_file($content, $file_name, $folder, $db)
         }      
         
         
-        $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
+       // $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
         $ioda_status = 0;
         if ($ioda_status)
         {
