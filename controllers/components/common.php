@@ -2839,7 +2839,7 @@ STR;
      	$headers .= 'From: <no-reply@freegalmusic.com>' . "\r\n";
      	$headers .= 'Cc: libraryideas@infobeans.com' . "\r\n";
 
-     	mail($to,$subject,$message,$headers);     
+     	// mail($to,$subject,$message,$headers);     
     }
 
     /**
