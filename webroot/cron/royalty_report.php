@@ -57,8 +57,8 @@ foreach ($arr_dates AS $key => $value)
         {
             while ($row_country = mysql_fetch_assoc($result_country))
             {
-                echo  $outputFile23 = IMPORTLOGS."ca_debug_" . date('Y_m_d_h_i_s') . ".txt";die;
-                $logFileWrite23 = fopen($outputFile23, 'w') or die("Can't Open the file!"); 
+                //echo  $outputFile23 = IMPORTLOGS."ca_debug_" . date('Y_m_d_h_i_s') . ".txt";die;
+                //$logFileWrite23 = fopen($outputFile23, 'w') or die("Can't Open the file!"); 
                 
                 $royalty_content = array(
                     array(
@@ -185,9 +185,8 @@ foreach ($arr_dates AS $key => $value)
                         echo "Error at Line Number : " . mysql_error($freegal) . "\n";
                     }
                     
-                  $titleString = 'Libid=> '.$q['library_id'].'  count=> '. $abcd;
-                   
-                  fwrite($fh, $titleString . "\n");
+                  //$titleString = 'Libid=> '.$q['library_id'].'  count=> '. $abcd;                   
+                  //fwrite($fh, $titleString . "\n");
                    
                    
                 }
@@ -211,12 +210,10 @@ foreach ($arr_dates AS $key => $value)
 
                 if (count($royalty_content[1]) > 0)
                 {
-                    $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
-                    $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
-
-                   // mysql_query($insert_query, $freegal);
-                   // write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
-
+                   $file_name = getFileNameDB($row_country['library_territory'], $value['from_date'], $libTypeKey, 1, $freegal);
+                   $insert_query = "INSERT INTO `freegal`.`ioda_reports` (`report_name`,`created`,`modified`) VALUES ('$file_name', now(), now())";
+                   //mysql_query($insert_query, $freegal);
+                   write_file($royalty_content, $file_name, $reportsFolder . "/", $freegal);
                 }
                 else
                 {
