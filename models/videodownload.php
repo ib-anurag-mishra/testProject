@@ -661,7 +661,8 @@ class Videodownload extends AppModel
 					'Country.SalesDate <=' => 'NOW()',
 					'Video.Genre' => $genre,
 					'Video.provider_type = Genre.provider_type',
-					'Video.Advisory !=' => 'T'
+					'Video.Advisory !=' => 'T',
+                                        'Video.DownloadStatus' => '1'
 			);
 		} else {
 			$options['conditions'] = array(
@@ -669,7 +670,8 @@ class Videodownload extends AppModel
 					'Library.library_territory' => $territory,
 					'Country.SalesDate <=' => 'NOW()',
 					'Video.Genre' => $genre,
-					'Video.provider_type = Genre.provider_type'
+					'Video.provider_type = Genre.provider_type',
+                                        'Video.DownloadStatus' => '1'
 			);
 		}
 	
