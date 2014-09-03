@@ -31,7 +31,7 @@
 
 				if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron")):
 					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
-					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false));
+					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false, 'data-provider' => $album["Album"]["provider_type"]));
 					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
 					?>
 				
@@ -45,7 +45,7 @@
 					<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
 
 				</ul> 
-
+				<a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
 				<?php endif; ?>
 
 			</div>

@@ -98,6 +98,11 @@ if ($this->Session->read('library_type') == '2')
 	</div>
 
 </div>
+<div class="player-messages" style="display: none;">
+	<input type="hidden" id="player-message-intro" value="<?php __('To stream music, put cursor over album cover, or create a playlist, or press the play button on a song.'); ?>" />
+</div>
+
+
 <?php } ?>
 <?php } ?>
 
