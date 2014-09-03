@@ -500,7 +500,7 @@
                 }else
                 {
 
-                    echo '<span style="font-size:14px;">.' __('Sorry,there are no downloads.', true) . '<span>';
+                    echo '<span style="font-size:14px;">' . __('Sorry,there are no downloads.', true) . '<span>';
                 }
                 ?>
 
