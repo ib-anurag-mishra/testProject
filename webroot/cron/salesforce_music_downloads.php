@@ -14,9 +14,6 @@ class salesfore_reports {
 		'three_months_ago',
 		'two_months_ago',
 		'last_month',
-		'four_weeks_ago',
-		'three_weeks_ago',
-		'two_weeks_ago',
 		'last_week'
 	);
 
@@ -39,12 +36,13 @@ class salesfore_reports {
 
 	public function getLastFourWeeks() {
 		$weeks = array();
-		for ($i=5; $i > 1; $i--) { 
-			$weeks[] = array(
-				'start' => date("Y-m-d",strtotime("-" . $i . " monday")) . ' 00:00:00',
-				'end' => date("Y-m-d",strtotime("-" . $i . " sunday")) . ' 23:59:59'
-			);
-		}
+		$previous_week = strtotime("-1 week +1 day");
+		$start_week = strtotime("last monday midnight",$previous_week);
+		$end_week = strtotime("next sunday",$start_week);
+		$weeks[] = array(
+			'start' => date("Y-m-d",$start_week) . ' 00:00:00',
+			'end' => date("Y-m-d",$end_week) . ' 23:59:59'
+		);
 		echo "End getWeekLabels \n";
 		return $weeks;
 	}
@@ -59,7 +57,7 @@ class salesfore_reports {
 	}
 
 	public function getLibraryIds($labels){
-		$sql = "SELECT libraries.id, libraries.library_name, libraries.customer_id FROM libraries WHERE libraries.library_status = 'active' AND libraries.customer_id != 0";
+		$sql = "SELECT libraries.id, libraries.library_name, libraries.customer_id, libraries.library_unlimited, libraries.library_user_download_limit FROM libraries WHERE libraries.library_status = 'active' AND libraries.customer_id != 0";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
@@ -68,20 +66,65 @@ class salesfore_reports {
 			$libids[$row['id']] = array(
 				'library_name' => $row['library_name'],
 				'customer_id' => $row['customer_id'],
+				'library_unlimited' => $row['library_unlimited'],
 				'cte' => '0',
+				'contract_start_date' => '',
+				'contract_end_date' => '',
+				'value_of_contract' => '',
+				'downloads_per_week' => $row['library_user_download_limit'],
 				$labels[0] => '0',
 				$labels[1] => '0',
 				$labels[2] => '0',
 				$labels[3] => '0',
-				$labels[4] => '0',
-				$labels[5] => '0',
-				$labels[6] => '0',
-				$labels[7] => '0'
+				$labels[4] => '0'
 			);
 		}
 		echo 'getLibraryIds() successful' . "\n";
 		return $libids;
 	} // end getLibraryIds()
+
+	public function getContractInfo($final){
+		foreach ($final as $library_id => $value) {
+			if ($value['library_unlimited'] == '1') {
+				$sql = "SELECT
+							clp.library_id 'id',
+							clp.library_contract_start_date 'contract_start_date',
+							clp.library_contract_end_date 'contract_end_date',
+							lp.purchased_amount 'value_of_contract'
+						FROM
+							contract_library_purchases clp
+						JOIN library_purchases lp ON lp.id = clp.id_library_purchases
+						WHERE
+							clp.library_id = $library_id
+						ORDER BY
+							clp.id DESC
+						LIMIT 1";
+			} else {
+				$sql = "SELECT
+							clp.library_id 'id', 
+							sum(lp.purchased_amount) 'value_of_contract',
+							clp.library_contract_start_date 'contract_start_date',
+							clp.library_contract_end_date 'contract_end_date'
+						FROM
+							contract_library_purchases clp
+						JOIN library_purchases lp ON lp.id = clp.id_library_purchases
+						WHERE clp.library_id = $library_id
+						GROUP BY clp.library_id 
+						LIMIT 1";
+			}
+			
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute();
+			$result = $stmt->fetchAll();
+			foreach($result as $row){
+				$final[$row['id']]['contract_start_date'] = $row['contract_start_date'];
+				$final[$row['id']]['contract_end_date'] = $row['contract_end_date'];
+				$final[$row['id']]['value_of_contract'] = number_format($row['value_of_contract'], 2, '.','');
+			}
+			echo "$library_id" . ': getContractInfo' . "\n";
+		}
+		return $final;
+	} // end getContractInfo()
 
 	public function getContractToEndDownloads($final, $table = 'downloads', $downloads_libid = 'library_id') {
 		foreach ($final as $library_id => $value) {
@@ -109,7 +152,7 @@ class salesfore_reports {
 	 	for ($i=0; $i < 4; $i++) { 
 	 		$case_statement .= ', sum(CASE WHEN LEFT (' . $table . '.created, 7) = "' . $months[$i] . '" then 1 else 0 end) "' . $labels[$i] . '"';
 	 	}
-	 	for ($i=0; $i <4 ; $i++) { 
+	 	for ($i=0; $i < 1 ; $i++) { 
 	 		$j = $i + 4;
 	 		$case_statement .= ', sum(CASE WHEN ' . $table . '.created >= "' . $weeks[$i]['start'] . '" AND  ' . $table . '.created <= "' . $weeks[$i]['end'] . '" then 1 else 0 end) "' . $labels[$j] . '"';
 	 	}
@@ -135,9 +178,6 @@ EOD;
 				$final[$row[$downloads_libid]][$labels[2]] = $row[$labels[2]];
 				$final[$row[$downloads_libid]][$labels[3]] = $row[$labels[3]];
 				$final[$row[$downloads_libid]][$labels[4]] = $row[$labels[4]];
-				$final[$row[$downloads_libid]][$labels[5]] = $row[$labels[5]];
-				$final[$row[$downloads_libid]][$labels[6]] = $row[$labels[6]];
-				$final[$row[$downloads_libid]][$labels[7]] = $row[$labels[7]];
 			}
 			echo "$library_id" . ': getPeriodDownloads' . "\n";
 	 	}
@@ -149,11 +189,11 @@ EOD;
 			unlink($file_name);
 		}
 		$report = fopen($file_name, 'w') or die("Can't open file");
-		$header = 'customer_id,library_name,cte,' . $labels[0] . ',' . $labels[1] . ',' . $labels[2] . ',' . $labels[3] . ',' . $labels[4] . ',' . $labels[5] . ',' . $labels[6] . ',' . $labels[7] . "\n";
+		$header = 'customer_id,library_name,cte,contract_start_date,contract_end_date,value_of_contract,downloads_per_week,' . $labels[0] . ',' . $labels[1] . ',' . $labels[2] . ',' . $labels[3] . ',' . $labels[4] . "\n";
 		fwrite($report, $header);
 
 		foreach ($final as $key => $value) {
-			$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['cte'] . ',' . $value[$labels[0]] . ',' . $value[$labels[1]] . ',' . $value[$labels[2]] . ',' . $value[$labels[3]] . ',' . $value[$labels[4]] . ',' . $value[$labels[5]] . ',' . $value[$labels[6]] . ',' . $value[$labels[7]] . "\n";
+			$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['cte'] . ',' . $value['contract_start_date'] . ',' . $value['contract_end_date'] . ',' . $value['value_of_contract'] . ',' . $value['downloads_per_week'] . ',' . $value[$labels[0]] . ',' . $value[$labels[1]] . ',' . $value[$labels[2]] . ',' . $value[$labels[3]] . ',' . $value[$labels[4]] . "\n";
 			fwrite($report, $string);
 		}
 		fclose($report);
@@ -203,13 +243,14 @@ function sendMail($file_path, $file_name) {
 }
 
 function freegalMusicDownloads() {
-	// $SalesforceReports = new salesfore_reports('127.0.0.1', 'freegal', 'root', '');
+	// $SalesforceReports = new salesfore_reports('localhost;port=3306', 'freegal', 'root', '');
 	$SalesforceReports = new salesfore_reports('192.168.100.114', 'freegal', 'freegal_prod', '}e47^B1EO9hD');
 	$labels = $SalesforceReports->getLabels();
 	$weeks = $SalesforceReports->getLastFourWeeks();
 	$months = $SalesforceReports->getLastFourMonths();
 	// This function gets the library IDs of all of the libraries that are active and have a customer ID
 	$final = $SalesforceReports->getLibraryIds($labels);
+	$final = $SalesforceReports->getContractInfo($final);
 	// This gets the total music downloads for each library's contract period
 	$final = $SalesforceReports->getContractToEndDownloads($final);
 	// This gets the total music downloads for each library during each period
