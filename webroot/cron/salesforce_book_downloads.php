@@ -57,7 +57,7 @@ class salesfore_reports {
 	}
 
 	public function getLibraryIds($labels){
-		$sql = "SELECT libraries.id, libraries.library_name, libraries.customer_id, libraries.library_contract_start_date, libraries.library_contract_end_date, libraries.library_user_download_limit FROM libraries WHERE libraries.library_status = 'active' AND libraries.customer_id != 0";
+		$sql = "SELECT libraries.id, libraries.library_name, libraries.customer_id, libraries.library_contract_start_date, libraries.library_contract_end_date, libraries.library_user_download_limit, libraries.qbitem_id FROM libraries WHERE libraries.library_status = 'active' AND libraries.customer_id != 0";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
@@ -69,7 +69,7 @@ class salesfore_reports {
 				'cte' => '0',
 				'contract_start_date' => $row['library_contract_start_date'],
 				'contract_end_date' => $row['library_contract_end_date'],
-				'value_of_contract' => '',
+				'value_of_contract' => '0',
 				'tokens_per_week' => $row['library_user_download_limit'],
 				$labels[0] => '0',
 				$labels[1] => '0',
@@ -77,6 +77,9 @@ class salesfore_reports {
 				$labels[3] => '0',
 				$labels[4] => '0'
 			);
+			if ($row['qbitem_id'] == '4' || $row['qbitem_id'] == '5' || $row['qbitem_id'] == '9' || $row['qbitem_id'] == '12' || $row['qbitem_id'] == '16') {
+				$libids[$row['id']]['value_of_contract'] = 'PAYG';
+			}
 		}
 		echo 'getLibraryIds() successful' . "\n";
 		return $libids;
@@ -175,7 +178,7 @@ EOD;
 		fwrite($report, $header);
 
 		foreach ($final as $key => $value) {
-			$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['cte'] . ',' . $value['contract_start_date'] . ',' . $value['contract_end_date'] . ',' . $value['value_of_contract'] . ',' . $value['tokens_per_week'] . ',' . $value[$labels[0]] . ',' . $value[$labels[1]] . ',' . $value[$labels[2]] . ',' . $value[$labels[3]] . ',' . $value[$labels[4]] . "\n";
+			$string = $value['customer_id'] . ',' . str_replace(',', '', $value['library_name']) . ',' . $value['cte'] . ',' . $value['contract_start_date'] . ',' . $value['contract_end_date'] . ',' . $value['value_of_contract'] . ',' . $value['tokens_per_week'] . ',' . $value[$labels[0]] . ',' . $value[$labels[1]] . ',' . $value[$labels[2]] . ',' . $value[$labels[3]] . ',' . $value[$labels[4]] . "\n";
 			fwrite($report, $string);
 		}
 		fclose($report);
@@ -225,14 +228,14 @@ function sendMail($file_path, $file_name) {
 }
 
 function freadingDownloads() {
-	$SalesforceReports = new salesfore_reports('localhost;port=3306', 'freading_test', 'root', 'pelebertix');
-	// $SalesforceReports = new salesfore_reports('192.168.100.114', 'freading', 'freegal_prod', '}e47^B1EO9hD');
+	// $SalesforceReports = new salesfore_reports('localhost;port=3306', 'freading_test', 'root', '');
+	$SalesforceReports = new salesfore_reports('192.168.100.114', 'freading', 'freegal_prod', '}e47^B1EO9hD');
 	$labels = $SalesforceReports->getLabels();
 	$weeks = $SalesforceReports->getLastFourWeeks();
 	$months = $SalesforceReports->getLastFourMonths();
 	// This function gets the library IDs of all of the libraries that are active and have a customer ID
 	$final = $SalesforceReports->getLibraryIds($labels);
-	$final = $SalesforceReports->getContractInfo($final);
+	// $final = $SalesforceReports->getContractInfo($final);
 	// This gets the total book downloads for each library's contract period
 	$final = $SalesforceReports->getContractToEndDownloads($final, 'acsdownloads', 'libraryid');
 	// This gets the total book downloads for each library during each period
