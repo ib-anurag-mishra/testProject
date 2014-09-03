@@ -482,7 +482,18 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         
                         if($dataresult)
                         {
-                            // do nothing
+                            while ($rowLibrary = mysql_fetch_assoc($result))
+                            {
+                                $libraryArray[] = $rowLibrary[library_id];                        
+                            }                    
+
+                            $getDuplicatesLibraryIds = array_unique(array_diff_assoc($libraryArray, array_unique($libraryArray)));
+
+                            if(count($getDuplicatesLibraryIds) > 0)
+                            {
+                                sendalert("Multiple Library Contract date: ".implode(",", $getDuplicatesLibraryIds), "Multiple Library Contract date");
+                                die("Multiple Library Contract date: ".implode(",", $getDuplicatesLibraryIds));
+                            }  
                         }
                         else
                         {
