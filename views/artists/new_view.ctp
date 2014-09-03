@@ -287,7 +287,7 @@
                                                         <![endif]-->
 						</span> <span class="afterClick"
 							id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>"
-							style="display: none;"><a class="add-to-wishlist"><?php __("Please Wait.."); ?>
+							style="display: none;"><a class="add-to-wishlist"><?php __('Please Wait'); ?>...
 								<span
 								id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>"
 								style="float: right; padding-right: 8px; padding-top: 2px;"><?php echo $html->image('ajax-loader_black.gif'); ?>

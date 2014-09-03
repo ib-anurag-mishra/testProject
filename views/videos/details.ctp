@@ -34,7 +34,7 @@
 											<label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?= $videosData[0]['Video']['ProdID']; ?>','0','<?= $videosData[0]['Video']['provider_type']; ?>', '<?= $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
                                         <![endif]-->
                                     </span>
-                                    <span class="afterClick" id="vdownloading_<?= $videosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait...&nbsp&nbsp'); ?></span>
+                                    <span class="afterClick" id="vdownloading_<?= $videosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait'); ?>...&nbsp;&nbsp;</span>
                                     <span id="vdownload_loader_<?= $videosData[0]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?= $html->image( 'ajax-loader_black.gif', array( 'style' => 'margin-top:-20px;width:16px;height:16px;' ) ); ?></span>
                                 </form>
                             </div>
@@ -119,7 +119,7 @@
                                                                     <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?= $value['Video']['ProdID']; ?>','0','<?= $value['Video']['provider_type']; ?>', '<?= $value['Full_Files']['CdnPath']; ?>', '<?= $value['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
                                                             <![endif]-->
                                                         </span>
-                                                        <span class="afterClick" id="vdownloading_<?= $value["Video"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait...&nbsp&nbsp'); ?></span>
+                                                        <span class="afterClick" id="vdownloading_<?= $value["Video"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait'); ?>...&nbsp;&nbsp;</span>
                                                         <span id="vdownload_loader_<?= $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?= $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                                     </form>
                                                 </div>
@@ -226,7 +226,7 @@
 														<label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?= $value['Video']['ProdID']; ?>','0','<?= $value['Video']['provider_type']; ?>', '<?= $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
                                                     <![endif]-->
                                                 </span>
-                                                <span class="afterClick" id="vdownloading_<?= $value["Video"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait...&nbsp&nbsp'); ?></span>
+                                                <span class="afterClick" id="vdownloading_<?= $value["Video"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait'); ?>...&nbsp;&nbsp;</span>
                                                 <span id="vdownload_loader_<?= $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?= $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                             </form>
                                         </div>

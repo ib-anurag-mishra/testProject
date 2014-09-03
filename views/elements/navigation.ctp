@@ -310,51 +310,51 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	<div class="rename-queue-dialog-box">
 		<div class="close"></div>
 		<header>
-			Rename '<span>Playlist Name</span>'
+			<?php __('Rename'); ?> '<span>Playlist Name</span>'
 		</header>
 		<form id="FormRename" action="#">
 			<div class="rename-form-container">
 				<label id="RenameQueueMessage"></label> <label for="name">Name:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
-				<label for="description">Description:</label>
+				<label for="description"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
 				<input type="hidden" id="rqPlid" name="rqPlid" value="" /> <input
 					type="hidden" name="hid_action" value="rename_queue" />
 			</div>
 			<div class="buttons-container clearfix">
-				<div class="text-close">Close</div>
+				<div class="text-close"><?php __('Close'); ?></div>
 				<input type="submit" class="save" value="Save Changes" />
 			</div>
 		</form>
 	</div>
 	<div class="create-queue-dialog-box">
 		<div class="close"></div>
-		<header>Create Playlist</header>
+		<header><?php __('Create Playlist'); ?></header>
 		<form id="FormDelete" action="#">
 			<div class="rename-form-container">
 				<label id="CreateQueueMessage"></label> <label for="name">Name:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-				<label for="description">Description:</label>
+				<label for="description"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
 			</div>
 			<div class="buttons-container clearfix">
-				<div class="text-close">Close</div>
-				<input type="submit" class="save" value="Create New Playlist" />
+				<div class="text-close"><?php __('Close'); ?></div>
+				<input type="submit" class="save" value="<?php __('Create New Playlist'); ?>" />
 			</div>
 		</form>
 	</div>
 
 	<div class="delete-queue-dialog-box">
 		<div class="close"></div>
-		<header>Delete Playlist?</header>
+		<header><?php __('Delete Playlist?'); ?></header>
 		<form action="#">
 			<div class="confirm-text">
 				<p>
-					Are you sure you want to delete '<span>Queue Name</span>'?
+					<?php __('Are you sure you want to delete'); ?> '<span>Queue Name</span>'?
 				</p>
 			</div>
 			<div class="buttons-container clearfix">
-				<div class="text-close">Close</div>
+				<div class="text-close"><?php __('Close'); ?></div>
 				<input type="hidden" name="hid_action" value="delete_queue" /> <input
 					type="hidden" id="dqPlid" name="dqPlid" value="" /> <input
 					type="submit" class="save" value="Delete Playlist" />

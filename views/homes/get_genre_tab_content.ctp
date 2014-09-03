@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
 									<span class="beforeClick" id="song_<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>">
 									<a href='javascript:void(0);' onclick='userDownloadAll("<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
 									</span>
-									<span class="afterClick" id="downloading_<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+									<span class="afterClick" id="downloading_<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait');?>...&nbsp;&nbsp;</span>
 									<span id="download_loader_<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-15px;margin-right:-15px')); ?></span>
 									</form>
 									<?php	
@@ -78,7 +78,7 @@ jQuery(document).ready(function() {
 										} else { 
 										?>
 											<span class="beforeClick" id="wishlist<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>","<?php echo $genre_info[$i]["Song"]["provider_type"]; ?>");'><?php __("Add To Wishlist");?></a></span><span id="wishlist_loader_<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-											<span class="afterClick" id="downloading_<?php echo $genre_country[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
+											<span class="afterClick" id="downloading_<?php echo $genre_country[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait"); ?>...</span>
 										<?php	
 										}
 									}

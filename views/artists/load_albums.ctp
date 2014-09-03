@@ -28,7 +28,7 @@
                     <div class="wishlist-popover">
                             <input type="hidden" id="<?= $album['Album']['ProdID'] ?>"
                                     value="album" /> <a class="add-to-playlist"
-                                    href="javascript:void(0)">Add To Playlist</a>
+                                    href="javascript:void(0)"><?php __('Add To Playlist'); ?></a>
                     </div>
                     <?php
                     }
@@ -65,7 +65,7 @@
                     }
                     if ($album['Album']['Advisory'] == 'T')
                     {
-                            echo '<span class="explicit"> (Explicit)</span>';
+                            echo '<span class="explicit"> (' . __('Explicit', true) . ')</span>';
                             echo '<br />';
                     }
                     ?>

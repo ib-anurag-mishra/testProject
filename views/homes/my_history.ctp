@@ -201,7 +201,7 @@ $ieVersion =  ieversion();
                                                     <a onclick='historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath'];?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName'];?>");' href="javascript:void(0);"><?php __('Download');?></a>
                                             <![endif]-->
                                     </span>
-                                    <span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
+                                    <span class="afterClick" style="display:none;float:left"><?php __("Please Wait");?>...</span>
                                     <span id="download_loader_<?php echo $downloadResult['Download']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 		       </p>
                     </div>
@@ -294,7 +294,7 @@ $ieVersion =  ieversion();
                                                                     <a onclick='historyDownloadVideo("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
                                                             <![endif]-->
 							</span>
-							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
+							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait");?>...</span>
 							<span id="download_loader_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                        </p>
                     </div>

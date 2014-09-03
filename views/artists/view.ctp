@@ -42,7 +42,7 @@
 					?>
 				<?php /*</div>*/ ?>
 				<ul>
-					<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+					<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
 				</ul> 
 				<a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
@@ -60,7 +60,7 @@
 				if ($album['Album']['Advisory'] == 'T'):
 
 					echo '<br />';
-					echo '<font class="explicit"> (Explicit)</font>';
+					echo '<font class="explicit"> (' . __('Explicit', true) . ')</font>';
 				endif;
 				?>
 				</span>
@@ -219,7 +219,7 @@
 					
 
 					if ($albumSong['Song']['Advisory'] == 'T'):
-						echo '<span class="explicit"> (Explicit)</span>';
+						echo '<span class="explicit"> (' . __('Explicit', true) . ')</span>';
 					endif;?>
 				</div>
 				<?php
@@ -282,7 +282,7 @@
 							<?php
 							echo $this->Html->link('Download Now', 'javascript:void(0)', array(
 								'class' => 'add-to-wishlist',
-								'title' => '"IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."',
+								'title' => __('"IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."', true),
 								'onclick' => 'return wishlistDownloadOthersHome("' . $albumSong["Song"]['ProdID'] . '", "0", "' . $albumSong['Full_Files']['CdnPath'] . '", "' . $albumSong['Full_Files']['SaveAsName'] . '", "' . $albumSong["Song"]["provider_type"] . '");'
 							));
 							?>
@@ -294,7 +294,7 @@
 						</span>
 						
 						<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display: none;">
-							<a class="add-to-wishlist"><?php __("Please Wait.."); ?>
+							<a class="add-to-wishlist"><?php __('Please Wait'); ?>...
 								<span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float: right; padding-right: 8px; padding-top: 2px;">
 									<?php echo $html->image('ajax-loader_black.gif'); ?>
 								</span>
@@ -304,10 +304,10 @@
 					<?php echo $this->Form->end(); ?>
 					<?php
 							else:
-					echo $this->Html->link('Downloaded', array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'add-to-wishlist', 'title' => 'You have already downloaded this song. Get it from your recent downloads'));
+					echo $this->Html->link(__('Downloaded', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'add-to-wishlist', 'title' => __('You have already downloaded this song. Get it from your recent downloads', true)));
 							endif;
 						else:
-					echo $this->Html->link('Limit Met', 'javascript:void(0)', array('class' => 'add-to-wishlist'));
+					echo $this->Html->link(__('Limit Met', true), 'javascript:void(0)', array('class' => 'add-to-wishlist'));
 						endif;
 					
 					elseif (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 0)):
@@ -316,17 +316,17 @@
 
 					else:
 						
-						$comingSoonDate = 'Coming Soon';
+						$comingSoonDate = __('Coming Soon', true);
 						if (isset($albumSong['Country']['SalesDate'])):
-	                        $comingSoonDate = 'Coming Soon ( ' . date("F d Y", strtotime($albumSong['Country']['SalesDate'])) . ' )';
+	                        $comingSoonDate = __('Coming Soon', true) . ' ( ' . date("F d Y", strtotime($albumSong['Country']['SalesDate'])) . ' )';
 	                    endif;
 
-					echo $this->Html->link('Coming Soon', 'javascript:void(0)', array('class' => 'add-to-wishlist', 'title' => $comingSoonDate));
+					echo $this->Html->link(__('Coming Soon', true), 'javascript:void(0)', array('class' => 'add-to-wishlist', 'title' => $comingSoonDate));
 
 					endif;
 					
 					if ($streamingFlag == 1): 
-						echo $this->Html->link('Add To Playlist', 'javascript:void(0)', array('class' => 'add-to-playlist'));
+						echo $this->Html->link(__('Add To Playlist', true), 'javascript:void(0)', array('class' => 'add-to-playlist'));
 					endif;
 			
 					$wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
@@ -361,7 +361,7 @@
 		endforeach;
 		
 		else:
-			echo '<span>Sorry, there are no more details available.</span>';
+			echo '<span>' . __('Sorry, there are no more details available.', true) . '</span>';
 		endif;?>
 	</section>
 </section> <!-- close class="albums-page" -->

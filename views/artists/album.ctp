@@ -210,7 +210,7 @@
 						}
 						if ($album['Album']['Advisory'] == 'T')
 						{
-							echo '<span class="explicit"> (Explicit)</span>';
+							echo '<span class="explicit"> (' . __('Explicit', true) . ')</span>';
 							echo '<br />';
 						}
 						?>
@@ -330,7 +330,7 @@
 								</span> <span class="afterClick"
 									id="vdownloading_<?php echo $value['Video']['ProdID']; ?>"
 									style="display: none;"><label
-									class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp'); ?>
+									class="top-10-download-now-button"><?php __('Please Wait'); ?>...&nbsp;&nbsp;
 								</label> </span> <span
 									id="vdownload_loader_<?php echo $value['Video']['ProdID']; ?>"
 									style="display: none; float: right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?>
@@ -440,7 +440,7 @@
 						if ('T' == $value['Video']['Advisory'])
 						{
 							?>
-						<span style="color: red; display: inline;"> (Explicit)</span>
+						<span style="color: red; display: inline;"> (<?php __('Explicit'); ?>)</span>
 						<?php } ?>
 					</div>
 					<div class="genre">

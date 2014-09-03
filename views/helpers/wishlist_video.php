@@ -75,12 +75,12 @@ class WishlistVideoHelper extends AppHelper
 	{
 		if ($wishlistInfo == 'Added To Wishlist')
 		{
-			$str = '<a class="add-to-wishlist" href="javascript:void(0);">' . "Added To Wishlist" . '</a>';
+			$str = '<a class="add-to-wishlist" href="javascript:void(0);">' . __('Added To Wishlist', true) . '</a>';
 		}
 		else
 		{
-			$str = '<span class="beforeClick" id="video_wishlist' . $video_ProdId . '"><a class="add-to-wishlist" href=\'JavaScript:void(0);\' onclick=\'Javascript: addToWishlistVideo("' . $video_ProdId . '","' . $video_Provider_Type . '");\'>' . "Add To Wishlist" . '</a></span>
-			<span class="afterClick" id="downloading_' . $video_ProdId . '" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>' . "Please Wait..." . '</a></span>';
+			$str = '<span class="beforeClick" id="video_wishlist' . $video_ProdId . '"><a class="add-to-wishlist" href=\'JavaScript:void(0);\' onclick=\'Javascript: addToWishlistVideo("' . $video_ProdId . '","' . $video_Provider_Type . '");\'>' . __('Add To Wishlist', true) . '</a></span>
+			<span class="afterClick" id="downloading_' . $video_ProdId . '" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>' . __('Please Wait', true) . '...</a></span>';
 		}
 		return $str;
 	}

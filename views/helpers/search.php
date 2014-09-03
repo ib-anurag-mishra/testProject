@@ -246,7 +246,7 @@ class SearchHelper extends AppHelper {
     	}
 
     	if ( isset( $palbum->AAdvisory ) && $palbum->AAdvisory == 'T') {
-    		$explicit = '<font class="explicit"> (Explicit)</font><br />';
+    		$explicit = '<font class="explicit"> (' . __('Explicit', true) . '</font><br />';
     	} else {
     		$explicit = '';
     	}

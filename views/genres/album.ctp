@@ -140,7 +140,7 @@ function Get_Sales_date($sales_date_array, $country) {
    
  <div class="breadcrumbs">
         <?php
-            echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
+            echo $html->link(__('Home', true), array('controller' => 'homes', 'action' => 'index'));
             echo " > ";
             echo "<a href = '/../search/index?q=".$keyword."&type=genre' >Search Results</a>";
             if(!empty($keyword)){
@@ -160,10 +160,10 @@ function Get_Sales_date($sales_date_array, $country) {
            
     ?>     
     <section class="<?php echo $search_category; ?>">
-        <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
+        <div class="faq-link"><?php __('Need Help? Visit our'); ?> <a href="/questions"><?php __('FAQ Section'); ?>.</a></div>
 	<div class="search-results-heading"><?php echo $keyword; ?></div> 
 	<header>
-                <h3 class="albums-header">Albums</h3>
+                <h3 class="albums-header"><?php __('Albums'); ?></h3>
         </header> 
                 <?php
                 if (!empty($albumData)) {
@@ -189,13 +189,13 @@ function Get_Sales_date($sales_date_array, $country) {
                         $linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
                         $linkProviderType = base64_encode($palbum->provider_type);
                         if (!empty($album_label)) {
-                            $album_label_str = "Label: " . truncate_text($this->getTextEncode($album_label), 32, $this);
+                            $album_label_str = __('Label', true) . ": " . truncate_text($this->getTextEncode($album_label), 32, $this);
                         } else {
                             $album_label_str = "";
                         }
                         $ReferenceId = $palbum->ReferenceID;
                         if ($palbum->AAdvisory == 'T') {
-                            $explicit = '<font class="explicit"> (Explicit)</font><br />';
+                            $explicit = '<font class="explicit"> (' . __('Explicit', true) . ')</font><br />';
                         } else {
                             $explicit = '';
                         }
@@ -216,8 +216,8 @@ function Get_Sales_date($sales_date_array, $country) {
                                         </a>                                                        
 
                                     </div>
-                                    <div class="genre">Genre: <?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?> </div>
-				    <div class="label">Label: <?php echo $album_label." ".$album_copyright; ?> </div>
+                                    <div class="genre"><?php __('Genre'); ?>: <?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?> </div>
+				    <div class="label"><?php __('Label'); ?>: <?php echo $album_label." ".$album_copyright; ?> </div>
                                                     <?php
                                                     if ($this->Session->read("patron")) {
                                                         if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) {
@@ -234,21 +234,21 @@ function Get_Sales_date($sales_date_array, $country) {
 
                                             if ($wishlistInfo == 'Added To Wishlist') {
                                                 ?>
-                                                        <a href="#">Added to Wishlist</a>
+                                                        <a href="#"><?php __('Added to Wishlist'); ?></a>
                                                 <?php
                                             } else {
                                                 ?>
-                                                        <span class="beforeClick" id="wishlist<?= $palbum->ReferenceID ?>" > <a class="add-to-wishlist no-ajaxy" href="#">Add to Wishlist</a> </span>
-                                                        <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a></span>
+                                                        <span class="beforeClick" id="wishlist<?= $palbum->ReferenceID ?>" > <a class="add-to-wishlist no-ajaxy" href="#"><?php __('Add to Wishlist'); ?></a> </span>
+                                                        <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href="JavaScript:void(0);"><?php __('Please Wait'); ?>...</a></span>
                                             <?php
                                         }
                                         ?>
                                                 </li>
                                         <?php if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) { ?> 
-                                                    <li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);">Add to Playlist</a></li>
+                                                    <li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);"><?php __('Add to Playlist'); ?></a></li>
                                                 </ul>
                                                 <ul class="playlist-menu">
-                                                    <li><a href="#">Create New Playlist</a></li>                                                                 
+                                                    <li><a href="#"><?php __('Create New Playlist'); ?></a></li>                                                                 
                                                 </ul>
                                         <?php } ?>    
                                         </section>
@@ -276,7 +276,7 @@ function Get_Sales_date($sales_date_array, $country) {
                     <?php } else { ?>
                         <div class="album-detail-container">
                             <div style="color:red; padding:50px; ">
-                                <span>No Albums Found</span>
+                                <span><?php __('No Albums Found'); ?></span>
                             </div> 
                         </div>    
                     <?php } ?>

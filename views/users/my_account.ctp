@@ -41,7 +41,7 @@ $ieVersion =  ieversion();
 </div>
 <br class="clr">
 <header>
-        <h2>My Account</h2>
+        <h2><?php __('My Account'); ?></h2>
 
 </header>
 <?php
@@ -54,7 +54,7 @@ $ieVersion =  ieversion();
 ?>
 		<div class="forms-wrapper">
 			<div class="account-info-wrapper">
-				<h3>Account Information</h3>
+				<h3><?php __('Account Information'); ?></h3>
                                     <?php echo $this->Form->create('User', array( 'controller' => 'User','action' => 'my_account')); ?>
                                     <?php if( isset($getData) && (count($getData) > 0) ) { ?>
                         		<?php echo $this->Form->hidden( 'id', array( 'label' => false ,'value' => $getData['User']['id'])); ?>
