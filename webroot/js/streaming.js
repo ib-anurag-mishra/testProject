@@ -24,6 +24,7 @@ function sendMessageToPlayer(message) {
 	console.log('sendMessageToPlayer called');
 	console.log('message is ' + message);
 	var flash =	document.getElementById("fmp_player");
+	console.log(flash);
 
 	flash.updatePlayerMessageJS(message);
 }
