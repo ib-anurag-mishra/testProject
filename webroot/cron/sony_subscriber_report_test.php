@@ -136,8 +136,8 @@ EOD;
 			$data[$row['library_territory']]['cancellations'] = $row['Cancelled'];
 		}
 
-		print_r($data);
-		echo 'freegalMusicStreaming() successful' . "\n";
+		// print_r($data);
+		// echo 'freegalMusicStreaming() successful' . "\n";
 		return $data;
 	}
 	
@@ -266,8 +266,8 @@ EOD;
 			$data[$row['library_territory']]['cancellations'] = $row['Cancelled'];
 		}
 
-		print_r($data);
-		echo 'freegalMusicSubscriptions() successful' . "\n";
+		// print_r($data);
+		// echo 'freegalMusicSubscriptions() successful' . "\n";
 		return $data;
 	}
 	
@@ -400,8 +400,8 @@ EOD;
 			$data[$row['library_territory']]['cancellations'] = $row['Cancelled'];
 		}
 
-		print_r($data);
-		echo 'freegalMusicAlc() successful' . "\n";
+		// print_r($data);
+		// echo 'freegalMusicAlc() successful' . "\n";
 		return $data;
 	}
 	
@@ -484,7 +484,7 @@ EOD;
 				'cancellations' => $row['Cancelled'],
 			);
 		}
-		echo 'freegalMoviesStreaming() successful' . "\n";
+		// echo 'freegalMoviesStreaming() successful' . "\n";
 		return $data;
 	}
 
@@ -525,9 +525,9 @@ function sendMail($file_path, $file_name, $previousMonth) {
 	// send email
 	$ok = mail($to, $subject, $message, $mail_header); 
 	if ($ok) { 
-		echo "<p>Mail sent to $to!</p>\n"; 
+		echo "Mail sent to $to!$file_name\n"; 
 	} else { 
-		echo "<p>Mail could not be sent!</p>\n"; 
+		echo "Mail could not be sent!$file_name\n"; 
 	}
 }
 
