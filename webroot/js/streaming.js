@@ -6,10 +6,13 @@ swfobject.switchOffAutoHideShow();
 swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0", false, flashvars, params, attributes);
 // swfobject.embedSWF("/swf/fmp-test.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
 
+var swfISLoaded = false;
 
-function SWFIsLoaded() {
+function reportSWFIsLoaded() {
 
 	console.log('swf is loaded');
+	swfISLoaded = true;
+
 }
 
 function sendMessageToPlayer(message) {
