@@ -4068,6 +4068,15 @@ sub { top: 0.4em; }
 							text-decoration: none;	
 							font-weight: bold;
 							box-shadow: 0 0 2px rgba(0,0,0,.5);
+
+
+							a {
+
+								&:hover {
+
+									text-decoration: none;
+								}
+							}
 						}
 					}
 					
