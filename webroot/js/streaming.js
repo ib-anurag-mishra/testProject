@@ -15,7 +15,7 @@ function reportSWFIsLoaded() {
 
 	if(swfISLoaded) {
 
-		sendMessageToPlayer('hello');
+		sendMessageToPlayer('test');
 	}
 
 }
