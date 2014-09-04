@@ -316,39 +316,39 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 {
                     while ($rowLibrary = mysql_fetch_assoc($result)) {
                         $libraryArray[] = $rowLibrary[library_id];                        
-                    }                    
+                    }
 
                     $getDuplicatesLibraryIds = array_unique(array_diff_assoc($libraryArray, array_unique($libraryArray)));
                     //isContractDateOverlapping($getDuplicatesLibraryIds);
-                    
-                    echo "libraryArray -------------------\n";
-                    print_r($libraryArray);
-                    
-                    echo "getDuplicatesLibraryIds -------------------\n";
-                    print_r($getDuplicatesLibraryIds);
-                    
+                    $format = 'd/m/Y';
+                    $step = '+1 day';
                     foreach($getDuplicatesLibraryIds as $libraryId) {
-                        $contractQuery = "SELECT * FROM freegal.contract_library_purchases where library_id=$libraryId;";
+                        $contractQuery = $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE l.id=$libraryId and clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                         $ConrtactResult = mysql_query($contractQuery);
                         while ($rowConrtact = mysql_fetch_assoc($ConrtactResult)) {
-                            $current = $rowConrtact[library_contract_start_date];  
-                            $last = $rowConrtact[library_contract_end_date];
-                            $format = 'd/m/Y';
-                            $step = '+1 day';
+                            $current = strtotime($rowConrtact[library_contract_start_date]);  
+                            $last = strtotime($rowConrtact[library_contract_end_date]);                            
                             
-                            while( $current <= $last ) { 
-                                $dates[] = date($format, $current);
-                                $current = strtotime($step, $current);
+                            if($current <= $last) {
+                                while( $current <= $last ) { 
+                                    $dates[] = date($format, $current);
+                                    $current = strtotime($step, $current);
+                                }
+                            } else if($current >= $last) {
+                                while( $current >= $last ) { 
+                                    $dates[] = date($format, $current);
+                                    $current = strtotime($step, $current);
+                                }
                             }
-                            echo "all dates -------------------\n";
-                            print_r($dates);
-                            
-                            $getDuplicatesDates = array_unique(array_diff_assoc($dates, array_unique($dates)));
-                            
-                            echo "duplicate dates -------------------\n";
-                            print_r($getDuplicatesDates);
-                            
                         }
+                        echo "all dates -------------------\n";
+                        print_r($dates);
+
+                        $getDuplicatesDates = array_unique(array_diff_assoc($dates, array_unique($dates)));
+
+                        echo "duplicate dates -------------------\n";
+                        print_r($getDuplicatesDates);
+                        unset($dates, $current, $last);
                     }
                     exit;
                     if(count($getDuplicatesLibraryIds) > 0)
@@ -361,15 +361,11 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 {
                     sendalert("Query failed: ".$sql);
                     die("Query failed: ". $sql. " Error: " .mysql_error());
-                }   
-                print_r($libraryArray);
-                echo "-------------------";
-                print_r($getDuplicatesLibraryIds);
+                }               
                 exit;
                 $countno = mysql_num_rows($result);
                 $data = array();
                 $videodata = array();
-                exit;
                 if($countno>0)
                 {
                     while ($row = mysql_fetch_assoc($result))
