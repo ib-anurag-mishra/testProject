@@ -624,14 +624,11 @@ function sonyReport($previousMonth) {
 
 //sonyReport();
 $backReports = array(
-	'2014-01',
-	'2014-02',
-	'2014-03',
-	'2014-04',
-	'2014-05',
-	'2014-06',
-	'2014-07',
-	'2014-08'
+	'2010-05',
+	'2010-06',
+	'2010-07',
+	'2010-08',
+	'2010-09'
 );
 //$backReports = array('2014-06','2014-07');
 foreach ($backReports as $key => $previousMonth) {
