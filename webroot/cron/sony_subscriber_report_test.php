@@ -531,11 +531,11 @@ function sendMail($file_path, $file_name, $previousMonth) {
 	}
 }
 
-function sonyReport() {
-	// $dbconfig = array('host' => '192.168.100.114', 'user' => 'freegal_prod', 'pass' => '}e47^B1EO9hD');
-	$dbconfig = array('host' => 'localhost;port=3306', 'user' => 'root', 'pass' => 'pelebertix');
+function sonyReport($previousMonth) {
+	$dbconfig = array('host' => '192.168.100.114', 'user' => 'freegal_prod', 'pass' => '}e47^B1EO9hD');
+	//$dbconfig = array('host' => 'localhost;port=3306', 'user' => 'root', 'pass' => '');
 	//$previousMonth = date("Y-m", strtotime("previous month"));
-	$previousMonth = '2014-06';//**********This is for testing**********//
+	//$previousMonth = '2014-06';//**********This is for testing**********//
 	$sections = array(
 		'Freegal Music Streaming' => '0',
 		'Freegal Music Subscription' => '1',
@@ -622,7 +622,66 @@ function sonyReport() {
 	sendMail($file_path, $file_name, $previousMonth);
 }
 
-sonyReport();
+//sonyReport();
+$backReports = array(
+	'2010-05',
+	'2010-06',
+	'2010-07',
+	'2010-08',
+	'2010-09',
+	'2010-10',
+	'2010-11',
+	'2010-12',
+	'2011-01',
+	'2011-02',
+	'2011-03',
+	'2011-04',
+	'2011-05',
+	'2011-06',
+	'2011-07',
+	'2011-08',
+	'2011-09',
+	'2011-10',
+	'2011-11',
+	'2011-12',
+	'2012-01',
+	'2012-02',
+	'2012-03',
+	'2012-04',
+	'2012-05',
+	'2012-06',
+	'2012-07',
+	'2012-08',
+	'2012-09',
+	'2012-10',
+	'2012-11',
+	'2012-12',
+	'2013-01',
+	'2013-02',
+	'2013-03',
+	'2013-04',
+	'2013-05',
+	'2013-06',
+	'2013-07',
+	'2013-08',
+	'2013-09',
+	'2013-10',
+	'2013-11',
+	'2013-12',
+	'2014-01',
+	'2014-02',
+	'2014-03',
+	'2014-04',
+	'2014-05',
+	'2014-06',
+	'2014-07'
+);
+//$backReports = array('2014-06','2014-07');
+foreach ($backReports as $key => $previousMonth) {
+	sonyReport($previousMonth);
+
+}
+
 
 
 
