@@ -26,7 +26,7 @@ function sendMessageToPlayer(message) {
 	var flash =	document.getElementById("fmp_player");
 
 
-	flash.updatePlayerMessageJS(message);
+	flash.updatePlayerMessageSWF(message);
 }
 
 
