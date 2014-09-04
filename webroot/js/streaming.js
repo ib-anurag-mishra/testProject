@@ -13,6 +13,11 @@ function reportSWFIsLoaded() {
 	console.log('swf is loaded');
 	swfISLoaded = true;
 
+	if(swfISLoaded) {
+
+		sendMessageToPlayer('hello');
+	}
+
 }
 
 function sendMessageToPlayer(message) {
