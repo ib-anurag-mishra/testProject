@@ -230,13 +230,14 @@ function sendReportEmail($typereport, $reportName){
 
 function sendalert($message, $subject="")
 {
-    if($subject=="")
+    return true;
+    /*if($subject=="")
     {
         $subject = "Monthly-Weekly Report failed";  
     }
 
     $success = mail(REPORT_TO,$subject,$message,REPORT_HEADERS);
-    return $success;
+    return $success;*/
 }
 
 /*

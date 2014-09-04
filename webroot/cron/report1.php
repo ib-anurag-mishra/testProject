@@ -22,8 +22,8 @@ $countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' 
 $lib_types = array('Unlimited' , 'ALC');
 //$lib_types = array('ALC');
 
-$currentDate = date( "Y-m-d", time());
-//$currentDate = '2014-02-01';
+//$currentDate = date( "Y-m-d", time());
+$currentDate = '2014-02-01';
 
 $fetchRecordsFromTable = 'latest_downloads';
 //$fetchRecordsFromTable = 'downloads';
@@ -314,16 +314,46 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 
                 if($result)
                 {
-                    while ($rowLibrary = mysql_fetch_assoc($result))
-                    {
+                    while ($rowLibrary = mysql_fetch_assoc($result)) {
                         $libraryArray[] = $rowLibrary[library_id];                        
                     }                    
 
                     $getDuplicatesLibraryIds = array_unique(array_diff_assoc($libraryArray, array_unique($libraryArray)));
-
+                    //isContractDateOverlapping($getDuplicatesLibraryIds);
+                    
+                    echo "libraryArray -------------------\n";
+                    print_r($libraryArray);
+                    
+                    echo "getDuplicatesLibraryIds -------------------\n";
+                    print_r($getDuplicatesLibraryIds);
+                    
+                    foreach($getDuplicatesLibraryIds as $libraryId) {
+                        $contractQuery = "SELECT * FROM freegal.contract_library_purchases where library_id=$libraryId;";
+                        $ConrtactResult = mysql_query($contractQuery);
+                        while ($rowConrtact = mysql_fetch_assoc($ConrtactResult)) {
+                            $current = $rowConrtact[library_contract_start_date];  
+                            $last = $rowConrtact[library_contract_end_date];
+                            $format = 'd/m/Y';
+                            $step = '+1 day';
+                            
+                            while( $current <= $last ) { 
+                                $dates[] = date($format, $current);
+                                $current = strtotime($step, $current);
+                            }
+                            echo "all dates -------------------\n";
+                            print_r($dates);
+                            
+                            $getDuplicatesDates = array_unique(array_diff_assoc($dates, array_unique($dates)));
+                            
+                            echo "duplicate dates -------------------\n";
+                            print_r($getDuplicatesDates);
+                            
+                        }
+                    }
+                    exit;
                     if(count($getDuplicatesLibraryIds) > 0)
                     {
-                        sendalert("Multiple Library Contract date: ".implode(",", $getDuplicatesLibraryIds), "Multiple Library Contract date");
+                        //sendalert("Multiple Library Contract date: ".implode(",", $getDuplicatesLibraryIds), "Multiple Library Contract date");
                         die("Multiple Library Contract date: ".implode(",", $getDuplicatesLibraryIds));
                     }
                 }
@@ -331,7 +361,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 {
                     sendalert("Query failed: ".$sql);
                     die("Query failed: ". $sql. " Error: " .mysql_error());
-                }
+                }   
                 print_r($libraryArray);
                 echo "-------------------";
                 print_r($getDuplicatesLibraryIds);
