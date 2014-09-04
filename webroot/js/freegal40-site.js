@@ -39,7 +39,7 @@ $(document).ready(function() {
     var $preview = $('.preview');
     var $most_popular_sub_nav = $('.most-popular-sub-nav');
     
-
+    console.log(swfISLoaded);
 
     if(swfISLoaded) {
 
