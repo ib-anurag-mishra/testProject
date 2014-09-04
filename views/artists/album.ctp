@@ -111,7 +111,7 @@
 		}
 		?>
 		<div class="faq-link">
-			Need help? Visit our <a href="/questions">FAQ section.</a>
+			<?php echo __( 'Need Help? Visit our', true ); ?> <?=$this->Html->link( __( 'FAQ Section.', true ),'/questions') ?>
 		</div>
 	</header>
 
