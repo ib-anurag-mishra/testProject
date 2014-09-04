@@ -40,10 +40,14 @@ $(document).ready(function() {
     var $most_popular_sub_nav = $('.most-popular-sub-nav');
     
 
-    
+
+    if(swfISLoaded) {
+
+        sendMessageToPlayer('hello');
+    }
 
 
-   $('.wishlist-popover').on('mouseleave', '.playlist-options', function() {
+    $('.wishlist-popover').on('mouseleave', '.playlist-options', function() {
         $('.playlist-options').removeClass('active');
     });
 
