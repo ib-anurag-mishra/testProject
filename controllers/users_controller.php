@@ -442,7 +442,7 @@ function login($library = null){
 					$insertArr['patronid'] = $patronId;
 					$insertArr['session_id'] = session_id();
 					$this->Currentpatron->save($insertArr);
-                                        $this->log("users/index: [libid=".$libraryId.", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                        $this->log("users/index: [libid=".$libraryId.", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 				}
 				$date = time();
 				$values = array(0 => $date, 1 => session_id());
@@ -537,7 +537,7 @@ function login($library = null){
 			$updateTime = date( "Y-m-d H:i:s", time()-60 );
 			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
 			$this->Currentpatron->saveField('modified',$updateTime, false);
-                        $this->log("users/logout: [update][libid=".$libraryId.", patronid=".$patronId.", id=".$patronDetails[0]['Currentpatron']['id']."]", "currentpatrons");
+                        $this->log("users/logout: [update][libid=".$libraryId.", patronid=".$patronId.", id=".$patronDetails[0]['Currentpatron']['id'].", CNT=".count($patronDetails).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 			//writing to memcache and writing to both the memcached servers
 			Cache::delete("login_".$this->Session->read('library')."_".$libraryId."_".$patronId);
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
@@ -1438,7 +1438,7 @@ function login($library = null){
                         $currentPatronData['Currentpatron']['stream_popup'] = 'yes';
                         $this->Currentpatron->set($currentPatronData['Currentpatron']);
                         $this->Currentpatron->save();  
-                        $this->log("users/savestreampopup: [libid=".$libaryID.", patronid=".$patronId."]", "currentpatrons");
+                        $this->log("users/savestreampopup: [libid=".$libaryID.", patronid=".$patronId.", CNT=".count($currentPatronData).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
                         $this->Session->write('streamPopupShow','yes');
                 }
                 $this->Currentpatron->setDataSource('default');         
@@ -1468,7 +1468,7 @@ function login($library = null){
                         $currentPatronData['Currentpatron']['notify_popup'] = 'no';
                         $this->Currentpatron->set($currentPatronData['Currentpatron']);
                         $this->Currentpatron->save();
-                        $this->log("users/savenotifypopup: [libid=".$libaryID.", patronid=".$patronId."]", "currentpatrons");
+                        $this->log("users/savenotifypopup: [libid=".$libaryID.", patronid=".$patronId.", CNT=".count($currentPatronData).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
                         $this->Session->write('showNotificationPopup','yes');
                 }
                 $this->Currentpatron->setDataSource('default');         
@@ -1653,7 +1653,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/ilogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/ilogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -1900,7 +1900,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/idlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/idlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -2131,7 +2131,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/mdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/mdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -2361,7 +2361,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/mndlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/mndlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -2618,7 +2618,7 @@ function login($library = null){
 						$insertArr['patronid'] = $patronId;
 						$insertArr['session_id'] = session_id();
 						$this->Currentpatron->save($insertArr);
-                                                $this->log("users/ildlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                $this->log("users/ildlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 					}
 					$date = time();
 					$values = array(0 => $date, 1 => session_id());
@@ -2847,7 +2847,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/inlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/inlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -3321,7 +3321,7 @@ function login($library = null){
 									$insertArr['patronid'] = $patronId;
 									$insertArr['session_id'] = session_id();
 									$this->Currentpatron->save($insertArr);
-                                                                        $this->log("users/slogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                                        $this->log("users/slogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 								}
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());
@@ -3550,7 +3550,7 @@ function login($library = null){
 									$insertArr['patronid'] = $patronId;
 									$insertArr['session_id'] = session_id();
 									$this->Currentpatron->save($insertArr);
-                                                                        $this->log("users/snlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                                        $this->log("users/snlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 								}
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());
@@ -4173,7 +4173,7 @@ function login($library = null){
 				$insertArr['patronid'] = $card;
 				$insertArr['session_id'] = session_id();
 				$this->Currentpatron->save($insertArr);
-                                $this->log("users/sso: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$card.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                $this->log("users/sso: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$card.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 			}
 			$date = time();
 			$values = array(0 => $date, 1 => session_id());
@@ -4389,7 +4389,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/inhlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/inhlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -4636,7 +4636,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/capita: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/capita: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -4885,7 +4885,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/symws: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/symws: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -5138,7 +5138,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/ihdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/ihdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -5367,7 +5367,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/inhdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/inhdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -5611,7 +5611,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/plogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/plogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -5860,7 +5860,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/ilhdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/ilhdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -6103,7 +6103,7 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
-                                                        $this->log("users/clogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                                                        $this->log("users/clogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());

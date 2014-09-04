@@ -1207,7 +1207,7 @@ Class LibrariesController extends AppController
                 $insertArr['patronid'] = $patronId;
                 $insertArr['session_id'] = session_id();
                 $this->Currentpatron->save($insertArr);
-                $this->log("libraries/patron: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id']."]", "currentpatrons");
+                $this->log("libraries/patron: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
             }
             if (($currentPatron = Cache::read("login_" . $existingLibraries['0']['Library']['id'] . $patronId)) === false)
             {

@@ -1267,7 +1267,7 @@ STR;
             $this->Currentpatron->save($updateArr);
             $this->Currentpatron->setDataSource('default');
             $this->Session->write('approved', 'yes');
-            $this->log("homes/approvePatron: [libid=".$libid.", patronid=".$patronid.", id=".$currentPatron[0]['Currentpatron']['id']."]", "currentpatrons");
+            $this->log("homes/approvePatron: [libid=".$libid.", patronid=".$patronid.", id=".$currentPatron[0]['Currentpatron']['id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
         }
         echo "Success";
         exit;
@@ -1716,7 +1716,7 @@ STR;
                 $this->Currentpatron->setDataSource('master');
                 $this->Currentpatron->saveField('modified', $updateTime, false);
                 $this->Currentpatron->setDataSource('default');
-                $this->log("homes/aboutus: [update][libid=".$libraryId.", patronid=".$patronId.", id=".$patronDetails[0]['Currentpatron']['id']."]", "currentpatrons");
+                $this->log("homes/aboutus: [update][libid=".$libraryId.", patronid=".$patronId.", id=".$patronDetails[0]['Currentpatron']['id'].", CNT=".count($patronDetails).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
             }
             $this->Session->destroy();
             $this->Session->setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='" . $url . "'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
