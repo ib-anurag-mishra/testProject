@@ -5,6 +5,8 @@ class VideosController extends AppController {
     var $helpers 	= array('WishlistVideo', 'Language', 'Videodownload', 'Mvideo', 'Token');
     var $components = array('Downloadsvideos', 'Session', 'Downloads', 'Common', 'Checkloginusers');
     var $layout 	= 'home';
+    var $videoPageBrokenImages = array();
+    var $brokenImageVideoURL ='';
 
     /**
      * Called before the controller action. You can use this method to configure and customize components
@@ -54,8 +56,31 @@ class VideosController extends AppController {
             $this->set( 'patronDownload',  $patronDownload );
         }
 
-        $featuredVideos 	 		 = $this->featuredVideos( $prefix, $territory );
-        $topDownloads   	 		 = $this->topDownloadVideos( $prefix, $territory );
+        
+        // fetching Feature videos
+        $explicitContent = true ;
+        $cacheVariableSuffix = '';
+        if( $this->Session->read('block') == 'yes' ) {
+            $explicitContent = false ;
+            $cacheVariableSuffix = '_none_explicit';
+        }
+        
+        $featuredVideos = Cache::read( 'featured_videos' . $cacheVariableSuffix . $territory );        
+        
+        if ($featuredVideos === false) {
+            $featuredVideos = $this->Common->featuredVideos($prefix, $territory,$explicitContent,$cacheVariableSuffix);
+        }   
+        
+        
+        //fetching top video download
+        $topDownloads = Cache::read( 'top_download_videos' . $territory );        
+        
+        if ($topDownloads === false) {
+            $topDownloads = $this->topDownloadVideos( $prefix, $territory );
+        } 
+        
+        
+        
         $featuredVideoDownloadStatus = $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId, 'FeaturedVideo' );
         $topVideoDownloadStatus 	 = $this->getVideosDownloadStatus( $topDownloads, $libraryId, $patronId, 'Video' );
         $featuredWishlistDetails	 = $this->getWishlistVideosData( $featuredVideos, $libraryId, $patronId, 'FeaturedVideo' );
@@ -387,13 +412,19 @@ class VideosController extends AppController {
 
         if ( isset( $this->params['pass'][0] ) ) {
 
-            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] );
+            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] ); 
+            $videoArtwork = $this->Token->artworkToken( $videosData[0]['File']['CdnPath'] . '/' . $videosData[0]['File']['SourceURL'] );            
+            $videosData[0]['videoImage'] = Configure::read( 'App.Music_Path' ) . $videoArtwork;            
             
-            $videoArtwork = $this->Token->artworkToken( $videosData[0]['File']['CdnPath'] . '/' . $videosData[0]['File']['SourceURL'] );
-            
-            $videosData[0]['videoImage'] = Configure::read( 'App.Music_Path' ) . $videoArtwork;
+            //check image file exist or not for each entry
+            if(!$this->Common->checkImageFileExist($videosData[0]['videoImage'])){              
+                //write broken image entry in the log files                    
+                $this->brokenImageVideoURL =  getenv('SERVER_NAME') . '/videos/details/'.$this->params['pass'][0];
+                $this->log($territory.' : ' .' Video Details : '. $videosData[0]['videoImage'].' : Album URL : '. $this->brokenImageVideoURL);                
+                $this->videoPageBrokenImages[] = $videosData[0]['videoImage'];                  
+            }
         }
-
+                
         $this->set( 'videosData', $videosData );
         
         if ( count( $videosData ) > 0 ) {
@@ -402,82 +433,11 @@ class VideosController extends AppController {
         }
 
         $this->set( 'videoGenre', $videosData[0]['Video']['Genre'] );
-    }
+        $this->__sendBrokenImageAlert($territory);
+    }    
+ 
     
-    /**
-     * Function Name: featuredVideos
-     * Desc: cache read & write featured videos for index action
-     *
-     * @param: Two and type String
-     * @return: array
-     */
-
-    public function featuredVideos( $prefix, $territory ) {
-    	
-    	$cacheVariableSuffix = '';
-    	$explicitContent     = true;
-
-    	if( $this->Session->read('block') == 'yes' ) {
-
-    		$cacheVariableSuffix = '_none_explicit';
-    		$explicitContent     = false;
-    	}
-
-    	$featuredVideos = Cache::read( 'featured_videos' . $cacheVariableSuffix . $territory );
-    	
-    	if ( $featuredVideos === false ) {
-    	
-    		$featuredVideos = $this->FeaturedVideo->fetchFeaturedVideo( $prefix, $territory, $explicitContent );
-    	
-    		if ( !empty( $featuredVideos ) ) {
-    	
-    			foreach ( $featuredVideos as $key => $featureVideo ) {
-    	
-    				$videoArtwork = $this->Token->artworkToken( $featureVideo['File']['CdnPath'] . '/' . $featureVideo['File']['SourceURL'] );
-    				$videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
-    	
-    				$featuredVideos[$key]['videoImage'] = $videoImage;
-    			}
-    	
-    			Cache::write( 'featured_videos' . $cacheVariableSuffix . $territory, $featuredVideos );
-    		}
-    	}
-    	
-    	return $featuredVideos;
-    }
-    
-    /**
-     * Function Name: topDownloadVideos
-     * Desc: cache read & write top download videos for index action
-     *
-     * @param: Two and type String
-     * @return: array
-     */
-
-    public function topDownloadVideos( $prefix, $territory ) {
-
-    	$topDownloads = Cache::read( 'top_download_videos' . $territory );
-    	
-    	if ( $topDownloads === false ) {
-    	
-    		$topDownloads = $this->Videodownload->fetchVideodownloadTopDownloadedVideos( $prefix );
-    	
-    		if ( !empty( $topDownloads ) ) {
-    	
-    			foreach ( $topDownloads as $key => $topDownload ) {
-    	
-    				$videoArtwork = $this->Token->artworkToken( $topDownload['File']['CdnPath'] . '/' . $topDownload['File']['SourceURL'] );
-    				$videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
-    	
-    				$topDownloads[$key]['videoImage'] = $videoImage;
-    			}
-    	
-    			Cache::write( 'top_download_videos' . $territory, $topDownloads );
-    		}
-    	}
-
-    	return $topDownloads;
-    }
+  
     
     /**
      * Function Name: topVideoGenre
@@ -520,6 +480,21 @@ class VideosController extends AppController {
     		 
     		Cache::write( 'top_videos_genre_' . $territory . '_' . $videoGenre . $cacheVariableSuffix, $topVideoGenreData );
     	}
+        
+        if(!empty($topVideoGenreData)){
+            
+            foreach ( $topVideoGenreData as $key => $value ) {
+       
+                if(!$this->Common->checkImageFileExist($value['videoImage'] )){              
+                    //write broken image entry in the log files
+                    $this->brokenImageVideoURL = getenv('SERVER_NAME') . '/videos/details/'.$this->params['pass'][0];
+                    $this->log($territory.' : ' .' Video Details : '. $value['videoImage'].' : Album URL : '. $this->brokenImageVideoURL); 
+
+                    $this->videoPageBrokenImages[] = $value['videoImage'];               
+                                      
+                }                
+            }           
+        }
     	
     	$this->set( 'topVideoGenreData', $topVideoGenreData );
     }
@@ -551,12 +526,27 @@ class VideosController extends AppController {
 
     	if ( !empty( $country ) ) {
 
-    		$moreVideosData = $this->Common->getAllVideoByArtist( $country, $decodedId, $explicitContent );
+    		$moreVideosData = $this->Common->getAllVideoByArtist( $country, $decodedId, $explicitContent ); 
     		Cache::write( 'videolist_' . $country . '_' . $decodedId . $cacheVariableSuffix, $moreVideosData );
     		 
     	} else {
     		$moreVideosData = Cache::read( 'videolist_' . $country . '_' . $decodedId . $cacheVariableSuffix );
     	}
+        
+         if(!empty($moreVideosData)){
+            
+            foreach ( $moreVideosData as $key => $value ) {
+       
+                if(!$this->Common->checkImageFileExist($value['videoAlbumImage'] )){              
+                    //write broken image entry in the log files                    
+                    $this->brokenImageVideoURL = getenv('SERVER_NAME') . '/videos/details/'.$this->params['pass'][0];
+                    $this->log($territory.' : ' .' Video Details : '. $value['videoAlbumImage'].' : Album URL : '. $this->brokenImageVideoURL); 
+
+                    $this->videoPageBrokenImages[] = $value['videoAlbumImage'];               
+                                      
+                }                
+            }           
+        }
     	
     	$this->set( 'moreVideosData', $moreVideosData );
     }
@@ -643,5 +633,28 @@ class VideosController extends AppController {
     	}
     	
     	return $videoWishlistDetails;
+    }
+    
+    /* Function : __sendBrokenImageAlert
+     * Desc: reponsible to send broken image alert
+     * 
+     * @param $country string
+     * 
+     */
+     function __sendBrokenImageAlert($country){
+        //print_r($this->videoPageBrokenImages);die;
+         
+        if(!empty($this->videoPageBrokenImages)){
+            $content ='';
+            $content .='Territory : '.$country.'<br />';
+            $content .='Website Page : Video Details'.'<br />';
+             $content .='Location : '.$this->brokenImageVideoURL.'<br />';
+            $content .='Date-Time : '.date('Y-m-d H:i:s').'<br /><br />';
+            foreach( $this->videoPageBrokenImages as $albumArtwork){
+                $content .='Image URL : '.$albumArtwork.'<br />';
+            }           
+            //echo $content; die;
+            $this->Common->sendBrokenImageAlert($content);
+        }
     }
 }

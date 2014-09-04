@@ -25,7 +25,7 @@
 			
 			<div class="album-cover-image">
 				
-				<?php $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+				<?php  $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
 				
 				echo $this->Html->image(Configure::read('App.Music_Path') . $albumArtwork, array('alt' => 'album-detail-cover', 'width' => '250', 'height' => '250'));
 
