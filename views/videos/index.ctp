@@ -42,13 +42,13 @@
                                                         <input type="hidden" name="ProviderType" value="<?=$featureVideo["Video"]["provider_type"]?>" />
                                                         <span class="beforeClick" id="download_video_<?=$featureVideo["FeaturedVideo"]["ProdID"]?>">
                                                             <![if !IE]>
-                                                            <a href="javascript:void(0);" title="<?= __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?= $featureVideo['FeaturedVideo']['ProdID']; ?>", "0", "<?= $featureVideo['File']['CdnPath']; ?>", "<?= $featureVideo['Video_file']['SaveAsName']; ?>",  "<?= $featureVideo['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?= __('Download Now'); ?></label></a>
+                                                            <a href="javascript:void(0);" title="<?= __('IMPORTANT: Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?= $featureVideo['FeaturedVideo']['ProdID']; ?>", "0", "<?= $featureVideo['File']['CdnPath']; ?>", "<?= $featureVideo['Video_file']['SaveAsName']; ?>",  "<?= $featureVideo['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?= __('Download Now'); ?></label></a>
                                                             <![endif]>
                                                             <!--[if IE]>
                                                                     <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?= $featureVideo['FeaturedVideo']['ProdID']; ?>','0','<?= $featureVideo['Video']['provider_type']; ?>', '<?= $featureVideo['File']['CdnPath']; ?>', '<?= $featureVideo['Video_file']['SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
                                                             <![endif]-->
                                                         </span>
-                                                        <span class="afterClick" id="vdownloading_<?= $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait...&nbsp&nbsp'); ?></span>
+                                                        <span class="afterClick" id="vdownloading_<?= $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait'); ?>...&nbsp;&nbsp;</span>
                                                         <span id="vdownload_loader_<?= $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;float:right;"><?= $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                                     </form>
                                                 </div>
@@ -166,7 +166,7 @@
                                                         <![endif]-->
                                                     </span>
                                                     <span class="afterClick" id="vdownloading_<?= $topDownload["Video"]["ProdID"]; ?>" style="display:none;">
-                                                        <?= __('Please Wait...&nbsp&nbsp'); ?>
+                                                        <?= __('Please Wait'); ?>...&nbsp;&nbsp;
                                                     </span>
                                                     <span id="vdownload_loader_<?= $topDownload["Video"]["ProdID"]; ?>" style="display:none;float:right;">
                                                         <?= $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?>
@@ -204,7 +204,7 @@
                         	<?= $this->getTextEncode( $topDownload['Video']['VideoTitle'] ); ?>
                             </a>
                       <?php if (isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory']): ?> 
-                      			<span style="color: red;display: inline;"> (Explicit)</span> 
+                      			<span style="color: red;display: inline;"> (<?php __('Explicit'); ?>)</span> 
                       <?php endif; ?>
                         </div>
                         <div class="video-name">

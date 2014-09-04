@@ -92,7 +92,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 <section class="composer-page">
 	<div class="breadcrumbs">
 		<?php
-		echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
+		echo $html->link(__('Home', true), array('controller' => 'homes', 'action' => 'index'));
 		echo " > ";
 		echo "<a style='cursor: pointer;;' onClick='history.back();' >Search Results</a>";
 		if(!empty($composertext)){
@@ -138,13 +138,13 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 				$linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
 				$linkProviderType = base64_encode($palbum->provider_type);
 				if (!empty($album_label)) {
-					$album_label_str = "Label: " . truncate_text($this->getTextEncode($album_label), 32, $this);
+					$album_label_str = __('Label', true) . ": " . truncate_text($this->getTextEncode($album_label), 32, $this);
 				} else {
 					$album_label_str = "";
 				}
 				$ReferenceId = $palbum->ReferenceID;
 				if ($palbum->AAdvisory == 'T') {
-					$explicit = '<font class="explicit"> (Explicit)</font><br />';
+					$explicit = '<font class="explicit"> (' . __('Explicit', true) . ')</font><br />';
 				} else {
 					$explicit = '';
 				}
@@ -166,10 +166,10 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 							<?php echo $explicit; ?> </a> </strong>
 				</div>
 				<div class="genre">
-					Genre: <?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?>
+					<?php __('Genre'); ?>: <?php echo $html->link($this->getTextEncode($album_genre), array('controller' => 'genres', 'action' => 'view', '?genre='.$album_genre), array("title" => $this->getTextEncode($album_genre))); ?>
 				</div>
 				<div class="label">
-					Label: <?php echo $album_label." ".$album_copyright; ?>
+					<?php __('Label'); ?>: <?php echo $album_label." ".$album_copyright; ?>
 				</div>
 				<?php
 				if ($this->Session->read("patron")) {
@@ -186,23 +186,22 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 						$wishlistInfo = $wishlist->getWishlistData($nationalTopSong['Song']['ProdID']);
 
 						if ($wishlistInfo == 'Added To Wishlist') {
-							?> <a href="#">Added to Wishlist</a> <?php
+							?> <a href="#"><?php __('Added to Wishlist'); ?></a> <?php
 						} else {
 							?> <span class="beforeClick"
 							id="wishlist<?= $palbum->ReferenceID ?>"> <a
-								class="add-to-wishlist no-ajaxy" href="#">Add to Wishlist</a>
+								class="add-to-wishlist no-ajaxy" href="#"><?php __('Add to Wishlist'); ?></a>
 						</span> <span class="afterClick" style="display: none;"><a
-								class="add-to-wishlist" href="JavaScript:void(0);">Please
-									Wait...</a> </span> <?php
+								class="add-to-wishlist" href="JavaScript:void(0);"><?php __('Please Wait'); ?>...</a> </span> <?php
 						}
 						?>
 						</li>
 						<?php if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) { ?>
-						<li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);">Add to Playlist</a>
+						<li><a class="add-to-playlist no-ajaxy" href="javascript:void(0);"><?php __('Add to Playlist'); ?></a>
 						</li>
 					</ul>
 					<ul class="playlist-menu">
-						<li><a href="#">Create New Playlist</a></li>
+						<li><a href="#"><?php __('Create New Playlist'); ?></a></li>
 					</ul>
 					<?php } ?>
 				</section>
@@ -227,7 +226,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 		<?php } else { ?>
 		<div class="album-detail-container">
 			<div style="color: red; padding: 50px;">
-				<span>No Albums Found</span>
+				<span><?php __('No Albums Found'); ?></span>
 			</div>
 		</div>
 		<?php } ?>

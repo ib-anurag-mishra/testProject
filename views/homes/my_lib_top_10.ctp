@@ -12,7 +12,7 @@
         <h2> <?php echo __('My Library Top 10', true); ?>  </h2>
 
     </header>
-    <h3>Albums</h3>
+    <h3><?php __('Albums'); ?></h3>
     <div class="album-shadow-container">
         <div class="album-scrollable horiz-scroll carousel">
             <ul style="width:1650px;">
@@ -49,7 +49,7 @@
                                         ?> 
                                         <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
                                         <ul>
-                                            <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+                                            <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                         </ul>
                                         <?php
@@ -108,7 +108,7 @@
                 }else
                 {
 
-                    echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                    echo '<span style="font-size:14px;">' . __('Sorry, there are no downloads.', true) . '<span>';
                 }
 
                 ?>
@@ -117,7 +117,7 @@
         <button class="left-scroll-button" type="button"></button>
         <button class="right-scroll-button" type="button"></button>
     </div>
-    <h3>Songs</h3>
+    <h3><?php __('Songs'); ?></h3>
     <div class="songs-shadow-container">
         <div class="songs-scrollable carousel horiz-scroll">
             <ul style="width:1650px;">
@@ -228,7 +228,7 @@
                                                                <a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Song"]['ProdID']; ?>", "0" , "<?php echo $value["Song"]["provider_type"]; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                         <![endif]-->
                                                     </span>
-                                                    <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait...&nbsp&nbsp"); ?>
+                                                    <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __('Please Wait'); ?>...&nbsp;&nbsp;
                                                             <span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="float:right;padding-right:3px;padding-top:4px;"><?php echo $html->image('ajax-loader_black.gif'); ?></span> </a> </span>
                                                 </form>
                                                 </span>    
@@ -306,7 +306,7 @@
                                     
                                     <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
                                     <ul>
-                                        <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+                                        <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                     </ul>
                                     
@@ -343,7 +343,7 @@
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                     */
                                     ?>
-                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
+                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="<?php __('Add to Wishlist'); ?>"></a>
                                     
                                     
                                 <?php } ?>
@@ -360,7 +360,7 @@
                                 </a><?php
                                 if ('T' == $value['Song']['Advisory'])
                                 {
-                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                                    ?> <span style="color: red;display: inline;"> (<?php __('Explicit'); ?>)</span> <?php } ?>
                             </div>
                             <div class="artist-name">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
@@ -380,7 +380,7 @@
                 }else
                 {
 
-                    echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                    echo '<span style="font-size:14px;">' . __('Sorry,there are no downloads.', true) . '<span>';
                 }
                 ?>
 
@@ -391,7 +391,7 @@
         <button class="right-scroll-button" type="button"></button>
 
     </div>
-    <h3>Videos</h3>
+    <h3><?php __('Videos'); ?></h3>
     <div class="videos-shadow-container">
         <div class="videos-scrollable horiz-scroll carousel">
             <ul>
@@ -460,7 +460,7 @@
                                                                     <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a></label>
                                                             <![endif]-->
                                                         </span>
-                                                        <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp'); ?></span>
+                                                        <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait'); ?>...&nbsp;&nbsp;</span>
                                                         <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                                     </form>
                                                 </span>
@@ -568,7 +568,7 @@
                 }else
                 {
 
-                    echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                    echo '<span style="font-size:14px;">' . __('Sorry,there are no downloads.', true) . '<span>';
                 }
                 
                 ?>

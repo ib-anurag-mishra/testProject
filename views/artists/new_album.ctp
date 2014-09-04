@@ -140,7 +140,7 @@
 						<div class="wishlist-popover">
 							<input type="hidden" id="<?= $album['Album']['ProdID'] ?>"
 								value="album" /> <a class="add-to-playlist"
-								href="javascript:void(0)">Add To Playlist</a>
+								href="javascript:void(0)"><?php __('Add To Playlist'); ?></a>
 						</div>
 						<?php
 						}
@@ -179,7 +179,7 @@
 						}
 						if ($album['Album']['Advisory'] == 'T')
 						{
-							echo '<span class="explicit"> (Explicit)</span>';
+							echo '<span class="explicit"> (' . __('Explicit', true) . ')</span>';
 							echo '<br />';
 						}
 						?>
@@ -280,7 +280,7 @@
 								</span> <span class="afterClick"
 									id="vdownloading_<?php echo $value['Video']['ProdID']; ?>"
 									style="display: none;"><label
-									class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp'); ?>
+									class="top-10-download-now-button"><?php __('Please Wait'); ?>...&nbsp;&nbsp;
 								</label>
 								</span> <span
 									id="vdownload_loader_<?php echo $value['Video']['ProdID']; ?>"
@@ -389,7 +389,7 @@
 						if ('T' == $value['Video']['Advisory'])
 						{
 							?>
-						<span style="color: red; display: inline;"> (Explicit)</span>
+						<span style="color: red; display: inline;"> (<?php __('Explicit'); ?>)</span>
 						<?php } ?>
 					</div>
 					<div class="genre">

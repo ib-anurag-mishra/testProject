@@ -1,14 +1,14 @@
 <section class="my-top-100-page">
     <div class="breadcrumbs">
         <?php
-        $html->addCrumb('New Releases', '/homes/new_releases');
+        $html->addCrumb(__('New Releases', true), '/homes/new_releases');
         echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
         ?>
     </div>
     <header>
         <h2><?php __('New Releases'); ?></h2>
     </header>
-    <h3>Albums</h3>
+    <h3><?php __('Albums'); ?></h3>
     <div class="album-shadow-container">
         <div class="album-scrollable horiz-scroll carousel">
             <ul style="width:16500px;">
@@ -39,7 +39,7 @@
                                     ?>
                                     <a class="playlist-menu-icon add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                                     <ul>
-                                        <li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+                                        <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                     </ul>                                     
                                     <?php
@@ -78,7 +78,7 @@
                             </a><?php
                             if ('T' == $value['Albums']['Advisory'])
                             {
-                                ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                                ?> <span style="color: red;display: inline;"> (<?php __('Explicit'); ?>)</span> <?php } ?>
                         </div>
                         <div class="artist-name">							
                             <a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
@@ -103,7 +103,7 @@
         <button class="right-scroll-button" type="button"></button>
     </div>
 
-<h3>Videos</h3>
+<h3><?php __('Videos'); ?></h3>
 <div class="videos-shadow-container">
     <div class="videos-scrollable horiz-scroll carousel">
         <ul style="width:29100px;">
@@ -163,7 +163,7 @@
                                                             <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a></label>
                                                     <![endif]-->
                                                 </span>
-                                                <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp'); ?></span>
+                                                <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait'); ?>...&nbsp;&nbsp;</span>
                                                 <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                             </form>
                                         </span>
@@ -229,7 +229,7 @@
                         </a><?php
                         if ('T' == $value['Video']['Advisory'])
                         {
-                            ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                            ?> <span style="color: red;display: inline;"> (<?php __('Explicit'); ?>)</span> <?php } ?>
                     </div>
                     <div class="artist-name">
                         <a title="<?php echo $this->getValidText($value['Video']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">

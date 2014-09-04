@@ -6074,11 +6074,11 @@ sub { top: 0.4em; }
                     background: url(../img/freegal_sprite.png) -340px -225px;
                     display: block;
                     position: absolute;
-                    top: 10px;
-                    left: 10px;
+                    top: 7px;
+                    left: 7px;
                     opacity: 0;
-                    width: 30px;
-                    height: 30px;
+                    width: 36px;
+                    height: 36px;
                     // top: 270px;
                     // left: 395px;
                     // height: 25px;
@@ -6281,6 +6281,18 @@ sub { top: 0.4em; }
                     //     }
                     // }
 
+                }
+
+                .wishlist-icon {
+
+                	display: block;
+                	position: absolute;
+                	left: 38px;
+                	top: 7px;
+                	width: 36px;
+                	height: 36px;
+                	background: url(../img/freegal_sprite.png) -380px -225px;
+                	opacity: 0;
                 }
 
 			}
@@ -6961,7 +6973,19 @@ sub { top: 0.4em; }
 							
 						}
 
+						.wishlist-icon {
 
+							text-indent: -9999px;
+							text-decoration: none;
+							cursor: pointer;
+							position: absolute;
+							left: 35px;
+							top: 5px;
+							width: 26px;
+							height: 20px;
+							background: url(../img/freegal_sprite.png) 0 -100px;
+							opacity: 0;							
+						}
 
 
                         .wishlist-popover {
@@ -10028,7 +10052,8 @@ sub { top: 0.4em; }
 	
 	
 
-	height: 1400px;
+	// height: 1400px;
+	margin-bottom: 60px;
 	
 	.breadcrumbs {
 		
@@ -10278,37 +10303,37 @@ sub { top: 0.4em; }
 	.my-wishlist-shadow-container {
 			
 		position: relative;
-		width: 850px;
-		height: 481px;
-		overflow-x: hidden;
-		overflow-y: hidden;
+		width: 847px;
+		// height: 481px;
+		// overflow-x: hidden;
+		// overflow-y: hidden;
 		
-		&:after {
+		// &:after {
 			
-			position: absolute;
-			content: "";
-			bottom: 0;
-			left: 0;
-			background: url(../img/my-wishlist/my-wishlist-shadow.png);
-			width: 849px;
-			height: 11px;
-		}
+		// 	position: absolute;
+		// 	content: "";
+		// 	bottom: 0;
+		// 	left: 0;
+		// 	background: url(../img/my-wishlist/my-wishlist-shadow.png);
+		// 	width: 849px;
+		// 	height: 11px;
+		// }
 		
 		.my-wishlist-scrollable {
 		
 		
-			overflow-x: hidden;
-			overflow-y: hidden;
-			height: 481px;
+			// overflow-x: hidden;
+			// overflow-y: hidden;
+			// height: 481px;
 			
-			&:hover {
-				overflow-y: scroll;
+			// &:hover {
+			// 	overflow-y: scroll;
 				
-			}
+			// }
 			
 			.row-container {
 				
-				height: 2000px;
+				// height: 2000px;
 			
 				.row {
 					padding-top: 10px;
@@ -10421,10 +10446,13 @@ sub { top: 0.4em; }
 						font-size: 12px;
 						line-height: 40px;
 						
-						width: 128px;
+						width: 262px;
 						position: absolute;
 						left: 114px;
 						top: 0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;						
 						
 						&.playing {
 							
@@ -10578,6 +10606,9 @@ sub { top: 0.4em; }
 						position: absolute;
 						left: 572px;
 						top: 0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;						
 						
 						&.playing {
 							
@@ -10618,6 +10649,9 @@ sub { top: 0.4em; }
 						position: absolute;
 						left: 394px;
 						top:0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;						
 						&.playing {
 							
 							font-weight: bold;
@@ -10712,7 +10746,9 @@ sub { top: 0.4em; }
 						right: 15px;
 						top:12px;
 						opacity: .5;
-						
+						text-indent: -9999px;
+						display: block;
+
 						&:hover,&.hovered {
 							
 							opacity: 1;
@@ -10739,42 +10775,42 @@ sub { top: 0.4em; }
 	.my-video-wishlist-shadow-container {
 			
 		position: relative;
-		width: 850px;
-		height: 481px;
-		overflow-x: hidden;
-		overflow-y: hidden;
+		width: 847px;
+		// height: 481px;
+		// overflow-x: hidden;
+		// overflow-y: hidden;
 		
-		&:after {
+		// &:after {
 			
-			position: absolute;
-			content: "";
-			bottom: 0;
-			left: 0;
-			background: url(../img/my-wishlist/my-wishlist-shadow.png);
-			width: 849px;
-			height: 11px;
-		}
+		// 	position: absolute;
+		// 	content: "";
+		// 	bottom: 0;
+		// 	left: 0;
+		// 	background: url(../img/my-wishlist/my-wishlist-shadow.png);
+		// 	width: 849px;
+		// 	height: 11px;
+		// }
 		
 		.my-video-wishlist-scrollable {
 		
 		
-			overflow-x: hidden;
-			overflow-y: hidden;
-			height: 481px;
+			// overflow-x: hidden;
+			// overflow-y: hidden;
+			// height: 481px;
 			
-			&:hover {
-				overflow-y: scroll;
+			// &:hover {
+			// 	overflow-y: scroll;
 				
-			}
+			// }
 			
 			.row-container {
 				
-				height: 2000px;
+				// height: 2000px;
 			
 				.row {
 					padding-top: 10px;
 					padding-bottom: 10px;
-					height: 40px;
+					height: 50px;
 					padding-left: 10px;
 					position: relative;
 					
@@ -10807,7 +10843,7 @@ sub { top: 0.4em; }
 					.date {
 						position: absolute;
 						left: 10px;
-						top:14px;
+						top:21px;
 						font-size: 12px;
 						
 						&.playing {
@@ -10899,10 +10935,13 @@ sub { top: 0.4em; }
 						font-size: 12px;
 						line-height: 40px;
 						
-						width: 128px;
+						width: 199px;
 						position: absolute;
 						left: 184px;
-						top: 5px;
+						top: 7px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
 						
 						&.playing {
 							
@@ -11048,7 +11087,10 @@ sub { top: 0.4em; }
 						width: 147px;
 						position: absolute;
 						left: 572px;
-						top: 0;
+						top: 7px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
 						&.playing {
 							
 							font-weight: bold;
@@ -11081,7 +11123,10 @@ sub { top: 0.4em; }
 						width: 158px;
 						position: absolute;
 						left: 394px;
-						top: 0;
+						top: 7px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;						
 						&.playing {
 							
 							font-weight: bold;
@@ -11131,7 +11176,7 @@ sub { top: 0.4em; }
 						position: absolute;
 						
 						left: 737px;
-						top:14px;
+						top:20px;
 						font-size: 12px;
 						
 						a {
@@ -11153,8 +11198,10 @@ sub { top: 0.4em; }
 						height: 17px;
 						position: absolute;
 						right: 15px;
-						top:12px;
+						top:18px;
 						opacity: .5;
+						text-indent: -9999px;
+						display: block;
 						
 						&:hover,&.hovered {
 							

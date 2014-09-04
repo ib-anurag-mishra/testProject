@@ -30,11 +30,11 @@ class QueueHelper extends AppHelper
             }           
         }
 
-
+        $new_text = __('Create New Playlist', true);
         $str = <<<EOD
            <div class="playlist-options">
                     <ul>
-                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">$new_text</a></li>
 EOD;
         if (!empty($queueList))
         {
@@ -66,11 +66,11 @@ EOD;
                 
             }           
         }
-
+        $new_text = __('Create New Playlist', true);
         $str = <<<EOD
                 
                     <ul class="playlist-menu">
-                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">$new_text</a></li>
 EOD;
         if (!empty($queueList))
         {
@@ -100,10 +100,11 @@ EOD;
         {
             $queueList = array();
         }
+        $new_text = __('Create New Playlist', true);
         $str = <<<EOD
            <div class="playlist-options">
                     <ul>
-                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">$new_text</a></li>
 EOD;
 
         if (!empty($queueList))
@@ -154,10 +155,11 @@ EOD;
         {
             $queueList = array();
         }
+        $new_text = __('Create New Playlist', true);
         $str = <<<EOD
            <div class="playlist-options">
                     <ul>
-                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">$new_text</a></li>
 EOD;
 
         if (!empty($queueList))
@@ -275,8 +277,9 @@ EOD;
             }
         }
         if(empty($top)){
+        $stream_label = __('Stream Now', true);
         $str = <<<EOD
-            <a onclick="javascript:loadAlbumSong('{$playList}');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+            <a onclick="javascript:loadAlbumSong('{$playList}');"  class="album-preview" href="javascript:void(0);" >$stream_label</a>
 EOD;
             return $str;
         }else if($top == 1){
@@ -293,9 +296,9 @@ EOD;
             return $str;  
             
        }else if($top == 3){
-       
+       $stream_label = __('Stream Artist', true);
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumSong('{$playList}');" class="stream-artist">Stream Artist</button>
+            <button onclick="javascript:loadAlbumSong('{$playList}');" class="stream-artist">$stream_label</button>
 EOD;
             return $str;  
             
@@ -364,9 +367,9 @@ EOD;
                 <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable"></button>
 EOD;
             */
-
+            $stream_label = __('Stream Now', true);
             $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable">Stream Now</button>
+                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable">$stream_label</button>
 EOD;
             return $str;            
             

@@ -4,7 +4,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 ?>
 <section class="top-albums">
 	<header>
-		<h2>Top Albums</h2>
+		<h2><?php __('Top Albums'); ?></h2>
 	</header>
 	<div class="top-albums-carousel-container">
 		<div class="top-albums-carousel carousel">
@@ -53,9 +53,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 							echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
 							?>
 						<a class="playlist-menu-icon toggleable no-ajaxy" href="#"
-							title="Add to a Playlist or Create a New Playlist"></a>
+							title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>
 						<ul>
-							<li><a href="#" class="create-new-playlist">Create New Playlist
+							<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>
 									...</a></li>
 
 						</ul>
@@ -65,7 +65,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						?>
 
 						<a class="wishlist-icon toggleable no-ajaxy" href="#"
-							title="Add to Wishlist"></a>
+							title="<?php __('Add to Wishlist'); ?>"></a>
 						<?php
 						}
 						?>
@@ -96,7 +96,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 				}
 				else
 				{
-					echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+					echo '<span style="font-size:14px;">' . __('Sorry, there are no downloads.', true) . '<span>';
 				}
 				?>
 			</ul>
@@ -112,7 +112,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 <!-- Top Singles code start here -->
 <section class="top-songs">
 	<header>
-		<h2>Top Singles</h2>
+		<h2><?php __('Top Singles'); ?></h2>
 	</header>
 	<div class="top-singles-carousel-container">
 		<div class="top-singles-carousel carousel">
@@ -159,7 +159,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 									class="beforeClick" style="cursor: pointer;"
 									id="wishlist_song_<?= $nationalTopSong["Song"]["ProdID"]; ?>">
 									<![if !IE]> <a class="download-icon"
-									title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
+									title="<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>"
 									onclick='return wishlistDownloadOthersHome("<?= $nationalTopSong["Song"]['ProdID']; ?>", "0", "<?= $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>", "<?= $nationalTopSong["Song"]["provider_type"]; ?>",1);'>
 
 								</a> <![endif]> <!--[if IE]>
@@ -182,7 +182,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 			} else { ?>
 
 						<a class="download-icon song-downloaded" href='/homes/my_history'
-							title="You have already downloaded this song. Get it from your recent downloads"></a>
+							title="<?php __('You have already downloaded this song. Get it from your recent downloads'); ?>"></a>
 						<?php
 			}
 		} else { ?>
@@ -205,14 +205,14 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 	}
 	?>
 
-						<a class="wishlist-icon no-ajaxy" title="Add to Wishlist"
+						<a class="wishlist-icon no-ajaxy" title="<?php __('Add to Wishlist'); ?>"
 							hrefe="#"></a>
 						<?php    if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?>
 
 						<a class="playlist-menu-icon no-ajaxy" href="#"
-							title="Add to a Playlist or Create a New Playlist"></a>
+							title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>
 						<ul>
-							<li><a href="#" class="create-new-playlist">Create New Playlist
+							<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>
 									...</a></li>
 
 						</ul>
@@ -224,7 +224,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 							{
 								if ('T' == $nationalTopSong['Song']['Advisory'])
 								{
-									$song_title = $nationalTopSong['Song']['SongTitle'] . '(Explicit)';
+									$song_title = $nationalTopSong['Song']['SongTitle'] . '(' . __('Explicit', true) . ')';
 								}
 								else
 								{
@@ -258,7 +258,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 							{
 								$songTitle = $this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 20)) . "..";
 							}
-							$songTitle .='<span style="color: red;display: inline;"> (Explicit)</span> ';
+							$songTitle .='<span style="color: red;display: inline;"> ('. __('Explicit', true) . '</span> ';
 						}
 						?>
 
@@ -310,7 +310,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
 
 <section class="featured-artists" id="featured-artists-section">
-	<h2>Featured Artists &amp; Composers</h2>
+	<h2><?php __('Featured Artists & Composers'); ?></h2>
 	<div class="featured-artists-grid clearfix"
 		id="featured-artists-grid-div">
 		<?php
@@ -346,7 +346,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						}
 					}
 					?>
-					<a title="More by <?php echo $this->getTextEncode($ArtistText); ?>"
+					<a title="<?php __('More by'); ?> <?php echo $this->getTextEncode($ArtistText); ?>"
 						class="more-by-artist"
 						href="/artists/album/<?= base64_encode($v['Featuredartist']['artist_name']); ?>">
 						<?php echo $this->getTextEncode($ArtistText); ?>

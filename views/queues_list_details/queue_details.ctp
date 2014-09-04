@@ -195,7 +195,7 @@
 
                                                 <span class="afterClick" id="downloading_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;">
                                                     <a  class="add-to-wishlist"  >
-                                                        <?php __("Please Wait.."); ?>
+                                                        <?php __("Please Wait"); ?>...
                                                         <span id="wishlist_loader_<?php echo $value["Songs"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;">
                                                             <?php echo $html->image('ajax-loader_black.gif'); ?>
                                                         </span> 
@@ -234,7 +234,7 @@
                                            $value['Countries']['StreamingSalesDate'] <= date('Y-m-d') && $value['Countries']['StreamingStatus'] == 1)
                                    {
                                        ?>
-                                    <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+                                    <a class="add-to-playlist" href="javascript:void(0)"><?php __('Add To Playlist'); ?></a>
                                     <?php
                                 }
 

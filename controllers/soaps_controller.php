@@ -7432,21 +7432,14 @@ STR;
    
   private function validateMp4FileExist($SaveAsName, $CdnPath)  {
 
-    $connection = ssh2_connect($this->CDN_HOST, 22);
-    ssh2_auth_password($connection, $this->CDN_USER, $this->CDN_PASS);
-    $filePath = '/published/'.$SaveAsName.'/'.$CdnPath;
+   	$url = Configure::read('App.Music_Path').$this->Token->regularToken($SaveAsName.'/'.$CdnPath);
 
-    $sftp = ssh2_sftp($connection);
-    $statinfo = null;
-    $statinfo = ssh2_sftp_stat($sftp, $filePath);
-
-    if(!(empty($statinfo))){
-      //if file exist return true
-      return true;
-    } else {
-      //if file not exist return false
-      return false;
-    }
+	if($this->Common->file_exists_remote($url)){
+		return true;
+	}
+	else{
+		return false;
+	}
   
   }
 

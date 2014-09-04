@@ -122,7 +122,7 @@
 		if (!empty($albumData))
 		{
 			?>
-	<h3>Albums</h3>
+	<h3><?php __('Albums'); ?></h3>
 	<div class="album-shadow-container">
 		<div class="album-scrollable horiz-scroll carousel-ajax">
 			<ul  class="artist-albums" style="width: 4500px">
@@ -154,9 +154,10 @@
 							?>
 							<a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
 							<ul>
-								<li><a href="#" class="create-new-playlist">Create New Playlist...</a></li>
+								<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
 							</ul>
+							<a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
 							<?php
 							/*
 						<a class="add-to-playlist-button no-ajaxy"
@@ -193,7 +194,7 @@
 							<b> <?php
 							if (strlen($album['Album']['AlbumTitle']) >= 50)
 							{
-								$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50) . '...';
+								$album['Album']['AlbumTitle'] = mb_substr($album['Album']['AlbumTitle'], 0, 50, 'UTF-8') . '...';
 							}
 							?> <?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>
 						</b>
@@ -209,7 +210,7 @@
 						}
 						if ($album['Album']['Advisory'] == 'T')
 						{
-							echo '<span class="explicit"> (Explicit)</span>';
+							echo '<span class="explicit"> (' . __('Explicit', true) . ')</span>';
 							echo '<br />';
 						}
 						?>
@@ -271,7 +272,7 @@
 	if (!empty($artistVideoList))
 	{
 		?>
-	<h3>Videos</h3>
+	<h3><?php __('Videos'); ?></h3>
 	<div class="videos-shadow-container">
 		<div class="videos-scrollable horiz-scroll carousel">
 			<ul style="width: 15000px;">
@@ -329,7 +330,7 @@
 								</span> <span class="afterClick"
 									id="vdownloading_<?php echo $value['Video']['ProdID']; ?>"
 									style="display: none;"><label
-									class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp'); ?>
+									class="top-10-download-now-button"><?php __('Please Wait'); ?>...&nbsp;&nbsp;
 								</label> </span> <span
 									id="vdownload_loader_<?php echo $value['Video']['ProdID']; ?>"
 									style="display: none; float: right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?>
@@ -439,7 +440,7 @@
 						if ('T' == $value['Video']['Advisory'])
 						{
 							?>
-						<span style="color: red; display: inline;"> (Explicit)</span>
+						<span style="color: red; display: inline;"> (<?php __('Explicit'); ?>)</span>
 						<?php } ?>
 					</div>
 					<div class="genre">
