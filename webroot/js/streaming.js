@@ -7,6 +7,10 @@ swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100",
 // swfobject.embedSWF("/swf/fmp-test.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
 
 
+function SWFIsLoaded() {
+
+	console.log('swf is loaded');
+}
 
 function sendMessageToPlayer(message) {
 	console.log('sendMessageToPlayer called');
