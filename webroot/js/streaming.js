@@ -8,8 +8,8 @@ swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100",
 
 
 
-function sendMessageToComponent(message) {
-	console.log('sendMessageToComponent called');
+function sendMessageToPlayer(message) {
+	console.log('sendMessageToPlayer called');
 	console.log('message is ' + message);
 	var flash =	document.getElementById("fmp_player");
 

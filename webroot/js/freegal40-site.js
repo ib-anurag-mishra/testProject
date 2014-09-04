@@ -40,7 +40,7 @@ $(document).ready(function() {
     var $most_popular_sub_nav = $('.most-popular-sub-nav');
     
 
-
+    sendMessageToPlayer('hello');
 
 
    $('.wishlist-popover').on('mouseleave', '.playlist-options', function() {
