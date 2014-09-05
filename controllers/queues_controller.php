@@ -316,9 +316,9 @@ class QueuesController extends AppController
             $this->params['form']['type'] = '';
         }    
         
-        if(empty($this->params['form']['data-provider'])) {
-            $this->params['form']['data-provider'] = '';
-        } 
+        if(empty($this->params['form']['provider_type'])) {
+            $this->params['form']['provider_type'] = '';
+        }  
         
         $prodID = $this->params['form']['prodID']; 
         $type = $this->params['form']['type'];
