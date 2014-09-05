@@ -3765,4 +3765,20 @@ STR;
         }    
     }
 
+    /*
+    Function Name : getLanguage
+    Desc : Called by the player upon load and returns the current language.
+    */
+    function getLanguage() {
+
+        $this->layout = false;
+        $locale = Configure::read('Config.language');
+        if ($locale) {
+            echo substr($locale, 0, 2);
+        } else {
+            echo 'en';
+        }
+        exit;
+    }
+
 }
