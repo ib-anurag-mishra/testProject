@@ -2996,7 +2996,7 @@ STR;
      * @func getQueueAlbumDetails
      * @desc This is used to get Songs list for Stream Now on Search page
      */
-    function getQueueAlbumDetails($ProdID)
+    function getQueueAlbumDetails($ProdID, $provider_type)
     {
         $albumInstance = ClassRegistry::init('Album');
         $country = $this->Session->read('territory');
@@ -3025,7 +3025,7 @@ STR;
                                 INNER JOIN 
                         File ON (Albums.FileID = File.FileID) 
                 WHERE
-                        Albums.ProdID = '$ProdID'
+                        Albums.ProdID = '$ProdID' AND Albums.ProdID = '$provider_type'
                 GROUP BY Song.ReferenceID
                 ORDER BY COUNT(Song.ReferenceID) DESC
                 LIMIT 100 

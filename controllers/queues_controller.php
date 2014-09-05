@@ -314,17 +314,22 @@ class QueuesController extends AppController
         
         if(empty($this->params['form']['type'])) {
             $this->params['form']['type'] = '';
-        }        
+        }    
+        
+        if(empty($this->params['form']['data-provider'])) {
+            $this->params['form']['data-provider'] = '';
+        } 
         
         $prodID = $this->params['form']['prodID']; 
         $type = $this->params['form']['type'];
+        $provider_type = $this->params['form']['data-provider'];
         $queueId = $this->params['form']['QueueID'];
 
         $patronID = $this->Session->read("patron");
 
         if ($type == 'album')
         {
-            $albumDetails = array_pop(array_pop($this->Common->getQueueAlbumDetails($prodID)));
+            $albumDetails = array_pop(array_pop($this->Common->getQueueAlbumDetails($prodID, $provider_type)));
 
 
             $albumSongs = $this->requestAction(

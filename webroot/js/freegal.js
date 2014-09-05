@@ -1851,10 +1851,11 @@ function addToPlaylistNew(queueID, addTo)
     {
         var type_of = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('value');
         var ProdID = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('id');
+        var provider_type = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('data-provider');
 
         $.ajax({
             type: "post",
-            data: {'prodID': ProdID, 'type': type_of, 'QueueID': queueID},
+            data: {'prodID': ProdID, 'type': type_of, 'QueueID': queueID, 'provider_type': provider_type},
             url: webroot + 'queues/queueListAlbums',
             success: function(response)
             {
