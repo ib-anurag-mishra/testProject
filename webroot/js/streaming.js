@@ -21,25 +21,26 @@ function reportSWFIsLoaded() {
         url: webroot + 'homes/getLanguage'
     }).done(function(data){
     	console.log('data is ' + data);
+    	if(swfISLoaded) {
+
+    		setLanguangeInPlayer(data);
+    	}
     })
     .fail(function(){
-        alert('homes/getLanguage failed');
+        console.log('homes/getLanguage failed');
     });  
 
-	if(swfISLoaded) {
 
-		sendMessageToPlayer('test');
-	}
 
 }
 
-function sendMessageToPlayer(message) {
-	console.log('sendMessageToPlayer called');
-	console.log('message is ' + message);
+function setLanguangeInPlayer(message) {
+	console.log('setLanguangeInPlayer called');
+	console.log('language is ' + message);
 	var flash =	document.getElementById("fmp_player");
 
 
-	flash.updatePlayerMessageSWF(message);
+	flash.setLanguangeInPlayerSWF(message);
 
 }
 
