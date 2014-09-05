@@ -18,12 +18,12 @@ function reportSWFIsLoaded() {
     $.ajax({
         type: "POST",
         cache:false,
-        url: 'homes/getLanguage'
+        url: webroot + 'homes/getLanguage'
     }).done(function(data){
     	console.log('data is ' + data);
     })
     .fail(function(){
-        alert('homes/getLanguage failed' + data);
+        alert('homes/getLanguage failed');
     });  
 
 	if(swfISLoaded) {
