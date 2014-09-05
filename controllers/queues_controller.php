@@ -322,7 +322,7 @@ class QueuesController extends AppController
         
         $prodID = $this->params['form']['prodID']; 
         $type = $this->params['form']['type'];
-        $provider_type = $this->params['form']['data-provider'];
+        $provider_type = $this->params['form']['provider_type'];
         $queueId = $this->params['form']['QueueID'];
 
         $patronID = $this->Session->read("patron");
