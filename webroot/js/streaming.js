@@ -23,7 +23,7 @@ function reportSWFIsLoaded() {
     	console.log('data is ' + data);
     })
     .fail(function(){
-        alert('homes/getLanguage failed');
+        alert('homes/getLanguage failed' + data);
     });  
 
 	if(swfISLoaded) {
