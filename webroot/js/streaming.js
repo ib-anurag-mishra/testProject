@@ -13,6 +13,19 @@ function reportSWFIsLoaded() {
 	console.log('swf is loaded');
 	swfISLoaded = true;
 
+
+
+    $.ajax({
+        type: "POST",
+        cache:false,
+        url: 'homes/getLanguage'
+    }).done(function(data){
+    	console.log('data is ' + data);
+    })
+    .fail(function(){
+        alert('homes/getLanguage failed');
+    });  
+
 	if(swfISLoaded) {
 
 		sendMessageToPlayer('test');
