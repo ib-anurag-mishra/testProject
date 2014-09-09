@@ -6,14 +6,42 @@ swfobject.switchOffAutoHideShow();
 swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0", false, flashvars, params, attributes);
 // swfobject.embedSWF("/swf/fmp-test.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
 
+var swfISLoaded = false;
+
+function reportSWFIsLoaded() {
+
+	console.log('swf is loaded');
+	swfISLoaded = true;
 
 
-function sendMessageToComponent(message) {
-	console.log('sendMessageToComponent called');
-	console.log('message is ' + message);
+
+    $.ajax({
+        type: "POST",
+        cache:false,
+        url: webroot + 'homes/getLanguage'
+    }).done(function(data){
+    	console.log('data is ' + data);
+    	if(swfISLoaded) {
+
+    		setLanguangeInPlayer(data);
+    	}
+    })
+    .fail(function(){
+        console.log('homes/getLanguage failed');
+    });  
+
+
+
+}
+
+function setLanguangeInPlayer(message) {
+	console.log('setLanguangeInPlayer called');
+	console.log('language is ' + message);
 	var flash =	document.getElementById("fmp_player");
 
-	flash.updatePlayerMessageJS(message);
+
+	flash.setLanguangeInPlayerSWF(message);
+
 }
 
 
