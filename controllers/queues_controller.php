@@ -35,10 +35,24 @@ class QueuesController extends AppController
      */
     function savedQueuesList($patron_id)
     {
-
-        $this->layout = 'home';
-        $queueData = $this->Queue->getQueueList($patron_id);
-        $this->set('queueData', $queueData);
+        if($patron_id != $this->Session->read('patron') && $patron_id != '')
+        {             
+             $this->layout = 'home';
+             $this->Session->setFlash('Sorry, You cant view Other users Playlist', 'modal', array('class' => 'queue problem'));
+             $queueData = $this->Queue->getQueueList($this->Session->read('patron'));
+             $this->set('queueData', $queueData);
+        }
+        else if($this->Session->read('patron') != '')
+        {
+            $this->layout = 'home';
+            $queueData = $this->Queue->getQueueList($this->Session->read('patron'));
+            $this->set('queueData', $queueData); 
+        }
+        else
+        {
+            $this->Session->setFlash('Invalid Patron ID', 'modal', array('class' => 'queue problem'));
+            $this->redirect('/homes/index');
+        }
     }
 
     /**
