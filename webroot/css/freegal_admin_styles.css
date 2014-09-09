@@ -832,3 +832,6 @@ td.actions a:hover {
 .manage_album{
     
 }
+.manage_album li {
+    list-style: none outside none;
+}
