@@ -287,7 +287,7 @@ Class ArtistsController extends AppController {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
         $territory = 'US';
-        $topAlbumsList = $this->TopAlbum->getTopAlbumsList($territory);
+        $topAlbumsList = $this->TopAlbum->getAdminTopAlbumsList($territory);
         $this->set( 'topAlbums', $topAlbumsList );
 	$this->set('userTypeId',$userTypeId);
         $this->set('default_territory',$territory);
@@ -303,7 +303,7 @@ Class ArtistsController extends AppController {
     function admin_getterritorytopalbums($territory) {
         $this->layout = 'ajax';
         $userTypeId = $this->Session->read('Auth.User.type_id');
-        $topAlbumsList = $this->TopAlbum->getTopAlbumsList($territory);
+        $topAlbumsList = $this->TopAlbum->getAdminTopAlbumsList($territory);
         $this->set( 'topAlbums', $topAlbumsList );
 	$this->set('userTypeId',$userTypeId);
         $this->set('default_territory',$territory);
