@@ -19,6 +19,7 @@
                         }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest+textStatus+errorThrown);
                     }
                 }); 
             } else {
