@@ -18,7 +18,6 @@
                             return;
                         }
                     },
-                    async: true,
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                     }
                 }); 
