@@ -1,5 +1,6 @@
 <?php $this->pageTitle = 'Content'; ?>
 <script type="text/javascript">
+    $(document).ready(function () { 
       $('#album_list_territory').change(function(){
             if($("#album_list_territory").val()) {
                 var link = webroot + 'admin/artists/getterritorytopalbums/' + $("#album_list_territory").val();
@@ -26,6 +27,8 @@
                 return false;
             }
       });
+    });
+    
 </script>      
 <div class="album_wrap">
     <legend>Top Albums Listing</legend> 
