@@ -286,11 +286,12 @@ Class ArtistsController extends AppController {
         for ($m = 0; $m < count($territories); $m++) {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
-        $this->set('default_territory','US');
-        $this->set("territories", $territoriesArray);   
-        $topAlbums = $this->paginate( 'TopAlbum', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
-        $this->set( 'topAlbums', $topAlbums );
-		$this->set('userTypeId',$userTypeId);
+        $territory = 'US';
+        $topAlbumsList = $this->TopAlbum->getTopAlbumsList($territory);
+        $this->set( 'topAlbums', $topAlbumsList );
+	$this->set('userTypeId',$userTypeId);
+        $this->set('default_territory',$territory);
+        $this->set("territories", $territoriesArray); 
     }
 
 	/*

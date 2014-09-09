@@ -38,6 +38,7 @@
         <div class="album_clear">
         </div>
         <div class="manage_album">
+          <?php if (!empty($topAlbums)) { ?>
             <ul>
            <?php foreach($topAlbums as $topAlbum){ ?>   
                     <li>
@@ -64,7 +65,12 @@
                         </div>
                     </li>
            <?php } ?>     
-            </ul>    
+            </ul>
+          <?php } else { ?> 
+            <div class="no_records">
+                <b>No Records available.</b>
+            </div>
+          <?php } ?>  
         </div>    
     </div>
 </div>
