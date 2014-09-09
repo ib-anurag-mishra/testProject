@@ -420,10 +420,10 @@ Class ArtistsController extends AppController {
             $insertArr['provider_type'] = $album_provider_type;
         }
         $insertObj = new TopAlbum();
-        $query = "SELECT IFNULL(MAX(sortId),0)+1 AS sortId FROM top_albums AS TopAlbum";
+        $query = "SELECT IFNULL(MAX(sortId),0)+1 AS sortId FROM top_albums";
         $sortdata = $insertObj->query($query);
         if(!empty($sortdata['TopAlbum']['sortId'])) {
-            $insertArr['sortId'] = $sortdata['TopAlbum']['sortId'];
+            $insertArr['sortId'] = $sortdata[0][0]['sortId'];
         } else {
             $errorMsg .= 'There seems to be some problem with Sort Id.<br/>';
         }
