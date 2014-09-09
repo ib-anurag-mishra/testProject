@@ -1,5 +1,4 @@
 <script type="text/javascript" src="/js/ajaxify-html5.js"></script>
-<script> 
 <div class="manage_album">
   <?php if (!empty($topAlbums)) { ?>
     <ul>
