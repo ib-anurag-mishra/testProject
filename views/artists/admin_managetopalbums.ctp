@@ -1,4 +1,32 @@
 <?php $this->pageTitle = 'Content'; ?>
+<script type="text/javascript">
+      $('#album_list_territory').change(function(){
+            if($("#album_list_territory").val()) {
+                var link = webroot + 'admin/artists/getterritorytopalbums/' + $("#album_list_territory").val();
+                jQuery.ajax({
+                    type: "post", // Request method: post, get
+                    url: link, // URL to request
+                    data: data, // post data
+                    success: function(newitems) {
+                        if (newitems) {
+                            $('.manage_album').remove();
+                            $('.album_list').append(newitems);
+                        } else {
+                            $('.manage_album').remove();
+                            $('.album_list').append('<div class="manage_album"><div class="no_records"><b>No Records available.</b></div></div>');
+                            return;
+                        }
+                    },
+                    async: true,
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                }); 
+            } else {
+                alert('Please select Another Territory');
+                return false;
+            }
+      });
+</script>      
 <div class="album_wrap">
     <legend>Top Albums Listing</legend> 
     <br/>
@@ -8,7 +36,7 @@
         </div>
         <div class="album_territory_left">
         <?php
-            echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $default_territory));
+            echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false,'id' => 'album_list_territory', 'class' => 'select_fields','default' => $default_territory));
         ?>
         </div>
         <div class="album_clear">

@@ -24,7 +24,7 @@ Class ArtistsController extends AppController {
 		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
 
 		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-                    $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete');
+                    $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete','admin_getterritorytopalbums');
                 }
     }
 
@@ -292,6 +292,22 @@ Class ArtistsController extends AppController {
 	$this->set('userTypeId',$userTypeId);
         $this->set('default_territory',$territory);
         $this->set("territories", $territoriesArray); 
+    }
+    
+    /**
+     *  Function Name : getterritorytopalbums
+     *  Desc : This is used to get Top albums of aa territory using ajax.
+     * 
+     */
+    
+    function admin_getterritorytopalbums($territory) {
+        $this->layout = 'ajax';
+        $userTypeId = $this->Session->read('Auth.User.type_id');
+        $topAlbumsList = $this->TopAlbum->getTopAlbumsList($territory);
+        $this->set( 'topAlbums', $topAlbumsList );
+	$this->set('userTypeId',$userTypeId);
+        $this->set('default_territory',$territory);
+        $this->set("territories", $territoriesArray);        
     }
 
 	/*
