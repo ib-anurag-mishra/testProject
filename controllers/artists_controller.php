@@ -281,7 +281,13 @@ Class ArtistsController extends AppController {
      */
 
     function admin_managetopalbums() {
-		$userTypeId = $this->Session->read('Auth.User.type_id');
+	$userTypeId = $this->Session->read('Auth.User.type_id');
+        $territories = $this->Territory->find("all");
+        for ($m = 0; $m < count($territories); $m++) {
+            $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
+        }
+        $this->set('default_territory','US');
+        $this->set("territories", $territoriesArray);   
         $topAlbums = $this->paginate( 'TopAlbum', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
         $this->set( 'topAlbums', $topAlbums );
 		$this->set('userTypeId',$userTypeId);

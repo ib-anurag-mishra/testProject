@@ -8,7 +8,7 @@
         </div>
         <div class="album_territory_left">
         <?php
-            echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory']));
+            echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $default_territory));
         ?>
         </div>
         <div class="album_clear">
