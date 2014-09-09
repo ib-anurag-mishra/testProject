@@ -7,7 +7,6 @@
                 jQuery.ajax({
                     type: "post", // Request method: post, get
                     url: link, // URL to request
-                    data: data, // post data
                     success: function(newitems) {
                         if (newitems) {
                             $('.manage_album').remove();
@@ -15,7 +14,7 @@
                         } else {
                             $('.manage_album').remove();
                             $('.album_list').append('<div class="manage_album"><div class="no_records"><b>No Records available.</b></div></div>');
-                            return;
+                            return false;
                         }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
