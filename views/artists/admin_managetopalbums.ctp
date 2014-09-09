@@ -1,7 +1,16 @@
 <?php $this->pageTitle = 'Content'; ?>
-<?php
-    echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory']));
-?>
+<div class="album_territory">
+    <div class="album_territory_left">
+        <?php echo $form->label('Choose Territory');?>
+    </div>
+    <div class="album_territory_left">
+    <?php
+        echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory']));
+    ?>
+    </div>
+</div>
+<div class="album_clear">
+</div> 
 <form>
 	<fieldset>
 		<legend>Top Albums Listing</legend>
