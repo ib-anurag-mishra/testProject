@@ -762,30 +762,41 @@ td.actions a:hover {
 }
 .album_list{
     border: 1px solid #e0e0e0;
+    left: 11px;
+    position: relative;
+    width: 915px;
 }
 .album_header{
-    float:left;
     background-color: #f5f5f5;
-    font-size: 14px;
+    border-bottom: 1px solid #e0e0e0;
+    float: left;
+    font-size: 15px;
+    font-weight: bold;
     padding: 5px 10px;
     text-align: left;
-    border-bottom: 1px solid #e0e0e0;
+    width: 895px;
 }
 
 .album_artist{
-    
+    float: left;
+    width: 20%;    
 }
 
 .album_terr{
-    
+    float: left;
+    width: 20%;   
 }
 .album_name{
-    
+    float: left;
+    width: 40%;   
 }
 .album_edit{
-    
+    float: left;
+    width: 10%;    
 }
 .album_delet{
+    float: left;
+    width: 10%;    
     
 }
 .manage_album{
