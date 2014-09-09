@@ -432,7 +432,7 @@ Class ArtistsController extends AppController {
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                 Configure::write('Cache.disable', false);
                 $this->Common->getTopAlbums($territory);
-                $this->redirect('managetopalbums');
+                $this->redirect('managetopalbums/'.$this->data['Artist']['territory']);
             }
         } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
@@ -495,10 +495,22 @@ Class ArtistsController extends AppController {
         $updateArr['territory'] = $this->data['Artist']['territory'];
         $updateArr['language'] = Configure::read('App.LANGUAGE');
         $updateArr['album'] = $album;
+
         if (!empty($album_provider_type)) {
             $updateArr['provider_type'] = $album_provider_type;
         }
         $updateObj = new TopAlbum();
+        if(!empty($this->data['Artist']['sortId'])) {
+            $updateArr['sortId'] = $this->data['Artist']['sortId'];
+        } else {
+            $query = "SELECT IFNULL(MAX(sortId),0)+1 AS sortId FROM top_albums";
+            $sortdata = $updateObj->query($query);
+            if(!empty($sortdata[0][0]['sortId'])) {
+                $updateArr['sortId'] = $sortdata[0][0]['sortId'];
+            } else {
+                $errorMsg .= 'There seems to be some problem with Sort Id.<br/>';
+            }            
+        }        
         if (empty($errorMsg)) {
             if ($updateObj->insert($updateArr)) {
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
