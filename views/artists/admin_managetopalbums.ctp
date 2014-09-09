@@ -1,5 +1,7 @@
 <?php $this->pageTitle = 'Content'; ?>
-
+<?php
+    echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory']));
+?>
 <form>
 	<fieldset>
 		<legend>Top Albums Listing</legend>
