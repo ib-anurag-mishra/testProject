@@ -7,6 +7,7 @@
                 jQuery.ajax({
                     type: "post", // Request method: post, get
                     url: link, // URL to request
+                    async: false,
                     success: function(newitems) {
                         if (newitems) {
                             $('.manage_album').remove();
