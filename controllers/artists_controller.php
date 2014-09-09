@@ -422,7 +422,7 @@ Class ArtistsController extends AppController {
         $insertObj = new TopAlbum();
         $query = "SELECT IFNULL(MAX(sortId),0)+1 AS sortId FROM top_albums";
         $sortdata = $insertObj->query($query);
-        if(!empty($sortdata['TopAlbum']['sortId'])) {
+        if(!empty($sortdata[0][0]['sortId'])) {
             $insertArr['sortId'] = $sortdata[0][0]['sortId'];
         } else {
             $errorMsg .= 'There seems to be some problem with Sort Id.<br/>';
