@@ -164,7 +164,12 @@ Class DownloadsComponent extends Object
             
             $mailContent     .=   "Thanks\n\n";
             
-            $mail_response = mail('tech@libraryideas.com, kushal.pogul@infobeans.com',"List of Libraries having Remaining Downloads <= 100",$mailContent,'From:no-reply@freegalmusic.com');
+            $to         = "tech@libraryideas.com, briand@libraryideas.com, jimp@libraryideas.com";
+            $subject    = "List of Libraries having Remaining Downloads <= 100";
+            $headers    = "From:no-reply@freegalmusic.com" . "\r\n" .
+"BCC: kushal.pogul@infobeans.com"; 
+            
+            $mail_response = mail($to,$subject,$mailContent,$headers);
             
             if($mail_response)
             {
