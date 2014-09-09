@@ -415,10 +415,18 @@ Class ArtistsController extends AppController {
         $insertArr['album'] = $album;
         $insertArr['territory'] = $this->data['Artist']['territory'];
         $insertArr['language'] = Configure::read('App.LANGUAGE');
+        
         if (!empty($album_provider_type)) {
             $insertArr['provider_type'] = $album_provider_type;
         }
         $insertObj = new TopAlbum();
+        $query = "SELECT IFNULL(MAX(sortId),0)+1 AS sortId FROM top_albums AS TopAlbum";
+        $sortdata = $insertObj->query($query);
+        if(!empty($sortdata['TopAlbum']['sortId'])) {
+            $insertArr['sortId'] = $sortdata['TopAlbum']['sortId'];
+        } else {
+            $errorMsg .= 'There seems to be some problem with Sort Id.<br/>';
+        }
         if (empty($errorMsg)) {
             if ($insertObj->insert($insertArr)) {
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
