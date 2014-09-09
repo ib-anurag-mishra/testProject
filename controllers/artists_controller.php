@@ -280,13 +280,15 @@ Class ArtistsController extends AppController {
       Desc : action for listing all the top albums
      */
 
-    function admin_managetopalbums() {
+    function admin_managetopalbums($territory) {
 	$userTypeId = $this->Session->read('Auth.User.type_id');
         $territories = $this->Territory->find("all");
         for ($m = 0; $m < count($territories); $m++) {
             $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
         }
-        $territory = 'US';
+        if(empty($territory)) {
+            $territory = 'US';
+        }
         $topAlbumsList = $this->TopAlbum->getAdminTopAlbumsList($territory);
         $this->set( 'topAlbums', $topAlbumsList );
 	$this->set('userTypeId',$userTypeId);
@@ -516,11 +518,11 @@ Class ArtistsController extends AppController {
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
                 Configure::write('Cache.disable', false);                
 				$this->Common->getTopAlbums($territory);
-                $this->redirect('managetopalbums');
+                $this->redirect('managetopalbums/'.$territory);
             }
         } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
-            $this->redirect('managetopalbums');
+            $this->redirect('managetopalbums'.$territory);
         }
     }
 
