@@ -739,7 +739,9 @@ td.actions a:hover {
 }
 
 .album_territory_left{
-    
+    float: left;
+    left: 247px;
+    position: relative;    
 }
 
 .album_territory_left{
@@ -747,5 +749,45 @@ td.actions a:hover {
 }
 
 .album_clear{
+    clear: both;    
+}
+.album_wrap{
+    
+}
+.album_wrap legend {
+    color: #09f;
+    font-size: 24px;
+    font-weight: normal;
+    padding: 0;
+}
+.album_list{
+    border: 1px solid #e0e0e0;
+}
+.album_header{
+    float:left;
+    background-color: #f5f5f5;
+    font-size: 14px;
+    padding: 5px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.album_artist{
+    
+}
+
+.album_terr{
+    
+}
+.album_name{
+    
+}
+.album_edit{
+    
+}
+.album_delet{
+    
+}
+.manage_album{
     
 }

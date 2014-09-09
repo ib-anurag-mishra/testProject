@@ -1,16 +1,46 @@
 <?php $this->pageTitle = 'Content'; ?>
-<div class="album_territory">
-    <div class="album_territory_left">
-        <?php echo $form->label('Choose Territory');?>
+<div class="album_wrap">
+    <legend>Top Albums Listing</legend>    
+    <div class="album_territory">
+        <div class="album_territory_left">
+            <?php echo $form->label('Choose Territory');?>
+        </div>
+        <div class="album_territory_left">
+        <?php
+            echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory']));
+        ?>
+        </div>
+        <div class="album_clear">
+        </div> 
     </div>
-    <div class="album_territory_left">
-    <?php
-        echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory']));
-    ?>
+    <div class="album_list">
+        <div class="album_header">
+            <div class="album_artist">
+                Artist Name   
+            </div>
+            <div class="album_terr">
+                Territory
+            </div>
+            <div class="album_name">
+                Album
+            </div>
+            <?php if($userTypeId !=7) { ?>
+            <div class="album_edit">
+                Edit
+            </div>
+            <div class="album_delet">
+                Delete
+            </div>
+            <?php } ?>
+        </div>
+        <div class="album_clear">
+        </div>
+        <div class="manage_album">
+        </div>    
     </div>
 </div>
-<div class="album_clear">
-</div> 
+
+
 <form>
 	<fieldset>
 		<legend>Top Albums Listing</legend>
