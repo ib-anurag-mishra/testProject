@@ -759,6 +759,7 @@ td.actions a:hover {
     font-size: 24px;
     font-weight: normal;
     padding: 0;
+    margin-left: 12px;
 }
 .album_list{
     border: 1px solid #e0e0e0;
