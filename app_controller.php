@@ -10,6 +10,7 @@ class AppController extends Controller
     var $patron_id;
     var $library_id;
     var $library_type;
+    var $brokenImages = array();
 
     function beforeFilter()
     {
