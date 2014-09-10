@@ -240,10 +240,11 @@ function freadingDownloads() {
 	$final = $SalesforceReports->getContractToEndDownloads($final, 'acsdownloads', 'libraryid');
 	// This gets the total book downloads for each library during each period
 	$final = $SalesforceReports->getPeriodDownloads($final, $months, $weeks, $labels, 'acsdownloads', 'libraryid');
-	$file_path = '../uploads/';
+	$file_path = '/home/salesforce/prod/';
+	array_map('unlink', glob($file_path . "freading_download_*"));
 	$file_name = 'freading_download_' . date('ymd') . '.csv';
 	$report = $SalesforceReports->createReport($file_path . $file_name, $labels, $final);
 	print_r($final);
-	sendMail($file_path, $file_name);
+	//sendMail($file_path, $file_name);
 }
 freadingDownloads();
