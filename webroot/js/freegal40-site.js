@@ -1854,12 +1854,14 @@ $(document).ready(function() {
 
         $(this).find('.playlist-menu-icon').css({opacity:.5});
         $(this).find('.album-preview').css({opacity:.5});
+        $(this).find('.wishlist-icon').css({opacity:.5});
     });
 
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').on('mouseleave',function(){
 
         $(this).find('.playlist-menu-icon').css({opacity:.0});
-        $(this).find('.album-preview').css({opacity:.0});
+        $(this).find('.album-preview').css({opacity:0});
+        $(this).find('.wishlist-icon').css({opacity:0});
     });
 
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container .playlist-menu-icon').on('mouseenter',function(){
@@ -1881,6 +1883,16 @@ $(document).ready(function() {
         $(this).css({opacity:.5});
 
     });
+
+    $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-icon').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+
+    $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container ..wishlist-icon').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });    
 
 
  
