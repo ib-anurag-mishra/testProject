@@ -3103,6 +3103,20 @@ sub { top: 0.4em; }
 								text-decoration: none;
 							}                                
                         }
+
+						.wishlist-icon {
+
+							text-indent: -9999px;
+							text-decoration: none;
+							cursor: pointer;
+							position: absolute;
+							left: 35px;
+							top: 5px;
+							width: 26px;
+							height: 20px;
+							background: url(../img/freegal_sprite.png) 0 -100px;
+							opacity: 0;							
+						}                        
 						
 						.wishlist-popover {
 						

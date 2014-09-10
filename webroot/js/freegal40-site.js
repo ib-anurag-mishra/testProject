@@ -87,7 +87,7 @@ $(document).ready(function() {
     });
 
     $('.albums-page').find('.album-detail-container').find('.add-to-playlist-button').on('mouseleave',function(e){
-        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY > $(this).height()) {
+        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
             $(this).next('ul').removeClass('active');
 
         }
