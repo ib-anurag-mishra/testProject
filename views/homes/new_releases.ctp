@@ -43,7 +43,7 @@
                                         <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                     </ul>
-                                    <input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album" data-provider="<?= $album["Album"]["provider_type"] ?>" />
+                                    <input type="hidden" id="<?= $album['Albums']['ProdID'] ?>" value="album" data-provider="<?= $album["Albums"]["provider_type"] ?>" />
                                     <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>                                     
                                     <?php
                                     /*
