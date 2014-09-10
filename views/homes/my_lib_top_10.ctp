@@ -52,6 +52,7 @@
                                             <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                         </ul>
+                                        <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a> 
                                         <?php
                                         /*
                                         <div class="wishlist-popover">
