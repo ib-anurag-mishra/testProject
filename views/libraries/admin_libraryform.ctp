@@ -85,7 +85,7 @@ if (empty($getData))
     $getData['Library']['facebook_icon'] = '';
     $getData['Library']['twiter_icon'] = '';
     $getData['Library']['youtube_icon'] = '';
-
+    $getData['Library']['show_barcode'] = '';
     $getData['Library']['library_language'] = 'en';
     $getData['Library']['library_exp_date_format'] = '';
     $getData['Library']['library_type'] = '1';
@@ -133,6 +133,24 @@ if (empty($getData))
                         </td>
                         <td align="left">
                             <?php echo $this->Form->label('Do not show library name on site'); ?>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td align="right">
+                            <?php
+                            if ($getData['Library']['show_barcode'] == 0)
+                            {
+                                $checked = false;
+                            }
+                            elseif ($getData['Library']['show_barcode'] == 1)
+                            {
+                                $checked = true;
+                            }
+                            echo $this->Form->checkbox('show_barcode', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $checked));
+                            ?>
+                        </td>
+                        <td align="left">
+                            <?php echo $this->Form->label('Show barcode in the admin library report.'); ?>
                         </td>
                     </tr>
 		    <tr>
