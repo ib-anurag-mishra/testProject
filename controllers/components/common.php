@@ -1423,7 +1423,7 @@ STR;
                         AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $albumAdvisory                
                     group by Albums.AlbumTitle
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 250
+                    LIMIT 150
 STR;
 
 
