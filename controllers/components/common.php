@@ -1401,7 +1401,6 @@ STR;
                             Albums.AlbumTitle,
                             Albums.ProdID,
                             Albums.Advisory,
-                            Albums.provider_type,
                             Genre.Genre,
                             Country.Territory,
                             Country.SalesDate,
