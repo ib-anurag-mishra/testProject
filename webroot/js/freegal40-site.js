@@ -2087,6 +2087,7 @@ $(document).ready(function() {
 
 
     $(document).find('.my-top-100-page .wishlist-icon').on('click',function(e){
+        console.log('insidee my-top-100-page wishlist-icon');
         e.preventDefault();
 
         var ProdID = $(this).siblings('input[type="hidden"]').attr('id');
