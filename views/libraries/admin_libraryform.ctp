@@ -91,6 +91,7 @@ if (empty($getData))
     $getData['Library']['library_type'] = '1';
     $getData['Library']['optout_email_notification'] = '0';
 }
+print_r($getData);
 ?>
 <fieldset>
     <legend><?php echo $formHeader; ?></legend>
@@ -150,7 +151,7 @@ if (empty($getData))
                             ?>
                         </td>
                         <td align="left">
-                            <?php echo $this->Form->label('Show barcode in the admin library report.'); ?>
+                            <?php echo $this->Form->label('Include Barcodes in Reports.'); ?>
                         </td>
                     </tr>
 		    <tr>
