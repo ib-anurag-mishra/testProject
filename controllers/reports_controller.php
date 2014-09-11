@@ -81,7 +81,10 @@ Class ReportsController extends AppController {
                     $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
                     $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                 } else {
-                    $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id = ' . $library_id, 'Library.library_territory= "' . $territory . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+                    $libraryArrayInfo = $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id = ' . $library_id, 'Library.library_territory= "' . $territory . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+                    $this->set('libraries_download', $libraryArrayInfo);
+                    $this->set('librariesShowbarcoeValue', $libraryArrayInfo['Library']['show_barcode']);
+                    
                 }
             }
             if ($this->Report->validates()) {

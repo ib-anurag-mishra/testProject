@@ -202,13 +202,13 @@ class Downloadpatron extends AppModel
   */
   function getDaysDownloadInformation($libraryID, $date, $territory) {
     if($libraryID == "all") {
-		  $all_Ids = '';
-		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
-		  $result = mysql_query($sql);
-		  while ($row = mysql_fetch_assoc($result)) {
-				$all_Ids = $all_Ids.$row["id"].",";
-			}
-      $lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
+        $all_Ids = '';
+        $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+        $result = mysql_query($sql);
+        while ($row = mysql_fetch_assoc($result)) {
+             $all_Ids = $all_Ids.$row["id"].",";
+        }
+        $lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
     }
     else {
       $lib_condition = "and library_id = ".$libraryID;
@@ -219,7 +219,9 @@ class Downloadpatron extends AppModel
       'download_date = "'.$downloadDate.'" '.$lib_condition." ORDER BY download_date DESC"
     );
     
-    $record = $this->find('all',array('conditions'=>$conditions, 'fields' => array('Currentpatrons.id, `Downloadpatron`.`download_date`, `Downloadpatron`.`library_id`, `Downloadpatron`.`patron_id`, `Downloadpatron`.`email`, `Downloadpatron`.`total`'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id')))));
+    $record = $this->find('all',array('conditions'=>$conditions, 'fields' => array('Currentpatrons.id, `Downloadpatron`.`download_date`, `Downloadpatron`.`library_id`, `Downloadpatron`.`patron_id`, `Downloadpatron`.`email`, `Downloadpatron`.`total`,Library.show_barcode'),
+        'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id'))
+            ),array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Downloadpatron.library_id'))));
     
     return $record;
   }
@@ -259,15 +261,14 @@ class Downloadpatron extends AppModel
   */
 	function getWeeksDownloadInformation($libraryID, $date, $territory) {
 		if($libraryID == "all") {
-			$all_Ids = '';
-			$sql = "SELECT id from libraries where library_territory = '".$territory."'";
-			$result = mysql_query($sql);
-			while ($row = mysql_fetch_assoc($result)) {
-				$all_Ids = $all_Ids.$row["id"].",";
-			}
-			$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
-		}
-		else {
+                    $all_Ids = '';
+                    $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+                    $result = mysql_query($sql);
+                    while ($row = mysql_fetch_assoc($result)) {
+                            $all_Ids = $all_Ids.$row["id"].",";
+                    }
+                    $lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
+		}else {
 			$lib_condition = "and library_id = ".$libraryID;
 		}
 		$date_arr = explode("/", $date);
@@ -279,7 +280,9 @@ class Downloadpatron extends AppModel
 			$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 		}
 		$conditions = array('download_date BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id, library_id ORDER BY download_date DESC");
-                return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('Currentpatrons.id','email','patron_id','library_id','SUM(total) as total'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id'))))));
+                return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('Currentpatrons.id','email','patron_id','library_id','SUM(total) as total','Library.show_barcode'),
+                    'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id'))
+                        ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Downloadpatron.library_id'))))));
 	}
         
   /*
@@ -338,7 +341,9 @@ class Downloadpatron extends AppModel
       $conditions = array(
           'download_date BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id, library_id ORDER BY download_date DESC"
       );
-      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('Currentpatrons.id', 'email','patron_id','library_id','SUM(total) as total'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id'))))));
+      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('Currentpatrons.id', 'email','patron_id','library_id','SUM(total) as total','Library.show_barcode'),
+          'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id'))
+              ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Downloadpatron.library_id'))))));
   }
   
   /*
@@ -445,7 +450,9 @@ class Downloadpatron extends AppModel
       $conditions = array(
           'download_date BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id,library_id ORDER BY download_date DESC"
       );
-      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('Currentpatrons.id', 'patron_id','library_id','SUM(total) as total'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id'))))));
+      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('Currentpatrons.id', 'patron_id','library_id','SUM(total) as total','Library.show_barcode'),
+          'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id'))
+              ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Downloadpatron.library_id'))))));
   }
   
   /*

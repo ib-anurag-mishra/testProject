@@ -239,8 +239,10 @@ class Videodownload extends AppModel
 		$conditions = array(
 				'Videodownload.created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY Videodownload.id  ORDER BY created ASC"
 		);
-		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id','Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created'),'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))),
-'recursive' => -1));
+		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id',
+                    'Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created','Library.show_barcode'),
+                    'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id','Currentpatrons.libid = Videodownload.library_id'))
+                       ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Videodownload.library_id'))),'recursive' => -1));
 	}
 
 	/*
@@ -269,7 +271,9 @@ class Videodownload extends AppModel
 			$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 		}
 		$conditions = array('Videodownload.created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY Videodownload.id ORDER BY created ASC");
-		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id','Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))),'recursive' => -1));
+		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id',
+                    'Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created','Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))
+                        ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Videodownload.library_id'))),'recursive' => -1));
 	}
 
 	/*
@@ -295,7 +299,9 @@ class Videodownload extends AppModel
 		$conditions = array(
 				'Videodownload.created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY Videodownload.id  ORDER BY created ASC"
 		);
-		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id','Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))), 'recursive' => -1));
+		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id',
+                    'Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created','Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))
+                        ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Videodownload.library_id'))), 'recursive' => -1));
 	}
 
 	/*
@@ -348,7 +354,9 @@ class Videodownload extends AppModel
 		$conditions = array(
 				'Videodownload.created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY Videodownload.id  ORDER BY created ASC"
 		);
-		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id','Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))),'recursive' => -1));
+		return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('Currentpatrons.id', 'Videodownload.id','Videodownload.library_id','Videodownload.patron_id',
+                    'Videodownload.artist','Videodownload.track_title','Videodownload.email','Videodownload.created','Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Videodownload.patron_id', 'Currentpatrons.libid = Videodownload.library_id'))
+                         ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Videodownload.library_id'))),'recursive' => -1));
 	}
 
 	function getConsortiumDaysDownloadInformation($libraryID, $date) {
