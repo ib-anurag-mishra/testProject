@@ -348,8 +348,7 @@ if (empty($getData)) {
                                     foreach ($patronDownloads as $key => $patronDownload) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php echo $patronDownload['Currentpatrons']['id']; ?></td>
+                                            <td><?php echo $i; ?></td>                                            
                                             <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?>   
                                             <td><?php                                             
                                             if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
