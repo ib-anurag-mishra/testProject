@@ -2130,6 +2130,8 @@ $(document).ready(function() {
             var type = $(this).parent().find('input[type="hidden"]').attr('value');
 
             console.log(ProdID);
+            console.log(Provider);
+            console.log(type);
 
             $.ajax({
                 type: "post",
