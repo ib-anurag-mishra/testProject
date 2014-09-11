@@ -203,14 +203,17 @@ class Downloadpatron extends AppModel
   function getDaysDownloadInformation($libraryID, $date, $territory) {
     if($libraryID == "all") {
         $all_Ids = '';
-        $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+        if($territory !=''){
+            $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+        }else{
+            $sql = "SELECT id from libraries";
+        }
         $result = mysql_query($sql);
         while ($row = mysql_fetch_assoc($result)) {
              $all_Ids = $all_Ids.$row["id"].",";
         }
         $lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
-    }
-    else {
+    } else {
       $lib_condition = "and library_id = ".$libraryID;
     }
     $date_arr = explode("/", $date);
@@ -262,7 +265,11 @@ class Downloadpatron extends AppModel
 	function getWeeksDownloadInformation($libraryID, $date, $territory) {
 		if($libraryID == "all") {
                     $all_Ids = '';
-                    $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+                    if($territory !=''){
+                        $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                    }else{
+                        $sql = "SELECT id from libraries";
+                    }
                     $result = mysql_query($sql);
                     while ($row = mysql_fetch_assoc($result)) {
                             $all_Ids = $all_Ids.$row["id"].",";
@@ -325,7 +332,11 @@ class Downloadpatron extends AppModel
   function getMonthsDownloadInformation($libraryID, $date, $territory) {
       if($libraryID == "all") {
 		  $all_Ids = '';
-		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+		  if($territory !=''){
+                        $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                    }else{
+                        $sql = "SELECT id from libraries";
+                    }
 		  $result = mysql_query($sql);
 		  while ($row = mysql_fetch_assoc($result)) {
 				$all_Ids = $all_Ids.$row["id"].",";
@@ -432,12 +443,16 @@ class Downloadpatron extends AppModel
   */
   function getManualDownloadInformation($libraryID, $date_from, $date_to, $territory) {
       if($libraryID == "all") {
-		  $all_Ids = '';
-		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
-		  $result = mysql_query($sql);
-		  while ($row = mysql_fetch_assoc($result)) {
-				$all_Ids = $all_Ids.$row["id"].",";
-			}
+            $all_Ids = '';
+            if($territory !=''){
+                  $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+            }else{
+                  $sql = "SELECT id from libraries";
+            }
+            $result = mysql_query($sql);
+            while ($row = mysql_fetch_assoc($result)) {
+                          $all_Ids = $all_Ids.$row["id"].",";
+            }
           $lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
       }
       else {

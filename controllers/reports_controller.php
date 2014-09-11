@@ -40,23 +40,29 @@ Class ReportsController extends AppController {
     function admin_index() {
         
         set_time_limit(0);
+        
+        //display library list 
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
-            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);            
         } else {
             $this->set('libraries', $this->admin_getLibraryIds());
             $this->set('libraryID', "");
         }
+        
+        
         if (isset($this->data)) {
+            
             $all_Ids = '';
             $this->Report->set($this->data);
             if (isset($_REQUEST['library_id'])) {
                 $library_id = $_REQUEST['library_id'];
             } else {
                 $library_id = $this->data['Report']['library_id'];
-            }
+            }            
             $this->set('library_id', $library_id);
+            $territory = '';
             if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
                 $territory = $libraryAdminID["Library"]["library_territory"];
             } 
@@ -67,7 +73,11 @@ Class ReportsController extends AppController {
             }
           
             if ($library_id == 'all') {
-                $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                if($territory !=''){
+                      $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                }else{
+                      $sql = "SELECT id from libraries";
+                }
                 $result = mysql_query($sql);
                 while ($row = mysql_fetch_assoc($result)) {
                     $all_Ids = $all_Ids . $row["id"] . ",";
@@ -75,7 +85,7 @@ Class ReportsController extends AppController {
                 $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
                 $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             } else {
-                $libraryArrayInfo = $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id = ' . $library_id, 'Library.library_territory= "' . $territory . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+                $libraryArrayInfo = $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id = ' . $library_id), 'order' => 'Library.library_name ASC', 'recursive' => -1));
                 $this->set('libraries_download', $libraryArrayInfo);
                 $this->set('librariesShowbarcoeValue', $libraryArrayInfo[0]['Library']['show_barcode']);
 

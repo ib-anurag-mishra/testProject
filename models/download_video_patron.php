@@ -227,7 +227,11 @@ class DownloadVideoPatron extends AppModel
   function getDaysDownloadInformation($libraryID, $date, $territory) {
     if($libraryID == "all") {
             $all_Ids = '';
-            $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+           if($territory !=''){
+                  $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+            }else{
+                  $sql = "SELECT id from libraries";
+            }
             $result = mysql_query($sql);
             while ($row = mysql_fetch_assoc($result)) {
                           $all_Ids = $all_Ids.$row["id"].",";
@@ -258,7 +262,11 @@ class DownloadVideoPatron extends AppModel
 	function getWeeksDownloadInformation($libraryID, $date, $territory) {
 		if($libraryID == "all") {
 			$all_Ids = '';
-			$sql = "SELECT id from libraries where library_territory = '".$territory."'";
+			if($territory !=''){
+                                $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                          }else{
+                                $sql = "SELECT id from libraries";
+                          }
 			$result = mysql_query($sql);
 			while ($row = mysql_fetch_assoc($result)) {
 				$all_Ids = $all_Ids.$row["id"].",";
@@ -289,7 +297,11 @@ class DownloadVideoPatron extends AppModel
   function getMonthsDownloadInformation($libraryID, $date, $territory) {
       if($libraryID == "all") {
 		  $all_Ids = '';
-		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+		  if($territory !=''){
+                        $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                  }else{
+                        $sql = "SELECT id from libraries";
+                  }
 		  $result = mysql_query($sql);
 		  while ($row = mysql_fetch_assoc($result)) {
 				$all_Ids = $all_Ids.$row["id"].",";
@@ -343,7 +355,11 @@ class DownloadVideoPatron extends AppModel
   function getManualDownloadInformation($libraryID, $date_from, $date_to, $territory) {
       if($libraryID == "all") {
 		  $all_Ids = '';
-		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+		 if($territory !=''){
+                    $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                }else{
+                      $sql = "SELECT id from libraries";
+                }
 		  $result = mysql_query($sql);
 		  while ($row = mysql_fetch_assoc($result)) {
 				$all_Ids = $all_Ids.$row["id"].",";
