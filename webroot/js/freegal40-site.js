@@ -2087,7 +2087,7 @@ $(document).ready(function() {
 
 
     $(document).find('.my-top-100-page .wishlist-icon').on('click',function(e){
-        console.log('insidee my-top-100-page wishlist-icon');
+        console.log('inside my-top-100-page wishlist-icon');
         e.preventDefault();
 
         var ProdID = $(this).siblings('input[type="hidden"]').attr('id');
@@ -2121,6 +2121,8 @@ $(document).ready(function() {
 
     $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist, .album-info .add-to-wishlist , .songs .add-to-wishlist , .songs-results-list .add-to-wishlist').on('click', function(e)
     {
+
+        console.log('inside 2nd document find');
         if ($(this).hasClass('wishlist-icon'))
         {
             var ProdID = $(this).parent().find('input[type="hidden"]').attr('id');
