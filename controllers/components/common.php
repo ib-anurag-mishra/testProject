@@ -2103,7 +2103,7 @@ STR;
             AND created BETWEEN '" . Configure::read('App.tenWeekStartDate') . "' AND '" . Configure::read('App.curWeekEndDate') . "'
         GROUP BY latest_downloads.ProdID
         ORDER BY countProduct DESC
-        LIMIT 10
+        LIMIT 25
         ";
         }
         else
@@ -2152,7 +2152,7 @@ STR;
           AND created BETWEEN '" . Configure::read('App.tenWeekStartDate') . "' AND '" . Configure::read('App.curWeekEndDate') . "'
       GROUP BY downloads.ProdID
       ORDER BY countProduct DESC
-      LIMIT 10
+      LIMIT 25
       ";
         }
 
