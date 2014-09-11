@@ -2089,9 +2089,9 @@ $(document).ready(function() {
     $(document).find('.my-top-100-page .wishlist-icon').on('click',function(e){
         e.preventDefault();
 
-        var ProdID = $(this).prev('input[type="hidden"]').attr('id');
-        var Provider = $(this).prev('input[type="hidden"]').attr('data-provider');
-        var type = $(this).prev('input[type="hidden"]').attr('value');
+        var ProdID = $(this).siblings('input[type="hidden"]').attr('id');
+        var Provider = $(this).siblings('input[type="hidden"]').attr('data-provider');
+        var type = $(this).siblings('input[type="hidden"]').attr('value');
 
 
         $.ajax({
