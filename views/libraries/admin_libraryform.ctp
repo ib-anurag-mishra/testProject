@@ -91,7 +91,7 @@ if (empty($getData))
     $getData['Library']['library_type'] = '1';
     $getData['Library']['optout_email_notification'] = '0';
 }
-print_r($getData);
+
 ?>
 <fieldset>
     <legend><?php echo $formHeader; ?></legend>
