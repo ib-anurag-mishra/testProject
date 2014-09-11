@@ -2129,6 +2129,8 @@ $(document).ready(function() {
             var Provider = $(this).parent().find('input[type="hidden"]').attr('data-provider');
             var type = $(this).parent().find('input[type="hidden"]').attr('value');
 
+            console.log(ProdID);
+
             $.ajax({
                 type: "post",
                 data: {'prodID': ProdID, 'provider_type': Provider, 'type': type},
