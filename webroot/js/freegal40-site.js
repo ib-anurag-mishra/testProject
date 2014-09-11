@@ -2086,35 +2086,35 @@ $(document).ready(function() {
 
 
 
-    $(document).find('.my-top-100-page .wishlist-icon').on('click',function(e){
-        console.log('inside my-top-100-page wishlist-icon');
-        e.preventDefault();
+    // $(document).find('.my-top-100-page .wishlist-icon').on('click',function(e){
+    //     console.log('inside my-top-100-page wishlist-icon');
+    //     e.preventDefault();
 
-        var ProdID = $(this).siblings('input[type="hidden"]').attr('id');
-        var Provider = $(this).siblings('input[type="hidden"]').attr('data-provider');
-        var type = $(this).siblings('input[type="hidden"]').attr('value');
+    //     var ProdID = $(this).siblings('input[type="hidden"]').attr('id');
+    //     var Provider = $(this).siblings('input[type="hidden"]').attr('data-provider');
+    //     var type = $(this).siblings('input[type="hidden"]').attr('value');
 
 
-        $.ajax({
-            type: "post",
-            data: {'prodID': ProdID, 'provider_type': Provider, 'type': type},
-            url: webroot + 'homes/addToWishlistNewHome',
-            success: function(response)
-            {
+    //     $.ajax({
+    //         type: "post",
+    //         data: {'prodID': ProdID, 'provider_type': Provider, 'type': type},
+    //         url: webroot + 'homes/addToWishlistNewHome',
+    //         success: function(response)
+    //         {
                
                 
-                displayMessage(response);
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                // log the error to the console
-                console.log(
-                        "The following error occured: " +
-                        textStatus, errorThrown);
-            }
-        });
+    //             displayMessage(response);
+    //         },
+    //         error: function(jqXHR, textStatus, errorThrown)
+    //         {
+    //             // log the error to the console
+    //             console.log(
+    //                     "The following error occured: " +
+    //                     textStatus, errorThrown);
+    //         }
+    //     });
 
-    });    
+    // });    
 
 
    
