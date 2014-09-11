@@ -239,10 +239,11 @@ function freegalMoviesStreams() {
 	$final = $SalesforceReports->getContractToEndDownloads($final);
 	// This gets the total movie for each library during each period
 	$final = $SalesforceReports->getPeriodDownloads($final, $months, $weeks, $labels);
-	$file_path = '../uploads/';
+	$file_path = '/home/salesforce/prod/';
+	array_map('unlink', glob($file_path . "freegalmovies_streaming_*"));
 	$file_name = 'freegalmovies_streaming_' . date('ymd') . '.csv';
 	$report = $SalesforceReports->createReport($file_path . $file_name, $labels, $final);
 	print_r($final);
-	sendMail($file_path, $file_name);
+	//sendMail($file_path, $file_name);
 }
 freegalMoviesStreams();
