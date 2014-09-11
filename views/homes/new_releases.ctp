@@ -36,7 +36,14 @@
                                 if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                 {
                                     echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
-                                    echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $value['Albums']['ProdID'], 'name' => false, 'data-provider' => $value['Albums']['provider_type']));
+                                    $options = array(
+                                        'value' => 'album',
+                                        'id' => $value['Albums']['ProdID'],
+                                        'name' => false,
+                                        'data-provider' => $value['Albums']['provider_type']
+                                    );
+                                    //echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $value['Albums']['ProdID'], 'name' => false, 'data-provider' => $value['Albums']['provider_type']));
+                                    echo $this->Form->hidden('empty',$options);
                                 ?>
 
 
