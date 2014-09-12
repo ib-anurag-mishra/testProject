@@ -74,14 +74,23 @@ Class ReportsController extends AppController {
             $this->set('librariesShowbarcoeValue', 0);
             if ($library_id == 'all') {
                 if($territory !=''){
-                      $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                     $libraryDetails = $this->Library->find('all', array(
+                        'fields' => array('id'),
+                        'conditions' => array('library_territory' => $territory),
+                        'recursive' => -1
+                            )
+                    );
                 }else{
-                      $sql = "SELECT id from libraries";
-                }
-                $result = mysql_query($sql);
-                while ($row = mysql_fetch_assoc($result)) {
-                    $all_Ids = $all_Ids . $row["id"] . ",";
-                }
+                     $libraryDetails = $this->Library->find('all', array(
+                        'fields' => array('id'),                        
+                        'recursive' => -1
+                            )
+                    );
+                }               
+                foreach ($libraryDetails AS $key => $val) {
+                     $all_Ids = $all_Ids . $val['Library']['id'] . ",";
+                }              
+                
                 $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
                 $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             } else {
@@ -520,13 +529,21 @@ Class ReportsController extends AppController {
             if ($library_id == 'all') {
                 $this->set('librariesShowbarcoeValue', 0);
                 if($territory !=''){
-                      $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                     $libraryDetails = $this->Library->find('all', array(
+                        'fields' => array('id'),
+                        'conditions' => array('library_territory' => $territory),
+                        'recursive' => -1
+                            )
+                    );
                 }else{
-                      $sql = "SELECT id from libraries";
-                }
-                $result = mysql_query($sql);
-                while ($row = mysql_fetch_assoc($result)) {
-                    $all_Ids = $all_Ids . $row["id"] . ",";
+                     $libraryDetails = $this->Library->find('all', array(
+                        'fields' => array('id'),                        
+                        'recursive' => -1
+                            )
+                    );
+                }               
+                foreach ($libraryDetails AS $key => $val) {
+                     $all_Ids = $all_Ids . $val['Library']['id'] . ",";
                 }
                 $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
                 $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
@@ -954,16 +971,26 @@ Class ReportsController extends AppController {
                 $this->Report->setValidation('reports_manual');
             }
             $this->set('librariesShowbarcoeValue',0);
-            if ($library_id == 'all') {
+            if ($library_id == 'all') {              
+                
                 if($territory !=''){
-                      $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+                     $libraryDetails = $this->Library->find('all', array(
+                        'fields' => array('id'),
+                        'conditions' => array('library_territory' => $territory),
+                        'recursive' => -1
+                            )
+                    );
                 }else{
-                      $sql = "SELECT id from libraries";
+                     $libraryDetails = $this->Library->find('all', array(
+                        'fields' => array('id'),                        
+                        'recursive' => -1
+                            )
+                    );
+                }               
+                foreach ($libraryDetails AS $key => $val) {
+                     $all_Ids = $all_Ids . $val['Library']['id'] . ",";
                 }
-                $result = mysql_query($sql);
-                while ($row = mysql_fetch_assoc($result)) {
-                    $all_Ids = $all_Ids . $row["id"] . ",";
-                }
+                
                 $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
                 $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             } else {
@@ -1399,6 +1426,25 @@ Class ReportsController extends AppController {
         if (isset($this->data)) {
             Configure::write('debug', 0); // Otherwise we cannot use this method while developing
             $this->Report->set($this->data);
+            
+            if (isset($_REQUEST['library_id'])) {
+                $library_id = $_REQUEST['library_id'];
+            } else if(isset($this->data['Report']['library_id'])){
+                $library_id = $this->data['Report']['library_id'];
+            }
+            $this->set('library_id', $library_id);  
+            $this->set('librariesShowbarcoeValue', 0);
+            if ($library_id != 'all') {
+                 $checklibraryDetails = $this->Library->find('all', array(
+                        'fields' => array('id'),
+                        'conditions' => array('id' => $library_id),
+                        'recursive' => -1
+                            )
+                    );
+            }else{
+                $this->set('librariesShowbarcoeValue', $checklibraryDetails[0]['Library']['show_barcode']);
+            }
+                                  
             if ($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             } else {

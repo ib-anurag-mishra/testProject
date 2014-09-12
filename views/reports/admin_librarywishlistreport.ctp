@@ -42,29 +42,28 @@
                                 <td align="left">
                                     <?php
                                         echo $this->Form->input('reports_daterange', array('options' => array(
-                                                                        'day' => 'Day',
-                                                                        'week' => 'Week',
-                                                                        'month' => 'Month',
-                                                                        'manual' => 'Manual'
-                                                                        ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
-                                                                );
+                                                'day' => 'Day',
+                                                'week' => 'Week',
+                                                'month' => 'Month',
+                                                'manual' => 'Manual'
+                                                ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
+                                        );
                                     ?>
                                 </td>
                         <?php
-                            }
-                            else {
+                            }  else {
                         ?>
                                 <td align="center" colspan="4">
                                     <?php
                                         echo $this->Form->label('Range');
                                         echo $this->Form->hidden('library_id', array('value' => $libraryID));
                                         echo $this->Form->input('reports_daterange', array('options' => array(
-                                                                        'day' => 'Day',
-                                                                        'week' => 'Week',
-                                                                        'month' => 'Month',
-                                                                        'manual' => 'Manual'
-                                                                        ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
-                                                                );
+                                                'day' => 'Day',
+                                                'week' => 'Week',
+                                                'month' => 'Month',
+                                                'manual' => 'Manual'
+                                                ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
+                                        );
                                     ?>
                                 </td>
                         <?php
@@ -180,7 +179,11 @@
                                         <tr>
                                             <th>&nbsp;</th>
                                             <th>Library Name</th>
-                                            <th>ID</th>
+                                            <?php                                        
+                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
+                                                echo '<th>ID</th>';             
+                                         }
+                                        ?>
                                             <th>Artists Name</th>
                                             <th>Track Title</th>
                                             <th>WishListed On</th>
@@ -193,7 +196,15 @@
                                             <tr>
                                                 <td><?php echo $i; ?></td>
                                                 <td><?php echo $libraryDetails['Library']['library_name']; ?></td>
-                                                <td><?php echo $wishlist['Currentpatrons']['id']; ?></td>
+                                                
+                                                <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoValue == 1 ) ) { ?> 
+                                                <td><?php                                             
+                                                if(isset($wishlist['Library']['show_barcode']) && $wishlist['Library']['show_barcode'] == 1){
+                                                    echo $wishlist['Currentpatrons']['id']; 
+                                                }
+                                                ?>                                          
+                                                </td>
+                                                <?php } ?>                                                
                                                 <td><?php echo $wishlist['Wishlist']['artist']; ?></td>
                                                 <td><?php echo $wishlist['Wishlist']['track_title']; ?></td>
                                                 <td><?php echo date("Y-m-d", strtotime($wishlist['Wishlist']['created'])); ?></td>

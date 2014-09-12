@@ -29,7 +29,11 @@ class Download extends AppModel {
             $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
         } else {
             $sql = "SELECT id, library_name from libraries";
-        }
+        } 
+        
+        
+        
+        
         $result = mysql_query($sql);
         while ($row = mysql_fetch_assoc($result)) {
 
