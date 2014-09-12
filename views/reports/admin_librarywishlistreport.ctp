@@ -179,11 +179,7 @@
                                         <tr>
                                             <th>&nbsp;</th>
                                             <th>Library Name</th>
-                                            <?php                                        
-                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
-                                                echo '<th>ID</th>';             
-                                         }
-                                        ?>
+                                            <th>ID</th>
                                             <th>Artists Name</th>
                                             <th>Track Title</th>
                                             <th>WishListed On</th>
@@ -197,14 +193,15 @@
                                                 <td><?php echo $i; ?></td>
                                                 <td><?php echo $libraryDetails['Library']['library_name']; ?></td>
                                                 
-                                                <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoValue == 1 ) ) { ?> 
+                                               
                                                 <td><?php                                             
                                                 if(isset($wishlist['Library']['show_barcode']) && $wishlist['Library']['show_barcode'] == 1){
                                                     echo $wishlist['Currentpatrons']['id']; 
+                                                }else{
+                                                    echo '--';
                                                 }
                                                 ?>                                          
-                                                </td>
-                                                <?php } ?>                                                
+                                                </td>                                                                                           
                                                 <td><?php echo $wishlist['Wishlist']['artist']; ?></td>
                                                 <td><?php echo $wishlist['Wishlist']['track_title']; ?></td>
                                                 <td><?php echo date("Y-m-d", strtotime($wishlist['Wishlist']['created'])); ?></td>
