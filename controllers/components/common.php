@@ -1165,7 +1165,7 @@ STR;
                     );
                     
                     //check image file exist or not for each entry
-                    if($this->checkImageFileExist($data[$key]['album_img'])){              
+                    if(!$this->checkImageFileExist($data[$key]['album_img'])){              
                        //write broken image entry in the log files
                        $this->log($country.' :  Top10 Albums : '. $data[$key]['album_img'], 'check_images');
                        $brokenImages[] = date('Y-m-d H:i:s').' : ' .$country.' : ' .' Top10 Albums : '. $data[$key]['album_img'];
@@ -1643,7 +1643,7 @@ STR;
         
 
                 
-                    $featureImageURL =  Configure::read('App.CDN') . 'featuredimg/' . $featured[$k]['Featuredartist']['artist_image'].'<br>';
+                    $featureImageURL =  Configure::read('App.CDN') . 'featuredimg/' . $featured[$k]['Featuredartist']['artist_image'];
 
                      //check image file exist or not for each Artist
                     if(!$this->checkImageFileExist($featureImageURL)){              
