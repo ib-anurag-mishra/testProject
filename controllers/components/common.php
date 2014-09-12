@@ -1643,7 +1643,7 @@ STR;
         
 
                 
-                    $featureImageURL =  Configure::read('App.CDN') . 'featuredimg/' . $featured[$k]['Featuredartist']['artist_image'].'<br>';
+                    $featureImageURL =  Configure::read('App.CDN') . 'featuredimg/' . $featured[$k]['Featuredartist']['artist_image'];
 
                      //check image file exist or not for each Artist
                     if(!$this->checkImageFileExist($featureImageURL)){              
