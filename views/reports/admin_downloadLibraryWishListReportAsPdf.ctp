@@ -153,11 +153,20 @@
     else {
         $libraryDetails = $library->getLibraryDetails($this->data['Report']['library_id']);
         //Column titles
+        
+        
         $header = array('Library Name', 'ID', 'Artists Name', 'Track Title', 'WishListed On');
         
         //Data loading
         foreach($wishlists as $key => $wishlist) {
-            $data[] = array($libraryDetails['Library']['library_name'], $wishlist['Currentpatrons']['id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
+            
+            if(isset($wishlist['Library']['show_barcode']) && $wishlist['Library']['show_barcode'] == 1){
+                 $data[] = array($libraryDetails['Library']['library_name'], $wishlist['Currentpatrons']['id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created']))); 
+            }else{
+                 $data[] = array($libraryDetails['Library']['library_name'], '-', $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
+
+            }
+            
         }
         
         // print colored table
