@@ -515,6 +515,7 @@ Class ReportsController extends AppController {
             } else {
                 $this->Report->setValidation('reports_manual');
             }
+            
            
             if ($library_id == 'all') {
                 $this->set('librariesShowbarcoeValue', 0);
