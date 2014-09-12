@@ -25,7 +25,11 @@ class Download extends AppModel {
 
         $arr_all_library_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
         while ($row = mysql_fetch_assoc($result)) {
 
@@ -61,7 +65,11 @@ class Download extends AppModel {
 
         $arr_all_library_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
         while ($row = mysql_fetch_assoc($result)) {
 
@@ -102,7 +110,11 @@ class Download extends AppModel {
 
         $arr_all_library_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
         while ($row = mysql_fetch_assoc($result)) {
 
@@ -138,7 +150,11 @@ class Download extends AppModel {
 
         $arr_all_library_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
         while ($row = mysql_fetch_assoc($result)) {
 
@@ -174,7 +190,12 @@ class Download extends AppModel {
 
         $arr_all_library_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
+
         $result = mysql_query($sql);
         while ($row = mysql_fetch_assoc($result)) {
 
@@ -211,9 +232,9 @@ class Download extends AppModel {
 
         if ($libraryID == "all") {
             $all_Ids = '';
-            if($territory !=''){
+            if ($territory != '') {
                 $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
-            }else{
+            } else {
                 $sql = "SELECT id from libraries";
             }
             $result = mysql_query($sql);
@@ -231,10 +252,10 @@ class Download extends AppModel {
             'Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY Download.id  ORDER BY created ASC"
         );
         return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
-            'Download.track_title', 'Download.email', 'Download.created','Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
-                'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')
-                ),array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Download.library_id') ))           
-            , 'recursive' => -1));
+                        'Download.track_title', 'Download.email', 'Download.created', 'Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
+                            'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')
+                        ), array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Download.library_id')))
+                    , 'recursive' => -1));
     }
 
     /*
@@ -245,9 +266,9 @@ class Download extends AppModel {
     function getWeeksDownloadInformation($libraryID, $date, $territory) {
         if ($libraryID == "all") {
             $all_Ids = '';
-           if($territory !=''){
+            if ($territory != '') {
                 $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
-            }else{
+            } else {
                 $sql = "SELECT id from libraries";
             }
             $result = mysql_query($sql);
@@ -268,9 +289,9 @@ class Download extends AppModel {
         }
         $conditions = array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY Download.id ORDER BY created ASC");
         return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
-            'Download.track_title', 'Download.email', 'Download.created','Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
-                'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
-                ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
+                        'Download.track_title', 'Download.email', 'Download.created', 'Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+                            'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+                        , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
     }
 
     /*
@@ -281,9 +302,9 @@ class Download extends AppModel {
     function getMonthsDownloadInformation($libraryID, $date, $territory) {
         if ($libraryID == "all") {
             $all_Ids = '';
-            if($territory !=''){
+            if ($territory != '') {
                 $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
-            }else{
+            } else {
                 $sql = "SELECT id from libraries";
             }
             $result = mysql_query($sql);
@@ -301,9 +322,9 @@ class Download extends AppModel {
             'Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY Download.id  ORDER BY created ASC"
         );
         return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
-            'Download.track_title', 'Download.email', 'Download.created','Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
-                'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
-                ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
+                        'Download.track_title', 'Download.email', 'Download.created', 'Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
+                            'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+                        , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
     }
 
     /*
@@ -314,9 +335,9 @@ class Download extends AppModel {
     function getYearsDownloadInformation($libraryID, $date, $territory) {
         if ($libraryID == "all") {
             $all_Ids = '';
-            if($territory !=''){
+            if ($territory != '') {
                 $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
-            }else{
+            } else {
                 $sql = "SELECT id from libraries";
             }
             $result = mysql_query($sql);
@@ -344,9 +365,9 @@ class Download extends AppModel {
     function getManualDownloadInformation($libraryID, $date_from, $date_to, $territory) {
         if ($libraryID == "all") {
             $all_Ids = '';
-            if($territory !=''){
+            if ($territory != '') {
                 $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
-            }else{
+            } else {
                 $sql = "SELECT id from libraries";
             }
             $result = mysql_query($sql);
@@ -365,9 +386,9 @@ class Download extends AppModel {
             'Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY Download.id  ORDER BY created ASC"
         );
         return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
-            'Download.track_title', 'Download.email', 'Download.created','Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
-                'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
-                ,array('table' => 'libraries', 'alias' => 'Library','type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
+                        'Download.track_title', 'Download.email', 'Download.created', 'Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
+                            'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+                        , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
     }
 
     function getConsortiumDaysDownloadInformation($libraryID, $date) {

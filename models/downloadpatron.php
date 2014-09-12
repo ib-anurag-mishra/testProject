@@ -20,7 +20,11 @@ class Downloadpatron extends AppModel {
 
         $arr_all_patron_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '" . $territory . "'  ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
 
         while ($row = mysql_fetch_assoc($result)) {
@@ -51,7 +55,11 @@ class Downloadpatron extends AppModel {
 
         $arr_all_patron_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '" . $territory . "'  ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
         while ($row = mysql_fetch_assoc($result)) {
             $count = 0;
@@ -92,7 +100,11 @@ class Downloadpatron extends AppModel {
 
         $arr_all_patron_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '" . $territory . "'  ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
 
         while ($row = mysql_fetch_assoc($result)) {
@@ -128,7 +140,11 @@ class Downloadpatron extends AppModel {
 
         $arr_all_patron_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '" . $territory . "'  ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
 
         while ($row = mysql_fetch_assoc($result)) {
@@ -163,7 +179,11 @@ class Downloadpatron extends AppModel {
 
         $arr_all_patron_downloads = array();
         $all_Ids = '';
-        $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '" . $territory . "'  ORDER BY library_name ASC";
+        if ($territory != '') {
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+        } else {
+            $sql = "SELECT id, library_name from libraries";
+        }
         $result = mysql_query($sql);
 
         while ($row = mysql_fetch_assoc($result)) {
