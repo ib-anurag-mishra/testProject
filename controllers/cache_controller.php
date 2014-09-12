@@ -306,20 +306,23 @@ class CacheController extends AppController {
     set_time_limit(0);
     
     //fetch all libraries
+	/*
     $libraryDetails = $this->Library->find('all',array(
       'fields' => array('id', 'library_territory', 'library_block_explicit_content'),
       'conditions' => array('library_status' => 'active'),
       'recursive' => -1
     ));
+	*/
+    $territoriesList = $this->Common->getTerritories();
   
     //loop for library
-    foreach ($libraryDetails AS $key => $libval){  
+    foreach ($territoriesList AS $territory){  
     
-      $library_territory = $libval['Library']['library_territory'];
+      $library_territory = $territory;
        $topSinglesCache = Cache::read("top_singles".$library_territory);
-      if ( (($topSinglesCache) !== false) && ($topSinglesCache !== null) ) { // checks if nationalTop100 is set
+      if ( (($topSinglesCache) !== false) && ($topSinglesCache !== null) ) { // checks if topsingles cache is set
     
-        //fetches top artist from nationTop100----Start
+        //fetches top artist from top singles----Start
         $arrTmp = $arrData = $arrFinal = $arrArtist = array();
         $arrTmp = $topSinglesCache;
     
@@ -340,13 +343,13 @@ class CacheController extends AppController {
           
           $this->Session->write('territory', $library_territory);
           $this->switchCpuntriesTable();          
-          
+          /*
           if(1 == $libval['Library']['library_block_explicit_content']) {
             $cond = array('Song.Advisory' => 'F');
           } else  {
             $cond = "";
           }
-          
+          */
           //fetches albums ids
           $songs = array();
           $songs = $this->Song->find('all', array(
@@ -441,7 +444,7 @@ class CacheController extends AppController {
         }
     
       } else {
-        $this->log("national top 100 not set in Cache for territory " . $library_territory, "topartist");
+        $this->log("Top singles is not set in Cache for territory " . $library_territory, "topartist");
       }
 
   

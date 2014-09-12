@@ -406,9 +406,11 @@ class SoapsController extends AppController {
       } else {
         
         Cache::write('mobile_top_artist_' . $mem_artistText . '_' . $library_territory, $albumData);
-      }
+		$albumDataCache = Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory);
+	     }
     } 
     
+	 
     $albumData = $albumDataCache;
     
     if(empty($albumData)) {
