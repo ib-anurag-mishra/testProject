@@ -515,8 +515,9 @@ Class ReportsController extends AppController {
             } else {
                 $this->Report->setValidation('reports_manual');
             }
-            $this->set('librariesShowbarcoeValue', 0);
+           
             if ($library_id == 'all') {
+                $this->set('librariesShowbarcoeValue', 0);
                 if($territory !=''){
                       $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
                 }else{
@@ -527,9 +528,9 @@ Class ReportsController extends AppController {
                     $all_Ids = $all_Ids . $row["id"] . ",";
                 }
                 $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
-                $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+                $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             } else {
-                $libraryArrayInfo = $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads'), 'conditions' => array('Library.id = ' . $library_id), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+                $libraryArrayInfo = $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id = ' . $library_id), 'order' => 'Library.library_name ASC', 'recursive' => -1));
                 $this->set('libraries_download', $libraryArrayInfo);
                 $this->set('librariesShowbarcoeValue', $libraryArrayInfo[0]['Library']['show_barcode']);
             }
@@ -963,9 +964,9 @@ Class ReportsController extends AppController {
                     $all_Ids = $all_Ids . $row["id"] . ",";
                 }
                 $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
-                $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+                $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             } else {
-                $libraryArrayInfo = $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads'), 'conditions' => array('Library.id = ' . $library_id), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+                $libraryArrayInfo = $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads', 'Library.show_barcode'), 'conditions' => array('Library.id = ' . $library_id), 'order' => 'Library.library_name ASC', 'recursive' => -1));
                 $this->set('libraries_download', $libraryArrayInfo);
                 $this->set('librariesShowbarcoeValue', $libraryArrayInfo[0]['Library']['show_barcode']);
             }

@@ -85,7 +85,7 @@ if (empty($getData))
     $getData['Library']['facebook_icon'] = '';
     $getData['Library']['twiter_icon'] = '';
     $getData['Library']['youtube_icon'] = '';
-    $getData['Library']['show_barcode'] = '';
+    $getData['Library']['show_barcode'] = 0;
     $getData['Library']['library_language'] = 'en';
     $getData['Library']['library_exp_date_format'] = '';
     $getData['Library']['library_type'] = '1';
