@@ -828,9 +828,12 @@ class SoapsController extends AppController {
     $territory = $libraryData['Library']['library_territory'];
 
     $topSinglesTmp = Cache::read("top_singles".$territory);
+	if($topSinglesTmp === false) {
+		$topSinglesTmp = $this->Common->getTopSingles($territory);
+	}    
+	
     $topSingles = array_splice($topSinglesTmp,0,20);
-    
-    
+        
     if(!(empty($topSingles))) {
 
       foreach($topSingles as $key => $data) {
