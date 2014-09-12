@@ -3275,14 +3275,14 @@ STR;
         
         if( $this->Session->read('block') == 'yes' ) {
         
-        	$new_releases_albums_rs = Cache::read("new_releases_albums_none_explicit" . $territory);
+        	//$new_releases_albums_rs = Cache::read("new_releases_albums_none_explicit" . $territory);
         
         	if ($new_releases_albums_rs === false) {
         		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory, true);
         	}
         } else {
         
-        	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
+        	//$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
         
         	if ($new_releases_albums_rs === false) {
         
