@@ -6,6 +6,7 @@ App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalLibrary.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'NationalTopTen.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'TopSingles.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'LibraryTopTen.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongData.php');
@@ -66,6 +67,7 @@ class SoapsController extends AppController {
     $test->includeMethodsDocumentation(false);
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."FreegalLibrary.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."NationalTopTen.php");
+	$test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."TopSingles.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."LibraryTopTen.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AlbumData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AlbumDataByArtist.php");
@@ -93,6 +95,7 @@ class SoapsController extends AppController {
     $test->setClassesGeneralURL($siteUrl);
     $test->addURLToClass("FreegalLibrary", $siteUrl."soaps/");
     $test->addURLToClass("NationalTopTen", $siteUrl."soaps/");
+	$test->addURLToClass("TopSingles", $siteUrl."soaps/");
     $test->addURLToClass("LibraryTopTen", $siteUrl."soaps/");
     $test->addURLToClass("AlbumData", $siteUrl."soaps/");
     $test->addURLToClass("AlbumDataByArtist", $siteUrl."soaps/");
