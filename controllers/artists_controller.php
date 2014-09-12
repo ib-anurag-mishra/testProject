@@ -20,12 +20,13 @@ Class ArtistsController extends AppController {
      */
 
     function beforeFilter() {
-		parent::beforeFilter();
-		$this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
 
-		if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1))){
-                    $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete','admin_getterritorytopalbums');
-                }
+        parent::beforeFilter();
+        $this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
+        if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
+            $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete','admin_getterritorytopalbums','saveTopalbumsSortOrder','admin_saveTopalbumsSortOrder');
+        }
+
     }
 
 
@@ -310,6 +311,29 @@ Class ArtistsController extends AppController {
 	$this->set('userTypeId',$userTypeId);
         $this->set('default_territory',$territory);
         $this->set("territories", $territoriesArray);        
+    }
+    
+    
+    function admin_saveTopalbumsSortOrder() {
+        Configure::write('debug', 0);
+        $this->layout = 'ajax';
+        $albumIds = $_POST['top_album'];
+        if(!empty($albumIds)) {
+            $i = 0;
+            foreach($albumIds as $value) {
+                $i++;
+                $updateSortIdObj = new TopAlbum();
+                if(!empty($value)) {
+                    $updateSortIdObj->id = $value;
+                    $updateSortIdObj->saveField('sortId', $i);
+                }
+            }
+            echo "success";
+            exit;
+        } else {
+            echo "error";
+            exit;
+        }
     }
 
 	/*

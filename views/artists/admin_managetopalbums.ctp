@@ -1,4 +1,5 @@
 <?php $this->pageTitle = 'Content'; ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () { 
       $('#album_list_territory').change(function(){
@@ -12,6 +13,7 @@
                         if (newitems) {
                             $('.manage_album').remove();
                             $('.album_list').append(newitems);
+                            loadDragDrop();
                         } else {
                             $('.manage_album').remove();
                             $('.album_list').append('<div class="manage_album"><div class="no_records"><b>No Records available.</b></div></div>');
@@ -19,7 +21,7 @@
                         }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert(XMLHttpRequest+textStatus+errorThrown);
+                        
                     }
                 }); 
             } else {
@@ -27,6 +29,34 @@
                 return false;
             }
       });
+      loadDragDrop();
+      function loadDragDrop(){
+        $("#top_albums").sortable({
+            items: 'li',
+            update: function(event, ui) {
+                var result = $('#top_albums').sortable('serialize');
+                if(result) {
+                    var link = webroot + 'admin/artists/saveTopalbumsSortOrder';
+                    jQuery.ajax({
+                        type: "post", // Request method: post, get
+                        url: link, // URL to request
+                        async: false,
+                        data: result,
+                        success: function(response) {
+                            if(response === 'error') {
+                                alert('There seems to be some problem in ordering the data.Please try again.')
+                                return false;
+                            }
+                            return true;
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            
+                        }
+                    });             
+                }
+            }
+        });          
+      }
     });
     
 </script>      
@@ -68,11 +98,11 @@
         </div>
         <div class="album_clear">
         </div>
-        <div class="manage_album">
-          <?php if (!empty($topAlbums)) { ?>
+        <div class="manage_album" id="top_albums">
+          <?php if (!empty($topAlbums)) {  ?>
             <ul>
            <?php foreach($topAlbums as $topAlbum){ ?>   
-                    <li>
+                <li id="top_album_<?php echo $topAlbum['TopAlbum']['id']; ?>" value="<?php echo $topAlbum['TopAlbum']['id']; ?>">
                         <div class="album_header_inner">
                             <div class="album_artist_inner">
                                 <?php echo $topAlbum['TopAlbum']['artist_name'];?>   

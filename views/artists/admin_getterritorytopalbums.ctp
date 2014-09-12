@@ -1,9 +1,8 @@
-<script type="text/javascript" src="/js/ajaxify-html5.js"></script>
-<div class="manage_album">
+<div class="manage_album" id="top_albums">
   <?php if (!empty($topAlbums)) { ?>
     <ul>
    <?php foreach($topAlbums as $topAlbum){ ?>   
-            <li>
+            <li id="top_album_<?php echo $topAlbum['TopAlbum']['id']; ?>" value="<?php echo $topAlbum['TopAlbum']['id']; ?>">
                 <div class="album_header_inner">
                     <div class="album_artist_inner">
                         <?php echo $topAlbum['TopAlbum']['artist_name'];?>   
