@@ -76,7 +76,7 @@ class VideosController extends AppController {
         $topDownloads = Cache::read( 'top_download_videos' . $territory );        
         
         if ($topDownloads === false) {
-            $topDownloads = $this->topDownloadVideos( $prefix, $territory );
+            $topDownloads = $this->Common->topDownloadVideos( $prefix, $territory );
         } 
         
         
