@@ -1803,6 +1803,7 @@ Class ReportsController extends AppController {
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
             }
             $this->set('libraryID', "");
+            
         } else {
             $libraryAdminID = $this->Library->find("first", array(
                 "conditions" => array(
@@ -1871,7 +1872,9 @@ Class ReportsController extends AppController {
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory, 'day');
 
                     $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory, 'day');
+                    
                 } elseif ($this->data['Report']['reports_daterange'] == 'week') {
+                    
                     $date_arr = explode("/", $this->data['Report']['date']);
                     if (date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0) {
                         if (mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]) > time()) {
