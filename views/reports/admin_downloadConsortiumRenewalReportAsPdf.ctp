@@ -158,9 +158,9 @@
         
         
        if(isset($download['Library']['show_barcode']) && ($download['Library']['show_barcode'] == 1 )){
-           $patron_id = $download['Currentpatrons']['id'];
+           $patron = $download['Currentpatrons']['id'];
        }else{
-           $patron_id = '-';
+           $patron = '-';
        }
         
         
