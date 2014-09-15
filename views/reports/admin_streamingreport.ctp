@@ -271,7 +271,7 @@ if (empty($getData)) {
                                     </tr>
                                         <?php
                                         $i = 1;
-                                        print_r($patronStreamedDetailedInfo);
+                                        //print_r($patronStreamedDetailedInfo);
                                         foreach ($patronStreamedDetailedInfo as $key => $patronStramed)
                                         {
                                             ?>

@@ -1797,11 +1797,7 @@ Class ReportsController extends AppController {
                 'recursive' => -1));
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
 
-            if ($this->data['Report']['Territory'] == '') {
-                $this->set('libraries', $this->admin_getLibraryIdsStream());
-            } else {
-                $this->set('libraries', $this->admin_getLibraryIdsStream());
-            }
+            $this->set('libraries', $this->admin_getLibraryIdsStream());
             $this->set('libraryID', "");
             
         } else {
@@ -1815,11 +1811,7 @@ Class ReportsController extends AppController {
                 'recursive' => -1));
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
 
-            if ($this->data['Report']['Territory'] == '') {
-                $this->set('libraries', $this->admin_getLibraryIdsStream());
-            } else {
-                $this->set('libraries', $this->admin_getLibraryIdsStream());
-            }
+            $this->set('libraries', $this->admin_getLibraryIdsStream());
             $this->set('libraryID', "");
         }
 
@@ -1835,15 +1827,8 @@ Class ReportsController extends AppController {
             }
             $this->set('library_id', $library_id);
 
-            if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
-                $territory = $libraryAdminID["Library"]["library_territory"];
-            } else {
-                if (!isset($this->data['Report']['Territory'])) {
-                    $territory = $libraryAdminID["Library"]["library_territory"];
-                } else {
-                    $territory = $this->data['Report']['Territory'];
-                }
-            }
+            $territory = $libraryAdminID["Library"]["library_territory"];
+            
             if ($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             } else {
@@ -1976,8 +1961,9 @@ Class ReportsController extends AppController {
 //                    $genreValue =  $this->common->getGenreSynonyms($genreValue);
 //                    $genreDayStremed['songs']['Genre'] = $genreValue;
 //                }
-
-                $combin_genre_arr = $this->common->getGenreSynonyms();
+                 
+                // I have comment this method since no argument is passing
+                //$combin_genre_arr = $this->common->getGenreSynonyms();
 
                 $this->set('streamingHours', $streamingHours);
                 $this->set('patronStreamedInfo', $patronStreaminInfo);
