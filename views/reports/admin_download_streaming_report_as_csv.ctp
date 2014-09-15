@@ -89,7 +89,7 @@ if(!is_array($patronStreamedInfo)) {
   
 // end - Total Patrons
 
-
+if(!empty($dayStreamingInfo)){
 
 $line = array('Library Streaming Report');
 $csv->addRow($line);
@@ -118,7 +118,7 @@ if($this->data['Report']['library_id'] == "all") {
         $csv->addRow($line);
     }
 }
-
+}
 $line = array('', '', '', '', '', '');
 $csv->addRow($line);
 
