@@ -34,7 +34,13 @@ $csv->addRow($line);
 foreach($downloads as $key => $download) {
     $patron = $download['Currentpatrons']['id'];
     $libraryName = $library->getLibraryName($download['Download']['library_id']);
-    $line = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+    if(isset($download['Library']['show_barcode']) && ($download['Library']['show_barcode'] == 1 )){
+         $line = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+    }else{
+         $line = array($key+1, $libraryName, '-',$download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+    }
+    
+    
     $csv->addRow($line);
 }
 
@@ -49,7 +55,13 @@ $csv->addRow($line);
 
 foreach($patronDownloads as $key => $patronDownload) {
     $patron_id = $patronDownload['Currentpatrons']['id'];
-    $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+    
+    if(isset($patronDownload['Library']['show_barcode']) && ($patronDownload['Library']['show_barcode'] == 1 )){
+         $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+    }else{
+         $line = array($key+1, '-', $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+    }
+    
     $csv->addRow($line);
 }
 

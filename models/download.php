@@ -396,6 +396,7 @@ class Download extends AppModel {
     }
 
     function getConsortiumDaysDownloadInformation($libraryID, $date) {
+        
         $lib_condition = "and library_id IN (" . $libraryID . ")";
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
@@ -404,8 +405,24 @@ class Download extends AppModel {
             'created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id"
         );
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')))
-            )), $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))), 'order' => 'patron_id DESC', 'recursive' => -1)), $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
+                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+            'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+            'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')),
+                array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left',
+            'conditions' => array('Library.id  = Download.library_id'))
+                
+                ))), 
+            
+            $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
+                'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
+                'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+                    'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')),
+                   array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))
+                    
+                    ), 'order' => 'patron_id DESC', 'recursive' => -1)),
+            
+            $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'),
+                'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
     }
 
     /*
@@ -425,8 +442,22 @@ class Download extends AppModel {
         }
         $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id  ORDER BY created ASC");
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')))
-            )), $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))), 'order' => 'patron_id DESC', 'recursive' => -1)), $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
+                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+                'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+                'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')),
+                 array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))                
+                ))),             
+            
+            $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
+                'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
+                'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+                    'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')),
+                     array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))
+                    ), 'order' => 'patron_id DESC', 'recursive' => -1)),            
+            
+            
+            $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'),
+                'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
     }
 
     /*
@@ -443,8 +474,23 @@ class Download extends AppModel {
             'created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id  ORDER BY created ASC"
         );
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')))
-            )), $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))), 'order' => 'patron_id DESC', 'recursive' => -1)), $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
+                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+            'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 
+                'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+                 ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))
+                
+                ))),            
+            
+            $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
+            'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
+            'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+            'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+             ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))                
+             ), 'order' => 'patron_id DESC', 'recursive' => -1)),
+            
+            
+            
+            $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
     }
 
     /*
@@ -461,8 +507,22 @@ class Download extends AppModel {
             'created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id  ORDER BY created ASC"
         );
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')))
-            )), $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))), 'order' => 'patron_id DESC', 'recursive' => -1)), $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
+                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+            'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+                'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+                 ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))  
+                ))), 
+            
+            $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 
+                'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'), 
+                'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+                    'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+                     ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))  
+                    
+                    ), 'order' => 'patron_id DESC', 'recursive' => -1)),
+            
+            
+            $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
     }
 
     /*
@@ -483,8 +543,24 @@ class Download extends AppModel {
             'created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id  ORDER BY created ASC"
         );
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')))
-            )), $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))), 'order' => 'patron_id DESC', 'recursive' => -1)), $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
+                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+                'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+                'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+                 ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))  
+                
+                ))),
+            
+            
+            
+            $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
+                'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
+                'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
+                  ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))     
+                    
+            ), 'order' => 'patron_id DESC', 'recursive' => -1)),
+            
+            
+            $this->find('all', array('conditions' => array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
     }
 
     function getCurrentPatronDownloads($library, $date, $territory = null, $allIds = null) { //,$startTime,$endTime
