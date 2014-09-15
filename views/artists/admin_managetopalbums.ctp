@@ -35,8 +35,9 @@
             items: 'li',
             update: function(event, ui) {
                 var result = $('#top_albums').sortable('serialize');
+                var data = "topAlbumIds=" + result + "&territory=" +$("#album_list_territory").val();
                 if(result) {
-                    var link = webroot + 'admin/artists/saveTopalbumsSortOrder';
+                    var link = webroot + 'admin/artists/saveTopalbumsSortOrder/' + $("#album_list_territory").val();
                     jQuery.ajax({
                         type: "post", // Request method: post, get
                         url: link, // URL to request

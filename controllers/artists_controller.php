@@ -314,7 +314,7 @@ Class ArtistsController extends AppController {
     }
     
     
-    function admin_saveTopalbumsSortOrder() {
+    function admin_saveTopalbumsSortOrder($territory) {
         Configure::write('debug', 0);
         $this->layout = 'ajax';
         $albumIds = $_POST['top_album'];
@@ -327,6 +327,10 @@ Class ArtistsController extends AppController {
                     $updateSortIdObj->id = $value;
                     $updateSortIdObj->saveField('sortId', $i);
                 }
+            }
+            if (!empty($territory)) {
+                Configure::write('Cache.disable', false);
+                $this->Common->getTopAlbums($territory);
             }
             echo "success";
             exit;

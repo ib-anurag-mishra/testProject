@@ -68,7 +68,8 @@ class TopAlbum extends AppModel {
 				'TopAlbum.territory' => $territory,
 				'TopAlbum.language' => Configure::read('App.LANGUAGE')
 			),
-			'recursive' => -1
+			'recursive' => -1 ,
+                        'order' => 'sortId asc'
 		));
 		return $topAlbumsList;
 	}
@@ -83,7 +84,8 @@ class TopAlbum extends AppModel {
 				'TopAlbum.territory' => $territory,
 				'TopAlbum.language' => Configure::read('App.LANGUAGE')
 			),
-			'recursive' => -1
+			'recursive' => -1,
+                        'order' => 'sortId asc'
 		));
 		return $topAlbumsList;
 	}        
