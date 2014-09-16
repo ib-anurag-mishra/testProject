@@ -268,7 +268,7 @@ if (empty($getData)) {
                                            <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?> 
                                                 <td><?php                                             
                                                 if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1){
-                                                    echo $download['Currentpatrons']['id']; 
+                                                    echo $download['Download']['patron_id']; 
                                                 }
                                                 ?>                                          
                                                 </td>
@@ -312,7 +312,7 @@ if (empty($getData)) {
                                            <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?>  
                                                 <td><?php                                             
                                                 if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1){
-                                                    echo $download['Currentpatrons']['id']; 
+                                                    echo $download['Videodownload']['patron_id'];
                                                 }
                                                 ?>                                          
                                                 </td>
@@ -352,7 +352,7 @@ if (empty($getData)) {
                                             <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?>   
                                             <td><?php                                             
                                             if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
-                                                echo $patronDownload['Currentpatrons']['id']; 
+                                                echo $patronDownload['Downloadpatron']['patron_id']; 
                                             }
                                             ?>                                          
                                             </td>
@@ -391,7 +391,7 @@ if (empty($getData)) {
                                             <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?>   
                                             <td><?php                                             
                                             if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
-                                                echo $patronDownload['Currentpatrons']['id']; 
+                                                echo $patronDownload['DownloadVideoPatron']['patron_id']; 
                                             }
                                             ?>                                          
                                             </td>  

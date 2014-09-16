@@ -463,7 +463,7 @@ if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValu
 
     //Data loading
     foreach($downloads as $key => $download) {
-	$patron = $download['Currentpatrons']['id'];
+	$patron = $download['Download']['patron_id'];
         $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
         //check barcode is enable or not
         if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 )) {
@@ -473,7 +473,7 @@ if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValu
         }
     }
     foreach($videoDownloads as $key => $download) {
-	$patron = $download['Currentpatrons']['id'];
+	$patron = $download['Videodownload']['patron_id'];
         $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
         //check barcode is enable or not
         if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 )) {
@@ -484,7 +484,7 @@ if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValu
     }
 
     foreach($patronDownloads as $key => $patronDownload) {
-	$patron_id = $patronDownload['Currentpatrons']['id'];        
+	$patron_id = $patronDownload['Downloadpatron']['patron_id'];        
         //check barcode is enable or not
         if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 )) {
             $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
@@ -494,7 +494,7 @@ if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValu
     }
     
     foreach($patronVideoDownloads as $key => $patronDownload) {
-	$patron_id = $patronDownload['Currentpatrons']['id'];
+	$patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
         //check barcode is enable or not
         if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 )) {
             $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));

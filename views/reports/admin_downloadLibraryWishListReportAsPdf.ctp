@@ -161,7 +161,7 @@
         foreach($wishlists as $key => $wishlist) {
             
             if(isset($wishlist['Library']['show_barcode']) && $wishlist['Library']['show_barcode'] == 1){
-                 $data[] = array($libraryDetails['Library']['library_name'], $wishlist['Currentpatrons']['id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created']))); 
+                 $data[] = array($libraryDetails['Library']['library_name'], $wishlist['Wishlist']['patron_id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created']))); 
             }else{
                  $data[] = array($libraryDetails['Library']['library_name'], '-', $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
 

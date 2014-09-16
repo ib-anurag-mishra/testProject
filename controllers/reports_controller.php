@@ -50,8 +50,7 @@ Class ReportsController extends AppController {
             $this->set('libraries', $this->admin_getLibraryIds());
             $this->set('libraryID', "");
         }
-        
-        
+               
         if (isset($this->data)) {
             
             $all_Ids = '';

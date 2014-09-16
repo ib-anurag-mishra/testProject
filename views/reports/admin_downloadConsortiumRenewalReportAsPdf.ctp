@@ -154,11 +154,11 @@
     
     //Data loading
     foreach($downloads as $key => $download) {
-	$patron = $download['Currentpatrons']['id'];
+	
         
         
        if(isset($download['Library']['show_barcode']) && ($download['Library']['show_barcode'] == 1 )){
-           $patron = $download['Currentpatrons']['id'];
+           $patron = $download['Download']['patron_id'];
        }else{
            $patron = '-';
        }
@@ -172,7 +172,7 @@
 	
         
        if(isset($patronDownload['Library']['show_barcode']) && ($patronDownload['Library']['show_barcode'] == 1 )){
-           $patron_id = $patronDownload['Currentpatrons']['id'];
+           $patron_id = $patronDownload['Download']['patron_id'];
        }else{
            $patron_id = '-';
        }

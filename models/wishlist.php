@@ -48,13 +48,13 @@ class Wishlist extends AppModel
 			$endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
 		}
 		if($libraryID == "all") {
-			return $this->find('all', array('conditions' => array('Wishlist.created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY library_id'), 'fields' => array('Currentpatrons.id', 'library_id', 'COUNT(library_id) AS totalWishlistedSongs','Library.show_barcode'),'joins' => array(
+			return $this->find('all', array('conditions' => array('Wishlist.created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY library_id'), 'fields' => array('Currentpatrons.id', 'library_id', 'COUNT(library_id) AS totalWishlistedSongs','Library.show_barcode','Wishlist.patron_id'),'joins' => array(
                             array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Wishlist.patron_id', 'Currentpatrons.libid = Wishlist.library_id'))
                             , array('table' => 'libraries','alias' => 'Library','type' => 'left', 'conditions'=> array('Library.id = Wishlist.library_id'))    
                                 )));
 		}
 		else {
-			return $this->find('all', array('conditions' => array('Wishlist.created BETWEEN "'.$startDate.'" and "'.$endDate.'" and library_id = '.$libraryID), 'fields'=>array('Wishlist.*', 'Currentpatrons.id','Library.show_barcode'), 'joins' => array(
+			return $this->find('all', array('conditions' => array('Wishlist.created BETWEEN "'.$startDate.'" and "'.$endDate.'" and library_id = '.$libraryID), 'fields'=>array('Wishlist.*', 'Currentpatrons.id','Library.show_barcode','Wishlist.patron_id'), 'joins' => array(
                             array('table' => 'currentpatrons','alias' => 'Currentpatrons','type' => 'left', 'conditions'=> array('Currentpatrons.patronid = Wishlist.patron_id', 'Currentpatrons.libid = Wishlist.library_id'))
                              , array('table' => 'libraries','alias' => 'Library','type' => 'left', 'conditions'=> array('Library.id = Wishlist.library_id'))    
                             )));

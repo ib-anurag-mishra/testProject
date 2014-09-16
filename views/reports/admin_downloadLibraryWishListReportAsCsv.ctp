@@ -66,7 +66,7 @@ else {
     $csv->addRow($line);
     foreach($wishlists as $key => $wishlist) {
         if(isset($wishlist['Library']['show_barcode']) && $wishlist['Library']['show_barcode'] == 1){
-                    $line = array($libraryDetails['Library']['library_name'], $wishlist['Currentpatrons']['id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
+                    $line = array($libraryDetails['Library']['library_name'], $wishlist['Wishlist']['patron_id'], $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));
 
         }else{
                     $line = array($libraryDetails['Library']['library_name'], '-', $wishlist['Wishlist']['artist'], $wishlist['Wishlist']['track_title'], date("Y-m-d", strtotime($wishlist['Wishlist']['created'])));

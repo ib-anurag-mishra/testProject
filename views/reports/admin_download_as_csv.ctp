@@ -121,14 +121,14 @@ $csv->addRow($line);
 
 foreach ($downloads as $key => $download) {
 
-    $patron = $download['Currentpatrons']['id'];
+    $patron = $download['Download']['patron_id'];
     $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
 
     //check barcode is enable or not
     if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 )) {
-        $line = array($key + 1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
+            $line = array($key + 1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
     } else {
-        $line = array($key + 1, $libraryName, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
+            $line = array($key + 1, $libraryName, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
     }
 
     $csv->addRow($line);
@@ -150,7 +150,7 @@ if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValu
 $csv->addRow($line);
 
 foreach ($videoDownloads as $key => $download) {
-    $patron = $download['Currentpatrons']['id'];
+    $patron = $download['Videodownload']['patron_id'];
     $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Videodownload']['library_id']));
     //check barcode is enable or not
     if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 )) {
@@ -180,7 +180,7 @@ if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValu
 $csv->addRow($line);
 
 foreach ($patronDownloads as $key => $patronDownload) {
-    $patron_id = $patronDownload['Currentpatrons']['id'];
+    $patron_id = $patronDownload['Downloadpatron']['patron_id'];
     //check barcode is enable or not
     if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 )) {
         $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']));
@@ -213,7 +213,7 @@ if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValu
 $csv->addRow($line);
 
 foreach ($patronVideoDownloads as $key => $patronDownload) {
-    $patron_id = $patronDownload['Currentpatrons']['id'];
+    $patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
 
     //check barcode is enable or not
     if (( isset($library_id) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 )) {

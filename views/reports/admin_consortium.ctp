@@ -173,7 +173,7 @@
                                         <td><?php 
                                         //check if library allowed to show barcode in the report
                                         if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1 ) {
-                                            echo $download['Currentpatrons']['id'];                                                                                         
+                                            echo $download['Download']['patron_id'];                                                                                         
                                         }else{
                                             echo '-';                                            
                                         }                                       
@@ -211,7 +211,7 @@
                                         <td><?php 
                                         //check if library allowed to show barcode in the report
                                         if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1 ) {
-                                            echo $patronDownload['Currentpatrons']['id'];                                                                                         
+                                            echo $patronDownload['Download']['patron_id'];                                                                                         
                                         }else{
                                             echo '-';                                            
                                         }                                       
