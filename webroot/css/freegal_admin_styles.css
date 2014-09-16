@@ -732,3 +732,174 @@ td.actions a:hover {
     left: -30px;
     position: relative;        
 }
+
+.album_territory{
+    
+    
+}
+
+.album_territory_left{
+    float: left;
+    left: 247px;
+    position: relative;    
+}
+
+.album_territory_left{
+    
+}
+
+.album_clear{
+    clear: both;    
+}
+.album_wrap{
+    
+}
+.album_wrap legend {
+    color: #09f;
+    font-size: 24px;
+    font-weight: normal;
+    padding: 0;
+    margin-left: 12px;
+}
+.album_list{
+    border: 1px solid #e0e0e0;
+    left: 24px;
+    position: relative;
+    width: 915px;
+}
+.album_header{
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-align: left;
+    width: 895px;
+}
+
+.album_artist{
+    display: inline-block;
+    width: 20%;    
+}
+
+.album_terr{
+    display: inline-block;
+    width: 20%;   
+}
+.album_name{
+    display: inline-block;
+    width: 37%;   
+}
+.album_edit{
+    display: inline-block;
+    width: 10%;    
+}
+.album_delet{
+    display: inline-block;
+    width: 10%;    
+    
+}
+.album_header_inner{
+    display: inline-block;
+    padding: 5px 10px;
+    text-align: left;
+    width: 895px;
+    color:#666;
+}
+
+.album_artist_inner{
+    display: inline-block;
+    width: 20%;    
+}
+
+.album_terr_inner{
+    display: inline-block;
+    width: 20%;   
+}
+.album_name_inner{
+    display: inline-block;
+    width: 37%;   
+}
+.album_edit_inner{
+    display: inline-block;
+    width: 10%;    
+}
+.album_delet_inner{
+    display: inline-block;
+    width: 10%;    
+    
+}
+.manage_album{
+    
+}
+.manage_album li {
+    list-style: none outside none;
+}
+
+.no_records{
+    
+}
+
+.song_artist{
+    display: inline-block;
+    width: 15%;    
+}
+
+.song_terr{
+    display: inline-block;
+    width: 15%;   
+}
+
+.song_id{
+    display: inline-block;
+    width: 15%;   
+}
+.song_name{
+    display: inline-block;
+    width: 31%;   
+}
+.song_edit{
+    display: inline-block;
+    width: 10%;    
+}
+.song_delet{
+    display: inline-block;
+    width: 10%;    
+    
+}
+.song_header_inner{
+    display: inline-block;
+    padding: 5px 10px;
+    text-align: left;
+    width: 895px;
+    color:#666;
+}
+
+.song_artist_inner{
+    display: inline-block;
+    width: 15%;    
+}
+
+.song_terr_inner{
+    display: inline-block;
+    width: 15%;   
+}
+.song_name_inner{
+    display: inline-block;
+    width: 31%;   
+}
+
+.song_id_inner{
+    display: inline-block;
+    width: 15%;   
+}
+.song_edit_inner{
+    display: inline-block;
+    width: 10%;    
+}
+.song_delet_inner{
+    display: inline-block;
+    width: 10%;    
+    
+}

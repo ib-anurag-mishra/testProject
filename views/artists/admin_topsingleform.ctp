@@ -9,6 +9,7 @@ if(empty($getData))
 	$getData['TopSingles']['language'] = "";
 	$getData['TopSingles']['album'] = "";
 	$getData['TopSingles']['prod_id'] = "";
+        $getData['TopSingles']['sortId'] = "";
 }
 if(empty($getArtistData)){
 	$getArtistData = array();
@@ -27,6 +28,7 @@ if(empty($songs)){
 	</legend>
 	<div class="formFieldsContainer">
 		<?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['TopSingles']['id'])); ?>
+                <?php echo $form->hidden( 'sortId', array( 'label' => false ,'value' => $getData['TopSingles']['sortId'])); ?>
 		<div class="form_steps">
 			<table cellspacing="10" cellpadding="0" border="0" width="100%">
 				<tr>
@@ -116,7 +118,7 @@ echo $session->flash();
             var data = "Name="+$("#ArtistArtistName").val()+"&Territory="+$("#ArtistTerritory").val();
             jQuery.ajax({
               type: "post",  // Request method: post, get
-              url: webroot+"admin/artists/getAutoArtist", // URL to request
+              url: webroot+"admin/artists/getPlaylistAutoArtist", // URL to request
               data: data,  // post data
               success: function(response) {
 
@@ -163,7 +165,7 @@ echo $session->flash();
                
 		jQuery.ajax({
 			type: "post",  // Request method: post, get
-			url: webroot+"admin/artists/getAlbums", // URL to request
+			url: webroot+"admin/artists/getAlbumsForDefaultQueues", // URL to request
 			data: data,  // post data
 			success: function(response) {
 					$('#getAlbum').text('');
@@ -182,7 +184,7 @@ echo $session->flash();
                     
 		jQuery.ajax({
 			type: "post",  // Request method: post, get
-			url: webroot+"admin/artists/getSongs", // URL to request
+			url: webroot+"admin/artists/getAlbumStreamSongs", // URL to request
 			data: data,  // post data
 			success: function(response) {
 					$('#getSongs').text('');
