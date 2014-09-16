@@ -104,7 +104,7 @@ class AlbumDataType{
 	 * Constructor
 	 * @param SongDataType[] $songs
 	 */
-	public function __construct($songs){
+	public function __construct(){
 
 	}
 }
