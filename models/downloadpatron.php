@@ -239,8 +239,10 @@ class Downloadpatron extends AppModel {
         );
 
         $record = $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id, `Downloadpatron`.`download_date`, `Downloadpatron`.`library_id`, `Downloadpatron`.`patron_id`, `Downloadpatron`.`email`, `Downloadpatron`.`total`,`Library`.`show_barcode`'),
-            'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id'))
-            ), array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Downloadpatron.library_id'))));
+            'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
+                'conditions' => array('Currentpatrons.patronid = Downloadpatron.patron_id', 'Currentpatrons.libid = Downloadpatron.library_id')),
+                array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Downloadpatron.library_id'))
+            )));
 
         return $record;
     }
