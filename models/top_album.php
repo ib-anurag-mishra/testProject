@@ -68,9 +68,26 @@ class TopAlbum extends AppModel {
 				'TopAlbum.territory' => $territory,
 				'TopAlbum.language' => Configure::read('App.LANGUAGE')
 			),
-			'recursive' => -1
+			'recursive' => -1 ,
+                        'order' => 'sortId asc'
 		));
 		return $topAlbumsList;
 	}
+        
+	/*
+	 Function Name : getTopAlbumsList
+	 Desc: gets the list of top albums
+	*/
+	function getAdminTopAlbumsList($territory) {
+		$topAlbumsList = $this->find('all', array(
+			'conditions' => array(
+				'TopAlbum.territory' => $territory,
+				'TopAlbum.language' => Configure::read('App.LANGUAGE')
+			),
+			'recursive' => -1,
+                        'order' => 'sortId asc'
+		));
+		return $topAlbumsList;
+	}        
 
 }

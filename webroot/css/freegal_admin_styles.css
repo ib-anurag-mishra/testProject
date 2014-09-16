@@ -732,3 +732,111 @@ td.actions a:hover {
     left: -30px;
     position: relative;        
 }
+
+.album_territory{
+    
+    
+}
+
+.album_territory_left{
+    float: left;
+    left: 247px;
+    position: relative;    
+}
+
+.album_territory_left{
+    
+}
+
+.album_clear{
+    clear: both;    
+}
+.album_wrap{
+    
+}
+.album_wrap legend {
+    color: #09f;
+    font-size: 24px;
+    font-weight: normal;
+    padding: 0;
+    margin-left: 12px;
+}
+.album_list{
+    border: 1px solid #e0e0e0;
+    left: 24px;
+    position: relative;
+    width: 915px;
+}
+.album_header{
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    float: left;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-align: left;
+    width: 895px;
+}
+
+.album_artist{
+    float: left;
+    width: 20%;    
+}
+
+.album_terr{
+    float: left;
+    width: 20%;   
+}
+.album_name{
+    float: left;
+    width: 40%;   
+}
+.album_edit{
+    float: left;
+    width: 10%;    
+}
+.album_delet{
+    float: left;
+    width: 10%;    
+    
+}
+.album_header_inner{
+    float: left;
+    padding: 5px 10px;
+    text-align: left;
+    width: 895px;
+    color:#666;
+}
+
+.album_artist_inner{
+    float: left;
+    width: 20%;    
+}
+
+.album_terr_inner{
+    float: left;
+    width: 20%;   
+}
+.album_name_inner{
+    float: left;
+    width: 40%;   
+}
+.album_edit_inner{
+    float: left;
+    width: 10%;    
+}
+.album_delet_inner{
+    float: left;
+    width: 10%;    
+    
+}
+.manage_album{
+    
+}
+.manage_album li {
+    list-style: none outside none;
+}
+
+.no_records{
+    
+}

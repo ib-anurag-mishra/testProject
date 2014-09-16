@@ -27,7 +27,7 @@ Class ArtistsController extends AppController {
         parent::beforeFilter();
         $this->Auth->allowedActions = array( 'view', 'test', 'album', 'load_albums', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData', 'getNationalAlbumData', 'getSongStreamUrl', 'featuredAjaxListing', 'composer','newAlbum', 'new_view', 'getFeaturedSongs','admin_getSongs') ;
         if(($this->Session->read('Auth.User.type_id')) && (($this->Session->read('Auth.User.type_id') == 1 || $this->Session->read('Auth.User.type_id') == 7))){
-            $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist','admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete','admin_manageartist','admin_managenewartist');
+            $this->Auth->allow('admin_managetopalbums','admin_deletePlaylist','admin_addPlaylist','admin_managePlaylist','admin_addPlaylist','admin_insertplaylist','admin_getAlbumStreamSongs','admin_getAlbumsForDefaultQueues', 'admin_getPlaylistAutoArtist', 'admin_topalbumform','admin_inserttopalbum','admin_updatetopalbum','admin_topalbumdelete','admin_managetopsingles','admin_topsingleform','admin_inserttopsingle','admin_updatetopsingle','admin_topsingledelete','admin_getterritorytopalbums','saveTopalbumsSortOrder','admin_saveTopalbumsSortOrder');
         }
 
     }
@@ -284,11 +284,63 @@ Class ArtistsController extends AppController {
       Desc : action for listing all the top albums
      */
 
-    function admin_managetopalbums() {
-		$userTypeId = $this->Session->read('Auth.User.type_id');
-        $topAlbums = $this->paginate( 'TopAlbum', array( 'album != ""', 'language' => Configure::read( 'App.LANGUAGE' ) ) );
-        $this->set( 'topAlbums', $topAlbums );
-		$this->set('userTypeId',$userTypeId);
+    function admin_managetopalbums($territory) {
+	$userTypeId = $this->Session->read('Auth.User.type_id');
+        $territories = $this->Territory->find("all");
+        for ($m = 0; $m < count($territories); $m++) {
+            $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
+        }
+        if(empty($territory)) {
+            $territory = 'US';
+        }
+        $topAlbumsList = $this->TopAlbum->getAdminTopAlbumsList($territory);
+        $this->set( 'topAlbums', $topAlbumsList );
+	$this->set('userTypeId',$userTypeId);
+        $this->set('default_territory',$territory);
+        $this->set("territories", $territoriesArray); 
+    }
+    
+    /**
+     *  Function Name : getterritorytopalbums
+     *  Desc : This is used to get Top albums of aa territory using ajax.
+     * 
+     */
+    
+    function admin_getterritorytopalbums($territory) {
+        $this->layout = 'ajax';
+        $userTypeId = $this->Session->read('Auth.User.type_id');
+        $topAlbumsList = $this->TopAlbum->getAdminTopAlbumsList($territory);
+        $this->set( 'topAlbums', $topAlbumsList );
+	$this->set('userTypeId',$userTypeId);
+        $this->set('default_territory',$territory);
+        $this->set("territories", $territoriesArray);        
+    }
+    
+    
+    function admin_saveTopalbumsSortOrder($territory) {
+        Configure::write('debug', 0);
+        $this->layout = 'ajax';
+        $albumIds = $_POST['top_album'];
+        if(!empty($albumIds)) {
+            $i = 0;
+            foreach($albumIds as $value) {
+                $i++;
+                $updateSortIdObj = new TopAlbum();
+                if(!empty($value)) {
+                    $updateSortIdObj->id = $value;
+                    $updateSortIdObj->saveField('sortId', $i);
+                }
+            }
+            if (!empty($territory)) {
+                Configure::write('Cache.disable', false);
+                $this->Common->getTopAlbums($territory);
+            }
+            echo "success";
+            exit;
+        } else {
+            echo "error";
+            exit;
+        }
     }
 
 	/*
@@ -396,16 +448,24 @@ Class ArtistsController extends AppController {
         $insertArr['album'] = $album;
         $insertArr['territory'] = $this->data['Artist']['territory'];
         $insertArr['language'] = Configure::read('App.LANGUAGE');
+        
         if (!empty($album_provider_type)) {
             $insertArr['provider_type'] = $album_provider_type;
         }
         $insertObj = new TopAlbum();
+        $query = "SELECT IFNULL(MAX(sortId),0)+1 AS sortId FROM top_albums";
+        $sortdata = $insertObj->query($query);
+        if(!empty($sortdata[0][0]['sortId'])) {
+            $insertArr['sortId'] = $sortdata[0][0]['sortId'];
+        } else {
+            $errorMsg .= 'There seems to be some problem with Sort Id.<br/>';
+        }
         if (empty($errorMsg)) {
             if ($insertObj->insert($insertArr)) {
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                 Configure::write('Cache.disable', false);
                 $this->Common->getTopAlbums($territory);
-                $this->redirect('managetopalbums');
+                $this->redirect('managetopalbums/'.$this->data['Artist']['territory']);
             }
         } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
@@ -468,20 +528,32 @@ Class ArtistsController extends AppController {
         $updateArr['territory'] = $this->data['Artist']['territory'];
         $updateArr['language'] = Configure::read('App.LANGUAGE');
         $updateArr['album'] = $album;
+
         if (!empty($album_provider_type)) {
             $updateArr['provider_type'] = $album_provider_type;
         }
         $updateObj = new TopAlbum();
+        if(!empty($this->data['Artist']['sortId'])) {
+            $updateArr['sortId'] = $this->data['Artist']['sortId'];
+        } else {
+            $query = "SELECT IFNULL(MAX(sortId),0)+1 AS sortId FROM top_albums";
+            $sortdata = $updateObj->query($query);
+            if(!empty($sortdata[0][0]['sortId'])) {
+                $updateArr['sortId'] = $sortdata[0][0]['sortId'];
+            } else {
+                $errorMsg .= 'There seems to be some problem with Sort Id.<br/>';
+            }            
+        }        
         if (empty($errorMsg)) {
             if ($updateObj->insert($updateArr)) {
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
                 Configure::write('Cache.disable', false);                
 				$this->Common->getTopAlbums($territory);
-                $this->redirect('managetopalbums');
+                $this->redirect('managetopalbums/'.$territory);
             }
         } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
-            $this->redirect('managetopalbums');
+            $this->redirect('managetopalbums'.$territory);
         }
     }
 

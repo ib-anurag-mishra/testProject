@@ -8,6 +8,7 @@ if(empty($getData))
 	$getData['TopAlbum']['territory'] = "";
 	$getData['TopAlbum']['language'] = "";
 	$getData['TopAlbum']['album'] = "";
+        $getData['TopAlbum']['sortId'] = "";
 }
 if(empty($getArtistData)){
 	$getArtistData = array();
@@ -22,6 +23,7 @@ if(empty($album)){
 	</legend>
 	<div class="formFieldsContainer">
 		<?php echo $form->hidden( 'id', array( 'label' => false ,'value' => $getData['TopAlbum']['id'])); ?>
+               <?php echo $form->hidden( 'sortId', array( 'label' => false ,'value' => $getData['TopAlbum']['sortId'])); ?>
 		<div class="form_steps">
 			<table cellspacing="10" cellpadding="0" border="0" width="100%">
 				<tr>
