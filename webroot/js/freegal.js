@@ -119,7 +119,7 @@ function userDownloadIE(prodId)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -215,7 +215,7 @@ function userDownloadOthers(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -284,7 +284,7 @@ function userDownloadIE_top(prodId)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -368,7 +368,7 @@ function userDownloadOthers_top(prodId, downloadUrl1, downloadUrl2, downloadUrl3
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -437,7 +437,7 @@ function userDownloadIE_toptab(prodId)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -509,7 +509,7 @@ function userDownloadOthers_toptab(prodId, downloadUrl1, downloadUrl2, downloadU
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -582,7 +582,7 @@ function userDownloadOthers_safari(prodId, downloadUrl1, downloadUrl2, downloadU
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -876,7 +876,7 @@ function addToWishlist_top(prodId, providerType)
                 }
                 else
                 {
-                    alert("Your download limit has exceeded.");
+                    alert("This song is no longer available, please try again later.");
                     location.reload();
                     return false;
                 }
@@ -944,7 +944,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName, type)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -998,7 +998,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1063,7 +1063,7 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName,
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1115,7 +1115,7 @@ function historyDownload(id, libID, patronID, CdnPath, SaveAsName)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1167,7 +1167,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1213,7 +1213,7 @@ function historyDownloadVideo(id, libID, patronID)
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1264,7 +1264,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1321,7 +1321,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1395,7 +1395,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1455,7 +1455,7 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
@@ -1533,7 +1533,7 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
             }
             else
             {
-                alert("Your download limit has exceeded.");
+                alert("This song is no longer available, please try again later.");
                 location.reload();
                 return false;
             }
