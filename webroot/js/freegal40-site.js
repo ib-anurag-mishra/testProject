@@ -94,6 +94,14 @@ $(document).ready(function() {
 
     });
 
+    $('.albums-page').find('.album-detail-container').find('.wishlist-icon').on('mouseleave',function(e){
+        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+            $(this).next('ul').removeClass('active');
+
+        }
+
+    });    
+
 
 
 
@@ -2122,7 +2130,7 @@ $(document).ready(function() {
     $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist, .album-info .add-to-wishlist , .songs .add-to-wishlist , .songs-results-list .add-to-wishlist').on('click', function(e)
     {
 
-        console.log('inside 2nd document find');
+
         if ($(this).hasClass('wishlist-icon'))
         {
             var ProdID = $(this).parent().find('input[type="hidden"]').attr('id');
