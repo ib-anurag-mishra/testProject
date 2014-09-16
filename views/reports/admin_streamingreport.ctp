@@ -239,7 +239,7 @@ if (empty($getData)) {
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['StreamingHistory']['library_id'])); ?></td>
                                             <?php endif; ?>
                                             <td><?php
-                                               if( isset( $streamInformation['library']['show_barcode'] ) && ( $streamInformation['library']['show_barcode'] == 1) ){                                                
+                                               if( isset( $streamInformation['lib']['show_barcode'] ) && ( $streamInformation['lib']['show_barcode'] == 1) ){                                                
                                                     echo $streamInformation['StreamingHistory']['patron_id'];
                                                 }
                                                 ?>
@@ -279,7 +279,7 @@ if (empty($getData)) {
                                                 <td><?php echo $i; ?></td>
                                                 <td>
                                                     <?php
-                                                    if( isset( $patronStramed['Library']['show_barcode'] ) && ( $patronStramed['Library']['show_barcode'] == 1) ){
+                                                    if( isset( $patronStramed['lib']['show_barcode'] ) && ( $patronStramed['lib']['show_barcode'] == 1) ){
                                                          echo $patronStramed['StreamingHistory']['patron_id'];
                                                     }else{
                                                          echo $patronStramed['Currentpatrons']['id'];

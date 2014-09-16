@@ -103,7 +103,7 @@ $csv->addRow($line);
 if($this->data['Report']['library_id'] == "all") {
     foreach($dayStreamingInfo as $key => $stream) {
         
-        if(isset($stream['Library']['show_barcode']) && $stream['Library']['show_barcode'] == 1){
+        if(isset($stream['lib']['show_barcode']) && $stream['lib']['show_barcode'] == 1){
              $patron = $stream['StreamingHistory']['patron_id'];
         }else{
              $patron = $stream['Currentpatrons']['id'];
@@ -116,7 +116,7 @@ if($this->data['Report']['library_id'] == "all") {
 }else{
     foreach($dayStreamingInfo as $key => $stream) {
         //check the condition which 
-        if(isset($stream['Library']['show_barcode']) && $stream['Library']['show_barcode'] == 1){
+        if(isset($stream['lib']['show_barcode']) && $stream['lib']['show_barcode'] == 1){
              $patron = $stream['StreamingHistory']['patron_id'];
         }else{
              $patron = $stream['Currentpatrons']['id'];
@@ -143,7 +143,7 @@ if($this->data['Report']['library_id'] == "all") {
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
           
             
-        if(isset($patronStreamed['Library']['show_barcode']) && $patronStreamed['Library']['show_barcode'] == 1){
+        if(isset($patronStreamed['lib']['show_barcode']) && $patronStreamed['lib']['show_barcode'] == 1){
              $patron = $patronStreamed['StreamingHistory']['patron_id'];
         }else{
              $patron = $patronStreamed['Currentpatrons']['id'];
@@ -154,7 +154,7 @@ if($this->data['Report']['library_id'] == "all") {
     }
 }else{
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-         if(isset($patronStreamed['Library']['show_barcode']) && $patronStreamed['Library']['show_barcode'] == 1){
+         if(isset($patronStreamed['lib']['show_barcode']) && $patronStreamed['lib']['show_barcode'] == 1){
              $patron = $patronStreamed['StreamingHistory']['patron_id'];
         }else{
              $patron = $patronStreamed['Currentpatrons']['id'];
