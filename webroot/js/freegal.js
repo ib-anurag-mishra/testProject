@@ -1168,6 +1168,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
                 $('.beforeClick').show();
                 //location.reload();
                 return false;
