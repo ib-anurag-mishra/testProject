@@ -229,7 +229,7 @@ Class ArtistsController extends AppController {
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                 Configure::write('Cache.disable', false);
                 $this->Common->getTopSingles($territory);
-                $this->redirect('managetopsingles');
+                $this->redirect('managetopsingles/'.$territory);
             }
         } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
@@ -327,7 +327,7 @@ Class ArtistsController extends AppController {
             }
         } else {
             $this->Session->setFlash($errorMsg, 'modal', array('class' => 'modal problem'));
-            $this->redirect('managetopsingles');
+            $this->redirect('managetopsingles/'.$territory);
         }
     }
 
@@ -339,16 +339,19 @@ Class ArtistsController extends AppController {
     function admin_topsingledelete() {
         $deleteTopSingleId = $this->params['named']['id'];
         $deleteObj = new TopSingles();
-		$getData = $deleteObj->gettopsingledata($deleteTopSingleId);
-		$territory = $getData['TopSingles']['territory'];
+        $getData = $deleteObj->gettopsingledata($deleteTopSingleId);
+        $territory = $getData['TopSingles']['territory'];
+        $deleteObj->setDataSource('master');
         if ($deleteObj->del($deleteTopSingleId)) {
+            $deleteObj->setDataSource('default');
 			Configure::write('Cache.disable', false);
 			$this->Common->getTopSingles($territory);
             $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
-            $this->redirect('managetopsingles');
+            $this->redirect('managetopsingles/'.$territory);
         } else {
+            $deleteObj->setDataSource('default');
             $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
-            $this->redirect('managetopsingles');
+            $this->redirect('managetopsingles/'.$territory);
         }
     }
 
@@ -645,16 +648,19 @@ Class ArtistsController extends AppController {
     function admin_topalbumdelete() {
         $deleteArtistUserId = $this->params['named']['id'];
         $deleteObj = new TopAlbum();
-		$getData = $deleteObj->getartistdata($deleteArtistUserId);
-		$territory = $getData['TopAlbum']['territory'];
+        $getData = $deleteObj->getartistdata($deleteArtistUserId);
+        $territory = $getData['TopAlbum']['territory'];
+        $deleteObj->setDataSource('master');
         if ($deleteObj->del($deleteArtistUserId)) {
-			Configure::write('Cache.disable', false);
-			$this->Common->getTopAlbums($territory);
+            $deleteObj->setDataSource('default');
+            Configure::write('Cache.disable', false);
+            $this->Common->getTopAlbums($territory);
             $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
-            $this->redirect('managetopalbums');
+            $this->redirect('managetopalbums/'.$territory);
         } else {
+            $deleteObj->setDataSource('default');
             $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
-            $this->redirect('managetopalbums');
+            $this->redirect('managetopalbums/'.$territory);
         }
     }
 
