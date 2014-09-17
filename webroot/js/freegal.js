@@ -120,6 +120,8 @@ function userDownloadIE(prodId)
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -216,6 +218,8 @@ function userDownloadOthers(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -285,6 +289,8 @@ function userDownloadIE_top(prodId)
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -369,6 +375,8 @@ function userDownloadOthers_top(prodId, downloadUrl1, downloadUrl2, downloadUrl3
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -438,6 +446,8 @@ function userDownloadIE_toptab(prodId)
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -510,6 +520,8 @@ function userDownloadOthers_toptab(prodId, downloadUrl1, downloadUrl2, downloadU
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -583,6 +595,8 @@ function userDownloadOthers_safari(prodId, downloadUrl1, downloadUrl2, downloadU
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -877,6 +891,8 @@ function addToWishlist_top(prodId, providerType)
                 else
                 {
                     alert("This song is no longer available, please try again later.");
+                    $('.afterClick').hide();
+                    $('.beforeClick').show();
                     //location.reload();
                     return false;
                 }
@@ -945,6 +961,8 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName, type)
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -1116,6 +1134,8 @@ function historyDownload(id, libID, patronID, CdnPath, SaveAsName)
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -1324,6 +1344,8 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
@@ -1398,6 +1420,8 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
             else
             {
                 alert("This song is no longer available, please try again later.");
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 //location.reload();
                 return false;
             }
