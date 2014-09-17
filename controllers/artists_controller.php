@@ -77,10 +77,12 @@ Class ArtistsController extends AppController {
                 $i++;
                 $updateSortIdObj = new TopSingles();
                 if(!empty($value)) {
+                    $updateSortIdObj->setDataSource('master');
                     $updateSortIdObj->id = $value;
                     $updateSortIdObj->saveField('sortId', $i);
                 }
             }
+            $updateSortIdObj->setDataSource('default');
             if (!empty($territory)) {
                 Configure::write('Cache.disable', false);
                 $this->Common->getTopSingles($territory);
@@ -221,7 +223,9 @@ Class ArtistsController extends AppController {
             $errorMsg .= 'There seems to be some problem with Sort Id.<br/>';
         }        
         if (empty($errorMsg)) {
+            $insertObj->setDataSource('master');
             if ($insertObj->insert($insertArr)) {
+                $insertObj->setDataSource('default');
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                 Configure::write('Cache.disable', false);
                 $this->Common->getTopSingles($territory);
@@ -313,7 +317,9 @@ Class ArtistsController extends AppController {
             }            
         }        
         if (empty($errorMsg)) {
+            $updateObj->setDataSource('master');
             if ($updateObj->insert($updateArr)) {
+                $updateObj->setDataSource('default');
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
                 Configure::write('Cache.disable', false);                
 		$this->Common->getTopSingles($territory);
@@ -395,10 +401,12 @@ Class ArtistsController extends AppController {
                 $i++;
                 $updateSortIdObj = new TopAlbum();
                 if(!empty($value)) {
+                    $updateSortIdObj->setDataSource('master');
                     $updateSortIdObj->id = $value;
                     $updateSortIdObj->saveField('sortId', $i);
                 }
             }
+            $updateSortIdObj->setDataSource('default');
             if (!empty($territory)) {
                 Configure::write('Cache.disable', false);
                 $this->Common->getTopAlbums($territory);
@@ -529,7 +537,9 @@ Class ArtistsController extends AppController {
             $errorMsg .= 'There seems to be some problem with Sort Id.<br/>';
         }
         if (empty($errorMsg)) {
+            $insertObj->setDataSource('master');
             if ($insertObj->insert($insertArr)) {
+                $insertObj->setDataSource('default');
                 $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                 Configure::write('Cache.disable', false);
                 $this->Common->getTopAlbums($territory);
@@ -613,7 +623,9 @@ Class ArtistsController extends AppController {
             }            
         }        
         if (empty($errorMsg)) {
+            $updateObj->setDataSource('master');
             if ($updateObj->insert($updateArr)) {
+                $updateObj->setDataSource('default');
                 $this->Session->setFlash('Data has been updated successfully!', 'modal', array('class' => 'modal success'));    
                 Configure::write('Cache.disable', false);                
 				$this->Common->getTopAlbums($territory);
