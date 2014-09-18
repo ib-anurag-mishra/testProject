@@ -241,6 +241,8 @@ if (empty($getData)) {
                                             <td><?php
                                                if( isset( $streamInformation['lib']['show_barcode'] ) && ( $streamInformation['lib']['show_barcode'] == 1) ){                                                
                                                     echo $streamInformation['StreamingHistory']['patron_id'];
+                                                }else{
+                                                    echo $streamInformation['Currentpatrons']['id'];
                                                 }
                                                 ?>
                                             </td>
