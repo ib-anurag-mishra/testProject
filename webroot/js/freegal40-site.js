@@ -133,12 +133,12 @@ $(document).ready(function() {
 
     $('.playlist-options').bindMouseWheel();
 
-    $(document).on('mousewheel', '.playlist-options', function(e) {
+    // $(document).on('mousewheel', '.playlist-options', function(e) {
 
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+    //     $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
-        return false;
-    });
+    //     return false;
+    // });
 
 
 
@@ -1856,7 +1856,7 @@ $(document).ready(function() {
 
     });
 
-    //$('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').next('ul').bindMouseWheel();
+    $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').next('ul').bindMouseWheel();
 
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').on('mouseenter',function(){
 
