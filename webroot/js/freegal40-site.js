@@ -1257,7 +1257,7 @@ $(document).ready(function() {
 
     $top_single_container_list = $('.top-single-container').find('ul');
 
-    // $top_single_container_list.bindMouseWheel();
+    $top_single_container_list.bindMouseWheel();
     $top_single_container_list.on('mouseleave', function() {
         $(this).removeClass('active');
 
@@ -1268,7 +1268,7 @@ $(document).ready(function() {
     var $album_cover_container_ul = $('.album-cover-container').find('ul');
 
 
-    // $album_cover_container_ul.bindMouseWheel();
+    $album_cover_container_ul.bindMouseWheel();
     $album_cover_container_ul.on('mouseleave', function() {
         $(this).removeClass('active');
 
@@ -1450,7 +1450,7 @@ $(document).ready(function() {
         $(this).removeClass('active');
     });
     var $genre_page_columns = $('.genre-column,.alpha-artist-list-column,.artist-column');
-    $genre_page_columns.bindMouseWheel();
+    //$genre_page_columns.bindMouseWheel();
 
     $(document).on('mouseenter', '.artist-column', function() {
         var $this = $(this);
