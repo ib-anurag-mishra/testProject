@@ -443,4 +443,119 @@ class Library extends AppModel
                                         
                           );
     }
+    
+    
+    
+        /*
+	Function Name : checkLibraryStreamingContract
+	Desc : function used for checking library information for streaming
+        *  and if contract date ends then turned off the streaming status 
+	*	 
+	*
+	* @return void
+	*/
+	function updateLibraryStreamingStatus() {
+
+            $selectedLibraryInfo = array();
+            $libraryPurchasesStreamingInstance = ClassRegistry::init('LibraryPurchasesStreaming');
+            $contractLibraryStreamingPurchase = ClassRegistry::init('ContractLibraryStreamingPurchase');
+            $libraryInstance->recursive = -1;
+            $results = $this->find('all',array('conditions' => array('library_type = "2"','library_status'=>'active'),'fields' => array('id','library_type')));
+
+            if(!empty($result)) {
+                //fetch records id from library streaming purchas
+                foreach($result as $libArray) {
+                    $libPurchaseStreamingArr = $libraryPurchasesStreamingInstance->find('first',
+                       array(
+                        'conditions' =>array('library_id="'.$libArray['Library']['id'].'"'),
+                        'fields' => array('id'),
+                        'order' => array('id desc'),
+                        'limit' => 1
+                    ));
+
+                    //fetch streaming contract date end
+                    if(!empty($libPurchaseStreamingArr)) {
+                        foreach($libPurchaseStreamingArr as $libPurchaseStreamingValue) {
+                            $libContractStreamingInfo = $contractLibraryStreamingPurchase->find('first',
+                               array(
+                                'conditions' =>array('id_library_purchases_streaming="'.$libPurchaseStreamingInfo['LibraryPurchasesStreaming']['id'].'"'),
+                                'fields' => array('library_contract_end_date')
+                            ));
+
+                            if(isset($libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date']) &&
+                                    ($libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date'] != '0000-00-00')){
+
+                                $currDate = strtotime(date("Y-m-d"));
+                                $contractEndDate = strtotime($libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date']);
+
+                                //check if library streaming contract end
+                                if($contractEndDate < $currDate) {
+                                    
+                                    $updateArr = Array();
+                                    $updateArr['id'] = $libArray['Library']['id'];
+                                    $updateArr['library_type'] = 1;                                    
+
+                                    $this->setDataSource('master');
+                                    
+                                    //update the date and reset the consumed time as the day start
+                                   // if($this->save($updateArr)){
+                                    if( 1 ) {
+                                    
+                                        $selectedLibraryInfo[]['lib_id'] = $libArray['Library']['id'];
+                                        $selectedLibraryInfo[]['lib_name'] = $libArray['Library']['library_name'];
+                                        $selectedLibraryInfo[]['contract_end_date'] = $libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date'];                                                                               
+                                    }
+                                    
+                                    $this->setDataSource('default');
+                                    
+                                }                                                                     
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if(!empty($selectedLibraryInfo)){
+                $this->sendStreamingStatusChangeAlert($selectedLibraryInfo);
+            }
+        }
+        
+    
+    /*
+	Function Name : sendStreamingStatusChangeAlert
+	Desc : send email alert to all responsible
+	*	 
+	*
+	* @return void
+	*/
+	function sendStreamingStatusChangeAlert($selectedLibraryInfo) {           
+            
+            $emailTemplate = 'Hi'.'\n\n';
+            $emailTemplate .= 'This is the automated email contain list of libraries which streaming contract end today.';
+            $emailTemplate .= 'We have turned off streaming status of these libraries.'.'\n';
+            
+            $emailTemplate .='Library ID'.'\t'.'Library Name'.'\t'.'Streaming Contract End Date'.'\n';
+            foreach($selectedLibraryInfo as $libInfo) {
+                $emailTemplate .= $libInfo['lib_id'] .'\t';
+                $emailTemplate .= $libInfo['lib_name'] .'\t';
+                $emailTemplate .= $libInfo['contract_end_date'] .'\t';
+            }        
+            
+            $emailTemplate .= '\n\n';
+            $emailTemplate .= 'Thanks'.'\n';
+            $emailTemplate .= 'FreegalMusic'.'\n\n';
+            
+            $this->Email->delivery = 'debug';
+            
+            $this->Email->to = 'narendra.nagesh@infobeans.com';
+            $this->Email->from = Configure::read('App.adminEmail');
+            $this->Email->fromName = Configure::read('App.fromName');
+            $this->Email->subject = 'FreegalMusic - Streaming status turned off';
+            $this->Email->smtpHostNames = Configure::read('App.SMTP');
+            $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
+            $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
+            $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
+            $result = $this->Email->send($emailTemplate);
+        }
+    
 }
