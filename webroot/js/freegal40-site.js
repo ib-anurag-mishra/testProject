@@ -1204,7 +1204,7 @@ $(document).ready(function() {
     });
 
     var $playlist_menu = $('.playlist-menu,.top-songs .options-menu .playlist-menu');
-    // $playlist_menu.bindMouseWheel();
+    $playlist_menu.bindMouseWheel();
     // $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
     $(document).on('mouseenter', '.top-songs .options-menu .playlist-menu', function() {
         var $this = $(this);
@@ -1257,7 +1257,7 @@ $(document).ready(function() {
 
     $top_single_container_list = $('.top-single-container').find('ul');
 
-    $top_single_container_list.bindMouseWheel();
+    // $top_single_container_list.bindMouseWheel();
     $top_single_container_list.on('mouseleave', function() {
         $(this).removeClass('active');
 
@@ -1268,7 +1268,7 @@ $(document).ready(function() {
     var $album_cover_container_ul = $('.album-cover-container').find('ul');
 
 
-    $album_cover_container_ul.bindMouseWheel();
+    // $album_cover_container_ul.bindMouseWheel();
     $album_cover_container_ul.on('mouseleave', function() {
         $(this).removeClass('active');
 
