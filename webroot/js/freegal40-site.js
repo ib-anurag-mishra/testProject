@@ -1852,7 +1852,7 @@ $(document).ready(function() {
     });
 
 
-    $('.my-top-100-page .album-container .add-to-playlist-button,.my-top-100-page .song-container .add-to-playlist-button').on('mouseleave',function(){
+    $('.my-top-100-page .album-container .add-to-playlist-button,.my-top-100-page .song-container .add-to-playlist-button').on('mouseleave',function(e){
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
             $(this).next('ul').removeClass('active');
 
