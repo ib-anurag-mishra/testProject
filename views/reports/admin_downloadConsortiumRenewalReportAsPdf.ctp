@@ -154,13 +154,29 @@
     
     //Data loading
     foreach($downloads as $key => $download) {
-	$patron = $download['Currentpatrons']['id'];
+	
+        
+        
+       if(isset($download['Library']['show_barcode']) && ($download['Library']['show_barcode'] == 1 )){
+           $patron = $download['Download']['patron_id'];
+       }else{
+           $patron = '-';
+       }
+        
+        
         $libraryName = $library->getLibraryName($download['Download']['library_id']);
         $data[] = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     }
     
     foreach($patronDownloads as $key => $patronDownload) {
-	$patron_id = $patronDownload['Currentpatrons']['id'];
+	
+        
+       if(isset($patronDownload['Library']['show_barcode']) && ($patronDownload['Library']['show_barcode'] == 1 )){
+           $patron_id = $patronDownload['Download']['patron_id'];
+       }else{
+           $patron_id = '-';
+       }
+        
         $patron_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
     }
     

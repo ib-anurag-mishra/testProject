@@ -230,7 +230,7 @@ if (empty($getData)) {
                                     </tr>
                                     <?php
                                     $i = 1;
-                                    //				print "<pre>";print_r($downloads);exit;
+                                    //print "<pre>";print_r($downloads);exit;
                                     foreach ($dayStreamingInfo as $key => $streamInformation) {
                                         ?>
                                         <tr>
@@ -239,9 +239,7 @@ if (empty($getData)) {
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['StreamingHistory']['library_id'])); ?></td>
                                             <?php endif; ?>
                                             <td><?php
-                                                if ($streamInformation['StreamingHistory']['patron_id'] != '') {
-                                                   /* echo $streamInformation['StreamingHistory']['email'];
-                                                } else {*/
+                                               if( isset( $streamInformation['lib']['show_barcode'] ) && ( $streamInformation['lib']['show_barcode'] == 1) ){                                                
                                                     echo $streamInformation['StreamingHistory']['patron_id'];
                                                 }
                                                 ?>
@@ -273,7 +271,7 @@ if (empty($getData)) {
                                     </tr>
                                         <?php
                                         $i = 1;
-
+                                        //print_r($patronStreamedDetailedInfo);
                                         foreach ($patronStreamedDetailedInfo as $key => $patronStramed)
                                         {
                                             ?>
@@ -281,7 +279,11 @@ if (empty($getData)) {
                                                 <td><?php echo $i; ?></td>
                                                 <td>
                                                     <?php
-                                                           echo $patronStramed['Currentpatrons']['id'];
+                                                    if( isset( $patronStramed['lib']['show_barcode'] ) && ( $patronStramed['lib']['show_barcode'] == 1) ){
+                                                         echo $patronStramed['StreamingHistory']['patron_id'];
+                                                    }else{
+                                                         echo $patronStramed['Currentpatrons']['id'];
+                                                    }                                                          
                                                     ?>
                                                 </td>
                                                 <?php if (!is_numeric($library_id)): ?>
