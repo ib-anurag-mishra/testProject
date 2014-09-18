@@ -89,7 +89,7 @@ if(!is_array($patronStreamedInfo)) {
   
 // end - Total Patrons
 
-
+if(!empty($dayStreamingInfo)){
 
 $line = array('Library Streaming Report');
 $csv->addRow($line);
@@ -102,23 +102,30 @@ if($this->data['Report']['library_id'] == "all") {
 $csv->addRow($line);
 if($this->data['Report']['library_id'] == "all") {
     foreach($dayStreamingInfo as $key => $stream) {
-            if($stream['StreamingHistory']['patron_id']!=''){
-                    $patron = $stream['StreamingHistory']['patron_id'];
-            }
+        
+        if(isset($stream['lib']['show_barcode']) && $stream['lib']['show_barcode'] == 1){
+             $patron = $stream['StreamingHistory']['patron_id'];
+        }else{
+             $patron = $stream['Currentpatrons']['id'];
+        }
+            
         $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
         $line = array($key+1, $libraryName,$patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['StreamingHistory']['createdOn'])));
         $csv->addRow($line);
     }
 }else{
     foreach($dayStreamingInfo as $key => $stream) {
-            if($stream['StreamingHistory']['patron_id']!=''){
-                    $patron = $stream['StreamingHistory']['patron_id'];
-            }
+        //check the condition which 
+        if(isset($stream['lib']['show_barcode']) && $stream['lib']['show_barcode'] == 1){
+             $patron = $stream['StreamingHistory']['patron_id'];
+        }else{
+             $patron = $stream['Currentpatrons']['id'];
+        }
         $line = array($key+1,  $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['StreamingHistory']['createdOn'])));
         $csv->addRow($line);
     }
 }
-
+}
 $line = array('', '', '', '', '', '');
 $csv->addRow($line);
 
@@ -134,14 +141,24 @@ $csv->addRow($line);
 
 if($this->data['Report']['library_id'] == "all") {
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-            $patron_id = $patronStreamed['Currentpatrons']['id'];
+          
+            
+        if(isset($patronStreamed['lib']['show_barcode']) && $patronStreamed['lib']['show_barcode'] == 1){
+             $patron = $patronStreamed['StreamingHistory']['patron_id'];
+        }else{
+             $patron = $patronStreamed['Currentpatrons']['id'];
+        }
 
         $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])),($patronStreamed[0]['total_streamed_songs']));
         $csv->addRow($line);
     }
 }else{
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-            $patron_id = $patronStreamed['Currentpatrons']['id'];
+         if(isset($patronStreamed['lib']['show_barcode']) && $patronStreamed['lib']['show_barcode'] == 1){
+             $patron = $patronStreamed['StreamingHistory']['patron_id'];
+        }else{
+             $patron = $patronStreamed['Currentpatrons']['id'];
+        }
 
         $line = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
         $csv->addRow($line);

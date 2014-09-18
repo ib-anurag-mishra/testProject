@@ -241,6 +241,7 @@ Class LibrariesController extends AppController
                         'Library.is_sip_over_ssh',
                         'Library.library_sip_command',
                         'Library.library_type',
+                        'Library.show_barcode',
                         'Library.library_streaming_hours',
 			'Library.optout_email_notification'
                     ),
@@ -386,6 +387,7 @@ Class LibrariesController extends AppController
                             'Library.youtube_icon',
                             'Library.library_unlimited',
                             'Library.library_type',
+                            'Library.show_barcode',
                             'Library.library_streaming_hours',
 			    'Library.optout_email_notification',
                             'Library.library_status'
