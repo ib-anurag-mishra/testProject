@@ -2,7 +2,6 @@
 
     $.fn.bindMouseWheel = function() {
 
-        console.log('bindMouseWheel called');
 
         return this.each(function() {
 
@@ -680,111 +679,111 @@ $(document).ready(function() {
 
 
 
-    $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseenter', function() {
-        $(this).find('.date').addClass('hovered');
-        $(this).find('.album-title').addClass('hovered');
-        $(this).find('.artist-name').addClass('hovered');
-        $(this).find('.time').addClass('hovered');
-        $(this).find('.song-title').addClass('hovered');
-        $(this).find('.preview').addClass('hovered');
-        $(this).find('.delete-btn').addClass('hovered');
-        $(this).find('.add-to-wishlist-button').addClass('hovered');
+    // $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseenter', function() {
+    //     $(this).find('.date').addClass('hovered');
+    //     $(this).find('.album-title').addClass('hovered');
+    //     $(this).find('.artist-name').addClass('hovered');
+    //     $(this).find('.time').addClass('hovered');
+    //     $(this).find('.song-title').addClass('hovered');
+    //     $(this).find('.preview').addClass('hovered');
+    //     $(this).find('.delete-btn').addClass('hovered');
+    //     $(this).find('.add-to-wishlist-button').addClass('hovered');
 
-    });
+    // });
 
-    $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseleave', function() {
+    // $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseleave', function() {
 
-        $(this).find('.date').removeClass('hovered');
-        $(this).find('.album-title').removeClass('hovered');
-        $(this).find('.artist-name').removeClass('hovered');
-        $(this).find('.time').removeClass('hovered');
-        $(this).find('.song-title').removeClass('hovered');
-        $(this).find('.preview').removeClass('hovered');
-        $(this).find('.delete-btn').removeClass('hovered');
-        $(this).find('.add-to-wishlist-button').removeClass('hovered');
-    });
+    //     $(this).find('.date').removeClass('hovered');
+    //     $(this).find('.album-title').removeClass('hovered');
+    //     $(this).find('.artist-name').removeClass('hovered');
+    //     $(this).find('.time').removeClass('hovered');
+    //     $(this).find('.song-title').removeClass('hovered');
+    //     $(this).find('.preview').removeClass('hovered');
+    //     $(this).find('.delete-btn').removeClass('hovered');
+    //     $(this).find('.add-to-wishlist-button').removeClass('hovered');
+    // });
 
-    $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseenter', function() {
-        $(this).find('.date').addClass('hovered');
-        $(this).find('.album-title').addClass('hovered');
-        $(this).find('.artist-name').addClass('hovered');
-        $(this).find('.time').addClass('hovered');
-        $(this).find('.song-title').addClass('hovered');
-        $(this).find('.preview').addClass('hovered');
-        $(this).find('.delete-btn').addClass('hovered');
-        $(this).find('.add-to-wishlist-button').addClass('hovered');
+    // $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseenter', function() {
+    //     $(this).find('.date').addClass('hovered');
+    //     $(this).find('.album-title').addClass('hovered');
+    //     $(this).find('.artist-name').addClass('hovered');
+    //     $(this).find('.time').addClass('hovered');
+    //     $(this).find('.song-title').addClass('hovered');
+    //     $(this).find('.preview').addClass('hovered');
+    //     $(this).find('.delete-btn').addClass('hovered');
+    //     $(this).find('.add-to-wishlist-button').addClass('hovered');
 
-    });
+    // });
 
-    $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseleave', function() {
+    // $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseleave', function() {
 
-        $(this).find('.date').removeClass('hovered');
-        $(this).find('.album-title').removeClass('hovered');
-        $(this).find('.artist-name').removeClass('hovered');
-        $(this).find('.time').removeClass('hovered');
-        $(this).find('.song-title').removeClass('hovered');
-        $(this).find('.preview').removeClass('hovered');
-        $(this).find('.delete-btn').removeClass('hovered');
-        $(this).find('.add-to-wishlist-button').removeClass('hovered');
-    });
-
-
+    //     $(this).find('.date').removeClass('hovered');
+    //     $(this).find('.album-title').removeClass('hovered');
+    //     $(this).find('.artist-name').removeClass('hovered');
+    //     $(this).find('.time').removeClass('hovered');
+    //     $(this).find('.song-title').removeClass('hovered');
+    //     $(this).find('.preview').removeClass('hovered');
+    //     $(this).find('.delete-btn').removeClass('hovered');
+    //     $(this).find('.add-to-wishlist-button').removeClass('hovered');
+    // });
 
 
 
-    $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseenter', function() {
-        $(this).removeClass('hovered').addClass('blue-bkg');
-
-    });
-
-    $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseleave', function() {
-        $(this).removeClass('blue-bkg').addClass('hovered');
-
-    });
-
-    $(document).on('click', '.my-wishlist-page .my-wishlist-scrollable .row .preview', function() {
-
-        if ($(this).hasClass('playing')) {
-
-            $(this).removeClass('playing');
-
-            $(this).parents('.row').removeClass('playing');
-            $(this).parent().removeClass('playing');
-            $(this).siblings('.date').removeClass('playing');
-            $(this).siblings('.album-title').removeClass('playing');
-            $(this).siblings('.artist-name').removeClass('playing');
-            $(this).siblings('.time').removeClass('playing');
-            $(this).siblings('.song-title').removeClass('playing');
-            $(this).siblings('.add-to-wishlist-button').removeClass('playing');
-            $(this).siblings('.download').removeClass('playing');
 
 
-        } else {
+    // $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseenter', function() {
+    //     $(this).removeClass('hovered').addClass('blue-bkg');
 
-            $('.my-wishlist-page .my-wishlist-scrollable .row').removeClass('playing');
-            $('.my-wishlist-page .my-wishlist-scrollable .row .date').removeClass('playing');
-            $('.my-wishlist-page .my-wishlist-scrollable .row .preview').removeClass('playing');
-            $('.my-wishlist-page .my-wishlist-scrollable .row .album-title').removeClass('playing');
-            $('.my-wishlist-page .my-wishlist-scrollable .row .artist-name').removeClass('playing');
-            $('.my-wishlist-page .my-wishlist-scrollable .row .time').removeClass('playing');
-            $('.my-wishlist-page .my-wishlist-scrollable .row .song-title').removeClass('playing');
-            $('.my-wishlist-page .my-wishlist-scrollable .row .add-to-wishlist-button').removeClass('playing');
-            $('.my-wishlist-page .my-wishlist-scrollable .row .download').removeClass('playing');
+    // });
 
-            $(this).addClass('playing');
-            $(this).parents('.row').addClass('playing');
-            $(this).parent().addClass('playing');
-            $(this).siblings('.date').addClass('playing');
-            $(this).siblings('.album-title').addClass('playing');
-            $(this).siblings('.artist-name').addClass('playing');
-            $(this).siblings('.time').addClass('playing');
-            $(this).siblings('.song-title').addClass('playing');
-            $(this).siblings('.add-to-wishlist-button').addClass('playing');
-            $(this).siblings('.download').addClass('playing');
+    // $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseleave', function() {
+    //     $(this).removeClass('blue-bkg').addClass('hovered');
 
-        }
+    // });
 
-    });
+    // $(document).on('click', '.my-wishlist-page .my-wishlist-scrollable .row .preview', function() {
+
+    //     if ($(this).hasClass('playing')) {
+
+    //         $(this).removeClass('playing');
+
+    //         $(this).parents('.row').removeClass('playing');
+    //         $(this).parent().removeClass('playing');
+    //         $(this).siblings('.date').removeClass('playing');
+    //         $(this).siblings('.album-title').removeClass('playing');
+    //         $(this).siblings('.artist-name').removeClass('playing');
+    //         $(this).siblings('.time').removeClass('playing');
+    //         $(this).siblings('.song-title').removeClass('playing');
+    //         $(this).siblings('.add-to-wishlist-button').removeClass('playing');
+    //         $(this).siblings('.download').removeClass('playing');
+
+
+    //     } else {
+
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row').removeClass('playing');
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row .date').removeClass('playing');
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row .preview').removeClass('playing');
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row .album-title').removeClass('playing');
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row .artist-name').removeClass('playing');
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row .time').removeClass('playing');
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row .song-title').removeClass('playing');
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row .add-to-wishlist-button').removeClass('playing');
+    //         $('.my-wishlist-page .my-wishlist-scrollable .row .download').removeClass('playing');
+
+    //         $(this).addClass('playing');
+    //         $(this).parents('.row').addClass('playing');
+    //         $(this).parent().addClass('playing');
+    //         $(this).siblings('.date').addClass('playing');
+    //         $(this).siblings('.album-title').addClass('playing');
+    //         $(this).siblings('.artist-name').addClass('playing');
+    //         $(this).siblings('.time').addClass('playing');
+    //         $(this).siblings('.song-title').addClass('playing');
+    //         $(this).siblings('.add-to-wishlist-button').addClass('playing');
+    //         $(this).siblings('.download').addClass('playing');
+
+    //     }
+
+    // });
     /* end my wishlist page */
 
     /* new release page */
