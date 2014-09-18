@@ -151,7 +151,7 @@ if (empty($getData))
                             ?>
                         </td>
                         <td align="left">
-                            <?php echo $this->Form->label('Include Barcodes in Reports.'); ?>
+                            <?php echo $this->Form->label('Show Barcodes in admin reports'); ?>
                         </td>
                     </tr>
 		    <tr>
