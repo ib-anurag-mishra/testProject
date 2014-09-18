@@ -163,13 +163,22 @@
                                     <th>Download</th>
                                 </tr>
                                 <?php
-								$i = 1;
+				$i = 1;
                                 foreach($downloads as $key => $download) {	
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
                                         <td><?php echo $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
-                                        <td><?php echo $download['Currentpatrons']['id']; ?></td>
+                                       
+                                        <td><?php 
+                                        //check if library allowed to show barcode in the report
+                                        if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1 ) {
+                                            echo $download['Download']['patron_id'];                                                                                         
+                                        }else{
+                                             echo $download['Currentpatrons']['id'];                                            
+                                        }                                       
+                                        ?></td> 
+                                        
                                         <td><?php echo $this->getAdminTextEncode($download['Download']['artist']); ?></td>
                                         <td><?php echo $this->getAdminTextEncode($download['Download']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
@@ -198,9 +207,16 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
+                                        
                                         <td><?php 
-                                        echo $patronDownload['Currentpatrons']['id']; ?>
-                                        </td>
+                                        //check if library allowed to show barcode in the report
+                                        if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1 ) {
+                                            echo $patronDownload['Download']['patron_id'];                                                                                         
+                                        }else{
+                                            echo $patronDownload['Currentpatrons']['id'];;                                              
+                                        }                                       
+                                        ?></td> 
+                                      
                                         <td><?php echo $this->getAdminTextEncode($library->getLibraryName($patronDownload['Download']['library_id'])); ?></td>
                                         <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
                                     </tr>
