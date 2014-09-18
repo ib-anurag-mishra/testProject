@@ -173,11 +173,11 @@ EOD;
 			unlink($file_name);
 		}
 		$report = fopen($file_name, 'w') or die("Can't open file");
-		$header = 'customer_id,library_name,cte,contract_start_date,contract_end_date,value_of_contract,streams_per_week,' . $labels[0] . ',' . $labels[1] . ',' . $labels[2] . ',' . $labels[3] . ',' . $labels[4] . "\n";
+		$header = 'customer_id,library_name,cte,contract_start_date,contract_end_date,value_of_contract,renewal_start_date,renewal_end_date,value_of_renewal,streams_per_week,' . $labels[0] . ',' . $labels[1] . ',' . $labels[2] . ',' . $labels[3] . ',' . $labels[4] . "\n";
 		fwrite($report, $header);
 
 		foreach ($final as $key => $value) {
-			$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['cte'] . ',' . $value['contract_start_date'] . ',' . $value['contract_end_date'] . ',' . $value['value_of_contract'] . ',' . $value['streams_per_week'] . ',' . $value[$labels[0]] . ',' . $value[$labels[1]] . ',' . $value[$labels[2]] . ',' . $value[$labels[3]] . ',' . $value[$labels[4]] . "\n";
+			$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['cte'] . ',' . $value['contract_start_date'] . ',' . $value['contract_end_date'] . ',' . $value['value_of_contract'] . ',,,,' . $value['streams_per_week'] . ',' . $value[$labels[0]] . ',' . $value[$labels[1]] . ',' . $value[$labels[2]] . ',' . $value[$labels[3]] . ',' . $value[$labels[4]] . "\n";
 			fwrite($report, $string);
 		}
 		fclose($report);
@@ -239,6 +239,7 @@ function freegalMoviesStreams() {
 	$final = $SalesforceReports->getContractToEndDownloads($final);
 	// This gets the total movie for each library during each period
 	$final = $SalesforceReports->getPeriodDownloads($final, $months, $weeks, $labels);
+	//$file_path = '../uploads/';
 	$file_path = '/home/salesforce/prod/';
 	array_map('unlink', glob($file_path . "freegalmovies_streaming_*"));
 	$file_name = 'freegalmovies_streaming_' . date('ymd') . '.csv';
