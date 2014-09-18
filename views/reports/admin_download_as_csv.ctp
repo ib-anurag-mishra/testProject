@@ -179,7 +179,7 @@ $csv->addRow($line);
 foreach ($patronDownloads as $key => $patronDownload) {
     
     if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
-         $patron_id = $patronDownload['Videodownload']['patron_id'];
+         $patron_id = $patronDownload['Downloadpatron']['patron_id'];
     }else{
          $patron_id = $patronDownload['Currentpatrons']['id'];
     }
