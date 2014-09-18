@@ -673,8 +673,8 @@ $(document).ready(function() {
 
 
 
-    // $('.my-wishlist-page .my-wishlist-scrollable').bindMouseWheel();
-    // $('.my-wishlist-page .my-video-wishlist-scrollable').bindMouseWheel();
+    /* $('.my-wishlist-page .my-wishlist-scrollable').bindMouseWheel(); */
+    /* $('.my-wishlist-page .my-video-wishlist-scrollable').bindMouseWheel(); */
 
 
 
