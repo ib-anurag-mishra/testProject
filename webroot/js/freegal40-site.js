@@ -1,35 +1,36 @@
-// (function($) {
+(function($) {
 
-//     $.fn.bindMouseWheel = function() {
+    $.fn.bindMouseWheel = function() {
 
-//         return this.each(function() {
+        console.log('bindMouseWheel called');
 
-//             $(this).bind('mousewheel', function(e) {
+        return this.each(function() {
 
-//                 $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-//                 //prevent page fom scrolling
-//                 return false;
+            $(this).bind('mousewheel', function(e) {
 
-//             });
+                $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+                //prevent page fom scrolling
+                return false;
 
-
-
-
-//         });
+            });
 
 
 
-//     };
+
+        });
 
 
-// }(jQuery));
+
+    };
+
+
+}(jQuery));
 
 
 
 
 $(document).ready(function() {
 
-    console.log('doc ready called');
     
 
   
