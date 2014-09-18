@@ -866,7 +866,7 @@ $(document).ready(function() {
 
 
 
-    // $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
+    $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
 
     $(document).on('click', '.saved-queues-page .add-to-playlist-button', function() {
 
@@ -1204,7 +1204,7 @@ $(document).ready(function() {
     });
 
     var $playlist_menu = $('.playlist-menu,.top-songs .options-menu .playlist-menu');
-    $playlist_menu.bindMouseWheel();
+    // $playlist_menu.bindMouseWheel();
     // $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
     $(document).on('mouseenter', '.top-songs .options-menu .playlist-menu', function() {
         var $this = $(this);
