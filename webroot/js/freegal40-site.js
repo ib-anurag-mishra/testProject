@@ -1450,7 +1450,7 @@ $(document).ready(function() {
         $(this).removeClass('active');
     });
     var $genre_page_columns = $('.genre-column,.alpha-artist-list-column,.artist-column');
-    //$genre_page_columns.bindMouseWheel();
+    $genre_page_columns.bindMouseWheel();
 
     $(document).on('mouseenter', '.artist-column', function() {
         var $this = $(this);
@@ -1856,7 +1856,7 @@ $(document).ready(function() {
 
     });
 
-    $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').next('ul').bindMouseWheel();
+    //$('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').next('ul').bindMouseWheel();
 
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container').on('mouseenter',function(){
 
