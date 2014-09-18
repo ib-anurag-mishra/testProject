@@ -291,11 +291,7 @@ if (empty($getData)) {
                                     <tr>
                                         <th>&nbsp;</th>
                                         <th>Library Name</th>
-                                        <?php                                        
-                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
-                                                echo '<th>ID</th>';             
-                                         }
-                                        ?>
+                                       <th>ID</th>
                                         <th>Artists Name</th>
                                         <th>Video Title</th>
                                         <th>Download</th>
@@ -335,11 +331,7 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                         <?php                                        
-                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
-                                                echo '<th>ID</th>';             
-                                         }
-                                        ?>
+                                        <th>ID</th>
                                         <th>Library Name</th>
                                         <th>Total Number of Tracks Downloaded</th>
                                     </tr>
@@ -376,11 +368,7 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                      <?php                                        
-                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
-                                                echo '<th>ID</th>';             
-                                         }
-                                        ?>
+                                      <th>ID</th>
                                         <th>Library Name</th>
                                         <th>Total Number of Videos Downloaded</th>
                                     </tr>
