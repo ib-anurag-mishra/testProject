@@ -115,7 +115,8 @@ Class QueueComponent extends Object
 								array('Countries.StreamingSalesDate <=' => date('Y-m-d')),
 								array('Countries.DownloadStatus' => 1)
 						),
-				)
+				),
+				'order' => 'QueueDetail.id ASC'
 		)
 		);
 		return $queueDetail;
