@@ -2868,35 +2868,35 @@ $(document).ready(function() {
 
     });
 
-    $('.my-wishlist-page .my-wishlist-scrollable').bind('mousewheel', function(e) {
+    // $('.my-wishlist-page .my-wishlist-scrollable').bind('mousewheel', function(e) {
 
 
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
-        //prevent page fom scrolling
-        return false;
-
-
-    });
-
-    $('.my-wishlist-page .my-video-wishlist-scrollable').bind('mousewheel', function(e) {
-
-
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+    //     $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
 
 
 
 
-        //prevent page fom scrolling
-        return false;
+    //     //prevent page fom scrolling
+    //     return false;
 
 
-    });
+    // });
+
+    // $('.my-wishlist-page .my-video-wishlist-scrollable').bind('mousewheel', function(e) {
+
+
+    //     $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+
+
+
+
+
+    //     //prevent page fom scrolling
+    //     return false;
+
+
+    // });
 
     $('.my-wishlist-page .add-to-wishlist-button').on('click', function(e) {
         e.preventDefault();
