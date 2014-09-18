@@ -175,7 +175,7 @@
                                         if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1 ) {
                                             echo $download['Download']['patron_id'];                                                                                         
                                         }else{
-                                            echo '-';                                            
+                                             echo $download['Currentpatrons']['id'];                                            
                                         }                                       
                                         ?></td> 
                                         
@@ -213,7 +213,7 @@
                                         if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1 ) {
                                             echo $patronDownload['Download']['patron_id'];                                                                                         
                                         }else{
-                                            echo '-';                                            
+                                            echo $patronDownload['Currentpatrons']['id'];;                                              
                                         }                                       
                                         ?></td> 
                                       
