@@ -3278,6 +3278,7 @@ STR;
         	$new_releases_albums_rs = Cache::read("new_releases_albums_none_explicit" . $territory);
         
         	if ($new_releases_albums_rs === false) {
+
         		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory, true);
         	}
         } else {
@@ -3285,6 +3286,7 @@ STR;
         	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
         
         	if ($new_releases_albums_rs === false) {
+
         
         		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
         	}

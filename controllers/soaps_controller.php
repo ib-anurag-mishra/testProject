@@ -6,6 +6,7 @@ App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalLibrary.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'NationalTopTen.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'TopSingles.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'LibraryTopTen.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongData.php');
@@ -66,6 +67,7 @@ class SoapsController extends AppController {
     $test->includeMethodsDocumentation(false);
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."FreegalLibrary.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."NationalTopTen.php");
+	$test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."TopSingles.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."LibraryTopTen.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AlbumData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AlbumDataByArtist.php");
@@ -93,6 +95,7 @@ class SoapsController extends AppController {
     $test->setClassesGeneralURL($siteUrl);
     $test->addURLToClass("FreegalLibrary", $siteUrl."soaps/");
     $test->addURLToClass("NationalTopTen", $siteUrl."soaps/");
+	$test->addURLToClass("TopSingles", $siteUrl."soaps/");
     $test->addURLToClass("LibraryTopTen", $siteUrl."soaps/");
     $test->addURLToClass("AlbumData", $siteUrl."soaps/");
     $test->addURLToClass("AlbumDataByArtist", $siteUrl."soaps/");
@@ -403,9 +406,11 @@ class SoapsController extends AppController {
       } else {
         
         Cache::write('mobile_top_artist_' . $mem_artistText . '_' . $library_territory, $albumData);
-      }
+		$albumDataCache = Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory);
+	     }
     } 
     
+	 
     $albumData = $albumDataCache;
     
     if(empty($albumData)) {
@@ -807,6 +812,83 @@ class SoapsController extends AppController {
 
 
   }
+
+/**
+   * Function Name : getTopsingles
+   * Desc : To get the twenty top singles
+   * @param string $authenticationToken
+   * @param int $libraryId
+   * @return TopSinglesType[]
+*/
+	function getTopSingles($authenticationToken, $libraryId) {
+
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+
+    $libraryData = $this->Library->find('first', array('conditions' => array('AND'=>array('Library.id' => $libraryId, 'library_status' => 'active')), 'fields' => array('library_territory')));
+    $territory = $libraryData['Library']['library_territory'];
+
+    $topSinglesTmp = Cache::read("top_singles".$territory);
+	if($topSinglesTmp === false) {
+		$topSinglesTmp = $this->Common->getTopSingles($territory);
+	}    
+	
+    $topSingles = array_splice($topSinglesTmp,0,20);
+        
+    if(!(empty($topSingles))) {
+
+      foreach($topSingles as $key => $data) {
+
+          $obj = new TopSinglesType;
+          
+          $obj->ProdId                    = (int) $data['PRODUCT']['pid'];
+          $obj->ProductId                 = (string)'';
+          $obj->ReferenceId               = (int)$this->getProductAutoID($data['Song']['ReferenceID'], $data['Song']['provider_type']);
+          $obj->Title                     = $this->getTextUTF((string)$data['Song']['Title']);
+          $obj->SongTitle                 = $this->getTextUTF((string)$data['Song']['SongTitle']);
+          $obj->ArtistText                = $this->getTextUTF((string)$data['Song']['ArtistText']);
+          $obj->Artist                    = $this->getTextUTF((string)$data['Song']['Artist']);
+          $obj->ISRC                      = (string)'';
+          $obj->Composer                  = (string)'';
+          $obj->Genre                     = $this->getTextUTF((string)$data['Genre']['Genre']);
+          $obj->Territory                 = (string)$data['Country']['Territory'];
+          $obj->Sample_Duration           = $this->getSongDurationTime($data['Song']['Sample_Duration']);
+          $obj->FullLength_Duration       = $this->getSongDurationTime($data['Song']['FullLength_Duration']);
+          $this->Album->recursive = -1;
+          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
+          $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
+          $fileURL = $this->Token->regularToken( $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
+          $fileURL = Configure::read('App.Music_Path').$fileURL;
+          
+          if($this->IsDownloadable($data['Song']['ProdID'], $territory, $data['Song']['provider_type'])) {
+            $obj->fileURL                 = 'nostring';
+            $obj->FullLength_FIleURL      = 'nostring';
+          } else {
+            $obj->fileURL                 = (string)$fileURL;
+            $obj->FullLength_FIleURL      = Configure::read('App.Music_Path').$this->Token->regularToken( $data['Full_Files']['CdnPath']."/".$data['Full_Files']['SaveAsName']);
+          }
+          
+          $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
+          
+          $obj->playButtonStatus          = $this->getPlayButtonStatus($data['Song']['ProdID'], $territory, $data['Song']['provider_type']);         
+          
+          if('T' == $data['Song']['Advisory']) $obj->SongTitle = $obj->SongTitle.' (Explicit)';
+          
+          $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'TopSinglesType');
+
+      }
+
+      $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfTopSinglesType');
+
+      return $data;
+
+    } else {
+
+      throw new SOAPFault('Soap:client', 'Top Singles list is empty');
+    }
+  }
+
 
   /**
    * Function Name : getLibraryTopTen

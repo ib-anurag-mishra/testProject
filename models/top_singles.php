@@ -17,11 +17,22 @@ class TopSingles extends AppModel
 			),
 			'recursive' => -1,
 			'order' => array(
-				'id' => 'asc'
+				'SortId' => 'asc'
 			)
 		));
 	}
         
+	function getAdminTopSingles($territory) {
+		return $this->find('all', array(
+			'conditions' => array(
+				'territory' => $territory, 
+			),
+			'recursive' => -1,
+			'order' => array(
+				'sortId' => 'asc'
+			)
+		));
+	}        
         /*
          Function Name : insert
          Desc : save an video data in the db

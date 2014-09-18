@@ -1401,6 +1401,7 @@ STR;
                             Albums.AlbumTitle,
                             Albums.ProdID,
                             Albums.Advisory,
+                            Albums.provider_type,
                             Genre.Genre,
                             Country.Territory,
                             Country.SalesDate,
@@ -2000,9 +2001,12 @@ STR;
                         Sample_Files.FileID,
                         PRODUCT.pid,
                         Albums.ProdID,
-                        Albums.provider_type
+                        Albums.provider_type,
+                        TopSingles.SortId
                 FROM
                         Songs AS Song
+                                INNER JOIN
+                        top_singles as TopSingles ON (TopSingles.prod_id = Song.ProdID AND TopSingles.Territory = '$territory')
                                 LEFT JOIN
                         File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                                 LEFT JOIN
@@ -2020,7 +2024,7 @@ STR;
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) 
                 GROUP BY Song.ProdID
-                ORDER BY FIELD(Song.ProdID,$ids) DESC
+                ORDER BY SortId ASC
                 LIMIT 50 
 
 STR;

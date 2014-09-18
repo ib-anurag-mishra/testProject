@@ -3103,6 +3103,20 @@ sub { top: 0.4em; }
 								text-decoration: none;
 							}                                
                         }
+
+						.wishlist-icon {
+
+							text-indent: -9999px;
+							text-decoration: none;
+							cursor: pointer;
+							position: absolute;
+							left: 35px;
+							top: 5px;
+							width: 26px;
+							height: 20px;
+							background: url(../img/freegal_sprite.png) 0 -100px;
+							opacity: 0;							
+						}                        
 						
 						.wishlist-popover {
 						
@@ -6093,6 +6107,7 @@ sub { top: 0.4em; }
                     opacity: 0;
                     width: 36px;
                     height: 36px;
+                    padding: 5px;
                     // top: 270px;
                     // left: 395px;
                     // height: 25px;
@@ -6307,6 +6322,7 @@ sub { top: 0.4em; }
                 	height: 36px;
                 	background: url(../img/freegal_sprite.png) -380px -225px;
                 	opacity: 0;
+
                 }
 
 			}

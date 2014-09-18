@@ -94,7 +94,7 @@ class Album extends AppModel  {
 				'Album.Label',
 				'Album.Copyright',
 				'Album.provider_type',
-				'ta.id as sortID'
+				'ta.sortId as sortID'
 			),
 			'contain' => array(
 				'Genre' => array(
@@ -110,7 +110,7 @@ class Album extends AppModel  {
 					)
 				)
 			),
-			'order' => 'sortID DESC',
+			'order' => 'sortID Asc',
 			'limit' => 25
 		));
 
