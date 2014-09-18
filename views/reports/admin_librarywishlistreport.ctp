@@ -198,7 +198,7 @@
                                                 if(isset($wishlist['Library']['show_barcode']) && $wishlist['Library']['show_barcode'] == 1){
                                                     echo $wishlist['Wishlist']['patron_id']; 
                                                 }else{
-                                                    echo '--';
+                                                    echo $wishlist['Currentpatrons']['id'];
                                                 }
                                                 ?>                                          
                                                 </td>                                                                                           
