@@ -520,11 +520,11 @@ $(document).ready(function() {
 
 
 
-    // $('.genre-list').bindMouseWheel();
-    // $('.alphabetical-filter').bindMouseWheel();
-    // $('.artist-list').bindMouseWheel();
-    // $('.album-list').bindMouseWheel();
-    // $('.albums-page').find('.album-cover-image').find('ul').bindMouseWheel();
+    $('.genre-list').bindMouseWheel();
+    $('.alphabetical-filter').bindMouseWheel();
+    $('.artist-list').bindMouseWheel();
+    $('.album-list').bindMouseWheel();
+    $('.albums-page').find('.album-cover-image').find('ul').bindMouseWheel();
 
     /* end genres page */
 
@@ -806,8 +806,8 @@ $(document).ready(function() {
 
 
 
-    $('.recent-downloads-page .recent-downloads-scrollable').bindMouseWheel();
-    $('.recent-downloads-page .recent-video-downloads-scrollable').bindMouseWheel();
+    // $('.recent-downloads-page .recent-downloads-scrollable').bindMouseWheel();
+    // $('.recent-downloads-page .recent-video-downloads-scrollable').bindMouseWheel();
 
 
 
