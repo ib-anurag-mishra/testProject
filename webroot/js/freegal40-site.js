@@ -1,28 +1,28 @@
-(function($) {
+// (function($) {
 
-    $.fn.bindMouseWheel = function() {
+//     $.fn.bindMouseWheel = function() {
 
-        return this.each(function() {
+//         return this.each(function() {
 
-            $(this).bind('mousewheel', function(e) {
+//             $(this).bind('mousewheel', function(e) {
 
-                $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-                //prevent page fom scrolling
-                return false;
+//                 $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+//                 //prevent page fom scrolling
+//                 return false;
 
-            });
-
-
-
-
-        });
+//             });
 
 
 
-    };
+
+//         });
 
 
-}(jQuery));
+
+//     };
+
+
+// }(jQuery));
 
 
 
