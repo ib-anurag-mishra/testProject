@@ -173,7 +173,7 @@ $(document).ready(function() {
 
 
 
-    // $('.library-list-scrollable').bindMouseWheel();
+    $('.library-list-scrollable').bindMouseWheel();
 
 
 
@@ -520,11 +520,11 @@ $(document).ready(function() {
 
 
 
-    $('.genre-list').bindMouseWheel();
-    $('.alphabetical-filter').bindMouseWheel();
-    $('.artist-list').bindMouseWheel();
-    $('.album-list').bindMouseWheel();
-    $('.albums-page').find('.album-cover-image').find('ul').bindMouseWheel();
+    // $('.genre-list').bindMouseWheel();
+    // $('.alphabetical-filter').bindMouseWheel();
+    // $('.artist-list').bindMouseWheel();
+    // $('.album-list').bindMouseWheel();
+    // $('.albums-page').find('.album-cover-image').find('ul').bindMouseWheel();
 
     /* end genres page */
 
