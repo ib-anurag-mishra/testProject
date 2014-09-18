@@ -806,8 +806,8 @@ $(document).ready(function() {
 
 
 
-    // $('.recent-downloads-page .recent-downloads-scrollable').bindMouseWheel();
-    // $('.recent-downloads-page .recent-video-downloads-scrollable').bindMouseWheel();
+    $('.recent-downloads-page .recent-downloads-scrollable').bindMouseWheel();
+    $('.recent-downloads-page .recent-video-downloads-scrollable').bindMouseWheel();
 
 
 
@@ -866,7 +866,7 @@ $(document).ready(function() {
 
 
 
-    $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
+    // $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
 
     $(document).on('click', '.saved-queues-page .add-to-playlist-button', function() {
 
