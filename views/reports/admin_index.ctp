@@ -346,7 +346,7 @@ if (empty($getData)) {
                                             if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
                                                 echo $patronDownload['Downloadpatron']['patron_id']; 
                                             }else{
-                                                echo $patronDownload['Currentpatrons']['patron_id']; 
+                                                echo $patronDownload['Currentpatrons']['id']; 
                                             }
                                             ?>                                          
                                             </td>
@@ -383,7 +383,7 @@ if (empty($getData)) {
                                                 if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
                                                     echo $patronDownload['DownloadVideoPatron']['patron_id']; 
                                                 }else{
-                                                    echo $patronDownload['Currentpatrons']['patron_id'];
+                                                    echo $patronDownload['Currentpatrons']['id'];
                                                 }
                                                 ?>                                          
                                             </td>  
