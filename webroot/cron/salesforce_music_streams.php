@@ -198,11 +198,11 @@ class salesfore_reports {
 			unlink($file_name);
 		}
 		$report = fopen($file_name, 'w') or die("Can't open file");
-		$header = 'customer_id,library_name,cte,contract_start_date,contract_end_date,value_of_contract,streaming_hours_per_day,' . $labels[0] . ',' . $labels[1] . ',' . $labels[2] . ',' . $labels[3] . ',' . $labels[4] . "\n";
+		$header = 'customer_id,library_name,cte,contract_start_date,contract_end_date,value_of_contract,renewal_start_date,renewal_end_date,value_of_renewal,streaming_hours_per_day,' . $labels[0] . ',' . $labels[1] . ',' . $labels[2] . ',' . $labels[3] . ',' . $labels[4] . "\n";
 		fwrite($report, $header);
 
 		foreach ($final as $key => $value) {
-			$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['cte'] . ',' . $value['contract_start_date'] . ',' . $value['contract_end_date'] . ',' . $value['value_of_contract'] . ',' . $value['streaming_hours_per_day'] . ',' . $value[$labels[0]] . ',' . $value[$labels[1]] . ',' . $value[$labels[2]] . ',' . $value[$labels[3]] . ',' . $value[$labels[4]] . "\n";
+			$string = $value['customer_id'] . ',' . $value['library_name'] . ',' . $value['cte'] . ',' . $value['contract_start_date'] . ',' . $value['contract_end_date'] . ',' . $value['value_of_contract'] . ',,,,' . $value['streaming_hours_per_day'] . ',' . $value[$labels[0]] . ',' . $value[$labels[1]] . ',' . $value[$labels[2]] . ',' . $value[$labels[3]] . ',' . $value[$labels[4]] . "\n";
 			fwrite($report, $string);
 		}
 		fclose($report);
