@@ -495,9 +495,6 @@ function login($library = null){
 				if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 					$this->Session->write('Config.language', $libraryArr['Library']['library_language']);
 				}
-				$this->Download->recursive = -1;
-				$results =  $this->Download->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-				$this ->Session->write("downloadsUsed", $results);
 				if($libraryArr['Library']['library_block_explicit_content'] == '1'){
 					$this ->Session->write("block", 'yes');
 				}
@@ -1327,20 +1324,27 @@ function login($library = null){
         /*
         Function Name : unsubscribe
         Desc : For unsubscribe email notification information
+        * @param   $email  string  'user's email id'
+        * 
+        * @return void 
         */
         function unsubscribe($email){
+            //set the layout
+            $this->layout = 'home';            
             
             //if email address exist then remove it from table and redirect user to login page with message
             if(isset($email) && $email!=''){
-                $email = base64_decode($email);
-                $this->NotificationSubscriptions->deleteAll(array('email_id' => $email));
-                $this->Session->setFlash('You have successfully unsubscribed!');
-                $this->redirect($this->webroot.'users/login'); 
+                $email = base64_decode(trim($email));                
+                if($this->NotificationSubscriptions->deleteAll(array('email_id' => $email))){
+                    $message = 'You have successfully unsubscribed!';          
+                }else{
+                    $message = 'Unable to unsubscribe. Please try again later.';
+                }                      
             }else{
-                $this->redirect($this->webroot.'users/login'); 
-            }            
-           
-            exit;
+                $message = 'Unable to unsubscribe. Please try again later.';
+            }
+            $this->set('notificationMsg',$message);
+            
         }
         
          /*
@@ -1701,10 +1705,7 @@ function login($library = null){
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", 'no');
 						}
-						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -1949,9 +1950,6 @@ function login($library = null){
 							$this->Session->write("userlogin", 'no');
 						}
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$this->Download->recursive = -1;
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -2179,9 +2177,6 @@ function login($library = null){
 							$this->Session->write("userlogin", 'no');
 						}
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$this->Download->recursive = -1;
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -2409,9 +2404,6 @@ function login($library = null){
 							$this->Session->write("userlogin", 'no');
 						}
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$this->Download->recursive = -1;
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -2666,9 +2658,6 @@ function login($library = null){
 						$this->Session->write("userlogin", 'no');
 					}
 					$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-					$this->Download->recursive = -1;
-					$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-					$this ->Session->write("downloadsUsed", $results);
 					if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 						$this ->Session->write("block", 'yes');
 					}
@@ -2896,9 +2885,6 @@ function login($library = null){
 							$this->Session->write("userlogin", 'no');
 						}
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$this->Download->recursive = -1;
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -3125,10 +3111,7 @@ function login($library = null){
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", 'no');
 						}
-						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -3370,9 +3353,6 @@ function login($library = null){
 									$this->Session->write("userlogin", 'no');
 								}
 								$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-								$this->Download->recursive = -1;
-								$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-								$this ->Session->write("downloadsUsed", $results);
 								if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 								  $this ->Session->write("block", 'yes');
 								}
@@ -3599,9 +3579,6 @@ function login($library = null){
 									$this->Session->write("userlogin", 'no');
 								}
 								  $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-								  $this->Download->recursive = -1;
-								  $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-								  $this ->Session->write("downloadsUsed", $results);
 								  if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 									  $this ->Session->write("block", 'yes');
 								  }
@@ -3844,10 +3821,7 @@ function login($library = null){
 								$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 								$this->Session->write("userlogin", 'no');
 							}
-							$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-							$this->Download->recursive = -1;
-							$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-							$this ->Session->write("downloadsUsed", $results);
+                                                        $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 							if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 								$this ->Session->write("block", 'yes');
 							}
@@ -4072,9 +4046,6 @@ function login($library = null){
 							$this->Session->write("userlogin", 'no');
 						}
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$this->Download->recursive = -1;
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -4194,9 +4165,6 @@ function login($library = null){
 				$this->Session->write("userlogin", 'no');
 			}
 			$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-			$this->Download->recursive = -1;
-			$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $user,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-			$this ->Session->write("downloadsUsed", $results);
 			if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 				$this ->Session->write("block", 'yes');
 			}
@@ -4437,10 +4405,7 @@ function login($library = null){
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", 'no');
 						}
-						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 						  $this ->Session->write("block", 'yes');
 						}
@@ -4684,10 +4649,7 @@ function login($library = null){
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", 'no');
 						}
-						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 						  $this ->Session->write("block", 'yes');
 						}
@@ -4933,10 +4895,7 @@ function login($library = null){
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", 'no');
 						}
-						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 						  $this ->Session->write("block", 'yes');
 						}
@@ -5187,9 +5146,6 @@ function login($library = null){
 							$this->Session->write("userlogin", 'no');
 						}
 					   $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-					   $this->Download->recursive = -1;
-					   $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-					   $this ->Session->write("downloadsUsed", $results);
 					   if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 						   $this ->Session->write("block", 'yes');
 					   }
@@ -5416,9 +5372,6 @@ function login($library = null){
 							$this->Session->write("userlogin", 'no');
 						}
 					   $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-					   $this->Download->recursive = -1;
-					   $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-					   $this ->Session->write("downloadsUsed", $results);
 					   if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 						   $this ->Session->write("block", 'yes');
 					   }
@@ -5659,10 +5612,7 @@ function login($library = null){
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", 'no');
 						}
-						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($retStatus == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -5909,9 +5859,6 @@ function login($library = null){
 							$this->Session->write("userlogin", 'no');
 						}
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$this->Download->recursive = -1;
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}
@@ -6150,10 +6097,7 @@ function login($library = null){
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", 'no');
 						}
-						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-						$this ->Session->write("downloadsUsed", $results);
 						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
 							$this ->Session->write("block", 'yes');
 						}

@@ -81,7 +81,17 @@ class CacheController extends AppController {
                 $this->log("cache wrritten for mobile music videos list for territory_".$territory, "cache");
             }
         }
-    }   
+    } 
+    
+    
+    function runStreamingCache(){        
+         set_time_limit(0);
+         $this->Library->updateLibraryStreamingStatus();
+         exit;
+    }
+    
+    
+    
     
     /*
      * @func runCache
