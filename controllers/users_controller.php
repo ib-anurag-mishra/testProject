@@ -1333,7 +1333,7 @@ function login($library = null){
         */
         function unsubscribe($email){
             //set the layout
-            $this->layout = 'unsubscribe';            
+            $this->layout = 'home';            
             
             //if email address exist then remove it from table and redirect user to login page with message
             if(isset($email) && $email!=''){
