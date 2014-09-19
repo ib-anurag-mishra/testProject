@@ -424,24 +424,24 @@ class Library extends AppModel
     Desc : Get Library having less than 100 downloads
     */	
         
-        function getLibHavingLessThan100Downloads(){ 
-            
-         $this->unBindModel(array('belongsTo' => array('User'), 'hasMany' => array('LibraryPurchase')));   
-            
-         return $this->find('all', array('conditions' => 
-                                                    array('library_available_downloads <= 100',
-                                                          'library_status' => 'active',
-                                                         ),
-                                        'fields' => array(
-                                                            'Library.id',
-                                                            'Library.library_name',
-                                                            'Library.library_available_downloads',
-                                                            'Library.library_status',
-                                                        ),
-                                         'order' => array('Library.library_available_downloads ASC')
-                                       )                                        
-                                        
-                          );
+    function getLibHavingLessThan100Downloads(){ 
+
+     $this->unBindModel(array('belongsTo' => array('User'), 'hasMany' => array('LibraryPurchase')));   
+
+     return $this->find('all', array('conditions' => 
+                                                array('library_available_downloads <= 100',
+                                                      'library_status' => 'active',
+                                                     ),
+                                    'fields' => array(
+                                                        'Library.id',
+                                                        'Library.library_name',
+                                                        'Library.library_available_downloads',
+                                                        'Library.library_status',
+                                                    ),
+                                     'order' => array('Library.library_available_downloads ASC')
+                                   )                                        
+
+                      );
     }
     
     
@@ -536,22 +536,21 @@ class Library extends AppModel
 	function sendStreamingStatusChangeAlert($selectedLibraryInfo) {           
    
             
-            $emailTemplate = 'Hi'.'\n\n';
+            $emailTemplate = 'Hi'."\n\n";
             $emailTemplate .= 'This is the automated email contain list of libraries which streaming contract end today.';
-            $emailTemplate .= 'We have turned off streaming status of these libraries.'.'\n';            
-            $emailTemplate .='Library ID'.'\t'.'Library Name'.'\t'.'Streaming Contract End Date'.'\n';            
+            $emailTemplate .= 'We have turned off streaming status of these libraries.'."\n";            
+            $emailTemplate .='Library ID'.'\t'.'Library Name'.'\t'.'Streaming Contract End Date'."\n";            
+            $emailTemplate .='<table><tr><th>Library ID</th><th>Library Name</th><th>Streaming Contract End Date</th></tr>';
             
             foreach($selectedLibraryInfo as $key => $libInfo) {            
                 
-                $emailTemplate .= $libInfo['lib_id'] .'\t';
-                $emailTemplate .= $libInfo['lib_name'] .'\t';
-                $emailTemplate .= $libInfo['contract_end_date'] .'\t';
-                $emailTemplate .= '\n';
-            }        
+                $emailTemplate .= '<tr><td>'.$libInfo['lib_id'].'</td><td>'.$libInfo['lib_name'].'</td><td>'.$libInfo['contract_end_date'].'</td></td></tr>';
+            } 
             
-            $emailTemplate .= '\n\n';
-            $emailTemplate .= 'Thanks'.'\n';
-            $emailTemplate .= 'FreegalMusic'.'\n\n';
+            $emailTemplate .='</table>';
+            $emailTemplate .= "\n\n";
+            $emailTemplate .= 'Thanks'."n";
+            $emailTemplate .= 'FreegalMusic'."\n\n";
            
             //$to = "tech@libraryideas.com";
             $to = "nagesh4group@gmail.com";
@@ -581,6 +580,16 @@ class Library extends AppModel
             $result = $this->Email->send($emailTemplate);
             */
              
+        }
+        
+        /* Function : sendNormalEmails
+        * Desc: common function is used to send email without SMTP
+        * 
+        * @param $content string    
+        * 
+        */
+        function sendNormalEmails($to,$subject,$message,$headers) {
+            mail($to,$subject,$message,$headers);
         }
     
 }
