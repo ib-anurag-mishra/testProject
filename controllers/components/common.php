@@ -2858,9 +2858,22 @@ STR;
      	// More headers
      	$headers .= 'From: <no-reply@freegalmusic.com>' . "\r\n";
      	$headers .= 'Cc: libraryideas@infobeans.com' . "\r\n";
-
+        
+        //$this->sendNormalEmails($to,$subject,$message,$headers);
+        
      	// mail($to,$subject,$message,$headers);     
     }
+    
+    /* Function : sendNormalEmails
+     * Desc: common function is used to send email without SMTP
+     * 
+     * @param $content string    
+     * 
+     */
+     function sendNormalEmails($to,$subject,$message,$headers) {
+         mail($to,$subject,$message,$headers); 
+         
+     }
 
     /**
      * @function getVideoDetails

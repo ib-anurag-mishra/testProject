@@ -459,12 +459,14 @@ class Library extends AppModel
             $selectedLibraryInfo = array();
             $libraryPurchasesStreamingInstance = ClassRegistry::init('LibraryPurchasesStreaming');
             $contractLibraryStreamingPurchase = ClassRegistry::init('ContractLibraryStreamingPurchase');
-            $libraryInstance->recursive = -1;
-            $results = $this->find('all',array('conditions' => array('library_type = "2"','library_status'=>'active'),'fields' => array('id','library_type')));
-
-            if(!empty($result)) {
-                //fetch records id from library streaming purchas
-                foreach($result as $libArray) {
+            $this->recursive = -1;
+            $results = $this->find('all',array('conditions' => array('library_type = "2"','library_status'=>'active'),'fields' => array('id','library_type','library_name')));
+           
+            if(!empty($results)) {
+                $libraryPurchasesStreamingInstance->recursive = -1;
+                //fetch last records id from library streaming purchas for fetching contract dates
+                foreach($results as $libArray) {                   
+                   
                     $libPurchaseStreamingArr = $libraryPurchasesStreamingInstance->find('first',
                        array(
                         'conditions' =>array('library_id="'.$libArray['Library']['id'].'"'),
@@ -472,19 +474,22 @@ class Library extends AppModel
                         'order' => array('id desc'),
                         'limit' => 1
                     ));
-
+                     
                     //fetch streaming contract date end
                     if(!empty($libPurchaseStreamingArr)) {
                         foreach($libPurchaseStreamingArr as $libPurchaseStreamingValue) {
+                                                     
                             $libContractStreamingInfo = $contractLibraryStreamingPurchase->find('first',
                                array(
-                                'conditions' =>array('id_library_purchases_streaming="'.$libPurchaseStreamingInfo['LibraryPurchasesStreaming']['id'].'"'),
+                                'conditions' =>array('id_library_purchases_streaming="'.$libPurchaseStreamingValue['id'].'"'),
                                 'fields' => array('library_contract_end_date')
                             ));
-
+                            
+                           
+                            //check the library contract dates
                             if(isset($libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date']) &&
-                                    ($libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date'] != '0000-00-00')){
-
+                                    ($libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date'] != '0000-00-00')){                                    
+                                
                                 $currDate = strtotime(date("Y-m-d"));
                                 $contractEndDate = strtotime($libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date']);
 
@@ -501,9 +506,9 @@ class Library extends AppModel
                                    // if($this->save($updateArr)){
                                     if( 1 ) {
                                     
-                                        $selectedLibraryInfo[]['lib_id'] = $libArray['Library']['id'];
-                                        $selectedLibraryInfo[]['lib_name'] = $libArray['Library']['library_name'];
-                                        $selectedLibraryInfo[]['contract_end_date'] = $libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date'];                                                                               
+                                        $selectedLibraryInfo[$libArray['Library']['id']]['lib_id'] = $libArray['Library']['id'];
+                                        $selectedLibraryInfo[$libArray['Library']['id']]['lib_name'] = $libArray['Library']['library_name'];
+                                        $selectedLibraryInfo[$libArray['Library']['id']]['contract_end_date'] = $libContractStreamingInfo['ContractLibraryStreamingPurchase']['library_contract_end_date'];                                                                               
                                     }
                                     
                                     $this->setDataSource('default');
@@ -521,7 +526,7 @@ class Library extends AppModel
         }
         
     
-    /*
+       /*
 	Function Name : sendStreamingStatusChangeAlert
 	Desc : send email alert to all responsible
 	*	 
@@ -529,24 +534,42 @@ class Library extends AppModel
 	* @return void
 	*/
 	function sendStreamingStatusChangeAlert($selectedLibraryInfo) {           
+   
             
             $emailTemplate = 'Hi'.'\n\n';
             $emailTemplate .= 'This is the automated email contain list of libraries which streaming contract end today.';
-            $emailTemplate .= 'We have turned off streaming status of these libraries.'.'\n';
+            $emailTemplate .= 'We have turned off streaming status of these libraries.'.'\n';            
+            $emailTemplate .='Library ID'.'\t'.'Library Name'.'\t'.'Streaming Contract End Date'.'\n';            
             
-            $emailTemplate .='Library ID'.'\t'.'Library Name'.'\t'.'Streaming Contract End Date'.'\n';
-            foreach($selectedLibraryInfo as $libInfo) {
+            foreach($selectedLibraryInfo as $key => $libInfo) {            
+                
                 $emailTemplate .= $libInfo['lib_id'] .'\t';
                 $emailTemplate .= $libInfo['lib_name'] .'\t';
                 $emailTemplate .= $libInfo['contract_end_date'] .'\t';
+                $emailTemplate .= '\n';
             }        
             
             $emailTemplate .= '\n\n';
             $emailTemplate .= 'Thanks'.'\n';
             $emailTemplate .= 'FreegalMusic'.'\n\n';
+           
+            //$to = "tech@libraryideas.com";
+            $to = "nagesh4group@gmail.com";
+            $subject = "FreegalMusic - CRON job for streaming status turn off if contract over.";
+
+           
+
+            // Always set content-type when sending HTML email
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+            // More headers
+            $headers .= 'From: <no-reply@freegalmusic.com>' . "\r\n";
+            //$headers .= 'Cc: libraryideas@infobeans.com' . "\r\n";
+            $this->sendNormalEmails($to,$subject,$emailTemplate,$headers);
             
-            $this->Email->delivery = 'debug';
-            
+            /*            
+            $this->Email->delivery = 'debug';            
             $this->Email->to = 'narendra.nagesh@infobeans.com';
             $this->Email->from = Configure::read('App.adminEmail');
             $this->Email->fromName = Configure::read('App.fromName');
@@ -556,6 +579,8 @@ class Library extends AppModel
             $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
             $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
             $result = $this->Email->send($emailTemplate);
+            */
+             
         }
     
 }
