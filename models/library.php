@@ -537,10 +537,10 @@ class Library extends AppModel
    
             
             
-            $emailTemplate = "Hi,\n\n\n";
+            $emailTemplate = "Hi,<br />";
             $emailTemplate .= 'This is the automated email contain list of libraries which streaming contract end today.';
-            $emailTemplate .= 'We have turned off streaming status of these libraries.'."\n";            
-            $emailTemplate .= "\n\n\n";      
+            $emailTemplate .= 'We have turned off streaming status of these libraries.';            
+            $emailTemplate .= "<br /><br />";      
             $emailTemplate .='<table><tr><th>Library ID</th><th>Library Name</th><th>Streaming Contract End Date</th></tr>';
             
             foreach($selectedLibraryInfo as $key => $libInfo) {            
@@ -549,8 +549,8 @@ class Library extends AppModel
             } 
             
             $emailTemplate .='</table>';
-            $emailTemplate .= "\n\n\n\n";
-            $emailTemplate .= 'Thanks'."\n";
+            $emailTemplate .= "<br /><br />";
+            $emailTemplate .= 'Thanks'."<br />";
             $emailTemplate .= 'FreegalMusic'."\n\n";
            
             //$to = "tech@libraryideas.com";
