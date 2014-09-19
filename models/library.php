@@ -533,8 +533,9 @@ class Library extends AppModel
 	*
 	* @return void
 	*/
-	function sendStreamingStatusChangeAlert($selectedLibraryInfo) {           
+	function sendStreamingStatusChangeAlert($selectedLibraryInfo) {          
    
+            
             
             $emailTemplate = "Hi,\n\n\n";
             $emailTemplate .= 'This is the automated email contain list of libraries which streaming contract end today.';
