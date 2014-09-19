@@ -536,10 +536,10 @@ class Library extends AppModel
 	function sendStreamingStatusChangeAlert($selectedLibraryInfo) {           
    
             
-            $emailTemplate = 'Hi'."\n\n";
+            $emailTemplate = "Hi,\n\n\n";
             $emailTemplate .= 'This is the automated email contain list of libraries which streaming contract end today.';
             $emailTemplate .= 'We have turned off streaming status of these libraries.'."\n";            
-            $emailTemplate .='Library ID'.'\t'.'Library Name'.'\t'.'Streaming Contract End Date'."\n";            
+            $emailTemplate .= "\n\n\n";      
             $emailTemplate .='<table><tr><th>Library ID</th><th>Library Name</th><th>Streaming Contract End Date</th></tr>';
             
             foreach($selectedLibraryInfo as $key => $libInfo) {            
@@ -548,8 +548,8 @@ class Library extends AppModel
             } 
             
             $emailTemplate .='</table>';
-            $emailTemplate .= "\n\n";
-            $emailTemplate .= 'Thanks'."n";
+            $emailTemplate .= "\n\n\n\n";
+            $emailTemplate .= 'Thanks'."\n";
             $emailTemplate .= 'FreegalMusic'."\n\n";
            
             //$to = "tech@libraryideas.com";
