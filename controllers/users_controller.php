@@ -1329,18 +1329,22 @@ function login($library = null){
         Desc : For unsubscribe email notification information
         */
         function unsubscribe($email){
+            //set the layout
+            $this->layout = 'unsubscribe';            
             
             //if email address exist then remove it from table and redirect user to login page with message
             if(isset($email) && $email!=''){
-                $email = base64_decode($email);
-                $this->NotificationSubscriptions->deleteAll(array('email_id' => $email));
-                $this->Session->setFlash('You have successfully unsubscribed!');
-                $this->redirect($this->webroot.'users/login'); 
+                $email = base64_decode($email);                
+                if($this->NotificationSubscriptions->deleteAll(array('email_id' => $email))){
+                    $message = 'You have successfully unsubscribed!';          
+                }else{
+                    $message = 'Unable to unsubscribe. Please try again later.';
+                }                      
             }else{
-                $this->redirect($this->webroot.'users/login'); 
-            }            
-           
-            exit;
+                $message = 'Unable to unsubscribe. Please try again later.';
+            }
+            $this->set('notificationMsg',$message);
+            
         }
         
          /*
