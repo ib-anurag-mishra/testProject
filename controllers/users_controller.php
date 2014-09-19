@@ -1327,6 +1327,9 @@ function login($library = null){
         /*
         Function Name : unsubscribe
         Desc : For unsubscribe email notification information
+        * @param   $email  string  'user's email id'
+        * 
+        * @return void 
         */
         function unsubscribe($email){
             //set the layout
@@ -1334,7 +1337,7 @@ function login($library = null){
             
             //if email address exist then remove it from table and redirect user to login page with message
             if(isset($email) && $email!=''){
-                $email = base64_decode($email);                
+                $email = base64_decode(trim($email));                
                 if($this->NotificationSubscriptions->deleteAll(array('email_id' => $email))){
                     $message = 'You have successfully unsubscribed!';          
                 }else{
