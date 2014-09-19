@@ -1647,11 +1647,10 @@ STR;
                     $featureImageURL =  Configure::read('App.CDN') . 'featuredimg/' . $featured[$k]['Featuredartist']['artist_image'];
 
                      //check image file exist or not for each Artist
-                    if(!$this->checkImageFileExist($featureImageURL)){              
+                    if(!$this->checkImageFileExist($featureImageURL)) {              
                         //write broken image entry in the log files
                         $this->log($territory.' : ' .' Feature Artist and Composer : '. $featured[$k]['Featuredartist']['artist_name'], 'check_images');
                         $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'Feature Artist and Composer : '. $featured[$k]['Featuredartist']['artist_name'];
-
                         //unset the broken images variable in the array
                         unset($featured[$k]);
                     }

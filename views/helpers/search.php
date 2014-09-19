@@ -233,7 +233,7 @@ class SearchHelper extends AppHelper {
     	}
 
     	$arrAlbumInfo	  				  = array();
-    	$arrAlbumInfo['album_title'] 	  = $this->truncateText( $obj->getTextEncode( $palbum->Title ), 24, $obj, false );
+    	$arrAlbumInfo['album_title'] 	  = $this->truncateText( $obj->getTextEncode( $palbum->AlbumTitle ), 24, $obj, false );
     	$arrAlbumInfo['album_genre'] 	  = str_replace( '"', '', $palbum->Genre );
     	$arrAlbumInfo['linkArtistText']   = str_replace( '/', '@', base64_encode( $palbum->ArtistText ) );
     	$arrAlbumInfo['linkProviderType'] = base64_encode( $palbum->provider_type );
@@ -246,7 +246,7 @@ class SearchHelper extends AppHelper {
     	}
 
     	if ( isset( $palbum->AAdvisory ) && $palbum->AAdvisory == 'T') {
-    		$explicit = '<font class="explicit"> (' . __('Explicit', true) . '</font><br />';
+    		$explicit = '<font class="explicit"> (Explicit)</font><br />';
     	} else {
     		$explicit = '';
     	}

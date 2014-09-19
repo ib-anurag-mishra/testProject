@@ -391,25 +391,48 @@
     //Data loading
     if($this->data['Report']['library_id'] == "all") {
         foreach($dayStreamingInfo as $key => $stream) {
-                   $patron = $stream['Currentpatrons']['id'];
+            
+            if(isset($stream['lib']['show_barcode']) && $stream['lib']['show_barcode'] == 1){
+                $patron = $stream['StreamingHistory']['patron_id'];
+            }else{
+                $patron = $stream['Currentpatrons']['id'];
+            }
+            
+                   
             $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
             $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
         }
     }else{
         foreach($dayStreamingInfo as $key => $stream) {
-                    $patron = $stream['Currentpatrons']['id'];
+            
+            if(isset($stream['lib']['show_barcode']) && $stream['lib']['show_barcode'] == 1){
+                $patron = $stream['StreamingHistory']['patron_id'];
+            }else{
+                $patron = $stream['Currentpatrons']['id'];
+            }
+            
+                   
             $data[] = array($key+1, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
         }
     }
 
     if($this->data['Report']['library_id'] == "all") {
         foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-                    $patron_id = $patronStreamed['Currentpatrons']['id'];
+            
+            if(isset($patronStreamed['lib']['show_barcode']) && $patronStreamed['lib']['show_barcode'] == 1){
+                $patron_id = $patronStreamed['StreamingHistory']['patron_id'];                
+            }else{
+                $patron_id = $patronStreamed['Currentpatrons']['id'];
+            }     
             $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
         }
     }else{
         foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-                    $patron_id = $patronStreamed['Currentpatrons']['id'];
+            if(isset($patronStreamed['lib']['show_barcode']) && $patronStreamed['lib']['show_barcode'] == 1){
+                $patron_id = $patronStreamed['StreamingHistory']['patron_id'];                
+            }else{
+                $patron_id = $patronStreamed['Currentpatrons']['id'];
+            }   
             $patron_data[] = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
         }
     }
