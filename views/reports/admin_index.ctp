@@ -248,12 +248,8 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                        <th>Library Name</th>
-                                       <?php                                        
-                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
-                                                echo '<th>ID</th>';             
-                                         }
-                                        ?>
+                                        <th>Library Name</th>                                      
+                                        <th>ID</th>
                                         <th>Artists Name</th>
                                         <th>Track Title</th>
                                         <th>Download</th>
@@ -265,14 +261,16 @@ if (empty($getData)) {
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
-                                           <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?> 
+                                          
                                                 <td><?php                                             
                                                 if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1){
                                                     echo $download['Download']['patron_id']; 
+                                                }else{
+                                                    echo $download['Currentpatrons']['id'];
                                                 }
                                                 ?>                                          
                                                 </td>
-                                           <?php } ?>
+                                         
                                             <td><?php echo $this->getTextEncode($download['Download']['artist']); ?></td>
                                             <td><?php echo $this->getTextEncode($download['Download']['track_title']); ?></td>
                                             <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
@@ -293,11 +291,7 @@ if (empty($getData)) {
                                     <tr>
                                         <th>&nbsp;</th>
                                         <th>Library Name</th>
-                                        <?php                                        
-                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
-                                                echo '<th>ID</th>';             
-                                         }
-                                        ?>
+                                       <th>ID</th>
                                         <th>Artists Name</th>
                                         <th>Video Title</th>
                                         <th>Download</th>
@@ -309,14 +303,16 @@ if (empty($getData)) {
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($download['Videodownload']['library_id'])); ?></td>
-                                           <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?>  
+                                          
                                                 <td><?php                                             
                                                 if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1){
                                                     echo $download['Videodownload']['patron_id'];
+                                                }else{
+                                                    echo $download['Currentpatrons']['id'];
                                                 }
                                                 ?>                                          
                                                 </td>
-                                           <?php } ?>
+                                          
                                             <td><?php echo $this->getTextEncode($download['Videodownload']['artist']); ?></td>
                                             <td><?php echo $this->getTextEncode($download['Videodownload']['track_title']); ?></td>
                                             <td><?php echo date('Y-m-d', strtotime($download['Videodownload']['created'])); ?></td>
@@ -335,11 +331,7 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                         <?php                                        
-                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
-                                                echo '<th>ID</th>';             
-                                         }
-                                        ?>
+                                        <th>ID</th>
                                         <th>Library Name</th>
                                         <th>Total Number of Tracks Downloaded</th>
                                     </tr>
@@ -348,15 +340,17 @@ if (empty($getData)) {
                                     foreach ($patronDownloads as $key => $patronDownload) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $i; ?></td>                                            
-                                            <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?>   
+                                            <td><?php echo $i; ?></td>                                           
+                                              
                                             <td><?php                                             
                                             if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
                                                 echo $patronDownload['Downloadpatron']['patron_id']; 
+                                            }else{
+                                                echo $patronDownload['Currentpatrons']['id']; 
                                             }
                                             ?>                                          
                                             </td>
-                                             <?php } ?>
+                                            
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
                                             <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']); ?></td>
                                         </tr>
@@ -374,11 +368,7 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                      <?php                                        
-                                         if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { 
-                                                echo '<th>ID</th>';             
-                                         }
-                                        ?>
+                                      <th>ID</th>
                                         <th>Library Name</th>
                                         <th>Total Number of Videos Downloaded</th>
                                     </tr>
@@ -388,14 +378,16 @@ if (empty($getData)) {
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <?php if( ( isset( $library_id ) && $library_id == "all" ) || ( $librariesShowbarcoeValue == 1 ) ) { ?>   
+                                           
                                             <td><?php                                             
-                                            if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
-                                                echo $patronDownload['DownloadVideoPatron']['patron_id']; 
-                                            }
-                                            ?>                                          
+                                                if(isset($patronDownload['Library']['show_barcode']) && $patronDownload['Library']['show_barcode'] == 1){
+                                                    echo $patronDownload['DownloadVideoPatron']['patron_id']; 
+                                                }else{
+                                                    echo $patronDownload['Currentpatrons']['id'];
+                                                }
+                                                ?>                                          
                                             </td>  
-                                            <?php } ?>
+                                           
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])); ?></td>
                                             <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $patronDownload['DownloadVideoPatron']['total'] : $patronDownload[0]['total']); ?></td>
                                         </tr>
