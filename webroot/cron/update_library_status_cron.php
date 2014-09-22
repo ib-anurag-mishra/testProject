@@ -16,6 +16,7 @@
 
         $mailContent     = '';
         $send_mail       = 0;
+        $sr_no           = 1;
 
         while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) 
         {
@@ -36,7 +37,8 @@
                                 if($line['library_status']=='active')       // Send mail containing details of those libraries whose status is changed from active to inactive
                                 {
                                     $send_mail      = 1;
-                                    $mailContent   .=   $library_name. " (ID: ".$line['id'].", library_contract_end_date: ".$contractEndDate.") is set inactive.\n";                        
+                                    $mailContent   .=   $sr_no.") ".$library_name. " (ID: ".$line['id'].", library_contract_end_date: ".$line['library_contract_end_date'].") is set inactive.\n\n";                        
+                                    $sr_no++;
                                 }
                         }
 
@@ -53,14 +55,14 @@
         if($send_mail)
         {    
             $mailText        .=   "Hi,\n\n";
-            $mailText        .=   "Following is list of libraries whose contract is expired:\n\n";
+            $mailText        .=   "Following is list of libraries whose Download contract is expired:\n\n";
             $mailText        .=   $mailContent;  
-            $mailText        .=   "Thanks\n\n";
+            $mailText        .=   "\n\nThanks\n\n";
 
-            $to         = "narendra.nagesh@infobeans.com";
-            $subject    = "Libraries whose Contract is expired";
+            $to         = "kushal.pogul@infobeans.com";
+            $subject    = "FreegalMusic: Libraries whose Download Contract is expired";
             $headers    = "From:no-reply@freegalmusic.com" . "\r\n" .
-                          "BCC: kushal.pogul@infobeans.com";
+                          "BCC: kushalpogul@gmail.com";
 
             $mail_response = mail($to,$subject,$mailText,$headers);  
             

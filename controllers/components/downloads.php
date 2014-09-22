@@ -165,7 +165,7 @@ Class DownloadsComponent extends Object
             $mailContent     .=   "Thanks\n\n";
             
             $to         = "tech@libraryideas.com, briand@libraryideas.com, jimp@libraryideas.com";
-            $subject    = "List of Libraries having Remaining Downloads <= 100";
+            $subject    = "FreegalMusic: List of Libraries having Remaining Downloads <= 100";
             $headers    = "From:no-reply@freegalmusic.com" . "\r\n" .
 "BCC: kushal.pogul@infobeans.com"; 
             
