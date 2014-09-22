@@ -2,6 +2,7 @@
 
     $.fn.bindMouseWheel = function() {
 
+
         return this.each(function() {
 
             $(this).bind('mousewheel', function(e) {
@@ -28,7 +29,6 @@
 
 
 $(document).ready(function() {
-
 
     
 
@@ -673,8 +673,8 @@ $(document).ready(function() {
 
 
 
-    // $('.my-wishlist-page .my-wishlist-scrollable').bindMouseWheel();
-    // $('.my-wishlist-page .my-video-wishlist-scrollable').bindMouseWheel();
+    /* $('.my-wishlist-page .my-wishlist-scrollable').bindMouseWheel(); */
+    /* $('.my-wishlist-page .my-video-wishlist-scrollable').bindMouseWheel(); */
 
 
 
@@ -1850,6 +1850,18 @@ $(document).ready(function() {
         $(this).next('ul').append(queuelist).addClass('active');
 
     });
+
+
+    $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').on('mouseleave',function(e){
+        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+            $(this).next('ul').removeClass('active');
+
+        }
+
+    });
+
+
+
 
     $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').next('ul').on('mouseleave',function(){
         $(this).removeClass('active');
