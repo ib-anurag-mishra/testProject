@@ -535,52 +535,53 @@ class Library extends AppModel
 	*/
 	function sendStreamingStatusChangeAlert($selectedLibraryInfo) {          
    
-            
-            
-            $emailTemplate = "Hi,<br /><br />";
-            $emailTemplate .= 'This is the automated email contain list of libraries which streaming contract end today.';
-            $emailTemplate .= 'We have turned off streaming status of these libraries.';            
-            $emailTemplate .= "<br /><br />";      
-            $emailTemplate .='<table CELLPADDING=5><tr><th>Library ID</th><th>Library Name</th><th>Streaming Contract End Date</th></tr>';
-            
-            foreach($selectedLibraryInfo as $key => $libInfo) {            
-                
-                $emailTemplate .= '<tr><td>'.$libInfo['lib_id'].'</td><td>'.$libInfo['lib_name'].'</td><td>'.$libInfo['contract_end_date'].'</td></td></tr>';
-            } 
-            
-            $emailTemplate .='</table>';
-            $emailTemplate .= "<br /><br />";
-            $emailTemplate .= 'Thanks'."<br />";
-            $emailTemplate .= 'FreegalMusic'."\n\n";
+            if( !empty( $selectedLibraryInfo ) ){               
            
-            //$to = "tech@libraryideas.com";
-            $to = "nagesh4group@gmail.com";
-            $subject = "FreegalMusic - CRON job for streaming status turn off if contract over.";
+                //create template for alert
+                $emailTemplate = "Hi,<br /><br />";
+                $emailTemplate .= 'This is the automated email contain list of libraries which streaming contract end today.';
+                $emailTemplate .= 'We have turned off streaming status of these libraries.';            
+                $emailTemplate .= "<br /><br />";      
+                $emailTemplate .='<table CELLPADDING=5><tr><th>Library ID</th><th>Library Name</th><th>Streaming Contract End Date</th></tr>';
 
-           
+                foreach($selectedLibraryInfo as $key => $libInfo) {          
 
-            // Always set content-type when sending HTML email
-            $headers = "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+                    $emailTemplate .= '<tr><td>'.$libInfo['lib_id'].'</td><td>'.$libInfo['lib_name'].'</td><td>'.$libInfo['contract_end_date'].'</td></td></tr>';
+                } 
 
-            // More headers
-            $headers .= 'From: <no-reply@freegalmusic.com>' . "\r\n";
-            //$headers .= 'Cc: libraryideas@infobeans.com' . "\r\n";
-            $this->sendNormalEmails($to,$subject,$emailTemplate,$headers);
-            
-            /*            
-            $this->Email->delivery = 'debug';            
-            $this->Email->to = 'narendra.nagesh@infobeans.com';
-            $this->Email->from = Configure::read('App.adminEmail');
-            $this->Email->fromName = Configure::read('App.fromName');
-            $this->Email->subject = 'FreegalMusic - Streaming status turned off';
-            $this->Email->smtpHostNames = Configure::read('App.SMTP');
-            $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
-            $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
-            $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
-            $result = $this->Email->send($emailTemplate);
-            */
-             
+                $emailTemplate .='</table>';
+                $emailTemplate .= "<br /><br />";
+                $emailTemplate .= 'Thanks'."<br />";
+                $emailTemplate .= 'FreegalMusic'."\n\n";
+
+                //$to = "tech@libraryideas.com";
+                $to = "nagesh4group@gmail.com";
+                $subject = "FreegalMusic - CRON job for streaming status turn off if contract over.";
+
+
+
+                // Always set content-type when sending HTML email
+                $headers = "MIME-Version: 1.0" . "\r\n";
+                $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+                // More headers
+                $headers .= 'From: <no-reply@freegalmusic.com>' . "\r\n";
+                //$headers .= 'Cc: libraryideas@infobeans.com' . "\r\n";
+                $this->sendNormalEmails($to,$subject,$emailTemplate,$headers);
+
+                /*            
+                $this->Email->delivery = 'debug';            
+                $this->Email->to = 'narendra.nagesh@infobeans.com';
+                $this->Email->from = Configure::read('App.adminEmail');
+                $this->Email->fromName = Configure::read('App.fromName');
+                $this->Email->subject = 'FreegalMusic - Streaming status turned off';
+                $this->Email->smtpHostNames = Configure::read('App.SMTP');
+                $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
+                $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
+                $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
+                $result = $this->Email->send($emailTemplate);
+                */
+            }             
         }
         
         /* Function : sendNormalEmails
