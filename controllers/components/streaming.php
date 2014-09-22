@@ -800,4 +800,9 @@ Class StreamingComponent extends Object
 		return $var;
 
 	}
+        
+        
+        
+        
+        
 }
