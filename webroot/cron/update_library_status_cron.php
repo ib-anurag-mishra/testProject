@@ -57,7 +57,7 @@
             $mailText        .=   "Hi,\n\n";
             $mailText        .=   "Following is list of libraries whose Download contract is expired:\n\n";
             $mailText        .=   $mailContent;  
-            $mailText        .=   "\n\nThanks\n\n";
+            $mailText        .=   "\nThanks\n\n";
 
             $to         = "kushal.pogul@infobeans.com";
             $subject    = "FreegalMusic: Libraries whose Download Contract is expired";
