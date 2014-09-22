@@ -1,7 +1,7 @@
 <section class="videos">
         <div class="breadcrumbs">                
          <?php
-            $html->addCrumb(__('Videos'), true), '/videos' );
+            $html->addCrumb(__('Videos', true), '/videos' );
             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
           ?>
         </div>
