@@ -754,6 +754,11 @@ class SoapsController extends AppController {
     $territory = $libraryData['Library']['library_territory'];
 
     $nationalTopDownloadTmp = Cache::read("top_singles".$territory);
+	
+	if ($nationalTopDownloadTmp === false || $nationalTopDownloadTmp == null) {
+            $nationalTopDownloadTmp = $this->Common->getTopSingles($territory);
+    }
+
     $nationalTopDownload = array_splice($nationalTopDownloadTmp,0,10);
     
     
@@ -808,8 +813,6 @@ class SoapsController extends AppController {
 
       throw new SOAPFault('Soap:client', 'NationalTopTen list is empty');
     }
-
-
 
   }
 
