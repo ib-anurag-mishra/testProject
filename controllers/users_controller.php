@@ -1334,10 +1334,11 @@ function login($library = null){
         function unsubscribe($email){
             //set the layout
             $this->layout = 'home';            
-            
+             $this->NotificationSubscriptions->setDataSource('master');
             //if email address exist then remove it from table and redirect user to login page with message
             if(isset($email) && $email!=''){
-                $email = base64_decode(trim($email));                
+                $email = base64_decode(trim($email));  
+               
                 if($this->NotificationSubscriptions->deleteAll(array('email_id' => $email))){
                     $message = 'You have successfully unsubscribed!';          
                 }else{
@@ -1346,6 +1347,7 @@ function login($library = null){
             }else{
                 $message = 'Unable to unsubscribe. Please try again later.';
             }
+            $this->NotificationSubscriptions->setDataSource('default');
             $this->set('notificationMsg',$message);
             
         }
