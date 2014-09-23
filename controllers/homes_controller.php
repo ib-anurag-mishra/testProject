@@ -2691,10 +2691,10 @@ STR;
             $this->Library->setDataSource('default');
             if (is_numeric($return))
             {                
-                $this->Videodownload->recursive = -1;
-                $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-                $this->Download->recursive = -1;
-                $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+                $this->LatestVideodownload->recursive = -1;
+                $videodownloadsUsed = $this->LatestVideodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+                $this->LatestDownload->recursive = -1;
+                $downloadscount = $this->LatestDownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
                 $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
                 //updating session for VideoDown load status
                 $this->Common->getVideodownloadStatus($libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'), true);
