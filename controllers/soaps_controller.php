@@ -754,6 +754,11 @@ class SoapsController extends AppController {
     $territory = $libraryData['Library']['library_territory'];
 
     $nationalTopDownloadTmp = Cache::read("top_singles".$territory);
+	
+	if ($nationalTopDownloadTmp === false || $nationalTopDownloadTmp == null) {
+            $nationalTopDownloadTmp = $this->Common->getTopSingles($territory);
+    }
+
     $nationalTopDownload = array_splice($nationalTopDownloadTmp,0,10);
     
     
@@ -808,8 +813,6 @@ class SoapsController extends AppController {
 
       throw new SOAPFault('Soap:client', 'NationalTopTen list is empty');
     }
-
-
 
   }
 
@@ -912,81 +915,13 @@ class SoapsController extends AppController {
     $library_territory = $libraryDetails['Library']['library_territory'];
 
     $topDownloadCache = Cache::read("lib".$libraryId);
-    if (($libDownload = $topDownloadCache ) === false) {
-      
-      $this->Session->write('territory', $library_territory); 
-      $this->switchCpuntriesTable();
-      $breakdown_table = $this->Session->read('multiple_countries').'countries';
-      
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
-			$ids = '';
-
-			foreach($topDownloaded as $k => $v){
-				if(empty($ids)){
-				  $ids .= $v['Download']['ProdID'];
-				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				} else {
-				  $ids .= ','.$v['Download']['ProdID'];
-				   $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				}
-			}
-
-			if($ids != ''){
-				$this->Song->recursive = 2;
-				 $topDownloaded_query =<<<STR
-				SELECT
-					Song.ProdID,
-					Song.ReferenceID,
-					Song.Title,
-					Song.ArtistText,
-					Song.SongTitle,
-					Song.Artist,
-					Song.Advisory,
-					Song.Sample_Duration,
-					Song.FullLength_Duration,
-					Song.provider_type,
-					Genre.Genre,
-					Country.Territory,
-					Country.SalesDate,
-					Sample_Files.CdnPath,
-					Sample_Files.SaveAsName,
-					Full_Files.CdnPath,
-					Full_Files.SaveAsName,
-					Sample_Files.FileID,
-					Full_Files.FileID,
-					PRODUCT.pid
-				FROM
-					Songs AS Song
-						LEFT JOIN
-					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-						LEFT JOIN
-					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
-						LEFT JOIN
-					$breakdown_table AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type)
-						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
-				WHERE
-					( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$library_territory') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
-				GROUP BY Song.ProdID
-				ORDER BY FIELD(Song.ProdID,
-						$ids) ASC
-				LIMIT 10
-STR;
-
-
-
-			$topDownload = $this->Album->query($topDownloaded_query);
-
-			} else {
-				$topDownload = array();
-			}
-			Cache::write("lib".$libraryId, $topDownload);
-		}
-		else {
+    
+	if( $topDownloadCache === false || $topDownloadCache == null ){
+		$topDownload = $this->Common->getLibraryTopTenSongs($library_territory, $libraryId);
+	}
+	else {
 		$topDownload = $topDownloadCache;
-		}
+	}
 
     if(!(empty($topDownload))) {
 
