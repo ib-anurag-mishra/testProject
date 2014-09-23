@@ -30,7 +30,7 @@ Class DownloadsComponent extends Object
 	Desc : function used for checking patron downloads
 	*/
 	function checkPatronDownload($patId,$libId) {
-		$downloadInstance = ClassRegistry::init('Download');
+		$downloadInstance = ClassRegistry::init('LatestDownload');
 		$libraryInstance = ClassRegistry::init('Library');
 		$libraryInstance->recursive = -1;
 		$downloadInstance->recursive = -1;
@@ -38,7 +38,7 @@ Class DownloadsComponent extends Object
 		$patronLimit = $libraryResults['0']['Library']['library_user_download_limit'];
 		$results = $downloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN "'.Configure::read('App.curWeekStartDate').'" and "'.Configure::read('App.curWeekEndDate').'" ')));
 
-		$videoDownloadInstance = ClassRegistry::init('Videodownload');
+		$videoDownloadInstance = ClassRegistry::init('LatestVideodownload');
 		$videoDownloadInstance->recursive = -1;
 		$videoDownloadCount = $videoDownloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 		$videoDownloadCount = $videoDownloadCount *2;
