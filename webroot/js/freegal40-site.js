@@ -1842,7 +1842,7 @@ $(document).ready(function() {
 
     /* added for my lib top 10 */
     $('.my-top-100-page .album-container .add-to-playlist-button,.my-top-100-page .song-container .add-to-playlist-button').on('click',function(e){
-        e.preventDefault();
+        // e.preventDefault();
         
         var oldList = $(this).next('ul');
         oldList.empty();
