@@ -1853,7 +1853,7 @@ $(document).ready(function() {
 
 
     $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').on('mouseleave',function(e){
-        console.log('mouse leave in FF');
+        console.log('mouse leave');
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
             $(this).next('ul').removeClass('active');
 
