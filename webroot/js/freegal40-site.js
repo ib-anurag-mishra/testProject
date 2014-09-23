@@ -1842,8 +1842,8 @@ $(document).ready(function() {
 
     /* added for my lib top 10 */
     $('.my-top-100-page .album-container .add-to-playlist-button,.my-top-100-page .song-container .add-to-playlist-button').on('click',function(e){
-        // e.preventDefault();
-        console.log('clicked');
+        e.preventDefault();
+
         var oldList = $(this).next('ul');
         oldList.empty();
         var queuelist = $(document).find('.playlist-options-new').find('ul').html();
@@ -1853,7 +1853,7 @@ $(document).ready(function() {
 
 
     $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').on('mouseleave',function(e){
-        console.log('mouse leave');
+
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
             $(this).next('ul').removeClass('active');
 
