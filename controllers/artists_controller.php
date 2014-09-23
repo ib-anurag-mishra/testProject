@@ -2201,6 +2201,7 @@ Class ArtistsController extends AppController {
                         )), $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
 
             $val = '';
+            $val_provider_type = '';
 
             foreach ($songs as $k => $v) {
                 $val = $val . $v['Song']['ReferenceID'] . ",";
@@ -3822,11 +3823,14 @@ Class ArtistsController extends AppController {
             $facetPage = $this->params['pass'][1];
         }
         if(isset($composer_text)){
-            $totalFacetCount = $this->Solr->getFacetSearchTotal('"'.$composer_text.'"', 'album',1);
             $limit = 12;
             $albums = $this->Solr->groupSearch('"'.$composer_text.'"', 'album', $facetPage, $limit , 0, null, 1);
+            $totalFacetCount = $albums['ngroups'];
             $arr_albumStream = array();
             foreach ($albums as $objKey => $objAlbum) {
+            	if ( !is_object( $objAlbum ) ) {
+            		continue;
+            	}
                 $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
                         array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
                 );
