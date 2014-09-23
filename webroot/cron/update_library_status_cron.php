@@ -59,10 +59,10 @@
             $mailText        .=   $mailContent;  
             $mailText        .=   "\nThanks\n\n";
 
-            $to         = "kushal.pogul@infobeans.com";
-            $subject    = "FreegalMusic: Libraries whose Download Contract is expired";
+            $to         = "tech@libraryideas.com";
+            $subject    = "FreegalMusic: Libraries whose Download Contract is expired Today";
             $headers    = "From:no-reply@freegalmusic.com" . "\r\n" .
-                          "BCC: kushalpogul@gmail.com";
+                          "BCC: kushal.pogul@infobeans.com";
 
             $mail_response = mail($to,$subject,$mailText,$headers);  
             
