@@ -909,7 +909,7 @@ $(document).ready(function() {
     });
 
     $('.gear-icon').on('mouseleave',function(){
-
+        console.log('mouseleave');
         console.log('offset is ' + e.offsetX);
 
         // if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
