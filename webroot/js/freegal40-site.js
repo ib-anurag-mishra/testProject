@@ -920,11 +920,9 @@ $(document).ready(function() {
 
     });
 
-    $('.gear-icon').on('mousemove', function(e) {
-        console.log('mousemove');
-        if (!e.target.tagName && !e.relatedTarget) {
-             console.log('mouseleave');
-        }
+    $('.gear-icon').on('mouseenter', function(e) {
+
+        console.log('mouseenter');
     });    
 
 
