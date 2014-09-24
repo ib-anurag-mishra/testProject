@@ -10,7 +10,7 @@ class HomesController extends AppController {
 
     var $name = 'Homes';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'WishlistVideo', 'Song', 'Language', 'Session', 'Mvideo', 'Download', 'Videodownload', 'Queue', 'Token');
-    var $components = array('RequestHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming');
+    var $components = array('RequestHandler','CacheHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming');
     var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload', 'Zipcode', 'StreamingHistory', 'MemDatas', 'Token');
 
     /*
@@ -3274,6 +3274,7 @@ STR;
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
         
         if( $this->Session->read('block') == 'yes' ) {
+           
         
         	$new_releases_albums_rs = Cache::read("new_releases_albums_none_explicit" . $territory);
         
@@ -3281,14 +3282,23 @@ STR;
 
         		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory, true);
         	}
+                
         } else {
         
+                //fetch record in cache
         	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
-        
-        	if ($new_releases_albums_rs === false) {
-
-        
-        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+                
+               //$this->CacheHandler->setMemData("new_releases_albums" . $territory,$new_releases_albums_rs);die;
+                
+                //if cache not set
+        	//if ( $new_releases_albums_rs === false ) {
+                    if ( 1 ) {
+                        //check variable data in to mem_datas table
+                        $new_releases_albums_rs = $this->CacheHandler->checkMemData("new_releases_albums" . $territory);
+                        //if not found then run query in the table
+                        if( $new_releases_albums_rs === false ){
+                            $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+                        }      		
         	}
         }
 
