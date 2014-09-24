@@ -103,7 +103,16 @@ $(document).ready(function() {
     });    
 
 
+    $('.albums-page').find('.album-detail-container').on('mouseleave',function(){
 
+        $(this).find('ul').removeClass('active');
+
+    });
+
+    $('.albums-page').find('.album-detail-container').find('.wishlist-icon').on('mouseenter',function(){
+        $(this).prev('ul').removeClass('active');
+
+    });
 
 
     
