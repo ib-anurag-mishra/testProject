@@ -914,7 +914,7 @@ $(document).ready(function() {
 
 
 
-            if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height() || e.pageY > $(this).height() + 70) {
+            if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height() || e.pageY > $(this).height() + 500) {
 
                 $(this).parent().next('.queue-options').removeClass('active');
             }
