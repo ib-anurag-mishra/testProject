@@ -74,7 +74,7 @@ Class CacheHandlerComponent extends Object  {
         $memDatasInstance->recursive = -1;
         
         $encodedDataValue = base64_encode(serialize($dataArray));
-        
+        $memDatasInstance->setDataSource('master');
         //check cache variable exist in mem_datas table or not
         $cacheVarInfo =  $this->checkMemdataVariableExist($cacheVariableName);
         if( $cacheVarInfo != false ) { 
@@ -86,6 +86,8 @@ Class CacheHandlerComponent extends Object  {
             $memDataFieldArr = array('cache_variable_name' => $cacheVariableName , 'vari_info' => $encodedDataValue ); 
         } 
         $memDatasInstance->save($memDataFieldArr); 
+        
+        $memDatasInstance->setDataSource('default');
     }
     
     
