@@ -6434,8 +6434,8 @@ class SoapsController extends AppController {
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->Title                = $this->getTextUTF($val->AlbumTitle);
+      $sobj->SongArtist           = $this->getTextUTF($val->ArtistText);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
       $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration); 
@@ -6520,8 +6520,8 @@ class SoapsController extends AppController {
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->Title                = $this->getTextUTF($val->AlbumTitle);
+      $sobj->SongArtist           = $this->getTextUTF($val->ArtistText);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
       $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration); 
@@ -6679,8 +6679,8 @@ class SoapsController extends AppController {
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->Title                = $this->getTextUTF($val->AlbumTitle);
+      $sobj->SongArtist           = $this->getTextUTF($val->ArtistText);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
       $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration);
@@ -6762,8 +6762,8 @@ class SoapsController extends AppController {
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->VideoTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->Title                = $this->getTextUTF($val->VideoTitle);
+      $sobj->SongArtist           = $this->getTextUTF($val->ArtistText);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = '';
       $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration);

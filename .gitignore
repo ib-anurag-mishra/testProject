@@ -30,3 +30,5 @@ webroot/uploads/*.txt
 *.scssc
 
 *.scssc
+
+webroot/.sass-cache/8bcde7e82c18b8c17d21bcef1e330cbd65088869/freegal40.scssc

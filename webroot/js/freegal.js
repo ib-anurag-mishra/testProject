@@ -2868,35 +2868,6 @@ $(document).ready(function() {
 
     });
 
-    $('.my-wishlist-page .my-wishlist-scrollable').bind('mousewheel', function(e) {
-
-
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
-        //prevent page fom scrolling
-        return false;
-
-
-    });
-
-    $('.my-wishlist-page .my-video-wishlist-scrollable').bind('mousewheel', function(e) {
-
-
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
-        //prevent page fom scrolling
-        return false;
-
-
-    });
 
     $('.my-wishlist-page .add-to-wishlist-button').on('click', function(e) {
         e.preventDefault();
@@ -2909,29 +2880,7 @@ $(document).ready(function() {
         $(this).removeClass('active');
     });
 
-    $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
 
-    $('.my-wishlist-page .my-wishlist-scrollable').on('scroll', function(e) {
-
-        $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').removeClass('top');
-
-
-        $('.my-wishlist-page .my-wishlist-scrollable .row').each(function(e) {
-
-            if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-
-
-
-
-                $(this).find('.wishlist-popover').addClass('top');
-
-
-
-            }
-
-        });
-
-    });
 
     $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
