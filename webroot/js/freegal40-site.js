@@ -909,17 +909,23 @@ $(document).ready(function() {
     });
 
     $('.gear-icon').on('mouseleave',function(e){
+
+        var x = e.offsetX==undefined?e.layerX:e.offsetX;
+        var y = e.offsetY==undefined?e.layerY:e.offsetY;
+
         // if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
 
         //     $(this).parent().next('.queue-options').removeClass('active');
         // }
 
+        if (x < 0 || x > $(this).width() || y < $(this).height()) {
+
+            $(this).parent().next('.queue-options').removeClass('active');
+        }        
+
     });
 
-    $('.button-container').on('mouseleave',function(){
-        $(this).next('.queue-options').removeClass('active');
 
-    });
 
 
 
