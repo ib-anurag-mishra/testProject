@@ -911,19 +911,18 @@ $(document).ready(function() {
     $('.gear-icon').on('mouseleave',function(e){
 
         if(e.offsetX == undefined) {
-            console.log('inside if');
-            console.log($(this).height());
-            console.log(e.pageX + ',' + e.pageY);
+            xpos = e.pageX-$(this).offset().left;
+            ypos = e.pageY-$(this).offset().top;
 
 
-            if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height() || e.pageY > $(this).height() + 500) {
+            if (xpos < 0 || xpos > $(this).width() || ypos < $(this).height()) {
 
                 $(this).parent().next('.queue-options').removeClass('active');
             }
 
         } else {
 
-            if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height() || e.offsetY > $(this).height() + 70) {
+            if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
 
                 $(this).parent().next('.queue-options').removeClass('active');
             }
