@@ -909,10 +909,15 @@ $(document).ready(function() {
     });
 
     $('.gear-icon').on('mouseleave',function(e){
-        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+        // if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
 
-            $(this).parent().next('.queue-options').removeClass('active');
-        }
+        //     $(this).parent().next('.queue-options').removeClass('active');
+        // }
+
+    });
+
+    $('.button-container').on('mouseleave',function(){
+        $(this).next('.queue-options').removeClass('active');
 
     });
 
