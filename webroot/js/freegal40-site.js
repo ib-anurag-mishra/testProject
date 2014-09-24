@@ -920,6 +920,12 @@ $(document).ready(function() {
 
     });
 
+    $('.gear-icon').on('mousemove', function(e) {
+        if (!e.target.tagName && !e.relatedTarget) {
+             console.log('mouseleave');
+        }
+    });    
+
 
 
 
