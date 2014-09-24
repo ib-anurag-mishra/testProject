@@ -1860,7 +1860,7 @@ $(document).ready(function() {
 
     // });
 
-    $('.my-top-100-page .album-container').on('mouseleave',function(e){
+    $('.my-top-100-page .album-container,.my-top-100-page .song-container').on('mouseleave',function(e){
         $(this).find('.playlist-menu-icon').next('ul').removeClass('active');
 
     });
