@@ -2061,6 +2061,7 @@ $(document).ready(function() {
 
     $('.artist-page').find('.album-container').children('.wishlist-icon').on('mouseenter',function(){
         $(this).css({opacity:1});
+        $(this).prev('ul').removeClass('active');
 
     });
 
