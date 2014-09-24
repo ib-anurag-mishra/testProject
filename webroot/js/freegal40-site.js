@@ -912,6 +912,8 @@ $(document).ready(function() {
 
         if(e.offsetX == undefined) {
             console.log('inside if');
+            console.log($(this).height());
+            console.log(e.pageX + ',' + e.pageY);
 
 
             if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height() || e.pageY > $(this).height() + 500) {
