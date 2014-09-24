@@ -914,14 +914,14 @@ $(document).ready(function() {
 
             console.log('undefined');
 
-            if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height()) {
+            if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height() + 70) {
 
                 $(this).parent().next('.queue-options').removeClass('active');
             }
 
         } else {
 
-            if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+            if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height() + 70) {
 
                 $(this).parent().next('.queue-options').removeClass('active');
             }
