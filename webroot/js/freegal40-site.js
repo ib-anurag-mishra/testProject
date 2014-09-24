@@ -911,7 +911,7 @@ $(document).ready(function() {
     $('.gear-icon').on('mouseleave',function(e){
 
         if(e.offsetX == undefined) {
-
+            console.log('inside if');
 
 
             if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height() || e.pageY > $(this).height() + 500) {
