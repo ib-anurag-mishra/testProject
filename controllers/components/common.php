@@ -2036,6 +2036,13 @@ STR;
 STR;
             $topSingleData = $albumInstance->query($sql_top_singles);
 
+            //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("top_singles" . $territory,$topSingleData);
+            $MemDatas->setDataSource('default');
+            
+            
 
             
             if (!empty($topSingleData))
