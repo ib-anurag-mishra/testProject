@@ -909,16 +909,26 @@ $(document).ready(function() {
     });
 
     $('.gear-icon').on('mouseleave',function(e){
-        console.log('mouseleave');
+
         if(e.offsetX == undefined) {
 
             console.log('undefined');
+
+            if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height()) {
+
+                $(this).parent().next('.queue-options').removeClass('active');
+            }
+
+        } else {
+
+            if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+
+                $(this).parent().next('.queue-options').removeClass('active');
+            }
+
         }
 
-        // if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
 
-        //     $(this).parent().next('.queue-options').removeClass('active');
-        // }
      
 
     });
