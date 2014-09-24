@@ -1918,7 +1918,13 @@ $(document).ready(function() {
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-icon').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
-    });    
+    });
+
+    $('.my-top-100-page .song-container .add-to-wishlist').on('mouseenter',function(){
+
+        $(this).parent().parent().parent().siblings('ul').removeClass('active');
+
+    });        
 
 
  
