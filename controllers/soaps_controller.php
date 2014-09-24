@@ -1547,7 +1547,7 @@ class SoapsController extends AppController {
    * @param string systemType
 	 * @return SuccessResponseType[]
    */
-  function registerDevice($deviceID, $registerID, $lang, $authenticationToken, $systemType){
+  function registerDevice($deviceID, $registerID, $lang, $authenticationToken, $systemType = null){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
@@ -1697,7 +1697,7 @@ class SoapsController extends AppController {
    * @return StreamingResponseType[]
    */
   
-  function validateStreamRequest($authenticationToken, $ProdID, $agent, $actionID, $consumedTime, $songDuration, $queueID, $instanceToken){
+  function validateStreamRequest($authenticationToken, $ProdID, $agent, $actionID, $consumedTime, $songDuration, $queueID = null, $instanceToken = null){
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -2148,7 +2148,7 @@ class SoapsController extends AppController {
   */
 
   private function loginAuthinticate($email, $password, $library_id, $agent, $authtype, $cron_call){
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $retVal = FALSE;
 
     $conditions = array(
@@ -2267,7 +2267,7 @@ class SoapsController extends AppController {
    */
 
   private function iloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $card = str_replace(" ", "", $card);
     $card = strtolower($card);
     $data['card'] = $card;
@@ -2391,7 +2391,7 @@ class SoapsController extends AppController {
    */
 
 	private function inloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
@@ -2503,7 +2503,7 @@ class SoapsController extends AppController {
 
   private function inhloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
-
+		$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 		$card = str_replace(" ","", $card);
 		$card = strtolower($card);
 		$data['card'] = $card;
@@ -2626,7 +2626,7 @@ class SoapsController extends AppController {
 
   private function ihdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $card = str_replace(" ","",$card);
 		$card = strtolower($card);
 		$data['card'] = $card;
@@ -2747,7 +2747,7 @@ class SoapsController extends AppController {
 
   private function ildloginAuthinticate($card, $last_name, $library_id, $agent, $authtype, $cron_call) {
 
-
+		$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 		$card = str_replace(" ","",$card);
 		$card = strtolower($card);
 		$data['card'] = $card;
@@ -2873,7 +2873,7 @@ class SoapsController extends AppController {
 
   private function ilhdloginAuthinticate($card, $last_name, $library_id, $agent, $authtype, $cron_call) {
 
-
+		$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 		$card = str_replace(" ","",$card);
 		$card = strtolower($card);
 		$data['card'] = $card;
@@ -2998,7 +2998,7 @@ class SoapsController extends AppController {
 
   private function sloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $card = str_replace(" ","",$card);
 		$card = strtolower($card);
 		$data['card'] = $card;
@@ -3109,7 +3109,7 @@ class SoapsController extends AppController {
    */
 
   private function sdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $data['card_orig'] = $card;
 
     $card = str_replace(" ","",$card);
@@ -3225,7 +3225,7 @@ class SoapsController extends AppController {
    */
 
   private function ploginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 
     $card = str_replace(" ","",$card);
 		$card = strtolower($card);
@@ -3339,8 +3339,8 @@ class SoapsController extends AppController {
    */
 
 	private function indloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
-
-
+	
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
@@ -3453,7 +3453,7 @@ class SoapsController extends AppController {
 
 	private function inhdloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
@@ -3565,7 +3565,7 @@ class SoapsController extends AppController {
 
 	private function snloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
@@ -3670,7 +3670,7 @@ class SoapsController extends AppController {
    */
 
 	private function sndloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $data['card_orig'] = $card;
 
     $card = str_replace(" ","",$card);
@@ -3776,7 +3776,7 @@ class SoapsController extends AppController {
    */
 	private function cloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
 
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
@@ -3872,7 +3872,7 @@ class SoapsController extends AppController {
    * @return AuthenticationResponseDataType[]
    */
 	private function referralAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
-
+    $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $card = trim($card);
     $data['card'] = $card;
     $data['pin'] = $pin;
@@ -3952,11 +3952,16 @@ class SoapsController extends AppController {
 
         $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
         $resp = $resp['Posts']['message'];
-
-
+	
+		if(is_array($resp)){
+        	if(empty($resp)){
+                $resp = "";
+            }
+        }
           $checkValidXml = null;
+	  	if(strpos($resp,'<')) {
           $checkValidXml = simplexml_load_string($resp);
-        
+        }
           if( isset($checkValidXml->Status) ) {
 
             if( ( isset($checkValidXml->Status) && ('' != $checkValidXml->Status) ) &&  ( isset($checkValidXml->LibraryCard) && ('' != $checkValidXml->LibraryCard) ) ) {
@@ -4044,7 +4049,7 @@ class SoapsController extends AppController {
 
   private function idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $card = str_replace(" ","",$card);
 		$card = strtolower($card);
 		$data['card'] = $card;
@@ -4165,7 +4170,7 @@ class SoapsController extends AppController {
 
 	private function mndloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
-
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
     $data['wrongReferral'] = '';
 
     $card = str_replace(" ","",$card);
@@ -4252,7 +4257,7 @@ class SoapsController extends AppController {
 
 	private function mdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
 
-   
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';   
     $data['wrongReferral'] = '';
     
     $card = str_replace(" ","",$card);
@@ -4348,7 +4353,7 @@ class SoapsController extends AppController {
    */
 
     private function capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
-	
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';	
 	$card = str_replace(" ","", $card);
 	$card = strtolower($card);
 	$data['card'] = $card;
@@ -4447,7 +4452,7 @@ class SoapsController extends AppController {
    */
 
     private function symwsAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
-	
+	$encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';	
 	$card = str_replace(" ","", $card);
 	$card = strtolower($card);
 	$data['card'] = $card;
@@ -7387,7 +7392,6 @@ class SoapsController extends AppController {
         return Configure::read('App.App_Streaming_Path').$this->Token->hlsToken($FileData['f4']['CdnPath'],$FileData['f4']['SaveAsName']);
        
       }else{
-        //sends mp3
         return $this->sendMp3Url($ProdID, $provider_type);
       }
             
