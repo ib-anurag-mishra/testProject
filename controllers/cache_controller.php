@@ -100,7 +100,8 @@ class CacheController extends AppController {
     function runCache(){
         set_time_limit(0);
         global $brokenImages;
-         $this->setNewReleaseAlbums('US');die;
+         $this->setTopSingles('US');die;
+         
         /*
         $brokenImages = array();
         $this->writeLibraryTop10songsCache();
