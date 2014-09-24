@@ -2009,14 +2009,19 @@ $(document).ready(function() {
 
     });
 
-    $('.artist-page').find('.album-container').find('.playlist-menu-icon').on('mouseleave',function(e){
-        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+    // $('.artist-page').find('.album-container').find('.playlist-menu-icon').on('mouseleave',function(e){
+    //     if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
  
  
-            $(this).next('ul').removeClass('active');
-        }
+    //         $(this).next('ul').removeClass('active');
+    //     }
 
+    // });
+
+    $('.artist-page').find('.album-container').on('mouseleave',function(){
+        $(this).find('ul').removeClass('active');
     });
+
 
     $('.artist-page').find('.album-container').on('mouseenter',function(){
         $this = $(this);
