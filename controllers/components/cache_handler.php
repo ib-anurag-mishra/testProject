@@ -28,8 +28,8 @@ Class CacheHandlerComponent extends Object  {
         $cacheVarInfo =  $this->checkMemdataVariableExist($cacheVariableName);
         if( $cacheVarInfo != false ) { 
             $new_releases_albums_rs =  unserialize(base64_decode($cacheVarInfo['MemDatas']['vari_info']));
-            Cache::write($cacheVariableName, $new_releases_albums_rs);
-           
+             Cache::write($cacheVariableName, $new_releases_albums_rs);
+             $this->log("variable Name : ".$cacheVariableName,'memcache_db_log' );           
             return $new_releases_albums_rs;            
         }else{
             return false;                            
@@ -75,17 +75,19 @@ Class CacheHandlerComponent extends Object  {
         
         $encodedDataValue = base64_encode(serialize($dataArray));
         $memDatasInstance->setDataSource('master');
+        $dateInfo = date('Y-m-d H:i:s');
         //check cache variable exist in mem_datas table or not
         $cacheVarInfo =  $this->checkMemdataVariableExist($cacheVariableName);
         if( $cacheVarInfo != false ) { 
             //update memdatas variables            
-            $memDataFieldArr = array('id' => $cacheVarInfo['MemDatas']['id'],'vari_info' => $encodedDataValue );            
+            $memDataFieldArr = array('id' => $cacheVarInfo['MemDatas']['id'],'vari_info' => $encodedDataValue ,'modified' => $dateInfo);            
         }else{
             //insert memdata variables
             $memDatasInstance->create();
-            $memDataFieldArr = array('cache_variable_name' => $cacheVariableName , 'vari_info' => $encodedDataValue ); 
+            $memDataFieldArr = array('cache_variable_name' => $cacheVariableName , 'vari_info' => $encodedDataValue ,'modified' => $dateInfo); 
         } 
         $memDatasInstance->save($memDataFieldArr); 
+        
         
         $memDatasInstance->setDataSource('default');
     }

@@ -2415,6 +2415,13 @@ STR;
                     
             }
            
+            //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("lib" . $libId,$topDownload);
+            $MemDatas->setDataSource('default');
+           
+            
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
