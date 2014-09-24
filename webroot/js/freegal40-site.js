@@ -908,7 +908,7 @@ $(document).ready(function() {
 
     });
 
-    $('.gear-icon').on('mouseleave',function(e){
+    $('.gear-icon').on('mouseleave',function(){
 
         console.log('mouseleave');
 
