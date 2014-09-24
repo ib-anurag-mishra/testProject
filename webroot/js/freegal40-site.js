@@ -32,7 +32,10 @@ $(document).ready(function() {
 
     
 
-  
+    $('.gear-icon').on('mouseenter', function(e) {
+
+        console.log('mouseenter');
+    });  
 
 
     var $music_search_results = $('.master-music-search-results');
