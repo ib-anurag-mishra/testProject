@@ -920,15 +920,7 @@ $(document).ready(function() {
 
     });
 
-    $('.gear-icon').on('mouseenter', function(e) {
-
-        console.log('mouseenter');
-    });
-
-    $(document).on('mouseenter','.gear-icon',function(){
-
-        console.log('test');
-    });  
+  
 
 
 
