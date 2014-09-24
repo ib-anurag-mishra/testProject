@@ -1911,6 +1911,7 @@ $(document).ready(function() {
 
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-icon').on('mouseenter',function(){
         $(this).css({opacity:1});
+        $(this).prev('ul').removeClass('active');
 
     });
 
