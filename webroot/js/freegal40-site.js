@@ -912,16 +912,16 @@ $(document).ready(function() {
 
         if(e.offsetX == undefined) {
 
-            console.log('undefined');
 
-            if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height() + 70) {
+
+            if (e.pageX < 0 || e.pageX > $(this).width() || e.pageY < $(this).height() || e.pageY > $(this).height() + 70) {
 
                 $(this).parent().next('.queue-options').removeClass('active');
             }
 
         } else {
 
-            if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height() + 70) {
+            if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height() || e.offsetY > $(this).height() + 70) {
 
                 $(this).parent().next('.queue-options').removeClass('active');
             }
