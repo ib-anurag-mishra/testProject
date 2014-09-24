@@ -72,9 +72,36 @@ class HomesController extends AppController {
         /* Top Singles Starts */ 
         $nationalTopDownload = Cache::read("top_singles" . $territory);
         if ($nationalTopDownload === false) {
-            $nationalTopDownload = $this->Common->getTopSingles($territory);
+            
+             //check variable data in to mem_datas table
+            $nationalTopDownload = $this->CacheHandler->checkMemData("top_singles" . $territory);
+            //if not found then run query in the table
+            if( $nationalTopDownload === false ){
+                $nationalTopDownload = $this->Common->getTopSingles($territory);
+            }            
         }
         $this->set('top_singles', $nationalTopDownload);
+        
+                
+        
+        
+        if ( $new_releases_albums_rs === false ) {
+                  //  if ( 1 ) {
+                        //check variable data in to mem_datas table
+                        $new_releases_albums_rs = $this->CacheHandler->checkMemData("new_releases_albums" . $territory);
+                        //if not found then run query in the table
+                        if( $new_releases_albums_rs === false ){
+                            $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+                        }      		
+        	}
+        
+        
+        
+        
+        
+        
+        
+        
         /* Top Singles Ends */ 
         
         /* National Top 100 Albums slider start */
@@ -3291,8 +3318,8 @@ STR;
                //$this->CacheHandler->setMemData("new_releases_albums" . $territory,$new_releases_albums_rs);die;
                 
                 //if cache not set
-        	//if ( $new_releases_albums_rs === false ) {
-                    if ( 1 ) {
+        	if ( $new_releases_albums_rs === false ) {
+                  //  if ( 1 ) {
                         //check variable data in to mem_datas table
                         $new_releases_albums_rs = $this->CacheHandler->checkMemData("new_releases_albums" . $territory);
                         //if not found then run query in the table
