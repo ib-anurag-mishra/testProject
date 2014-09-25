@@ -9,7 +9,7 @@
 Class CommonComponent extends Object
 {
 
-    var $components = array('Session', 'Streaming', 'Queue','Email');
+    var $components = array('Session', 'Streaming', 'Queue','Email','CacheHandler');
     var $uses = array('Token','FeaturedVideo');
 
     /*
@@ -1338,8 +1338,9 @@ STR;
 
     function getNewReleaseAlbums($territory, $explicitContent = false)
     {
+       
         set_time_limit(0);
-         global $brokenImages;
+        global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $songInstance = ClassRegistry::init('Song');
@@ -1465,8 +1466,14 @@ STR;
                 Cache::write($cacheVariableName . $country, $data);
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
-
-
+            
+            
+             //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData($cacheVariableName . $country,$data);
+            $MemDatas->setDataSource('default');
+            
             $this->log("cache written for new releases albums for $territory", 'debug');
             //End Caching functionality for new releases albums
             return $data;
@@ -2029,6 +2036,13 @@ STR;
 STR;
             $topSingleData = $albumInstance->query($sql_top_singles);
 
+            //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("top_singles" . $territory,$topSingleData);
+            $MemDatas->setDataSource('default');
+            
+            
 
             
             if (!empty($topSingleData))
@@ -2401,6 +2415,13 @@ STR;
                     
             }
            
+            //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("lib" . $libId,$topDownload);
+            $MemDatas->setDataSource('default');
+           
+            
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
