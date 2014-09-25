@@ -5,7 +5,7 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language','MemDatas');
-    var $components = array('Queue','Common','Email');
+    var $components = array('Queue','Common','Email','CacheHandler');
     
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
@@ -284,9 +284,12 @@ class CacheController extends AppController {
     function setFeaturedArtists($territory){
         
         $featuresArtists = $this->Common->getFeaturedArtists($territory,1);    
-       
-        
-        if(!empty($featuresArtists)){
+        $MemDatas = ClassRegistry::init('MemDatas');        
+        if(!empty($featuresArtists)){  
+            //update the mem datas table            
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("featured_artists_" . $territory.'_'.'1',$featuresArtists);
+            $MemDatas->setDataSource('default');
             Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
             $this->log("cache written for featured artists for ".$territory.'_'.'1', 'debug');
             $this->log("cache written for featured artists for: ".$territory.'_'.'1', "cache");        
@@ -297,7 +300,11 @@ class CacheController extends AppController {
         
         $page = 2;
         while($featuresArtists = $this->Common->getFeaturedArtists($territory,$page)){
-            if(!empty($featuresArtists)){
+            if(!empty($featuresArtists)){                
+                //update the mem datas table            
+                $MemDatas->setDataSource('master');
+                $this->CacheHandler->setMemData("featured_artists_" . $territory.'_'.$page,$featuresArtists);
+                $MemDatas->setDataSource('default');                
                 Cache::write("featured_artists_" . $territory.'_'.$page, $featuresArtists);
                 $this->log("cache written for featured artists for ".$territory.'_'.$page, 'debug');
                 $this->log("cache written for featured artists for: ".$territory.'_'.$page, "cache");        

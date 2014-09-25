@@ -1623,11 +1623,11 @@ STR;
          global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
     	if(isset($page)){
-    		if($page <= 0)
-    		{
-    			$page = 1;
-    		}
-    		$offset = ($page - 1) * $limit;
+            if($page <= 0)
+            {
+                    $page = 1;
+            }
+            $offset = ($page - 1) * $limit;
     	}
 
         
