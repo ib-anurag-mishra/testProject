@@ -259,7 +259,7 @@ class HomesController extends AppController {
             
             $topDownload_songs = $this->CacheHandler->checkMemData("lib" . $libId);
             //if not found then run query in the table
-            if( $new_releases_albums_rs === false ){
+            if( $topDownload_songs === false ){
                $topDownload_songs = $this->Common->getLibraryTopTenSongs($country, $libId);
             }    
                     
