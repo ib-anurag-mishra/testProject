@@ -100,8 +100,13 @@ class HomesController extends AppController {
         /* featured artist slideshow code start */
         $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.'1');
         if ($featuresArtists === false) {
-            $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
-            Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
+            //check variable data in to mem_datas table
+            $featuresArtists = $this->CacheHandler->checkMemData("featured_artists_" . $territory.'_'.'1');
+            //if not found then run query in the table
+            if( $featuresArtists === false ){
+                $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
+                Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
+            }
         }        
         $this->set('featuredArtists', $featuresArtists);
         /* featured artist slideshow code Ends */
@@ -111,7 +116,6 @@ class HomesController extends AppController {
     function get_genre_tab_content($tab_no, $genre) {
 
         //Cachec results for Rock Genre
-
         $this->layout = 'ajax';
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
