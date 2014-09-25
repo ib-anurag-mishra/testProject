@@ -23,16 +23,15 @@ Class CacheHandlerComponent extends Object  {
     function checkMemData($cacheVariableName) {
         $memDatasInstance = ClassRegistry::init('MemDatas');
         
-         
         //check cache variable exist in mem_datas table or not
         $cacheVarInfo =  $this->checkMemdataVariableExist($cacheVariableName);
         if( $cacheVarInfo != false ) { 
-            $new_releases_albums_rs =  unserialize(base64_decode($cacheVarInfo['MemDatas']['vari_info']));
-             Cache::write($cacheVariableName, $new_releases_albums_rs);
+             $cacheVariableData =  unserialize(base64_decode($cacheVarInfo['MemDatas']['vari_info']));
+             Cache::write($cacheVariableName, $cacheVariableData);
              $this->log("variable Name : ".$cacheVariableName,'memcache_db_log' );           
-            return $new_releases_albums_rs;            
+             return $cacheVariableData;            
         }else{
-            return false;                            
+             return false;                            
         }
     }
     
