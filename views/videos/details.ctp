@@ -1,8 +1,9 @@
 <section class="individual-videos-page">
 	<div class="breadcrumbs">                
     <?php
-		$html->addCrumb( __( 'Video', true ), 'javascript:void(0);' );
-        echo $html->getCrumbs( '>', __( 'Home', true ), '/homes' );
+		$html->addCrumb( __( ' Videos ', true ), '/videos' );
+                $html->addCrumb(__($this->getTextEncode($videosData[0]['Video']['ArtistText']), true), '/artists/album/' . str_replace('/', '@', base64_encode($videosData[0]['Video']['ArtistText'])));
+                echo $html->getCrumbs( ' > ', __( 'Home', true ), '/homes' );
 	?>
     </div>
     <div class="hero-container clearfix">
@@ -78,7 +79,6 @@
             <div class="release-information">
                 <p><?= __('Release Information', true); ?> </p>
                 <div class="release-date">Date: <?= date( "M d, Y", strtotime( $videosData[0]['Country']['SalesDate'] ) ); ?></div>
-                <div class="video-duration">Duration: <?= $duration_arr[0] . " min " . $duration_arr[1] . " sec"; ?></div>
             </div>
         </div>
 	</div>
