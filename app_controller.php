@@ -106,6 +106,10 @@ class AppController extends Controller
             $maintainLatestDownload = $maintainDownload;
             $this->Session->write('maintainLatestDownload', $maintainLatestDownload);
         }
+	
+		if (!isset($this->Auth)) {
+    		$this->Auth = new stdClass();
+		}
         $this->Auth->authorize = 'actions';
         $this->Auth->fields = array('username' => 'email', 'password' => 'password');
         $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
