@@ -10,7 +10,7 @@ class HomesController extends AppController {
 
     var $name = 'Homes';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'WishlistVideo', 'Song', 'Language', 'Session', 'Mvideo', 'Download', 'Videodownload', 'Queue', 'Token');
-    var $components = array('RequestHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming');
+    var $components = array('RequestHandler','CacheHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming');
     var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload', 'Zipcode', 'StreamingHistory', 'MemDatas', 'Token');
 
     /*
@@ -72,9 +72,17 @@ class HomesController extends AppController {
         /* Top Singles Starts */ 
         $nationalTopDownload = Cache::read("top_singles" . $territory);
         if ($nationalTopDownload === false) {
-            $nationalTopDownload = $this->Common->getTopSingles($territory);
+            
+             //check variable data in to mem_datas table
+            $nationalTopDownload = $this->CacheHandler->checkMemData("top_singles" . $territory);
+            //if not found then run query in the table
+            if( $nationalTopDownload === false ){
+                $nationalTopDownload = $this->Common->getTopSingles($territory);
+            }            
         }
         $this->set('top_singles', $nationalTopDownload);
+       
+        
         /* Top Singles Ends */ 
         
         /* National Top 100 Albums slider start */
@@ -248,7 +256,13 @@ class HomesController extends AppController {
         $this->set('patronDownload', $patronDownload);
         $topDownload_songs = Cache::read("lib" . $libId);
         if ($topDownload_songs === false) {
-            $topDownload_songs = $this->Common->getLibraryTopTenSongs($country, $libId);
+            
+            $new_releases_albums_rs = $this->CacheHandler->checkMemData("lib" . $libId);
+            //if not found then run query in the table
+            if( $new_releases_albums_rs === false ){
+               $topDownload_songs = $this->Common->getLibraryTopTenSongs($country, $libId);
+            }    
+                    
         }
         $this->set('top_10_songs', $topDownload_songs);
 
@@ -3274,21 +3288,36 @@ STR;
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
         
         if( $this->Session->read('block') == 'yes' ) {
+           
         
         	$new_releases_albums_rs = Cache::read("new_releases_albums_none_explicit" . $territory);
         
         	if ($new_releases_albums_rs === false) {
-
-        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory, true);
+                    
+                    //check variable data in to mem_datas table
+                    $new_releases_albums_rs = $this->CacheHandler->checkMemData("new_releases_albums_none_explicit" . $territory);
+                    //if not found then run query in the table
+                    if( $new_releases_albums_rs === false ){
+                        $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory, true);
+                    }                   
         	}
+                
         } else {
         
+                //fetch record in cache
         	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
-        
-        	if ($new_releases_albums_rs === false) {
-
-        
-        		$new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+                
+               //$this->CacheHandler->setMemData("new_releases_albums" . $territory,$new_releases_albums_rs);die;
+                
+                //if cache not set
+        	if ( $new_releases_albums_rs === false ) {
+                  //  if ( 1 ) {
+                        //check variable data in to mem_datas table
+                        $new_releases_albums_rs = $this->CacheHandler->checkMemData("new_releases_albums" . $territory);
+                        //if not found then run query in the table
+                        if( $new_releases_albums_rs === false ){
+                            $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+                        }      		
         	}
         }
 

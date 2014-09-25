@@ -103,8 +103,11 @@ class CacheController extends AppController {
         
         $brokenImages = array();
         $this->writeLibraryTop10songsCache();
-        $territoriesList = $this->Common->getTerritories();       
+        
+        $territoriesList = $this->Common->getTerritories();   
+        
         foreach($territoriesList as $territory){ 
+            
             
             $this->setGenre($territory);
 	    $this->setTopSingles($territory); 
@@ -113,14 +116,15 @@ class CacheController extends AppController {
 	    $this->setTopAlbums($territory);
             $this->setUsTop10Songs($territory);       
             $this->setUsTop10Albums($territory);           
-            $this->setUsTop10Videos($territory);       
+            $this->setUsTop10Videos($territory);  
             $this->setNewReleaseAlbums($territory);
             $this->setNewReleaseVideos($territory);                      
             $this->setFeaturedArtists($territory);            
 	    $this->setFeaturedSongsInCache($territory);
             $this->setDifferentGenreData($territory);
             //$this->getArtistText($territory);
-            $this->setDefaultQueues($territory);        
+            $this->setDefaultQueues($territory);   
+              
         
         }
 
@@ -130,8 +134,8 @@ class CacheController extends AppController {
        $this->setAnnouncementCache();
        $this->setMoviesAnnouncements();
        $this->setTopArtist();
-       
        $this->sendBrokenImagesEmail(); 
+ 
        
     }
    
