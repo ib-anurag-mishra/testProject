@@ -257,7 +257,7 @@ class HomesController extends AppController {
         $topDownload_songs = Cache::read("lib" . $libId);
         if ($topDownload_songs === false) {
             
-            $new_releases_albums_rs = $this->CacheHandler->checkMemData("lib" . $libId);
+            $topDownload_songs = $this->CacheHandler->checkMemData("lib" . $libId);
             //if not found then run query in the table
             if( $new_releases_albums_rs === false ){
                $topDownload_songs = $this->Common->getLibraryTopTenSongs($country, $libId);
@@ -3306,8 +3306,6 @@ STR;
         
                 //fetch record in cache
         	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
-                
-               //$this->CacheHandler->setMemData("new_releases_albums" . $territory,$new_releases_albums_rs);die;
                 
                 //if cache not set
         	if ( $new_releases_albums_rs === false ) {
