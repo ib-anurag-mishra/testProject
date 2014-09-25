@@ -3299,12 +3299,18 @@ function login($library = null){
 						}elseif($resultAnalysis[0] == "success"){
 								//writing to memcache and writing to both the memcached servers
 								$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+                                                                $auth_library_name  = base64_decode($result['Posts']['auth_library_name']);
+                                                                $auth_library_name  = ($auth_library_name=='NA')?'':$auth_library_name;
+                                                                
 								if(count($currentPatron) > 0){
-								// do nothing
+								         $this->Currentpatron->id = $currentPatron[0]['Currentpatron']['id'];
+                                                                         $this->Currentpatron->saveField('auth_library_name',$auth_library_name, false);
+                                                                         $this->log("users/slogin(update): [id=".$this->Currentpatron->id.", CNT=".count($currentPatron)."]", "currentpatrons");
 								} else {
 									$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 									$insertArr['patronid'] = $patronId;
 									$insertArr['session_id'] = session_id();
+                                                                        $insertArr['auth_library_name'] = $auth_library_name;
 									$this->Currentpatron->save($insertArr);
                                                                         $this->log("users/slogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 								}
@@ -3525,12 +3531,18 @@ function login($library = null){
 						}elseif($resultAnalysis[0] == "success"){
 							//writing to memcache and writing to both the memcached servers
 								$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-								if(count($currentPatron) > 0){
-								// do nothing
+                                                                $auth_library_name  = base64_decode($result['Posts']['auth_library_name']);
+                                                                $auth_library_name  = ($auth_library_name=='NA')?'':$auth_library_name; 
+                                                                
+								if(count($currentPatron) > 0){                                                                    
+                                                                        $this->Currentpatron->id = $currentPatron[0]['Currentpatron']['id'];
+                                                                        $this->Currentpatron->saveField('auth_library_name',$auth_library_name, false);
+                                                                        $this->log("users/snlogin(update): [id=".$this->Currentpatron->id.", CNT=".count($currentPatron)."]", "currentpatrons");                                                                        
 								} else {
 									$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 									$insertArr['patronid'] = $patronId;
 									$insertArr['session_id'] = session_id();
+                                                                        $insertArr['auth_library_name'] = $auth_library_name;
 									$this->Currentpatron->save($insertArr);
                                                                         $this->log("users/snlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 								}
@@ -3768,12 +3780,18 @@ function login($library = null){
 						}elseif($resultAnalysis[0] == "success"){
 							//writing to memcache and writing to both the memcached servers
 							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+                                                        $auth_library_name  = base64_decode($result['Posts']['auth_library_name']);
+                                                        $auth_library_name  = ($auth_library_name=='NA')?'':$auth_library_name;
+                                                        
 							if(count($currentPatron) > 0){
-							// do nothing
+                                                            $this->Currentpatron->id = $currentPatron[0]['Currentpatron']['id'];
+                                                            $this->Currentpatron->saveField('auth_library_name',$auth_library_name, false);
+                                                            $this->log("users/sdlogin(update): [id=".$this->Currentpatron->id.", CNT=".count($currentPatron)."]", "currentpatrons");
 							} else {
 								$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 								$insertArr['patronid'] = $patronId;
 								$insertArr['session_id'] = session_id();
+                                                                $insertArr['auth_library_name'] = $auth_library_name;
 								$this->Currentpatron->save($insertArr);
                                                                 $this->log("users/sdlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron)."]", "currentpatrons");
 							}
@@ -3983,20 +4001,26 @@ function login($library = null){
 					$data['database'] = 'freegal';
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
-					$resultAnalysis[1] = $result['Posts']['message'];
+					$resultAnalysis[1] = $result['Posts']['message'];                                         
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 					}elseif($resultAnalysis[0] == "success"){
 
 						//writing to memcache and writing to both the memcached servers
-						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-						if(count($currentPatron) > 0){
-						// do nothing
+						$currentPatron      = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+                                                $auth_library_name  = base64_decode($result['Posts']['auth_library_name']);
+                                                $auth_library_name  = ($auth_library_name=='NA')?'':$auth_library_name;
+                                                
+						if(count($currentPatron) > 0){                                                        
+                                                        $this->Currentpatron->id = $currentPatron[0]['Currentpatron']['id'];
+                                                        $this->Currentpatron->saveField('auth_library_name',$auth_library_name, false);
+                                                        $this->log("users/sndlogin(update): [id=".$this->Currentpatron->id.", CNT=".count($currentPatron)."]", "currentpatrons");
 						} else {
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
+                                                        $insertArr['auth_library_name'] = $auth_library_name;
 							$this->Currentpatron->save($insertArr);
                                                         $this->log("users/sndlogin: [libid=".$existingLibraries['0']['Library']['id'].", patronid=".$patronId.", session_id=".$insertArr['session_id'].", CNT=".count($currentPatron)."]", "currentpatrons");
 						}
