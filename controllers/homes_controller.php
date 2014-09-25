@@ -87,8 +87,13 @@ class HomesController extends AppController {
         
         /* National Top 100 Albums slider start */
         $TopAlbums = Cache::read("top_albums" . $territory);
-        if ($TopAlbums === false) {
-            $TopAlbums = $this->Common->getTopAlbums($territory);
+        if ($TopAlbums === false) {            
+             //check variable data in to mem_datas table
+            $TopAlbums = $this->CacheHandler->checkMemData("top_albums" . $territory);
+            //if not found then run query in the table
+            if( $TopAlbums === false ){
+                $TopAlbums = $this->Common->getTopAlbums($territory);
+            }          
         }
         $this->set('nationalTopAlbums', $TopAlbums);
 
@@ -270,16 +275,24 @@ class HomesController extends AppController {
 
         $ids_provider_type_album = '';
         $topDownload_albums = Cache::read("lib_album" . $libId);
-        if ($topDownload_albums === false) {
-            $topDownload_albums = $this->Common->getLibraryTop10Albums($country, $libId);
+        if ($topDownload_albums === false) {            
+             $topDownload_albums = $this->CacheHandler->checkMemData("lib_album" . $libId);
+            //if not found then run query in the table
+            if( $topDownload_albums === false ){
+               $topDownload_albums = $this->Common->getLibraryTop10Albums($country, $libId);
+            } 
         }
         $this->set('topDownload_albums', $topDownload_albums);
 
 
         ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
         $topDownload_videos_data = Cache::read("lib_video" . $libId);
-        if ($topDownload_videos_data === false) {
-            $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country, $libId);
+        if ($topDownload_videos_data === false) {            
+            $topDownload_videos_data = $this->CacheHandler->checkMemData("lib_video" . $libId);
+            //if not found then run query in the table
+            if( $topDownload_videos_data === false ){
+                   $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country, $libId);
+            }            
         }
         $this->set('topDownload_videos_data', $topDownload_videos_data);
     }
@@ -306,7 +319,11 @@ class HomesController extends AppController {
         if (!empty($territory)) {
             $national_us_top10_record = Cache::read("national_us_top10_songs" . $territory);
             if ($national_us_top10_record === false) {
-                $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
+                $national_us_top10_record = $this->CacheHandler->checkMemData("national_us_top10_songs" . $territory);
+                //if not found then run query in the table
+                if( $national_us_top10_record === false ){
+                      $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
+                }               
             } 
         }
         $this->set('nationalTopDownload', $national_us_top10_record);
@@ -318,7 +335,11 @@ class HomesController extends AppController {
         if (!empty($country)) {
             $ustop10Albums = Cache::read("national_us_top10_albums" . $territory);
             if ($ustop10Albums === false) {
-                $ustop10Albums = $this->Common->getUsTop10Albums($territory);
+                 $ustop10Albums = $this->CacheHandler->checkMemData("national_us_top10_albums" . $territory);
+                //if not found then run query in the table
+                if( $ustop10Albums === false ){
+                      $ustop10Albums = $this->Common->getUsTop10Albums($territory);
+                }   
             } 
         }
         $this->set('ustop10Albums', $ustop10Albums);
@@ -329,8 +350,12 @@ class HomesController extends AppController {
 
         if (!empty($country)) {
             $usTop10VideoDownload = Cache::read("national_us_top10_videos" . $territory);
-            if ($usTop10VideoDownload === false) {
-                $usTop10VideoDownload = $this->Common->getUsTop10Videos($territory);
+            if ($usTop10VideoDownload === false) {               
+                $usTop10VideoDownload = $this->CacheHandler->checkMemData("national_us_top10_videos" . $territory);
+                //if not found then run query in the table
+                if( $usTop10VideoDownload === false ){
+                      $usTop10VideoDownload = $this->Common->getUsTop10Videos($territory);
+                } 
             }
         }
         $this->set('usTop10VideoDownload', $usTop10VideoDownload);
@@ -3279,11 +3304,17 @@ STR;
         //get Advisory condition
         //////////////////////////////////Videos/////////////////////////////////////////////////////////            
         $coming_soon_videos = Cache::read("new_releases_videos" . $territory);
-        if ($coming_soon_videos === false) {
-            $coming_soon_videos = $this->Common->getNewReleaseVideos($territory);
+        if ($coming_soon_videos === false) {           
+            $coming_soon_videos = $this->CacheHandler->checkMemData("new_releases_videos" . $territory);
+            //if not found then run query in the table
+            if( $coming_soon_videos === false ){
+                $coming_soon_videos = $this->Common->getNewReleaseVideos($territory);
+            } 
         }
 
         $this->set('new_releases_videos', $coming_soon_videos);
+        
+        
 
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
         
