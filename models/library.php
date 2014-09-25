@@ -503,8 +503,8 @@ class Library extends AppModel
                                     $this->setDataSource('master');
                                     
                                     //update the date and reset the consumed time as the day start
-                                   // if($this->save($updateArr)){
-                                    if( 1 ) {
+                                    if($this->save($updateArr)){
+                                    //if( 1 ) {
                                     
                                         $selectedLibraryInfo[$libArray['Library']['id']]['lib_id'] = $libArray['Library']['id'];
                                         $selectedLibraryInfo[$libArray['Library']['id']]['lib_name'] = $libArray['Library']['library_name'];
@@ -554,7 +554,7 @@ class Library extends AppModel
             $emailTemplate .= 'FreegalMusic'.'\n\n';
            
             //$to = "tech@libraryideas.com";
-            $to = "nagesh4group@gmail.com";
+            $to = "libraryideas@infobeans.com,tech@libraryideas.com";
             $subject = "FreegalMusic - CRON job for streaming status turn off if contract over.";
 
            

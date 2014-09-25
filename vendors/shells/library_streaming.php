@@ -7,9 +7,10 @@ class LibraryDownloadShell extends Shell {
  */
     function main() {
 
-         App::import('Model', 'Library');
-         $this->library = &new Library();
-         $result= $this->library->updateLibraryStreamingStatus(); 
+         
+         App::import('Component', 'Common');
+         $this->Common = &new CommonComponent();
+         $this->Common->callLibraryStreamingStatusCron(); 
     }
 
 }
