@@ -1,4 +1,10 @@
 <section class="videos">
+        <div class="breadcrumbs">                
+         <?php
+            $html->addCrumb(__('Videos', true), '/videos' );
+            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+          ?>
+        </div>
 	<section class="featured-videos">
         <header class="clearfix">
         	<h3><?= __('Featured Videos', true); ?></h3>
