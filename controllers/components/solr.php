@@ -402,14 +402,14 @@ class SolrComponent extends Object {
 
 					} else if ( preg_match( '/tribute/i', $searchkeyword ) && !preg_match( '/karaoke/i', $searchkeyword ) ) {
 						
-						$query = '(' . $searchkeyword . ') AND !(karaoke*) AND Territory:' . $country . $conditions;
+						$query = '(' . $searchkeyword . ') AND !(karaoke) AND Territory:' . $country . $conditions;
 
 					} else if( !preg_match( '/tribute/i', $searchkeyword ) && preg_match( '/karaoke/i', $searchkeyword ) ) {
 						
-						$query = '(' . $searchkeyword . ') AND !(tribute*) AND Territory:' . $country . $conditions;
+						$query = '(' . $searchkeyword . ') AND !(tribute) AND Territory:' . $country . $conditions;
 
 					} else {
-						$query = '(' . $searchkeyword . ') AND !(tribute*) AND !(karaoke*) AND Territory:' . $country . $conditions;
+						$query = '(' . $searchkeyword . ') AND !(tribute) AND !(karaoke) AND Territory:' . $country . $conditions;
 					}
 					
 				} else {
