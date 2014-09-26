@@ -120,7 +120,7 @@ class CacheController extends AppController {
             $this->setNewReleaseAlbums($territory);
             $this->setNewReleaseVideos($territory);                      
             $this->setFeaturedArtists($territory);            
-	    $this->setFeaturedSongsInCache($territory);
+	    //$this->setFeaturedSongsInCache($territory);
             $this->setDifferentGenreData($territory);
             //$this->getArtistText($territory);
             $this->setDefaultQueues($territory);   
