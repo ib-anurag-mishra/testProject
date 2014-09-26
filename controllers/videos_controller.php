@@ -3,7 +3,7 @@ class VideosController extends AppController {
 
     var $uses 		= array('Siteconfig', 'Video', 'LatestVideodownload', 'Videodownload', 'Library', 'Token', 'FeaturedVideo', 'WishlistVideo');
     var $helpers 	= array('WishlistVideo', 'Language', 'Videodownload', 'Mvideo', 'Token');
-    var $components = array('Downloadsvideos', 'Session', 'Downloads', 'Common', 'Checkloginusers');
+    var $components = array('Downloadsvideos','CacheHandler', 'Session', 'Downloads', 'Common', 'Checkloginusers');
     var $layout 	= 'home';
     var $videoPageBrokenImages = array();
     var $brokenImageVideoURL ='';
@@ -67,21 +67,27 @@ class VideosController extends AppController {
         
         $featuredVideos = Cache::read( 'featured_videos' . $cacheVariableSuffix . $territory );        
         
-        if ($featuredVideos === false) {
-            $featuredVideos = $this->Common->featuredVideos($prefix, $territory,$explicitContent,$cacheVariableSuffix);
-        }   
-        
+        if ($featuredVideos === false) {            
+            //check variable data in to mem_datas table
+            $featuredVideos = $this->CacheHandler->checkMemData('featured_videos' . $cacheVariableSuffix . $territory );
+            //if not found then run query in the table
+            if( $featuredVideos === false ){
+                $featuredVideos = $this->Common->featuredVideos($prefix, $territory,$explicitContent,$cacheVariableSuffix);
+            } 
+        }       
         
         //fetching top video download
-        $topDownloads = Cache::read( 'top_download_videos' . $territory );        
-        
-        if ($topDownloads === false) {
-            $topDownloads = $this->Common->topDownloadVideos( $prefix, $territory );
+        $topDownloads = Cache::read( 'top_download_videos' . $territory );
+        if ($topDownloads === false) {            
+            //check variable result set in the mem_datas table
+            $topDownloads = $this->CacheHandler->checkMemData('top_download_videos' . $territory);
+            //if not found then run query in the table
+            if( $topDownloads === false ){
+                $topDownloads = $this->Common->topDownloadVideos( $prefix, $territory );
+            }
         } 
-        
-        
-        
-        $featuredVideoDownloadStatus = $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId, 'FeaturedVideo' );
+               
+        $featuredVideoDownloadStatus =      $this->getVideosDownloadStatus( $featuredVideos, $libraryId, $patronId, 'FeaturedVideo' );
         $topVideoDownloadStatus 	 = $this->getVideosDownloadStatus( $topDownloads, $libraryId, $patronId, 'Video' );
         $featuredWishlistDetails	 = $this->getWishlistVideosData( $featuredVideos, $libraryId, $patronId, 'FeaturedVideo' );
         $topVideoWishlistDetails	 = $this->getWishlistVideosData( $topDownloads, $libraryId, $patronId, 'Video' );

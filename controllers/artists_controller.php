@@ -12,7 +12,7 @@ Class ArtistsController extends AppController {
 	var $uses		= array('Featuredartist', 'Artist', 'Newartist', 'Album', 'Song', 'Download', 'Video', 'Territory', 'Token', 'TopAlbum','TopSingles' ,'QueueList' , 'QueueDetail');
 	var $layout 	= 'admin';
 	var $helpers 	= array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo', 'Genre', 'Token');
-	var $components = array('Session', 'Auth', 'Downloads', 'CdnUpload', 'Streaming', 'Common','Solr', 'RequestHandler');
+	var $components = array('Session', 'Auth', 'Downloads', 'CdnUpload', 'Streaming', 'Common','Solr', 'RequestHandler','CacheHandler');
         
         var $artistPageBrokenImages = array();
         var $brokenImageArtistURL ='';
@@ -1515,14 +1515,17 @@ Class ArtistsController extends AppController {
             $page = $this->params['form']['page'];
             if (!empty($page)) {
                 $territory = $this->Session->read('territory');
-                $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);
-                if ($featuresArtists === false) {
-                    $featuresArtists = $this->Common->getFeaturedArtists($territory, $page);
+                $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);                
+                if ($featuresArtists === false) {                    
+                    $featuresArtists = $this->CacheHandler->checkMemData("featured_artists_" . $territory . '_' . $page);
+                    //if not found then run query in the table
+                    if( $featuresArtists === false ){
+                         $featuresArtists = $this->Common->getFeaturedArtists($territory, $page);                       
+                    }                    
                     if(!empty($featuresArtists)) {
                         Cache::write("featured_artists_" . $territory . '_' . $page, $featuresArtists);
                     }
-                } 
-                
+                }                
                 $this->set('featuredArtists', $featuresArtists);
                 echo $this->render('/artists/feature_ajaxlisting');
             } else {

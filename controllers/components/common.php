@@ -10,7 +10,7 @@ Class CommonComponent extends Object
 {
 
     var $components = array('Session', 'Streaming', 'Queue','Email','CacheHandler');
-    var $uses = array('Token','FeaturedVideo');
+    var $uses = array('Token','FeaturedVideo','Library');
 
     /*
      * Function Name : getGenres
@@ -731,6 +731,12 @@ STR;
                         }                            
                 }
                 
+                 //update the mem datas table
+                $MemDatas = ClassRegistry::init('MemDatas');
+                $MemDatas->setDataSource('master');
+                $this->CacheHandler->setMemData('featured_videos' . $cacheVariableSuffix . $territory,$featuredVideos);
+                $MemDatas->setDataSource('default');                
+                
                 Cache::write( 'featured_videos' . $cacheVariableSuffix . $territory, $featuredVideos );
                 $this->log("Updated featured videos $cacheVariableSuffix cache for " . $territory, "cache");
          }
@@ -773,6 +779,12 @@ STR;
                             unset($topDownloads[$key]);             
                         }                        
                 }
+                
+                //update the mem datas table
+                $MemDatas = ClassRegistry::init('MemDatas');
+                $MemDatas->setDataSource('master');
+                $this->CacheHandler->setMemData('top_download_videos' . $territory,$topDownloads);
+                $MemDatas->setDataSource('default');
                 
                 Cache::write( 'top_download_videos' . $territory, $topDownloads );
                 $this->log("Updated top download videos cache for " . $territory, "cache");    
@@ -1033,6 +1045,13 @@ STR;
                 Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("Unable to update US top ten for " . $territory, "cache");
             }
+            
+            //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("national_us_top10_songs" . $country,$data);
+            $MemDatas->setDataSource('default');
+            
         }
         $this->log("cache written for US top ten for $territory", 'debug');
         //End Caching functionality for US TOP 10 Songs
@@ -1184,6 +1203,15 @@ STR;
                 $this->log("Unable to update US top ten Album for " . $territory, "cache");
             }
         }
+        
+         //update the mem datas table
+        $MemDatas = ClassRegistry::init('MemDatas');
+        $MemDatas->setDataSource('master');
+        $this->CacheHandler->setMemData("national_us_top10_albums" . $country,$data);
+        $MemDatas->setDataSource('default');
+        
+        
+        
         $this->log("cache written for US top ten Album for $territory", 'debug');
         //End Caching functionality for US TOP 10 Albums
         return $data;
@@ -1326,6 +1354,15 @@ STR;
                 $this->log("Unable to update US top ten video for " . $territory, "cache");
             }
         }
+        
+        //update the mem datas table
+        $MemDatas = ClassRegistry::init('MemDatas');
+        $MemDatas->setDataSource('master');
+        $this->CacheHandler->setMemData("national_us_top10_videos" . $country,$data);
+        $MemDatas->setDataSource('default');
+        
+        
+        
         $this->log("cache written for US top ten video for $territory", 'debug');
         //End Caching functionality for US TOP 10 Videos
         return $data;
@@ -1586,11 +1623,11 @@ STR;
          global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
     	if(isset($page)){
-    		if($page <= 0)
-    		{
-    			$page = 1;
-    		}
-    		$offset = ($page - 1) * $limit;
+            if($page <= 0)
+            {
+                    $page = 1;
+            }
+            $offset = ($page - 1) * $limit;
     	}
 
         
@@ -1867,6 +1904,13 @@ STR;
                     unset($topAlbumData[$key]);             
                 }          
             } 
+            
+            
+            //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData('top_albums' . $territory,$topAlbumData);
+            $MemDatas->setDataSource('default');
             
             Cache::write('top_albums' . $territory, $topAlbumData);
             $this->log('cache written for Top Albums for: ' . $territory, 'debug');
@@ -2624,6 +2668,13 @@ STR;
                }                     
             }
             
+            //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("lib_album" . $libId,$topDownload);
+            $MemDatas->setDataSource('default');           
+            
+            
             Cache::write("lib_album" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 albums cache set for lib: $libId $country", "cache");
@@ -2814,6 +2865,12 @@ STR;
                    unset($topDownload[$key]);             
                }
             }
+            
+            //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("lib_video" . $libId,$topDownload);
+            $MemDatas->setDataSource('default');
             
             Cache::write("lib_video" . $libId, $topDownload);
             //library top 10 cache set
@@ -3807,5 +3864,13 @@ STR;
         }
 		return $albumData;            
        }  
+       
+       /*
+     * @func callLibraryStreamingStatusCron
+     * @desc reponsible to check streamging contract 
+     */   
+       function callLibraryStreamingStatusCron(){
+           $this->Library->updateLibraryStreamingStatus();           
+       }
 
 }
