@@ -405,7 +405,7 @@ class Download extends AppModel {
             'created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id"
         );
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.*', 'Genre.*','Library.show_barcode'),
             'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
             'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')),
                 array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left',
@@ -414,7 +414,7 @@ class Download extends AppModel {
                 ))), 
             
             $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
                     'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')),
                    array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))
@@ -442,14 +442,14 @@ class Download extends AppModel {
         }
         $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id  ORDER BY created ASC");
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.*', 'Genre.*','Library.show_barcode'),
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
                 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')),
                  array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))                
                 ))),             
             
             $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
                     'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')),
                      array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))
@@ -474,7 +474,7 @@ class Download extends AppModel {
             'created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id  ORDER BY created ASC"
         );
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.*', 'Genre.*','Library.show_barcode'),
             'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 
                 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
                  ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))
@@ -482,7 +482,7 @@ class Download extends AppModel {
                 ))),            
             
             $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-            'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
+            'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
             'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
             'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
              ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))                
@@ -507,14 +507,14 @@ class Download extends AppModel {
             'created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id  ORDER BY created ASC"
         );
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.*', 'Genre.*','Library.show_barcode'),
             'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
                 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
                  ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))  
                 ))), 
             
             $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 
-                'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'), 
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'), 
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
                     'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
                      ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))  
@@ -543,7 +543,7 @@ class Download extends AppModel {
             'created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY id  ORDER BY created ASC"
         );
         return array($this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'Download.*', 'Genre.*','Library.show_barcode'),
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.*', 'Genre.*','Library.show_barcode'),
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
                 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
                  ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))  
@@ -553,7 +553,7 @@ class Download extends AppModel {
             
             
             $this->find('all', array('conditions' => array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition, '1 = 1 GROUP BY patron_id, library_id'),
-                'fields' => array('Currentpatrons.id', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
+                'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'patron_id', 'library_id', 'email', 'COUNT(patron_id) AS totalDownloads','Library.show_barcode'),
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
                   ,array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id  = Download.library_id'))     
                     
