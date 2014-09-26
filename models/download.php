@@ -255,7 +255,7 @@ class Download extends AppModel {
         $conditions = array(
             'Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY Download.id  ORDER BY created ASC"
         );
-        return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
+        return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
                         'Download.track_title', 'Download.email', 'Download.created', 'Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
                             'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id')
                         ), array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Download.library_id')))
@@ -292,7 +292,7 @@ class Download extends AppModel {
             $endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))) + 7, $date_arr[2]));
         }
         $conditions = array('Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY Download.id ORDER BY created ASC");
-        return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
+        return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
                         'Download.track_title', 'Download.email', 'Download.created', 'Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left',
                             'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
                         , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
@@ -325,7 +325,7 @@ class Download extends AppModel {
         $conditions = array(
             'Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY Download.id  ORDER BY created ASC"
         );
-        return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
+        return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
                         'Download.track_title', 'Download.email', 'Download.created', 'Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
                             'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
                         , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
@@ -389,7 +389,7 @@ class Download extends AppModel {
         $conditions = array(
             'Download.created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY Download.id  ORDER BY created ASC"
         );
-        return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
+        return $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Download.id', 'Download.library_id', 'Download.patron_id', 'Download.artist',
                         'Download.track_title', 'Download.email', 'Download.created', 'Library.show_barcode'), 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons',
                             'type' => 'left', 'conditions' => array('Currentpatrons.patronid = Download.patron_id', 'Currentpatrons.libid = Download.library_id'))
                         , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = Download.library_id'))), 'recursive' => -1));
