@@ -538,13 +538,12 @@ Class GenresController extends AppController
             if (!empty($type))
             {
              	$limit = 12;
+                $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album', 0, $filter);
+                       
                 $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit, 0, null, 0, $filter);
-                $totalFacetCount = $albums['ngroups'];
+                      
                 $arr_albumStream = array();
                 foreach ($albums as $objKey => $objAlbum) {
-                    if ( !is_object( $objAlbum ) ) {
-            		continue;
-            	}
                 	$arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
                     	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
                     );
