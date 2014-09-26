@@ -117,11 +117,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 		if (!empty($albumData)) {
 			$i = 0;
 			foreach ($albumData as $palbum) {
-				
-				if ( !is_object( $palbum ) ) {
-					continue;
-				}
-
 				$albumDetails = $album->getImage( $palbum->ReferenceID, $palbum->provider_type );
 
 				if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {					                                        
@@ -135,11 +130,11 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 				} else {
 
 				}
-				$album_title = truncate_text($this->getTextEncode($palbum->AlbumTitle), 24, $this, false);
+				$album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
 				$album_genre = str_replace('"', '', $palbum->Genre);
 				$album_label = $palbum->Label;
 				$album_copyright = $palbum->Copyright;
-				$tilte = urlencode($palbum->AlbumTitle);
+				$tilte = urlencode($palbum->Title);
 				$linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
 				$linkProviderType = base64_encode($palbum->provider_type);
 				if (!empty($album_label)) {
@@ -158,7 +153,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 			<div class="cover-image">
 				<a
 					href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>"
-					title="<?php echo $this->getTextEncode($palbum->AlbumTitle); ?>"> <img
+					title="<?php echo $this->getTextEncode($palbum->Title); ?>"> <img
 					src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>"
 					width="162" height="162" />
 				</a>
@@ -167,7 +162,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 				<div class="album-title">
 					<strong><a
 						href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>"
-						title="<?php echo $this->getTextEncode($palbum->AlbumTitle); ?>"><?php echo $album_title; ?>
+						title="<?php echo $this->getTextEncode($palbum->Title); ?>"><?php echo $album_title; ?>
 							<?php echo $explicit; ?> </a> </strong>
 				</div>
 				<div class="genre">
