@@ -1606,6 +1606,14 @@ STR;
                 Cache::write("new_releases_videos" . $country, $data);
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
+            
+             //update the mem datas table
+            $MemDatas = ClassRegistry::init('MemDatas');
+            $MemDatas->setDataSource('master');
+            $this->CacheHandler->setMemData("new_releases_videos" . $country,$data);
+            $MemDatas->setDataSource('default');
+            
+            
         }
         $this->log("cache written for new releases videos for $territory", 'debug');
         //End Caching functionality for new releases videos  
