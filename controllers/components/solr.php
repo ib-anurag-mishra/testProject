@@ -7,12 +7,12 @@ class SolrComponent extends Object {
 	/**
 	 * Used for runtime configuration of model
 	 */
-	static $_defaults = array( 'server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/' ); //108.166.39.24//192.168.100.24//192.168.100.24
+	static $_defaults = array( 'server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicstage/' ); //108.166.39.24//192.168.100.24//192.168.100.24
 
 	/**
 	 * Used for runtime configuration of model
 	 */
-	static $_defaults2 = array( 'server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicvideos/' ); //108.166.39.24//192.168.100.24//192.168.100.24
+	static $_defaults2 = array( 'server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicvideosstage/' ); //108.166.39.24//192.168.100.24//192.168.100.24
 
 	/**
 	 * Solr client object
@@ -82,7 +82,7 @@ class SolrComponent extends Object {
 		if ( $type == 'video' ) {			
 			$conditions = ' AND DownloadStatus:1';
 		} else {
-			$conditions = ' AND (TerritoryDownloadStatus:' . $country . '_1 OR TerritoryStreamingStatus:' . $country . '_1)' . $filter;
+			$conditions = ' AND (TerritoryDownloadStatus:' . $country . '_1 OR TerritoryDownloadStatus:' . $country . '_1 OR TerritoryStreamingStatus:' . $country . '_1)' . $filter;
 		}
 		
 		if( $mobileExplicitStatus == 1 ) {
@@ -123,54 +123,64 @@ class SolrComponent extends Object {
 		}
 	}
 	
-	public function createSearchFields( $type ) {
-
-		$queryFields = '';
-
+	public function solrSearchFileds( $type, $check = 0, $fieldFlag = false ) {
+	
+		$queryFields = array();
+	
 		switch ( $type ) {
-
+	
 			case 'song':
-				$queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+				$queryFields['queryFields'] = 'catchSongs^10';
+				$queryFields['field'] 		= 'SongTitle';
 				break;
-
+	
 			case 'genre':
-				$queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
+				$queryFields['queryFields'] = 'Genre';
+				$queryFields['field'] 		= 'Genre';
 				break;
-		
+	
 			case 'album':
-				$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+				if( !empty( $check ) ) {
+					$queryFields['queryFields'] = 'Composer';
+				} else {
+					$queryFields['queryFields'] = 'catchAlbums^10';
+				}
+				
+				if ( $fieldFlag === true ) {
+					$queryFields['field'] = 'AlbumTitle';
+				} else {
+					$queryFields['field'] = 'rpjoin';					
+				}
+
 				break;
-		
+	
 			case 'artist':
-				$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+				$queryFields['queryFields'] = 'ArtistText';
+				$queryFields['field'] 		= 'ArtistText';
 				break;
-		
+	
 			case 'label':
-				$queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+				$queryFields['queryFields'] = 'Label';
+				$queryFields['field'] 		= 'Label';
 				break;
-		
+	
 			case 'video':
-				$queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
+				$queryFields['queryFields'] = "catchVideos^10";
+				$queryFields['field'] 		= 'VideoTitle';
 				break;
-		
+	
 			case 'composer':
-				$queryFields = "CComposer^100";
+				$queryFields['queryFields'] = 'Composer';
+				$queryFields['field'] 		= 'Composer';
 				break;
-		
-			case 'all':
-				$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
-				break;
-		
-			case 'genreAlbum':
-				$queryFields = "CGenre^60";
-				break;
-		
+	
 			default:
-				$queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+				$queryFields['queryFields'] = 'catchSongs^10';
+				$queryFields['field'] 		= 'SongTitle';
 				break;
 		}
-		
-		return $queryFields;
+	
+		return  $queryFields;
 	}
 
 	public function getSearchResponse( $type, $query, $begin, $end, $additionalParams, $check = 0 ) {
@@ -187,113 +197,6 @@ class SolrComponent extends Object {
 
 		return $response;
 	}
-	
-	public function createGroupSearchFields( $type, $check ) {
-
-		$arrGroup = array();
-
-		switch ( $type ) {
-		
-			case 'song':
-				$arrGroup['queryFields'] = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-				$arrGroup['field'] 		 = 'SongTitle';
-				break;
-
-			case 'genre':
-				$arrGroup['queryFields'] = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
-				$arrGroup['field'] 		 = 'Genre';
-				break;
-
-			case 'album':		
-				if( !empty( $check ) ) {
-					$arrGroup['queryFields'] = "CComposer";
-				} else {
-					$arrGroup['queryFields'] = "CTitle^100000 CArtistText^100 CGenre^60 CSongTitle^20 CComposer";
-				}
-	
-				$arrGroup['field'] = 'rpjoin';
-				break;
-		
-			case 'artist':
-				$arrGroup['queryFields'] = "CArtistText^1000000 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
-				$arrGroup['field'] 		 = 'ArtistText';
-				break;
-
-			case 'label':
-				$arrGroup['queryFields'] = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-				$arrGroup['field'] 		 = 'Label';
-				break;
-
-			case 'video':
-				$arrGroup['queryFields'] = "CVideoTitle^100 CArtistText^80 CTitle^60";
-				$arrGroup['field'] 		 = 'VideoTitle';
-				break;
-
-			case 'composer':
-				$arrGroup['queryFields'] = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
-				$arrGroup['field'] 		 = 'Composer';
-				break;
-
-			case 'genreAlbum':
-				$arrGroup['queryFields'] = "CGenre^60";
-				$arrGroup['field'] 		 = 'rpjoin';
-				break;
-		
-			default:
-				$arrGroup['queryFields'] = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
-				$arrGroup['field'] 		 = 'SongTitle';
-				break;
-		}
-		return  $arrGroup;
-	}
-	
-	public function createAutoCompleteFields( $type ) {
-
-		$arrAuto = array();
-
-		switch ( $type ) {
-			case 'song':
-				$arrAuto['queryFields'] = "CSongTitle";
-				$arrAuto['field']		= 'SongTitle';
-				break;
-		
-			case 'genre':
-				$arrAuto['queryFields'] = "CGenre";
-				$arrAuto['field'] 		= 'Genre';
-				break;
-		
-			case 'album':
-				$arrAuto['queryFields'] = "CTitle";
-				$arrAuto['field'] 		= 'Title';
-				break;
-		
-			case 'artist':
-				$arrAuto['queryFields'] = "CArtistText";
-				$arrAuto['field'] 		= 'ArtistText';
-				break;
-		
-			case 'video':
-				$arrAuto['queryFields'] = "CVideoTitle^100 CArtistText^80 CTitle^60";
-				$arrAuto['field'] 		= 'VideoTitle';
-				break;
-		
-			case 'composer':
-				$arrAuto['queryFields'] = "CComposer";
-				$arrAuto['field'] 		= 'Composer';
-				break;
-		
-			case 'genreAlbum':
-				$arrAuto['queryFields'] = "CGenre";
-				$arrAuto['field'] 		= 'Genre';
-				break;
-		
-			default:
-				$arrAuto['queryFields'] = "CSongTitle";
-				$arrAuto['field']		= 'SongTitle';
-				break;
-		}
-		return $arrAuto;
-	}
 
 	public function search( $keyword, $type = 'song', $sort="SongTitle", $sortOrder = "asc", $page = 1, $limit = 10, $country, $perfect = false, $mobileExplicitStatus = 0 ) {
 
@@ -306,7 +209,9 @@ class SolrComponent extends Object {
 				$conditions    = $this->createSearchConditions( $type, $country, $mobileExplicitStatus );
 				$searchkeyword = $this->escapeSpace( $keyword );
 				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-				$queryFields   = $this->createSearchFields( $type );
+				$queryFields   = $this->solrSearchFileds( $type );
+
+				$queryFields   = isset( $queryFields['queryFields'] ) ? $queryFields['queryFields'] : '';
 
 				if ( $page == 1 ) {
 					$this->Session->delete('pagebreak');
@@ -320,8 +225,8 @@ class SolrComponent extends Object {
 										'qf' => $queryFields
 									);
 				
-				$query 					 = $searchkeyword . ' AND Territory:' . $country . $conditions;
-				$provider_query_lastpage = ' AND (provider_type:sony OR provider_type:ioda)';
+				$query 					 = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
+				$provider_query_lastpage = ' AND (provider_type:sony OR provider_type:sony OR provider_type:ioda)';
 
 				$lastPageResponse = self::$solr->search( $query . $provider_query_lastpage, 0, 1, $additionalParams );
 
@@ -430,12 +335,12 @@ class SolrComponent extends Object {
 				$conditions    = $this->createSearchConditions( $type, $country, 0, $filter );
 				$searchkeyword = $this->escapeSpace( $keyword );
 				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-				$arrGroup	   = $this->createGroupSearchFields( $type, $check );
+				$arrGroup	   = $this->solrSearchFileds( $type, $check );
 				
 				$queryFields = isset( $arrGroup['queryFields'] ) ? $arrGroup['queryFields'] : '';
 				$field 		 = isset( $arrGroup['field'] ) ? $arrGroup['field'] : '';
 
-				$query = $searchkeyword . ' AND Territory:' . $country . $conditions;
+				$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
 
 				$additionalParams = array(
 										'defType' => 'edismax',
@@ -484,12 +389,33 @@ class SolrComponent extends Object {
 				$conditions    = $this->createSearchConditions( $type, $country, $mobileExplicitStatus, $filter );
 				$searchkeyword = $this->escapeSpace( $keyword );
 				$searchkeyword = $this->checkSearchKeyword( $searchkeyword );
-				$arrGroup	   = $this->createGroupSearchFields( $type, $check );
+				$arrGroup	   = $this->solrSearchFileds( $type, $check );
 				
 				$queryFields = isset( $arrGroup['queryFields'] ) ? $arrGroup['queryFields'] : '';
 				$field 		 = isset( $arrGroup['field'] ) ? $arrGroup['field'] : '';
 
-				$query = $searchkeyword . ' AND Territory:' . $country . $conditions;
+				if ( $type == 'album' ) {
+					
+					/*if ( preg_match( '/tribute/i', $searchkeyword ) && preg_match( '/karaoke/i', $searchkeyword ) ) {
+
+						$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
+
+					} else if ( preg_match( '/tribute/i', $searchkeyword ) && !preg_match( '/karaoke/i', $searchkeyword ) ) {
+						
+						$query = '(' . $searchkeyword . ') AND !(karaoke) AND Territory:' . $country . $conditions;
+
+					} else if( !preg_match( '/tribute/i', $searchkeyword ) && preg_match( '/karaoke/i', $searchkeyword ) ) {
+						
+						$query = '(' . $searchkeyword . ') AND !(tribute) AND Territory:' . $country . $conditions;
+
+					} else {
+						$query = '(' . $searchkeyword . ') AND !(tribute) AND !(karaoke) AND Territory:' . $country . $conditions;
+					}*/
+					$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
+					
+				} else {
+					$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
+				}
 
 				if ( $page == 1 ) {
 					$start = 0;
@@ -504,6 +430,7 @@ class SolrComponent extends Object {
 										'group.field' => $field,
 										'group.query' => $query,
 										'group.sort' => 'provider_type desc',
+										'group.ngroups'	=> 'true'
 									);
 				$response = $this->getSearchResponse( $type, $query, $start, $limit, $additionalParams, $check );
 				$docs 	  = array();
@@ -515,6 +442,8 @@ class SolrComponent extends Object {
 							$group->doclist->docs[0]->numFound = $group->doclist->numFound;
 							$docs[] = $group->doclist->docs[0];
 						}
+
+						$docs['ngroups'] = $response->grouped->$field->ngroups;
 					}
 				}
 				return $docs;
@@ -544,33 +473,63 @@ class SolrComponent extends Object {
 
 				if ( $type != 'all' ) {
 
-					$arrAuto 	 = $this->createAutoCompleteFields( $type );					
+					$arrAuto 	 = $this->solrSearchFileds( $type, 0, true );					
 					$queryFields = isset( $arrAuto['queryFields'] ) ? $arrAuto['queryFields'] : '';
 					$field 		 = isset( $arrAuto['field'] ) ? $arrAuto['field'] : '';
-					$query	 	 = $searchkeyword . ' AND Territory:' . $country . $conditions;
+					$query	 	 = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
 
 					$additionalParams = array(
 											'defType' => 'edismax',
 											'qf' => $queryFields,
-											'facet' => 'true',
-											'facet.field' => array( $field ),
-											'facet.query' => $query,
-											'facet.mincount' => 1,
-											'facet.limit' => $limit
+											'group' => 'true',
+											'group.field' => array( $field ),
+											'group.query' => $query,
+											'group.mincount' => 1,
+											'group.limit' => $limit
 										);
 
-					$response 	= $this->getSearchResponse( $type, $query, 0, 0, $additionalParams );
+					$response 	= $this->getSearchResponse( $type, $query, 0, $limit, $additionalParams );
 					$arr_result = array();
 
+					switch ( $type ) {
+						case 'album':
+							$textField = 'AlbumTitle';
+							break;
+
+						case 'artist':
+							$textField = 'ArtistText';
+							break;
+
+						case 'song':
+							$textField = 'SongTitle';
+							break;
+
+						case 'composer':
+							$textField = 'Composer';
+							break;
+
+						case 'genre':
+							$textField = 'Genre';
+							break;
+
+						case 'video':
+							$textField = 'VideoTitle';
+							break;
+					}
+
 					if ( $response->getHttpStatus() == 200 ) {
-						if ( !empty( $response->facet_counts->facet_fields->$field ) ) {
-							if ( $allmusic == 1 ) {
-								$arr_result[$response->response->numFound][$type] = $response->facet_counts->facet_fields->$field;
-							} else {
-								return $response->facet_counts->facet_fields->$field;
+						
+						if ( !empty( $response->grouped->$field->groups ) ) {
+						
+							foreach ( $response->grouped->$field->groups as $group ) {
+
+								if ( isset( $group->doclist->docs[0]->$textField ) && !empty( $group->doclist->docs[0]->$textField )) {
+									$arr_result[] = $group->doclist->docs[0]->$textField;
+								}
 							}
 						}
 					}
+
 					return $arr_result;
 				}
 			} else {

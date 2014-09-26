@@ -168,8 +168,8 @@
 						<?php 
 							$artistText    = str_replace( '/', '@', base64_encode( $psong->ArtistText ) );
 							$providerType  = base64_encode( $psong->provider_type );
-							$songTitle	   = $this->getTextEncode( $psong->Title );
-							$linkSongTitle = str_replace( '"', '', $this->Search->truncateText( $this->getTextEncode( $psong->Title ), 25, $this ) );
+							$songTitle	   = $this->getTextEncode( $psong->AlbumTitle );
+							$linkSongTitle = str_replace( '"', '', $this->Search->truncateText( $this->getTextEncode( $psong->AlbumTitle ), 25, $this ) );
 						?>
 						<?=$this->Html->link( $linkSongTitle, array( 'controller' => 'artists', 'action' => 'view', $psong->ReferenceID, $providerType ), array( 'title' => $songTitle ) )?>
 					</div>
@@ -307,16 +307,21 @@
 				$i = 0;
 
 				foreach ( $albumData as $palbum ):
+
+					if ( !is_object( $palbum ) ) {
+						continue;
+					}
+
 					$albumInfo = $this->Search->getAlbumInfo( $palbum, $this );
 					extract( $albumInfo );
 		?>
 					<div class="album-detail-container">
 						<div class="cover-image">
-							<?=$this->Html->link( $this->Html->image( $image, array( 'alt' => $album_title, 'width' => 162, 'height' => 162 ) ), array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false ) )?>
+							<?=$this->Html->link( $this->Html->image( $image, array( 'alt' => $album_title, 'width' => 162, 'height' => 162 ) ), array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->AlbumTitle ), 'escape' => false ) )?>
 						</div>
 						<div class="album-info">
 							<div class="album-title">
-								<strong> <?=$this->Html->link( $album_title . $explicit, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false ) )?> </strong>
+								<strong> <?=$this->Html->link( $album_title . $explicit, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ), array( 'title' => $this->getTextEncode( $palbum->AlbumTitle ), 'escape' => false ) )?> </strong>
 							</div>
 							<div class="artist">
 								by <?php echo $this->Html->link( $this->getTextEncode( $palbum->ArtistText ), array( 'controller' => 'artists', 'action' => 'album', str_replace( '/', '@', base64_encode( $palbum->ArtistText ) ), base64_encode( $album_genre ) ), array( 'class' => 'more-by-artist' ) ); ?>
@@ -341,7 +346,7 @@
 										<ul>
 											<li>
 											<?php												
-                                                                                                $wishlistInfo = $wishlist->getWishlistData($palbum->ProdID);
+												$wishlistInfo = $wishlist->getWishlistData($palbum->ProdID);
 
 												if ( $wishlistInfo == 'Added To Wishlist' ):
 											?> 
@@ -395,6 +400,10 @@
 				<ul>
 		<?php
 				foreach ( $genres as $genre ):
+
+					if ( !is_object( $genre ) ) {
+						continue;
+					}
 
 					$genre_name 	 = str_replace( '"', '', $genre->Genre );
 					$genre_name_text = $this->Search->truncateText( $genre_name, 125, $this );
@@ -500,6 +509,11 @@
 					<ul>
 					<?php
 						foreach ( $artists as $artist ):
+
+							if ( !is_object( $artist ) ) {
+								continue;
+							}
+
 							$artist_name 	  = str_replace( '"', '', $artist->ArtistText );
 							$artist_name_text = str_replace( '/', '@', base64_encode( $artist->ArtistText ) );
 					?>
@@ -521,6 +535,11 @@
 				<?php
 					$composerFlag = 0;
 					foreach ( $composers as $composer ):
+					
+						if ( !is_object( $composer ) ) {
+							continue;
+						}
+
 						$composer_name = str_replace('"', '', $composer->Composer);
 						$composer_name = $this->Search->truncateText( $composer_name, 125, $this );
 						$composer_name = $this->getTextEncode($composer_name);
@@ -567,6 +586,10 @@
 						<?php
 							$i = 0;
 							foreach ( $albumData as $palbum ):
+
+								if ( !is_object( $palbum ) ) {
+									continue;
+								}
 						?>
 								<li>
 						<?php
@@ -577,7 +600,7 @@
 									<?php echo $this->Html->link( 
 												$this->Html->image( $image, array( 'alt' => $album_title, 'width' => 162, 'height' => 162 ) ),
 												array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType ),
-												array( 'title' => $this->getTextEncode( $palbum->Title ), 'escape' => false )
+												array( 'title' => $this->getTextEncode( $palbum->AlbumTitle ), 'escape' => false )
 											);
 									?>
 								<?php if ( isset( $patronId ) && !empty( $patronId ) ): ?>
@@ -597,7 +620,7 @@
 									</div>
 									<div class="album-info">
 										<p class="title">
-											<?php echo $this->Html->link( $album_title, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType), array( 'title' => $this->getTextEncode( $palbum->Title ) ) );?>
+											<?php echo $this->Html->link( $album_title, array( 'controller' => 'artists', 'action' => 'view', $linkArtistText, $palbum->ReferenceID, $linkProviderType), array( 'title' => $this->getTextEncode( $palbum->AlbumTitle ) ) );?>
 										</p>
 										<p class="artist">
 											<?php __('Genre'); ?>: <span> <?= $html->link( $this->getTextEncode( $album_genre ), array( 'controller' => 'genres', 'action' => 'view', base64_encode( $album_genre ) ), array( "title" => $this->getTextEncode( $album_genre ) ) ); ?></span>
@@ -634,6 +657,11 @@
 						<ul>
 						<?php
 							foreach ( $artists as $artist ):
+
+								if ( !is_object( $artist ) ) {
+									continue;
+								}
+
 								$artist_name_text = $this->Search->truncateText( $this->getTextEncode( $artist->ArtistText ), 125, $this );
 
 								if ( !empty( $artist_name_text ) ):
@@ -676,6 +704,11 @@
 						<?php
 							$composerFlag = 0;
 							foreach ( $composers as $composer ):
+
+								if ( !is_object( $composer ) ) {
+									continue;
+								}
+
 								$composer_name = $this->Search->truncateText( $this->getTextEncode( $composer->Composer ), 125, $this );
 								if ( !empty( $composer_name ) ):
 									$composerFlag  = 1;
@@ -713,6 +746,11 @@
 				<?php if ( isset( $videos ) && is_array( $videos ) && count( $videos ) > 0 ): ?>
 				<ul>
 				<?php 	foreach ( $videos as $video ):
+
+							if ( !is_object( $video ) ) {
+								continue;
+							}
+
 							$video_name_text = $this->Search->truncateText( $this->getTextEncode( $video->VideoTitle ), 125, $this );
 							$name 			 = $this->getTextEncode( $video->VideoTitle );
 							$video_name_text = ($name != "false") ? $video_name_text : ""
@@ -742,6 +780,11 @@
 				<?php if ( isset( $genres ) && is_array( $genres ) && count( $genres ) ): ?>
 				<ul>
 				<?php	foreach ( $genres as $genre ):
+
+							if ( !is_object( $genre ) ) {
+								continue;
+							}
+
 							$genre_name 	 = str_replace( '"', '', $genre->Genre );
 							$genre_name		 = $this->getTextEncode( $genre_name );
 							$genre_name_text = $this->Search->truncateText( $genre_name , 125, $this );
@@ -859,7 +902,7 @@
 											<span title='<?= str_replace( '"', '', $this->getTextEncode( $psong->Composer ) ); ?>'><?= $this->Search->truncateText( str_replace( '"', '', $this->getTextEncode( $psong->Composer ) ), 25, $this ); ?> </span>
 										</div>
 										<div class="album album-name">
-											<?php echo $this->Html->link( str_replace('"', '', $this->Search->truncateText($this->getTextEncode($psong->Title), 25, $this)), array( 'controller' => 'artists', 'action' => 'view', str_replace( '/', '@', base64_encode( $psong->ArtistText ) ), $psong->ReferenceID, base64_encode( $psong->provider_type ) ), array( 'title' => $this->getTextEncode($psong->Title) ) ); ?>
+											<?php echo $this->Html->link( str_replace('"', '', $this->Search->truncateText($this->getTextEncode($psong->AlbumTitle), 25, $this)), array( 'controller' => 'artists', 'action' => 'view', str_replace( '/', '@', base64_encode( $psong->ArtistText ) ), $psong->ReferenceID, base64_encode( $psong->provider_type ) ), array( 'title' => $this->getTextEncode($psong->AlbumTitle) ) ); ?>
 										</div>
 										<div class="song song-name" sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $territory; ?>">
 										<?php $showSongTitle = $this->Search->truncateText( $psong->SongTitle, strlen( $psong->SongTitle ), $this ); ?>
