@@ -905,7 +905,7 @@ STR;
             AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
             GROUP BY Download.ProdID 
             ORDER BY `countProduct` DESC 
-            LIMIT 110";
+            LIMIT 25";
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
@@ -1047,7 +1047,7 @@ STR;
                AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
                GROUP BY Download.ProdID 
                ORDER BY `countProduct` DESC 
-               LIMIT 110";
+               LIMIT 25";
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
@@ -1182,7 +1182,7 @@ STR;
                  AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
                  GROUP BY Download.ProdID 
                  ORDER BY `countProduct` DESC 
-                 LIMIT 110";
+                 LIMIT 25";
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
