@@ -396,7 +396,7 @@ class SolrComponent extends Object {
 
 				if ( $type == 'album' ) {
 					
-					if ( preg_match( '/tribute/i', $searchkeyword ) && preg_match( '/karaoke/i', $searchkeyword ) ) {
+					/*if ( preg_match( '/tribute/i', $searchkeyword ) && preg_match( '/karaoke/i', $searchkeyword ) ) {
 
 						$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
 
@@ -410,7 +410,8 @@ class SolrComponent extends Object {
 
 					} else {
 						$query = '(' . $searchkeyword . ') AND !(tribute) AND !(karaoke) AND Territory:' . $country . $conditions;
-					}
+					}*/
+					$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
 					
 				} else {
 					$query = '(' . $searchkeyword . ') AND Territory:' . $country . $conditions;
