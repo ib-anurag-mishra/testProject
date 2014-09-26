@@ -31,7 +31,28 @@
 $(document).ready(function() {
 
     
+    var time = new Date().getTime();
+    $(document.body).bind("mousemove keypress", function(e) {
+        time = new Date().getTime();
+    });
 
+    function refresh() {
+        if(new Date().getTime() - time >= 10000) {
+         console.log('10 seconds idle'); 
+         
+         var confirmation = confirm("We've noticed you've been away from your computer for a while. To ensure you have the best user experience posssible, please press 'OK' to refresh your browser.");
+         if (confirmation == true) {
+
+             console.log('ok pressed');
+             window.location.reload(true);
+         } 
+
+        } else { 
+         setTimeout(refresh, 10000);
+        }
+    }
+
+    setTimeout(refresh, 10000);
 
 
 
