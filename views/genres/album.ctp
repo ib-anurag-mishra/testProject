@@ -169,10 +169,6 @@ function Get_Sales_date($sales_date_array, $country) {
                 if (!empty($albumData)) {
 		    $i = 0;
                     foreach ($albumData as $palbum) {
-                        
-                        if ( !is_object( $palbum ) ) {
-                            continue;
-                        }
                         $albumDetails = $album->getImage($palbum->ReferenceID);
 
                         if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {                            
