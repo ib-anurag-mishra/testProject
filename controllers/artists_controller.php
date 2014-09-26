@@ -1570,13 +1570,16 @@ Class ArtistsController extends AppController {
         $libId = $this->Session->read('library');
         
         //checking the download status for the patron & library
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        if (!empty($libId) && !empty($patId)) {
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);        
+        }
 
         //setting the values for view        
         $this->set('album', $album);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+
 
                         
         $cond = "";
@@ -2885,10 +2888,12 @@ Class ArtistsController extends AppController {
         $this->set('genre', base64_decode($album));
         $combineGenre = $this->Common->getGenreForSelection(base64_decode($album));
 		$this->set('combineGenre',$combineGenre);
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+        if (!empty($libId) && !empty($patId)) {       
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+        }
 
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
