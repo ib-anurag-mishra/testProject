@@ -2233,47 +2233,23 @@ STR;
         $ids_provider_type = '';
         foreach ($topDownloaded as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if (empty($ids))
             {
-                if (empty($ids))
-                {
-                    $ids .= $v['LatestDownload']['ProdID'];
-                    $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['LatestDownload']['ProdID'];
-                    $ids_provider_type .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                if ($v['LatestDownload']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['LatestDownload']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['LatestDownload']['ProdID'];
-                }
+                $ids .= $v['LatestDownload']['ProdID'];
+                $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
             }
             else
             {
-                if (empty($ids))
-                {
-                    $ids .= $v['Download']['ProdID'];
-                    $ids_provider_type .= "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['Download']['ProdID'];
-                    $ids_provider_type .= ',' . "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-                if ($v['Download']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['Download']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['Download']['ProdID'];
-                }
+                $ids .= ',' . $v['LatestDownload']['ProdID'];
+                $ids_provider_type .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
+            }
+            if ($v['LatestDownload']['provider_type'] == 'sony')
+            {
+                $sony_ids[] = $v['LatestDownload']['ProdID'];
+            }
+            else
+            {
+                $ioda_ids[] = $v['LatestDownload']['ProdID'];
             }
         }
 
@@ -2444,52 +2420,25 @@ STR;
         $ids_provider_type_album ='';
         foreach ($topDownloaded_albums as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if (empty($ids))
             {
-                if (empty($ids))
-                {
-                    $ids .= $v['LatestDownload']['ProdID'];
-                    $ids_provider_type_album .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['LatestDownload']['ProdID'];
-                    $ids_provider_type_album .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                if ($v['LatestDownload']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['LatestDownload']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['LatestDownload']['ProdID'];
-                }
+                $ids .= $v['LatestDownload']['ProdID'];
+                $ids_provider_type_album .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
             }
             else
             {
-
-                if (empty($ids))
-                {
-                    $ids .= $v['Download']['ProdID'];
-                    $ids_provider_type_album .= "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['Download']['ProdID'];
-                    $ids_provider_type_album .= ',' . "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-
-
-                if ($v['Download']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['Download']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['Download']['ProdID'];
-                }
+                $ids .= ',' . $v['LatestDownload']['ProdID'];
+                $ids_provider_type_album .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
             }
-        }
+            if ($v['LatestDownload']['provider_type'] == 'sony')
+            {
+                $sony_ids[] = $v['LatestDownload']['ProdID'];
+            }
+            else
+            {
+                $ioda_ids[] = $v['LatestDownload']['ProdID'];
+            }
+         }
 
         if ((count($topDownloaded_albums) < 1) || ($topDownloaded_albums === false))
         {
@@ -2642,48 +2591,23 @@ STR;
         $ids_provider_type_video = '';
         foreach ($topDownloaded_videos as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if (empty($ids))
             {
-                if (empty($ids))
-                {
-                    $ids .= $v['LatestVideodownload']['ProdID'];
-                    $ids_provider_type_video .= "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['LatestVideodownload']['ProdID'];
-                    $ids_provider_type_video .= ',' . "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
-                }
-                if ($v['LatestVideodownload']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['LatestVideodownload']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['LatestVideodownload']['ProdID'];
-                }
+                $ids .= $v['LatestVideodownload']['ProdID'];
+                $ids_provider_type_video .= "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
             }
             else
             {
-
-                if (empty($ids))
-                {
-                    $ids .= $v['Download']['ProdID'];
-                    $ids_provider_type_video .= "(" . $v['Videodownload']['ProdID'] . ",'" . $v['Videodownload']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['Download']['ProdID'];
-                    $ids_provider_type_video .= ',' . "(" . $v['Videodownload']['ProdID'] . ",'" . $v['Videodownload']['provider_type'] . "')";
-                }
-                if ($v['Download']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['Videodownload']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['Videodownload']['ProdID'];
-                }
+                $ids .= ',' . $v['LatestVideodownload']['ProdID'];
+                $ids_provider_type_video .= ',' . "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
+            }
+            if ($v['LatestVideodownload']['provider_type'] == 'sony')
+            {
+                $sony_ids[] = $v['LatestVideodownload']['ProdID'];
+            }
+            else
+            {
+                $ioda_ids[] = $v['LatestVideodownload']['ProdID'];
             }
         }
 
