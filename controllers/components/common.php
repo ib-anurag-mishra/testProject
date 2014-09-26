@@ -910,29 +910,14 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
-            {
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                FROM `latest_downloads` AS `Download` 
-                LEFT JOIN libraries ON libraries.id=Download.library_id
-                WHERE libraries.library_territory = '" . $country . "' 
-                AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-                GROUP BY Download.ProdID 
-                ORDER BY `countProduct` DESC 
-                LIMIT 110";
-            }
-            else
-            {
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                FROM `downloads` AS `Download` 
-                LEFT JOIN libraries ON libraries.id=Download.library_id
-                WHERE libraries.library_territory = '" . $country . "' 
-                AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-                GROUP BY Download.ProdID 
-                ORDER BY `countProduct` DESC 
-                LIMIT 110";
-            }
+            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+            FROM `latest_downloads` AS `Download` 
+            LEFT JOIN libraries ON libraries.id=Download.library_id
+            WHERE libraries.library_territory = '" . $country . "' 
+            AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
+            GROUP BY Download.ProdID 
+            ORDER BY `countProduct` DESC 
+            LIMIT 25";
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
@@ -1074,29 +1059,14 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
-            {
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                   FROM `latest_downloads` AS `Download` 
-                   LEFT JOIN libraries ON libraries.id=Download.library_id
-                   WHERE libraries.library_territory = '" . $country . "' 
-                   AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-                   GROUP BY Download.ProdID 
-                   ORDER BY `countProduct` DESC 
-                   LIMIT 110";
-            }
-            else
-            {
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                   FROM `downloads` AS `Download` 
-                   LEFT JOIN libraries ON libraries.id=Download.library_id
-                   WHERE libraries.library_territory = '" . $country . "' 
-                   AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-                   GROUP BY Download.ProdID 
-                   ORDER BY `countProduct` DESC 
-                   LIMIT 110";
-            }
+            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+               FROM `latest_downloads` AS `Download` 
+               LEFT JOIN libraries ON libraries.id=Download.library_id
+               WHERE libraries.library_territory = '" . $country . "' 
+               AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
+               GROUP BY Download.ProdID 
+               ORDER BY `countProduct` DESC 
+               LIMIT 25";
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
@@ -1233,30 +1203,14 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-            $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-            if ($maintainLatestDownload)
-            {
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                     FROM `latest_videodownloads` AS `Download` 
-                     LEFT JOIN libraries ON libraries.id=Download.library_id
-                     WHERE libraries.library_territory = '" . $country . "' 
-                     AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-                     GROUP BY Download.ProdID 
-                     ORDER BY `countProduct` DESC 
-                     LIMIT 110";
-            }
-            else
-            {
-
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                     FROM `videodownloads` AS `Download` 
-                     LEFT JOIN libraries ON libraries.id=Download.library_id
-                     WHERE libraries.library_territory = '" . $country . "' 
-                     AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-                     GROUP BY Download.ProdID 
-                     ORDER BY `countProduct` DESC 
-                     LIMIT 110";
-            }
+            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                 FROM `latest_videodownloads` AS `Download` 
+                 LEFT JOIN libraries ON libraries.id=Download.library_id
+                 WHERE libraries.library_territory = '" . $country . "' 
+                 AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
+                 GROUP BY Download.ProdID 
+                 ORDER BY `countProduct` DESC 
+                 LIMIT 25";
             $ids = '';
             $ids_provider_type = '';
             $USTop10Downloaded = $albumInstance->query($sql);
@@ -2270,25 +2224,13 @@ STR;
         $tokeninstance = ClassRegistry::init('Token');
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
         $latestDownloadInstance = ClassRegistry::init('LatestDownload');
-        $downloadInstance = ClassRegistry::init('Download');
         $songInstance = ClassRegistry::init('Song');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
-
         //this is for my library songs start
 
-        if ($maintainLatestDownload)
-        {
-            $download_src = 'LatestDownload';
-            $topDownloaded = $latestDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-        else
-        {
-            $download_src = 'Download';
-            $topDownloaded = $downloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-
+        $download_src = 'LatestDownload';
+        $topDownloaded = $latestDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
         $this->log("$download_src - $libId - $country", "cache");
 
         $ids = '';
@@ -2299,47 +2241,23 @@ STR;
         $ids_provider_type = '';
         foreach ($topDownloaded as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if (empty($ids))
             {
-                if (empty($ids))
-                {
-                    $ids .= $v['LatestDownload']['ProdID'];
-                    $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['LatestDownload']['ProdID'];
-                    $ids_provider_type .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                if ($v['LatestDownload']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['LatestDownload']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['LatestDownload']['ProdID'];
-                }
+                $ids .= $v['LatestDownload']['ProdID'];
+                $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
             }
             else
             {
-                if (empty($ids))
-                {
-                    $ids .= $v['Download']['ProdID'];
-                    $ids_provider_type .= "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['Download']['ProdID'];
-                    $ids_provider_type .= ',' . "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-                if ($v['Download']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['Download']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['Download']['ProdID'];
-                }
+                $ids .= ',' . $v['LatestDownload']['ProdID'];
+                $ids_provider_type .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
+            }
+            if ($v['LatestDownload']['provider_type'] == 'sony')
+            {
+                $sony_ids[] = $v['LatestDownload']['ProdID'];
+            }
+            else
+            {
+                $ioda_ids[] = $v['LatestDownload']['ProdID'];
             }
         }
 
@@ -2494,23 +2412,11 @@ STR;
         $tokeninstance = ClassRegistry::init('Token');         
         $albumInstance = ClassRegistry::init('Album');
         $latestDownloadInstance = ClassRegistry::init('LatestDownload');
-        $downloadInstance = ClassRegistry::init('Download');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
         //library top 10 cache set for albums start            
-        if ($maintainLatestDownload)
-        {
-            $download_src = 'LatestDownload';
-            $topDownloaded_albums = $latestDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-        else
-        {
-            $download_src = 'Download';
-            $topDownloaded_albums = $downloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-
-
+        $download_src = 'LatestDownload';
+        $topDownloaded_albums = $latestDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
         $this->log("$download_src - $libId - $country", "cache");
 
         $ids = '';
@@ -2522,52 +2428,25 @@ STR;
         $ids_provider_type_album ='';
         foreach ($topDownloaded_albums as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if (empty($ids))
             {
-                if (empty($ids))
-                {
-                    $ids .= $v['LatestDownload']['ProdID'];
-                    $ids_provider_type_album .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['LatestDownload']['ProdID'];
-                    $ids_provider_type_album .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
-                }
-                if ($v['LatestDownload']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['LatestDownload']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['LatestDownload']['ProdID'];
-                }
+                $ids .= $v['LatestDownload']['ProdID'];
+                $ids_provider_type_album .= "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
             }
             else
             {
-
-                if (empty($ids))
-                {
-                    $ids .= $v['Download']['ProdID'];
-                    $ids_provider_type_album .= "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['Download']['ProdID'];
-                    $ids_provider_type_album .= ',' . "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
-                }
-
-
-                if ($v['Download']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['Download']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['Download']['ProdID'];
-                }
+                $ids .= ',' . $v['LatestDownload']['ProdID'];
+                $ids_provider_type_album .= ',' . "(" . $v['LatestDownload']['ProdID'] . ",'" . $v['LatestDownload']['provider_type'] . "')";
             }
-        }
+            if ($v['LatestDownload']['provider_type'] == 'sony')
+            {
+                $sony_ids[] = $v['LatestDownload']['ProdID'];
+            }
+            else
+            {
+                $ioda_ids[] = $v['LatestDownload']['ProdID'];
+            }
+         }
 
         if ((count($topDownloaded_albums) < 1) || ($topDownloaded_albums === false))
         {
@@ -2702,25 +2581,13 @@ STR;
         global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $latestVideoDownloadInstance = ClassRegistry::init('LatestVideodownload');
-        $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videoInstance = ClassRegistry::init('Video');
         $country = $territory;
         $countryPrefix = $this->getCountryPrefix($territory);
-        $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
 
         //library top 10 cache set for videos start 
-        if ($maintainLatestDownload)
-        {
-            $download_src = 'LatestDownload';
-            $topDownloaded_videos = $latestVideoDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-        else
-        {
-            $download_src = 'Download';
-            $topDownloaded_videos = $videodownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
-        }
-
-
+        $download_src = 'LatestVideodownload';
+        $topDownloaded_videos = $latestVideoDownloadInstance->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
         $this->log("$download_src - $libId - $country", "cache");
 
         $ids = '';
@@ -2732,48 +2599,23 @@ STR;
         $ids_provider_type_video = '';
         foreach ($topDownloaded_videos as $k => $v)
         {
-            if ($maintainLatestDownload)
+            if (empty($ids))
             {
-                if (empty($ids))
-                {
-                    $ids .= $v['LatestVideodownload']['ProdID'];
-                    $ids_provider_type_video .= "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['LatestVideodownload']['ProdID'];
-                    $ids_provider_type_video .= ',' . "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
-                }
-                if ($v['LatestVideodownload']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['LatestVideodownload']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['LatestVideodownload']['ProdID'];
-                }
+                $ids .= $v['LatestVideodownload']['ProdID'];
+                $ids_provider_type_video .= "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
             }
             else
             {
-
-                if (empty($ids))
-                {
-                    $ids .= $v['Download']['ProdID'];
-                    $ids_provider_type_video .= "(" . $v['Videodownload']['ProdID'] . ",'" . $v['Videodownload']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['Download']['ProdID'];
-                    $ids_provider_type_video .= ',' . "(" . $v['Videodownload']['ProdID'] . ",'" . $v['Videodownload']['provider_type'] . "')";
-                }
-                if ($v['Download']['provider_type'] == 'sony')
-                {
-                    $sony_ids[] = $v['Videodownload']['ProdID'];
-                }
-                else
-                {
-                    $ioda_ids[] = $v['Videodownload']['ProdID'];
-                }
+                $ids .= ',' . $v['LatestVideodownload']['ProdID'];
+                $ids_provider_type_video .= ',' . "(" . $v['LatestVideodownload']['ProdID'] . ",'" . $v['LatestVideodownload']['provider_type'] . "')";
+            }
+            if ($v['LatestVideodownload']['provider_type'] == 'sony')
+            {
+                $sony_ids[] = $v['LatestVideodownload']['ProdID'];
+            }
+            else
+            {
+                $ioda_ids[] = $v['LatestVideodownload']['ProdID'];
             }
         }
 
