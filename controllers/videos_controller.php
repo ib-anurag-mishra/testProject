@@ -403,14 +403,15 @@ class VideosController extends AppController {
         $libraryId = $this->Session->read( 'library' );
         $patronId  = $this->Session->read( 'patron' );
         $territory = $this->Session->read( 'territory' );
-
-        $libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
-        $patronDownload  = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
-
+        if (!empty($libraryId) && !empty($patronId)) {
+            $libraryDownload = $this->Downloads->checkLibraryDownload( $libraryId );
+            $patronDownload  = $this->Downloads->checkPatronDownload( $patronId, $libraryId );
+            $this->set( 'libraryDownload', $libraryDownload );
+            $this->set( 'patronDownload', $patronDownload );
+        }
         $this->set('libraryId', $libraryId);
         $this->set('patronId', $patronId);
-        $this->set( 'libraryDownload', $libraryDownload );
-        $this->set( 'patronDownload', $patronDownload );
+
 
         $prefix = strtolower( $territory ) . '_';
 

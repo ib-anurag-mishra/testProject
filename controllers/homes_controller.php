@@ -259,10 +259,12 @@ class HomesController extends AppController {
 
         $ids = '';
         $ids_provider_type = '';
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+        if (!empty($libId) && !empty($patId)) {
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+        }
         $topDownload_songs = Cache::read("lib" . $libId);
         if ($topDownload_songs === false) {
             
@@ -308,11 +310,12 @@ class HomesController extends AppController {
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $territory = $this->Session->read('territory');
-
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+        if (!empty($libId) && !empty($patId)) {
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+        }
 
         $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
         $siteConfigData = $this->Album->query($siteConfigSQL);
