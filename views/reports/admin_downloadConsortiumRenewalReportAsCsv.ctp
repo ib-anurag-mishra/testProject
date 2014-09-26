@@ -38,9 +38,17 @@ foreach($downloads as $key => $download) {
           $patron = $download['Download']['patron_id'];
      }else{
           $patron = $download['Currentpatrons']['id'];
-     }
+     }        
     
-    $libraryName = $library->getLibraryName($download['Download']['library_id']);
+    if(empty($download['Currentpatrons']['auth_library_name']))
+    {        
+        $libraryName = $library->getLibraryName($download['Download']['library_id']);
+    }
+    else
+    {
+        $libraryName = $download['Currentpatrons']['auth_library_name'];
+    }
+    
     $line = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
         
     $csv->addRow($line);
@@ -63,8 +71,17 @@ foreach($patronDownloads as $key => $patronDownload) {
      }else{
           $patron_id = $patronDownload['Currentpatrons']['id'];
      }
+     
+     if(empty($patronDownload['Currentpatrons']['auth_library_name']))
+    {
+        $patron_library_name    =    $library->getLibraryName($patronDownload['Download']['library_id']); 
+    }
+    else
+    {
+        $patron_library_name    =    $patronDownload['Currentpatrons']['auth_library_name']; 
+    }
     
-   $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+   $line = array($key+1, $patron_id, $patron_library_name, $patronDownload[0]['totalDownloads']);
     
     $csv->addRow($line);
 }
