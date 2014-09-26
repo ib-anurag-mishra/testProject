@@ -37,7 +37,7 @@ $(document).ready(function() {
     });
 
     function refresh() {
-        if(new Date().getTime() - time >= 60000) {
+        if(new Date().getTime() - time >= 600000) {
          console.log('10 minutes idle'); 
          
          var confirmation = confirm("We've noticed you've been away from your computer for a while. To ensure you have the best user experience posssible, please press 'OK' to refresh your browser.");
@@ -48,11 +48,11 @@ $(document).ready(function() {
          } 
 
         } else { 
-         setTimeout(refresh, 60000);
+         setTimeout(refresh, 600000);
         }
     }
 
-    setTimeout(refresh, 60000);
+    setTimeout(refresh, 600000);
 
 
 
