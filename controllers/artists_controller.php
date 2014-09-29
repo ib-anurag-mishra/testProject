@@ -2385,8 +2385,12 @@ Class ArtistsController extends AppController {
                     if ($value->Song->Advisory == 'T') {
                         $value->Song->SongTitle = $value->Song->SongTitle . ' (Explicit)';
                     }
-
-                    $playItem = array('playlistId' => 0, 'songId' => $value->Song->ProdID, 'providerType' => $value->Song->provider_type, 'label' => $value->Song->SongTitle, 'songTitle' => $value->Song->SongTitle, 'artistName' => $value->Song->ArtistText, 'songLength' => $value->totalseconds, 'data' => $value->streamUrl);
+                    if(!empty($this->params['form']['AlbumID'])) {
+                        $albumId = $this->params['form']['AlbumID'];
+                    } else {
+                        $albumId = 0;
+                    }
+                    $playItem = array('playlistId' => 0, 'AlbumID' => $albumId, 'songId' => $value->Song->ProdID, 'providerType' => $value->Song->provider_type, 'label' => $value->Song->SongTitle, 'songTitle' => $value->Song->SongTitle, 'artistName' => $value->Song->ArtistText, 'songLength' => $value->totalseconds, 'data' => $value->streamUrl);
                     $jsonPlayItem = json_encode($playItem);
                     $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
                     $playListData[] = $jsonPlayItem;

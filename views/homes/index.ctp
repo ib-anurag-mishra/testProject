@@ -50,7 +50,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						<?php
 						if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
 						{
-							echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
+							echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 1, $value['Album']['ProdID']);
 							?>
 						<a class="playlist-menu-icon toggleable no-ajaxy" href="#"
 							title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>

@@ -2386,10 +2386,10 @@ function loadAlbumSong(albumSongs) {
 }
 
 
-function loadAlbumData(albumtData) {
-
+function loadAlbumData(albumtData,AlbumID) {
+    AlbumID = (AlbumID === undefined) ? 0 : AlbumID;
     //albumtData = JSON.parse(albumtData);
-    var data = "albumtData=" + albumtData;
+    var data = "albumtData=" + albumtData + "&AlbumID =" + AlbumID;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "artists/getAlbumData", // URL to request
