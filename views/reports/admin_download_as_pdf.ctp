@@ -447,10 +447,10 @@
     //check barcode is enable or not
 
      //Column titles
-    $header = array('','Library Name', 'ID', 'Artists Name', 'Track title', 'Download');
-    $video_header = array('','Library Name', 'ID', 'Artists Name', 'Video title', 'Download');
-    $patron_header = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
-    $patron_video_header = array('', 'ID', 'Library Name', 'Total Number of Videos Downloaded'); 
+    $header = array('','Library Name', 'Branch Name', 'ID', 'Artists Name', 'Track title', 'Download');
+    $video_header = array('','Library Name', 'Branch Name', 'ID', 'Artists Name', 'Video title', 'Download');
+    $patron_header = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Tracks Downloaded');
+    $patron_video_header = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Videos Downloaded'); 
     
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
     $genre_video_header = array('', 'Genre Name', 'Total Number of Videos Downloaded');
@@ -467,7 +467,7 @@
         
         $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
         //check barcode is enable or not
-         $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
+         $data[] = array($key+1, $libraryName, $download['Currentpatrons']['branch_name'], $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
 
     }
     foreach($videoDownloads as $key => $download) {
@@ -483,7 +483,7 @@
         
         $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
         //check barcode is enable or not
-        $video_data[] = array($key+1, $this->getAdminTextEncode($libraryName), $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
+        $video_data[] = array($key+1, $this->getAdminTextEncode($libraryName), $download['Currentpatrons']['branch_name'], $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
 
     }
 
@@ -498,7 +498,7 @@
         
         
         //check barcode is enable or not
-        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
+        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), $patronDownload['Currentpatrons']['branch_name'], (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
       
     }
     
@@ -511,7 +511,7 @@
        }
         
         //check barcode is enable or not
-        $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
+        $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), $patronDownload['Currentpatrons']['branch_name'], (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
 
     }    
 

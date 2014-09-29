@@ -248,7 +248,8 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                        <th>Library Name</th>                                      
+                                        <th>Library Name</th> 
+                                        <th>Branch Name</th>
                                         <th>ID</th>
                                         <th>Artists Name</th>
                                         <th>Track Title</th>
@@ -261,7 +262,7 @@ if (empty($getData)) {
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
-                                          
+                                            <td><?php  echo $download['Currentpatrons']['branch_name']; ?></td>                                          
                                                 <td><?php                                             
                                                 if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1){
                                                     echo $download['Download']['patron_id']; 
@@ -291,6 +292,7 @@ if (empty($getData)) {
                                     <tr>
                                         <th>&nbsp;</th>
                                         <th>Library Name</th>
+                                        <th>Branch Name</th>
                                        <th>ID</th>
                                         <th>Artists Name</th>
                                         <th>Video Title</th>
@@ -303,7 +305,7 @@ if (empty($getData)) {
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($download['Videodownload']['library_id'])); ?></td>
-                                          
+                                            <td><?php echo $download['Currentpatrons']['branch_name']; ?></td>
                                                 <td><?php                                             
                                                 if(isset($download['Library']['show_barcode']) && $download['Library']['show_barcode'] == 1){
                                                     echo $download['Videodownload']['patron_id'];
@@ -333,6 +335,7 @@ if (empty($getData)) {
                                         <th>&nbsp;</th>
                                         <th>ID</th>
                                         <th>Library Name</th>
+                                        <th>Branch Name</th>
                                         <th>Total Number of Tracks Downloaded</th>
                                     </tr>
                                     <?php
@@ -352,6 +355,7 @@ if (empty($getData)) {
                                             </td>
                                             
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
+                                            <td><?php echo $patronDownload['Currentpatrons']['branch_name']; ?></td>
                                             <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']); ?></td>
                                         </tr>
                                         <?php
@@ -370,6 +374,7 @@ if (empty($getData)) {
                                         <th>&nbsp;</th>
                                       <th>ID</th>
                                         <th>Library Name</th>
+                                        <th>Branch Name</th>
                                         <th>Total Number of Videos Downloaded</th>
                                     </tr>
                                     <?php
@@ -389,6 +394,7 @@ if (empty($getData)) {
                                             </td>  
                                            
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])); ?></td>
+                                            <td><?php echo $patronDownload['Currentpatrons']['branch_name'] ?></td>
                                             <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $patronDownload['DownloadVideoPatron']['total'] : $patronDownload[0]['total']); ?></td>
                                         </tr>
                                         <?php

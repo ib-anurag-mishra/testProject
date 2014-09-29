@@ -112,7 +112,7 @@ $csv->addRow($line);
 
 //check barcode is enable or not
 
-    $line = array('', 'Library Name', 'ID', 'Artists Name', 'Track title', 'Download');
+    $line = array('', 'Library Name', 'Branch Name', 'ID', 'Artists Name', 'Track title', 'Download');
 
 
 $csv->addRow($line);
@@ -127,7 +127,7 @@ foreach ($downloads as $key => $download) {
     
     $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
 
-    $line = array($key + 1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
+    $line = array($key + 1, $libraryName, $download['Currentpatrons']['branch_name'],  $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
 
 
     $csv->addRow($line);
@@ -142,7 +142,7 @@ $csv->addRow($line);
 
 //check barcode is enable or not
 
-$line = array('', 'Library Name', 'ID', 'Artists Name', 'Video title', 'Download');
+$line = array('', 'Library Name', 'Branch Name', 'ID', 'Artists Name', 'Video title', 'Download');
 
 $csv->addRow($line);
 
@@ -156,7 +156,7 @@ foreach ($videoDownloads as $key => $download) {
     
     $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Videodownload']['library_id']));
     //check barcode is enable or not
-    $line = array($key + 1, $libraryName, $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
+    $line = array($key + 1, $libraryName, $download['Currentpatrons']['branch_name'], $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
 
 
 
@@ -173,7 +173,7 @@ $csv->addRow($line);
 
 //check barcode is enable or not
 
-$line = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
+$line = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Tracks Downloaded');
 $csv->addRow($line);
 
 foreach ($patronDownloads as $key => $patronDownload) {
@@ -185,7 +185,7 @@ foreach ($patronDownloads as $key => $patronDownload) {
     }
     
     //check barcode is enable or not
-    $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']));
+    $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), $patronDownload['Currentpatrons']['branch_name'], (($dataRange == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']));
 
     $csv->addRow($line);
 }
@@ -198,7 +198,7 @@ $csv->addRow($line);
 
 
 //check barcode is enable or not
- $line = array('', 'ID', 'Library Name', 'Total Number of Videos Downloaded');
+ $line = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Videos Downloaded');
 $csv->addRow($line);
 
 foreach ($patronVideoDownloads as $key => $patronDownload) {
@@ -210,7 +210,7 @@ foreach ($patronVideoDownloads as $key => $patronDownload) {
     }
     
     //check barcode is enable or not
-    $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day') ? $patronDownload['DownloadVideoPatron']['total'] : $patronDownload[0]['total']));
+    $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), $patronDownload['DownloadVideoPatron']['branch_name'], (($dataRange == 'day') ? $patronDownload['DownloadVideoPatron']['total'] : $patronDownload[0]['total']));
 
 
 

@@ -168,16 +168,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                        <td><?php   
-                                                    if(empty($download['Currentpatrons']['auth_library_name']))
-                                                    {
-                                                        echo $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id'])); 
-                                                    }
-                                                    else
-                                                    {
-                                                        echo $this->getAdminTextEncode($download['Currentpatrons']['auth_library_name']); 
-                                                    }
-                                            ?></td>
+                                        <td><?php echo $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
                                        
                                         <td><?php 
                                         //check if library allowed to show barcode in the report
@@ -226,17 +217,7 @@
                                         }                                       
                                         ?></td> 
                                       
-                                        <td><?php                                                                                                         
-                                                    if(empty($patronDownload['Currentpatrons']['auth_library_name']))
-                                                    {
-                                                        echo $this->getAdminTextEncode($library->getLibraryName($patronDownload['Download']['library_id'])); 
-                                                    }
-                                                    else
-                                                    {
-                                                        echo $this->getAdminTextEncode($patronDownload['Currentpatrons']['auth_library_name']); 
-                                                    }                                                    
-                                            ?>
-                                        </td>
+                                        <td><?php echo $this->getAdminTextEncode($library->getLibraryName($patronDownload['Download']['library_id'])); ?></td>
                                         <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
                                     </tr>
                                 <?php
