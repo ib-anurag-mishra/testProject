@@ -159,9 +159,17 @@
           $patron = $download['Download']['patron_id'];
       }else{
           $patron = $download['Currentpatrons']['id'];
-      }
-       
-        $libraryName = $library->getLibraryName($download['Download']['library_id']);
+      }               
+        
+        if(empty($download['Currentpatrons']['auth_library_name']))
+        {        
+            $libraryName = $library->getLibraryName($download['Download']['library_id']);
+        }
+        else
+        {
+            $libraryName = $download['Currentpatrons']['auth_library_name'];
+        }
+        
         $data[] = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     }
     
@@ -173,8 +181,17 @@
        }else{
           $patron_id = $patronDownload['Currentpatrons']['id'];
        }
+       
+        if(empty($patronDownload['Currentpatrons']['auth_library_name']))
+        {
+            $patron_library_name    =    $library->getLibraryName($patronDownload['Download']['library_id']); 
+        }
+        else
+        {
+            $patron_library_name    =    $patronDownload['Currentpatrons']['auth_library_name']; 
+        }
         
-        $patron_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+        $patron_data[] = array($key+1, $patron_id, $patron_library_name, $patronDownload[0]['totalDownloads']);
     }
     
     foreach($genreDownloads as $key => $genreDownload) {
