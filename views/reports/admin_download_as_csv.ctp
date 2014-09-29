@@ -127,7 +127,9 @@ foreach ($downloads as $key => $download) {
     
     $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
 
+
     $line = array($key + 1, $libraryName, $download['Currentpatrons']['branch_name'],  $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
+
 
 
     $csv->addRow($line);
