@@ -3227,7 +3227,7 @@ STR;
                         }
 
                         if ($zip == '') {
-                            $result = $this->Library->find('all', array('conditions' => array('library_status' => 'active', 'OR' => array($other_condition))));
+                            $result = $this->Library->find('all', array('conditions' => array('library_status' => 'active', 'OR' => array($other_condition)), 'order' => 'library_name ASC'));
 
 
                             if (!empty($result)) {
@@ -3252,7 +3252,7 @@ STR;
                                     'conditions' => array(
                                         'library_status' => 'active',
                                         'OR' => array(
-                                            "substring(library_zipcode,1,5) in ($result)", "find_in_set('" . $condition . "',library_zipcode)", $other_condition))));
+                                            "substring(library_zipcode,1,5) in ($result)", "find_in_set('" . $condition . "',library_zipcode)", $other_condition), 'order' => 'library_name ASC')));
 
                                 if (!empty($result)) {
                                     $this->set('libraries', $result);
@@ -3271,7 +3271,7 @@ STR;
                 if ($this->data['Library_details1']['country'] != '') {
                     $territory = $this->data['Library_details1']['country'];
                     $this->Library->recursive = -1;
-                    $result = $this->Library->find('all', array('conditions' => "library_territory = '$territory'"));
+                    $result = $this->Library->find('all', array('conditions' => "library_territory = '$territory' and library_status = 'active'", 'order' => 'library_name ASC'));
                     if (!empty($result))
                         $this->set('libraries', $result);
                     else
