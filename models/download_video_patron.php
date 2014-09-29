@@ -261,7 +261,7 @@ class DownloadVideoPatron extends AppModel {
             'download_date = "' . $downloadDate . '" ' . $lib_condition . " ORDER BY download_date DESC"
         );
 
-        $record = $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id, Currentpatrons.auth_library_name, `DownloadVideoPatron`.`download_date`, `DownloadVideoPatron`.`library_id`, `DownloadVideoPatron`.`patron_id`, `DownloadVideoPatron`.`email`, `DownloadVideoPatron`.`total`,Library.show_barcode'),
+        $record = $this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id, Currentpatrons.branch_name, `DownloadVideoPatron`.`download_date`, `DownloadVideoPatron`.`library_id`, `DownloadVideoPatron`.`patron_id`, `DownloadVideoPatron`.`email`, `DownloadVideoPatron`.`total`,Library.show_barcode'),
             'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = DownloadVideoPatron.patron_id', 'Currentpatrons.libid = DownloadVideoPatron.library_id'))
                 , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = DownloadVideoPatron.library_id')))));
 
@@ -298,7 +298,7 @@ class DownloadVideoPatron extends AppModel {
             $endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))) + 7, $date_arr[2]));
         }
         $conditions = array('download_date BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY patron_id, library_id ORDER BY download_date DESC");
-        return array($this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'email', 'patron_id', 'library_id', 'SUM(total) as total', 'Library.show_barcode'),
+        return array($this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.branch_name', 'email', 'patron_id', 'library_id', 'SUM(total) as total', 'Library.show_barcode'),
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = DownloadVideoPatron.patron_id', 'Currentpatrons.libid = DownloadVideoPatron.library_id'))
                     , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = DownloadVideoPatron.library_id'))))));
     }
@@ -330,7 +330,7 @@ class DownloadVideoPatron extends AppModel {
         $conditions = array(
             'download_date BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY patron_id, library_id ORDER BY download_date DESC"
         );
-        return array($this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'Currentpatrons.patronid', 'email', 'patron_id', 'library_id', 'SUM(total) as total', 'Library.show_barcode'),
+        return array($this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.branch_name', 'Currentpatrons.patronid', 'email', 'patron_id', 'library_id', 'SUM(total) as total', 'Library.show_barcode'),
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = DownloadVideoPatron.patron_id', 'Currentpatrons.libid = DownloadVideoPatron.library_id'))
                     , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = DownloadVideoPatron.library_id'))))));
     }
@@ -389,7 +389,7 @@ class DownloadVideoPatron extends AppModel {
         $conditions = array(
             'download_date BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 GROUP BY patron_id,library_id ORDER BY download_date DESC"
         );
-        return array($this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.auth_library_name', 'patron_id', 'library_id', 'SUM(total) as total', 'Library.show_barcode'),
+        return array($this->find('all', array('conditions' => $conditions, 'fields' => array('Currentpatrons.id', 'Currentpatrons.branch_name', 'patron_id', 'library_id', 'SUM(total) as total', 'Library.show_barcode'),
                 'joins' => array(array('table' => 'currentpatrons', 'alias' => 'Currentpatrons', 'type' => 'left', 'conditions' => array('Currentpatrons.patronid = DownloadVideoPatron.patron_id', 'Currentpatrons.libid = DownloadVideoPatron.library_id'))
                     , array('table' => 'libraries', 'alias' => 'Library', 'type' => 'left', 'conditions' => array('Library.id = DownloadVideoPatron.library_id'))))));
     }
