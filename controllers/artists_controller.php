@@ -2938,7 +2938,9 @@ Class ArtistsController extends AppController {
                                 )
                             )
                         ),
-                        'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
+                        'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+                        'cache' => 'no',
+                        'chk' => 2
             );
 
             $this->paginate['limit'] = 50;
