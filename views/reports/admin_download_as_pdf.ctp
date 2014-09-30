@@ -537,7 +537,7 @@
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(10, 50, 40, 60, 80, 20);
+    $w = array(10, 50, 30, 40, 40, 70, 20);
     for($i = 0; $i < count($header); $i++)
         $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
@@ -598,7 +598,7 @@
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(10, 50, 40, 60, 80, 20);
+    $w = array(10, 50, 30, 40, 40, 70, 20);
     for($i = 0; $i < count($video_header); $i++)
         $tcpdf->Cell($w[$i], 7, $video_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
