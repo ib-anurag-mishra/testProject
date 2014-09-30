@@ -418,8 +418,7 @@ class VideosController extends AppController {
 
         if ( isset( $this->params['pass'][0] ) ) {
 
-            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] ); 
-            print_r($videosData);
+            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] );           
             $videoArtwork = $this->Token->artworkToken( $videosData[0]['File']['CdnPath'] . '/' . $videosData[0]['File']['SourceURL'] );            
             $videosData[0]['videoImage'] = Configure::read( 'App.Music_Path' ) . $videoArtwork;            
             
