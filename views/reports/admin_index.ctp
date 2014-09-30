@@ -15,11 +15,11 @@ if (empty($getData)) {
     echo "for \"" . $this->getTextEncode($libraryname) . "\"";
 } ?></legend>
     <div class="formFieldsContainer">
-        <div class="formFieldsbox">Patron Downloads Report
+        <div class="formFieldsbox">
             <div id="form_step" class="form_steps">
                 <h1>Report Settings</h1>
                 <table cellspacing="10" cellpadding="0" border="0" width="100%">
-                    <tr><td id="formError" class="formErroPatron Downloads Reportr" colspan="4"></td></tr>
+                    <tr><td id="formError" class="formError" colspan="4"></td></tr>
                     <tr>
                         <?php
                         if ($libraryID == "") {
@@ -390,7 +390,7 @@ if (empty($getData)) {
                                                 ?>                                          
                                             </td>  
                                            
-                                            <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])); ?></td>                                            
+                                            <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])); ?></td>                                           
                                             <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $patronDownload['DownloadVideoPatron']['total'] : $patronDownload[0]['total']); ?></td>
                                         </tr>
                                         <?php
