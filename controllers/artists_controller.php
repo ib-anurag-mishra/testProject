@@ -2958,7 +2958,7 @@ Class ArtistsController extends AppController {
                     $albumData[$key]['combineGenre'] = $this->Common->getGenreForSelection($albumData[$key]['Genre']['Genre']);
                 }
             $this->set('albumData', $albumData);            
-            
+       print_r($albumData);     
            
             if(!empty($albumData)){
                  foreach ($albumData as $key => $value) {
