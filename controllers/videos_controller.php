@@ -477,7 +477,7 @@ class VideosController extends AppController {
     		 
     		foreach ( $topVideoGenreData as $key => $value ) {
     			 
-    			$videoArtwork = $this->Token->artworkToken( $value['File']['CdnPath'] . '/' . $value['File']['SourceURL'] );
+    			$videoArtwork = $this->Token->artworkToken( $value['Video']['CdnPath'] . '/' . $value['Video']['Image_SaveAsName'] );
     			 
     			$videoImage  = Configure::read( 'App.Music_Path' ) . $videoArtwork;
     			 

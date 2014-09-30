@@ -42,7 +42,7 @@ Class CommonComponent extends Object
                     'fields' => array(
                         'Country.Territory'
                     )
-                ),
+                )
             ), 'group' => 'Genre.Genre'
         ));
       
@@ -706,7 +706,7 @@ STR;
     public function featuredVideos( $prefix, $territory,$explicitContent,$cacheVariableSuffix ) {
         
          set_time_limit(0);
-          global $brokenImages;
+         global $brokenImages;
          $tokeninstance = ClassRegistry::init('Token');
          $FeaturedVideo = ClassRegistry::init('FeaturedVideo');
     	
@@ -714,21 +714,21 @@ STR;
 
          if ( !empty( $featuredVideos ) ) {
 
-                foreach ( $featuredVideos as $key => $featureVideo ) {
+               foreach ( $featuredVideos as $key => $featureVideo ) {
 
-                        $videoArtwork = $tokeninstance->artworkToken( $featureVideo['File']['CdnPath'] . '/' . $featureVideo['File']['SourceURL'] );
-                        $videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
+                    $videoArtwork = $tokeninstance->artworkToken( $featureVideo['Video']['CdnPath'] . '/' . $featureVideo['Video']['Image_SaveAsName'] );
+                    $videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
 
-                        $featuredVideos[$key]['videoImage'] = $videoImage;
+                    $featuredVideos[$key]['videoImage'] = $videoImage;
 
-                        //check image file exist or not for each entry
-                        if(!$this->checkImageFileExist($featuredVideos[$key]['videoImage'])){              
-                            //write broken image entry in the log files
-                            $this->log($territory.' : ' .' Featured Videos : '. $featuredVideos[$key]['videoImage'], 'check_images');
-                            $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .' Featured Videos : '. $featuredVideos[$key]['videoImage'];
-                            //unset the broken images variable in the array
-                            unset($featuredVideos[$key]);             
-                        }                            
+                    //check image file exist or not for each entry
+                    if(!$this->checkImageFileExist($featuredVideos[$key]['videoImage'])){              
+                        //write broken image entry in the log files
+                        $this->log($territory.' : ' .' Featured Videos : '. $featuredVideos[$key]['videoImage'], 'check_images');
+                        $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .' Featured Videos : '. $featuredVideos[$key]['videoImage'];
+                        //unset the broken images variable in the array
+                        unset($featuredVideos[$key]);             
+                    }                            
                 }
                 
                  //update the mem datas table
@@ -765,7 +765,7 @@ STR;
 
                 foreach ( $topDownloads as $key => $topDownload ) {
 
-                        $videoArtwork = $tokeninstance->artworkToken( $topDownload['File']['CdnPath'] . '/' . $topDownload['File']['SourceURL'] );
+                        $videoArtwork = $tokeninstance->artworkToken( $topDownload['Video']['CdnPath'] . '/' . $topDownload['Video']['Image_SaveAsName'] );
                         $videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
 
                         $topDownloads[$key]['videoImage'] = $videoImage;
@@ -969,30 +969,26 @@ STR;
                     Song.Sample_Duration,
                     Song.FullLength_Duration,
                     Song.provider_type,
+                    Song.FullLength_SaveAsName,
+                    Song.Sample_SaveAsName,
+                    Song.CdnPath,
                     Albums.ProdID,
                     Albums.provider_type,
                     Albums.Advisory,
+                    Albums.Image_SaveAsName,
+                    Albums.CdnPath,
                     Genre.Genre,
                     Country.Territory,
                     Country.SalesDate,
                     Country.StreamingSalesDate,
                     Country.StreamingStatus,
                     Country.DownloadStatus,                    
-                    Sample_Files.CdnPath,
-                    Sample_Files.SaveAsName,
-                    Full_Files.CdnPath,
-                    Full_Files.SaveAsName,
-                    File.CdnPath,
-                    File.SourceURL,
-                    File.SaveAsName,
-                    Sample_Files.FileID
-            FROM Songs AS Song
-            LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-            LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                    
+                    
+            FROM Songs AS Song           
             LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-            INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-            INNER JOIN File ON (Albums.FileID = File.FileID) 
+            INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID)            
             WHERE ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
             GROUP BY Song.ProdID
             ORDER BY FIELD(Song.ProdID,$ids) ASC
@@ -1011,11 +1007,11 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {                         
-                    $songs_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $songs_img = $tokeninstance->artworkToken($value['Albums']['CdnPath'] . "/" . $value['Albums']['Image_SaveAsName']);
                     $songs_img = Configure::read('App.Music_Path') . $songs_img;
                     $data[$key]['songs_img'] = $songs_img;
                                         
-                    $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    $filePath = $tokeninstance->streamingToken($value['Song']['CdnPath'] . "/" . $value['Song']['FullLength_SaveAsName']);
 
                     if (!empty($filePath))
                     {
@@ -1133,31 +1129,26 @@ STR;
                    Song.Sample_Duration,
                    Song.FullLength_Duration,
                    Song.provider_type,
+                   Song.FullLength_SaveAsName,
+                   Song.Sample_SaveAsName,
+                   Song.CdnPath,
                    Albums.ProdID,
                    Albums.provider_type,  
                    Albums.AlbumTitle,
                    Albums.Advisory,
+                   Albums.Image_SaveAsName,
+                   Albums.CdnPath, 
                    Genre.Genre,
                    Country.Territory,
                    Country.SalesDate,
                    Country.StreamingSalesDate,
                    Country.StreamingStatus,
                    Country.DownloadStatus,
-                   Sample_Files.CdnPath,
-                   Sample_Files.SaveAsName,
-                   Full_Files.CdnPath,
-                   Full_Files.SaveAsName,
-                   File.CdnPath,
-                   File.SourceURL,
-                   File.SaveAsName,
-                   Sample_Files.FileID
-           FROM Songs AS Song
-           LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-           LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                  
+           FROM Songs AS Song          
            LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
            LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-           INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-           INNER JOIN File ON (Albums.FileID = File.FileID) 
+           INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID)           
            WHERE ( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) )  AND (Country.Territory = '$country')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
            GROUP BY  Song.ReferenceID
            ORDER BY count(Song.ProdID) DESC
@@ -1176,7 +1167,7 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-                    $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);                    
+                    $album_img = $tokeninstance->artworkToken($value['Albums']['CdnPath'] . "/" . $value['Albums']['Image_SaveAsName']);                    
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['album_img'] = $album_img;
                     $data[$key]['albumSongs'] = $this->requestAction(
@@ -1210,8 +1201,6 @@ STR;
         $this->CacheHandler->setMemData("national_us_top10_albums" . $country,$data);
         $MemDatas->setDataSource('default');
         
-        
-        
         $this->log("cache written for US top ten Album for $territory", 'debug');
         //End Caching functionality for US TOP 10 Albums
         return $data;
@@ -1225,7 +1214,7 @@ STR;
     function getUsTop10Videos($territory)
     {
         set_time_limit(0);
-         global $brokenImages;
+        global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
@@ -1294,20 +1283,15 @@ STR;
                      Video.Sample_Duration,
                      Video.FullLength_Duration,
                      Video.provider_type,
+                     Video.FullLength_SaveAsName,
+                     Video.Image_SaveAsName,
+                     Video.CdnPath,
                      Genre.Genre,
                      Country.Territory,
-                     Country.SalesDate,
-                     Full_Files.CdnPath,
-                     Full_Files.SaveAsName,
-                     Full_Files.FileID,
-                     Image_Files.FileID,
-                     Image_Files.CdnPath,
-                     Image_Files.SourceURL
-             FROM video AS Video
-             LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                     Country.SalesDate 
+             FROM video AS Video            
              LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
-             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-             LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)            
              WHERE ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
              GROUP BY Video.ProdID
              ORDER BY FIELD(Video.ProdID, $ids) ASC
@@ -1323,16 +1307,13 @@ STR;
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
             
-            
-            
             if (!empty($data))
             {
                 foreach ($data as $key => $value)
                 {                    
-                    $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                    $albumArtwork = $tokeninstance->artworkToken($value['Video']['CdnPath'] . "/" . $value['Video']['Image_SaveAsName']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
-                    
                     
                      //check image file exist or not for each entry
                     if(!$this->checkImageFileExist($data[$key]['videoAlbumImage'])){              
@@ -1342,7 +1323,7 @@ STR;
                        //unset the broken images variable in the array
                        unset($data[$key]);             
                     }
-                }
+                }   
                 
                 Cache::write("national_us_top10_videos" . $country, $data);
                 $this->log("cache written for US top ten video for $territory", "cache");
@@ -1360,8 +1341,6 @@ STR;
         $MemDatas->setDataSource('master');
         $this->CacheHandler->setMemData("national_us_top10_videos" . $country,$data);
         $MemDatas->setDataSource('default');
-        
-        
         
         $this->log("cache written for US top ten video for $territory", 'debug');
         //End Caching functionality for US TOP 10 Videos
@@ -1436,30 +1415,27 @@ STR;
                             Song.Sample_Duration,
                             Song.FullLength_Duration,
                             Song.provider_type,
+                            Song.FullLength_SaveAsName,
+                            Song.Sample_SaveAsName,
+                            Song.CdnPath,
                             Albums.AlbumTitle,
                             Albums.ProdID,
                             Albums.Advisory,
                             Albums.provider_type,
+                            Albums.Image_SaveAsName,
+                            Albums.CdnPath,
                             Genre.Genre,
                             Country.Territory,
                             Country.SalesDate,
                             Country.StreamingSalesDate,
                             Country.StreamingStatus,
-                            Country.DownloadStatus,
-                            File.CdnPath,
-                            File.SourceURL,
-                            File.SaveAsName,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            Full_Files.FileID
-                    FROM Songs AS Song
-                    LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                            Country.DownloadStatus                           
+                    FROM Songs AS Song                    
                     LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
                     LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-                    INNER JOIN File ON (Albums.FileID = File.FileID) 
+                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID)                    
                     WHERE ( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)))
-                        AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $albumAdvisory                
+                    AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $albumAdvisory                
                     group by Albums.AlbumTitle
                     ORDER BY Country.SalesDate DESC
                     LIMIT 150
@@ -1475,13 +1451,13 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-                    $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);                    
+                    $album_img = $tokeninstance->artworkToken($value['Albums']['CdnPath'] . "/" . $value['Albums']['Image_SaveAsName']);                    
                     $album_img = Configure::read('App.Music_Path') . $album_img;
 
                     $data[$key]['albumImage'] = $album_img;
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
-                    );                    
+                    );
                     
                     //check image file exist or not for each entry
                     if(!$this->checkImageFileExist($data[$key]['albumImage'])){              
@@ -1490,10 +1466,8 @@ STR;
                        $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .' New Release Albums '. $data[$key]['albumImage'];
                        //unset the broken images variable in the array
                        unset($data[$key]);             
-                    }  
-
-                }
-                
+                    }
+                }                
                 Cache::write($cacheVariableName . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
             }
@@ -1554,20 +1528,15 @@ STR;
                             Video.Sample_Duration,
                             Video.FullLength_Duration,
                             Video.provider_type,
+                            Video.FullLength_SaveAsName,
+                            Video.Image_SaveAsName,
+                            Video.CdnPath,
                             Genre.Genre,
                             Country.Territory,
-                            Country.SalesDate,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            Full_Files.FileID,
-                            Image_Files.FileID,
-                            Image_Files.CdnPath,
-                            Image_Files.SourceURL
-                        FROM video AS Video
-                        LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                            Country.SalesDate                            
+                        FROM video AS Video                        
                         LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-                        LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-                        LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                        LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)                        
                         WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
                         GROUP BY Video.ProdID 
                         ORDER BY Country.SalesDate DESC 
@@ -1582,7 +1551,7 @@ STR;
                 
                 foreach ($data as $key => $value)
                 {                    
-                    $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                    $albumArtwork = $tokeninstance->artworkToken($value['Video']['CdnPath'] . "/" . $value['Video']['Image_SaveAsName']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                     
@@ -1628,12 +1597,12 @@ STR;
     function getFeaturedArtists($territory,$page = 0, $limit = 20)
     {
     	set_time_limit(0);
-         global $brokenImages;
+        global $brokenImages;
         $tokeninstance = ClassRegistry::init('Token');
     	if(isset($page)){
             if($page <= 0)
             {
-                    $page = 1;
+                $page = 1;
             }
             $offset = ($page - 1) * $limit;
     	}
@@ -1674,27 +1643,25 @@ STR;
                          	array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Featuredartist']['artist_name']), $albumids[$i], base64_encode($v['Featuredartist']['provider_type']),0,$territory))
                     	);
 					}
-        			$albumsongs = array();
-    				for($a =0; $a<count($streamsongs);$a++){
-        				$playlist = reset($streamsongs[$a]);
-					$albumsongs =  array_merge($albumsongs,$playlist);
-				}
-					if(empty($albumsongs)) {
-				 		$albumsongs = array();
-						$artistAlbums = $this->getStreamArtist($v['Featuredartist']['artist_name']);
-					$i = 0;
-					foreach ($artistAlbums as $index => $value) {
-						if($i == 4) break;
-						if(!empty($value['albumSongs'][$value['Album']['ProdID']])) {
-						$albumsongs = array_merge($albumsongs,$value['albumSongs'][$value['Album']['ProdID']]);
-						$i++;
-					}
-					}	
-					}
+                        $albumsongs = array();
+                        for($a =0; $a<count($streamsongs);$a++){
+                                $playlist = reset($streamsongs[$a]);
+                                $albumsongs =  array_merge($albumsongs,$playlist);
+                        }
+                        if(empty($albumsongs)) {
+                                $albumsongs = array();
+                                $artistAlbums = $this->getStreamArtist($v['Featuredartist']['artist_name']);
+                                $i = 0;
+                                foreach ($artistAlbums as $index => $value) {
+                                    if($i == 4) break;
+                                    if(!empty($value['albumSongs'][$value['Album']['ProdID']])) {
+                                        $albumsongs = array_merge($albumsongs,$value['albumSongs'][$value['Album']['ProdID']]);
+                                        $i++;
+                                    }
+                                }	
+                        }
 					
-        			$featured[$k]['albumSongs'] = $albumsongs;
-        
-
+                        $featured[$k]['albumSongs'] = $albumsongs;
                 
                     $featureImageURL =  Configure::read('App.CDN') . 'featuredimg/' . $featured[$k]['Featuredartist']['artist_image'];
 
@@ -1786,22 +1753,20 @@ STR;
                     'Song.Advisory',
                     'Song.FullLength_Duration',
                     'Song.provider_type',
+                    'Song.FullLength_SaveAsName',
+                    'Song.CdnPath'
                 ),
                 'contain' => array(
                     'Country' => array(
                         'fields' => array(
                             'Country.StreamingStatus',
                         )
-                    ),
-                    'Full_Files' => array(
-                        'fields' => array(
-                            'Full_Files.CdnPath',
-                            'Full_Files.SaveAsName'
-                        )
                     )
                 ), 'group' => 'Song.ProdID, Song.provider_type','order' => 'Song.CreatedOn DESC','limit' => 50
             ));
-        }else{
+            
+        } else {
+            
             $randomSongs = $songInstance->find('first', array(
                 'conditions' =>
                 array('and' =>
@@ -1822,17 +1787,13 @@ STR;
                     'Song.Advisory',
                     'Song.FullLength_Duration',
                     'Song.provider_type',
+                    'Song.FullLength_SaveAsName',
+                    'Song.CdnPath'
                 ),
                 'contain' => array(
                     'Country' => array(
                         'fields' => array(
                             'Country.StreamingStatus',
-                        )
-                    ),
-                    'Full_Files' => array(
-                        'fields' => array(
-                            'Full_Files.CdnPath',
-                            'Full_Files.SaveAsName'
                         )
                     )
                 ), 'group' => 'Song.ProdID, Song.provider_type'
@@ -1841,7 +1802,7 @@ STR;
         if (!empty($ajax)) {
             foreach ($randomSongs as $key => $value) {
                 $tokeninstance = ClassRegistry::init('Token');
-                $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                $filePath = $tokeninstance->streamingToken($value['Song']['CdnPath'] . "/" . $value['Song']['FullLength_SaveAsName']);
                 if (!empty($filePath)) {
                     $songPath = explode(':', $filePath);
                     $streamUrl = trim($songPath[1]);
@@ -1849,10 +1810,8 @@ STR;
                     $randomSongs[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
                 }
             }
-        }
-        
+        }        
         return $randomSongs;
-
     }
     
     
@@ -1900,7 +1859,7 @@ STR;
         
             foreach ($topAlbumData as $key => $data) { 
 
-                $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Files']['CdnPath'] . '/' . $data['Files']['SourceURL']);;
+                $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Album']['CdnPath'] . '/' . $data['Album']['Image_SaveAsName']);;
                 $topAlbumData[$key]['albumSongs'] = $this->getAlbumSongsNew($data['Album']['ProdID'], $data['Album']['provider_type'], $territory);          
 
                 //check image file exist or not for each entry
@@ -2043,20 +2002,17 @@ STR;
                         Song.Advisory,
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
-                        Song.provider_type,                       
+                        Song.provider_type,
+                        Song.FullLength_SaveAsName,
+                        Song.Sample_SaveAsName,
+                        Song.CdnPath,
                         Country.Territory,
                         Country.SalesDate,
                         Country.StreamingSalesDate,
                         Country.StreamingStatus,
                         Country.DownloadStatus,
-                        Sample_Files.CdnPath,
-                        Sample_Files.SaveAsName,
-                        Full_Files.CdnPath,
-                        Full_Files.SaveAsName,
-                        File.CdnPath,
-                        File.SourceURL,
-                        File.SaveAsName,
-                        Sample_Files.FileID,
+                        Albums.Image_SaveAsName,
+                        Albums.CdnPath, 
                         PRODUCT.pid,
                         Albums.ProdID,
                         Albums.provider_type,
@@ -2066,10 +2022,7 @@ STR;
                                 INNER JOIN
                         top_singles as TopSingles ON (TopSingles.prod_id = Song.ProdID AND TopSingles.Territory = '$territory')
                                 LEFT JOIN
-                        File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                LEFT JOIN
-                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                LEFT JOIN
+                        
                         Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)                        
                                 INNER JOIN
                         {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
@@ -2077,8 +2030,7 @@ STR;
                         PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
                                 INNER JOIN 
                         Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                INNER JOIN 
-                        File ON (Albums.FileID = File.FileID) 
+                                
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) 
                 GROUP BY Song.ProdID
@@ -2088,29 +2040,27 @@ STR;
 STR;
             $topSingleData = $albumInstance->query($sql_top_singles);
 
+            
+                        
+            if (!empty($topSingleData))
+            {
+                Cache::write("top_singles" . $territory, $topSingleData);                
+                $this->log("cache written for national top 100 songs for $territory", "cache");
+            }
+            else
+            {
+                $topSingleData = Cache::read("top_singles" . $territory);
+                $this->log("Unable to update national 100 for " . $territory, "cache");
+            }
+            
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("top_singles" . $territory,$topSingleData);
             $MemDatas->setDataSource('default');
-            
-            
-
-            
-            if (!empty($topSingleData))
-            {
-                Cache::write("top_singles" . $territory, $topSingleData);
-                $data = $topSingleData;
-                $this->log("cache written for national top 100 songs for $territory", "cache");
-            }
-            else
-            {
-                $data = Cache::read("top_singles" . $territory);
-                $this->log("Unable to update national 100 for " . $territory, "cache");
-            }
 
             $this->log("cache written for top 100 singles for $territory", 'debug');
-            return $data;
+            return $topSingleData;
         }
     }
     
@@ -2143,25 +2093,18 @@ STR;
             Song.FullLength_Duration,
             Song.provider_type,
             Song.Genre,
+            Song.FullLength_SaveAsName,
+            Song.Sample_SaveAsName,
+            Song.CdnPath,          
             Country.Territory,
             Country.SalesDate,
             Country.DownloadStatus,
-            Sample_Files.CdnPath,
-            Sample_Files.SaveAsName,
-            Full_Files.CdnPath,
-            Full_Files.SaveAsName,
-            Sample_Files.FileID,
-            Full_Files.FileID,
             PRODUCT.pid
         FROM
             latest_downloads,
             Songs AS Song
                 LEFT JOIN
-            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory LIKE '%" . $territory . "%')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
-                LEFT JOIN
-            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                LEFT JOIN
-            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory LIKE '%" . $territory . "%')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())                 
                 LEFT JOIN
             PRODUCT ON (PRODUCT.ProdID = Song.ProdID)  AND (PRODUCT.provider_type = Song.provider_type)
         WHERE
@@ -2195,22 +2138,15 @@ STR;
           Country.Territory,
           Country.SalesDate,
           Country.DownloadStatus,
-          Sample_Files.CdnPath,
-          Sample_Files.SaveAsName,
-          Full_Files.CdnPath,
-          Full_Files.SaveAsName,
-          Sample_Files.FileID,
-          Full_Files.FileID,
-                      PRODUCT.pid
+          Song.FullLength_SaveAsName,
+          Song.Sample_SaveAsName,
+          Song.CdnPath,          
+          PRODUCT.pid
       FROM
           downloads,
           Songs AS Song
               LEFT JOIN
           {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID AND (Country.Territory LIKE '%" . $territory . "%')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
-              LEFT JOIN
-          File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-              LEFT JOIN
-          File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
               LEFT JOIN
           PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
       WHERE
@@ -2385,29 +2321,22 @@ STR;
                                     Song.Sample_Duration,
                                     Song.FullLength_Duration,
                                     Song.provider_type,
+                                    Song.FullLength_SaveAsName,
+                                    Song.Sample_SaveAsName,
+                                    Song.CdnPath,
                                     Albums.ProdID,
-                                    Albums.provider_type,                                          
+                                    Albums.provider_type,
+                                    Albums.Image_SaveAsName,
+                                    Albums.CdnPath, 
                                     Genre.Genre,
                                     Country.Territory,
                                     Country.SalesDate,
                                     Country.StreamingSalesDate,
                                     Country.StreamingStatus,
-                                    Country.DownloadStatus,                                    
-                                    Sample_Files.CdnPath,
-                                    Sample_Files.SaveAsName,
-                                    Full_Files.CdnPath,
-                                    Full_Files.SaveAsName,
-                                    File.CdnPath,
-                                    File.SourceURL,
-                                    File.SaveAsName,
-                                    Sample_Files.FileID,
+                                    Country.DownloadStatus,
                                     PRODUCT.pid
                             FROM
-                                    Songs AS Song
-                                            INNER JOIN
-                                    File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                            INNER JOIN
-                                    File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                    Songs AS Song                                    
                                             LEFT JOIN
                                     Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
                                             INNER JOIN
@@ -2415,14 +2344,13 @@ STR;
                                             LEFT JOIN
                                     PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type) 
                                             INNER JOIN 
-                                    Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                    Albums ON (Song.ReferenceID = Albums.ProdID) 
                                             INNER JOIN 
                                     File ON (Albums.FileID = File.FileID)
                             WHERE
                                     (($top_ten_condition_songs) AND 1 = 1)
                             GROUP BY Song.ProdID
-                            ORDER BY FIELD(Song.ProdID,
-                                            $ids) ASC
+                            ORDER BY FIELD(Song.ProdID,$ids) ASC
                             LIMIT 10
 STR;
             $topDownload = $songInstance->query($topDownloaded_query);
@@ -2442,11 +2370,11 @@ STR;
         {
             foreach ($topDownload as $key => $value)
             {                  
-                $songs_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $songs_img = $tokeninstance->artworkToken($value['Albums']['CdnPath'] . "/" . $value['Albums']['Image_SaveAsName']);
                 $songs_img = Configure::read('App.Music_Path') . $songs_img;
                 $topDownload[$key]['songs_img'] = $songs_img;
                     
-                $filePath = $tokeninstance->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                $filePath = $tokeninstance->streamingToken($value['Song']['CdnPath'] . "/" . $value['Song']['FullLength_SaveAsName']);
 
                 if (!empty($filePath))
                 {
@@ -2466,13 +2394,12 @@ STR;
                 }       
                     
             }
-           
+            
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("lib" . $libId,$topDownload);
-            $MemDatas->setDataSource('default');
-           
+            $MemDatas->setDataSource('default');           
             
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
@@ -2610,32 +2537,26 @@ STR;
                     Song.Advisory,
                     Song.Sample_Duration,
                     Song.FullLength_Duration,
-                    Song.provider_type,
+                    Song.provider_type,                    
+                    Song.FullLength_SaveAsName,
+                    Song.Sample_SaveAsName,
+                    Song.CdnPath,                    
                     Albums.ProdID,
                     Albums.provider_type,
                     Albums.Advisory,             
                     Albums.AlbumTitle,
+                    Albums.Image_SaveAsName,             
+                    Albums.CdnPath,
                     Genre.Genre,
                     Country.Territory,
                     Country.SalesDate,
                     Country.StreamingSalesDate,
                     Country.StreamingStatus,
-                    Country.DownloadStatus,
-                    Sample_Files.CdnPath,
-                    Sample_Files.SaveAsName,
-                    Full_Files.CdnPath,
-                    Full_Files.SaveAsName,
-                    File.CdnPath,
-                    File.SourceURL,
-                    File.SaveAsName,
-                    Sample_Files.FileID
-            FROM Songs AS Song
-            LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-            LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                    Country.DownloadStatus                        
+            FROM Songs AS Song           
             LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-            INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-            INNER JOIN File ON (Albums.FileID = File.FileID)
+            INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID)            
             WHERE (Country.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
             GROUP BY Song.ReferenceID
             ORDER BY count(Song.ReferenceID) DESC
@@ -2658,7 +2579,7 @@ STR;
         {            
             foreach ($topDownload as $key => $value)
             {                
-                $album_img = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $album_img = $tokeninstance->artworkToken($value['Song']['CdnPath'] . "/" . $value['Song']['Sample_SaveAsName']);
                 $album_img = Configure::read('App.Music_Path') . $album_img;
                 $topDownload[$key]['album_img'] = $album_img;
                     $topDownload[$key]['albumSongs'] = $this->requestAction(
@@ -2820,23 +2741,15 @@ STR;
                      Video.Sample_Duration,
                      Video.FullLength_Duration,
                      Video.provider_type,
+                     Video.FullLength_SaveAsName,
+                     Video.Image_SaveAsName,
+                     Video.CdnPath,
                      Genre.Genre,
                      Country.Territory,
-                     Country.SalesDate,
-                     Sample_Files.CdnPath,
-                     Sample_Files.SaveAsName,
-                     Full_Files.CdnPath,
-                     Full_Files.SaveAsName,
-                     File.CdnPath,
-                     File.SourceURL,
-                     File.SaveAsName,
-                     Sample_Files.FileID
-             FROM video AS Video
-             LEFT JOIN File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-             LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                     Country.SalesDate                     
+             FROM video AS Video            
              LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-             INNER JOIN File ON (Video.Image_FileID = File.FileID)
+             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)             
              WHERE((Video.DownloadStatus = '1') AND ($top_ten_condition_videos) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
              GROUP BY Video.ProdID
              ORDER BY FIELD(Video.ProdID, $ids) ASC
@@ -2859,7 +2772,7 @@ STR;
         {
             foreach ($topDownload as $key => $value)
             {                
-                $albumArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $albumArtwork = $tokeninstance->artworkToken($value['Video']['CdnPath'] . "/" . $value['Video']['Image_SaveAsName']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
                 
@@ -2972,15 +2885,11 @@ STR;
         $videoInstance = ClassRegistry::init('Video');
         $albumInstance = ClassRegistry::init('Album');
         $individualVideoSQL =
-                "SELECT Video.ProdID, Video.ReferenceID,Video.Advisory,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration,
-         Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,
-         Full_Files.CdnPath,Full_Files.SaveAsName,File.CdnPath,File.SourceURL,File.SaveAsName
-         FROM video as Video            
+         "SELECT Video.ProdID, Video.ReferenceID,Video.Advisory,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration,
+         Video.CreatedOn,Video.provider_type, Video.Genre,Video.FullLength_SaveAsName, Video.Image_SaveAsName, Video.CdnPath         
+         FROM video as Video         
          LEFT JOIN
-         File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
-         LEFT JOIN
-         PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)
-         INNER JOIN File ON (Video.Image_FileID = File.FileID)
+         PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)        
          Where Video.DownloadStatus = '1' AND Video.ProdID = " . $indiMusicVidID;
 
         $EachVideosData = $videoInstance->query($individualVideoSQL);
@@ -2990,37 +2899,26 @@ STR;
         }
         else
         {            
-            $videoArtwork = $tokeninstance->artworkToken($EachVideosData[0]['File']['CdnPath'] . "/" . $EachVideosData[0]['File']['SourceURL']);
+            $videoArtwork = $tokeninstance->artworkToken($EachVideosData[0]['Video']['CdnPath'] . "/" . $EachVideosData[0]['Video']['Image_SaveAsName']);
             $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path') . $videoArtwork;
         }
         if (count($EachVideosData) > 0)
         {
             $MoreVideosSql =
-                    "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle,Video.Advisory, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
-             Sample_Files.SaveAsName,
-             Full_Files.CdnPath,
-             Full_Files.SaveAsName,
-             File.CdnPath,
-             File.SourceURL,
-             File.SaveAsName,
-             Sample_Files.FileID,
-             Country.Territory,
-             Country.SalesDate
-             FROM video as Video
-             LEFT JOIN
-             File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-             LEFT JOIN
-             File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)   
+                    "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle,Video.Advisory, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn,
+                     Video.provider_type,Video.Image_SaveAsName,Video.FullLength_SaveAsName,Video.CdnPath,Country.Territory,Country.SalesDate
+             FROM video as Video                
              LEFT JOIN
              {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
              LEFT JOIN
-             PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
-             Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '" . $EachVideosData[0]['Video']['ArtistText'] . "'   ORDER BY Country.SalesDate desc limit 0,10";
+             PRODUCT ON (PRODUCT.ProdID = Video.ProdID)            
+             Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  
+             AND Video.ArtistText = '" . $EachVideosData[0]['Video']['ArtistText'] . "'   ORDER BY Country.SalesDate desc limit 0,10";
 
             $MoreVideosData = $albumInstance->query($MoreVideosSql);
             foreach ($MoreVideosData as $key => $value)
             {                
-                $videoArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $videoArtwork = $tokeninstance->artworkToken($value['Video']['CdnPath'] . "/" . $value['Video']['Image_SaveAsName']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $MoreVideosData[$key]['videoImage'] = $videoImage;
             }
@@ -3036,16 +2934,19 @@ STR;
         }
         if (count($EachVideosData) > 0)
         {
-            $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID,Video.Advisory, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
-                 `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
-                 LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
+            $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID,Video.Advisory, Video.ReferenceID, Video.provider_type, Video.VideoTitle,
+                Video.Genre, Video.ArtistText, Video.CdnPath, Video.Image_SaveAsName, Video.FullLength_SaveAsName,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
+                 `Country`.`SalesDate` FROM videodownloads as Videodownloads 
+                 LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type)                 
+                 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+                 LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
                  LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id 
                  WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '" . $EachVideosData[0]['Video']['Genre'] . "' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 0,10";
 
             $TopVideoGenreData = $albumInstance->query($TopVideoGenreSql);
             foreach ($TopVideoGenreData as $key => $value)
             {                
-                $videoArtwork = $tokeninstance->artworkToken($value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $videoArtwork = $tokeninstance->artworkToken($value['Video']['CdnPath'] . "/" . $value['Video']['Image_SaveAsName']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $TopVideoGenreData[$key]['videoImage'] = $videoImage;
             }
@@ -3098,34 +2999,22 @@ STR;
                                 Video.provider_type,
                                 Video.video_label,
                                 Video.CreatedOn,
-                                Video.Image_FileID,
+                                Video.Image_SaveAsName,
+                                Video.FullLength_SaveAsName,
+                                Video.CdnPath,
                                 Genre.Genre,
                                 Country.Territory,
-                                Country.SalesDate,
-                                Sample_Files.CdnPath,
-                                Sample_Files.SaveAsName,
-                                Sample_Files.FileID,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                Full_Files.FileID,
-                                Image_Files.FileID,
-                                Image_Files.CdnPath,
-                                Image_Files.SourceURL,
+                                Country.SalesDate,                                
                                 PRODUCT.pid
                 FROM
                                 video AS Video
                                                 LEFT JOIN
-                                File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-                                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                                                LEFT JOIN
+                                
                                 Genre AS Genre ON (Genre.ProdID = Video.ProdID)
                                                 LEFT JOIN
          {$preFix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
                                                 LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
-                                                LEFT JOIN
-                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)                                               
                 WHERE
                                 ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1 $videoAdvisory
                 GROUP BY Video.ProdID
@@ -3135,7 +3024,7 @@ STR;
             $artistVideoList = $videoInstance->query($sql_us_10_v);
             foreach ($artistVideoList as $key => $value)
             {                
-                $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                $albumArtwork = $tokeninstance->artworkToken($value['Video']['CdnPath'] . "/" . $value['Video']['Image_SaveAsName']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
@@ -3175,7 +3064,6 @@ STR;
         }
         else
         {
-            Cache::delete("defaultqueuelist");
             Cache::write("defaultqueuelist", $queueData);
 
             //library top 10 cache set
@@ -3768,8 +3656,8 @@ STR;
         	}
 
         	
-            $id = $artist;
-			$Song = ClassRegistry::init('Song');
+                $id = $artist;
+		$Song = ClassRegistry::init('Song');
         	$Song->Behaviors->attach('Containable');
         	$songs = $Song->find('all', array(
             'fields' => array(
@@ -3831,9 +3719,8 @@ STR;
                             'Album.Label',
                             'Album.Copyright',
                             'Album.provider_type',
-                            'Files.CdnPath',
-                            'Files.SaveAsName',
-                            'Files.SourceURL',
+                            'Album.Image_SaveAsName',
+                            'Album.CdnPath',                            
                             'Genre.Genre'
                         ),
                         'contain' => array(
@@ -3841,13 +3728,6 @@ STR;
                                 'fields' => array(
                                     'Genre.Genre'
                                 )
-                            ),
-                            'Files' => array(
-                                'fields' => array(
-                                    'Files.CdnPath',
-                                    'Files.SaveAsName',
-                                    'Files.SourceURL'
-                                ),
                             )
                         ),
                         'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),

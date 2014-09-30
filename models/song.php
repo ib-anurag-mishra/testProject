@@ -510,8 +510,9 @@ class Song extends AppModel {
 				'Song.Advisory',
 				'Song.Sample_Duration',
 				'Song.FullLength_Duration',
-				'Song.Sample_FileID',
-				'Song.FullLength_FIleID',
+				'Song.Sample_SaveAsName',
+				'Song.FullLength_SaveAsName',
+                                'Song.CdnPath',
 				'Song.provider_type',
 				'Song.sequence_number'
 			),
@@ -530,18 +531,7 @@ class Song extends AppModel {
 						'Country.DownloadStatus',
 					)
 				),
-				'Sample_Files' => array(
-					'fields' => array(
-						'Sample_Files.CdnPath',
-						'Sample_Files.SaveAsName'
-					)
-				),
-				'Full_Files' => array(
-					'fields' => array(
-						'Full_Files.CdnPath',
-						'Full_Files.SaveAsName'
-					)
-				),
+				
 			),
 			'group' => 'Song.ProdID, Song.provider_type',
 			'order' => array(

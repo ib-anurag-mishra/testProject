@@ -64,13 +64,10 @@ class CacheController extends AppController {
           }
 
             $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
-                v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
-                imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
+                v.FullLength_SaveAsName, v.Image_SaveAsName, v.CdnPath,v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, prd.pid, COUNT(vd.id) AS cnt
                 FROM video AS v
                 INNER JOIN '.$countryPrefix.'countries AS c ON v.ProdID = c.ProdID AND v.provider_type = c.provider_type
-                INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type
-                INNER JOIN File AS ff ON v.FullLength_FileID = ff.FileID
-                INNER JOIN File AS imgf ON v.Image_FileID = imgf.FileID
+                INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type               
                 INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
                 LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
                 WHERE c.Territory = "'.$territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
@@ -129,11 +126,19 @@ class CacheController extends AppController {
         }
 
        $this->setLibraryTopTenCache();       
-       $this->setVideoCacheVar();    
+       //not removing file table join       
+      
+       
+       $this->setVideoCacheVar();  
+       
+       
+       
        $this->setAppMyMusicVideoList(); 
+       $this->setTopArtist();
+       
+       
        $this->setAnnouncementCache();
        $this->setMoviesAnnouncements();
-       $this->setTopArtist();
        $this->sendBrokenImagesEmail(); 
  
        
@@ -340,8 +345,8 @@ class CacheController extends AppController {
     foreach ($territoriesList AS $territory){  
     
       $library_territory = $territory;
-       $topSinglesCache = Cache::read("top_singles".$library_territory);
-      if ( (($topSinglesCache) !== false) && ($topSinglesCache !== null) ) { // checks if topsingles cache is set
+      $topSinglesCache = Cache::read("top_singles".$library_territory);
+      if ( ( ($topSinglesCache) !== false ) && ( $topSinglesCache !== null ) ) { // checks if topsingles cache is set
     
         //fetches top artist from top singles----Start
         $arrTmp = $arrData = $arrFinal = $arrArtist = array();
@@ -364,21 +369,16 @@ class CacheController extends AppController {
           
           $this->Session->write('territory', $library_territory);
           $this->switchCpuntriesTable();          
-          /*
-          if(1 == $libval['Library']['library_block_explicit_content']) {
-            $cond = array('Song.Advisory' => 'F');
-          } else  {
-            $cond = "";
-          }
-          */
+          
           //fetches albums ids
           $songs = array();
           $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
             'conditions' => array(
               'LOWER(Song.ArtistText)' => strtolower($artistText),
-              "Song.Sample_FileID != ''",
-              "Song.FullLength_FIleID != ''" ,
+              "Song.FullLength_SaveAsName != ''",
+              "Song.CdnPath != ''" ,
+              "Song.Sample_SaveAsName != ''" ,
               'Country.Territory' => $library_territory, 
               'Country.DownloadStatus' => 1, 
               $cond, 
@@ -430,6 +430,8 @@ class CacheController extends AppController {
               'Album.Label',
               'Album.Copyright',
               'Album.Advisory',
+              'Album.Image_SaveAsName',
+              'Album.CdnPath',
               'Album.provider_type'
 						),
             'contain' => array(
@@ -437,14 +439,7 @@ class CacheController extends AppController {
                 'fields' => array(
                   'Genre.Genre'
                   )
-                ),
-              'Files' => array(
-                'fields' => array(
-                  'Files.CdnPath' ,
-                  'Files.SaveAsName',
-                  'Files.SourceURL'
-                ),
-              )
+                )
             ), 
             'order' => array('FIELD(Album.ProdID, '.$val.') ASC'), 
             'chk' => 2,

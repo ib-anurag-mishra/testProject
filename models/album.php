@@ -94,19 +94,14 @@ class Album extends AppModel  {
 				'Album.Label',
 				'Album.Copyright',
 				'Album.provider_type',
+				'Album.Image_SaveAsName',
+				'Album.CdnPath',
 				'ta.sortId as sortID'
 			),
 			'contain' => array(
 				'Genre' => array(
 					'fields' => array(
 						'Genre.Genre'
-					)
-				),
-				'Files' => array(
-					'fields' => array(
-						'Files.CdnPath',
-						'Files.SaveAsName',
-						'Files.SourceURL'
 					)
 				)
 			),

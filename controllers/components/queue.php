@@ -46,7 +46,11 @@ Class QueueComponent extends Object
 		$queueDetailList = ClassRegistry::init('QueueDetail');
 
 		$queueDetail = $queueDetailList->find('all', array(
-				'fields' => array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle', 'Songs.ReferenceID', 'Songs.Advisory', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText', 'Songs.Artist', 'Albums.AlbumTitle', 'Albums.ProdID', 'Albums.provider_type', 'Albums.Title as ATitle', 'AProduct.pid as AlbumProdID', 'SProduct.pid as SongProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName', 'Countries.StreamingStatus', 'Countries.StreamingSalesDate', 'Countries.DownloadStatus', 'Countries.SalesDate'),
+				'fields' => array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle', 'Songs.ReferenceID',
+                                    'Songs.Advisory', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',
+                                    'Songs.Artist', 'Albums.AlbumTitle', 'Albums.ProdID', 'Albums.provider_type', 'Albums.Title as ATitle', 'AProduct.pid as AlbumProdID',
+                                    'SProduct.pid as SongProdID','Songs.FullLength_SaveAsName','Songs.Sample_SaveAsName','Songs.CdnPath' , 'Countries.StreamingStatus',
+                                    'Countries.StreamingSalesDate','Countries.DownloadStatus', 'Countries.SalesDate'),
 				'group' => array('Songs.ProdID', 'Songs.provider_type'),
 				'joins' => array(
 						array(
@@ -91,20 +95,7 @@ Class QueueComponent extends Object
 								'foreignKey' => false,
 								'conditions' => array('Songs.ProdID = SProduct.ProdID', 'Songs.provider_type = SProduct.provider_type'),
 						),
-						array(
-								'type' => 'INNER',
-								'table' => 'File',
-								'alias' => 'AlbumFile',
-								'foreignKey' => false,
-								'conditions' => array('Albums.FileID = AlbumFile.FileID'),
-						),
-						array(
-								'type' => 'INNER',
-								'table' => 'File',
-								'alias' => 'SongFile',
-								'foreignKey' => false,
-								'conditions' => array('Songs.FullLength_FileID = SongFile.FileID'),
-						),
+						
 				),
 				'recursive' => -1,
 				'conditions' => array('and' =>

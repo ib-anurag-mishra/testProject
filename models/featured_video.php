@@ -14,9 +14,9 @@ class FeaturedVideo extends AppModel {
 						'Video.ArtistText',
 						'Video.provider_type',
 						'Video.Advisory',
-						'File.CdnPath',
-						'File.SourceURL',
-						'Video_file.SaveAsName',
+                                                'Video.FullLength_SaveAsName',
+						'Video.Image_SaveAsName',
+						'Video.CdnPath',						
 						'Country.SalesDate'
 				),
 				'joins'		 =>	array(
@@ -28,19 +28,7 @@ class FeaturedVideo extends AppModel {
 										'FeaturedVideo.ProdID = Video.ProdID',
 										'FeaturedVideo.provider_type = Video.provider_type'
 								)
-						),
-						array(
-								'table' => 'File',
-								'alias'	=> 'File',
-								'type'	=> 'left',
-								'conditions' => array( 'File.FileID = Video.Image_FileID' )
-						),
-						array(
-								'table' => 'File',
-								'alias'	=> 'Video_file',
-								'type' 	=> 'left',
-								'conditions' => array( 'Video_file.FileID = Video.FullLength_FileID' )
-						),
+						),											
 						array(
 								'table' => $prefix.'countries',
 								'alias'	=> 'Country',

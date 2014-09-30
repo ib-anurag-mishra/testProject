@@ -565,18 +565,7 @@ class Videodownload extends AppModel
 										'`Videodownload`.`provider_type` = `Video`.`provider_type`'
 								)
 						),
-						array(
-								'table' => '`File`',
-								'alias' => '`File`',
-								'type'  => 'LEFT',
-								'conditions' => array('`Video`.`Image_FileID` = `File`.`FileID`')
-						),
-						array(
-								'table' => '`File`',
-								'alias' => '`Video_file`',
-								'type'	=> 'LEFT',
-								'conditions' => array('`Video_file`.`FileID` = `Video`.`FullLength_FileID`')
-						),
+						
 						array(
 								'table' => '`' . $prefix . 'countries`',
 								'alias' => '`Country`',
@@ -594,9 +583,9 @@ class Videodownload extends AppModel
 						'`Video`.`VideoTitle`',
 						'`Video`.`ArtistText`',
 						'`Video`.`Advisory`',
-						'`File`.`CdnPath`',
-						'`File`.`SourceURL`',
-						'`Video_file`.`SaveAsName`',
+						'`Video`.`CdnPath`',
+						'`Video`.`FullLength_SaveAsName`',
+                                                '`Video`.`Image_SaveAsName`',
 						'COUNT(DISTINCT(`Videodownload`.`id`)) AS COUNT',
 						'`Country`.`SalesDate`'
 				)
@@ -636,8 +625,8 @@ class Videodownload extends AppModel
 						'Video.VideoTitle',
 						'Video.Genre',
 						'Video.ArtistText',
-						'File.CdnPath',
-						'File.SourceURL',
+						'Video.CdnPath',
+						'Video.Image_SaveAsName',
 						'COUNT(DISTINCT(Videodownload.id)) AS COUNT',
 						'Country.SalesDate'
 				),
@@ -650,13 +639,7 @@ class Videodownload extends AppModel
 								'alias' => 'Video',
 								'type'  => 'LEFT',
 								'conditions' => array('Videodownload.ProdID = Video.ProdID', 'Videodownload.provider_type = Video.provider_type')
-						),
-						array(
-								'table' => 'File',
-								'alias' => 'File',
-								'type'  => 'LEFT',
-								'conditions' => array('Video.Image_FileID = File.FileID')
-						),
+						),						
 						array(
 								'table' => 'Genre',
 								'alias' => 'Genre',

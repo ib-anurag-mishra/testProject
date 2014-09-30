@@ -41,7 +41,7 @@ Class CacheHandlerComponent extends Object  {
      * 
      * @param   $cacheVariableName   string
      * 
-     * @return @array
+     * @return  @array
      * 
      */
     function checkMemdataVariableExist($cacheVariableName) {
@@ -85,8 +85,7 @@ Class CacheHandlerComponent extends Object  {
             $memDatasInstance->create();
             $memDataFieldArr = array('cache_variable_name' => $cacheVariableName , 'vari_info' => $encodedDataValue ,'modified' => $dateInfo); 
         } 
-        $memDatasInstance->save($memDataFieldArr); 
-        
+        $memDatasInstance->save($memDataFieldArr);        
         
         $memDatasInstance->setDataSource('default');
     }

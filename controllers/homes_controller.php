@@ -69,17 +69,20 @@ class HomesController extends AppController {
             $this->set('patronDownload', $patronDownload);
         }
 
+        
+        
+        
+        /*
         /* Top Singles Starts */ 
         $nationalTopDownload = Cache::read("top_singles" . $territory);
-        if ($nationalTopDownload === false) {
-            
+        if ($nationalTopDownload === false) {            
              //check variable data in to mem_datas table
             $nationalTopDownload = $this->CacheHandler->checkMemData("top_singles" . $territory);
             //if not found then run query in the table
             if( $nationalTopDownload === false ){
                 $nationalTopDownload = $this->Common->getTopSingles($territory);
             }            
-        }
+        }        
         $this->set('top_singles', $nationalTopDownload);
        
         

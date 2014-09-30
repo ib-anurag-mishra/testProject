@@ -163,7 +163,7 @@ class QueueListDetailsController extends AppController
                 $minutes = $temp_arr[0];
                 $seconds = $temp_arr[1];
                 $total_seconds += $minutes * 60 + $seconds;                
-                $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+                $filePath = $this->Token->streamingToken($v['Songs']['CdnPath'] . "/" . $v['Songs']['FullLength_SaveAsName']);
                 if (!empty($filePath))
                 {
                     $songPath = explode(':', $filePath);
@@ -186,7 +186,7 @@ class QueueListDetailsController extends AppController
             $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'], $songPlaying['providerType'], $territory);
             foreach ($trackDetails as $k => $v)
             {                
-                $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+                $filePath = $this->Token->streamingToken($v['Songs']['CdnPath'] . "/" . $v['Songs']['FullLength_SaveAsName']);
                 if (!empty($filePath))
                 {
                     $songPath = explode(':', $filePath);
@@ -241,14 +241,13 @@ class QueueListDetailsController extends AppController
             $minutes = $temp_arr[0];
             $seconds = $temp_arr[1];
             $total_seconds += $minutes * 60 + $seconds;            
-            $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+            $filePath = $this->Token->streamingToken($v['Songs']['CdnPath'] . "/" . $v['Songs']['FullLength_SaveAsName']);
             if (!empty($filePath))
             {
                 $songPath = explode(':', $filePath);
                 $streamUrl = trim($songPath[1]);
                 $queue_list_array[$k]['streamUrl'] = $streamUrl;
-            }
-            
+            }            
         }    
         $total_duration     =    $total_seconds/60;
         $total_minutes      =    floor($total_duration);
