@@ -2875,9 +2875,7 @@ Class ArtistsController extends AppController {
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => base64_decode($id),
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
-                "Song.FullLength_SaveAsName != ''",
-                "Song.Sample_SaveAsName != ''",
-                "Song.CdnPath != ''",
+               
                 'Country.Territory' => $country, $cond,
                 'Song.provider_type = Country.provider_type'),
             'contain' => array(
@@ -2892,7 +2890,7 @@ Class ArtistsController extends AppController {
 
         $val = '';
         $val_provider_type = '';
-print_r($songs);
+
        
         if (!empty($songs)) {
             foreach ($songs as $k => $v) {
