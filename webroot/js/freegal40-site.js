@@ -31,28 +31,28 @@
 $(document).ready(function() {
 
     
-    var time = new Date().getTime();
-    $(document.body).bind("mousemove keypress", function(e) {
-        time = new Date().getTime();
-    });
+    // var time = new Date().getTime();
+    // $(document.body).bind("mousemove keypress", function(e) {
+    //     time = new Date().getTime();
+    // });
 
-    function refresh() {
-        if(new Date().getTime() - time >= 600000) {
-         console.log('10 minutes idle'); 
+    // function refresh() {
+    //     if(new Date().getTime() - time >= 600000) {
+    //      console.log('10 minutes idle'); 
          
-         var confirmation = confirm("We've noticed you've been away from your computer for a while. To ensure you have the best user experience posssible, please press 'OK' to refresh your browser.");
-         if (confirmation == true) {
+    //      var confirmation = confirm("We've noticed you've been away from your computer for a while. To ensure you have the best user experience posssible, please press 'OK' to refresh your browser.");
+    //      if (confirmation == true) {
 
 
-             window.location.reload(true);
-         } 
+    //          window.location.reload(true);
+    //      } 
 
-        } else { 
-         setTimeout(refresh, 600000);
-        }
-    }
+    //     } else { 
+    //      setTimeout(refresh, 600000);
+    //     }
+    // }
 
-    setTimeout(refresh, 600000);
+    // setTimeout(refresh, 600000);
 
 
 
