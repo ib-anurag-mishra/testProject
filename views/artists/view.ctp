@@ -25,7 +25,7 @@
 			
 			<div class="album-cover-image">
 				
-				<?php  $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+				<?php  $albumArtwork = $this->Token->artworkToken($album['Album']['CdnPath'] . "/" . $album['Album']['Image_SaveAsName']);
 				
 				echo $this->Html->image(Configure::read('App.Music_Path') . $albumArtwork, array('alt' => 'album-detail-cover', 'width' => '250', 'height' => '250'));
 
@@ -100,9 +100,9 @@
 				<?php
 				$artistNames = $artistName;
 
-                if($this->getTextEncode($artistName)):
-                   $artistName= $this->getTextEncode($artistName);
-                endif;
+                                if($this->getTextEncode($artistName)):
+                                   $artistName= $this->getTextEncode($artistName);
+                                endif;
                                 
                                 
 				if (strlen($artistName) >= 90):
@@ -130,7 +130,7 @@
 			
 			if ($this->Session->read('library_type') == 2):				
                 
-                $filePath = $this->Token->streamingToken($albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
+                                $filePath = $this->Token->streamingToken($albumSong['Song']['CdnPath'] . "/" . $albumSong['Song']['FullLength_SaveAsName']);
 
 				if (!empty($filePath)):
 					$songPath = explode(':', $filePath);
