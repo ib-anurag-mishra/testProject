@@ -173,7 +173,7 @@ $csv->addRow($line);
 
 //check barcode is enable or not
 
-$line = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Tracks Downloaded');
+$line = array('', 'ID', 'Library Name',  'Total Number of Tracks Downloaded');
 $csv->addRow($line);
 
 foreach ($patronDownloads as $key => $patronDownload) {
@@ -185,7 +185,7 @@ foreach ($patronDownloads as $key => $patronDownload) {
     }
     
     //check barcode is enable or not
-    $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), $patronDownload['Currentpatrons']['branch_name'], (($dataRange == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']));
+    $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']));
 
     $csv->addRow($line);
 }
@@ -198,7 +198,7 @@ $csv->addRow($line);
 
 
 //check barcode is enable or not
- $line = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Videos Downloaded');
+ $line = array('', 'ID', 'Library Name',  'Total Number of Videos Downloaded');
 $csv->addRow($line);
 
 foreach ($patronVideoDownloads as $key => $patronDownload) {
@@ -210,7 +210,7 @@ foreach ($patronVideoDownloads as $key => $patronDownload) {
     }
     
     //check barcode is enable or not
-    $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), $patronDownload['DownloadVideoPatron']['branch_name'], (($dataRange == 'day') ? $patronDownload['DownloadVideoPatron']['total'] : $patronDownload[0]['total']));
+    $line = array($key + 1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day') ? $patronDownload['DownloadVideoPatron']['total'] : $patronDownload[0]['total']));
 
 
 

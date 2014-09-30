@@ -449,8 +449,8 @@
      //Column titles
     $header = array('','Library Name', 'Branch Name', 'ID', 'Artists Name', 'Track title', 'Download');
     $video_header = array('','Library Name', 'Branch Name', 'ID', 'Artists Name', 'Video title', 'Download');
-    $patron_header = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Tracks Downloaded');
-    $patron_video_header = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Videos Downloaded'); 
+    $patron_header = array('', 'ID', 'Library Name',  'Total Number of Tracks Downloaded');
+    $patron_video_header = array('', 'ID', 'Library Name', 'Total Number of Videos Downloaded'); 
     
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
     $genre_video_header = array('', 'Genre Name', 'Total Number of Videos Downloaded');
@@ -498,7 +498,7 @@
         
         
         //check barcode is enable or not
-        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), $patronDownload['Currentpatrons']['branch_name'], (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
+        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])),  (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
       
     }
     
@@ -511,7 +511,7 @@
        }
         
         //check barcode is enable or not
-        $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), $patronDownload['Currentpatrons']['branch_name'], (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
+        $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])),  (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
 
     }    
 
@@ -577,6 +577,7 @@
         $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[6], 12.5, $row[6], 'LR', 'L',  $fill, 0);
         
         $tcpdf->Ln();
         $fill=!$fill;
@@ -637,6 +638,7 @@
         $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[6], 12.5, $row[6], 'LR', 'L',  $fill, 0);
         
         $tcpdf->Ln();
         $fill=!$fill;
