@@ -27,6 +27,17 @@
 
 
 
+function refreshBrowserFromAS3() {
+
+    var confirmation = confirm("We've noticed you've been away from your computer for a while. To ensure you have the best user experience posssible, please press 'OK' to refresh your browser.");
+    if (confirmation == true) {
+
+
+     window.location.reload(true);
+    } 
+    
+}
+
 
 $(document).ready(function() {
 
@@ -53,6 +64,8 @@ $(document).ready(function() {
     // }
 
     // setTimeout(refresh, 600000);
+
+
 
 
 
