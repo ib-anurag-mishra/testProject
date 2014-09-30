@@ -2893,7 +2893,7 @@ Class ArtistsController extends AppController {
         $val = '';
         $val_provider_type = '';
 
-        print_r($songs);
+       
         if (!empty($songs)) {
             foreach ($songs as $k => $v) {
                 if (empty($val)) {
@@ -2989,10 +2989,11 @@ Class ArtistsController extends AppController {
         }
 
         // Videos Section
-        echo $decodedId = trim(base64_decode($id));
+         $decodedId = trim(base64_decode($id));
         $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
         if (!empty($country)) {
-            if ($artistVideoList === false) {
+            //if ($artistVideoList === false) {
+            if(1){
 
                 if (!empty($decodedId)) {
                     $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
