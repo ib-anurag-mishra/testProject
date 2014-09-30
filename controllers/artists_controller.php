@@ -2892,7 +2892,7 @@ Class ArtistsController extends AppController {
 
         $val = '';
         $val_provider_type = '';
-
+print_r($songs);
        
         if (!empty($songs)) {
             foreach ($songs as $k => $v) {
@@ -2920,7 +2920,7 @@ Class ArtistsController extends AppController {
                         'fields' => array(
                             'Album.ProdID',
                             'Album.Title',
-                            'Album.ArtistText1',
+                            'Album.ArtistText',
                             'Album.AlbumTitle',
                             'Album.Advisory',
                             'Album.Artist',
