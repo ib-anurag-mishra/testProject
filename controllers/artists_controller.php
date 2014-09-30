@@ -2875,7 +2875,9 @@ Class ArtistsController extends AppController {
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => base64_decode($id),
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
-               
+                "Song.FullLength_SaveAsName != ''",
+                "Song.Sample_SaveAsName != ''",
+                "Song.CdnPath != ''",
                 'Country.Territory' => $country, $cond,
                 'Song.provider_type = Country.provider_type'),
             'contain' => array(
@@ -2938,7 +2940,7 @@ Class ArtistsController extends AppController {
                             )
                         ),
                         'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
-                        'cache' => 'no',
+                        'cache' => 'yes',
                         'chk' => 2
             );
 
