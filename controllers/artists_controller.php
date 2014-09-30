@@ -2893,6 +2893,7 @@ Class ArtistsController extends AppController {
         $val = '';
         $val_provider_type = '';
 
+        print_r($songs);
         if (!empty($songs)) {
             foreach ($songs as $k => $v) {
                 if (empty($val)) {
@@ -2919,7 +2920,7 @@ Class ArtistsController extends AppController {
                         'fields' => array(
                             'Album.ProdID',
                             'Album.Title',
-                            'Album.ArtistText1',
+                            'Album.ArtistText',
                             'Album.AlbumTitle',
                             'Album.Advisory',
                             'Album.Artist',
@@ -2939,7 +2940,7 @@ Class ArtistsController extends AppController {
                             )
                         ),
                         'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
-                        'cache' => 'no',
+                        'cache' => 'yes',
                         'chk' => 2
             );
 
@@ -2958,7 +2959,7 @@ Class ArtistsController extends AppController {
                     $albumData[$key]['combineGenre'] = $this->Common->getGenreForSelection($albumData[$key]['Genre']['Genre']);
                 }
             $this->set('albumData', $albumData);            
-       print_r($albumData);     
+          
            
             if(!empty($albumData)){
                  foreach ($albumData as $key => $value) {
@@ -2988,7 +2989,7 @@ Class ArtistsController extends AppController {
         }
 
         // Videos Section
-        $decodedId = trim(base64_decode($id));
+        echo $decodedId = trim(base64_decode($id));
         $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
         if (!empty($country)) {
             if ($artistVideoList === false) {
