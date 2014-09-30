@@ -447,9 +447,9 @@
     //check barcode is enable or not
 
      //Column titles
-    $header = array('','Library Name', 'ID', 'Artists Name', 'Track title', 'Download');
-    $video_header = array('','Library Name', 'ID', 'Artists Name', 'Video title', 'Download');
-    $patron_header = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
+    $header = array('','Library Name', 'Branch Name', 'ID', 'Artists Name', 'Track title', 'Download');
+    $video_header = array('','Library Name', 'Branch Name', 'ID', 'Artists Name', 'Video title', 'Download');
+    $patron_header = array('', 'ID', 'Library Name',  'Total Number of Tracks Downloaded');
     $patron_video_header = array('', 'ID', 'Library Name', 'Total Number of Videos Downloaded'); 
     
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
@@ -467,7 +467,7 @@
         
         $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
         //check barcode is enable or not
-         $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
+         $data[] = array($key+1, $libraryName, $download['Currentpatrons']['branch_name'], $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
 
     }
     foreach($videoDownloads as $key => $download) {
@@ -483,7 +483,7 @@
         
         $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
         //check barcode is enable or not
-        $video_data[] = array($key+1, $this->getAdminTextEncode($libraryName), $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
+        $video_data[] = array($key+1, $this->getAdminTextEncode($libraryName), $download['Currentpatrons']['branch_name'], $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
 
     }
 
@@ -498,7 +498,7 @@
         
         
         //check barcode is enable or not
-        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
+        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])),  (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
       
     }
     
@@ -511,7 +511,7 @@
        }
         
         //check barcode is enable or not
-        $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
+        $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])),  (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
 
     }    
 
@@ -537,7 +537,7 @@
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(10, 50, 40, 60, 80, 20);
+    $w = array(10, 50, 30, 40, 40, 70, 20);
     for($i = 0; $i < count($header); $i++)
         $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
@@ -577,6 +577,7 @@
         $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[6], 12.5, $row[6], 'LR', 'L',  $fill, 0);
         
         $tcpdf->Ln();
         $fill=!$fill;
@@ -597,7 +598,7 @@
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(10, 50, 40, 60, 80, 20);
+    $w = array(10, 50, 30, 40, 40, 70, 20);
     for($i = 0; $i < count($video_header); $i++)
         $tcpdf->Cell($w[$i], 7, $video_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
@@ -637,6 +638,7 @@
         $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[6], 12.5, $row[6], 'LR', 'L',  $fill, 0);
         
         $tcpdf->Ln();
         $fill=!$fill;
