@@ -2920,7 +2920,7 @@ Class ArtistsController extends AppController {
                         'fields' => array(
                             'Album.ProdID',
                             'Album.Title',
-                            'Album.ArtistText',
+                            'Album.ArtistText1',
                             'Album.AlbumTitle',
                             'Album.Advisory',
                             'Album.Artist',
