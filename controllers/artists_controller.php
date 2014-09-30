@@ -2940,7 +2940,7 @@ Class ArtistsController extends AppController {
                             )
                         ),
                         'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
-                        'cache' => 'yes',
+                        'cache' => 'no',
                         'chk' => 2
             );
 
