@@ -26,242 +26,382 @@ class database {
 	public function freegalMusicStreaming($date) {
 		$fullstart = date('Y-m-01', strtotime($date));
 		$fullend =   date('Y-m-t',  strtotime($date));
-		$sql = <<<EOD
-			SELECT
-				libraries.library_territory,
-				sum(
-					CASE
-					WHEN '$fullstart' BETWEEN clsp.library_contract_start_date AND clsp.library_contract_end_date OR '$fullend' BETWEEN clsp.library_contract_start_date AND clsp.library_contract_end_date THEN
-						1
-					ELSE
-						0
-					END
-				) 'Total',
-				sum(
-					CASE
-					WHEN clsp.library_contract_start_date = (SELECT min(contract_library_streaming_purchases.library_contract_start_date) FROM contract_library_streaming_purchases WHERE contract_library_streaming_purchases.library_id = libraries.id) AND clsp.library_contract_start_date LIKE '$date%' THEN
-						1
-					ELSE
-						0
-					END
-				) 'New',
-				sum(
-					CASE
-					WHEN clsp.library_contract_start_date = (
-						SELECT max(contract_library_streaming_purchases.library_contract_start_date)
-						FROM contract_library_streaming_purchases
-						WHERE contract_library_streaming_purchases.library_id = libraries.id
-					)
-					AND clsp.library_contract_start_date LIKE '$date%'
-					AND (
-						SELECT max(contract_library_streaming_purchases.library_contract_end_date)
-						FROM contract_library_streaming_purchases
-						WHERE contract_library_streaming_purchases.library_contract_end_date != (
-							SELECT max(contract_library_streaming_purchases.library_contract_end_date)
-							FROM contract_library_streaming_purchases
-							WHERE contract_library_streaming_purchases.library_id = libraries.id
-						)
-						AND contract_library_streaming_purchases.library_id = libraries.id
-					) < clsp.library_contract_start_date THEN
-						1
-					ELSE
-						0
-					END
-				) 'Renewals',
-				sum(
-					CASE
-					WHEN clsp.library_contract_end_date = (
-						SELECT max(contract_library_streaming_purchases.library_contract_end_date)
-						FROM contract_library_streaming_purchases
-						WHERE contract_library_streaming_purchases.library_id = libraries.id
-					)
-					AND clsp.library_contract_end_date LIKE '$date%' THEN
-						1
-					ELSE
-						0
-					END
-				) 'Cancelled'
-			FROM
-				libraries
-			LEFT JOIN contract_library_streaming_purchases AS clsp ON libraries.id = clsp.library_id
-			WHERE
-				libraries.customer_id != 0
-			GROUP BY libraries.library_territory
-			ORDER BY libraries.library_territory
-EOD;
+		$sql = "SELECT DISTINCT libraries.library_territory FROM libraries ORDER BY libraries.library_territory";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
 		$data = array();
 		foreach($result as $row){
-			$data[] = array(
+			$data[$row['library_territory']] = array(
 				'territory' => $row['library_territory'],
-				'total' => $row['Total'],
-				'new' => $row['New'],
-				'existing' => $row['Renewals'],
-				'cancellations' => $row['Cancelled'],
+				'total' => '0',
+				'new' => '0',
+				'existing' => '0',
+				'cancellations' => '0',
 			);
 		}
-		echo 'freegalMusicStreaming() successful' . "\n";
+		$sql = <<<EOD
+			SELECT 
+				l.library_territory,
+				count(DISTINCT l.id) 'Total'
+			FROM
+				contract_library_streaming_purchases clsp
+			LEFT JOIN libraries l ON l.id = clsp.library_id
+			WHERE '$fullstart' BETWEEN clsp.library_contract_start_date AND clsp.library_contract_end_date
+			OR    '$fullend' BETWEEN clsp.library_contract_start_date AND clsp.library_contract_end_date
+			GROUP BY l.library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['total'] = $row['Total'];
+		}
+		$sql = <<<EOD
+			SELECT
+				l.library_territory,
+				count(DISTINCT clsp.library_id) 'Renewals'
+			FROM
+				contract_library_streaming_purchases clsp
+			JOIN libraries l ON clsp.library_id = l.id
+			WHERE clsp.library_contract_start_date = (
+				SELECT max(contract_library_streaming_purchases.library_contract_start_date)
+				FROM contract_library_streaming_purchases
+				WHERE contract_library_streaming_purchases.library_id = l.id
+			)
+			AND clsp.library_contract_start_date LIKE '$date%'
+			AND (
+				SELECT max(contract_library_streaming_purchases.library_contract_end_date)
+				FROM contract_library_streaming_purchases
+				WHERE contract_library_streaming_purchases.library_contract_end_date != (
+					SELECT max(contract_library_streaming_purchases.library_contract_end_date)
+					FROM contract_library_streaming_purchases
+					WHERE contract_library_streaming_purchases.library_id = l.id
+				)
+				AND contract_library_streaming_purchases.library_id = l.id
+			) < clsp.library_contract_start_date
+			GROUP BY
+				l.library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['existing'] = $row['Renewals'];
+		}
+		$sql = <<<EOD
+			SELECT
+				l.library_territory,
+				count(DISTINCT library_id) 'New'
+			FROM
+				contract_library_streaming_purchases clsp
+			JOIN libraries l ON clsp.library_id = l.id
+			WHERE
+				clsp.library_contract_start_date = (
+					SELECT min(contract_library_streaming_purchases.library_contract_start_date) 
+					FROM contract_library_streaming_purchases 
+					WHERE contract_library_streaming_purchases.library_id = l.id
+				) 
+			AND clsp.library_contract_start_date LIKE '$date%'
+			GROUP BY
+				l.library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['new'] = $row['New'];
+		}
+		$sql = <<<EOD
+			SELECT
+				l.library_territory,
+				count(DISTINCT library_id) 'Cancelled'
+			FROM
+				contract_library_streaming_purchases clsp
+			JOIN libraries l ON clsp.library_id = l.id
+			WHERE
+				clsp.library_contract_end_date = (
+					SELECT max(contract_library_streaming_purchases.library_contract_end_date)
+					FROM contract_library_streaming_purchases
+					WHERE contract_library_streaming_purchases.library_id = l.id
+				)
+				AND clsp.library_contract_end_date LIKE '$date%'
+			GROUP BY
+				l.library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['cancellations'] = $row['Cancelled'];
+		}
+
+		// print_r($data);
+		// echo 'freegalMusicStreaming() successful' . "\n";
 		return $data;
 	}
 	
 	public function freegalMusicSubscriptions($date) {
 		$fullstart = date('Y-m-01', strtotime($date));
 		$fullend =   date('Y-m-t',  strtotime($date));
-		$sql = <<<EOD
-			SELECT
-				libraries.library_territory,
-				sum(
-					CASE
-					WHEN clp.library_unlimited = '1' AND '$fullstart' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date
-					OR   clp.library_unlimited = '1' AND '$fullend' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date THEN
-						1
-					ELSE
-						0
-					END
-				) 'Total',
-				sum(
-					CASE
-					WHEN clp.library_unlimited = '1'
-					AND clp.library_contract_start_date = (
-						SELECT min(contract_library_purchases.library_contract_start_date) 
-						FROM contract_library_purchases 
-						WHERE contract_library_purchases.library_id = libraries.id
-					) 
-					AND clp.library_contract_start_date LIKE '$date%' THEN
-						1
-					ELSE
-						0
-					END
-				) 'New',
-				sum(
-					CASE
-					WHEN clp.library_unlimited = '1'
-					AND clp.library_contract_start_date LIKE '$date%'
-					AND (
-						SELECT min(contract_library_purchases.library_contract_start_date)
-						FROM contract_library_purchases
-						WHERE contract_library_purchases.library_id = libraries.id
-					) != clp.library_contract_start_date THEN
-						1
-					ELSE
-						0
-					END
-				) 'Renewals',
-				sum(
-					CASE
-					WHEN clp.library_contract_end_date = (
-						SELECT max(contract_library_purchases.library_contract_end_date)
-						FROM contract_library_purchases
-						WHERE contract_library_purchases.library_id = libraries.id
-					)
-					AND clp.library_contract_end_date LIKE '$date%'
-					AND clp.library_unlimited = '1' THEN
-						1
-					ELSE
-						0
-					END
-				) 'Cancelled'
-			FROM
-				libraries
-			LEFT JOIN contract_library_purchases AS clp ON libraries.id = clp.library_id
-			GROUP BY libraries.library_territory
-			ORDER BY libraries.library_territory
-EOD;
+		$sql = "SELECT DISTINCT libraries.library_territory FROM libraries ORDER BY libraries.library_territory";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
 		$data = array();
 		foreach($result as $row){
-			$data[] = array(
+			$data[$row['library_territory']] = array(
 				'territory' => $row['library_territory'],
-				'total' => $row['Total'],
-				'new' => $row['New'],
-				'existing' => $row['Renewals'],
-				'cancellations' => $row['Cancelled'],
+				'total' => '0',
+				'new' => '0',
+				'existing' => '0',
+				'cancellations' => '0',
 			);
 		}
-		echo 'freegalMusicSubscriptions() successful' . "\n";
+		$sql = <<<EOD
+			SELECT
+				l.library_territory,
+				count(DISTINCT library_id) 'Total'
+			FROM
+				contract_library_purchases clp
+			INNER JOIN libraries l ON l.id = clp.library_id
+			WHERE
+				 clp.library_unlimited = '1' AND '$fullstart' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date
+			OR   clp.library_unlimited = '1' AND '$fullend' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date
+			GROUP BY l.library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['total'] = $row['Total'];
+		}
+		$sql = <<<EOD
+			SELECT
+				library_territory,
+				count(DISTINCT library_id) 'Renewals'
+			FROM
+				contract_library_purchases clp
+			JOIN libraries l ON clp.library_id = l.id
+			WHERE
+				clp.library_contract_start_date LIKE '$date%'
+			AND clp.library_unlimited = '1'
+			AND clp.id = (
+				SELECT
+					max(clp2.id)
+				FROM
+					contract_library_purchases clp2
+				WHERE
+					clp2.library_id = l.id
+			)
+			AND clp.id > (
+				SELECT
+					min(clp2.id)
+				FROM
+					contract_library_purchases clp2
+				WHERE
+					clp2.library_id = l.id
+			)
+			GROUP BY
+				library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['existing'] = $row['Renewals'];
+		}
+		$sql = <<<EOD
+			SELECT
+				library_territory,
+				count(DISTINCT library_id) 'New'
+			FROM
+				contract_library_purchases clp
+			JOIN libraries l ON clp.library_id = l.id
+			WHERE
+				clp.library_contract_start_date LIKE '$date%'
+			AND clp.library_unlimited = '1'
+			AND clp.id = (
+				SELECT
+					min(clp2.id)
+				FROM
+					contract_library_purchases clp2
+				WHERE
+					clp2.library_id = l.id
+			)
+			GROUP BY
+				library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['new'] = $row['New'];
+		}
+		$sql = <<<EOD
+			SELECT
+				library_territory,
+				count(DISTINCT library_id) 'Cancelled'
+			FROM
+				contract_library_purchases clp
+			JOIN libraries l ON clp.library_id = l.id
+			WHERE
+				clp.library_contract_end_date LIKE '$date%'
+			AND clp.library_unlimited = '1'
+			AND clp.id = (
+				SELECT
+					max(clp2.id)
+				FROM
+					contract_library_purchases clp2
+				WHERE
+					clp2.library_id = l.id
+			)
+			GROUP BY
+				library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['cancellations'] = $row['Cancelled'];
+		}
+
+		// print_r($data);
+		// echo 'freegalMusicSubscriptions() successful' . "\n";
 		return $data;
 	}
 	
 	public function freegalMusicAlc($date) {
 		$fullstart = date('Y-m-01', strtotime($date));
 		$fullend =   date('Y-m-t',  strtotime($date));
-		$sql = <<<EOD
-			SELECT
-				libraries.library_territory,
-				sum(
-					CASE
-					WHEN clp.library_unlimited = '0' AND '$fullstart' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date
-					OR   clp.library_unlimited = '0' AND '$fullend' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date THEN
-						1
-					ELSE
-						0
-					END
-				) 'Total',
-				sum(
-					CASE
-					WHEN clp.library_unlimited = '0' AND clp.library_contract_start_date = (
-						SELECT min(contract_library_purchases.library_contract_start_date) 
-						FROM contract_library_purchases 
-						WHERE contract_library_purchases.library_id = libraries.id
-					) 
-					AND clp.library_contract_start_date LIKE '$date%' THEN
-						1
-					ELSE
-						0
-					END
-				) 'New',
-				sum(
-					CASE
-					WHEN clp.library_unlimited = '0'
-					AND clp.library_contract_start_date LIKE '$date%'
-					AND (
-						SELECT min(contract_library_purchases.library_contract_start_date)
-						FROM contract_library_purchases
-						WHERE contract_library_purchases.library_id = libraries.id
-					) != clp.library_contract_start_date THEN
-						1
-					ELSE
-						0
-					END
-				) 'Renewals',
-				sum(
-					CASE
-					WHEN clp.library_contract_end_date = (
-						SELECT max(contract_library_purchases.library_contract_end_date)
-						FROM contract_library_purchases
-						WHERE contract_library_purchases.library_id = libraries.id
-					)
-					AND clp.library_contract_end_date LIKE '$date%'
-					AND clp.library_unlimited = '0' THEN
-						1
-					ELSE
-						0
-					END
-				) 'Cancelled'
-			FROM
-				libraries
-			LEFT JOIN contract_library_purchases AS clp ON libraries.id = clp.library_id
-			GROUP BY libraries.library_territory
-			ORDER BY libraries.library_territory
-EOD;
+		$sql = "SELECT DISTINCT libraries.library_territory FROM libraries ORDER BY libraries.library_territory";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
 		$data = array();
 		foreach($result as $row){
-			$data[] = array(
+			$data[$row['library_territory']] = array(
 				'territory' => $row['library_territory'],
-				'total' => $row['Total'],
-				'new' => $row['New'],
-				'existing' => $row['Renewals'],
-				'cancellations' => $row['Cancelled'],
+				'total' => '0',
+				'new' => '0',
+				'existing' => '0',
+				'cancellations' => '0',
 			);
 		}
-		echo 'freegalMusicAlc() successful' . "\n";
+		$sql = <<<EOD
+			SELECT l.library_territory, count(l.id) AS 'Total'
+			FROM
+				libraries AS l
+			LEFT JOIN 
+			    (
+			        SELECT DISTINCT(library_id), library_contract_end_date, library_contract_start_date, library_unlimited
+			        FROM contract_library_purchases
+					WHERE library_unlimited = '0'
+					ORDER BY library_unlimited ASC, library_contract_start_date DESC
+			    ) AS clp
+			ON l.id = clp.library_id
+			WHERE clp.library_unlimited = '0' AND '$fullstart' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date
+				OR clp.library_unlimited = '0' AND '$fullend' BETWEEN clp.library_contract_start_date AND clp.library_contract_end_date
+			GROUP BY l.library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['total'] = $row['Total'];
+		}
+		$sql = <<<EOD
+			SELECT
+				library_territory,
+				count(DISTINCT library_id) 'New'
+			FROM
+				contract_library_purchases clp
+			JOIN libraries l ON clp.library_id = l.id
+			WHERE
+				clp.library_contract_start_date LIKE '$date%'
+			AND clp.library_unlimited = '0'
+			AND clp.id = (
+				SELECT
+					min(clp2.id)
+				FROM
+					contract_library_purchases clp2
+				WHERE
+					clp2.library_id = l.id
+			)
+			GROUP BY
+				library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['new'] = $row['New'];
+		}
+		$sql = <<<EOD
+			SELECT
+				library_territory,
+				count(DISTINCT library_id) 'Renewals'
+			FROM
+				contract_library_purchases clp
+			JOIN libraries l ON clp.library_id = l.id
+			WHERE
+				clp.library_contract_start_date LIKE '$date%'
+			AND clp.library_unlimited = '0'
+			AND clp.id = (
+				SELECT
+					max(clp2.id)
+				FROM
+					contract_library_purchases clp2
+				WHERE
+					clp2.library_id = l.id
+			)
+			AND clp.id > (
+				SELECT
+					min(clp2.id)
+				FROM
+					contract_library_purchases clp2
+				WHERE
+					clp2.library_id = l.id
+			)
+			GROUP BY
+				library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['existing'] = $row['Renewals'];
+		}
+		$sql = <<<EOD
+			SELECT
+				library_territory,
+				count(DISTINCT library_id) 'Cancelled'
+			FROM
+				contract_library_purchases clp
+			JOIN libraries l ON clp.library_id = l.id
+			WHERE
+				clp.library_contract_end_date LIKE '$date%'
+			AND clp.library_unlimited = '0'
+			AND clp.id = (
+				SELECT
+					max(clp2.id)
+				FROM
+					contract_library_purchases clp2
+				WHERE
+					clp2.library_id = l.id
+			)
+			GROUP BY
+				library_territory
+EOD;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row){
+			$data[$row['library_territory']]['cancellations'] = $row['Cancelled'];
+		}
+
+		// print_r($data);
+		// echo 'freegalMusicAlc() successful' . "\n";
 		return $data;
 	}
 	
@@ -344,16 +484,20 @@ EOD;
 				'cancellations' => $row['Cancelled'],
 			);
 		}
-		echo 'freegalMoviesStreaming() successful' . "\n";
+		// echo 'freegalMoviesStreaming() successful' . "\n";
 		return $data;
 	}
 
 } // end class
 
 function sendMail($file_path, $file_name, $previousMonth) {
-	$to = "ralphk@libraryideas.com";
-	$from = "no-reply@freegalmusic.com";
-	$bcc = "ralph_kelley@yahoo.com";
+	// $to = "ralphk@libraryideas.com";
+	// $from = "no-reply@freegalmusic.com";
+	// $bcc = "ralph_kelley@yahoo.com";
+	$to = "accounting@libraryideas.com, briand@libraryideas.com";
+	$from = "accounting@freegalmovies.com";
+	$bcc = "robr@libraryideas.com, ralphk@libraryideas.com";
+	
 	$subject ='Library subscriptions report (' . $previousMonth . ')';
 	$message =
 			"Greetings,<br/><br/>
@@ -385,18 +529,16 @@ function sendMail($file_path, $file_name, $previousMonth) {
 	// send email
 	$ok = mail($to, $subject, $message, $mail_header); 
 	if ($ok) { 
-		echo "<p>Mail sent to $to!</p>\n"; 
+		echo "Mail sent to $to!$file_name\n"; 
 	} else { 
-		echo "<p>Mail could not be sent!</p>\n"; 
+		echo "Mail could not be sent!$file_name\n"; 
 	}
 }
 
-function sonyReport() {
-	// $dbconfig = array('host' => '192.168.100.114', 'user' => 'freegal_prod', 'pass' => '}e47^B1EO9hD');
-	$dbconfig = array('host' => '127.0.0.1', 'user' => 'root', 'pass' => 'pelebertix');
-	$previousMonth = date("Y-m", strtotime("previous month"));
-	//$previousMonth = '2014-07';//**********This is for testing**********//
-
+function sonyReport($previousMonth) {
+	$dbconfig = array('host' => '192.168.100.114', 'user' => 'freegal_prod', 'pass' => '}e47^B1EO9hD');
+	//$dbconfig = array('host' => 'localhost;port=3306', 'user' => 'root', 'pass' => '');
+	
 	$sections = array(
 		'Freegal Music Streaming' => '0',
 		'Freegal Music Subscription' => '1',
@@ -483,8 +625,21 @@ function sonyReport() {
 	sendMail($file_path, $file_name, $previousMonth);
 }
 
-sonyReport();
+//sonyReport();
+// $backReports = array(
+// 	'2010-05',
+// 	'2010-06',
+// 	'2010-07',
+// 	'2010-08',
+// 	'2010-09'
+// );
+//$backReports = array('2014-06','2014-07');
+// foreach ($backReports as $key => $previousMonth) {
+// 	sonyReport($previousMonth);
 
-
+// }
+$previousMonth = date("Y-m", strtotime("previous month"));
+// $previousMonth = '2014-06';//**********This is for testing**********//
+sonyReport($previousMonth);
 
 
