@@ -5400,7 +5400,7 @@ class SoapsController extends AppController {
       default:
 
     }
-    return $searchData;
+    return $soap;
 
   }
 
@@ -6435,46 +6435,66 @@ class SoapsController extends AppController {
 
     
     foreach($AllData AS $key => $val){
-        
-      $sobj = new SearchDataType;
-      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
-      $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
-      $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
-      $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
-      $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration); 
-      $sobj->ISRC                 = $val->ISRC;
+
+		if (!is_array($val->SalesDate)){
+			if($val->SalesDate <= date('Y-m-d')) {
+				$allow = true;
+			}
+			else{
+				$allow =false;
+			}
+		}
+		else{
+			$key = array_search($library_terriotry,$val->Territory);
+			if($val->SalesDate[$key] <= date('Y-m-d')){
+				$allow = true;
+			}
+			else{
+				$allow = false;
+			}
+		}
+
+
+      if ($allow) {  
+      	$sobj = new SearchDataType;
+      	$sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      	$sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
+      	$sobj->Title                = $this->getTextUTF($val->Title);
+      	$sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      	$sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
+      	$sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
+      	$sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration); 
+      	$sobj->ISRC                 = $val->ISRC;
       
   
-      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+      	$sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
         
-      if($sobj->DownloadStatus) {
-        $sobj->fileURL            = 'nostring';
-        $sobj->FullLengthFileURL  = 'nostring';
-      }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').$this->Token->regularToken($val->CdnPath."/".$val->SaveAsName);
-        $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
-      }
+      	if($sobj->DownloadStatus) {
+        	$sobj->fileURL            = 'nostring';
+        	$sobj->FullLengthFileURL  = 'nostring';
+      	}else{
+        	$sobj->fileURL            = Configure::read('App.Music_Path').$this->Token->regularToken($val->CdnPath."/".$val->SaveAsName);
+        	$sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
+      	}
         
-      $albumData = $this->Album->find('first',
-        array(
+      	$albumData = $this->Album->find('first',
+        	array(
           'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
           'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
           'recursive' => -1,
-        )
-      ); 
+        	)
+      	); 
 
-      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-      $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
-      $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
+      	$sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      	$sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
+      	$sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
-      $sobj->playButtonStatus     = $this->getPlayButtonStatus($val->ProdID, $library_terriotry, $val->provider_type);
+      	$sobj->playButtonStatus     = $this->getPlayButtonStatus($val->ProdID, $library_terriotry, $val->provider_type);
       
-      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+      	if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
       
-      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-
+      	$search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      }
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
@@ -6521,7 +6541,24 @@ class SoapsController extends AppController {
     
     $search_list = array();  
     foreach($ArtistData AS $key => $val){    
-        
+      if (!is_array($val->SalesDate)){
+			if($val->SalesDate <= date('Y-m-d')) {
+				$allow = true;
+			}
+			else{
+				$allow =false;
+			}
+		}
+		else{
+			$key = array_search($library_terriotry,$val->Territory);
+			if($val->SalesDate[$key] <= date('Y-m-d')){
+				$allow = true;
+			}
+			else{
+				$allow = false;
+			}
+		}
+	  if($allow) {
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
@@ -6561,6 +6598,7 @@ class SoapsController extends AppController {
       
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
       
+	}
               
     }
 
@@ -6602,7 +6640,24 @@ class SoapsController extends AppController {
  
       
     foreach($Albumlist AS $key => $val){
-
+	  if (!is_array($val->SalesDate)){
+			if($val->SalesDate <= date('Y-m-d')) {
+				$allow = true;
+			}
+			else{
+				$allow =false;
+			}
+		}
+		else{
+			$key = array_search($library_terriotry,$val->Territory);
+			if($val->SalesDate[$key] <= date('Y-m-d')){
+				$allow = true;
+			}
+			else{
+				$allow = false;
+			}
+		}
+	  if($allow) {
       $sobj = new SearchDataType;
       $sobj->SongProdID           = '';
       $sobj->SongTitle            = '';
@@ -6635,7 +6690,7 @@ class SoapsController extends AppController {
       if('T' == $albumData['Album']['Advisory']) { $sobj->AlbumTitle = $sobj->AlbumTitle.' (Explicit)'; }
       
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-
+	}
       
     }
 
@@ -6680,7 +6735,25 @@ class SoapsController extends AppController {
 
 
     foreach($SongData AS $key => $val){        
-        
+      if (!is_array($val->SalesDate)){
+			if($val->SalesDate <= date('Y-m-d')) {
+				$allow = true;
+			}
+			else{
+				$allow =false;
+			}
+		}
+		else{
+			$key = array_search($library_terriotry,$val->Territory);
+			if($val->SalesDate[$key] <= date('Y-m-d')){
+				$allow = true;
+			}
+			else{
+				$allow = false;
+			}
+		}
+
+	 if($allow) {
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
@@ -6719,7 +6792,7 @@ class SoapsController extends AppController {
       if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
       
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-
+	}
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
@@ -6763,7 +6836,24 @@ class SoapsController extends AppController {
     
 
     foreach($VideoData AS $key => $val){        
-        
+       if (!is_array($val->SalesDate)){
+			if($val->SalesDate <= date('Y-m-d')) {
+				$allow = true;
+			}
+			else{
+				$allow =false;
+			}
+		}
+		else{
+			$key = array_search($library_terriotry,$val->Territory);
+			if($val->SalesDate[$key] <= date('Y-m-d')){
+				$allow = true;
+			}
+			else{
+				$allow = false;
+			}
+		}
+	if($allow) {
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->VideoTitle);
@@ -6809,7 +6899,7 @@ class SoapsController extends AppController {
       }  
            
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-
+	}
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
