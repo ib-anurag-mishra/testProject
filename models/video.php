@@ -194,7 +194,7 @@ class Video extends AppModel
 						'Country.Territory',
 						'Country.SalesDate'
 				),
-				'conditions' => array('Video.DownloadStatus' => '1', 'Video.ProdID' => $productId),
+				'conditions' => array('Video.DownloadStatus' => '1', 'Video.ProdID' => $productId, 'Country.SalesDate !=' => '', 'Country.SalesDate <=' => date('Y-m-d')),
 				'joins' => array(
 						array(
 								'table' => $prefix . 'countries',
