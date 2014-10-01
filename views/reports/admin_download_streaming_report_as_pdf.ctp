@@ -440,10 +440,6 @@
         $genre_data[] = array($key+1, $this->getAdminTextEncode($genreStreamed['Genres']['expected_genre']), ($genreStreamed[0]['total_streamed_songs']));
     }
         
-     // add a page
-    
-    $tcpdf->AddPage();
-
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
