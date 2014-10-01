@@ -1853,7 +1853,8 @@ Class ArtistsController extends AppController {
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
                                 array('Song.provider_type = Country.provider_type'),
                                 array("Song.Sample_FileID != ''"),
-                                array("Song.FullLength_FIleID != ''"),                                                         
+                                array("Song.FullLength_FIleID != ''"),
+                                array('Country.SalesDate <=' => date('Y-m-d')),
                                 array("Song.provider_type" => $provider),
                                 array('Country.Territory' => $country),
                                 $cond
@@ -1864,8 +1865,7 @@ Class ArtistsController extends AppController {
                                     ))
                                 ,
                                 array('and' => array(
-                                        'Country.DownloadStatus' => 1,
-                                        'Country.SalesDate <=' => date('Y-m-d')
+                                        'Country.DownloadStatus' => 1                                        
                                     ))
                             )
                         ),
