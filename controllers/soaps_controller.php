@@ -5400,7 +5400,7 @@ class SoapsController extends AppController {
       default:
 
     }
-    return $soap;
+    return $searchData;
 
   }
 
@@ -6436,7 +6436,7 @@ class SoapsController extends AppController {
     
     foreach($AllData AS $key => $val){
 
-		if (!is_array($val->SalesDate)){
+		if(!is_array($val->SalesDate)){
 			if($val->SalesDate <= date('Y-m-d')) {
 				$allow = true;
 			}
@@ -6455,7 +6455,7 @@ class SoapsController extends AppController {
 		}
 
 
-      if ($allow) {  
+      if($allow) { 
       	$sobj = new SearchDataType;
       	$sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       	$sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
@@ -6541,7 +6541,7 @@ class SoapsController extends AppController {
     
     $search_list = array();  
     foreach($ArtistData AS $key => $val){    
-      if (!is_array($val->SalesDate)){
+      if(!is_array($val->SalesDate)){
 			if($val->SalesDate <= date('Y-m-d')) {
 				$allow = true;
 			}
@@ -6735,7 +6735,7 @@ class SoapsController extends AppController {
 
 
     foreach($SongData AS $key => $val){        
-      if (!is_array($val->SalesDate)){
+      if(!is_array($val->SalesDate)){
 			if($val->SalesDate <= date('Y-m-d')) {
 				$allow = true;
 			}
@@ -6836,7 +6836,7 @@ class SoapsController extends AppController {
     
 
     foreach($VideoData AS $key => $val){        
-       if (!is_array($val->SalesDate)){
+       if(!is_array($val->SalesDate)){
 			if($val->SalesDate <= date('Y-m-d')) {
 				$allow = true;
 			}
