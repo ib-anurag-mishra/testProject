@@ -24,6 +24,7 @@
     /*text-indent: -9999px;*/
     /*width: 285px;*/
     width: 100%;
+    margin-bottom: 20px;
 }
 .content{
 
