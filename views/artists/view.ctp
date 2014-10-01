@@ -1,4 +1,11 @@
 <section class="albums-page">
+    
+    <?php if( $blockHoleContent == 1 ) { 
+    
+            echo 'Sorry, there are no details available!';
+    
+     } else { ?>
+    
 	<section class="album-detail-container clearfix">
 		<div class="breadcrumbs">
 			<span><?php
@@ -364,4 +371,5 @@
 			echo '<span>' . __('Sorry, there are no more details available.', true) . '</span>';
 		endif;?>
 	</section>
+     <?php }  ?>
 </section> <!-- close class="albums-page" -->

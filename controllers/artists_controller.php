@@ -1543,6 +1543,7 @@ Class ArtistsController extends AppController {
     function view($id = null, $album = null, $provider = null) {
 
         $this->layout = 'home';
+        $albumReferenceID = '';
 
         //Reading the parameters from URL
         if (count($this->params['pass']) > 1) {
@@ -1562,7 +1563,7 @@ Class ArtistsController extends AppController {
                 $provider = "";
             }
         }
- 
+        $albumReferenceID = $album;
         //reading sessin vlaues
         $country = $this->Session->read('territory');
         $libType = $this->Session->read('library_type');
@@ -1615,6 +1616,8 @@ Class ArtistsController extends AppController {
                         'Country.DownloadStatus' => 1,
                         "Song.Sample_FileID != ''",
                         "Song.FullLength_FIleID != ''",
+                        "Country.SalesDate <= NOW()",
+                        "Country.StreamingSalesDate <= NOW()",
                         'Country.Territory' => $country, 
                         $cond),
                     'contain' => array(
@@ -1636,6 +1639,8 @@ Class ArtistsController extends AppController {
                         'Song.ArtistText' => base64_decode($id),
                         "Song.Sample_FileID != ''",
                         "Song.FullLength_FIleID != ''",
+                        "Country.SalesDate <= NOW()",
+                        "Country.StreamingSalesDate <= NOW()",
                         'Country.Territory' => $country,
                         'Country.DownloadStatus' => 1,
                         array('or' =>
@@ -1689,7 +1694,9 @@ Class ArtistsController extends AppController {
                 'Album.ArtistURL',
                 'Album.Label',
                 'Album.Copyright',
-                'Album.provider_type'
+                'Album.provider_type',
+                'Country.SalesDate',
+                'Country.StreamingSalesDate',
             ),
             'contain' => array(
                 'Genre' => array(
@@ -1784,6 +1791,8 @@ Class ArtistsController extends AppController {
                                 array('Song.provider_type = Country.provider_type'),
                                 array('Country.DownloadStatus' => 1),
                                 array("Song.Sample_FileID != ''"),
+                                array("Country.SalesDate <= NOW()"),
+                                array("Country.StreamingSalesDate <= NOW()"),
                                 array("Song.FullLength_FIleID != ''"),
                                 array("Song.provider_type" => $provider),
                                 array('Country.Territory' => $country),
@@ -1844,7 +1853,7 @@ Class ArtistsController extends AppController {
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
                                 array('Song.provider_type = Country.provider_type'),
                                 array("Song.Sample_FileID != ''"),
-                                array("Song.FullLength_FIleID != ''"),
+                                array("Song.FullLength_FIleID != ''"),                                                         
                                 array("Song.provider_type" => $provider),
                                 array('Country.Territory' => $country),
                                 $cond
@@ -1855,7 +1864,8 @@ Class ArtistsController extends AppController {
                                     ))
                                 ,
                                 array('and' => array(
-                                        'Country.DownloadStatus' => 1
+                                        'Country.DownloadStatus' => 1,
+                                        'Country.SalesDate <=' => date('Y-m-d')
                                     ))
                             )
                         ),
@@ -1941,6 +1951,14 @@ Class ArtistsController extends AppController {
                     }
                 }
             }
+        }
+        
+        //if no any song available to display or
+        //if all songs in a album has sales date greater then today's date
+        if(empty($albumSongs[$albumReferenceID])) { 
+             $this->set('blockHoleContent', 1);      
+        }else{
+            $this->set('blockHoleContent', 0);  
         }
         
         $this->set('albumSongs', $albumSongs);
@@ -2200,7 +2218,8 @@ Class ArtistsController extends AppController {
  
             $songs = $this->Song->find('all', array(
                 'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                'conditions' => array('Song.ArtistText' => base64_decode($id), "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
+                'conditions' => array('Song.ArtistText' => base64_decode($id), "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country,
+                    "Country.SalesDate <= NOW()","Country.StreamingSalesDate <= NOW()",'Country.DownloadStatus' => 1,
                     array('or' =>
                         array(
                             array('Country.StreamingStatus' => 1)
@@ -2235,7 +2254,9 @@ Class ArtistsController extends AppController {
                 'Album.ArtistURL',
                 'Album.Label',
                 'Album.Copyright',
-                'Album.provider_type'
+                'Album.provider_type',
+                'Country.SalesDate <= NOW()',
+                'Country.StreamingSalesDate <= NOW()'
             ),
             'contain' => array(
                 'Genre' => array(
@@ -2277,10 +2298,11 @@ Class ArtistsController extends AppController {
                             array('Song.provider_type = Country.provider_type'),
                             array("Song.Sample_FileID != ''"),
                             array("Song.FullLength_FIleID != ''"),
+                            array("Country.SalesDate <= NOW()"),
+                            array("Country.StreamingSalesDate <= NOW()"),
                             array("Song.provider_type" => $provider),
                             array('Country.Territory' => $country),
-                            array('Country.StreamingStatus' => 1),
-                            array('Country.StreamingSalesDate <=' => date('Y-m-d')),
+                            array('Country.StreamingStatus' => 1),                           
                             $cond
                         )
                     ),
@@ -2297,6 +2319,8 @@ Class ArtistsController extends AppController {
                         'Song.Sample_FileID',
                         'Song.FullLength_FIleID',
                         'Song.provider_type',
+                        'Country.SalesDate',
+                        'Country.StreamingSalesDate',
                         'Song.sequence_number'
                     ),
                     'contain' => array(
@@ -2905,6 +2929,7 @@ Class ArtistsController extends AppController {
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
+                "Country.SalesDate <= NOW()",
                 'Country.Territory' => $country, $cond,
                 'Song.provider_type = Country.provider_type'),
             'contain' => array(
@@ -3021,7 +3046,7 @@ Class ArtistsController extends AppController {
                 die;
             }
         }
-
+        //print_r($albumData);
         // Videos Section
         $decodedId = trim(base64_decode($id));
         $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
@@ -3041,7 +3066,6 @@ Class ArtistsController extends AppController {
                            //write broken image entry in the log files                    
                            $this->brokenImageArtistURL  = getenv('SERVER_NAME') . '/artists/album/'.$artistTextEncode;
                            $this->log($country.' : ' .' Video Details : '. $value['videoAlbumImage'].' : Album URL : '. $this->brokenImageArtistURL ); 
-
                            $this->artistPageBrokenImages[] = $value['videoAlbumImage'];                  
                      }                     
                 }

@@ -307,6 +307,12 @@
 				$i = 0;
 
 				foreach ( $albumData as $palbum ):
+				
+					$downloadFlag = $this->Search->checkSalesDateStatusForSearch( $palbum->TerritorySalesDate, $territory );
+					$streamingFlag = $this->Search->checkSalesDateStatusForSearch( $palbum->TerritoryStreamingSalesDate, $territory );
+					if ( $downloadFlag === 0 && $streamingFlag === 0 ) {
+						continue;
+					}
 					$albumInfo = $this->Search->getAlbumInfo( $palbum, $this );
 					extract( $albumInfo );
 		?>
@@ -420,6 +426,11 @@
 			foreach ( $songs as $psong ):
 
 				if ( !is_object( $psong ) ) {
+					continue;
+				}
+				
+				$displayFlag = $this->Search->checkSalesDateStatusForSearch( $psong->TerritorySalesDate, $territory );
+				if ( $displayFlag === 0 ) {
 					continue;
 				}
 		?>
@@ -567,6 +578,11 @@
 						<?php
 							$i = 0;
 							foreach ( $albumData as $palbum ):
+							$downloadFlag = $this->Search->checkSalesDateStatusForSearch( $palbum->TerritorySalesDate, $territory );
+							$streamingFlag = $this->Search->checkSalesDateStatusForSearch( $palbum->TerritoryStreamingSalesDate, $territory );
+							if ( $downloadFlag === 0 && $streamingFlag === 0 ) {
+								continue;
+							}
 						?>
 								<li>
 						<?php
@@ -713,6 +729,11 @@
 				<?php if ( isset( $videos ) && is_array( $videos ) && count( $videos ) > 0 ): ?>
 				<ul>
 				<?php 	foreach ( $videos as $video ):
+							
+							$displayFlag = $this->Search->checkSalesDateStatusForSearch( $video->TerritorySalesDate, $territory );
+							if ( $displayFlag === 0 ) {
+								continue;
+							}
 							$video_name_text = $this->Search->truncateText( $this->getTextEncode( $video->VideoTitle ), 125, $this );
 							$name 			 = $this->getTextEncode( $video->VideoTitle );
 							$video_name_text = ($name != "false") ? $video_name_text : ""
