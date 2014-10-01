@@ -22,7 +22,8 @@
     overflow: hidden;
     position: relative;
     /*text-indent: -9999px;*/
-    width: 285px;
+    /*width: 285px;*/
+    width: 100%;
 }
 .content{
 
