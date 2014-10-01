@@ -380,10 +380,10 @@
     //Column titles
     if($this->data['Report']['library_id'] == "all") {
         $header = array('','Library Name', 'ID', 'Artists Name', 'Track title', 'Streamed date');
-        $patron_header = array('', 'ID', 'Library Name', 'Total Number of Tracks Streamed');
+        $patron_header = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Tracks Streamed');
     }else{
         $header = array('', 'ID', 'Artists Name', 'Track title', 'Streamed date');
-        $patron_header = array('', 'ID', 'Total Number of Tracks Streamed');
+        $patron_header = array('', 'ID', 'Branch Name', 'Total Number of Tracks Streamed');
     }
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Streamed');
 
@@ -424,7 +424,7 @@
             }else{
                 $patron_id = $patronStreamed['Currentpatrons']['id'];
             }     
-            $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
+            $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), $patronStreamed['Currentpatrons']['branch_name'], ($patronStreamed[0]['total_streamed_songs']));
         }
     }else{
         foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
@@ -433,7 +433,7 @@
             }else{
                 $patron_id = $patronStreamed['Currentpatrons']['id'];
             }   
-            $patron_data[] = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
+            $patron_data[] = array($key+1, $patron_id, $patronStreamed['Currentpatrons']['branch_name'], ($patronStreamed[0]['total_streamed_songs']));
         }
     }
     foreach($genreDayStremedInfo as $key => $genreStreamed) {
@@ -515,7 +515,7 @@
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(10, 50, 100, 90);
+    $w = array(10, 50, 50, 70, 70);
     for($i = 0; $i < count($patron_header); $i++)
         $tcpdf->Cell($w[$i], 7, $patron_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
@@ -552,8 +552,9 @@
         $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill, '', 3);
         if($this->data['Report']['library_id'] == "all") {
-            $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'C', $fill, '', 3);
+            $tcpdf->Cell($w[4], 6, $row[4], 'LR', 0, 'C', $fill, '', 3);
         }
         $tcpdf->Ln();
         $fill=!$fill;
