@@ -133,6 +133,8 @@
 				{
 					continue;
 				}
+                                
+                                
 				?>
 				<li>
 					<div class="album-container">
