@@ -3127,7 +3127,7 @@ STR;
                                                 LEFT JOIN
                                 File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
                 WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1 $videoAdvisory
+                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1 $videoAdvisory
                 GROUP BY Video.ProdID
                 ORDER BY Country.SalesDate desc  
 STR;
