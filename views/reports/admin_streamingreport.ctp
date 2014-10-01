@@ -265,10 +265,11 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                        <th>ID</th>
+                                        <th>ID</th>                                        
                                         <?php if(!is_numeric($library_id)):?>
-                                        <th>Library Name</th>
+                                        <th>Library Name</th>                                        
                                         <?php endif; ?>
+                                        <th>Branch Name</th>
                                         <th>Total Number of Tracks Streamed</th>
                                     </tr>
                                         <?php
@@ -278,7 +279,7 @@ if (empty($getData)) {
                                         {
                                             ?>
                                             <tr>
-                                                <td><?php echo $i; ?></td>
+                                                <td><?php echo $i; ?></td>                                                
                                                 <td>
                                                     <?php
                                                     if( isset( $patronStramed['lib']['show_barcode'] ) && ( $patronStramed['lib']['show_barcode'] == 1) ){
@@ -291,6 +292,7 @@ if (empty($getData)) {
                                                 <?php if (!is_numeric($library_id)): ?>
                                                     <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
                                                 <?php endif; ?>
+                                                <td><?php echo $patronStramed['Currentpatrons']['branch_name']; ?></td>
                                                 <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
                                             </tr>
                                             <?php
