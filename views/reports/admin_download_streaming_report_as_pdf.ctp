@@ -439,66 +439,7 @@
     foreach($genreDayStremedInfo as $key => $genreStreamed) {
         $genre_data[] = array($key+1, $this->getAdminTextEncode($genreStreamed['Genres']['expected_genre']), ($genreStreamed[0]['total_streamed_songs']));
     }
-    
-    // print colored table
-    // Colors, line width and bold font
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Library Streaming Report', 0, 0, 'C', 0);
-    $tcpdf->Ln();
-
-    $tcpdf->SetFillColor(0, 153, 255);
-    $tcpdf->SetTextColor(255);
-    $tcpdf->SetDrawColor(224, 224, 224);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    // Header
-    $w = array(10, 50, 40, 60, 80, 20);
-    for($i = 0; $i < count($header); $i++)
-        $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
-        $tcpdf->Ln();
-    // Color and font restoration
-    $tcpdf->SetFillColor(224, 235, 255);
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetFont('');
-    // Data
-    $fill = 0;
-    foreach($data as $k=>$row) {
-        if($k%13 == 0 && $k != 0) {
-            $tcpdf->SetTextColor(0);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Library Streaming Report', 0, 0, 'C', 0);
-            $tcpdf->Ln();
-
-            // Colors, line width and bold font
-            $tcpdf->SetFillColor(0, 153, 255);
-            $tcpdf->SetTextColor(255);
-            $tcpdf->SetDrawColor(224, 224, 224);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            // Header
-            for($i = 0; $i < count($header); $i++)
-                $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
-                $tcpdf->Ln();
-        }
-        // Color and font restoration
-        $tcpdf->SetFillColor(224, 235, 255);
-        $tcpdf->SetTextColor(0);
-        $tcpdf->SetFont('');
-
-        $tcpdf->MultiCell($w[0], 12.5, number_format($row[0]), 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[1], 12.5, $row[1], 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[2], 12.5, $row[2], 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
-        if($this->data['Report']['library_id'] == "all") {
-            $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
-        }        
-        $tcpdf->Ln();
-        $fill=!$fill;
-    }
+        
      // add a page
     
     $tcpdf->AddPage();
