@@ -16,9 +16,9 @@
 .txt-my-terms {
     /*background: url("../img/<?php echo $this->Session->read('Config.language'); ?>/terms.png") no-repeat scroll 0 0 transparent;*/
     height: 35px;
-    margin-left:-35px;
+    /*margin-left:-35px;*/
     font-size:30px;
-    left: 35px;
+    /*left: 35px;*/
     overflow: hidden;
     position: relative;
     /*text-indent: -9999px;*/
