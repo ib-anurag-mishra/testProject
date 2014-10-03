@@ -4,9 +4,7 @@
  File Description : View page for admin_view
  Author : m68interactive
  */
-?>
-
-<?php $this->pageTitle = 'Content'; 
+$this->pageTitle = 'Content'; 
 ?>
 <div class="questions view">
 <h2><?php  __('News');?></h2>
@@ -37,8 +35,7 @@
 					
 			?>
 		</dd>
-		
-		
+	
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $news['News']['created']; ?>
@@ -55,9 +52,9 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('News', true)), array('action' => 'edit', $news['News']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('News', true)), array('action' => 'delete', $news['News']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $news['News']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('News', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('News', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit', true) . ' %s', __('News', true)), array('action' => 'edit', $news['News']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete', true) . ' %s', __('News', true)), array('action' => 'delete', $news['News']['id']), null, sprintf(__('Are you sure you want to delete', true) . ' # %s?', $news['News']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('List', true) . ' %s', __('News', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('New', true) . ' %s', __('News', true)), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

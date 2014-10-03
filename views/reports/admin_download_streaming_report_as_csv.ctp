@@ -133,9 +133,9 @@ $line = array('Patron Streaming Report');
 $csv->addRow($line);
 
 if($this->data['Report']['library_id'] == "all") {
-    $line = array('', 'ID', 'Library Name', 'Total Number of Tracks Downloaded');
+    $line = array('', 'ID', 'Library Name', 'Branch Name', 'Total Number of Tracks Downloaded');
 }else{
-    $line = array('', 'ID', 'Total Number of Tracks Downloaded');
+    $line = array('', 'ID', 'Branch Name', 'Total Number of Tracks Downloaded');
 }
 $csv->addRow($line);
 
@@ -149,7 +149,7 @@ if($this->data['Report']['library_id'] == "all") {
              $patron_id = $patronStreamed['Currentpatrons']['id'];
         }
 
-        $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])),($patronStreamed[0]['total_streamed_songs']));
+        $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), $patronStreamed['Currentpatrons']['branch_name'], ($patronStreamed[0]['total_streamed_songs']));
         $csv->addRow($line);
     }
 }else{
@@ -160,7 +160,7 @@ if($this->data['Report']['library_id'] == "all") {
              $patron_id = $patronStreamed['Currentpatrons']['id'];
         }
 
-        $line = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
+        $line = array($key+1, $patron_id, $patronStreamed['Currentpatrons']['branch_name'], ($patronStreamed[0]['total_streamed_songs']));
         $csv->addRow($line);
     }
 }

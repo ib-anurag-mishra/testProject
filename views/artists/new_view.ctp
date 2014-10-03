@@ -385,7 +385,7 @@
 		}
 		else
 		{
-			echo '<span>Sorry,there are no more details available.</span>';
+			echo '<span>Sorry, there are no more details available.</span>';
 		}
 		?>
 	</section>

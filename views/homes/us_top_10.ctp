@@ -408,7 +408,7 @@
                                                                     <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a></label>
                                                             <![endif]-->
                                                         </span>
-                                                        <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...  '); ?></span>
+                                                        <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait') . '...'; ?></span>
                                                         <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                                     </form>
                                                 </span>
@@ -501,7 +501,7 @@
                 }else
                 {
 
-                    echo '<span style="font-size:14px;">' . __('Sorry,there are no downloads.', true) . '<span>';
+                    echo '<span style="font-size:14px;">' . __('Sorry, there are no downloads.', true) . '<span>';
                 }
                 ?>
 

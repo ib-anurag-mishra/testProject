@@ -4,12 +4,12 @@
  File Description : View page for questions add page
  Author : m68interactive
  */
-?>
-<?php $this->pageTitle = 'Content'; ?>
-<?php
-	if (isset ($javascript)) {
-            echo $javascript->link('tiny_mce/tiny_mce');
-	}
+
+$this->pageTitle = 'Content';
+
+if (isset ($javascript)) {
+	echo $javascript->link('tiny_mce/tiny_mce');
+}
 	echo $javascript->codeBlock('tinyMCE.init({
 		// General options
 		mode : "textareas",
@@ -38,23 +38,23 @@
 	);
 ?>
 <div class="questions form">
-<?php echo $this->Form->create('News' ,  array('type' => 'file'));?>
+	<?php echo $this->Form->create('News' ,  array('type' => 'file'));?>
 	<fieldset>
- 		<legend><?php printf(__('Add %s', true), __('News', true)); ?></legend>
-	<?php
+		<legend><?php printf(__('Add', true) . ' %s', __('News', true)); ?></legend>
+		<?php
 		echo $this->Form->input('place');
 		echo $this->Form->input('subject');
 		echo $this->Form->input('body', array('cols' => '80', 'rows' => '20'));
 		echo "News image<br/>";
 		echo $form->file('image_name', array('label' => false, 'div' => false, 'class' => 'form_fields'));
-	?>
+		?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit', true));?>
+	<?php echo $this->Form->end(__('Submit', true));?>
 </div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Question.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Question.id'))); ?></li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('News', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Question.id')), null, sprintf(__('Are you sure you want to delete', true) . ' # %s?', $this->Form->value('Question.id'))); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('List', true) . ' %s', __('News', true)), array('action' => 'index'));?></li>
 	</ul>
 </div>
