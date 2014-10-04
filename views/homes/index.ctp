@@ -28,7 +28,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						?>
 				<li>
 					<div class="album-cover-container">
-						<?php echo $html->link($html->image($value['topAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Album']['ArtistText']), $value['Album']['ProdID'], base64_encode($value['Album']['provider_type'])), array('onclick' => "ga('send', 'event', 'Top Albums', 'Artwork Click', '<?php echo $count; ?>-<?php echo $this->getTextEncode($title); ?>')", 'class' => 'first', 'escape' => false)) ?>
+						<?php echo $html->link($html->image($value['topAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Album']['ArtistText']), $value['Album']['ProdID'], base64_encode($value['Album']['provider_type'])), array('onclick' => "ga('send', 'event', 'Top Albums', 'Artwork Click', '$count-$this->getTextEncode($title)')", 'class' => 'first', 'escape' => false)) ?>
 						<div class="ranking">
 							<?php echo $count; ?>
 						</div>

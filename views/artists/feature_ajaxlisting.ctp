@@ -13,7 +13,7 @@ if(!empty($featuredArtists)) {
         }
         ?>
         <div class="featured-grid-item">
-            <a href="/artists/album/<?= base64_encode($this->getTextEncode($v['Featuredartist']['artist_name'])); ?>">
+            <a onclick="ga('send', 'event', 'Featured Artist and Composers', 'Artwork Click', 'R<?php echo $row; ?>C<?php echo $column; ?>-<?php echo $this->getTextEncode($ArtistText); ?>')" href="/artists/album/<?= base64_encode($this->getTextEncode($v['Featuredartist']['artist_name'])); ?>">
                 <?php echo $html->image(Configure::read('App.CDN') . 'featuredimg/' . $v['Featuredartist']['artist_image'], array("height" => "77", "width" => "84", "alt" => $ArtistText)); ?>
             </a>
             <div class="featured-grid-menu">
@@ -29,7 +29,7 @@ if(!empty($featuredArtists)) {
                         }
                     }
                     ?>                     
-                    <a title="More by <?php echo $this->getTextEncode($ArtistText); ?>" class="more-by-artist" 
+                    <a onclick="ga('send', 'event', 'Featured Artist and Composers', 'More By', 'R<?php echo $row; ?>C<?php echo $column; ?>-<?php echo $this->getTextEncode($ArtistText); ?>')" title="More by <?php echo $this->getTextEncode($ArtistText); ?>" class="more-by-artist" 
                        href="/artists/album/<?= base64_encode($this->getTextEncode($v['Featuredartist']['artist_name'])); ?>">
                            <?php echo $this->getTextEncode($ArtistText); ?>
                     </a>
