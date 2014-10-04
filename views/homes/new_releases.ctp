@@ -27,8 +27,8 @@
                         <div class="album-container">
 
                             <?php
-                            $albumTitleTrack = $value['Albums']['AlbumTitle'];
-                            echo $html->link($html->image($value['albumImage'], array("height" => "250", "width" => "250")), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('onclick' => "ga('send', 'event', 'New Release Albums', 'Artwork Click', '$count-$this->getTextEncode($albumTitleTrack)')", 'class' => 'first', 'escape' => false))
+                            $albumTitleTrack = $this->getTextEncode($value['Albums']['AlbumTitle']);
+                            echo $html->link($html->image($value['albumImage'], array("height" => "250", "width" => "250")), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('onclick' => "ga('send', 'event', 'New Release Albums', 'Artwork Click', '$count-$albumTitleTrack')", 'class' => 'first', 'escape' => false))
                             ?>
                             <div class="top-10-ranking"><?php echo $count; ?></div>
 
