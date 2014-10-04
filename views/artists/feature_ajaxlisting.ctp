@@ -1,16 +1,14 @@
 
 <?php   
-if(!empty($featuredArtists))
-{
+if(!empty($featuredArtists)) {
     $count = 1;
-    foreach ($featuredArtists as $k => $v)
-    {
-        if (strlen($v['Featuredartist']['artist_name']) > 22)
-        {
+    $row = (($page - 1) * 4) + 1;
+    $column = 1;
+    foreach ($featuredArtists as $k => $v) {
+        
+        if (strlen($v['Featuredartist']['artist_name']) > 22) {
             $ArtistText = substr($v['Featuredartist']['artist_name'], 0, 22) . "..";
-        }
-        else
-        {
+        } else {
             $ArtistText = $v['Featuredartist']['artist_name'];
         }
         ?>
@@ -25,11 +23,9 @@ if(!empty($featuredArtists))
                 </div>
                 <div class="featured-artist-ctas">
                     <?php
-                    if ($this->Session->read("patron"))
-                    {
-                        if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs']))
-                        {
-                            echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'],3);
+                    if ($this->Session->read("patron")) {
+                        if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'])) {
+                            echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'], 3, 'R' . $row . 'C' . $column . '-' . $this->getTextEncode($ArtistText));
                         }
                     }
                     ?>                     
@@ -41,8 +37,12 @@ if(!empty($featuredArtists))
             </div>
         </div>
         <?php
-        if ($count == 20)
-        {
+        if ($column == 5) {
+            $column = 0;
+            $row++;
+        }
+        $column++;
+        if ($count == 20) {
             break;
         }
         $count++;
