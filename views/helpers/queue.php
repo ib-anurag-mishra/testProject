@@ -213,7 +213,7 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getNationalsongsStreamNowLabel($cdnPath, $sourceUrl,$songTitle, $artistText, $songLength, $songProdId, $providerType)
+    function getNationalsongsStreamNowLabel($cdnPath, $sourceUrl,$songTitle, $artistText, $songLength, $songProdId, $providerType, $analytics)
     {
 
         $songTitle = base64_encode($songTitle);
@@ -222,7 +222,7 @@ EOD;
         $sourceUrl = base64_encode($sourceUrl);
         $songLength = base64_encode($songLength);
         $str = <<<EOD
-       <button class="play-btn-icon" onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType');"></button>        
+       <button class="play-btn-icon" onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType'); ga('send', 'event', 'Top Singles', 'Stream', '$analytics')"></button>        
 EOD;
         return $str;
     } 
@@ -247,7 +247,7 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getAlbumStreamNowLabel($albumSongs , $top = null)
+    function getAlbumStreamNowLabel($albumSongs , $top = null, $analytics = null, $section = null)
     {
         if (!empty($albumSongs))
         {
@@ -278,9 +278,15 @@ EOD;
         }
         if(empty($top)){
         $stream_label = __('Stream Now', true);
+            if (!empty($analytics) && !empty($section)) {
+        $str = <<<EOD
+            <a onclick="javascript:loadAlbumSong('{$playList}'); ga('send', 'event', '$section', 'Stream', '$analytics')"  class="album-preview" href="javascript:void(0);" >$stream_label</a>
+EOD;
+            } else {
         $str = <<<EOD
             <a onclick="javascript:loadAlbumSong('{$playList}');"  class="album-preview" href="javascript:void(0);" >$stream_label</a>
 EOD;
+            }
             return $str;
         }else if($top == 1){
            
@@ -298,7 +304,7 @@ EOD;
        }else if($top == 3){
        $stream_label = __('Stream Artist', true);
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumSong('{$playList}');" class="stream-artist">$stream_label</button>
+            <button onclick="javascript:loadAlbumSong('{$playList}'); ga('send', 'event', 'Featured Artist and Composers', 'Stream', '$analytics')" class="stream-artist">$stream_label</button>
 EOD;
             return $str;  
             
@@ -352,8 +358,7 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getAlbumStreamLabel($albumSongs,$flag = 0)
-    {
+    function getAlbumStreamLabel($albumSongs,$flag = 0,$analytics = null) {
         $albumSongs = base64_encode(json_encode($albumSongs));
         
         if(empty($flag)){
@@ -387,6 +392,13 @@ $str = <<<EOD
 EOD;
             return $str;
             
+       }else if($flag == 4){
+
+            $stream_label = __('Stream Now', true);
+            $str = <<<EOD
+                <button onclick="javascript:loadAlbumData('$albumSongs'); ga('send', 'event', 'Top Albums', 'Stream', '$analytics')" class="play-btn-icon toggleable">$stream_label</button>
+EOD;
+            return $str;            
        }
      
     }
