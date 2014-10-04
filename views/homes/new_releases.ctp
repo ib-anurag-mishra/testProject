@@ -19,7 +19,7 @@
 
                 foreach ($new_releases_albums as $key => $value) {
                     if($count==101) { 
-                    	break 
+                    	break;
                     };
 
                     ?>					
