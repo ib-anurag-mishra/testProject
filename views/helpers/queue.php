@@ -278,7 +278,7 @@ EOD;
         }
         if(empty($top)){
         $stream_label = __('Stream Now', true);
-            if (!empty($analytics) && !empty($section))) {
+            if (!empty($analytics) && !empty($section)) {
         $str = <<<EOD
             <a onclick="javascript:loadAlbumSong('{$playList}'); ga('send', 'event', '$section', 'Stream', '$analytics')"  class="album-preview" href="javascript:void(0);" >$stream_label</a>
 EOD;
