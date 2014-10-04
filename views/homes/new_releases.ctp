@@ -18,7 +18,7 @@
                 $count = 1;
 
                 foreach ($new_releases_albums as $key => $value) {
-                    if($count==101) break;
+                    if($count==101) { break };
 
                     ?>					
                     <li>
@@ -45,7 +45,9 @@
                                     </ul>
                                     <a onclick="ga('send', 'event', 'New Release Albums', 'Add to Wishlist', '<?php echo $count; ?>-<?php echo $this->getTextEncode($value['Albums']['AlbumTitle']); ?>')" class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>                                     
 
-                                <?php } ?>
+                                <?php } 
+                            } ?>
+
 
                         </div>
                         <div class="album-title">							
@@ -159,8 +161,7 @@
                                 }
                             }
 
-                        if ($this->Session->read("patron")) {
-                            ?> 
+                        if ($this->Session->read("patron")) { ?> 
                             <a onclick="ga('send', 'event', 'New Release Videos', 'Toggle Menu', '<?php echo $count; ?>-<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>')" class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                             <div class="wishlist-popover">
                                 <?php
