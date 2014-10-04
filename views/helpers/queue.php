@@ -222,7 +222,7 @@ EOD;
         $sourceUrl = base64_encode($sourceUrl);
         $songLength = base64_encode($songLength);
         $str = <<<EOD
-       <button class="play-btn-icon" onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType'); ga('send', 'event', 'Top Singles', 'Stream', '<?php echo $analytics; ?>')"></button>        
+       <button class="play-btn-icon" onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType'); ga('send', 'event', 'Top Singles', 'Stream', '$analytics')"></button>        
 EOD;
         return $str;
     } 
@@ -298,7 +298,7 @@ EOD;
        }else if($top == 3){
        $stream_label = __('Stream Artist', true);
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumSong('{$playList}'); ga('send', 'event', 'Featured Artist and Composers', 'Stream', '<?php echo $analytics; ?>')" class="stream-artist">$stream_label</button>
+            <button onclick="javascript:loadAlbumSong('{$playList}'); ga('send', 'event', 'Featured Artist and Composers', 'Stream', '$analytics')" class="stream-artist">$stream_label</button>
 EOD;
             return $str;  
             
@@ -390,7 +390,7 @@ EOD;
 
             $stream_label = __('Stream Now', true);
             $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs'); ga('send', 'event', 'Top Albums', 'Stream', '<?php echo $analytics; ?>')" class="play-btn-icon toggleable">$stream_label</button>
+                <button onclick="javascript:loadAlbumData('$albumSongs'); ga('send', 'event', 'Top Albums', 'Stream', '$analytics')" class="play-btn-icon toggleable">$stream_label</button>
 EOD;
             return $str;            
        }
