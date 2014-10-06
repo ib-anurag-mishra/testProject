@@ -1130,6 +1130,7 @@ div.paging span a, div.paging a {
 
 .listlink{
 	cursor: default;
+	color: black;
     pointer-events: none;
     text-decoration: none;
 }
