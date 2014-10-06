@@ -3252,7 +3252,7 @@ STR;
                                     'conditions' => array(
                                         'library_status' => 'active',
                                         'OR' => array(
-                                            "substring(library_zipcode,1,5) in ($result)", "find_in_set('" . $condition . "',library_zipcode)", $other_condition), 'order' => 'library_name ASC')));
+                                            "substring(library_zipcode,1,5) in ($result)", "find_in_set('" . $condition . "',library_zipcode)", $other_condition)), 'order' => 'library_name ASC'));
 
                                 if (!empty($result)) {
                                     $this->set('libraries', $result);
