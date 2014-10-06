@@ -25,10 +25,11 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						} else {
 							$ArtistText = $value['Album']['ArtistText'];
 						}
+						$trackingTitle = $this->getTextEncode($title);
 						?>
 				<li>
 					<div class="album-cover-container">
-						<?php echo $html->link($html->image($value['topAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Album']['ArtistText']), $value['Album']['ProdID'], base64_encode($value['Album']['provider_type'])), array('onclick' => "ga('send', 'event', 'Top Albums', 'Artwork Click', '$count-$this->getTextEncode($title)')", 'class' => 'first', 'escape' => false)) ?>
+						<?php echo $html->link($html->image($value['topAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Album']['ArtistText']), $value['Album']['ProdID'], base64_encode($value['Album']['provider_type'])), array('onclick' => "ga('send', 'event', 'Top Albums', 'Artwork Click', '$count-$trackingTitle')", 'class' => 'first', 'escape' => false)) ?>
 						<div class="ranking">
 							<?php echo $count; ?>
 						</div>
@@ -127,7 +128,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						<input type="hidden" name="ProviderType" value="<?= $nationalTopSong["Song"]["provider_type"]; ?>" /> 
 						<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $nationalTopSong["Song"]["ProdID"]; ?>">
 							<![if !IE]> 
-							<a class="download-icon" title="<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>" onclick="return wishlistDownloadOthersHome('<?= $nationalTopSong['Song']['ProdID']; ?>', '0', '<?= $nationalTopSong['Full_Files']['CdnPath']; ?>', '<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>', '<?= $nationalTopSong["Song"]["provider_type"]; ?>',1); ga('send', 'event', 'Top Singles', 'Download', '<?php echo $count; ?>-<?php echo $this->getTextEncode($nationalTopSong['Song']['SongTitle']); ?>')"></a> 
+							<a class="download-icon" title="<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>" onclick="return wishlistDownloadOthersHome('<?= $nationalTopSong['Song']['ProdID']; ?>', '0', '<?= $nationalTopSong['Full_Files']['CdnPath']; ?>', '<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>', '<?= $nationalTopSong["Song"]["provider_type"]; ?>',1); ga('send', 'event', 'Top Singles', 'Download', '<?php echo $count; ?>-<?php echo $this->getTextEncode($nationalTopSong['Song']['SongTitle']); ?>', 1)"></a> 
 							<![endif]> <!--[if IE]>
                                                 <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
                                                             class="download-icon" 
