@@ -240,20 +240,6 @@
 		<button class="left-scroll-button-ajax"></button>
 		<button class="right-scroll-button-ajax"></button>
 		<?php
-		/*
-		<div class="paging">
-			<?php
-			echo $paginator->prev('<< ' . __('Previous ', true), null, null, array('class' => 'disabled'));
-			echo $paginator->numbers(array('separator' => ' '));
-			echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
-			?>
-		</div>
-		
-                echo $this->Paginator->counter(
-                    'Page {:page} of {:pages}, showing {:current} records out of
-                     {:count} total, starting on record {:start}, ending on {:end}'
-                );
-                */
                 $currentPage = $this->Paginator->params['paging']['Album']['page'];
                 $totalPages = $this->Paginator->params['paging']['Album']['pageCount'];
                 $artistText = base64_encode($artisttext);
@@ -266,8 +252,6 @@
 	<?php
 		}
 		?>
-
-
 
 	<!-- Videos Section  -->
 	<?php

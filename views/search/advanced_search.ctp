@@ -1167,7 +1167,7 @@ $reverseSortOrder = ( ( $sortOrder == 'asc' ) ? 'desc' : 'asc' );
 							</a>
 							</span> <span class="afterClick"
 								id="downloading_<?php echo $psong->ProdID; ?>"
-								style="display: none; float: left"><?php __("Please Wait...");?>
+								style="display: none; float: left"><?php __('Please Wait') . '...';?>
 							</span> <span id="download_loader_<?php echo $psong->ProdID; ?>"
 								style="display: none; float: right;"><?php echo $html->image('ajax-loader_black.gif'); ?>
 							</span>
@@ -1209,7 +1209,7 @@ $reverseSortOrder = ( ( $sortOrder == 'asc' ) ? 'desc' : 'asc' );
 								id="wishlist_loader_<?php echo $song->ProdID; ?>"
 								style="display: none;"><?php echo $html->image('ajax-loader_black.gif'); ?>
 							</span> <span class="afterClick"
-								style="display: none; float: left"><?php __("Please Wait...");?>
+								style="display: none; float: left"><?php __('Please Wait') . '...';?>
 							</span>
 						</p> <?php
 										}

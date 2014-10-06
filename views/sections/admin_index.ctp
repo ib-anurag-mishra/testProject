@@ -4,8 +4,7 @@
  File Description : view page for admin index page
  Author : m68interactive
  */
-?>
-<?php $this->pageTitle = 'Content'; ?>
+$this->pageTitle = 'Content'; ?>
 <div class="sections index">
 	<h2><?php __('FAQ Sections');?></h2>
 	<table cellpadding="0" cellspacing="0">
@@ -27,7 +26,7 @@
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $section['Section']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $section['Section']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $section['Section']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $section['Section']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $section['Section']['id']), null, sprintf(__('Are you sure you want to delete', true) . ' # %s?', $section['Section']['id'])); ?>
 		</td>
 		<td><?php echo $section['Section']['language']; ?>&nbsp;</td>
 	</tr>
@@ -36,7 +35,7 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+	'format' => __('Page', true) . ' %page% ' . __('of', true) . ' %pages%, ' . __('showing', true) . ' %current% ' . __('records out of', true) . ' %count% ' . __('total, starting on record', true) . ' %start%, ' . __('ending on', true) . ' %end%'
 	));
 	?>	</p>
 
@@ -50,8 +49,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Section', true)), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Questions', true)), array('controller' => 'questions', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Question', true)), array('controller' => 'questions', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('New', true) . ' %s', __('Section', true)), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('List', true) . ' %s', __('Questions', true)), array('controller' => 'questions', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('New', true) . ' %s', __('Question', true)), array('controller' => 'questions', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
