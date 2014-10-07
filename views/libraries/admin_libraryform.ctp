@@ -171,7 +171,27 @@ if (empty($getData))
                         <td align="left">
                             <?php echo $this->Form->label('Optout Email Request Notification'); ?>
                         </td>
-                    </tr>					
+                    </tr>
+		
+		  <tr style = 'display:none;'>
+                        <td align="right">
+                            <?php
+                            if ($getData['Library']['library_announcement'] == 0)
+                            {
+                                $checked = false;
+                            }
+                            elseif ($getData['Library']['library_announcement'] == 1)
+                            {
+                                $checked = true;
+                            }
+                            echo $this->Form->checkbox('library_announcement', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $checked));
+                            ?>
+                        </td>
+                        <td align="left">
+                            <?php echo $this->Form->label('library announcement'); ?>
+                        </td>
+                    </tr>		
+					
                     <?php
                     if ($getData['Library']['library_authentication_method'] != "")
                     {

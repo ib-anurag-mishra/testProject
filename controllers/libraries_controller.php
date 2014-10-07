@@ -243,7 +243,8 @@ Class LibrariesController extends AppController
                         'Library.library_type',
                         'Library.show_barcode',
                         'Library.library_streaming_hours',
-			'Library.optout_email_notification'
+			'Library.optout_email_notification',
+			'Library.library_announcement'
                     ),
                     'contain' => array(
                         'User' => array(
@@ -390,7 +391,8 @@ Class LibrariesController extends AppController
                             'Library.show_barcode',
                             'Library.library_streaming_hours',
 			    'Library.optout_email_notification',
-                            'Library.library_status'
+                            'Library.library_status',
+			    'Library.library_announcement'
                         ),
                         'contain' => array(
                             'User' => array(
