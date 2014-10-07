@@ -1,4 +1,11 @@
 <section class="albums-page">
+    
+    <?php if( $blockHoleContent == 1 ) { 
+    
+            echo 'Sorry, there are no details available!';
+    
+     } else { ?>
+    
 	<section class="album-detail-container clearfix">
 		<div class="breadcrumbs">
 			<span><?php
@@ -25,7 +32,7 @@
 			
 			<div class="album-cover-image">
 				
-				<?php  $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+				<?php  $albumArtwork = $this->Token->artworkToken($album['Album']['CdnPath'] . "/" . $album['Album']['Image_SaveAsName']);
 				
 				echo $this->Html->image(Configure::read('App.Music_Path') . $albumArtwork, array('alt' => 'album-detail-cover', 'width' => '250', 'height' => '250'));
 
@@ -100,9 +107,9 @@
 				<?php
 				$artistNames = $artistName;
 
-                if($this->getTextEncode($artistName)):
-                   $artistName= $this->getTextEncode($artistName);
-                endif;
+                                if($this->getTextEncode($artistName)):
+                                   $artistName= $this->getTextEncode($artistName);
+                                endif;
                                 
                                 
 				if (strlen($artistName) >= 90):
@@ -130,7 +137,7 @@
 			
 			if ($this->Session->read('library_type') == 2):				
                 
-                $filePath = $this->Token->streamingToken($albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
+                                $filePath = $this->Token->streamingToken($albumSong['Song']['CdnPath'] . "/" . $albumSong['Song']['FullLength_SaveAsName']);
 
 				if (!empty($filePath)):
 					$songPath = explode(':', $filePath);
@@ -283,12 +290,12 @@
 							echo $this->Html->link('Download Now', 'javascript:void(0)', array(
 								'class' => 'add-to-wishlist',
 								'title' => __('"IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."', true),
-								'onclick' => 'return wishlistDownloadOthersHome("' . $albumSong["Song"]['ProdID'] . '", "0", "' . $albumSong['Full_Files']['CdnPath'] . '", "' . $albumSong['Full_Files']['SaveAsName'] . '", "' . $albumSong["Song"]["provider_type"] . '");'
+								'onclick' => 'return wishlistDownloadOthersHome("' . $albumSong["Song"]['ProdID'] . '", "0", "' . $albumSong['Song']['CdnPath'] . '", "' . $albumSong['Song']['FullLength_SaveAsName'] . '", "' . $albumSong["Song"]["provider_type"] . '");'
 							));
 							?>
 							<![endif]>
                                                         <!--[if IE]>
-                                                                <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>", "<?php echo $albumSong['Full_Files']['CdnPath']; ?>", "<?php echo $albumSong['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                                                                <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>", "<?php echo $albumSong['Song']['CdnPath']; ?>", "<?php echo $albumSong['Song']['FullLength_SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                         <![endif]-->                                                        
 							
 						</span>
@@ -364,4 +371,5 @@
 			echo '<span>' . __('Sorry, there are no more details available.', true) . '</span>';
 		endif;?>
 	</section>
+     <?php }  ?>
 </section> <!-- close class="albums-page" -->
