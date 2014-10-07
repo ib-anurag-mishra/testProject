@@ -316,13 +316,12 @@ class QueueListDetailsController extends AppController
                     }
                     else
                     {
-                        if (!empty($prodId) && !empty($provider))
-                        {
-                            $songDetails = array('prodId' => $prodId, 'providerType' => $provider);
-                            $this->Session->write("songPlaying", $songDetails);
-                        } else if(!empty($AlbumProdId)) {
+                        if (!empty($prodId) && !empty($provider) && !empty($AlbumProdId)) {
                             $albumDetails = array('albumProdId' => $AlbumProdId, 'providerType' => $provider);
-                            $this->Session->write("albumPlaying", $albumDetails);
+                            $this->Session->write("albumPlaying", $albumDetails);                            
+                        } else if(!empty($prodId) && !empty($provider)) {
+                            $songDetails = array('prodId' => $prodId, 'providerType' => $provider);
+                            $this->Session->write("songPlaying", $songDetails);                           
                         }
                     }
                 }
