@@ -3,7 +3,7 @@
         <?php
         echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
         echo " > ";
-        echo $html->link('Playlists', array('controller' => 'queues', 'action' => 'savedQueuesList'));
+        echo $html->link('Playlists', array('controller' => 'queues', 'action' => 'savedQueuesList'),array('class' => 'listlink'));
         ?>
     </div>
     <header class="clearfix">
