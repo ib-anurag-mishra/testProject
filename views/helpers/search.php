@@ -22,17 +22,6 @@ class SearchHelper extends AppHelper {
     	}
     }
     
-    public function checkSalesDateStatusForSearch( $territorySalesDate, $territory ) {
-
-    	$salesDateStatus = $this->songStatus( $territorySalesDate, $territory );
-    	
-    	if( ( $salesDateStatus <= date( 'Y-m-d' ) ) ) {
-    		return 1;
-    	} else {
-    		return 0;
-    	}
-    	
-    }
     public function songStatus( $args, $territory ) {
 
     	$status = '';

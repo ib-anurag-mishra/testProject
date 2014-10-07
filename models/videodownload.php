@@ -682,7 +682,6 @@ class Videodownload extends AppModel
 			$options['conditions'] = array(
 					'Videodownload.library_id' => 1,
 					'Library.library_territory' => $territory,
-                                        'Country.SalesDate !=' => '',
 					'Country.SalesDate <=' => 'NOW()',
 					'Video.Genre' => $genre,
 					'Video.provider_type = Genre.provider_type',
@@ -693,7 +692,6 @@ class Videodownload extends AppModel
 			$options['conditions'] = array(
 					'Videodownload.library_id' => 1,
 					'Library.library_territory' => $territory,
-                                        'Country.SalesDate !=' => '',
 					'Country.SalesDate <=' => 'NOW()',
 					'Video.Genre' => $genre,
 					'Video.provider_type = Genre.provider_type',
