@@ -3022,8 +3022,9 @@ Class ArtistsController extends AppController {
          $decodedId = trim(base64_decode($id));
         $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
         if (!empty($country)) {
-            if ($artistVideoList === false) {
-           // if(1){
+            //for time being we have added this after when we switch cache this code will be remove
+            //if ($artistVideoList === false) {
+            if(1){
 
                 if (!empty($decodedId)) {
                     $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
