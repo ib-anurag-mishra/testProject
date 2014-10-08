@@ -2940,36 +2940,23 @@ STR;
                                 Video.provider_type,
                                 Video.video_label,
                                 Video.CreatedOn,
-                                Video.Image_FileID,
+                                Video.FullLength_SaveAsName,
+                                Video.Image_SaveAsName,
+                                Video.CdnPath,
                                 Genre.Genre,
                                 Country.Territory,
-                                Country.SalesDate,
-                                Sample_Files.CdnPath,
-                                Sample_Files.SaveAsName,
-                                Sample_Files.FileID,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                Full_Files.FileID,
-                                Image_Files.FileID,
-                                Image_Files.CdnPath,
-                                Image_Files.SourceURL,
+                                Country.SalesDate,                              
                                 PRODUCT.pid
                 FROM
                                 video AS Video
-                                                LEFT JOIN
-                                File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-                                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                                                LEFT JOIN
+                                                LEFT JOIN                              
                                 Genre AS Genre ON (Genre.ProdID = Video.ProdID)
                                                 LEFT JOIN
-         {$preFix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+                {$preFix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
                                                 LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
-                                                LEFT JOIN
-                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)                                               
                 WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1 $videoAdvisory
+                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND (Video.FullLength_SaveAsName != '' AND Video.Image_SaveAsName != '' AND Video.CdnPath != '') AND 1 = 1 $videoAdvisory
                 GROUP BY Video.ProdID
                 ORDER BY Country.SalesDate desc  
 STR;
@@ -2977,11 +2964,10 @@ STR;
             $artistVideoList = $videoInstance->query($sql_us_10_v);
             foreach ($artistVideoList as $key => $value)
             {                
-                $albumArtwork = $tokeninstance->artworkToken($value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                $albumArtwork = $tokeninstance->artworkToken($value['Video']['CdnPath'] . "/" . $value['Video']['Image_SaveAsName']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
-
 
             return $artistVideoList;
         }

@@ -1614,9 +1614,9 @@ Class ArtistsController extends AppController {
                     'conditions' => array(
                         'Song.ArtistText' => base64_decode($id),
                         'Country.DownloadStatus' => 1,
-                        "Song.Sample_FileID != ''",
-                        "Song.FullLength_FIleID != ''",
-                        "Country.SalesDate <= NOW()",
+                        "Song.CdnPath != ''",
+                        "Song.FullLength_SaveAsName != ''",
+                        "Song.Sample_SaveAsName != ''",
                         "Country.StreamingSalesDate <= NOW()",
                         'Country.Territory' => $country, 
                         $cond),
@@ -1637,10 +1637,11 @@ Class ArtistsController extends AppController {
                         'Song.provider_type'),
                     'conditions' => array(
                         'Song.ArtistText' => base64_decode($id),
-                        "Song.Sample_FileID != ''",
-                        "Song.FullLength_FIleID != ''",
-                        "Country.SalesDate <= NOW()",
+                        "Song.CdnPath != ''",
+                        "Song.FullLength_SaveAsName != ''",
+                        "Song.Sample_SaveAsName != ''",
                         "Country.StreamingSalesDate <= NOW()",
+
                         'Country.Territory' => $country,
                         'Country.DownloadStatus' => 1,
                         array('or' =>
@@ -1697,6 +1698,8 @@ Class ArtistsController extends AppController {
                 'Album.provider_type',
                 'Country.SalesDate',
                 'Country.StreamingSalesDate',
+                'Album.Image_SaveAsName',
+                'Album.CdnPath'
             ),
             'contain' => array(
                 'Genre' => array(
@@ -1708,13 +1711,6 @@ Class ArtistsController extends AppController {
                     'fields' => array(
                         'Country.Territory'
                     )
-                ),
-                'Files' => array(
-                    'fields' => array(
-                        'Files.CdnPath',
-                        'Files.SaveAsName',
-                        'Files.SourceURL'
-                    ),
                 )
             ),
             'order' => array('Country.SalesDate' => 'desc'),
@@ -1743,7 +1739,7 @@ Class ArtistsController extends AppController {
             }
             
             foreach ($albumData as $album) {  
-                $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
+                $albumArtwork = $this->Token->artworkToken($album['Album']['CdnPath'] . "/" . $album['Album']['Image_SaveAsName']);
                 $albumArtwork = Configure::read('App.Music_Path') .$albumArtwork;
                 //check image file exist or not for each entry
                 if(!$this->Common->checkImageFileExist($albumArtwork)){              
@@ -1789,11 +1785,12 @@ Class ArtistsController extends AppController {
                             array(
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
                                 array('Song.provider_type = Country.provider_type'),
-                                array('Country.DownloadStatus' => 1),
-                                array("Song.Sample_FileID != ''"),
+                                array("Song.FullLength_SaveAsName != ''"),
+                                array("Song.Sample_SaveAsName != ''"),
+                                array("Song.CdnPath != ''"),
+                                array('Country.DownloadStatus' => 1),                                
                                 array("Country.SalesDate <= NOW()"),
-                                array("Country.StreamingSalesDate <= NOW()"),
-                                array("Song.FullLength_FIleID != ''"),
+                                array("Country.StreamingSalesDate <= NOW()"),                                
                                 array("Song.provider_type" => $provider),
                                 array('Country.Territory' => $country),
                                 $cond
@@ -1809,10 +1806,12 @@ Class ArtistsController extends AppController {
                             'Song.Advisory',
                             'Song.Sample_Duration',
                             'Song.FullLength_Duration',
-                            'Song.Sample_FileID',
-                            'Song.FullLength_FIleID',
+                            'Song.Sample_FileID',                            
                             'Song.provider_type',
-                            'Song.sequence_number'
+                            'Song.sequence_number',
+                            'Song.FullLength_SaveAsName',                            
+                            'Song.Sample_SaveAsName',
+                            'Song.CdnPath'
                         ),
                         'contain' => array(
                             'Genre' => array(
@@ -1828,19 +1827,7 @@ Class ArtistsController extends AppController {
                                     'Country.StreamingStatus',
                                     'Country.DownloadStatus'
                                 )
-                            ),
-                            'Sample_Files' => array(
-                                'fields' => array(
-                                    'Sample_Files.CdnPath',
-                                    'Sample_Files.SaveAsName'
-                                )
-                            ),
-                            'Full_Files' => array(
-                                'fields' => array(
-                                    'Full_Files.CdnPath',
-                                    'Full_Files.SaveAsName'
-                                )
-                            ),
+                            )                           
                         ),
                         'group' => 'Song.ProdID, Song.provider_type',
                         'order' => array('Song.sequence_number', 'Song.ProdID')
@@ -1852,8 +1839,9 @@ Class ArtistsController extends AppController {
                             array(
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
                                 array('Song.provider_type = Country.provider_type'),
-                                array("Song.Sample_FileID != ''"),
-                                array("Song.FullLength_FIleID != ''"),
+                                array("Song.FullLength_SaveAsName != ''"),
+                                array("Song.Sample_SaveAsName != ''"),
+                                array("Song.CdnPath != ''"),
                                 array('Country.SalesDate <=' => date('Y-m-d')),
                                 array("Song.provider_type" => $provider),
                                 array('Country.Territory' => $country),
@@ -1879,10 +1867,12 @@ Class ArtistsController extends AppController {
                             'Song.Advisory',
                             'Song.Sample_Duration',
                             'Song.FullLength_Duration',
-                            'Song.Sample_FileID',
-                            'Song.FullLength_FIleID',
+                            'Song.Sample_FileID',                            
                             'Song.provider_type',
-                            'Song.sequence_number'
+                            'Song.sequence_number',
+                            'Song.FullLength_SaveAsName',                            
+                            'Song.Sample_SaveAsName',
+                            'Song.CdnPath'
                         ),
                         'contain' => array(
                             'Genre' => array(
@@ -1898,19 +1888,7 @@ Class ArtistsController extends AppController {
                                     'Country.StreamingStatus',
                                     'Country.DownloadStatus',
                                 )
-                            ),
-                            'Sample_Files' => array(
-                                'fields' => array(
-                                    'Sample_Files.CdnPath',
-                                    'Sample_Files.SaveAsName'
-                                )
-                            ),
-                            'Full_Files' => array(
-                                'fields' => array(
-                                    'Full_Files.CdnPath',
-                                    'Full_Files.SaveAsName'
-                                )
-                            ),
+                            )                            
                         ),
                         'group' => 'Song.ProdID, Song.provider_type',
                         'order' => array('Song.sequence_number', 'Song.ProdID')
@@ -1941,7 +1919,7 @@ Class ArtistsController extends AppController {
 
                     if ($this->Session->read('library_type') == 2) {
 
-                        $filePath = $this->Token->streamingToken($value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                        $filePath = $this->Token->streamingToken($value['Song']['CdnPath'] . "/" . $value['Song']['FullLength_SaveAsName']);
                         if (!empty($filePath)) {
                             $songPath = explode(':', $filePath);
                             $streamUrl = trim($songPath[1]);
@@ -1951,18 +1929,17 @@ Class ArtistsController extends AppController {
                     }
                 }
             }
-        }
-        
-        //if no any song available to display or
-        //if all songs in a album has sales date greater then today's date
-        if(empty($albumSongs[$albumReferenceID])) { 
-             $this->set('blockHoleContent', 1);      
-        }else{
-            $this->set('blockHoleContent', 0);  
-        }
-        
-        $this->set('albumSongs', $albumSongs);
+                
+            //if no any song available to display or
+            //if all songs in a album has sales date greater then today's date
+            if(empty($albumSongs[$albumReferenceID])) { 
+                 $this->set('blockHoleContent', 1);      
+            }else{
+                $this->set('blockHoleContent', 0);  
+            }
+        }        
 
+        $this->set('albumSongs', $albumSongs);
     }
     
     
@@ -2926,10 +2903,11 @@ Class ArtistsController extends AppController {
                 'Song.provider_type',
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => base64_decode($id),
-                'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
-                "Song.Sample_FileID != ''",
-                "Song.FullLength_FIleID != ''",
+                'Country.DownloadStatus' => 1, 
                 "Country.SalesDate <= NOW()",
+                "Song.FullLength_SaveAsName != ''",
+                "Song.Sample_SaveAsName != ''",
+                "Song.CdnPath != ''",
                 'Country.Territory' => $country, $cond,
                 'Song.provider_type = Country.provider_type'),
             'contain' => array(
@@ -2945,6 +2923,7 @@ Class ArtistsController extends AppController {
         $val = '';
         $val_provider_type = '';
 
+       
         if (!empty($songs)) {
             foreach ($songs as $k => $v) {
                 if (empty($val)) {
@@ -2979,9 +2958,8 @@ Class ArtistsController extends AppController {
                             'Album.Label',
                             'Album.Copyright',
                             'Album.provider_type',
-                            'Files.CdnPath',
-                            'Files.SaveAsName',
-                            'Files.SourceURL',
+                            'Album.CdnPath',
+                            'Album.Image_SaveAsName',                           
                             'Genre.Genre'
                         ),
                         'contain' => array(
@@ -2989,13 +2967,6 @@ Class ArtistsController extends AppController {
                                 'fields' => array(
                                     'Genre.Genre'
                                 )
-                            ),
-                            'Files' => array(
-                                'fields' => array(
-                                    'Files.CdnPath',
-                                    'Files.SaveAsName',
-                                    'Files.SourceURL'
-                                ),
                             )
                         ),
                         'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
@@ -3018,11 +2989,11 @@ Class ArtistsController extends AppController {
                     $albumData[$key]['combineGenre'] = $this->Common->getGenreForSelection($albumData[$key]['Genre']['Genre']);
                 }
             $this->set('albumData', $albumData);            
-            
+          
            
             if(!empty($albumData)){
                  foreach ($albumData as $key => $value) {
-                     $albumArtwork = $this->Token->artworkToken($value['Files']['CdnPath'] . "/" . $value['Files']['SourceURL']);
+                     $albumArtwork = $this->Token->artworkToken($value['Album']['CdnPath'] . "/" . $value['Album']['Image_SaveAsName']);
                      $albumArtwork = Configure::read('App.Music_Path') .$albumArtwork;                    
 
                      //check image file exist or not for each entry
@@ -3048,10 +3019,11 @@ Class ArtistsController extends AppController {
         }
         //print_r($albumData);
         // Videos Section
-        $decodedId = trim(base64_decode($id));
+         $decodedId = trim(base64_decode($id));
         $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
         if (!empty($country)) {
             if ($artistVideoList === false) {
+           // if(1){
 
                 if (!empty($decodedId)) {
                     $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
