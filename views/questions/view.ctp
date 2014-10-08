@@ -43,11 +43,11 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Question', true)), array('action' => 'edit', $question['Question']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Question', true)), array('action' => 'delete', $question['Question']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $question['Question']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Questions', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Question', true)), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Section', true)), array('controller' => 'sections', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit', true) . ' %s', __('Question', true)), array('action' => 'edit', $question['Question']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete', true) . ' %s', __('Question', true)), array('action' => 'delete', $question['Question']['id']), null, sprintf(__('Are you sure you want to delete', true) . ' # %s?', $question['Question']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('List', true) . ' %s', __('Questions', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('New', true) . ' %s', __('Question', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('List', true) . ' %s', __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('New', true) . ' %s', __('Section', true)), array('controller' => 'sections', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

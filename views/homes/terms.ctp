@@ -33,7 +33,7 @@
 }
 </style>
 <div class="txt-my-terms">
-	<?php echo __('Terms &amp; Conditions');?>
+	<?php __('Terms & Conditions');?>
 </div>
 
 <div id="terms">

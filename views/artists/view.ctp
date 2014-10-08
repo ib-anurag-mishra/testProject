@@ -282,7 +282,7 @@
 							<?php
 							echo $this->Html->link('Download Now', 'javascript:void(0)', array(
 								'class' => 'add-to-wishlist',
-								'title' => __('"IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."', true),
+								'title' => __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.', true),
 								'onclick' => 'return wishlistDownloadOthersHome("' . $albumSong["Song"]['ProdID'] . '", "0", "' . $albumSong['Full_Files']['CdnPath'] . '", "' . $albumSong['Full_Files']['SaveAsName'] . '", "' . $albumSong["Song"]["provider_type"] . '");'
 							));
 							?>
