@@ -492,9 +492,9 @@ class Song extends AppModel {
 				'and' => array(
 					array('Song.ReferenceID' => $prodId),
 					array('Song.provider_type = Country.provider_type'),
-					array("Song.Sample_FileID != ''"),
-					array("Song.FullLength_FIleID != ''"),
-					array("Song.provider_type" => $provider),
+					array("Song.FullLength_SaveAsName != ''"),
+					array("Song.CdnPath != ''"),
+					array("Song.provider_type" => $provider),                                                                     
 					array('Country.Territory' => $territory),
 					array('Country.StreamingStatus' => 1),
 					array('Country.StreamingSalesDate <=' => date('Y-m-d'))
@@ -509,11 +509,12 @@ class Song extends AppModel {
 				'Song.Artist',
 				'Song.Advisory',
 				'Song.Sample_Duration',
-				'Song.FullLength_Duration',
-				'Song.Sample_FileID',
-				'Song.FullLength_FIleID',
+				'Song.FullLength_Duration',				
 				'Song.provider_type',
-				'Song.sequence_number'
+				'Song.sequence_number',
+                                'Song.FullLength_SaveAsName',
+				'Song.Sample_SaveAsName',
+				'Song.CdnPath'
 			),
 			'contain' => array(
 				'Genre' => array(
@@ -528,18 +529,6 @@ class Song extends AppModel {
 						'Country.StreamingSalesDate',
 						'Country.StreamingStatus',
 						'Country.DownloadStatus',
-					)
-				),
-				'Sample_Files' => array(
-					'fields' => array(
-						'Sample_Files.CdnPath',
-						'Sample_Files.SaveAsName'
-					)
-				),
-				'Full_Files' => array(
-					'fields' => array(
-						'Full_Files.CdnPath',
-						'Full_Files.SaveAsName'
 					)
 				),
 			),
