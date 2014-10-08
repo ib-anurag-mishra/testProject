@@ -2952,11 +2952,11 @@ STR;
                                                 LEFT JOIN                              
                                 Genre AS Genre ON (Genre.ProdID = Video.ProdID)
                                                 LEFT JOIN
-         {$preFix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+                {$preFix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
                                                 LEFT JOIN
                                 PRODUCT ON (PRODUCT.ProdID = Video.ProdID)                                               
                 WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1 $videoAdvisory
+                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND (Video.FullLength_SaveAsName != '' AND Video.Image_SaveAsName != '' AND Video.CdnPath != '') AND 1 = 1 $videoAdvisory
                 GROUP BY Video.ProdID
                 ORDER BY Country.SalesDate desc  
 STR;
@@ -2968,7 +2968,6 @@ STR;
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
-
 
             return $artistVideoList;
         }
