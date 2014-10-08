@@ -45,7 +45,7 @@
 <p>
 <?php
 echo $paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+'format' => __('Page', true) . ' %page% ' . __('of', true) . ' %pages%, ' . __('showing', true) . ' %current% ' . __('records out of', true) . ' %count% ' . __('total, starting on record', true) . ' %start%, ' . __('ending on', true) . ' %end%'
 ));
 ?></p>
   <table id="list">

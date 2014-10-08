@@ -75,7 +75,7 @@
 				<?php
 				if ($album['Album']['Label'] != '')
 				{
-					echo __("Label") . ': ' . $this->getTextEncode($album['Album']['Label']);
+					echo __('Label', true) . ': ' . $this->getTextEncode($album['Album']['Label']);
 					echo '<br />';
 				}
 				if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown')
@@ -93,8 +93,8 @@
 
 <div class="paging">
 	<?php
-	echo $paginator->prev('<< ' . __('Previous ', true), null, null, array('class' => 'disabled'));
+	echo $paginator->prev('<< ' . __('Previous', true) . ' ', null, null, array('class' => 'disabled'));
 	echo $paginator->numbers(array('separator' => ' '));
-	echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
+	echo $paginator->next(' ' . __(' Next', true) . ' >>', null, null, array('class' => 'disabled'));
 	?>
 </div>

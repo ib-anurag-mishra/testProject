@@ -1527,6 +1527,7 @@ Class ArtistsController extends AppController {
                     }
                 }                
                 $this->set('featuredArtists', $featuresArtists);
+                $this->set('page', $page);
                 echo $this->render('/artists/feature_ajaxlisting');
             } else {
                 
