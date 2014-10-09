@@ -1861,13 +1861,12 @@ STR;
                 if(!$this->checkImageFileExist($topAlbumData[$key]['topAlbumImage'])){              
                     //write broken image entry in the log files
                     $this->log($territory.' : ' .' Top Albums : '. $topAlbumData[$key]['topAlbumImage'], 'check_images');
-                     $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'Top Albums : '. $topAlbumData[$key]['topAlbumImage'];
+                    $brokenImages[] = date('Y-m-d H:i:s').' : ' .$territory.' : ' .'Top Albums : '. $topAlbumData[$key]['topAlbumImage'];
                     //unset the broken images variable in the array
                     unset($topAlbumData[$key]);             
                 }          
-            } 
+            }            
             
-            print_r($topAlbumData);die;
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');

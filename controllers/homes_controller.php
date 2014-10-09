@@ -110,7 +110,7 @@ class HomesController extends AppController {
             //check variable data in to mem_datas table
             $featuresArtists = $this->CacheHandler->checkMemData("featured_artists_" . $territory.'_'.'1');
             //if not found then run query in the table
-            if( $featuresArtists === false ){
+            if( $featuresArtists === false ) {
                 $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
                 Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
             }

@@ -141,30 +141,24 @@ class CacheController extends AppController {
     
     
     /*
-     * @func runCache
-     * @desc This function is used to call all functions for setting cache variables
+     * @func runCacheTest
+     * @desc This function is used to set some of the cache variables
      */    
     function runCacheTest(){
+        
         set_time_limit(0);
         global $brokenImages;
         
-        $brokenImages = array();
-       // $this->writeLibraryTop10songsCache();
-         $this->setTopAlbums('US');die;
+        $brokenImages = array();     
+      
         $territoriesList = $this->Common->getTerritories();   
         
-        foreach($territoriesList as $territory){             
-          
-	   // $this->setTopSingles($territory);          
-	    $this->setTopAlbums('US');
-           // $this->setFeaturedArtists($territory);
-            
-        
+        foreach($territoriesList as $territory){
+            $this->setTopSingles($territory); 
+            $this->setTopAlbums($territory);
+            $this->setFeaturedArtists($territory);       
         }
-
         
- 
-       
     }
    
    
