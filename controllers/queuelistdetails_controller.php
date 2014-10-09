@@ -152,6 +152,11 @@ class QueueListDetailsController extends AppController
         $this->set('patronDownload', $patronDownload);
         $queueId = $this->Session->read('queuePlaying');
         $songPlaying = $this->Session->read('songPlaying');
+        $albumDetails = $this->Session->read('albumPlaying');
+        if(!empty($albumDetails)) {
+            echo "in album page";
+            print_r($albumDetails);exit;
+        }
         if (!empty($queueId))
         {
             $queue_list_array = $this->Queue->getQueueDetails($queueId, $territory);
