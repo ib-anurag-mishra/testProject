@@ -390,10 +390,9 @@
 		</div>                     
                     
                 <?php }    ?>
-                }else{ ?>
+        <?php }else{ ?>
 
-                <h2> <?php echo __('There are no Playlists currently being played.'); ?> </h2>
-		
-                <?php } ?>                
+            <h2> <?php echo __('There are no Playlists currently being played.'); ?> </h2>
 
-	</section>
+        <?php } ?>                
+</section>
