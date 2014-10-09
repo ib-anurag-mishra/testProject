@@ -182,6 +182,8 @@ class QueueListDetailsController extends AppController
             $this->set('queue_songs_count', count($queue_list_array));
             $this->set('total_time', $total_minutes . ":" . $total_seconds);
         } else if(!empty($albumDetails)) {
+            $Album = ClassRegistry::init('Album');
+            $albumData = $this->Album->getAlbum($albumDetails['albumProdId']);
             $albumSongs = $this->Common->getAlbumNowStreamingSongs($albumDetails['albumProdId'],$albumDetails['providerType'],$territory);
             foreach ($albumSongs as $k => $v)
             {
@@ -194,6 +196,7 @@ class QueueListDetailsController extends AppController
                 }
             }
             $this->set('albumSongs' , $albumSongs);
+            $this->set('albumTitle',$albumData[0]['Album']['AlbumTitle']);
         } else if (!empty($songPlaying)) {
             $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'], $songPlaying['providerType'], $territory);
             foreach ($trackDetails as $k => $v)

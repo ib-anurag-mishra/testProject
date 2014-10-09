@@ -148,5 +148,18 @@ class Album extends AppModel  {
 
 		return $albumData;
 	}
+        
+	function getAlbum($id) {
+            $this->recursive = -1;
+            $details = $this->find('all', array(
+                                   'conditions'=>array('Album.ProdID' => $id),
+                                   'fields' => array(
+                                                   'Album.ProdID',
+                                                   'Album.AlbumTitle'
+                                   )
+            )
+                   );
+            return  $details;
+	}        
 }
 

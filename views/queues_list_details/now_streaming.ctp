@@ -375,7 +375,7 @@
                                                         </form>
 						</div>
                                                 <div class="album-title">
-                                                                            <a href="/artists/album/<?php echo base64_encode($value['Song']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
+                                                                            <a href="/artists/album/<?php echo base64_encode($value['Song']['ArtistText']); ?>"><?php echo $albumTitle; ?></a>                                                
                                                                         </div>
                                                 <div class="artist-name">
                                                                             <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
