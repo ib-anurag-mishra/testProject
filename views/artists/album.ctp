@@ -150,7 +150,7 @@
 							?>
 							<input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album" data-provider="<?= $album["Album"]["provider_type"] ?>" />
 							<?
-							echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
+							echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']],0,$album['Album']['ProdID']);
 							?>
 							<a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
 							<ul>
