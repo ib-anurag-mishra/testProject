@@ -43,7 +43,7 @@
                                 <?php
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
+                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']],0,$value['Albums']['ProdID']);
                                         ?> 
                                         <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
                                         <ul>
