@@ -337,7 +337,7 @@
 							<?php
 								if ( isset( $patronId ) && !empty( $patronId ) ):
 									if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ) {
-										echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 3 );
+										echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 3 , $palbum->ReferenceID);
 									}
 							?>
 									<button class="menu-btn"></button>
@@ -607,7 +607,7 @@
 										<input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>" />
 							<?php
 									  	if ( isset( $libraryType ) && isset( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) && $libraryType == 2 && !empty( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID] ) ):
-											echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1 );
+											echo $this->Queue->getAlbumStreamLabel( $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1 , $palbum->ReferenceID);
 											echo $this->Html->link('', '#', array( 'title' => __('Add to a Playlist or Create a New Playlist', true), 'class' => 'playlist-menu-icon toggleable no-ajaxy' ) );
 							?>
 											<ul><li><?php echo $this->Html->link(__('Create New Playlist', true) . '...', '#', array( 'class' => 'create-new-playlist' ) );?></li></ul>
