@@ -221,7 +221,7 @@ function Get_Sales_date($sales_date_array, $country) {
                                                     <?php
                                                     if ($this->Session->read("patron")) {
                                                         if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) {
-                                                            echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 3);
+                                                            echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 3, $palbum->ReferenceID);
                                                         }
                                                         ?>
                                         <button class="menu-btn"></button>
