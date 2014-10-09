@@ -247,7 +247,7 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getAlbumStreamNowLabel($albumSongs , $top = null)
+    function getAlbumStreamNowLabel($albumSongs , $top = null, $albumId = 0)
     {
         if (!empty($albumSongs))
         {
@@ -260,8 +260,7 @@ EOD;
                     {
                         $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' (Explicit)';
                     }
-
-                    $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                    $playItem = array('playlistId' => 0, 'AlbumID' => $albumId,'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
                     $jsonPlayItem = json_encode($playItem);
                     $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
                     $playListData[] = $jsonPlayItem;
