@@ -352,7 +352,7 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getAlbumStreamLabel($albumSongs,$flag = 0,$AlbumID)
+    function getAlbumStreamLabel($albumSongs,$flag = 0,$AlbumID = 0)
     {
         $albumSongs = base64_encode(json_encode($albumSongs));
         
@@ -376,14 +376,14 @@ EOD;
         }else if($flag == 2){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Artist</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-artist">Stream Artist</button>
 EOD;
             return $str;
             
        }else if($flag == 3){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-now-btn">Stream Now</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-now-btn">Stream Now</button>
 EOD;
             return $str;
             
