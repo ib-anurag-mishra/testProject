@@ -153,10 +153,6 @@ class QueueListDetailsController extends AppController
         $queueId = $this->Session->read('queuePlaying');
         $songPlaying = $this->Session->read('songPlaying');
         $albumDetails = $this->Session->read('albumPlaying');
-        if(!empty($albumDetails)) {
-            echo "in album page";
-            print_r($albumDetails);exit;
-        }
         if (!empty($queueId))
         {
             $queue_list_array = $this->Queue->getQueueDetails($queueId, $territory);
@@ -185,9 +181,20 @@ class QueueListDetailsController extends AppController
             $this->set('queue_id', $queueId);
             $this->set('queue_songs_count', count($queue_list_array));
             $this->set('total_time', $total_minutes . ":" . $total_seconds);
-        }
-        else if (!empty($songPlaying))
-        {
+        } else if(!empty($albumDetails)) {
+            $albumSongs = $this->Common->getAlbumNowStreamingSongs($albumDetails['albumProdId'],$albumDetails['providerType'],$territory);
+            foreach ($albumSongs as $k => $v)
+            {
+                $filePath = $this->Token->streamingToken($v['Full_Files']['CdnPath'] . "/" . $v['Full_Files']['SaveAsName']);
+                if (!empty($filePath))
+                {
+                    $songPath = explode(':', $filePath);
+                    $streamUrl = trim($songPath[1]);
+                    $albumSongs[$k]['streamUrl'] = $streamUrl;
+                }
+            }
+            $this->set('albumSongs' , $albumSongs);
+        } else if (!empty($songPlaying)) {
             $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'], $songPlaying['providerType'], $territory);
             foreach ($trackDetails as $k => $v)
             {                
