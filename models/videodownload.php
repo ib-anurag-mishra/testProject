@@ -680,7 +680,7 @@ class Videodownload extends AppModel
 	
 		if ( $explicitContent === false ) {
 			$options['conditions'] = array(
-					'Videodownload.library_id' => 1,
+					//'Videodownload.library_id' => 1,
 					'Library.library_territory' => $territory,
                                         'Country.SalesDate !=' => '',
 					'Country.SalesDate <=' => 'NOW()',
@@ -691,7 +691,8 @@ class Videodownload extends AppModel
 			);
 		} else {
 			$options['conditions'] = array(
-					'Videodownload.library_id' => 1,
+					
+					//'Videodownload.library_id' => 1,
 					'Library.library_territory' => $territory,
                                         'Country.SalesDate !=' => '',
 					'Country.SalesDate <=' => 'NOW()',

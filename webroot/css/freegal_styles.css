@@ -1127,3 +1127,10 @@ div.paging span a, div.paging a {
 .qtipmodal-ie6fix{
 	position: absolute !important;
 }
+
+.listlink{
+	cursor: default;
+	color: black;
+    pointer-events: none;
+    text-decoration: none;
+}
