@@ -30,7 +30,7 @@
 				echo $this->Html->image(Configure::read('App.Music_Path') . $albumArtwork, array('alt' => 'album-detail-cover', 'width' => '250', 'height' => '250'));
 
 				if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron")):
-					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
+					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']],0,$album['Album']['ProdID']);
 					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false, 'data-provider' => $album["Album"]["provider_type"]));
 					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
 					?>

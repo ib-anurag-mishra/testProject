@@ -362,11 +362,6 @@ EOD;
 EOD;
             return $str;
         }else if ($flag == 1){
-            /*
-            $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable"></button>
-EOD;
-            */
             $stream_label = __('Stream Now', true);
             $str = <<<EOD
                 <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="play-btn-icon toggleable">$stream_label</button>
