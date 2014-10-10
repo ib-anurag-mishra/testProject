@@ -298,7 +298,7 @@ class SoapsController extends AppController {
 	function getAlbumsFromArtistText($authenticationToken, $artistText, $startFrom, $recordCount) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -456,7 +456,7 @@ class SoapsController extends AppController {
 	function getFeaturedAlbum($authenticationToken, $append) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -536,7 +536,7 @@ class SoapsController extends AppController {
 	function getFeaturedAlbumFreegal4($authenticationToken) {
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -581,7 +581,7 @@ class SoapsController extends AppController {
 	function getFeaturedArtistSlides($authenticationToken, $append, $featured_mobile_time) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -747,7 +747,7 @@ class SoapsController extends AppController {
 	function getNationalTopTen($authenticationToken, $libraryId) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryData = $this->Library->find('first', array('conditions' => array('AND'=>array('Library.id' => $libraryId, 'library_status' => 'active')), 'fields' => array('library_territory')));
@@ -826,7 +826,7 @@ class SoapsController extends AppController {
 	function getTopSingles($authenticationToken, $libraryId) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryData = $this->Library->find('first', array('conditions' => array('AND'=>array('Library.id' => $libraryId, 'library_status' => 'active')), 'fields' => array('library_territory')));
@@ -903,7 +903,7 @@ class SoapsController extends AppController {
 	function getLibraryTopTen($authenticationToken, $libraryId) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryDetails = $this->Library->find('first',array(
@@ -988,7 +988,7 @@ class SoapsController extends AppController {
 	function getAlbumDetail($authenticationToken, $prodId) { 
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
     
     $product_detail = $this->getProductDetail($prodId);
@@ -1231,7 +1231,7 @@ class SoapsController extends AppController {
 	function getUserCurrentDownload($libraryId, $authenticationToken) {
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $patronId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
@@ -1277,7 +1277,7 @@ class SoapsController extends AppController {
 
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $product_detail = $this->getProductDetail($prodId);
@@ -1405,7 +1405,7 @@ class SoapsController extends AppController {
 	function deleteSongFromWishlist($deleteSongId, $libraryId, $authenticationToken) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     if($this->Wishlist->delete($deleteSongId)) {
@@ -1435,7 +1435,7 @@ class SoapsController extends AppController {
 
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $patronId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
@@ -1550,7 +1550,7 @@ class SoapsController extends AppController {
   function registerDevice($deviceID, $registerID, $lang, $authenticationToken, $systemType = null){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
+      $msg = 'Freegal needs to update. Please logout and login again.';
       return $this->createsSuccessResponseObject(false, $msg);
     }
     
@@ -1616,7 +1616,7 @@ class SoapsController extends AppController {
   function updateRegisterDeviceLang($authenticationToken, $deviceID, $registerID, $lang){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
+      $msg = 'Freegal needs to update. Please logout and login again.';
       return $this->createsSuccessResponseObject(false, $msg);
     }
     
@@ -1666,7 +1666,7 @@ class SoapsController extends AppController {
   function validateLibInTimezone($authenticationToken){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
+      $msg = 'Freegal needs to update. Please logout and login again.';
       return $this->createsSuccessResponseObject(false, $msg);
     }
    
@@ -1700,7 +1700,7 @@ class SoapsController extends AppController {
   function validateStreamRequest($authenticationToken, $ProdID, $agent, $actionID, $consumedTime, $songDuration, $queueID = null, $instanceToken = null){
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
     
     $patId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
@@ -2044,7 +2044,7 @@ class SoapsController extends AppController {
     
     if(1 != $innerCall){
       if(!($this->isValidAuthenticationToken($token))) {
-        throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+        throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
       }
     }
     
@@ -2076,7 +2076,7 @@ class SoapsController extends AppController {
   function getStreamSongsList($authenticationToken, $startFrom, $recordCount) {
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
     
     $patronID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
@@ -4557,7 +4557,7 @@ class SoapsController extends AppController {
 	function updateUserDetails($authentication_token, $fname, $lname, $mail, $new_pass, $old_pass) {
 
     if(!($this->isValidAuthenticationToken($authentication_token))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $user_id = $this->getPatronIdFromAuthenticationToken($authentication_token);
@@ -4620,7 +4620,7 @@ class SoapsController extends AppController {
 
 
     if(!($this->isValidAuthenticationToken($authentication_token))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $user_id = $this->getPatronIdFromAuthenticationToken($authentication_token);
@@ -4750,7 +4750,7 @@ class SoapsController extends AppController {
   function regenerateSongDownloadRequest($authentication_token, $prodId, $agent) {
 
     if(!($this->isValidAuthenticationToken($authentication_token))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $product_detail = $this->getProductDetail($prodId);
@@ -4797,7 +4797,7 @@ class SoapsController extends AppController {
   function regenerateVideoDownloadRequest($authentication_token, $prodId, $agent) {
 
     if(!($this->isValidAuthenticationToken($authentication_token))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $product_detail = $this->getProductDetail($prodId);
@@ -4845,7 +4845,7 @@ class SoapsController extends AppController {
     
     
     if(!($this->isValidAuthenticationToken($authentication_token))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
     
     $product_detail = $this->getProductDetail($prodId);
@@ -5082,7 +5082,7 @@ class SoapsController extends AppController {
     
     
     if(!($this->isValidAuthenticationToken($authentication_token))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
     
     $product_detail = $this->getProductDetail($prodId);
@@ -5369,7 +5369,7 @@ class SoapsController extends AppController {
   
   
     if(!($this->isValidAuthenticationToken($authentication_token))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authentication_token);
@@ -5416,7 +5416,7 @@ class SoapsController extends AppController {
 	function getAllGenre($authenticationToken, $startfrom, $count) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -5486,7 +5486,7 @@ class SoapsController extends AppController {
 	function getTopGenre($authenticationToken) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
@@ -5517,7 +5517,7 @@ class SoapsController extends AppController {
 	function getTopSongs($authenticationToken, $startFrom, $recordCount) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -5604,7 +5604,7 @@ class SoapsController extends AppController {
   function getMyMusicVideos($authenticationToken, $startFrom, $recordCount) { 
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
     
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -5705,7 +5705,7 @@ class SoapsController extends AppController {
 	function getTopArtist($authenticationToken, $startFrom, $recordCount) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -5790,7 +5790,7 @@ class SoapsController extends AppController {
 	function getGenreSongs($authenticationToken, $genreTitle) {
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -5882,7 +5882,7 @@ class SoapsController extends AppController {
 	function logoutAuthinticate($authenticationToken, $registerID = null) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
     
     if('' != trim($registerID)) {
@@ -5915,7 +5915,7 @@ class SoapsController extends AppController {
   function getQueueList($authenticationToken, $startFrom, $recordCount, $uid){
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     } 
              
     $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -5986,7 +5986,7 @@ class SoapsController extends AppController {
   function manageQueue($authenticationToken, $queueName, $queueID, $arrsongs, $action, $queueDescription = null){
  
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -6087,7 +6087,7 @@ class SoapsController extends AppController {
   function deleteQueue($authenticationToken, $queueID){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
     
     $st2 = $st1 = false;
@@ -6116,7 +6116,7 @@ class SoapsController extends AppController {
   function getQueueDetails($authenticationToken, $queueID, $startFrom, $recordCount){
    
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     } 
 
     $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
@@ -6221,7 +6221,7 @@ class SoapsController extends AppController {
 	function getLiveSearchSongList($authenticationToken, $searchKey, $searchType) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      throw new SOAPFault('Soap:logout', 'Freegal needs to update. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
