@@ -4751,7 +4751,7 @@ class SoapsController extends AppController {
 	$log_data .= 'Input : '.'/Soaps/loginByWebservice/'.$val['AuthenticationToken']['authtype'].'/'.$val['AuthenticationToken']['email'].'/'.$val['AuthenticationToken']['password'].'/'.$val['AuthenticationToken']['card'].'/'. $val['AuthenticationToken']['pin'].'/'.$val['AuthenticationToken']['last_name'].'/'.$val['AuthenticationToken']['library_id'].'/'.$val['AuthenticationToken']['agent'].'/1'.PHP_EOL;
 
 
-		$resp = $this->requestAction('/Soaps/loginByWebservice/'.$tokenDetails['AuthenticationToken']['authtype'].'/'.$tokenDetails['AuthenticationToken']['email'].'/'.$tokenDetails['AuthenticationToken']['password'].'/'.$tokenDetails['AuthenticationToken']['card'].'/'. $tokenDetails['AuthenticationToken']['pin'].'/'.$tokenDetails['AuthenticationToken']['last_name'].'/'.$tokenDetails['AuthenticationToken']['library_id'].'/'.$tokenDetails['AuthenticationToken']['agent'].'/1');
+		$resp = $this->requestAction('/Soaps/loginByWebservice/'.$val['AuthenticationToken']['authtype'].'/'.$val['AuthenticationToken']['email'].'/'.$val['AuthenticationToken']['password'].'/'.$val['AuthenticationToken']['card'].'/'. $val['AuthenticationToken']['pin'].'/'.$val['AuthenticationToken']['last_name'].'/'.$val['AuthenticationToken']['library_id'].'/'.$val['AuthenticationToken']['agent'].'/1');
 
 		$log_data .= 'Response : '.$resp->enc_value->enc_value->response.' AuthToken : '.$resp->enc_value->enc_value->authentication_token.' Patron : '.$resp->enc_value->enc_value->patron_id.PHP_EOL;
 		
