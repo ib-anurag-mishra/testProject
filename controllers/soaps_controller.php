@@ -4744,7 +4744,8 @@ class SoapsController extends AppController {
         if(empty($val['AuthenticationToken']['pin']))           { $val['AuthenticationToken']['pin'] = ' ';             }
         if(empty($val['AuthenticationToken']['last_name']))     { $val['AuthenticationToken']['last_name'] = ' ';       }
         if(empty($val['AuthenticationToken']['library_id']))    { $val['AuthenticationToken']['library_id'] = ' ';      }
-        if(empty($val['AuthenticationToken']['agent']))         { $val['AuthenticationToken']['agent'] = ' '; 
+        if(empty($val['AuthenticationToken']['agent']))         { $val['AuthenticationToken']['agent'] = ' '; 	       }
+		if($val['AuthenticationToken']['agent'] == '?')			{ $val['AuthenticationToken']['agent'] = ' ';		   }
 
 	$log_name = 'block_card_app_log';
 	$log_data = PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") Start----------------".PHP_EOL;
@@ -4765,6 +4766,8 @@ class SoapsController extends AppController {
 		else {
 			$log_data .= PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") End----------------".PHP_EOL;
 			$this->log($log_data, $log_name);
+			$data = array('id' => $val['AuthenticationToken']['id'], 'auth_time' => time());
+			$this->AuthenticationToken->save($data);
 			return true;
 		}
 	}
