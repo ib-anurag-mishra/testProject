@@ -4733,10 +4733,18 @@ class SoapsController extends AppController {
 
   private function isValidAuthenticationToken($token){
 
-	$tokenDetails = $this->AuthenticationToken->find('first', array('conditions' => array('token' => $token)));
-	$lastVisited = $tokenDetails['AuthenticationToken']['auth_time'];
+	$val = $this->AuthenticationToken->find('first', array('conditions' => array('token' => $token)));
+	$lastVisited = $val['AuthenticationToken']['auth_time'];
 	
-	if(($lastVisited - now()) > 86400){
+	if((time() - $lastVisited) > 86400){
+
+	 if(empty($val['AuthenticationToken']['email']))         { $val['AuthenticationToken']['email'] = ' ';           }
+        if(empty($val['AuthenticationToken']['password']))      { $val['AuthenticationToken']['password'] = ' ';        }
+        if(empty($val['AuthenticationToken']['card']))          { $val['AuthenticationToken']['card'] = ' ';            }
+        if(empty($val['AuthenticationToken']['pin']))           { $val['AuthenticationToken']['pin'] = ' ';             }
+        if(empty($val['AuthenticationToken']['last_name']))     { $val['AuthenticationToken']['last_name'] = ' ';       }
+        if(empty($val['AuthenticationToken']['library_id']))    { $val['AuthenticationToken']['library_id'] = ' ';      }
+        if(empty($val['AuthenticationToken']['agent']))         { $val['AuthenticationToken']['agent'] = ' '; 
 
 	$log_name = 'block_card_app_log';
 	$log_data = PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") Start----------------".PHP_EOL;
