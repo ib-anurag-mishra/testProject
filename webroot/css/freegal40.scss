@@ -11569,6 +11569,19 @@ sub { top: 0.4em; }
 
 			}
 
+			&.streaming-time-header {
+
+				width: 118px;
+				line-height: 15px;
+				height: 39px;
+				padding-top: 4px;
+
+				&:after {
+
+					background: none;
+				}
+			}
+
 		}
 		
 		

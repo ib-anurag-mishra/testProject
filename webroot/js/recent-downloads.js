@@ -60,35 +60,35 @@ $(document).ready(function() {
 
     });
 
-    $('.recent-downloads-page .recent-downloads-scrollable').bind('mousewheel', function(e) {
+    // $('.recent-downloads-page .recent-downloads-scrollable').bind('mousewheel', function(e) {
 
 
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
-        //prevent page fom scrolling
-        return false;
-
-
-    });
-
-    $('.recent-downloads-page .recent-video-downloads-scrollable').bind('mousewheel', function(e) {
-
-
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+    //     $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
 
 
 
 
-        //prevent page fom scrolling
-        return false;
+    //     //prevent page fom scrolling
+    //     return false;
 
 
-    });
+    // });
+
+    // $('.recent-downloads-page .recent-video-downloads-scrollable').bind('mousewheel', function(e) {
+
+
+    //     $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+
+
+
+
+
+    //     //prevent page fom scrolling
+    //     return false;
+
+
+    // });
 
     $('.recent-downloads-page .add-to-wishlist-button').on('click', function(e) {
         e.preventDefault();

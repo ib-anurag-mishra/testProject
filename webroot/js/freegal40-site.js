@@ -849,8 +849,8 @@ $(document).ready(function() {
 
 
 
-    $('.recent-downloads-page .recent-downloads-scrollable').bindMouseWheel();
-    $('.recent-downloads-page .recent-video-downloads-scrollable').bindMouseWheel();
+    $('.recent-downloads-page .recent-downloads-scrollable.recent-downloads-page').bindMouseWheel();
+    $('.recent-downloads-page .recent-video-downloads-scrollable.recent-downloads-page').bindMouseWheel();
 
 
 
