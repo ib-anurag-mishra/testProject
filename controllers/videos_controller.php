@@ -419,8 +419,8 @@ class VideosController extends AppController {
 
         if ( isset( $this->params['pass'][0] ) ) {
 
-            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] );           
-            $videoArtwork = $this->Token->artworkToken( $videosData[0]['Video']['CdnPath'] . '/' . $videosData[0]['Video']['Image_SaveAsName'] );            
+            $videosData = $this->Video->fetchVideoDataByDownloadStatusAndProdId( $prefix, $this->params['pass'][0] ); 
+            $videoArtwork = $this->Token->artworkToken( $videosData[0]['File']['CdnPath'] . '/' . $videosData[0]['File']['SourceURL'] );            
             $videosData[0]['videoImage'] = Configure::read( 'App.Music_Path' ) . $videoArtwork;            
             
             //check image file exist or not for each entry
