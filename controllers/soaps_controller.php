@@ -4733,7 +4733,36 @@ class SoapsController extends AppController {
 
   private function isValidAuthenticationToken($token){
 
-	return $this->AuthenticationToken->find('count', array('conditions' => array('token' => $token)));
+	$tokenDetails = $this->AuthenticationToken->find('first', array('conditions' => array('token' => $token)));
+	$lastVisited = $tokenDetails['AuthenticationToken']['auth_time'];
+	
+	if(($lastVisited - now()) > 86400){
+
+	$log_name = 'block_card_app_log';
+	$log_data = PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") Start----------------".PHP_EOL;
+	$log_data .= 'Input : '.'/Soaps/loginByWebservice/'.$val['AuthenticationToken']['authtype'].'/'.$val['AuthenticationToken']['email'].'/'.$val['AuthenticationToken']['password'].'/'.$val['AuthenticationToken']['card'].'/'. $val['AuthenticationToken']['pin'].'/'.$val['AuthenticationToken']['last_name'].'/'.$val['AuthenticationToken']['library_id'].'/'.$val['AuthenticationToken']['agent'].'/1'.PHP_EOL;
+
+
+		$resp = $this->requestAction('/Soaps/loginByWebservice/'.$tokenDetails['AuthenticationToken']['authtype'].'/'.$tokenDetails['AuthenticationToken']['email'].'/'.$tokenDetails['AuthenticationToken']['password'].'/'.$tokenDetails['AuthenticationToken']['card'].'/'. $tokenDetails['AuthenticationToken']['pin'].'/'.$tokenDetails['AuthenticationToken']['last_name'].'/'.$tokenDetails['AuthenticationToken']['library_id'].'/'.$tokenDetails['AuthenticationToken']['agent'].'/1');
+
+		$log_data .= 'Response : '.$resp->enc_value->enc_value->response.' AuthToken : '.$resp->enc_value->enc_value->authentication_token.' Patron : '.$resp->enc_value->enc_value->patron_id.PHP_EOL;
+		
+		if( '1' != $resp->enc_value->enc_value->response ) {
+			$this->AuthenticationToken->deleteAll(array('token' => $token));
+			$log_data .= 'DeleteStatus : '.$status.PHP_EOL;
+			$log_data .= PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") End----------------".PHP_EOL;
+			$this->log($log_data, $log_name);
+			throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');			
+		}
+		else {
+			$log_data .= PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") End----------------".PHP_EOL;
+			$this->log($log_data, $log_name);
+			return true;
+		}
+	}
+	else {
+		return true;
+	}
 
   }
 
