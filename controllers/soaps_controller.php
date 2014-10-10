@@ -4732,7 +4732,7 @@ class SoapsController extends AppController {
    */
 
   private function isValidAuthenticationToken($token){
-
+    $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 	$val = $this->AuthenticationToken->find('first', array('conditions' => array('token' => $token)));
 	$lastVisited = $val['AuthenticationToken']['auth_time'];
 	
@@ -4740,8 +4740,26 @@ class SoapsController extends AppController {
 
 	 if(empty($val['AuthenticationToken']['email']))         { $val['AuthenticationToken']['email'] = ' ';           }
         if(empty($val['AuthenticationToken']['password']))      { $val['AuthenticationToken']['password'] = ' ';        }
+		else {
+			$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password'],$encodingKey);
+			if(preg_match('/\W/',$val['AuthenticationToken']['password'])) {
+   				$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password']);
+			}	
+		}
         if(empty($val['AuthenticationToken']['card']))          { $val['AuthenticationToken']['card'] = ' ';            }
+		else {
+			$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card'],$encodingKey);
+			if(preg_match('/\W/',$val['AuthenticationToken']['card'])) {
+   				$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card']);
+			}	
+		}
         if(empty($val['AuthenticationToken']['pin']))           { $val['AuthenticationToken']['pin'] = ' ';             }
+		else {
+			$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin'],$encodingKey);
+			if(preg_match('/\W/',$val['AuthenticationToken']['pin'])) {
+   				$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin']);
+			}	
+		}
         if(empty($val['AuthenticationToken']['last_name']))     { $val['AuthenticationToken']['last_name'] = ' ';       }
         if(empty($val['AuthenticationToken']['library_id']))    { $val['AuthenticationToken']['library_id'] = ' ';      }
         if(empty($val['AuthenticationToken']['agent']))         { $val['AuthenticationToken']['agent'] = ' '; 	       }
