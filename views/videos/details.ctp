@@ -16,7 +16,7 @@
                 	if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 
                         $productInfo	  = $mvideo->getDownloadData( $videosData[0]["Video"]["ProdID"], $videosData[0]["Video"]["provider_type"] );                        
-                        $videoUrl		  = $this->Token->regularToken( $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName'] );
+                        $videoUrl		  = $this->Token->regularToken( $videosData[0]["Video"]["CdnPath"] . "/" . $videosData[0]["Video"]["FullLength_SaveAsName"] );
                         $finalVideoUrl	  = Configure::read( 'App.Music_Path' ) . $videoUrl;
                         $finalVideoUrlArr = str_split( $finalVideoUrl, ceil( strlen( $finalVideoUrl ) / 3 ) );
                         $downloadsUsed 	  = $this->Videodownload->getVideodownloadfind( $videosData[0]['Video']['ProdID'], $videosData[0]['Video']['provider_type'], $libraryId, $patronId, Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) );
@@ -29,10 +29,10 @@
                                     <input type="hidden" name="ProviderType" value="<?= $videosData[0]["Video"]["provider_type"]; ?>" />
                                     <span class="beforeClick" id="download_video_<?= $videosData[0]["Video"]["ProdID"]; ?>">
                                         <![if !IE]>
-                                        	<a class="top-10-download-now-button no-ajaxy" href="javascript:void(0);" title="<?= __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?= $videosData[0]['Video']['ProdID']; ?>", "0", "<?= $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>",  "<?= $videosData[0]['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?= __('Download Now'); ?></label></a>
+                                        	<a class="top-10-download-now-button no-ajaxy" href="javascript:void(0);" title="<?= __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?= $videosData[0]['Video']['ProdID']; ?>", "0", "<?= $videosData[0]['Video']['CdnPath']; ?>", "<?= $videosData[0]['Video']['FullLength_SaveAsName']; ?>",  "<?= $videosData[0]['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?= __('Download Now'); ?></label></a>
                                         <![endif]>
                                         <!--[if IE]>
-											<label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?= $videosData[0]['Video']['ProdID']; ?>','0','<?= $videosData[0]['Video']['provider_type']; ?>', '<?= $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?= $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
+											<label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?= $videosData[0]['Video']['ProdID']; ?>','0','<?= $videosData[0]['Video']['provider_type']; ?>', '<?= $videosData[0]['Video']['CdnPath']; ?>', '<?= $videosData[0]['Video']['FullLength_SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
                                         <![endif]-->
                                     </span>
                                     <span class="afterClick" id="vdownloading_<?= $videosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait'); ?>...&nbsp;&nbsp;</span>
