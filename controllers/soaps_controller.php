@@ -4733,6 +4733,7 @@ class SoapsController extends AppController {
 
   private function isValidAuthenticationToken($token){
     $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
+	$char = array('"','*','_','/','+','~','!','@','#','$','%','^','&','(',')','{','}',':','<','>','?','`','-','=',';',',','.','|');
 	$val = $this->AuthenticationToken->find('first', array('conditions' => array('token' => $token)));
 	$lastVisited = $val['AuthenticationToken']['auth_time'];
 	
@@ -4743,21 +4744,42 @@ class SoapsController extends AppController {
 		else {
 			$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password'],$encodingKey);
 			if(preg_match('/\W/',$val['AuthenticationToken']['password'])) {
-   				$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password']);
+				$decryptArr = str_split($val['AuthenticationToken']['password']);
+				foreach($decryptArr as $a) 	{
+					if(!preg_match('/\w/',$a)){
+	 					if (!in_array($a,$char)) { 
+							$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password']); 
+	 					}
+					}
+    			}
 			}	
 		}
         if(empty($val['AuthenticationToken']['card']))          { $val['AuthenticationToken']['card'] = ' ';            }
 		else {
 			$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card'],$encodingKey);
 			if(preg_match('/\W/',$val['AuthenticationToken']['card'])) {
-   				$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card']);
+				$decryptArr = str_split($val['AuthenticationToken']['card']);
+				foreach($decryptArr as $a) 	{
+					if(!preg_match('/\w/',$a)){
+	 					if (!in_array($a,$char)) { 
+							$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card']); 
+	 					}
+					}
+    			}
 			}	
 		}
         if(empty($val['AuthenticationToken']['pin']))           { $val['AuthenticationToken']['pin'] = ' ';             }
 		else {
 			$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin'],$encodingKey);
 			if(preg_match('/\W/',$val['AuthenticationToken']['pin'])) {
-   				$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin']);
+				$decryptArr = str_split($val['AuthenticationToken']['pin']);
+				foreach($decryptArr as $a) 	{
+					if(!preg_match('/\w/',$a)){
+	 					if (!in_array($a,$char)) { 
+							$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin']); 
+	 					}
+					}
+    			}
 			}	
 		}
         if(empty($val['AuthenticationToken']['last_name']))     { $val['AuthenticationToken']['last_name'] = ' ';       }
