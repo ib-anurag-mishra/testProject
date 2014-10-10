@@ -2210,7 +2210,7 @@ class SoapsController extends AppController {
       $insertArr['patron_id'] = $user['User']['id'];
 			$insertArr['library_id'] = $user['User']['library_id'];
 			$insertArr['token'] = $token;
-			$insertArr['auth_time'] = time();
+			$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 			$insertArr['agent'] = $agent;
 			$insertArr['auth_method'] = $library_authentication_method;
       
@@ -2360,7 +2360,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -2472,7 +2472,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -2596,7 +2596,7 @@ class SoapsController extends AppController {
         $insertArr['patron_id'] = $data['patronId'];
 				$insertArr['library_id'] = $library_id;
 				$insertArr['token'] = $token;
-				$insertArr['auth_time'] = time();
+				$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 				$insertArr['agent'] = $agent;
 				$insertArr['auth_method'] = $library_authentication_method;
         
@@ -2716,7 +2716,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
 					
@@ -2840,7 +2840,7 @@ class SoapsController extends AppController {
 					$insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -2964,7 +2964,7 @@ class SoapsController extends AppController {
 					$insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -3077,7 +3077,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -3191,7 +3191,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -3309,7 +3309,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -3420,7 +3420,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -3534,7 +3534,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -3639,7 +3639,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -3746,7 +3746,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $data['patronId'];
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -3840,7 +3840,7 @@ class SoapsController extends AppController {
         $insertArr['patron_id'] = $data['patronId'];
         $insertArr['library_id'] = $library_id;
         $insertArr['token'] = $token;
-        $insertArr['auth_time'] = time();
+        $insertArr['auth_time'] = $insertArr['last_visited'] = time();
         $insertArr['agent'] = $agent;
         $insertArr['auth_method'] = $library_authentication_method;
         
@@ -3974,7 +3974,7 @@ class SoapsController extends AppController {
                 $insertArr['patron_id'] = trim($response_patron_id);
                 $insertArr['library_id'] = $library_id;
                 $insertArr['token'] = $token;
-                $insertArr['auth_time'] = time();
+                $insertArr['auth_time'] = $insertArr['last_visited'] = time();
                 $insertArr['agent'] = $agent;
                 $insertArr['auth_method'] = $library_authentication_method;
                 
@@ -4015,7 +4015,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = trim($response_patron_id);
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time']  = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -4140,7 +4140,7 @@ class SoapsController extends AppController {
           $insertArr['patron_id'] = $patronId;
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
-					$insertArr['auth_time'] = time();
+					$insertArr['auth_time']  = $insertArr['last_visited'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
           
@@ -4220,7 +4220,7 @@ class SoapsController extends AppController {
             $insertArr['patron_id'] = $data['patronId'];
             $insertArr['library_id'] = $library_id;
             $insertArr['token'] = $token;
-            $insertArr['auth_time'] = time();
+            $insertArr['auth_time'] = $insertArr['last_visited'] = time();
             $insertArr['agent'] = $agent;
             $insertArr['auth_method'] = $library_authentication_method;
             
@@ -4316,7 +4316,7 @@ class SoapsController extends AppController {
               $insertArr['patron_id'] = $data['patronId'];
               $insertArr['library_id'] = $library_id;
               $insertArr['token'] = $token;
-              $insertArr['auth_time'] = time();
+              $insertArr['auth_time'] = $insertArr['last_visited'] = time();
               $insertArr['agent'] = $agent;
               $insertArr['auth_method'] = $library_authentication_method;
               
@@ -4422,7 +4422,7 @@ class SoapsController extends AppController {
        			$insertArr['patron_id'] = $data['patronId'];
 			$insertArr['library_id'] = $library_id;
 			$insertArr['token'] = $token;
-			$insertArr['auth_time'] = time();
+			$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 			$insertArr['agent'] = $agent;
 			$insertArr['auth_method'] = $library_authentication_method;
 			$insertArr['authtype'] = $authtype;
@@ -4522,7 +4522,7 @@ class SoapsController extends AppController {
        			$insertArr['patron_id'] = $data['patronId'];
 			$insertArr['library_id'] = $library_id;
 			$insertArr['token'] = $token;
-			$insertArr['auth_time'] = time();
+			$insertArr['auth_time'] = $insertArr['last_visited'] = time();
 			$insertArr['agent'] = $agent;
 			$insertArr['auth_method'] = $library_authentication_method;
 			$insertArr['authtype'] = $authtype;
