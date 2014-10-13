@@ -39,7 +39,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						<input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album" data-provider="<?= $value["Album"]["provider_type"] ?>" />
 						<?php
 						if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']])) {
-							echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 4, $count . '-' . h(addslashes($title)));
+							echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 4, $count . '-' . h(addslashes($title)),$value['Album']['ProdID']);
 
 							?>
 						<a onclick="ga('send', 'event', 'Top Albums', 'Toggle Playlists', '<?php echo $count; ?>-<?php echo h(addslashes($title)); ?>')" class="playlist-menu-icon toggleable no-ajaxy" href="#" title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>
