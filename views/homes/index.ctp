@@ -128,12 +128,12 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						<input type="hidden" name="ProviderType" value="<?= $nationalTopSong["Song"]["provider_type"]; ?>" /> 
 						<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $nationalTopSong["Song"]["ProdID"]; ?>">
 							<![if !IE]> 
-							<a class="download-icon" title="<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>" onclick="return wishlistDownloadOthersHome('<?= $nationalTopSong['Song']['ProdID']; ?>', '0', '<?= $nationalTopSong['Full_Files']['CdnPath']; ?>', '<?= $nationalTopSong['Full_Files']['SaveAsName']; ?>', '<?= $nationalTopSong["Song"]["provider_type"]; ?>',1); ga('send', 'event', 'Top Singles', 'Download', '<?php echo $count; ?>-<?php echo $this->getTextEncode($nationalTopSong['Song']['SongTitle']); ?>', 1)"></a> 
+							<a class="download-icon" title="<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>" onclick="return wishlistDownloadOthersHome('<?= $nationalTopSong['Song']['ProdID']; ?>', '0', '<?= $nationalTopSong['Song']['CdnPath']; ?>', '<?= $nationalTopSong['Song']['FullLength_SaveAsName']; ?>', '<?= $nationalTopSong["Song"]["provider_type"]; ?>',1); ga('send', 'event', 'Top Singles', 'Download', '<?php echo $count; ?>-<?php echo $this->getTextEncode($nationalTopSong['Song']['SongTitle']); ?>', 1)"></a> 
 							<![endif]> <!--[if IE]>
                                                 <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
                                                             class="download-icon" 
                                                             title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
-                                                            onclick='wishlistDownloadIEHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>", "<?php echo $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopSong['Full_Files']['SaveAsName']; ?>",1);' 
+                                                            onclick='wishlistDownloadIEHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>", "<?php echo $nationalTopSong['Song']['CdnPath']; ?>", "<?php echo $nationalTopSong['Song']['FullLength_SaveAsName']; ?>",1);' 
                                                             ></a>
                                                 <![endif]-->
 						</span> 
@@ -186,7 +186,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 								} else {
 									$song_title = $nationalTopSong['Song']['SongTitle'];
 								}
-								echo $this->Queue->getNationalsongsStreamNowLabel($nationalTopSong['Full_Files']['CdnPath'], $nationalTopSong['Full_Files']['SaveAsName'], $song_title, $nationalTopSong['Song']['ArtistText'], $nationalTopSong['Song']['FullLength_Duration'], $nationalTopSong['Song']['ProdID'], $nationalTopSong['Song']['provider_type'], $count . '-' . $this->getTextEncode($nationalTopSong['Song']['SongTitle']));
+								echo $this->Queue->getNationalsongsStreamNowLabel($nationalTopSong['Song']['CdnPath'], $nationalTopSong['Song']['FullLength_SaveAsName'], $song_title, $nationalTopSong['Song']['ArtistText'], $nationalTopSong['Song']['FullLength_Duration'], $nationalTopSong['Song']['ProdID'], $nationalTopSong['Song']['provider_type'], $count . '-' . $this->getTextEncode($nationalTopSong['Song']['SongTitle']));
 							} else if ($nationalTopSong['Country']['SalesDate'] <= date('Y-m-d')) {
 								echo $html->image('sample-icon.png', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $count, "onClick" => 'playSample(this, "' . $count . '", ' . $nationalTopSong['Song']['ProdID'] . ', "' . base64_encode($nationalTopSong['Song']['provider_type']) . '", "' . $this->webroot . '"); ga("send", "event", "Top Singles, "Play Sample", "' . $count . '-' . $this->getTextEncode($nationalTopSong['Song']['SongTitle']) . '")'));
 								echo $html->image('sample-loading-icon-v3.gif', array("alt" => "Loading Sample", "class" => "preview play-btn", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $count));

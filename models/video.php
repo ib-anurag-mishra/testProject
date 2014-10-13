@@ -179,41 +179,25 @@ class Video extends AppModel
 						'Video.VideoTitle',
 						'Video.ArtistText',
 						'Video.FullLength_Duration',
-						'Video.CreatedOn',
-						'Video.Image_FileID',
+						'Video.CreatedOn',						
 						'Video.provider_type',
 						'Video.Genre',
-						'Sample_Files.CdnPath',
-						'Sample_Files.SaveAsName',
-						'Full_Files.CdnPath',
-						'Full_Files.SaveAsName',
-						'File.CdnPath',
-						'File.SourceURL',
-						'File.SaveAsName',
-						'Sample_Files.FileID',
+                                                'Video.Image_SaveAsName',
+						'Video.CdnPath',
+						'Video.FullLength_SaveAsName',
 						'Country.Territory',
 						'Country.SalesDate'
 				),
-				'conditions' => array('Video.DownloadStatus' => '1', 'Video.ProdID' => $productId),
+				'conditions' => array('Video.DownloadStatus' => '1','Video.Image_SaveAsName !=' => '','Video.CdnPath !=' => '',
+                                    'Video.FullLength_SaveAsName !=' => '', 'Video.ProdID' => $productId,
+                                    'Country.SalesDate !=' => '', 'Country.SalesDate <=' => date('Y-m-d')),
 				'joins' => array(
 						array(
 								'table' => $prefix . 'countries',
 								'alias' => 'Country',
 								'type' 	=> 'LEFT',
 								'conditions' => array('Video.ProdID = Country.ProdID', 'Video.provider_type = Country.provider_type')
-						),
-						array(
-								'table' => 'File',
-								'alias' => 'Sample_Files',
-								'type'  => 'LEFT',
-								'conditions' => array('Video.Sample_FileID = Sample_Files.FileID')
-						),
-						array(
-								'table' => 'File',
-								'alias' => 'Full_Files',
-								'type'  => 'LEFT',
-								'conditions' => array('Video.FullLength_FileID = Full_Files.FileID')
-						),
+						),						
 						array(
 								'table' => 'PRODUCT',
 								'alias' => 'PRODUCT',

@@ -98,6 +98,8 @@ class CacheController extends AppController {
      * @desc This function is used to call all functions for setting cache variables
      */    
     function runCache(){
+        
+        
         set_time_limit(0);
         global $brokenImages;
         
@@ -107,7 +109,7 @@ class CacheController extends AppController {
         $territoriesList = $this->Common->getTerritories();   
         
         foreach($territoriesList as $territory){ 
-            
+           
             
             $this->setGenre($territory);
 	    $this->setTopSingles($territory); 
@@ -138,6 +140,35 @@ class CacheController extends AppController {
  
        
     }
+    
+    
+    /*
+     * @func runCache
+     * @desc This function is used to call all functions for setting cache variables
+     */    
+    function runCacheTest(){
+        set_time_limit(0);
+        global $brokenImages;
+        
+        $brokenImages = array();
+       // $this->writeLibraryTop10songsCache();
+         $this->setTopAlbums('US');die;
+        $territoriesList = $this->Common->getTerritories();   
+        
+        foreach($territoriesList as $territory){             
+          
+	   // $this->setTopSingles($territory);          
+	    $this->setTopAlbums('US');
+           // $this->setFeaturedArtists($territory);
+            
+        
+        }
+
+        
+ 
+       
+    }
+   
    
     /* Function : sendBrokenImagesEmail
      * Desc: reponsible to send broken image alert          
