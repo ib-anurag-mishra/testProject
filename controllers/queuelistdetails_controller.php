@@ -152,6 +152,7 @@ class QueueListDetailsController extends AppController
         $this->set('patronDownload', $patronDownload);
         $queueId = $this->Session->read('queuePlaying');
         $songPlaying = $this->Session->read('songPlaying');
+        $albumDetails = $this->Session->read('albumPlaying');
         if (!empty($queueId))
         {
             $queue_list_array = $this->Queue->getQueueDetails($queueId, $territory);
@@ -180,9 +181,23 @@ class QueueListDetailsController extends AppController
             $this->set('queue_id', $queueId);
             $this->set('queue_songs_count', count($queue_list_array));
             $this->set('total_time', $total_minutes . ":" . $total_seconds);
-        }
-        else if (!empty($songPlaying))
-        {
+        } else if(!empty($albumDetails)) {
+            $Album = ClassRegistry::init('Album');
+            $albumData = $this->Album->getAlbum($albumDetails['albumProdId']);
+            $albumSongs = $this->Common->getAlbumNowStreamingSongs($albumDetails['albumProdId'],$albumDetails['providerType'],$territory);
+            foreach ($albumSongs as $k => $v)
+            {
+                $filePath = $this->Token->streamingToken($v['Full_Files']['CdnPath'] . "/" . $v['Full_Files']['SaveAsName']);
+                if (!empty($filePath))
+                {
+                    $songPath = explode(':', $filePath);
+                    $streamUrl = trim($songPath[1]);
+                    $albumSongs[$k]['streamUrl'] = $streamUrl;
+                }
+            }
+            $this->set('albumSongs' , $albumSongs);
+            $this->set('albumTitle',$albumData[0]['Album']['AlbumTitle']);
+        } else if (!empty($songPlaying)) {
             $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'], $songPlaying['providerType'], $territory);
             foreach ($trackDetails as $k => $v)
             {                
@@ -284,12 +299,16 @@ class QueueListDetailsController extends AppController
     function getPlaylistData()
     {
         $prodId = $this->params['form']['prodId'];
+        if(!empty($this->params['form']['AlbumID'])) {
+            $AlbumProdId = $this->params['form']['AlbumID'];
+        }
         $provider = $this->params['form']['providerType'];
         $eventType = $this->params['form']['eventFired'];
         $userStreamedTime = $this->params['form']['userStreamedTime'];
         $songDuration = $this->params['form']['songLength'];
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
+        $this->Session->delete('albumPlaying');
         $this->Session->delete('queuePlaying');
         $this->Session->delete('songPlaying');
         $eventArray = array(5, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21);
@@ -312,10 +331,12 @@ class QueueListDetailsController extends AppController
                     }
                     else
                     {
-                        if (!empty($prodId) && !empty($provider))
-                        {
+                        if (!empty($prodId) && !empty($provider) && !empty($AlbumProdId)) {
+                            $albumDetails = array('albumProdId' => $AlbumProdId, 'providerType' => $provider);
+                            $this->Session->write("albumPlaying", $albumDetails);                            
+                        } else if(!empty($prodId) && !empty($provider)) {
                             $songDetails = array('prodId' => $prodId, 'providerType' => $provider);
-                            $this->Session->write("songPlaying", $songDetails);
+                            $this->Session->write("songPlaying", $songDetails);                           
                         }
                     }
                 }
@@ -343,6 +364,7 @@ class QueueListDetailsController extends AppController
     {
         $this->Session->delete('queuePlaying');
         $this->Session->delete('songPlaying');
+        $this->Session->delete('albumPlaying');
         echo "success";
         exit;
     }

@@ -43,50 +43,50 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active" style="cursor:pointer;width:90px;"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter active" style="cursor: pointer; width:90px;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled" style="cursor:pointer;width:90px;"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter active toggled" style="cursor: pointer; width:90px;"><?php echo __('Date'); ?></div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter " style="cursor:pointer;width:90px;"><?php echo __('Date'); ?></div>
+                <div class="date-filter-button filter " style="cursor: pointer; width:90px;"><?php echo __('Date'); ?></div>
             <?php
             }
             ?>   
-                        <div class="song-filter-button" style="cursor:pointer;width:190px;"><?php echo __('Music'); ?></div>
-			<div class="song-filter-button" style="cursor:pointer;width:130px;"><?php echo __('Playlist'); ?></div> 
+                        <div class="song-filter-button" style="cursor: pointer; width:190px;"><?php echo __('Music'); ?></div>
+			<div class="song-filter-button" style="cursor: pointer; width:130px;"><?php echo __('Playlist'); ?></div> 
 			
 			<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
+                    <div class="artist-filter-button filter active" style="cursor: pointer; width:141px;"><?php echo __('Artists'); ?></div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
+                    <div class="artist-filter-button filter active toggled" style="cursor: pointer; width:141px;"><?php echo __('Artists'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
+			<div class="artist-filter-button filter" style="cursor: pointer; width:141px;"><?php echo __('Artists'); ?></div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
+                    <div class="album-filter-button filter active" style="cursor: pointer; width:178px;"><?php echo __('Album'); ?></div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
+                    <div class="album-filter-button filter active toggled" style="cursor: pointer; width:178px;"><?php echo __('Album'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
+			<div class="album-filter-button filter" style="cursor: pointer; width:178px;"><?php echo __('Album'); ?></div>
             <?php
             }
             ?>  
-			<div class="artist-filter-button"style="cursor:pointer;"><?php echo __('Streaming Time'); ?> (in sec.)</div>
+			<div class="streaming-time-header" style="cursor: pointer;"><?php echo __('Streaming Time'); ?> <br> (in sec.)</div>
 			
 		</nav>
-		<div class="recent-downloads-shadow-container" style="display:none">
-			<div class="recent-downloads-scrollable">
+		<div class="recent-downloads-shadow-container" style="height: auto; margin-bottom: 40px;">
+			<div class="recent-downloads-scrollable" style="height: auto;">
 				<div class="row-container">
 				<?php 
                 if(count($streamingData) != 0)
@@ -135,19 +135,20 @@ $ieVersion =  ieversion();
                         
                         ?>
 					</div>
-					<div class="song-title" style="left: 115px;">
+					<div class="song-title" style="left: 115px; width: 155px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                     <?php 
-                                                  if(strlen($streamingArr['Song']['SongTitle']) >= 16) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 16)) . '...</span>';							
-						} else {
-							echo $this->getTextEncode($streamingArr['Song']['SongTitle']); 
-					 	}
+      //                                             if(strlen($streamingArr['Song']['SongTitle']) >= 16) {
+						// 	echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 16)) . '...</span>';							
+						// } else {
+						// 	echo $this->getTextEncode($streamingArr['Song']['SongTitle']); 
+					 // 	}
+                            echo $this->getTextEncode($streamingArr['Song']['SongTitle']);         
                     
 					?>
                                     <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
                                         
-                                        <div style="width: 128px; position: absolute; left: 292px; top: 25px; font-size: 12px;  color: rgba(0, 0, 0, 0.7); text-decoration: none;">
+                                        <div style="width: 128px; position: absolute; left: 292px; top: 14px; font-size: 12px;  color: rgba(0, 0, 0, 0.7); text-decoration: none;" class="playlist-title">
                                             <a href="/queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>/<?php echo $streamingArr['QueueList']['queue_type']; ?>/<?php echo base64_encode($streamingArr['QueueList']['queue_name']); ?>">
                                      <?php 
                                                
@@ -162,24 +163,26 @@ $ieVersion =  ieversion();
                                             </a>
                                         </div>
 
-					<div class="album-title" style="left:561px;"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
+					<div class="album-title" style="left:561px; width: 158px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
                                              <?php 
-						if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Album']['AlbumTitle'], 0, 19)) . '...</span>';							
-						} else {
-							echo $this->getTextEncode($streamingArr['Album']['AlbumTitle']); 
-					 	}
+						// if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
+						// 	echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Album']['AlbumTitle'], 0, 19)) . '...</span>';							
+						// } else {
+						// 	echo $this->getTextEncode($streamingArr['Album']['AlbumTitle']); 
+					 // 	}
+                            echo $this->getTextEncode($streamingArr['Album']['AlbumTitle']); 
 					?>
                                             </a>
                                             </div>
-					<div class="artist-name" style="left:422px;"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
-						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .$this->getTextEncode(substr($streamingArr['Song']['ArtistText'], 0, 19)) . '...</span>';							
-						} else {
-							$ArtistName = $streamingArr['Song']['ArtistText'];
-							echo $this->getTextEncode($ArtistName);
-						}
-						
+					<div class="artist-name" style="left:422px; width: 122px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
+						// if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
+						// 	echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .$this->getTextEncode(substr($streamingArr['Song']['ArtistText'], 0, 19)) . '...</span>';							
+						// } else {
+						// 	$ArtistName = $streamingArr['Song']['ArtistText'];
+						// 	echo $this->getTextEncode($ArtistName);
+						// }
+						$ArtistName = $streamingArr['Song']['ArtistText'];
+                        echo $this->getTextEncode($ArtistName);
 					?></a></div>
 					
 					<div class="download"><?php
