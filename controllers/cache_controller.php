@@ -331,11 +331,16 @@ class CacheController extends AppController {
         
         $page = 2;
         while($featuresArtists = $this->Common->getFeaturedArtists($territory,$page)){
-            if(!empty($featuresArtists)){                
+            if(!empty($featuresArtists)){   
+                
+               /* 
                 //update the mem datas table            
                 $MemDatas->setDataSource('master');
                 $this->CacheHandler->setMemData("featured_artists_" . $territory.'_'.$page,$featuresArtists);
-                $MemDatas->setDataSource('default');                
+                $MemDatas->setDataSource('default');    
+                */
+                
+                
                 Cache::write("featured_artists_" . $territory.'_'.$page, $featuresArtists);
                 $this->log("cache written for featured artists for ".$territory.'_'.$page, 'debug');
                 $this->log("cache written for featured artists for: ".$territory.'_'.$page, "cache");        
