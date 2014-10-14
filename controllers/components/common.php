@@ -1925,21 +1925,17 @@ STR;
     }
     foreach ($albumSongs as $k => $albumSong) {
       foreach ($albumSong as $key => $value) {
-        $albumSongs[$k][$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
-        $albumSongs[$k][$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
+        $albumSongs[$k][$key]['CdnPath'] = $value['Song']['CdnPath'];
+        $albumSongs[$k][$key]['SaveAsName'] = $value['Song']['FullLength_SaveAsName'];
         $albumSongs[$k][$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
         unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
         unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
-        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
-        unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
-        unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
+        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);        
         unset($albumSongs[$k][$key]['Song']['sequence_number']);
         unset($albumSongs[$k][$key]['Song']['Title']);
         unset($albumSongs[$k][$key]['Song']['Artist']);
         unset($albumSongs[$k][$key]['Genre']);
-        unset($albumSongs[$k][$key]['Country']);
-        unset($albumSongs[$k][$key]['Sample_Files']);
-        unset($albumSongs[$k][$key]['Full_Files']);
+        unset($albumSongs[$k][$key]['Country']);        
       }
     }
     return $albumSongs;
