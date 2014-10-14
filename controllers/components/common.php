@@ -1817,7 +1817,7 @@ STR;
 
   function getTopAlbums($territory) {
      
-      global $brokenImages;
+    global $brokenImages;
     // Gets the list of the top albums that are manually set
     $TopAlbum = ClassRegistry::init('TopAlbum');
     $topAlbumsList = $TopAlbum->getTopAlbumsList($territory);
@@ -1867,14 +1867,14 @@ STR;
                 }          
             } 
            
-            /*
+            
             //print_r($topAlbumData);die;
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData('top_albums' . $territory,$topAlbumData);
             $MemDatas->setDataSource('default');
-            */
+            
             Cache::write('top_albums' . $territory, $topAlbumData);
             $this->log('cache written for Top Albums for: ' . $territory, 'debug');
             $this->log('cache written for Top Albums for: ' . $territory, 'cache');
@@ -1925,21 +1925,17 @@ STR;
     }
     foreach ($albumSongs as $k => $albumSong) {
       foreach ($albumSong as $key => $value) {
-        $albumSongs[$k][$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
-        $albumSongs[$k][$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
+        $albumSongs[$k][$key]['CdnPath'] = $value['Song']['CdnPath'];
+        $albumSongs[$k][$key]['SaveAsName'] = $value['Song']['FullLength_SaveAsName'];
         $albumSongs[$k][$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
         unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
         unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
-        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
-        unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
-        unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
+        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);        
         unset($albumSongs[$k][$key]['Song']['sequence_number']);
         unset($albumSongs[$k][$key]['Song']['Title']);
         unset($albumSongs[$k][$key]['Song']['Artist']);
         unset($albumSongs[$k][$key]['Genre']);
-        unset($albumSongs[$k][$key]['Country']);
-        unset($albumSongs[$k][$key]['Sample_Files']);
-        unset($albumSongs[$k][$key]['Full_Files']);
+        unset($albumSongs[$k][$key]['Country']);        
       }
     }
     return $albumSongs;
@@ -2044,15 +2040,12 @@ STR;
 
 STR;
             $topSingleData = $albumInstance->query($sql_top_singles);
-
-        /*
+        
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("top_singles" . $territory,$topSingleData);
-            $MemDatas->setDataSource('default');
-            
-        */    
+            $MemDatas->setDataSource('default');       
 
             
             if (!empty($topSingleData))
