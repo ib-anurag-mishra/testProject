@@ -109,11 +109,13 @@ $(function() {
 			$("#pur_order").show();
 			$("#pur_amount").show();
 			$("#pur_track").show();
+                        $("#pur_acv").show();
 			upgrade = 0;	
 		} else {
 			$("#pur_order").hide();
 			$("#pur_amount").hide();
 			$("#pur_track").hide();
+                        $("#pur_acv").hide();
 			upgrade = 1;			
 		}
 	});
@@ -124,11 +126,13 @@ $(function() {
 			$("#str_order").show();
 			$("#str_amount").show();
 			$("#str_track").show();
+                        $("#str_acv").show();
 			strupgrade = 0;	
 		} else {
 			$("#str_order").hide();
 			$("#str_amount").hide();
 			$("#str_track").hide();
+                        $("#str_acv").hide();
 			strupgrade = 1;			
 		}
 	});        
@@ -569,11 +573,12 @@ function showContract(){
 				$("#pur_order").show();
 				$("#pur_amount").show();
 				$("#pur_track").show();
+                                $("#pur_acv").show();
 				$("#LibraryPurchasePurchasedTracks").val('Unlimited');
 			} else {
 				$("#pur_order").show();
 				$("#pur_amount").show();
-				$("#pur_track").show();
+				$("#pur_acv").show();
 				$("#LibraryPurchasePurchasedTracks").val('');
 			}
 			$("#LibraryLibraryContractStartDate").val('');
@@ -589,6 +594,7 @@ function showContract(){
 			$("#pur_order").hide();
 			$("#pur_amount").hide();
 			$("#pur_track").hide();
+                        $("#pur_acv").hide();
 			$("#upgrd").hide();
 			if($("#LibraryLibraryContractStartDate").val() != ''){
 				$("#upgrd").show();
@@ -605,11 +611,13 @@ function showStreamContract(){
                             $("#str_order").show();
                             $("#str_amount").show();
                             $("#str_track").show();
+                            $("#str_acv").show();
                             $("#LibraryPurchasesStreamingPurchasedHours").val('24');
 			} else {
                             $("#str_order").show();
                             $("#str_amount").show();
                             $("#str_track").show();
+                            $("#str_acv").show();
                             $("#LibraryPurchasesStreamingPurchasedHours").val($( "select#LibraryLibraryStreamingHours" ).val());
 			}
 			$("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val('');
@@ -626,6 +634,7 @@ function showStreamContract(){
 			$("#str_order").hide();
 			$("#str_amount").hide();
 			$("#str_track").hide();
+                        $("#str_acv").hide();
 			$("#strupgrd").hide();
 			if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != ''){
 				$("#strupgrd").show();
