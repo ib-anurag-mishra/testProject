@@ -403,15 +403,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 			}
 				} else {
 					?>
-			<h1 class="logo" style="width: 350px; height: 108px; position: absolute; left: 0; top: 0;">
+			<div class="logo" style="width: 350px; height: 108px; position: absolute; left: 0; top: 0;">
 				<a href="/homes/index"><?php echo $this->Html->image('logo.png', array('width' => '157', 'height' => '108'));?></a>
-			</h1>
+			</div>
 			<?php }
 			} else {
 				?>
-			<h1 class="logo" style="width: 350px; height: 108px; position: absolute; left: 0; top: 0;">
+			<div class="logo" style="width: 350px; height: 108px; position: absolute; left: 0; top: 0;">
 				<a href="/homes/index"><?php echo $this->Html->image('logo.png', array('width' => '157', 'height' => '108'));?></a>
-			</h1>
+			</div>
 			<?php } ?>
 			<div class="header-right-col" style="right: 10px;">
 				<div class="row-1 clearfix">
