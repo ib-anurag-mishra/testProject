@@ -16,7 +16,7 @@
                 	if ( isset( $libraryDownload ) && isset( $patronDownload ) && $libraryDownload == '1' && $patronDownload == '1' ):
 
                         $productInfo	  = $mvideo->getDownloadData( $videosData[0]["Video"]["ProdID"], $videosData[0]["Video"]["provider_type"] );                        
-                        $videoUrl		  = $this->Token->regularToken( $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName'] );
+                        $videoUrl		  = $this->Token->regularToken( $videosData[0]["Video"]["CdnPath"] . "/" . $videosData[0]["Video"]["FullLength_SaveAsName"] );
                         $finalVideoUrl	  = Configure::read( 'App.Music_Path' ) . $videoUrl;
                         $finalVideoUrlArr = str_split( $finalVideoUrl, ceil( strlen( $finalVideoUrl ) / 3 ) );
                         $downloadsUsed 	  = $this->Videodownload->getVideodownloadfind( $videosData[0]['Video']['ProdID'], $videosData[0]['Video']['provider_type'], $libraryId, $patronId, Configure::read( 'App.twoWeekStartDate' ), Configure::read( 'App.twoWeekEndDate' ) );

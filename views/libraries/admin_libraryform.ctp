@@ -1338,6 +1338,10 @@ if (empty($getData))
                         <?php echo $this->Form->label('Purchased Amount in $'); ?>
                         <?php echo $this->Form->input('LibraryPurchase.purchased_amount', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
                     </div>
+                    <div id="pur_acv" class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('Music ACV'); ?>
+                        <?php echo $this->Form->input('LibraryPurchase.acv', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>                        
                     </div>
                     <div class="purchase_streaming">
                         <h1>Purchase Streaming</h1><br/><br/>
@@ -1369,6 +1373,10 @@ if (empty($getData))
                         <?php echo $this->Form->label('Purchased Amount in $'); ?>
                         <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_amount', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
                     </div>
+                    <div id="str_acv" class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('Streaming ACV'); ?>
+                        <?php echo $this->Form->input('LibraryPurchasesStreaming.acv', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>                        
                     </div> 
                     <div class="clr">
                     </div>
