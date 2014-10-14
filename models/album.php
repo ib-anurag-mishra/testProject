@@ -52,7 +52,8 @@ class Album extends AppModel  {
 					'conditions' => array(
 						'Album.ProdID = ta.album',
 						'ta.territory' => $territory
-					)
+		
+                                                )
 				),
 				array(
 					'type' => 'INNER',
@@ -93,20 +94,15 @@ class Album extends AppModel  {
 				'Album.ArtistURL',
 				'Album.Label',
 				'Album.Copyright',
-				'Album.provider_type',
+				'Album.provider_type',                                
+				'Album.CdnPath',
+				'Album.Image_SaveAsName',
 				'ta.sortId as sortID'
 			),
 			'contain' => array(
 				'Genre' => array(
 					'fields' => array(
 						'Genre.Genre'
-					)
-				),
-				'Files' => array(
-					'fields' => array(
-						'Files.CdnPath',
-						'Files.SaveAsName',
-						'Files.SourceURL'
 					)
 				)
 			),

@@ -1817,7 +1817,7 @@ STR;
 
   function getTopAlbums($territory) {
      
-      global $brokenImages;
+    global $brokenImages;
     // Gets the list of the top albums that are manually set
     $TopAlbum = ClassRegistry::init('TopAlbum');
     $topAlbumsList = $TopAlbum->getTopAlbumsList($territory);
@@ -1854,7 +1854,7 @@ STR;
         
             foreach ($topAlbumData as $key => $data) { 
 
-                $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Files']['CdnPath'] . '/' . $data['Files']['SourceURL']);;
+                $topAlbumData[$key]['topAlbumImage'] = $musicPath . $Token->artworkToken($data['Album']['CdnPath'] . '/' . $data['Album']['Image_SaveAsName']);;
                 $topAlbumData[$key]['albumSongs'] = $this->getAlbumSongsNew($data['Album']['ProdID'], $data['Album']['provider_type'], $territory);          
 
                 //check image file exist or not for each entry
@@ -1866,8 +1866,9 @@ STR;
                     unset($topAlbumData[$key]);             
                 }          
             } 
+           
             
-            
+            //print_r($topAlbumData);die;
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
@@ -1892,6 +1893,8 @@ STR;
    */
   function checkImageFileExist($imageURL) {      
      
+      //comment this code for time being
+      /*
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL,$imageURL);
       // don't download content
@@ -1903,6 +1906,8 @@ STR;
       }else{
           return false;
       }      
+      */  
+      return true;
   }
 
   function getAlbumSongsNew($prodId, $provider, $territory) {
@@ -1920,21 +1925,17 @@ STR;
     }
     foreach ($albumSongs as $k => $albumSong) {
       foreach ($albumSong as $key => $value) {
-        $albumSongs[$k][$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
-        $albumSongs[$k][$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
+        $albumSongs[$k][$key]['CdnPath'] = $value['Song']['CdnPath'];
+        $albumSongs[$k][$key]['SaveAsName'] = $value['Song']['FullLength_SaveAsName'];
         $albumSongs[$k][$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
         unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
         unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
-        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
-        unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
-        unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
+        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);        
         unset($albumSongs[$k][$key]['Song']['sequence_number']);
         unset($albumSongs[$k][$key]['Song']['Title']);
         unset($albumSongs[$k][$key]['Song']['Artist']);
         unset($albumSongs[$k][$key]['Genre']);
-        unset($albumSongs[$k][$key]['Country']);
-        unset($albumSongs[$k][$key]['Sample_Files']);
-        unset($albumSongs[$k][$key]['Full_Files']);
+        unset($albumSongs[$k][$key]['Country']);        
       }
     }
     return $albumSongs;
@@ -1997,20 +1998,15 @@ STR;
                         Song.Advisory,
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
-                        Song.provider_type,                       
+                        Song.provider_type,
+                        Song.FullLength_SaveAsName,
+                        Song.Sample_SaveAsName,
+                        Song.CdnPath,   
                         Country.Territory,
                         Country.SalesDate,
                         Country.StreamingSalesDate,
                         Country.StreamingStatus,
                         Country.DownloadStatus,
-                        Sample_Files.CdnPath,
-                        Sample_Files.SaveAsName,
-                        Full_Files.CdnPath,
-                        Full_Files.SaveAsName,
-                        File.CdnPath,
-                        File.SourceURL,
-                        File.SaveAsName,
-                        Sample_Files.FileID,
                         PRODUCT.pid,
                         Albums.ProdID,
                         Albums.provider_type,
@@ -2020,19 +2016,13 @@ STR;
                                 INNER JOIN
                         top_singles as TopSingles ON (TopSingles.prod_id = Song.ProdID AND TopSingles.Territory = '$territory')
                                 LEFT JOIN
-                        File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                LEFT JOIN
-                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                LEFT JOIN
                         Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)                        
                                 INNER JOIN
                         {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                                 LEFT JOIN
                         PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
                                 INNER JOIN 
-                        Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                INNER JOIN 
-                        File ON (Albums.FileID = File.FileID) 
+                        Albums ON (Song.ReferenceID=Albums.ProdID)                                  
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) 
                 GROUP BY Song.ProdID
@@ -2041,14 +2031,12 @@ STR;
 
 STR;
             $topSingleData = $albumInstance->query($sql_top_singles);
-
+        
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("top_singles" . $territory,$topSingleData);
-            $MemDatas->setDataSource('default');
-            
-            
+            $MemDatas->setDataSource('default');       
 
             
             if (!empty($topSingleData))

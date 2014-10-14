@@ -71,6 +71,9 @@ class HomesController extends AppController {
 
         /* Top Singles Starts */ 
         $nationalTopDownload = Cache::read("top_singles" . $territory);
+        
+        //print_r($nationalTopDownload);die;
+        
         if ($nationalTopDownload === false) {
             
              //check variable data in to mem_datas table
@@ -87,6 +90,10 @@ class HomesController extends AppController {
         
         /* National Top 100 Albums slider start */
         $TopAlbums = Cache::read("top_albums" . $territory);
+        
+       // print_r($TopAlbums);die;
+
+        
         if ($TopAlbums === false) {            
              //check variable data in to mem_datas table
             $TopAlbums = $this->CacheHandler->checkMemData("top_albums" . $territory);
