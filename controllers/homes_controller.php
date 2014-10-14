@@ -71,6 +71,9 @@ class HomesController extends AppController {
 
         /* Top Singles Starts */ 
         $nationalTopDownload = Cache::read("top_singles" . $territory);
+        
+        //print_r($nationalTopDownload);die;
+        
         if ($nationalTopDownload === false) {
             
              //check variable data in to mem_datas table
@@ -87,6 +90,10 @@ class HomesController extends AppController {
         
         /* National Top 100 Albums slider start */
         $TopAlbums = Cache::read("top_albums" . $territory);
+        
+       // print_r($TopAlbums);die;
+
+        
         if ($TopAlbums === false) {            
              //check variable data in to mem_datas table
             $TopAlbums = $this->CacheHandler->checkMemData("top_albums" . $territory);
@@ -3413,7 +3420,18 @@ STR;
             echo "empty|Something went wrong during download.Please try again later.";
             exit;
         }
-
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        //check for download availability
+        if (empty($libraryDownload)) {
+            echo "error";
+            exit;
+        }
+        
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        if (empty($patronDownload)) {
+            echo "error";
+            exit;
+        }        
         /*
          * if all required field are not null then we continue 
          * for download and  insert record in download table
@@ -3425,14 +3443,6 @@ STR;
         $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
 
         $downloadsDetail = array();
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-
-        //check for download availability
-        if ($libraryDownload != '1' || $patronDownload != '1') {
-            echo "error";
-            exit;
-        }
 
         //get details for this song
         $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
