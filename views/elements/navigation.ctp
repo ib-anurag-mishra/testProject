@@ -599,7 +599,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 						if($this->Session->read("patron")){
 						echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id" => 'topmylib07', "onclick" => "setUpperNavigation('topmylib07'); ga('send', 'event', 'Top Nav', 'Click', 'Most Popular')"));
 						} else { 
-						echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' => 'us_top_10'), array("id" => 'topustop07', "onclick" => "setUpperNavigation('topustop07'); ga('send', 'event', 'Top Nav', 'Click', 'Most Popular')"));
+						echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' => 'us_top_10'), array("id" => 'topmylib07', "onclick" => "setUpperNavigation('topustop07'); ga('send', 'event', 'Top Nav', 'Click', 'Most Popular')"));
 						}
 					} ?>
 				</li>
