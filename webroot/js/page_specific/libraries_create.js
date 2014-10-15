@@ -521,26 +521,27 @@ function getArray(v){
 }
 function get_purFields(val){
 	if(document.getElementById("LibraryShowContract").checked==true){
-		if(val == 1){
-			$("#pur_order").show();
-			$("#pur_amount").show();
-			$("#pur_track").show();
-                        $("#pur_acv").show();
-			$("#LibraryPurchasePurchasedTracks").val('Unlimited');
-		} else {
-			$("#pur_order").show();
-			$("#pur_amount").show();
-			$("#pur_track").show();
-                        $("#pur_acv").hide();
-			$("#LibraryPurchasePurchasedTracks").val('');
-		}
+            if(val == 1){
+                $("#pur_order").show();
+                $("#pur_amount").show();
+                $("#pur_track").show();
+                $("#pur_acv").show();
+                $("#LibraryPurchasePurchasedTracks").val('Unlimited');
+            } else {
+                $("#pur_order").show();
+                $("#pur_amount").show();
+                $("#pur_track").show();
+                $("#pur_acv").hide();
+                $("#LibraryPurchasePurchasedTracks").val('');
+            }
 	} else{
 		if(val ==1){
-			$("#upgrd").hide();
+                    $("#upgrd").hide();
 		} else {
-			if($("#LibraryLibraryContractStartDate").val() != ''){
-				$("#upgrd").show();
-			}
+                    if($("#LibraryLibraryContractStartDate").val() != ''){
+                        $("#upgrd").show();
+                        $("#pur_acv").hide();
+                    }
 		}
 	}
         
@@ -565,6 +566,7 @@ function get_purFields(val){
                     $( "select#LibraryLibraryStreamingHours" ).val();
                     if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != ''){
                             $("#strupgrd").show();
+                            $("#str_acv").hide();
                     }
                 }
         }                
