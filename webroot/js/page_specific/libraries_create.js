@@ -578,7 +578,6 @@ function showContract(){
 			} else {
 				$("#pur_order").show();
 				$("#pur_amount").show();
-				$("#pur_acv").show();
 				$("#LibraryPurchasePurchasedTracks").val('');
 			}
 			$("#LibraryLibraryContractStartDate").val('');
@@ -617,7 +616,6 @@ function showStreamContract(){
                             $("#str_order").show();
                             $("#str_amount").show();
                             $("#str_track").show();
-                            $("#str_acv").show();
                             $("#LibraryPurchasesStreamingPurchasedHours").val($( "select#LibraryLibraryStreamingHours" ).val());
 			}
 			$("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val('');
