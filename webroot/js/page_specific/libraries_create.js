@@ -587,6 +587,7 @@ function showContract(){
 			} else {
 				$("#pur_order").show();
 				$("#pur_amount").show();
+                                $("#pur_track").show();
 				$("#LibraryPurchasePurchasedTracks").val('');
 			}
 			$("#LibraryLibraryContractStartDate").val('');
