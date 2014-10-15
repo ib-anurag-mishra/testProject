@@ -126,7 +126,9 @@ $(function() {
 			$("#str_order").show();
 			$("#str_amount").show();
 			$("#str_track").show();
-                        $("#str_acv").show();
+                        if($("#redio2").is(":checked")){
+                            $("#str_acv").show();
+                        }
 			strupgrade = 0;	
 		} else {
 			$("#str_order").hide();
@@ -521,11 +523,13 @@ function get_purFields(val){
 			$("#pur_order").show();
 			$("#pur_amount").show();
 			$("#pur_track").show();
+                        $("#pur_acv").show();
 			$("#LibraryPurchasePurchasedTracks").val('Unlimited');
 		} else {
 			$("#pur_order").show();
 			$("#pur_amount").show();
 			$("#pur_track").show();
+                        $("#pur_acv").hide();
 			$("#LibraryPurchasePurchasedTracks").val('');
 		}
 	} else{
