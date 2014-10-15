@@ -4735,6 +4735,8 @@ class SoapsController extends AppController {
     $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 	$char = array('"','*','_','/','+','~','!','@','#','$','%','^','&','(',')','{','}',':','<','>','?','`','-','=',';',',','.','|');
 	$val = $this->AuthenticationToken->find('first', array('conditions' => array('token' => $token)));
+
+	if($val) {
 	$lastVisited = $val['AuthenticationToken']['auth_time'];
 	
 	if((time() - $lastVisited) > 1200){
@@ -4813,6 +4815,10 @@ class SoapsController extends AppController {
 	}
 	else {
 		return true;
+	}
+   }
+	else{
+		return false;
 	}
 
   }
