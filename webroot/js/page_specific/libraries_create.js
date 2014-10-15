@@ -109,7 +109,9 @@ $(function() {
 			$("#pur_order").show();
 			$("#pur_amount").show();
 			$("#pur_track").show();
-                        $("#pur_acv").show();
+                        if($(".unlmtd #redio2").is(":checked")){
+                            $("#pur_acv").show();
+                        }
 			upgrade = 0;	
 		} else {
 			$("#pur_order").hide();
