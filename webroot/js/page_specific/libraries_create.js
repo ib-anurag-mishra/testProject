@@ -542,32 +542,31 @@ function get_purFields(val){
 		}
 	}
         
-            if($('form_step4 #redio1').is(':checked')) {
-                if(document.getElementById("ShowContract").checked==true){
-                        if(val == 1){
-                            $("#str_order").show();
-                            $("#str_amount").show();
-                            $("#str_track").show();
-                            $("#str_acv").show();
-                            $("#LibraryPurchasesStreamingPurchasedHours").val(24);
-                        } else {
-                            $("#str_order").show();
-                            $("#str_amount").show();
-                            $("#str_track").show();
-                            $("#str_acv").hide();
-                            $("#LibraryPurchasesStreamingPurchasedHours").val($( "select#LibraryLibraryStreamingHours" ).val());
-                        }
-                } else{
-                        if(val ==1){
-                            $("#strupgrd").hide();
-                        } else {
-                            $( "select#LibraryLibraryStreamingHours" ).val();
-                            if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != ''){
-                                    $("#strupgrd").show();
-                            }
-                        }
-                }                
-            }
+        if(document.getElementById("ShowContract").checked==true){
+                if(val == 1){
+                    $("#str_order").show();
+                    $("#str_amount").show();
+                    $("#str_track").show();
+                    $("#str_acv").show();
+                    $("#LibraryPurchasesStreamingPurchasedHours").val(24);
+                } else {
+                    $("#str_order").show();
+                    $("#str_amount").show();
+                    $("#str_track").show();
+                    $("#str_acv").hide();
+                    $("#LibraryPurchasesStreamingPurchasedHours").val($( "select#LibraryLibraryStreamingHours" ).val());
+                }
+        } else{
+                if(val ==1){
+                    $("#strupgrd").hide();
+                } else {
+                    $( "select#LibraryLibraryStreamingHours" ).val();
+                    if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != ''){
+                            $("#strupgrd").show();
+                    }
+                }
+        }                
+
 }
 
 
