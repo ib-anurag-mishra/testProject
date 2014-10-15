@@ -716,7 +716,7 @@ STR;
 
                 foreach ( $featuredVideos as $key => $featureVideo ) {
 
-                        $videoArtwork = $tokeninstance->artworkToken( $featureVideo['File']['CdnPath'] . '/' . $featureVideo['File']['SourceURL'] );
+                        $videoArtwork = $tokeninstance->artworkToken( $featureVideo['Video']['CdnPath'] . '/' . $featureVideo['Video']['Image_SaveAsName'] );
                         $videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
 
                         $featuredVideos[$key]['videoImage'] = $videoImage;
@@ -765,7 +765,7 @@ STR;
 
                 foreach ( $topDownloads as $key => $topDownload ) {
 
-                        $videoArtwork = $tokeninstance->artworkToken( $topDownload['File']['CdnPath'] . '/' . $topDownload['File']['SourceURL'] );
+                        $videoArtwork = $tokeninstance->artworkToken( $topDownload['Video']['CdnPath'] . '/' . $topDownload['Video']['Image_SaveAsName'] );
                         $videoImage   = Configure::read( 'App.Music_Path' ) . $videoArtwork;
 
                         $topDownloads[$key]['videoImage'] = $videoImage;
