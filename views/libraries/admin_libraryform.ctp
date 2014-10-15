@@ -86,6 +86,7 @@ if (empty($getData))
     $getData['Library']['twiter_icon'] = '';
     $getData['Library']['youtube_icon'] = '';
     $getData['Library']['show_barcode'] = 0;
+    $getData['Library']['customer_id'] = 0;
     $getData['Library']['library_language'] = 'en';
     $getData['Library']['library_exp_date_format'] = '';
     $getData['Library']['library_type'] = '1';
@@ -114,6 +115,10 @@ if (empty($getData))
                 <?php echo $this->Form->hidden('LibraryPurchase.library_id', array('value' => $getData['Library']['id'])); ?>
                 <table cellspacing="10" cellpadding="0" border="0">
                     <tr><td id="formError1" class="formError" colspan="2"></td></tr>
+                    <tr>
+                        <td align="right" width="250"><?php echo $this->Form->label('Customer ID'); ?></td>
+                        <td align="left"><?php echo $this->Form->input('customer_id', array('label' => false, 'value' => $getData['Library']['customer_id'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
+                    </tr>
                     <tr>
                         <td align="right" width="250"><?php echo $this->Form->label('Library Name'); ?></td>
                         <td align="left"><?php echo $this->Form->input('library_name', array('label' => false, 'value' => $getData['Library']['library_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
