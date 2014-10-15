@@ -42,6 +42,7 @@ $replace = array('','');
 						<?php
 						if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']])) {
 							echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 4, $count . '-' . $trackingTitle);
+
 							?>
 						<a onclick="ga('send', 'event', 'Top Albums', 'Toggle Playlists', '<?php echo $count; ?>-<?php echo $trackingTitle; ?>')" class="playlist-menu-icon toggleable no-ajaxy" href="#" title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>
 						<ul>

@@ -12,7 +12,7 @@ foreach ($albumData as $album_key => $album):
 		<?php
 		if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
 		{
-			echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
+			echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']],0,$album['Album']['ProdID']);
 			?>
 		<a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
 

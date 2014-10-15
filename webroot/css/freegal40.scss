@@ -4091,10 +4091,10 @@ sub { top: 0.4em; }
 									text-decoration: none;
 								}
 
-								label {
+								// label {
 
-									cursor: pointer;
-								}
+								// 	cursor: pointer;
+								// }
 							}
 						}
 					}
@@ -11567,6 +11567,19 @@ sub { top: 0.4em; }
 					background: none;
 				}
 
+			}
+
+			&.streaming-time-header {
+
+				width: 118px;
+				line-height: 15px;
+				height: 39px;
+				padding-top: 4px;
+
+				&:after {
+
+					background: none;
+				}
 			}
 
 		}
@@ -19150,4 +19163,9 @@ footer {
 		}	
 	}
 
+}
+
+#terms {
+
+	margin-bottom: 40px;
 }

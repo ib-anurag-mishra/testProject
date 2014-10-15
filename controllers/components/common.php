@@ -1940,6 +1940,15 @@ STR;
     }
     return $albumSongs;
   }
+  
+  
+  function getAlbumNowStreamingSongs($prodId, $provider, $territory) {
+    $countryPrefix = $this->getCountryPrefix($territory);
+    $albumSongs = array();
+    $Song = ClassRegistry::init('Song');
+    $albumSongs = $Song->getSongDetails($prodId, $provider, $territory);  
+    return $albumSongs;
+  }  
     
     /*
      * Function Name : getTopSingles
