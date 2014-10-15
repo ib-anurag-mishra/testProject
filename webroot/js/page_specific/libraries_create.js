@@ -573,7 +573,7 @@ function showContract(){
 		if(document.getElementById("LibraryShowContract").checked==true){
 			$("#contract_start").show();
 			$("#contract_end").show();
-			if(document.getElementById("redio2").checked==true){
+			if($("#redio2").is(":checked")){
 				$("#pur_order").show();
 				$("#pur_amount").show();
 				$("#pur_track").show();
