@@ -4737,7 +4737,8 @@ class SoapsController extends AppController {
 	$val = $this->AuthenticationToken->find('first', array('conditions' => array('token' => $token)));
 	$lastVisited = $val['AuthenticationToken']['auth_time'];
 	
-	if((time() - $lastVisited) > 1){
+
+	if((time() - $lastVisited) > 86400){
 
 	 if(empty($val['AuthenticationToken']['email']))         { $val['AuthenticationToken']['email'] = ' ';           }
         if(empty($val['AuthenticationToken']['password']))      { $val['AuthenticationToken']['password'] = ' ';        }
