@@ -126,7 +126,7 @@ $(function() {
 			$("#str_order").show();
 			$("#str_amount").show();
 			$("#str_track").show();
-                        if($("#redio2").is(":checked")){
+                        if($(".unlmtd #redio2").is(":checked")){
                             $("#str_acv").show();
                         }
 			strupgrade = 0;	
@@ -573,7 +573,7 @@ function showContract(){
 		if(document.getElementById("LibraryShowContract").checked==true){
 			$("#contract_start").show();
 			$("#contract_end").show();
-			if($("#redio2").is(":checked")){
+			if($(".unlmtd #redio2").is(":checked")){
 				$("#pur_order").show();
 				$("#pur_amount").show();
 				$("#pur_track").show();
@@ -610,7 +610,7 @@ function showStreamContract(){
 			$("#stream_contract_start").show();
 			$("#stream_contract_end").show(); 
                         
-			if($("#redio2").is(":checked")){ 
+			if($(".unlmtd #redio2").is(":checked")){ 
                             $("#str_order").show();
                             $("#str_amount").show();
                             $("#str_track").show();
