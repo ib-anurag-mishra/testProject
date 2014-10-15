@@ -1,6 +1,8 @@
 <?php
 echo $session->flash();
 ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
+$find = array('\'', '"');
+$replace = array('','');
 ?>
 <section class="top-albums">
 	<header>
@@ -25,7 +27,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						} else {
 							$ArtistText = $value['Album']['ArtistText'];
 						}
-						$trackingTitle = h(addslashes($title));
+						$trackingTitle = str_replace($find, $replace, $this->getTextEncode($title));
 						?>
 				<li>
 					<div class="album-cover-container">
@@ -39,9 +41,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						<input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album" data-provider="<?= $value["Album"]["provider_type"] ?>" />
 						<?php
 						if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']])) {
-							echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 4, $count . '-' . h(addslashes($title)));
+							echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 4, $count . '-' . $trackingTitle);
 							?>
-						<a onclick="ga('send', 'event', 'Top Albums', 'Toggle Playlists', '<?php echo $count; ?>-<?php echo h(addslashes($title)); ?>')" class="playlist-menu-icon toggleable no-ajaxy" href="#" title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>
+						<a onclick="ga('send', 'event', 'Top Albums', 'Toggle Playlists', '<?php echo $count; ?>-<?php echo $trackingTitle; ?>')" class="playlist-menu-icon toggleable no-ajaxy" href="#" title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>
 						<ul>
 							<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 						</ul>
@@ -50,7 +52,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
 						?>
 
-						<a onclick="ga('send', 'event', 'Top Albums', 'Add to Wishlist', '<?php echo $count; ?>-<?php echo h(addslashes($title)); ?>')" class="wishlist-icon toggleable no-ajaxy" href="#" title="<?php __('Add to Wishlist'); ?>"></a>
+						<a onclick="ga('send', 'event', 'Top Albums', 'Add to Wishlist', '<?php echo $count; ?>-<?php echo $trackingTitle; ?>')" class="wishlist-icon toggleable no-ajaxy" href="#" title="<?php __('Add to Wishlist'); ?>"></a>
 						<?php
 						}
 						?>
@@ -58,11 +60,11 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 					</div>
 					<div class="album-info">
 						<p class="title">
-							<a onclick="ga('send', 'event', 'Top Albums', 'Title Click', '<?php echo $count; ?>-<?php echo h(addslashes($title)); ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Album']['ArtistText']); ?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?>
+							<a onclick="ga('send', 'event', 'Top Albums', 'Title Click', '<?php echo $count; ?>-<?php echo $trackingTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Album']['ArtistText']); ?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?>
 							</a>
 						</p>
 						<p class="artist">
-							<a onclick="ga('send', 'event', 'Top Albums', 'Artist Click', '<?php echo $count; ?>-<?php echo h(addslashes($title)); ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['ArtistText'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Album']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>"><?php echo $this->getTextEncode($ArtistText); ?>
+							<a onclick="ga('send', 'event', 'Top Albums', 'Artist Click', '<?php echo $count; ?>-<?php echo $trackingTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['ArtistText'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Album']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>"><?php echo $this->getTextEncode($ArtistText); ?>
 							</a>
 						</p>
 					</div>
@@ -98,6 +100,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 					$count = 0;
 					foreach( $top_singles as $nationalTopSong ) {
 						$count++;
+						$trackingSongTitle = str_replace($find, $replace, $this->getTextEncode($nationalTopSong['Song']['SongTitle']));
 						if( $count % 2 != 0 ) {
 							?>
 				<li><?php }?>
@@ -128,7 +131,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						<input type="hidden" name="ProviderType" value="<?= $nationalTopSong["Song"]["provider_type"]; ?>" /> 
 						<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $nationalTopSong["Song"]["ProdID"]; ?>">
 							<![if !IE]> 
-							<a class="download-icon" title="<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>" onclick="ga('send', 'event', 'Top Singles', 'Download', '<?php echo $count; ?>-<?php echo h(addslashes($nationalTopSong['Song']['SongTitle'])); ?>', 1); return wishlistDownloadOthersHome('<?= $nationalTopSong['Song']['ProdID']; ?>', '0', '<?= $nationalTopSong['Song']['CdnPath']; ?>', '<?= $nationalTopSong['Song']['FullLength_SaveAsName']; ?>', '<?= $nationalTopSong["Song"]["provider_type"]; ?>',1)"></a> 
+							<a class="download-icon" title="<?php __('IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.'); ?>" onclick="ga('send', 'event', 'Top Singles', 'Download', '<?php echo $count; ?>-<?php echo $trackingSongTitle; ?>', 1); return wishlistDownloadOthersHome('<?= $nationalTopSong['Song']['ProdID']; ?>', '0', '<?= $nationalTopSong['Song']['CdnPath']; ?>', '<?= $nationalTopSong['Song']['FullLength_SaveAsName']; ?>', '<?= $nationalTopSong["Song"]["provider_type"]; ?>',1)"></a> 
 							<![endif]> <!--[if IE]>
                                                 <a id="song_download_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>" 
                                                             class="download-icon" 
@@ -169,10 +172,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 	}
 	?>
 
-						<a onclick="ga('send', 'event', 'Top Singles', 'Add to Wishlist', '<?php echo $count; ?>-<?php echo h(addslashes($nationalTopSong['Song']['SongTitle'])); ?>')" class="wishlist-icon no-ajaxy" title="<?php __('Add to Wishlist'); ?>" href="#"></a>
+						<a onclick="ga('send', 'event', 'Top Singles', 'Add to Wishlist', '<?php echo $count; ?>-<?php echo $trackingSongTitle; ?>')" class="wishlist-icon no-ajaxy" title="<?php __('Add to Wishlist'); ?>" href="#"></a>
 						<?php if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?>
 
-						<a onclick="ga('send', 'event', 'Top Singles', 'Toggle Playlists', '<?php echo $count; ?>-<?php echo h(addslashes($nationalTopSong['Song']['SongTitle'])); ?>')" class="playlist-menu-icon no-ajaxy" href="#" title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>
+						<a onclick="ga('send', 'event', 'Top Singles', 'Toggle Playlists', '<?php echo $count; ?>-<?php $trackingSongTitle; ?>')" class="playlist-menu-icon no-ajaxy" href="#" title="<?php __('Add to a Playlist or Create a New Playlist'); ?>"></a>
 						<ul>
 							<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 						</ul>
@@ -186,7 +189,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 								} else {
 									$song_title = $nationalTopSong['Song']['SongTitle'];
 								}
-								echo $this->Queue->getNationalsongsStreamNowLabel($nationalTopSong['Song']['CdnPath'], $nationalTopSong['Song']['FullLength_SaveAsName'], $song_title, $nationalTopSong['Song']['ArtistText'], $nationalTopSong['Song']['FullLength_Duration'], $nationalTopSong['Song']['ProdID'], $nationalTopSong['Song']['provider_type'], $count . '-' . h(addslashes($nationalTopSong['Song']['SongTitle'])));
+								echo $this->Queue->getNationalsongsStreamNowLabel($nationalTopSong['Song']['CdnPath'], $nationalTopSong['Song']['FullLength_SaveAsName'], $song_title, $nationalTopSong['Song']['ArtistText'], $nationalTopSong['Song']['FullLength_Duration'], $nationalTopSong['Song']['ProdID'], $nationalTopSong['Song']['provider_type'], $count . '-' . $trackingSongTitle);
 							} else if ($nationalTopSong['Country']['SalesDate'] <= date('Y-m-d')) {
 								echo $html->image('sample-icon.png', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $count, "onClick" => 'playSample(this, "' . $count . '", ' . $nationalTopSong['Song']['ProdID'] . ', "' . base64_encode($nationalTopSong['Song']['provider_type']) . '", "' . $this->webroot . '"); ga("send", "event", "Top Singles, "Play Sample", "' . $count . '-' . $this->getTextEncode($nationalTopSong['Song']['SongTitle']) . '")'));
 								echo $html->image('sample-loading-icon-v3.gif', array("alt" => "Loading Sample", "class" => "preview play-btn", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $count));
@@ -212,11 +215,11 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 						?>
 
 						<div class="song-title">
-							<a onclick="ga('send', 'event', 'Top Singles', 'Title Click', '<?php echo $count; ?>-<?php echo h(addslashes($nationalTopSong['Song']['SongTitle'])); ?>')" title="<?php echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['SongTitle'])); ?> " href="/artists/view/<?= base64_encode($nationalTopSong['Song']['ArtistText']); ?>/<?= $nationalTopSong['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopSong['Song']['provider_type']); ?>"><?php echo $this->getTextEncode($songTitle); ?>
+							<a onclick="ga('send', 'event', 'Top Singles', 'Title Click', '<?php echo $count; ?>-<?php echo $trackingSongTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['SongTitle'])); ?> " href="/artists/view/<?= base64_encode($nationalTopSong['Song']['ArtistText']); ?>/<?= $nationalTopSong['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopSong['Song']['provider_type']); ?>"><?php echo $this->getTextEncode($songTitle); ?>
 							</a>
 						</div>
 						<div class="artist-name">
-							<a onclick="ga('send', 'event', 'Top Singles', 'Artist Click', '<?php echo $count; ?>-<?php echo h(addslashes($nationalTopSong['Song']['SongTitle'])); ?>')"
+							<a onclick="ga('send', 'event', 'Top Singles', 'Artist Click', '<?php echo $count; ?>-<?php echo $trackingSongTitle; ?>')"
 								href="/artists/album/<?= base64_encode( $this->getTextEncode( $nationalTopSong['Song']['ArtistText'] ) ); ?>">
 								<?php
 								if ( strlen( $nationalTopSong['Song']['ArtistText'] ) > 36 ) {
@@ -268,9 +271,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 			} else {
 				$ArtistText = $v['Featuredartist']['artist_name'];
 			}
+			$trackingArtistText = str_replace($find, $replace, $this->getTextEncode($ArtistText));
 			?>
 		<div class="featured-grid-item">
-			<a onclick="ga('send', 'event', 'Featured Artist and Composers', 'Artwork Click', 'R<?php echo $row; ?>C<?php echo $column; ?>-<?php echo h(addslashes($ArtistText)); ?>')" href="/artists/album/<?= base64_encode($v['Featuredartist']['artist_name']); ?>">
+			<a onclick="ga('send', 'event', 'Featured Artist and Composers', 'Artwork Click', 'R<?php echo $row; ?>C<?php echo $column; ?>-<?php echo $trackingArtistText; ?>')" href="/artists/album/<?= base64_encode($v['Featuredartist']['artist_name']); ?>">
 				<?php echo $html->image(Configure::read('App.CDN') . 'featuredimg/' . $v['Featuredartist']['artist_image'], array("height" => "77", "width" => "84", "alt" => $ArtistText)); ?>
 			</a>
 			<div class="featured-grid-menu">
@@ -282,11 +286,11 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 					<?php
 					if ($this->Session->read("patron")) {
 						if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'])) {
-							echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'], 3, 'R' . $row . 'C' . $column . '-' . addslashes($ArtistText));
+							echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'], 3, 'R' . $row . 'C' . $column . '-' . $trackingArtistText);
 						}
 					}
 					?>
-					<a onclick="ga('send', 'event', 'Featured Artist and Composers', 'More By', 'R<?php echo $row; ?>C<?php echo $column; ?>-<?php echo h(addslashes($ArtistText)); ?>')" title="<?php __('More by'); ?> <?php echo $this->getTextEncode($ArtistText); ?>" class="more-by-artist" href="/artists/album/<?= base64_encode($v['Featuredartist']['artist_name']); ?>">
+					<a onclick="ga('send', 'event', 'Featured Artist and Composers', 'More By', 'R<?php echo $row; ?>C<?php echo $column; ?>-<?php echo $trackingArtistText; ?>')" title="<?php __('More by'); ?> <?php echo $this->getTextEncode($ArtistText); ?>" class="more-by-artist" href="/artists/album/<?= base64_encode($v['Featuredartist']['artist_name']); ?>">
 						<?php echo $this->getTextEncode($ArtistText); ?>
 					</a>
 				</div>
