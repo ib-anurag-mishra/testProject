@@ -18,9 +18,9 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 }
 
 mysql_select_db("freegal", $freegalConn);
-$sql = "UPDATE libraries SET library_announcement = 1 WHERE customer_id IN (".implode(',',$freegalIds).")";
+$sql = "UPDATE libraries SET library_announcement = 1 WHERE customer_id IN (".implode(',',$freegalIds).") and id NOT IN (1,2)";
 $result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-$sql = "UPDATE libraries SET library_announcement = 0 WHERE customer_id NOT IN (".implode(',',$freegalIds).")";
+$sql = "UPDATE libraries SET library_announcement = 0 WHERE customer_id NOT IN (".implode(',',$freegalIds).") and id NOT IN (1,2)";
 $result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 echo date("Y-m-d H:i:s")." - Library satus updated successfully for Library ID's ".implode(',',$freegalIds);
 mysql_close($freegalConn);
