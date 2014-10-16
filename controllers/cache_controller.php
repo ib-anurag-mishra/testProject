@@ -157,6 +157,7 @@ class CacheController extends AppController {
           
 	   $this->setFeaturedVideos($territory);          
            $this->setTopVideoDownloads($territory); 
+           
         
         }
        
