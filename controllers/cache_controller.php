@@ -151,21 +151,14 @@ class CacheController extends AppController {
         global $brokenImages;
         
         $brokenImages = array();
-       // $this->writeLibraryTop10songsCache();
-         $this->setTopAlbums('US');die;
         $territoriesList = $this->Common->getTerritories();   
         
         foreach($territoriesList as $territory){             
           
-	   // $this->setTopSingles($territory);          
-	    $this->setTopAlbums('US');
-           // $this->setFeaturedArtists($territory);
-            
+	   $this->setFeaturedVideos($territory);          
+           $this->setTopVideoDownloads($territory); 
         
         }
-
-        
- 
        
     }
    
