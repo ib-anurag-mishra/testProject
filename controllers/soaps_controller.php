@@ -4732,63 +4732,64 @@ class SoapsController extends AppController {
    */
 
   private function isValidAuthenticationToken($token){
+
     $encodingKey = 'bGlicmFyeWlkZWFzMjAxNA==';
 	$char = array('"','*','_','/','+','~','!','@','#','$','%','^','&','(',')','{','}',':','<','>','?','`','-','=',';',',','.','|');
 	$val = $this->AuthenticationToken->find('first', array('conditions' => array('token' => $token)));
 
 	if($val) {
-	$lastVisited = $val['AuthenticationToken']['auth_time'];
+
+		$lastVisited = $val['AuthenticationToken']['auth_time'];
 	
+		if((time() - $lastVisited) > 1200){
 
-	if((time() - $lastVisited) > 1200){
-
-	 if(empty($val['AuthenticationToken']['email']))         { $val['AuthenticationToken']['email'] = ' ';           }
-        if(empty($val['AuthenticationToken']['password']))      { $val['AuthenticationToken']['password'] = ' ';        }
-		else {
-			$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password'],$encodingKey);
-			if(preg_match('/\W/',$val['AuthenticationToken']['password'])) {
-				$decryptArr = str_split($val['AuthenticationToken']['password']);
-				foreach($decryptArr as $a) 	{
-					if(!preg_match('/\w/',$a)){
-	 					if (!in_array($a,$char)) { 
-							$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password']); 
-	 					}
-					}
-    			}
-			}	
-		}
-        if(empty($val['AuthenticationToken']['card']))          { $val['AuthenticationToken']['card'] = ' ';            }
-		else {
-			$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card'],$encodingKey);
-			if(preg_match('/\W/',$val['AuthenticationToken']['card'])) {
-				$decryptArr = str_split($val['AuthenticationToken']['card']);
-				foreach($decryptArr as $a) 	{
-					if(!preg_match('/\w/',$a)){
-	 					if (!in_array($a,$char)) { 
-							$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card']); 
-	 					}
-					}
-    			}
-			}	
-		}
-        if(empty($val['AuthenticationToken']['pin']))           { $val['AuthenticationToken']['pin'] = ' ';             }
-		else {
-			$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin'],$encodingKey);
-			if(preg_match('/\W/',$val['AuthenticationToken']['pin'])) {
-				$decryptArr = str_split($val['AuthenticationToken']['pin']);
-				foreach($decryptArr as $a) 	{
-					if(!preg_match('/\w/',$a)){
-	 					if (!in_array($a,$char)) { 
-							$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin']); 
-	 					}
-					}
-    			}
-			}	
-		}
-        if(empty($val['AuthenticationToken']['last_name']))     { $val['AuthenticationToken']['last_name'] = ' ';       }
-        if(empty($val['AuthenticationToken']['library_id']))    { $val['AuthenticationToken']['library_id'] = ' ';      }
-        if(empty($val['AuthenticationToken']['agent']))         { $val['AuthenticationToken']['agent'] = ' '; 	       }
-		if($val['AuthenticationToken']['agent'] == '?')			{ $val['AuthenticationToken']['agent'] = ' ';		   }
+	 		if(empty($val['AuthenticationToken']['email']))         { $val['AuthenticationToken']['email'] = ' ';           }
+        	if(empty($val['AuthenticationToken']['password']))      { $val['AuthenticationToken']['password'] = ' ';        }
+			else {
+				$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password'],$encodingKey);
+				if(preg_match('/\W/',$val['AuthenticationToken']['password'])) {
+					$decryptArr = str_split($val['AuthenticationToken']['password']);
+					foreach($decryptArr as $a) 	{
+						if(!preg_match('/\w/',$a)){
+	 						if (!in_array($a,$char)) { 
+								$val['AuthenticationToken']['password'] = $this->Common->freegalDecode($val['AuthenticationToken']['password']); 
+	 						}	
+						}
+    				}
+				}	
+			}
+        	if(empty($val['AuthenticationToken']['card']))          { $val['AuthenticationToken']['card'] = ' ';            }
+			else {
+				$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card'],$encodingKey);
+				if(preg_match('/\W/',$val['AuthenticationToken']['card'])) {
+					$decryptArr = str_split($val['AuthenticationToken']['card']);
+					foreach($decryptArr as $a) 	{
+						if(!preg_match('/\w/',$a)){
+	 						if (!in_array($a,$char)) { 
+								$val['AuthenticationToken']['card'] = $this->Common->freegalDecode($val['AuthenticationToken']['card']); 
+	 						}
+						}
+    				}
+				}	
+			}
+        	if(empty($val['AuthenticationToken']['pin']))           { $val['AuthenticationToken']['pin'] = ' ';             }
+			else {
+				$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin'],$encodingKey);
+				if(preg_match('/\W/',$val['AuthenticationToken']['pin'])) {
+					$decryptArr = str_split($val['AuthenticationToken']['pin']);
+					foreach($decryptArr as $a) 	{
+						if(!preg_match('/\w/',$a)){
+	 						if (!in_array($a,$char)) { 
+								$val['AuthenticationToken']['pin'] = $this->Common->freegalDecode($val['AuthenticationToken']['pin']); 
+	 						}
+						}
+    				}
+				}	
+			}
+        	if(empty($val['AuthenticationToken']['last_name']))     { $val['AuthenticationToken']['last_name'] = ' ';       }
+        	if(empty($val['AuthenticationToken']['library_id']))    { $val['AuthenticationToken']['library_id'] = ' ';      }
+        	if(empty($val['AuthenticationToken']['agent']))         { $val['AuthenticationToken']['agent'] = ' '; 	       }
+			if($val['AuthenticationToken']['agent'] == '?')			{ $val['AuthenticationToken']['agent'] = ' ';		   }
 
 	$log_name = 'block_card_app_log';
 	$log_data = PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") Start----------------".PHP_EOL;
@@ -4813,11 +4814,11 @@ class SoapsController extends AppController {
 			$this->AuthenticationToken->save($data);
 			return true;
 		}
-	}
-	else {
+	  }
+	  else {
 		return true;
-	}
-   }
+	  }
+    }
 	else{
 		return false;
 	}
