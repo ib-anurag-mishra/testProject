@@ -116,8 +116,8 @@ if (empty($getData))
                 <table cellspacing="10" cellpadding="0" border="0">
                     <tr><td id="formError1" class="formError" colspan="2"></td></tr>
                     <tr>
-                        <td align="right" width="250"><?php echo $this->Form->label('Customer ID'); ?></td>
-                        <td align="left"><?php echo $this->Form->input('customer_id', array('label' => false, 'value' => $getData['Library']['customer_id'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
+                        <td align="right" width="250"><label>Customer ID</label></td>
+                        <td align="left"><?php echo $this->Form->input('customer_id', array('label' => false, 'type' => 'text', 'value' => $getData['Library']['customer_id'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
                     </tr>
                     <tr>
                         <td align="right" width="250"><?php echo $this->Form->label('Library Name'); ?></td>
