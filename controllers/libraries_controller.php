@@ -668,6 +668,9 @@ Class LibrariesController extends AppController
                                                             $this->data['Library']['library_status'] = $getData['Library']['library_status'];
                                                         }
                                                     }
+                                                    
+                                                    $this->data['Library']['customer_id'] = ($this->data['Library']['customer_id']=='')?'0':$this->data['Library']['customer_id'];
+                                                    
                                                     $this->Library->create();
                                                     if ($this->Library->save($this->data['Library']))
                                                      {                                        
