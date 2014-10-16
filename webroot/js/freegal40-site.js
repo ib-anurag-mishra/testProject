@@ -148,7 +148,8 @@ $(document).ready(function() {
 
     });
 
-    $('.top-single-container .wishlist-icon').on('mouseleave',function(){
+    $('.top-single-container .wishlist-icon').on('mouseenter',function(){
+
         $(this).siblings('ul').removeClass('active');
 
     });
