@@ -2984,7 +2984,7 @@ function reloadJqueryFunctions() {
 
     $('.menu-btn').on('mouseleave', function(e) {
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+        if (if (e.offsetX > $(this).width() || e.offsetY < 0 || e.offsetX < 0)) {
 
             $('.options-menu').removeClass('active');
         }
