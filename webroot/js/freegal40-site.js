@@ -148,6 +148,10 @@ $(document).ready(function() {
 
     });
 
+    $('.top-single-container .wishlist-icon').on('mouseleave',function(){
+        $(this).siblings('ul').removeClass('active');
+
+    });
 
     
 
