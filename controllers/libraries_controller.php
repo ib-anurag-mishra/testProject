@@ -242,6 +242,7 @@ Class LibrariesController extends AppController
                         'Library.library_sip_command',
                         'Library.library_type',
                         'Library.show_barcode',
+                        'Library.customer_id',
                         'Library.library_streaming_hours',
 			'Library.optout_email_notification',
 			'Library.library_announcement'
@@ -389,6 +390,7 @@ Class LibrariesController extends AppController
                             'Library.library_unlimited',
                             'Library.library_type',
                             'Library.show_barcode',
+                            'Library.customer_id',
                             'Library.library_streaming_hours',
 			    'Library.optout_email_notification',
                             'Library.library_status',
