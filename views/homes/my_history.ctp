@@ -101,7 +101,7 @@ $ieVersion =  ieversion();
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
-			<div class="recent-downloads-scrollable">
+			<div class="recent-downloads-scrollable recent-downloads-page">
 				<div class="row-container">
 				<?php
                 if(count($downloadResults) != 0)
@@ -218,7 +218,7 @@ $ieVersion =  ieversion();
 		</div>
 		<!-- (this is the html for the videos) -->
 		<div class="recent-video-downloads-shadow-container" style="display:none">
-			<div class="recent-video-downloads-scrollable">
+			<div class="recent-video-downloads-scrollable recent-downloads-page">
 				<div class="row-container">
 				<?php
                 if(count($videoDownloadResults) != 0)

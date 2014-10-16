@@ -27,12 +27,46 @@
 
 
 
+// function refreshBrowserFromAS3() {
+
+//     var confirmation = confirm("We've noticed you've been away from your computer for a while. To ensure you have the best user experience posssible, please press 'OK' to refresh your browser.");
+//     if (confirmation == true) {
+
+
+//      window.location.reload(true);
+//     } 
+    
+// }
+
 
 $(document).ready(function() {
 
     
+    // var time = new Date().getTime();
+    // $(document.body).bind("mousemove keypress", function(e) {
+    //     time = new Date().getTime();
+    // });
 
-  
+    // function refresh() {
+    //     if(new Date().getTime() - time >= 600000) {
+    //      console.log('10 minutes idle'); 
+         
+    //      var confirmation = confirm("We've noticed you've been away from your computer for a while. To ensure you have the best user experience posssible, please press 'OK' to refresh your browser.");
+    //      if (confirmation == true) {
+
+
+    //          window.location.reload(true);
+    //      } 
+
+    //     } else { 
+    //      setTimeout(refresh, 600000);
+    //     }
+    // }
+
+    // setTimeout(refresh, 600000);
+
+
+
 
 
     var $music_search_results = $('.master-music-search-results');
@@ -103,7 +137,16 @@ $(document).ready(function() {
     });    
 
 
+    $('.albums-page').find('.album-detail-container').on('mouseleave',function(){
 
+        $(this).find('ul').removeClass('active');
+
+    });
+
+    $('.albums-page').find('.album-detail-container').find('.wishlist-icon').on('mouseenter',function(){
+        $(this).prev('ul').removeClass('active');
+
+    });
 
 
     
@@ -806,8 +849,8 @@ $(document).ready(function() {
 
 
 
-    $('.recent-downloads-page .recent-downloads-scrollable').bindMouseWheel();
-    $('.recent-downloads-page .recent-video-downloads-scrollable').bindMouseWheel();
+    $('.recent-downloads-page .recent-downloads-scrollable.recent-downloads-page').bindMouseWheel();
+    $('.recent-downloads-page .recent-video-downloads-scrollable.recent-downloads-page').bindMouseWheel();
 
 
 
@@ -900,12 +943,34 @@ $(document).ready(function() {
     });
 
     $('.gear-icon').on('mouseleave',function(e){
-        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
 
-            $(this).parent().next('.queue-options').removeClass('active');
+        if(e.offsetX == undefined) {
+            xpos = e.pageX-$(this).offset().left;
+            ypos = e.pageY-$(this).offset().top;
+
+
+            if (xpos < 0 || xpos > $(this).width() || ypos < $(this).height()) {
+
+                $(this).parent().next('.queue-options').removeClass('active');
+            }
+
+        } else {
+
+            if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+
+                $(this).parent().next('.queue-options').removeClass('active');
+            }
+
         }
 
+
+     
+
     });
+
+
+
+
 
 
 
@@ -1852,11 +1917,16 @@ $(document).ready(function() {
     });
 
 
-    $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').on('mouseleave',function(e){
-        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
-            $(this).next('ul').removeClass('active');
+    // $('.my-top-100-page .album-container .playlist-menu-icon,.my-top-100-page .song-container .playlist-menu-icon').on('mouseleave',function(e){
+    //     if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+    //         $(this).next('ul').removeClass('active');
 
-        }
+    //     }
+
+    // });
+
+    $('.my-top-100-page .album-container,.my-top-100-page .song-container').on('mouseleave',function(e){
+        $(this).find('.playlist-menu-icon').next('ul').removeClass('active');
 
     });
 
@@ -1906,13 +1976,20 @@ $(document).ready(function() {
 
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-icon').on('mouseenter',function(){
         $(this).css({opacity:1});
+        $(this).prev('ul').removeClass('active');
 
     });
 
     $('.my-top-100-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-icon').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
-    });    
+    });
+
+    $('.my-top-100-page .song-container .add-to-wishlist').on('mouseenter',function(){
+
+        $(this).parent().parent().parent().siblings('ul').removeClass('active');
+
+    });        
 
 
  
@@ -1997,14 +2074,19 @@ $(document).ready(function() {
 
     });
 
-    $('.artist-page').find('.album-container').find('.playlist-menu-icon').on('mouseleave',function(e){
-        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
+    // $('.artist-page').find('.album-container').find('.playlist-menu-icon').on('mouseleave',function(e){
+    //     if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < $(this).height()) {
  
  
-            $(this).next('ul').removeClass('active');
-        }
+    //         $(this).next('ul').removeClass('active');
+    //     }
 
+    // });
+
+    $('.artist-page').find('.album-container').on('mouseleave',function(){
+        $(this).find('ul').removeClass('active');
     });
+
 
     $('.artist-page').find('.album-container').on('mouseenter',function(){
         $this = $(this);
@@ -2044,6 +2126,7 @@ $(document).ready(function() {
 
     $('.artist-page').find('.album-container').children('.wishlist-icon').on('mouseenter',function(){
         $(this).css({opacity:1});
+        $(this).prev('ul').removeClass('active');
 
     });
 

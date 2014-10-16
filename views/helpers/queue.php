@@ -247,7 +247,8 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getAlbumStreamNowLabel($albumSongs , $top = null, $analytics = null, $section = null)
+    function getAlbumStreamNowLabel($albumSongs , $top = null, $analytics = null, $section = null,$albumId = 0)
+
     {
         if (!empty($albumSongs))
         {
@@ -260,8 +261,7 @@ EOD;
                     {
                         $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' (Explicit)';
                     }
-
-                    $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                    $playItem = array('playlistId' => 0, 'AlbumID' => $albumId,'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
                     $jsonPlayItem = json_encode($playItem);
                     $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
                     $playListData[] = $jsonPlayItem;
@@ -358,37 +358,33 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getAlbumStreamLabel($albumSongs,$flag = 0,$analytics = null) {
+    function getAlbumStreamLabel($albumSongs,$flag = 0,$analytics = null,$AlbumID = 0) {
+
         $albumSongs = base64_encode(json_encode($albumSongs));
         
         if(empty($flag)){
             $str = <<<EOD
-       <a onclick="javascript:loadAlbumData('$albumSongs');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+       <a onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
 EOD;
             return $str;
         }else if ($flag == 1){
-            /*
-            $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable"></button>
-EOD;
-            */
             $stream_label = __('Stream Now', true);
             $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs');" class="play-btn-icon toggleable">$stream_label</button>
+                <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="play-btn-icon toggleable">$stream_label</button>
 EOD;
             return $str;            
             
         }else if($flag == 2){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Artist</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-artist">Stream Artist</button>
 EOD;
             return $str;
             
        }else if($flag == 3){
        
 $str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-now-btn">Stream Now</button>
+            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-now-btn">Stream Now</button>
 EOD;
             return $str;
             
@@ -396,7 +392,7 @@ EOD;
 
             $stream_label = __('Stream Now', true);
             $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs'); ga('send', 'event', 'Top Albums', 'Stream', '$analytics', 1)" class="play-btn-icon toggleable">$stream_label</button>
+                <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID); ga('send', 'event', 'Top Albums', 'Stream', '$analytics', 1)" class="play-btn-icon toggleable">$stream_label</button>
 EOD;
             return $str;            
        }

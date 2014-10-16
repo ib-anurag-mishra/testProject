@@ -377,8 +377,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 					target="_blank"><img style="max-width: 100%; padding-top: 20px;"
 					src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>"
 					alt="<?php echo $libraryInfo['Library']['library_name']; ?>"
-					title="<?php echo $libraryInfo['Library']['library_name']; ?>"
-					style="padding-top: 20px;"> </a>
+					title="<?php echo $libraryInfo['Library']['library_name']; ?>"> </a>
 			</div>
 			<?php
 			}else{
@@ -455,7 +454,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 					<span id="hid_library_unlimited" style="display: none;"><?php echo $libraryunlimited; ?></span>
 					<?php if($this->Session->read('library_type')==2){ ?>
 					<div class="streaming-time-remaining">
-						<?php __('Streaming Time Remaining'); ?>:&nbsp;</span>
+						<?php __('Streaming Time Remaining'); ?>:&nbsp;
                         <span id="remaining_stream_time"><?php echo $streamTime; ?> </span>
 					</div>
 					<?php
@@ -685,7 +684,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 								$fqueuesid = 'leftfqueues_'.$value['QueueList']['queue_id'].'_07';
 								?>
 							<li>
-								<a class="leftfqueuesclass" id="<?=$fqueuesid?>" onclick="setUpperNavigation('<?=$fqueuesid?>'); ga('send', 'event', 'Freegal Playlist', 'Click', '<?php echo $value['QueueList']['queue_name']; ?>')" href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>/<?php echo base64_encode($value['QueueList']['queue_name']);?>"><?php echo $value['QueueList']['queue_name']; ?></a>
+								<a class="leftfqueuesclass" id="<?=$fqueuesid?>" onclick="setUpperNavigation('<?=$fqueuesid?>'); ga('send', 'event', 'Freegal Playlist', 'Click', '<?php echo addslashes($value['QueueList']['queue_name']); ?>')" href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>/<?php echo base64_encode($value['QueueList']['queue_name']);?>"><?php echo $value['QueueList']['queue_name']; ?></a>
 							</li>
 							<?php } ?>
 						</ul>
@@ -753,7 +752,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 							$i++;
 							?>   
 							<p style="margin-bottom:8px;">
-								<a class="announcments-movie-titles" style="color:#008fbd;" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" onClick="ga('send', 'event', 'Announcements', 'Click', '<?php echo $value['announcements']['title']; ?>');" target ="_blank">
+								<a class="announcments-movie-titles" style="color:#008fbd;" href="http://<?php echo $domain[0].'.'.Configure::read('App.MoviesPath').'/videos/index/'.$value['announcements']['video_id']; ?>" onClick="ga('send', 'event', 'Announcements', 'Click', '<?php echo addslashes($value['announcements']['title']); ?>');" target ="_blank">
 								<?php echo $value['announcements']['title']; ?></a>
 							</p>
 							<?php
