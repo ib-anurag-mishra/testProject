@@ -190,7 +190,7 @@ $replace = array('','');
 								} else {
 									$song_title = $nationalTopSong['Song']['SongTitle'];
 								}
-								echo $this->Queue->getNationalsongsStreamNowLabel($nationalTopSong['Full_Files']['CdnPath'], $nationalTopSong['Full_Files']['SaveAsName'], $song_title, $nationalTopSong['Song']['ArtistText'], $nationalTopSong['Song']['FullLength_Duration'], $nationalTopSong['Song']['ProdID'], $nationalTopSong['Song']['provider_type'], $count . '-' . addslashes($nationalTopSong['Song']['SongTitle']));
+                                                                echo $this->Queue->getNationalsongsStreamNowLabel($nationalTopSong['Song']['CdnPath'], $nationalTopSong['Song']['FullLength_SaveAsName'], $song_title, $nationalTopSong['Song']['ArtistText'], $nationalTopSong['Song']['FullLength_Duration'], $nationalTopSong['Song']['ProdID'], $nationalTopSong['Song']['provider_type'], $count . '-' . $trackingSongTitle);                                                                
 
 							} else if ($nationalTopSong['Country']['SalesDate'] <= date('Y-m-d')) {
 								echo $html->image('sample-icon.png', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $count, "onClick" => 'playSample(this, "' . $count . '", ' . $nationalTopSong['Song']['ProdID'] . ', "' . base64_encode($nationalTopSong['Song']['provider_type']) . '", "' . $this->webroot . '"); ga("send", "event", "Top Singles, "Play Sample", "' . $count . '-' . $this->getTextEncode($nationalTopSong['Song']['SongTitle']) . '")'));
