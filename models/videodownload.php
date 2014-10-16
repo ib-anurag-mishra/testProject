@@ -557,34 +557,22 @@ class Videodownload extends AppModel
 				'limit' => 100,
 				'joins' => array(
 						array(
-								'table' => '`video`',
-								'alias' => '`Video`',
-								'type' 	=> 'LEFT',
-								'conditions' => array(
-										'`Videodownload`.`ProdID` = `Video`.`ProdID`',
-										'`Videodownload`.`provider_type` = `Video`.`provider_type`'
-								)
-						),
+                                                        'table' => '`video`',
+                                                        'alias' => '`Video`',
+                                                        'type' 	=> 'LEFT',
+                                                        'conditions' => array(
+                                                                        '`Videodownload`.`ProdID` = `Video`.`ProdID`',
+                                                                        '`Videodownload`.`provider_type` = `Video`.`provider_type`'
+                                                        )
+						),						
 						array(
-								'table' => '`File`',
-								'alias' => '`File`',
-								'type'  => 'LEFT',
-								'conditions' => array('`Video`.`Image_FileID` = `File`.`FileID`')
-						),
-						array(
-								'table' => '`File`',
-								'alias' => '`Video_file`',
-								'type'	=> 'LEFT',
-								'conditions' => array('`Video_file`.`FileID` = `Video`.`FullLength_FileID`')
-						),
-						array(
-								'table' => '`' . $prefix . 'countries`',
-								'alias' => '`Country`',
-								'type'	=> 'LEFT',
-								'conditions' => array(
-										'`Video`.`ProdId` = `Country`.`ProdId`',
-										'`Video`.`provider_type` = `Country`.`provider_type`'
-								)
+                                                        'table' => '`' . $prefix . 'countries`',
+                                                        'alias' => '`Country`',
+                                                        'type'	=> 'LEFT',
+                                                        'conditions' => array(
+                                                                        '`Video`.`ProdId` = `Country`.`ProdId`',
+                                                                        '`Video`.`provider_type` = `Country`.`provider_type`'
+                                                        )
 						)
 				),
 				'fields' => array(
@@ -594,9 +582,9 @@ class Videodownload extends AppModel
 						'`Video`.`VideoTitle`',
 						'`Video`.`ArtistText`',
 						'`Video`.`Advisory`',
-						'`File`.`CdnPath`',
-						'`File`.`SourceURL`',
-						'`Video_file`.`SaveAsName`',
+						'`Video`.`CdnPath`',
+						'`Video`.`FullLength_SaveAsName`',
+						'`Video`.`Image_SaveAsName`',
 						'COUNT(DISTINCT(`Videodownload`.`id`)) AS COUNT',
 						'`Country`.`SalesDate`'
 				)
