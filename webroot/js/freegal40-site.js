@@ -1510,6 +1510,13 @@ $(document).ready(function() {
 
 
 
+    $('.search-results-albums .album-cover-container').on('mouseleave',function(){
+        $(this).find('ul').removeClass('active');
+
+    });
+
+
+
     $account_menu_dropdown.on('mouseleave', function() {
 
         $(this).removeClass('active');
