@@ -197,6 +197,7 @@ class QueueListDetailsController extends AppController
             }
             $this->set('albumSongs' , $albumSongs);
             $this->set('albumTitle',$albumData[0]['Album']['AlbumTitle']);
+            $this->set('allbumID',$albumDetails['albumProdId']);
         } else if (!empty($songPlaying)) {
             $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'], $songPlaying['providerType'], $territory);
             foreach ($trackDetails as $k => $v)

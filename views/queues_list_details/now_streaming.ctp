@@ -328,7 +328,7 @@
                                                                             <a href="/artists/album/<?php echo base64_encode($value['Song']['ArtistText']); ?>"><?php echo $albumTitle; ?></a>                                                
                                                                         </div>
                                                 <div class="artist-name">
-                                                                            <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
+                                                                            <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $albumID; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
                                                                         </div>                                                
 
                                                 <div class="time"><?php echo $this->Song->getSongDurationTime($value['Song']['FullLength_Duration']);?></div>                        
