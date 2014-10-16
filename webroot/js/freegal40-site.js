@@ -1756,7 +1756,7 @@ $(document).ready(function() {
 
     $('.menu-btn').on('mouseleave', function(e) {
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+        if (e.offsetX > $(this).width() || e.offsetY < 0 || e.offsetX < $(this).width()) {
 
             $('.options-menu').removeClass('active');
         }
