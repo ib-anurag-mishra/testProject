@@ -730,13 +730,14 @@ STR;
                             unset($featuredVideos[$key]);             
                         }                            
                 }
-                
+               
+                /*
                  //update the mem datas table
                 $MemDatas = ClassRegistry::init('MemDatas');
                 $MemDatas->setDataSource('master');
                 $this->CacheHandler->setMemData('featured_videos' . $cacheVariableSuffix . $territory,$featuredVideos);
                 $MemDatas->setDataSource('default');                
-                
+                */
                 Cache::write( 'featured_videos' . $cacheVariableSuffix . $territory, $featuredVideos );
                 $this->log("Updated featured videos $cacheVariableSuffix cache for " . $territory, "cache");
          }
@@ -780,12 +781,13 @@ STR;
                         }                        
                 }
                 
+                /*
                 //update the mem datas table
                 $MemDatas = ClassRegistry::init('MemDatas');
                 $MemDatas->setDataSource('master');
                 $this->CacheHandler->setMemData('top_download_videos' . $territory,$topDownloads);
                 $MemDatas->setDataSource('default');
-                
+                */
                 Cache::write( 'top_download_videos' . $territory, $topDownloads );
                 $this->log("Updated top download videos cache for " . $territory, "cache");    
         }
