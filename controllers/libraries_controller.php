@@ -565,7 +565,11 @@ Class LibrariesController extends AppController
                                         }
                                         else
                                         {
-                                            $this->LibraryPurchase->setValidation('library_step' . $this->data['Library']['libraryStepNum']);
+                                            if ($this->data['Library']['library_unlimited'] == 1) {
+                                                $this->LibraryPurchase->setValidation('library_step_acv' . $this->data['Library']['libraryStepNum']);
+                                            } else {
+                                                $this->LibraryPurchase->setValidation('library_step' . $this->data['Library']['libraryStepNum']);
+                                            }
                                         }
                                         if ($this->LibraryPurchase->validates()) {
                                             $streamPurchase = 0;
@@ -579,7 +583,11 @@ Class LibrariesController extends AppController
                                                 }
                                                 else
                                                 {   
-                                                    $this->LibraryPurchasesStreaming->setValidation('library_stream_step' . $this->data['Library']['libraryStepNum']);
+                                                    if ($this->data['Library']['library_unlimited'] == 1) {
+                                                        $this->LibraryPurchasesStreaming->setValidation('library_stream_step_acv' . $this->data['Library']['libraryStepNum']);
+                                                    } else {
+                                                        $this->LibraryPurchasesStreaming->setValidation('library_stream_step' . $this->data['Library']['libraryStepNum']);
+                                                    }
                                                 } 
                                                 if (!$this->LibraryPurchasesStreaming->validates()) {  
                                                     $message = __('To proceed further please enter the data correctly.|5', true);

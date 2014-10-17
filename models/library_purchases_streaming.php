@@ -29,9 +29,24 @@ class LibraryPurchasesStreaming extends AppModel
                                                        'purchased_amount-2' => array('rule' => 'numeric', 'allowEmpty' =>  false, 'message' => 'Please provide the total amount for hours purchased  as a numeric value.')
                                                  )
                           ),
+                        'library_stream_step_acv5' => array(
+                           'purchased_order_num' => array(
+                                                         'purchased_order_num-1' => array('rule' => 'notEmpty', 'allowEmpty' =>  false, 'message' => 'Please provide a purchase order number.', 'last' => true),
+                                                         'purchased_order_num-2' => array('rule' => array('noDuplicates', array('library_id', 'purchased_order_num')), 'allowEmpty' =>  false, 'message' => 'This purchase order number already exists in our database for this Library.')
+                                                    ),
+                           'purchased_amount' => array(
+                                                       'purchased_amount-1' => array('rule' => 'notEmpty', 'allowEmpty' =>  false, 'message' => 'Please provide the total amount for hours purchased .', 'last' => true),
+                                                       'purchased_amount-2' => array('rule' => 'numeric', 'allowEmpty' =>  false, 'message' => 'Please provide the total amount for hours purchased  as a numeric value.')
+                                                 ),
+                           'acv' => array(
+                                                       'acv-1' => array('rule' => 'notEmpty', 'allowEmpty' =>  false, 'message' => 'Please provide the total amount for hours purchased .', 'last' => true),
+                                                       'acv-2' => array('rule' => 'numeric', 'allowEmpty' =>  false, 'message' => 'Please provide the total amount for hours purchased  as a numeric value.')
+                                                 )
+                          ),        
                           'library_stream_step5_edit' => array(
                            'purchased_order_num' => array('rule' => array('noDuplicates', array('library_id', 'purchased_order_num')), 'allowEmpty' =>  true, 'message' => 'This purchase order number already exists in our database for this Library.'),
-                           'purchased_amount' => array('rule' => 'numeric', 'allowEmpty' =>  true, 'message' => 'Please provide the total amount for hours purchased  as a numeric value.')
+                           'purchased_amount' => array('rule' => 'numeric', 'allowEmpty' =>  true, 'message' => 'Please provide the total amount for hours purchased  as a numeric value.'),
+                           'acv' => array('rule' => 'numeric', 'allowEmpty' =>  true, 'message' => 'Please provide the total amount for hours purchased  as a numeric value.')
                           )
     );
     
