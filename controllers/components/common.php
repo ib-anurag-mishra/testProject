@@ -2373,15 +2373,13 @@ STR;
                     unset($topDownload[$key]);             
                 }       
                     
-            }
-           
-            /*
+            }          
+            
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("lib" . $libId,$topDownload);
-            $MemDatas->setDataSource('default');
-           */
+            $MemDatas->setDataSource('default');           
             
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
@@ -2541,13 +2539,12 @@ STR;
                }                     
             }
             
-            /*
+            
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("lib_album" . $libId,$topDownload);
             $MemDatas->setDataSource('default');           
-            */
             
             Cache::write("lib_album" . $libId, $topDownload);
             //library top 10 cache set
@@ -2694,15 +2691,14 @@ STR;
                    //unset the broken images variable in the array
                    unset($topDownload[$key]);             
                }
-            }
+            }            
             
-            /*
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("lib_video" . $libId,$topDownload);
             $MemDatas->setDataSource('default');
-            */
+            
             Cache::write("lib_video" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
