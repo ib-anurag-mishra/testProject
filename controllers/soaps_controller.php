@@ -945,7 +945,7 @@ class SoapsController extends AppController {
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
           $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
 
-          $fileURL = $this->Token->regularToken( $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
+          $fileURL = $this->Token->regularToken( $data['Song']['CdnPath']."/".$data['Song']['Sample_SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
           
           
@@ -954,10 +954,10 @@ class SoapsController extends AppController {
             $obj->FullLength_FIleURL      = 'nostring';
           } else {
             $obj->fileURL                 = (string)$fileURL;
-            $obj->FullLength_FIleURL      = $this->getFullLengthFileURL($data['Full_Files']['FileID']);
+            $obj->FullLength_FIleURL      = $this->getFullLengthFileURLNew($data['Song']['CdnPath'],$data['Song']['FullLength_SaveAsName']);
           }
 
-          $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
+          $obj->FullLength_FIleID         = (int)'0';
 
           $obj->playButtonStatus          = $this->getPlayButtonStatus($data['Song']['ProdID'], $library_territory, $data['Song']['provider_type']);
           
@@ -7371,7 +7371,23 @@ class SoapsController extends AppController {
     $FileData = $this->Files->find('first',array('conditions' => array('FileID' => $FullLengthFileID)));
     return Configure::read('App.Music_Path').$this->Token->regularToken( $FileData['Files']['CdnPath']."/".$FileData['Files']['SaveAsName']);
     
-  }  
+  } 
+  
+   /**
+   * Function Name : getFullLengthFileURLNew
+   * Desc : returns full length file url for music audio
+   * @param string FullLengthFileID
+   * @return string
+   */
+  private function getFullLengthFileURLNew($cdnPath,$saveAsName) { 
+    
+    return Configure::read('App.Music_Path').$this->Token->regularToken( $cdnPath."/".$saveAsName);    
+    
+    /*
+    $FileData = $this->Files->find('first',array('conditions' => array('FileID' => $FullLengthFileID)));
+    return Configure::read('App.Music_Path').$this->Token->regularToken( $FileData['Files']['CdnPath']."/".$FileData['Files']['SaveAsName']);
+    */    
+  }
   
   /**
    * Function Name : getTotalDownloadCound
