@@ -927,6 +927,7 @@ sub { top: 0.4em; }
 					background: none;
 					position: relative;
 					font-size: 11px;
+					font-family: Arial, Helvetica, sans-serif;
 					
 					&:before {
 						
@@ -955,6 +956,8 @@ sub { top: 0.4em; }
 					&:hover {
 						
 						border: 1px solid #dedddd;
+						font-size: 11px;
+						font-family: Arial, Helvetica, sans-serif;
 					}
 				}
 				
