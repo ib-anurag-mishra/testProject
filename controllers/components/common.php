@@ -2289,7 +2289,7 @@ STR;
             }
 
             $songInstance->recursive = 2;
-            $topDownloaded_query = <<<STR
+        echo  $topDownloaded_query = <<<STR
                             SELECT 
                                     Song.ProdID,
                                     Song.ReferenceID,
