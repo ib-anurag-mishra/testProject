@@ -242,6 +242,7 @@ Class LibrariesController extends AppController
                         'Library.library_sip_command',
                         'Library.library_type',
                         'Library.show_barcode',
+                        'Library.customer_id',
                         'Library.library_streaming_hours',
 			'Library.optout_email_notification',
 			'Library.library_announcement'
@@ -389,6 +390,7 @@ Class LibrariesController extends AppController
                             'Library.library_unlimited',
                             'Library.library_type',
                             'Library.show_barcode',
+                            'Library.customer_id',
                             'Library.library_streaming_hours',
 			    'Library.optout_email_notification',
                             'Library.library_status',
@@ -666,6 +668,9 @@ Class LibrariesController extends AppController
                                                             $this->data['Library']['library_status'] = $getData['Library']['library_status'];
                                                         }
                                                     }
+                                                    
+                                                    $this->data['Library']['customer_id'] = ($this->data['Library']['customer_id']=='')?'0':$this->data['Library']['customer_id'];
+                                                    
                                                     $this->Library->create();
                                                     if ($this->Library->save($this->data['Library']))
                                                      {                                        
