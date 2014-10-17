@@ -658,19 +658,20 @@ Class LibrariesController extends AppController
                                                         }
                                                     }
                                                     $this->data['Library']['library_admin_id'] = $this->User->id;
-                                                    if (strtotime(date('Y-m-d')) < strtotime($this->data['Library']['library_contract_start_date']))
+                                                    /*if (strtotime(date('Y-m-d')) < strtotime($this->data['Library']['library_contract_start_date']))
                                                     {
                                                         $this->data['Library']['library_status'] = 'inactive';
                                                     }
                                                     else
-                                                    {
+                                                    {*/
                                                         if(!empty($getData['Library']['library_status'])) {
                                                             $this->data['Library']['library_status'] = $getData['Library']['library_status'];
                                                         }
-                                                    }
+
+                                                    //}
                                                     
                                                     $this->data['Library']['customer_id'] = ($this->data['Library']['customer_id']=='')?'0':$this->data['Library']['customer_id'];
-                                                    
+
                                                     $this->Library->create();
                                                     if ($this->Library->save($this->data['Library']))
                                                      {                                        
