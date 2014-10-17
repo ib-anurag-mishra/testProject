@@ -242,6 +242,7 @@ Class LibrariesController extends AppController
                         'Library.library_sip_command',
                         'Library.library_type',
                         'Library.show_barcode',
+                        'Library.customer_id',
                         'Library.library_streaming_hours',
 			'Library.optout_email_notification',
 			'Library.library_announcement'
@@ -389,6 +390,7 @@ Class LibrariesController extends AppController
                             'Library.library_unlimited',
                             'Library.library_type',
                             'Library.show_barcode',
+                            'Library.customer_id',
                             'Library.library_streaming_hours',
 			    'Library.optout_email_notification',
                             'Library.library_status',
@@ -565,7 +567,11 @@ Class LibrariesController extends AppController
                                         }
                                         else
                                         {
-                                            $this->LibraryPurchase->setValidation('library_step' . $this->data['Library']['libraryStepNum']);
+                                            if ($this->data['Library']['library_unlimited'] == 1) {
+                                                $this->LibraryPurchase->setValidation('library_step_acv' . $this->data['Library']['libraryStepNum']);
+                                            } else {
+                                                $this->LibraryPurchase->setValidation('library_step' . $this->data['Library']['libraryStepNum']);
+                                            }
                                         }
                                         if ($this->LibraryPurchase->validates()) {
                                             $streamPurchase = 0;
@@ -579,7 +585,11 @@ Class LibrariesController extends AppController
                                                 }
                                                 else
                                                 {   
-                                                    $this->LibraryPurchasesStreaming->setValidation('library_stream_step' . $this->data['Library']['libraryStepNum']);
+                                                    if ($this->data['Library']['library_unlimited'] == 1) {
+                                                        $this->LibraryPurchasesStreaming->setValidation('library_stream_step_acv' . $this->data['Library']['libraryStepNum']);
+                                                    } else {
+                                                        $this->LibraryPurchasesStreaming->setValidation('library_stream_step' . $this->data['Library']['libraryStepNum']);
+                                                    }
                                                 } 
                                                 if (!$this->LibraryPurchasesStreaming->validates()) {  
                                                     $message = __('To proceed further please enter the data correctly.|5', true);
@@ -648,16 +658,20 @@ Class LibrariesController extends AppController
                                                         }
                                                     }
                                                     $this->data['Library']['library_admin_id'] = $this->User->id;
-                                                    if (strtotime(date('Y-m-d')) < strtotime($this->data['Library']['library_contract_start_date']))
+                                                    /*if (strtotime(date('Y-m-d')) < strtotime($this->data['Library']['library_contract_start_date']))
                                                     {
                                                         $this->data['Library']['library_status'] = 'inactive';
                                                     }
                                                     else
-                                                    {
+                                                    {*/
                                                         if(!empty($getData['Library']['library_status'])) {
                                                             $this->data['Library']['library_status'] = $getData['Library']['library_status'];
                                                         }
-                                                    }
+
+                                                    //}
+                                                    
+                                                    $this->data['Library']['customer_id'] = ($this->data['Library']['customer_id']=='')?'0':$this->data['Library']['customer_id'];
+
                                                     $this->Library->create();
                                                     if ($this->Library->save($this->data['Library']))
                                                      {                                        

@@ -109,11 +109,15 @@ $(function() {
 			$("#pur_order").show();
 			$("#pur_amount").show();
 			$("#pur_track").show();
+                        if($(".unlmtd #redio2").is(":checked")){
+                            $("#pur_acv").show();
+                        }
 			upgrade = 0;	
 		} else {
 			$("#pur_order").hide();
 			$("#pur_amount").hide();
 			$("#pur_track").hide();
+                        $("#pur_acv").hide();
 			upgrade = 1;			
 		}
 	});
@@ -124,11 +128,15 @@ $(function() {
 			$("#str_order").show();
 			$("#str_amount").show();
 			$("#str_track").show();
+                        if($(".unlmtd #redio2").is(":checked")){
+                            $("#str_acv").show();
+                        }
 			strupgrade = 0;	
 		} else {
 			$("#str_order").hide();
 			$("#str_amount").hide();
 			$("#str_track").hide();
+                        $("#str_acv").hide();
 			strupgrade = 1;			
 		}
 	});        
@@ -513,67 +521,73 @@ function getArray(v){
 }
 function get_purFields(val){
 	if(document.getElementById("LibraryShowContract").checked==true){
-		if(val == 1){
-			$("#pur_order").show();
-			$("#pur_amount").show();
-			$("#pur_track").show();
-			$("#LibraryPurchasePurchasedTracks").val('Unlimited');
-		} else {
-			$("#pur_order").show();
-			$("#pur_amount").show();
-			$("#pur_track").show();
-			$("#LibraryPurchasePurchasedTracks").val('');
-		}
+            if(val == 1){
+                $("#pur_order").show();
+                $("#pur_amount").show();
+                $("#pur_track").show();
+                $("#pur_acv").show();
+                $("#LibraryPurchasePurchasedTracks").val('Unlimited');
+            } else {
+                $("#pur_order").show();
+                $("#pur_amount").show();
+                $("#pur_track").show();
+                $("#pur_acv").hide();
+                $("#LibraryPurchasePurchasedTracks").val('');
+            }
 	} else{
 		if(val ==1){
-			$("#upgrd").hide();
+                    $("#upgrd").hide();
 		} else {
-			if($("#LibraryLibraryContractStartDate").val() != ''){
-				$("#upgrd").show();
-			}
+                    if($("#LibraryLibraryContractStartDate").val() != ''){
+                        $("#upgrd").show();
+                        $("#pur_acv").hide();
+                    }
 		}
-	}	
+	}
+        
+        if(document.getElementById("ShowContract").checked==true){
+                if(val == 1){
+                    $("#str_order").show();
+                    $("#str_amount").show();
+                    $("#str_track").show();
+                    $("#str_acv").show();
+                    $("#LibraryPurchasesStreamingPurchasedHours").val(24);
+                } else {
+                    $("#str_order").show();
+                    $("#str_amount").show();
+                    $("#str_track").show();
+                    $("#str_acv").hide();
+                    $("#LibraryPurchasesStreamingPurchasedHours").val($( "select#LibraryLibraryStreamingHours" ).val());
+                }
+        } else{
+                if(val ==1){
+                    $("#strupgrd").hide();
+                } else {
+                    $( "select#LibraryLibraryStreamingHours" ).val();
+                    if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != ''){
+                            $("#strupgrd").show();
+                            $("#str_acv").hide();
+                    }
+                }
+        }                
+
 }
 
-function get_strFields(val){
-	if(document.getElementById("ShowContract").checked==true){
-		if(val == 1){
-			$("#sur_order").show();
-			$("#sur_amount").show();
-			$("#sur_track").show();
-			$("#LibraryPurchasesStreamingPurchasedHours").val(Unlimited);
-		} else {
-			$("#sur_order").show();
-			$("#sur_amount").show();
-			$("#sur_track").show();
-			$("#LibraryPurchasesStreamingPurchasedHours").val($( "select#LibraryLibraryStreamingHours" ).val());
-		}
-	} else{
-		if(val ==1){
-			$("#strupgrd").hide();
-		} else {
-                        $( "select#LibraryLibraryStreamingHours" ).val();
-			if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != ''){
-				$("#strupgrd").show();
-			}
-		}
-	}	
-}
-    
 
 function showContract(){
 		if(document.getElementById("LibraryShowContract").checked==true){
 			$("#contract_start").show();
 			$("#contract_end").show();
-			if(document.getElementById("redio2").checked==true){
+			if($(".unlmtd #redio2").is(":checked")){
 				$("#pur_order").show();
 				$("#pur_amount").show();
 				$("#pur_track").show();
+                                $("#pur_acv").show();
 				$("#LibraryPurchasePurchasedTracks").val('Unlimited');
 			} else {
 				$("#pur_order").show();
 				$("#pur_amount").show();
-				$("#pur_track").show();
+                                $("#pur_track").show();
 				$("#LibraryPurchasePurchasedTracks").val('');
 			}
 			$("#LibraryLibraryContractStartDate").val('');
@@ -589,6 +603,7 @@ function showContract(){
 			$("#pur_order").hide();
 			$("#pur_amount").hide();
 			$("#pur_track").hide();
+                        $("#pur_acv").hide();
 			$("#upgrd").hide();
 			if($("#LibraryLibraryContractStartDate").val() != ''){
 				$("#upgrd").show();
@@ -601,10 +616,11 @@ function showStreamContract(){
 			$("#stream_contract_start").show();
 			$("#stream_contract_end").show(); 
                         
-			if($("#redio2").is(":checked")){ 
+			if($(".unlmtd #redio2").is(":checked")){ 
                             $("#str_order").show();
                             $("#str_amount").show();
                             $("#str_track").show();
+                            $("#str_acv").show();
                             $("#LibraryPurchasesStreamingPurchasedHours").val('24');
 			} else {
                             $("#str_order").show();
@@ -626,6 +642,7 @@ function showStreamContract(){
 			$("#str_order").hide();
 			$("#str_amount").hide();
 			$("#str_track").hide();
+                        $("#str_acv").hide();
 			$("#strupgrd").hide();
 			if($("#ContractLibraryStreamingPurchaseLibraryContractStartDate").val() != ''){
 				$("#strupgrd").show();

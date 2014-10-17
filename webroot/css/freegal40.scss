@@ -926,6 +926,7 @@ sub { top: 0.4em; }
 					cursor: pointer;
 					background: none;
 					position: relative;
+					font-size: 11px;
 					
 					&:before {
 						
@@ -11594,32 +11595,32 @@ sub { top: 0.4em; }
 			
 		position: relative;
 		width: 850px;
-		height: 481px;
-		overflow-x: hidden;
-		overflow-y: hidden;
+		// height: 481px;
+		// overflow-x: hidden;
+		// overflow-y: hidden;
 		
-		&:after {
+		// &:after {
 			
-			position: absolute;
-			content: "";
-			bottom: 0;
-			left: 0;
-			background: url(../img/recent-downloads/my-wishlist-shadow.png);
-			width: 849px;
-			height: 11px;
-		}
+		// 	position: absolute;
+		// 	content: "";
+		// 	bottom: 0;
+		// 	left: 0;
+		// 	background: url(../img/recent-downloads/my-wishlist-shadow.png);
+		// 	width: 849px;
+		// 	height: 11px;
+		// }
 		
 		.recent-downloads-scrollable {
 		
 		
-			overflow-x: hidden;
-			overflow-y: hidden;
-			height: 481px;
+			// overflow-x: hidden;
+			// overflow-y: hidden;
+			// height: 481px;
 			
-			&:hover {
-				overflow-y: scroll;
+			// &:hover {
+			// 	overflow-y: scroll;
 				
-			}
+			// }
 			
 			.row-container {
 				

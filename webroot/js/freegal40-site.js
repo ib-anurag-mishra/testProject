@@ -148,6 +148,11 @@ $(document).ready(function() {
 
     });
 
+    $('.top-single-container .wishlist-icon').on('mouseenter',function(){
+
+        $(this).siblings('ul').removeClass('active');
+
+    });
 
     
 
@@ -849,8 +854,8 @@ $(document).ready(function() {
 
 
 
-    $('.recent-downloads-page .recent-downloads-scrollable.recent-downloads-page').bindMouseWheel();
-    $('.recent-downloads-page .recent-video-downloads-scrollable.recent-downloads-page').bindMouseWheel();
+    // $('.recent-downloads-page .recent-downloads-scrollable.recent-downloads-page').bindMouseWheel();
+    // $('.recent-downloads-page .recent-video-downloads-scrollable.recent-downloads-page').bindMouseWheel();
 
 
 
@@ -1510,6 +1515,13 @@ $(document).ready(function() {
 
 
 
+    $('.search-results-albums .album-cover-container').on('mouseleave',function(){
+        $(this).find('ul').removeClass('active');
+
+    });
+
+
+
     $account_menu_dropdown.on('mouseleave', function() {
 
         $(this).removeClass('active');
@@ -1749,7 +1761,7 @@ $(document).ready(function() {
 
     $('.menu-btn').on('mouseleave', function(e) {
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+        if (e.offsetX > $(this).width() || e.offsetY < 0 || e.offsetX < 0) {
 
             $('.options-menu').removeClass('active');
         }
@@ -2977,7 +2989,7 @@ function reloadJqueryFunctions() {
 
     $('.menu-btn').on('mouseleave', function(e) {
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+        if (e.offsetX > $(this).width() || e.offsetY < 0 || e.offsetX < 0) {
 
             $('.options-menu').removeClass('active');
         }
