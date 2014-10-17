@@ -2289,7 +2289,7 @@ STR;
             }
 
             $songInstance->recursive = 2;
-        echo  $topDownloaded_query = <<<STR
+            $topDownloaded_query = <<<STR
                             SELECT 
                                     Song.ProdID,
                                     Song.ReferenceID,
@@ -2327,7 +2327,7 @@ STR;
                                             INNER JOIN 
                                     Albums ON (Song.ReferenceID=Albums.ProdID)                                           
                             WHERE
-                                    (($top_ten_condition_songs) AND 1 = 1) AND ( Song.Sample_SaveAsName != '' AND Song.CdnPath != '' AND Song.FullLength_SaveAsName != '' AND  Song.CdnPath != '' AND Song.Image_SaveAsName != '')
+                                    (($top_ten_condition_songs) AND 1 = 1) AND ( Song.Sample_SaveAsName != '' AND Song.CdnPath != '' AND Song.FullLength_SaveAsName != '' AND  Albums.CdnPath != '' AND Albums.Image_SaveAsName != '')
                             GROUP BY Song.ProdID
                             ORDER BY FIELD(Song.ProdID,
                                             $ids) ASC
@@ -2375,12 +2375,13 @@ STR;
                     
             }
            
+            /*
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("lib" . $libId,$topDownload);
             $MemDatas->setDataSource('default');
-           
+           */
             
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
@@ -2500,7 +2501,7 @@ STR;
             LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
             INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID)            
-            WHERE (Country.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) AND ( Song.Sample_SaveAsName != '' AND Song.CdnPath != '' AND Song.FullLength_SaveAsName != '' AND  Song.CdnPath != '' AND Song.Image_SaveAsName != '')                        
+            WHERE (Country.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) AND ( Song.Sample_SaveAsName != '' AND Song.CdnPath != '' AND Song.FullLength_SaveAsName != '' AND  Albums.CdnPath != '' AND Albums.Image_SaveAsName != '')                        
             GROUP BY Song.ReferenceID
             ORDER BY count(Song.ReferenceID) DESC
             LIMIT 10
@@ -2540,12 +2541,13 @@ STR;
                }                     
             }
             
+            /*
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("lib_album" . $libId,$topDownload);
             $MemDatas->setDataSource('default');           
-            
+            */
             
             Cache::write("lib_album" . $libId, $topDownload);
             //library top 10 cache set
@@ -2694,12 +2696,13 @@ STR;
                }
             }
             
+            /*
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("lib_video" . $libId,$topDownload);
             $MemDatas->setDataSource('default');
-            
+            */
             Cache::write("lib_video" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
