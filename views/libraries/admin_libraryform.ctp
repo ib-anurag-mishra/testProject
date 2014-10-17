@@ -1478,7 +1478,7 @@ if (empty($getData))
                                     <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_hours']; ?></label></td>
                                     <td><label>$<?php echo $spurchases['LibraryPurchasesStreaming']['purchased_amount']; ?></label></td>
                                     <?php if(!empty($getData['Library']['library_unlimited'])) { ?>
-                                        <th><label><?php echo $purchases['LibraryPurchasesStreaming']['acv']; ?></label></th>
+                                        <th><label><?php echo $spurchases['LibraryPurchasesStreaming']['acv']; ?></label></th>
                                     <?php } ?>                                    
                                     <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['created']; ?></label></td>
                                 </tr>
