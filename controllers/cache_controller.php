@@ -153,7 +153,7 @@ class CacheController extends AppController {
         $brokenImages = array();       
        
         $territoriesList = $this->Common->getTerritories(); 
-        foreach($territoriesList as $territory){   
+        foreach($territoriesList as $territory){ 
           
 	    $this->setUsTop10Songs($territory);       
             $this->setUsTop10Albums($territory);           
