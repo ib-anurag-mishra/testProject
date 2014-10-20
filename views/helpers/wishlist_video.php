@@ -71,18 +71,26 @@ class WishlistVideoHelper extends AppHelper
 		return $wishlistCount;
 	}
 
-	function getWishListVideoMarkup($wishlistInfo, $video_ProdId, $video_Provider_Type)
-	{
-		if ($wishlistInfo == 'Added To Wishlist')
-		{
-			$str = '<a class="add-to-wishlist" href="javascript:void(0);">' . __('Added To Wishlist', true) . '</a>';
+	function getWishListVideoMarkup($wishlistInfo, $video_ProdId, $video_Provider_Type, $flag = null, $section, $analytics) {
+		if ($flag == 1) {
+			if ($wishlistInfo == 'Added To Wishlist') {
+				$str = '<a class="add-to-wishlist" href="javascript:void(0);">' . __('Added To Wishlist', true) . '</a>';
+			} else {
+				$str = '<span class="beforeClick" id="video_wishlist' . $video_ProdId . '"><a class="add-to-wishlist" href=\'JavaScript:void(0);\' onclick=\'Javascript: addToWishlistVideo("' . $video_ProdId . '","' . $video_Provider_Type . '"); ga("send", "event", "' . $section . '", "Add to Wishlist", "' . $analytics . '");\'>' . __('Add To Wishlist', true) . '</a></span>
+				<span class="afterClick" id="downloading_' . $video_ProdId . '" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>' . __('Please Wait', true) . '...</a></span>';
+			}
+			return $str;
+		} else {
+			if ($wishlistInfo == 'Added To Wishlist') {
+				$str = '<a class="add-to-wishlist" href="javascript:void(0);">' . __('Added To Wishlist', true) . '</a>';
+			} else {
+				$str = '<span class="beforeClick" id="video_wishlist' . $video_ProdId . '"><a class="add-to-wishlist" href=\'JavaScript:void(0);\' onclick=\'Javascript: addToWishlistVideo("' . $video_ProdId . '","' . $video_Provider_Type . '");\'>' . __('Add To Wishlist', true) . '</a></span>
+				<span class="afterClick" id="downloading_' . $video_ProdId . '" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>' . __('Please Wait', true) . '...</a></span>';
+			}
+			return $str;
 		}
-		else
-		{
-			$str = '<span class="beforeClick" id="video_wishlist' . $video_ProdId . '"><a class="add-to-wishlist" href=\'JavaScript:void(0);\' onclick=\'Javascript: addToWishlistVideo("' . $video_ProdId . '","' . $video_Provider_Type . '");\'>' . __('Add To Wishlist', true) . '</a></span>
-			<span class="afterClick" id="downloading_' . $video_ProdId . '" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>' . __('Please Wait', true) . '...</a></span>';
-		}
-		return $str;
+			
+
 	}
 
 }
