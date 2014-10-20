@@ -1027,14 +1027,14 @@ STR;
                 $this->log("Unable to update US top ten for " . $territory, "cache");
             }
             
-            /*
+            
             //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("national_us_top10_songs" . $country,$data);
             $MemDatas->setDataSource('default');
              
-             */
+             
             
         }
         $this->log("cache written for US top ten for $territory", 'debug');
@@ -1167,13 +1167,13 @@ STR;
             }
         }
         
-        /*
+        
          //update the mem datas table
         $MemDatas = ClassRegistry::init('MemDatas');
         $MemDatas->setDataSource('master');
         $this->CacheHandler->setMemData("national_us_top10_albums" . $country,$data);
         $MemDatas->setDataSource('default');
-        */
+        
         
         
         $this->log("cache written for US top ten Album for $territory", 'debug');
@@ -1297,13 +1297,13 @@ STR;
             }
         }
         
-        /*
+        
         //update the mem datas table
         $MemDatas = ClassRegistry::init('MemDatas');
         $MemDatas->setDataSource('master');
         $this->CacheHandler->setMemData("national_us_top10_videos" . $country,$data);
         $MemDatas->setDataSource('default');
-        */
+        
         
         
         $this->log("cache written for US top ten video for $territory", 'debug');
