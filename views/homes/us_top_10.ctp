@@ -51,14 +51,7 @@
 
                                         </ul>
                                         <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>                                         
-                                        <?php
-                                        /*
-                                        <div class="wishlist-popover">
-                                            <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
-                                            <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-                                        </div>
-                                        */
-                                        ?>
+                                       
                                         <?php
                                     }
                                     ?>
@@ -182,7 +175,6 @@
 
                                         if ($libraryDownload == '1' && $patronDownload == '1')
                                         {
-                                            $productInfo = $song->getDownloadData($value['Song']['ProdID'], $value['Song']['provider_type']);
                                             
                                             if($this->Session->read('downloadVariArray'))
                                             {
@@ -211,10 +203,10 @@
                                                         <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
                                                         <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Song"]["ProdID"]; ?>">
                                                             <![if !IE]>
-                                                            <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?php echo $value["Song"]['ProdID']; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $value["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
+                                                            <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?php echo $value["Song"]['ProdID']; ?>", "0", "<?php echo $value["Song"]['CdnPath']; ?>", "<?php echo $value["Song"]['FullLength_SaveAsName']; ?>", "<?php echo $value["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
                                                             <![endif]>
                                                             <!--[if IE]>
-                                                                   <a class="no-ajaxy top-10-download-now-button" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Song"]['ProdID']; ?>", "0" , "<?php echo $value["Song"]["provider_type"]; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                                                                   <a class="no-ajaxy top-10-download-now-button" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Song"]['ProdID']; ?>", "0" , "<?php echo $value["Song"]["provider_type"]; ?>", "<?php echo $value["Song"]['CdnPath']; ?>", "<?php echo $value["Song"]['FullLength_SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                             <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait"); ?>...
@@ -265,34 +257,13 @@
                                 if ($this->Session->read("patron"))
                                 {
                                     ?>
-                                    <?php
-                                    /* 
-                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
-                                    */
-                                    ?>
+                                  
                                     <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
                                     <ul>
                                         <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                     </ul>
-                                    <?php
-                                    /*
-                                    <div class="wishlist-popover">
-                                        <input type="hidden" id="<?= $value["Song"]["ProdID"] ?>" value="song"/>
-
-                                        <?php
-                                        if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
-                                        {
-                                            ?>
-                                            <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-                                        <?php } ?>
-                                        <?php
-                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-                                        echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
-                                        ?>
-                                    </div>
-                                    */
-                                    ?>
+                                   
                                     <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
                                 <?php } ?>
 
@@ -402,10 +373,10 @@
                                                         <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                                                         <span class="beforeClick" id="download_video_<?php echo $value["Video"]["ProdID"]; ?>">
                                                             <![if !IE]>
-                                                            <a class="no-ajaxy top-10-download-now-button" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $value['Video']['ProdID']; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $value['Video']['provider_type']; ?>");'><?php __('Download Now'); ?></a>
+                                                            <a class="no-ajaxy top-10-download-now-button" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $value['Video']['ProdID']; ?>", "0", "<?php echo $value['Video']['CdnPath']; ?>", "<?php echo $value['Video']['FullLength_SaveAsName']; ?>", "<?php echo $value['Video']['provider_type']; ?>");'><?php __('Download Now'); ?></a>
                                                             <![endif]>
                                                             <!--[if IE]>
-                                                                    <a class="no-ajaxy top-10-download-now-button" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>', '<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>', '<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                                                                    <a class="no-ajaxy top-10-download-now-button" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>', '<?php echo $value['Video']['CdnPath']; ?>', '<?php echo $value['Video']['FullLength_SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                             <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait') . '...'; ?></span>
