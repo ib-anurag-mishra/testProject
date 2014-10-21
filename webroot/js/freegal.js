@@ -1076,7 +1076,7 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName,
                     location.href = unescape(downloadUsedArr[2]);
                     $('.afterClick').hide();
                     $('.beforeClick').show();
-                    document.getElementById('download_video_' + prodId).innerHTML = '<a title=You have already download this video. Get it from your recent downloads" class="download-btn video-downloaded" href="/homes/my_history"></a>';
+                    document.getElementById('download_video_' + prodId).innerHTML = '<a title=You have already downloaded this video. Get it from your recent downloads" class="download-btn video-downloaded" href="/homes/my_history"></a>';
                     document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                     document.getElementById('vdownloading_' + prodId).style.display = 'none';
                     document.getElementById('download_video_' + prodId).style.display = 'block';
