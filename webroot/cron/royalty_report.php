@@ -24,10 +24,9 @@ echo $arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0, 0, 0, 
 echo ' -- ';
 echo $arr_dates['month']['to_date'] = date("Y-m-t 23:59:59", mktime(0, 0, 0, (date(m) - 2), 1, date(Y))); //'2012-10-31 23:59:59';
 
-
-echo $arr_dates['month']['from_date'] = '2014-02-01 00:00:00';
-echo ' -- ';
-echo $arr_dates['month']['to_date'] = '2014-02-28  23:59:59';
+//echo $arr_dates['month']['from_date'] = '2014-02-01 00:00:00';
+//echo ' -- ';
+//echo $arr_dates['month']['to_date'] = '2014-02-28  23:59:59';
 
 //$fetchRecordsFromTable = 'latest_downloads';
 $fetchRecordsFromTable = 'downloads';
@@ -60,8 +59,6 @@ foreach ($arr_dates AS $key => $value)
 
                 //echo  $outputFile23 = IMPORTLOGS."ca_debug_" . date('Y_m_d_h_i_s') . ".txt";die;
                 //$logFileWrite23 = fopen($outputFile23, 'w') or die("Can't Open the file!"); 
-
-
                 $royalty_content = array(
                     array(
                         array("RECORD_TYPE", "PERIOD_START_DATE", "PERIOD_END_DATE", "TOTAL_SALES", "ISO_CURRENCY_CODE", "INVOICE_REQUIRED", "TIMEZONE", "SPEC_NUMBER", "VERSION_NUMBER")
