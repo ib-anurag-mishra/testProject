@@ -1438,13 +1438,13 @@ STR;
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
             
-            /*
+            
              //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData($cacheVariableName . $country,$data);
             $MemDatas->setDataSource('default');
-            */
+            
             $this->log("cache written for new releases albums for $territory", 'debug');
             //End Caching functionality for new releases albums
             return $data;
@@ -1535,13 +1535,13 @@ STR;
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
             
-            /*
+            
              //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData("new_releases_videos" . $country,$data);
             $MemDatas->setDataSource('default');
-            */
+            
             
         }
         $this->log("cache written for new releases videos for $territory", 'debug');

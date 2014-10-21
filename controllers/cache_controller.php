@@ -154,7 +154,7 @@ class CacheController extends AppController {
        
         $territoriesList = $this->Common->getTerritories(); 
         foreach($territoriesList as $territory){           
-	    $this->setNewReleaseAlbums($territory);
+	   // $this->setNewReleaseAlbums($territory);
             $this->setNewReleaseVideos($territory);        
         }        
        

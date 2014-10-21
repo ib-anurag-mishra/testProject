@@ -3335,12 +3335,8 @@ STR;
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
         
         if( $this->Session->read('block') == 'yes' ) {
-           
-        
-        	$new_releases_albums_rs = Cache::read("new_releases_albums_none_explicit" . $territory);
-        
+        	$new_releases_albums_rs = Cache::read("new_releases_albums_none_explicit" . $territory);                        
         	if ($new_releases_albums_rs === false) {
-                    
                     //check variable data in to mem_datas table
                     $new_releases_albums_rs = $this->CacheHandler->checkMemData("new_releases_albums_none_explicit" . $territory);
                     //if not found then run query in the table
@@ -3352,11 +3348,9 @@ STR;
         } else {
         
                 //fetch record in cache
-        	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
-                
+        	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);                
                 //if cache not set
-        	if ( $new_releases_albums_rs === false ) {
-                  //  if ( 1 ) {
+        	if ( $new_releases_albums_rs === false ) {                 
                         //check variable data in to mem_datas table
                         $new_releases_albums_rs = $this->CacheHandler->checkMemData("new_releases_albums" . $territory);
                         //if not found then run query in the table
