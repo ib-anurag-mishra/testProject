@@ -1381,7 +1381,7 @@ STR;
                             Albums.ProdID,
                             Albums.Advisory,
                             Albums.provider_type,
-                            Albums.CdnPath
+                            Albums.CdnPath,
                             Albums.Image_SaveAsName,
                             Genre.Genre,
                             Country.Territory,
