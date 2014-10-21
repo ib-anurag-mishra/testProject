@@ -6,6 +6,8 @@
         $patId = $this->Session->read('patron');
         $html->addCrumb(__('My Library Top 10', true), '/homes/my_lib_top_10');
         echo $html->getCrumbs(' > ', __('Home', true), '/homes');
+        $find = array('\'', '"');
+        $replace = array('', '');
         ?>
     </div>
     <header class="clearfix">
@@ -33,8 +35,10 @@
                             <div class="album-container">
 
                                 <?php
+
+                                $trackingAlbumTitle = $count . '-' . str_replace($find, $replace, $this->getTextEncode($value['Albums']['AlbumTitle']));
                                 echo $html->link($html->image($value['album_img'], array("height" => "250", "width" => "250")), array('controller' => 'artists', 'action' => 'view',
-                                    base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false))
+                                    base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('onclick' => "ga('send', 'event', 'My Lib Albums', 'Artwork Click', '$trackingAlbumTitle')", 'class' => 'first', 'escape' => false))
                                 ?>
                                 <div class="top-10-ranking"><?php echo $count; ?></div>
                                 <?php
@@ -45,14 +49,14 @@
                                 <?php
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']],0,0,0,$value['Albums']['ProdID']);
+                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']], 0, $trackingAlbumTitle, 'My Lib Albums', $value['Albums']['ProdID']);
                                         ?> 
-                                        <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+                                        <a onclick="ga('send', 'event', 'My Lib Albums', 'Toggle Playlists', '<?php echo $trackingAlbumTitle; ?>')" class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
                                         <ul>
                                             <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                         </ul>
-                                        <a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a> 
+                                        <a onclick="ga('send', 'event', 'My Lib Albums', 'Add to Wishlist', '<?php echo $trackingAlbumTitle ?>')" class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a> 
                                         <?php
                                         /*
                                         <div class="wishlist-popover">
@@ -79,7 +83,7 @@
                                 ?>
                             </div>
                             <div class="album-title">							
-                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
+                                <a onclick="ga('send', 'event', 'My Lib Albums', 'Title Click', '<?php echo $trackingAlbumTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
                                     <?php
                                     
                                     if (strlen($value['Albums']['AlbumTitle']) > 20)
@@ -93,7 +97,7 @@
                                     ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                             </div>
                             <div class="artist-name">							
-                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
+                                <a onclick="ga('send', 'event', 'My Lib Albums', 'Artist Click', '<?php echo $trackingAlbumTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
                                     <?php
                                     if (strlen($value['Song']['Artist']) > 32)
                                         echo substr($value['Song']['Artist'], 0, 32) . "...";
@@ -134,6 +138,7 @@
                         {
                             continue;
                         }
+                        $trackingSongTitle = $count . '-' . str_replace($find, $replace, $this->getTextEncode($value['Song']['SongTitle']));
 
                         if ($count > 10)
                             break;
@@ -146,7 +151,7 @@
                                     ?>                                  
                                     <input type="hidden" id="<?php echo $value["Song"]["ProdID"]; ?>" value="song" data-provider="<?php echo $value["Song"]["provider_type"]; ?>" />
                                <?php } ?>
-                                <a href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
+                                <a onclick="ga('send', 'event', 'My Lib Songs', 'Artwork Click', '<?php echo $trackingSongTitle; ?>')" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
                                     <img class="lazy"  src="<?php echo $value['songs_img']; ?>" alt="<?php echo $this->getValidText($value['Song']['Artist'] . ' - ' . $value['Song']['SongTitle']); ?>" width="250" height="250" />                                                        
                                 </a>
                                 <div class="top-10-ranking"><?php echo $count; ?></div>
@@ -167,7 +172,7 @@
                                             $song_title = $value['Song']['SongTitle'];
                                         }
 
-                                        echo $this->Queue->getStreamNowLabel($value['streamUrl'], $song_title, $value['Song']['ArtistText'], $value['totalseconds'], $value['Song']['ProdID'], $value['Song']['provider_type']); 
+                                        echo $this->Queue->getStreamNowLabel($value['streamUrl'], $song_title, $value['Song']['ArtistText'], $value['totalseconds'], $value['Song']['ProdID'], $value['Song']['provider_type'], 'My Lib Songs', $trackingSongTitle); 
                                     }
                                     else if ($value['Country']['SalesDate'] <= date('Y-m-d'))
                                     {
@@ -218,7 +223,7 @@
                                                     <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
                                                     <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Song"]["ProdID"]; ?>">
                                                         <![if !IE]>
-                                                        <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?php echo $value["Song"]['ProdID']; ?>", "0", "<?php echo $value["Song"]['CdnPath']; ?>", "<?php echo $value["Song"]['FullLength_SaveAsName']; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
+                                                        <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='ga("send", "event", "My Lib Songs", "Download", "<?php echo $trackingSongTitle; ?>", 1); return wishlistDownloadOthersHome("<?php echo $value["Song"]['ProdID']; ?>", "0", "<?php echo $value["Song"]['CdnPath']; ?>", "<?php echo $value["Song"]['FullLength_SaveAsName']; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
                                                         <![endif]>
                                                         <!--[if IE]>
                                                                <a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Song"]['ProdID']; ?>", "0" , "<?php echo $value["Song"]["provider_type"]; ?>", "<?php echo $value['Song']['CdnPath']; ?>", "<?php echo $value["Song"]['FullLength_SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
@@ -295,20 +300,20 @@
                                 {
                                     ?>                                    
                                     
-                                    <a class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+                                    <a onclick="ga('send', 'event', 'My Lib Songs', 'Toggle Playlists', '<?php echo $trackingSongTitle; ?>')" class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
                                     <ul>
                                         <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
                                     </ul>
                                    
-                                    <a class="wishlist-icon toggleable no-ajaxy" href="#" title="<?php __('Add to Wishlist'); ?>"></a>
+                                    <a onclick="ga('send', 'event', 'My Lib Songs', 'Add to Wishlist', '<?php echo $trackingSongTitle; ?>')" class="wishlist-icon toggleable no-ajaxy" href="#" title="<?php __('Add to Wishlist'); ?>"></a>
                                     
                                     
                                 <?php } ?>
 
                             </div>
                             <div class="album-title">
-                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['SongTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
+                                <a onclick="ga('send', 'event', 'My Lib Songs', 'Title Click', '<?php echo $trackingSongTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['SongTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
                                     <?php
                                     if (strlen($value['Song']['SongTitle']) > 20)
                                         echo substr($value['Song']['SongTitle'], 0, 20) . "...";
@@ -321,7 +326,7 @@
                                     ?> <span style="color: red;display: inline;"> (<?php __('Explicit'); ?>)</span> <?php } ?>
                             </div>
                             <div class="artist-name">
-                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
+                                <a onclick="ga('send', 'event', 'My Lib Songs', 'Artist Click', '<?php echo $trackingSongTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
                                     <?php
                                     if (strlen($value['Song']['Artist']) > 32)
                                         echo substr($value['Song']['Artist'], 0, 32) . "...";
@@ -367,11 +372,12 @@
                         {
                             continue;
                         }
+                        $trackingVideoTitle = $count . '-' . str_replace($find, $replace, $this->getTextEncode($value['Video']['VideoTitle']));
                         ?>
                         <li>
 
                             <div class="video-container">
-                                <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                <a onclick="ga('send', 'event', 'My Lib Videos', 'Artwork Click', '<?php echo $trackingVideoTitle; ?>')" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                     <img src="<?php echo $value['videoAlbumImage']; ?>" alt="<?php echo $this->getValidText($value['Video']['Artist'] . ' - ' . $value['Video']['VideoTitle']); ?>" width="423" height="250" />
                                 </a>                                                  
                                 <div class="top-10-ranking"><?php echo $count; ?></div>
@@ -411,7 +417,7 @@
                                                         <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                                                         <span class="beforeClick" id="download_video_<?php echo $value["Video"]["ProdID"]; ?>">
                                                             <![if !IE]>
-                                                            <a class="no-ajaxy top-10-download-now-button" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $value['Video']['ProdID']; ?>", "0", "<?php echo $value['Video']['CdnPath']; ?>", "<?php echo $value['Video']['FullLength_SaveAsName']; ?>",  "<?php echo $value['Video']['provider_type']; ?>");'><?php __('Download Now'); ?></a>
+                                                            <a class="no-ajaxy top-10-download-now-button" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='ga("send", "event", "My Lib Videos", "Video Download", "<?php echo $trackingVideoTitle; ?>", 1); return wishlistVideoDownloadOthersToken("<?php echo $value['Video']['ProdID']; ?>", "0", "<?php echo $value['Video']['CdnPath']; ?>", "<?php echo $value['Video']['FullLength_SaveAsName']; ?>",  "<?php echo $value['Video']['provider_type']; ?>");'><?php __('Download Now'); ?></a>
                                                             <![endif]>
                                                             <!--[if IE]>
                                                                     <a class="no-ajaxy top-10-download-now-button" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>', '<?php echo $value['Video']['CdnPath']; ?>', '<?php echo $value['Video']['FullLength_SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a>
@@ -451,7 +457,7 @@
                                                 else
                                                 {
                                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
-                                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"]);
+                                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"], 1, 'My Lib Videos', $trackingVideoTitle);
                                                 }
                                             }
                                             else
@@ -493,14 +499,14 @@
 
                                         <?php
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
-                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"]);
+                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"], 1, 'My Lib Videos', $trackingVideoTitle);
                                         ?>
 
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class="album-title">
-                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                <a onclick="ga('send', 'event', 'My Lib Videos', 'Title Click', '<?php echo $trackingVideoTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                     <?php
                                     if (strlen($value['Video']['VideoTitle']) > 20)
                                         echo substr($value['Video']['VideoTitle'], 0, 20) . "...";
@@ -513,7 +519,7 @@
                                     ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                             </div>
                             <div class="artist-name">
-                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
+                                <a onclick="ga('send', 'event', 'My Lib Videos', 'Artist Click', '<?php echo $trackingVideoTitle; ?>')" title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
                                     <?php
                                     if (strlen($value['Video']['Artist']) > 32)
                                         echo substr($value['Video']['Artist'], 0, 32) . "...";
