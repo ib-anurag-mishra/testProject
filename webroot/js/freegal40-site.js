@@ -2010,6 +2010,7 @@ $(document).ready(function() {
         $this.find('.playlist-menu-icon').css({opacity:.5});
         $this.find('.top-10-download-now-button').css({opacity:.5});
         $this.find('span.top-10-download-now-button').find('.add-to-wishlist').css({opacity:.5});
+        $this.find('span.top-10-download-now-button').find('.song-downloaded').css({opacity:.5});
         $this.find('.album-preview').css({opacity:.5});
         $this.find('.wishlist-icon').css({opacity:.5});
     });
@@ -2019,6 +2020,7 @@ $(document).ready(function() {
         $this.find('.playlist-menu-icon').css({opacity:.0});
         $this.find('.top-10-download-now-button').css({opacity:0});
         $this.find('span.top-10-download-now-button').find('.add-to-wishlist').css({opacity:.0});
+        $this.find('span.top-10-download-now-button').find('.song-downloaded').css({opacity:0});
         $this.find('.album-preview').css({opacity:.0});
         $this.find('.wishlist-icon').css({opacity:.0});
     });
