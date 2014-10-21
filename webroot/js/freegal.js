@@ -1560,9 +1560,11 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
                     
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                     if (languageSet === 'en') {
-                        document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                        //document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                        document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history" class="top-10-download-now-button">Downloaded</a>';
                     } else {
-                        document.getElementById('download_video_' + prodId).innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
+                        //document.getElementById('download_video_' + prodId).innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
+                        document.getElementById('download_video_' + prodId).innerHTML = '<a href="/homes/my_history" class="top-10-download-now-button">bajaedas</a>';
                     }
                     document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                     document.getElementById('vdownloading_' + prodId).style.display = 'none';
