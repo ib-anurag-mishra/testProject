@@ -13,7 +13,7 @@
                     ?>
                 </div>
 		<header><?php echo $session->flash(); ?>
-			<h2><?php __('The Great Fall Concert Ticket Giveaway');?></h2>
+			<h2></h2>
 		</header>
 		<div class="faq-container">
                     <ul>

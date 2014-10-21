@@ -3,6 +3,8 @@
          <?php
             $html->addCrumb(__('Videos', true), '/videos' );
             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+            $find = array('\'', '"');
+            $replace = array('', '');
           ?>
         </div>
 	<section class="featured-videos">
@@ -17,6 +19,7 @@
                     $sr_no = 0;
 
                     foreach ( $featuredVideos as $key => $featureVideo ):
+                        $trackingFeaturedTitle = ($sr_no + 1) . '-' . str_replace($find, $replace, $this->getTextEncode($featureVideo['Video']['VideoTitle']));
                         if ( $sr_no % 2 == 0 ): ?>
 							<li>
 				  <?php endif; ?>
@@ -24,7 +27,7 @@
                                 <div class="video-thumbnail-container">
 
 
-                                    <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="288" height="162" alt="" /></a>
+                                    <a onclick="ga('send', 'event', 'Featured Videos', 'Artwork Click', '<?php echo $trackingFeaturedTitle; ?>')" href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="288" height="162" alt="Video Thumbnail Image" /></a>
                                     
 
                                     <?php
@@ -48,10 +51,10 @@
                                                         <input type="hidden" name="ProviderType" value="<?=$featureVideo["Video"]["provider_type"]?>" />
                                                         <span class="beforeClick" id="download_video_<?=$featureVideo["FeaturedVideo"]["ProdID"]?>">
                                                             <![if !IE]>
-                                                            <a href="javascript:void(0);" title="<?= __('IMPORTANT: Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?= $featureVideo['FeaturedVideo']['ProdID']; ?>", "0", "<?= $featureVideo['Video']['CdnPath']; ?>", "<?= $featureVideo['Video']['FullLength_SaveAsName']; ?>",  "<?= $featureVideo['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?= __('Download Now'); ?></label></a>
+                                                            <a href="javascript:void(0);" title="<?= __('IMPORTANT: Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='ga("send", "event", "Featured Videos", "Video Download", "<?php echo $trackingFeaturedTitle; ?>", 1); return wishlistVideoDownloadOthersToken("<?= $featureVideo['FeaturedVideo']['ProdID']; ?>", "0", "<?= $featureVideo['Video']['CdnPath']; ?>", "<?= $featureVideo['Video']['FullLength_SaveAsName']; ?>",  "<?= $featureVideo['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?= __('Download Now'); ?></label></a>
                                                             <![endif]>
                                                             <!--[if IE]>
-                                                                    <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?= $featureVideo['FeaturedVideo']['ProdID']; ?>','0','<?= $featureVideo['Video']['provider_type']; ?>', '<?= $featureVideo['Video']['CdnPath']; ?>', '<?= $featureVideo['Video']['FullLength_SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
+                                                                    <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="ga('send', 'event', 'Featured Videos', 'Video Download', '<?php echo $trackingFeaturedTitle; ?>', 1); wishlistVideoDownloadIEToken('<?= $featureVideo['FeaturedVideo']['ProdID']; ?>','0','<?= $featureVideo['Video']['provider_type']; ?>', '<?= $featureVideo['Video']['CdnPath']; ?>', '<?= $featureVideo['Video']['FullLength_SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
                                                             <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="vdownloading_<?= $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><?= __('Please Wait'); ?>...&nbsp;&nbsp;</span>
@@ -75,7 +78,7 @@
                                             	$wishlistInfo = 'Add To Wishlist';
                                             endif;
 
-                                            echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $featureVideo["FeaturedVideo"]["ProdID"], $featureVideo["Video"]["provider_type"]);
+                                            echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $featureVideo["FeaturedVideo"]["ProdID"], $featureVideo["Video"]["provider_type"], 1, 'Featured Videos', $trackingFeaturedTitle);
                                             ?>
                                         </div>
                               <?php else: ?>
@@ -83,7 +86,7 @@
                               <?php endif; ?>
                                 </div>
                                 <div class="video-title">
-                                    <a title="<?= $this->getValidText( $this->getTextEncode( $featureVideo['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>">
+                                    <a onclick="ga('send', 'event', 'Featured Videos', 'Title Click', '<?php echo $trackingFeaturedTitle; ?>')" title="<?= $this->getValidText( $this->getTextEncode( $featureVideo['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>">
                                		<?php if ( strlen( $featureVideo['Video']['VideoTitle'] ) >= 20 ):
                                             $featureVideo['Video']['VideoTitle'] = substr( $featureVideo['Video']['VideoTitle'], 0, 20 ) . '...';
                                           endif;
@@ -100,7 +103,7 @@
                                         $featureVideo['Video']['ArtistText'] = substr( $featureVideo['Video']['ArtistText'], 0, 20 ) . '...';
                                     endif;
                                     ?>
-                                    <a title="<?= $this->getValidText( $this->getTextEncode( $featureVideo['Video']['ArtistText'] ) ); ?>" href="/artists/album/<?= base64_encode( $featureVideo['Video']['ArtistText']); ?>"><?= $this->getTextEncode($featureVideo['Video']['ArtistText'] ); ?></a>
+                                    <a onclick="ga('send', 'event', 'Featured Videos', 'Artist Click', '<?php echo $trackingFeaturedTitle; ?>')" title="<?= $this->getValidText( $this->getTextEncode( $featureVideo['Video']['ArtistText'] ) ); ?>" href="/artists/album/<?= base64_encode( $featureVideo['Video']['ArtistText']); ?>"><?= $this->getTextEncode($featureVideo['Video']['ArtistText'] ); ?></a>
                                 </div>
                             </div>
                             <?php if ( $sr_no % 2 == 1 || $sr_no == ( $total_videos - 1 ) ): ?>
@@ -133,12 +136,13 @@
                     $sr_no = 0;
 
                     foreach ($topVideoDownloads as $key => $topDownload):
+                        $trackingTopTitle = ($sr_no + 1) . '-' . str_replace($find, $replace, $this->getTextEncode($topDownload['Video']['VideoTitle']));
                         if ($sr_no % 2 == 0):
                 ?>
 							<li> 
                   <?php endif; ?>
 						<div class="video-cover-container">
-                        	<a href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>"><img alt="" src="<?= $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
+                        	<a onclick="ga('send', 'event', 'Top Videos', 'Artwork Click', '<?php echo $trackingTopTitle; ?>')" href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>"><img alt="Video Thumbnail Image" src="<?= $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
                         <?php
 								if ( $this->Session->read( 'patron' ) ):
                         ?>
@@ -165,10 +169,10 @@
                                                     <input type="hidden" name="ProviderType" value="<?= $topDownload["Video"]["provider_type"]; ?>" />
                                                     <span class="beforeClick" id="download_video_<?= $topDownload["Video"]["ProdID"]; ?>">
                                                         <![if !IE]>
-                                                        <a class="no-ajaxy" href="javascript:void(0);" title="<?= __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?= $topDownload['Video']['ProdID']; ?>", "0", "<?= $topDownload['Video']['CdnPath']; ?>", "<?= $topDownload['Video']['FullLength_SaveAsName']; ?>",  "<?= $topDownload["Video"]["provider_type"]; ?>");'><label class="top-10-download-now-button"><?= __('Download Now'); ?></label></a>
+                                                        <a class="no-ajaxy" href="javascript:void(0);" title="<?= __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='ga("send", "event", "Top Videos", "Video Download", "<?php echo $trackingTopTitle; ?>", 1); return wishlistVideoDownloadOthersToken("<?= $topDownload['Video']['ProdID']; ?>", "0", "<?= $topDownload['Video']['CdnPath']; ?>", "<?= $topDownload['Video']['FullLength_SaveAsName']; ?>",  "<?= $topDownload["Video"]["provider_type"]; ?>");'><label class="top-10-download-now-button"><?= __('Download Now'); ?></label></a>
                                                         <![endif]>
                                                         <!--[if IE]>
-                                                                <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?= $topDownload['Video']['ProdID']; ?>','0','<?= $topDownload['Video']['provider_type']; ?>', '<?= $topDownload['File']['CdnPath']; ?>', '<?= $topDownload['Video']['FullLength_SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
+                                                                <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="ga('send', 'event', 'Top Videos', 'Video Download', '<?php echo $trackingTopTitle; ?>', 1); wishlistVideoDownloadIEToken('<?= $topDownload['Video']['ProdID']; ?>','0','<?= $topDownload['Video']['provider_type']; ?>', '<?= $topDownload['File']['CdnPath']; ?>', '<?= $topDownload['Video']['FullLength_SaveAsName']; ?>');" href="javascript:void(0);"><?= __('Download Now'); ?></a></label>
                                                         <![endif]-->
                                                     </span>
                                                     <span class="afterClick" id="vdownloading_<?= $topDownload["Video"]["ProdID"]; ?>" style="display:none;">
@@ -191,13 +195,13 @@
 	                                 		$wishlistInfo = 'Add To Wishlist';
 	                                 	endif;
 
-                                        echo $this->WishlistVideo->getWishListVideoMarkup( $wishlistInfo, $topDownload["Video"]["ProdID"], $featureVideo["Video"]["provider_type"] );
+                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $topDownload["Video"]["ProdID"], $featureVideo["Video"]["provider_type"], 1, 'Top Videos', $trackingTopTitle);
                                   ?>
                           <?php endif; ?>
                             </div>
                         </div>
                         <div class="video-title">
-							<a title="<?= $this->getValidText( $this->getTextEncode( $topDownload['Video']['VideoTitle'] ) ); ?>" href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>">
+							<a onclick="ga('send', 'event', 'Top Videos', 'Title Click', '<?php echo $trackingTopTitle; ?>')" title="<?= $this->getValidText( $this->getTextEncode( $topDownload['Video']['VideoTitle'] ) ); ?>" href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>">
                         	<?php
 	                        	if ( isset( $topDownload['Video']['Advisory'] ) && 'T' == $topDownload['Video']['Advisory'] ) {
 	                        		$topDownload['Video']['VideoTitle'] = substr( $topDownload['Video']['VideoTitle'], 0, 10 ) . '...';
@@ -214,7 +218,7 @@
                       <?php endif; ?>
                         </div>
                         <div class="video-name">
-							<a title="<?= $this->getValidText( $this->getTextEncode( $topDownload['Video']['ArtistText'] ) ); ?>" href="/artists/album/<?= base64_encode( $topDownload['Video']['ArtistText'] ); ?>">
+							<a onclick="ga('send', 'event', 'Top Videos', 'Artist Click', '<?php echo $trackingTopTitle; ?>')" title="<?= $this->getValidText( $this->getTextEncode( $topDownload['Video']['ArtistText'] ) ); ?>" href="/artists/album/<?= base64_encode( $topDownload['Video']['ArtistText'] ); ?>">
 					  <?php
 							if ( strlen( $topDownload['Video']['ArtistText'] ) >= 20 ):
                             	$topDownload['Video']['ArtistText'] = substr( $topDownload['Video']['ArtistText'], 0, 20 ) . '...';

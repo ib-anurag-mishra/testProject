@@ -486,7 +486,7 @@
 												</form>
 											</div>
 								<?php 	else:
-											echo $this->Html->link( '', array('controller' => 'homes', 'action' => 'my_history' ), array( 'title' => __('You have already download this video. Get it from your recent downloads', true), 'class' => 'download-btn video-downloaded') );
+											echo $this->Html->link( '', array('controller' => 'homes', 'action' => 'my_history' ), array( 'title' => __('You have already downloaded this video. Get it from your recent downloads', true), 'class' => 'download-btn video-downloaded') );
 								 		endif;
 									else:
 								  		echo $this->Html->link( '', '#', array( 'class' => 'download-btn download-limit-met', 'title' => __('Your download limit has been met.', true) ) );
