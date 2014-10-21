@@ -213,7 +213,7 @@
                                             {
                                                 ?>
                                                 <span class="top-10-download-now-button">
-                                                <form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+                                                <form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/wishlistDownloadHome" class="suggest_text1">
                                                     <input type="hidden" name="ProdID" value="<?php echo $value["Song"]["ProdID"]; ?>" />
                                                     <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
                                                     <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Song"]["ProdID"]; ?>">
