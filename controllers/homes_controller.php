@@ -3351,9 +3351,6 @@ STR;
                 
         } else {
         
-             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
-             
-             die;
                 //fetch record in cache
         	$new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
                 
