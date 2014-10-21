@@ -1364,7 +1364,7 @@ STR;
             }
 
             $data = array();
-    echo       $sql_album_new_release = <<<STR
+           $sql_album_new_release = <<<STR
                     SELECT 
                             Song.ProdID,
                             Song.ReferenceID,
@@ -1399,7 +1399,7 @@ STR;
                     ORDER BY Country.SalesDate DESC
                     LIMIT 150
 STR;
-die;
+
 
             $data = $songInstance->query($sql_album_new_release);
             $this->log("new release album for $territory", "cachequery");
