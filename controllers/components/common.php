@@ -1409,7 +1409,7 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-                    $album_img = $tokeninstance->artworkToken($value['Albums']['CdnPath'] . "/" . $value['Albums']['SourceURL']);                    
+                    $album_img = $tokeninstance->artworkToken($value['Albums']['CdnPath'] . "/" . $value['Albums']['Image_SaveAsName']);                    
                     $album_img = Configure::read('App.Music_Path') . $album_img;
 
                     $data[$key]['albumImage'] = $album_img;
