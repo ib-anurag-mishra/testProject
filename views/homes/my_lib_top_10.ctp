@@ -37,7 +37,7 @@
                                 <?php
 
                                 $trackingAlbumTitle = $count . '-' . str_replace($find, $replace, $this->getTextEncode($value['Albums']['AlbumTitle']));
-                                echo $html->link($html->image($value['album_img'], array("height" => "250", "width" => "250")), array('controller' => 'artists', 'action' => 'view',
+                                echo $html->link($html->image($value['album_img'], array("height" => "250", "width" => "250", "alt" => 'Album Cover Art')), array('controller' => 'artists', 'action' => 'view',
                                     base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('onclick' => "ga('send', 'event', 'My Lib Albums', 'Artwork Click', '$trackingAlbumTitle')", 'class' => 'first', 'escape' => false))
                                 ?>
                                 <div class="top-10-ranking"><?php echo $count; ?></div>
