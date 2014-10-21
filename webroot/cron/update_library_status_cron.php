@@ -62,7 +62,7 @@
             $to         = "tech@libraryideas.com";
             $subject    = "FreegalMusic: Libraries whose Download Contract is expired Today";
             $headers    = "From:no-reply@freegalmusic.com" . "\r\n" .
-                          "BCC: kushal.pogul@infobeans.com";
+                          "BCC: tech@libraryideas.com, kushal.pogul@infobeans.com";
 
             $mail_response = mail($to,$subject,$mailText,$headers);  
             

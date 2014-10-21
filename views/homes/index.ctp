@@ -127,7 +127,7 @@ $replace = array('','');
 									}
 			if ($nationalTopSong['Song']['status'] != 'avail') { ?>
 				<span class="top-100-download-now-button">
-					<form method="Post" id="form<?= $nationalTopSong["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+					<form method="Post" id="form<?= $nationalTopSong["Song"]["ProdID"]; ?>" action="/homes/wishlistDownloadHome" class="suggest_text1">
 						<input type="hidden" name="ProdID" value="<?= $nationalTopSong["Song"]["ProdID"]; ?>" /> 
 						<input type="hidden" name="ProviderType" value="<?= $nationalTopSong["Song"]["provider_type"]; ?>" /> 
 						<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?= $nationalTopSong["Song"]["ProdID"]; ?>">
@@ -193,7 +193,8 @@ $replace = array('','');
                                                                 echo $this->Queue->getNationalsongsStreamNowLabel($nationalTopSong['Song']['CdnPath'], $nationalTopSong['Song']['FullLength_SaveAsName'], $song_title, $nationalTopSong['Song']['ArtistText'], $nationalTopSong['Song']['FullLength_Duration'], $nationalTopSong['Song']['ProdID'], $nationalTopSong['Song']['provider_type'], $count . '-' . $trackingSongTitle);                                                                
 
 							} else if ($nationalTopSong['Country']['SalesDate'] <= date('Y-m-d')) {
-								echo $html->image('sample-icon.png', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $count, "onClick" => 'playSample(this, "' . $count . '", ' . $nationalTopSong['Song']['ProdID'] . ', "' . base64_encode($nationalTopSong['Song']['provider_type']) . '", "' . $this->webroot . '"); ga("send", "event", "Top Singles, "Play Sample", "' . $count . '-' . $this->getTextEncode($nationalTopSong['Song']['SongTitle']) . '")'));
+								echo $html->image('sample-icon.png', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $count, "onClick" => "ga('send', 'event', 'Top Singles', 'Play Sample', '" . $count . '-' . $trackingSongTitle . "'); playSample(this, '" . $count . "', " . $nationalTopSong['Song']['ProdID'] . ", '" . base64_encode($nationalTopSong['Song']['provider_type']) . "', '" . $this->webroot . "')"));
+								
 								echo $html->image('sample-loading-icon-v3.gif', array("alt" => "Loading Sample", "class" => "preview play-btn", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $count));
 								echo $html->image('sample-stop.png', array("alt" => "Stop Sample", "class" => "preview play-btn", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $count, "onClick" => 'stopThis(this, "' . $count . '");'));
 							}
