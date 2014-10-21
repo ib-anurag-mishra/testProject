@@ -2050,7 +2050,16 @@ $(document).ready(function() {
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .add-to-wishlist').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
-    });    
+    });
+
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
+        $(this).css({opacity:1});
+
+    });
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });          
 
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .wishlist-icon').on('mouseenter',function(){
         $(this).css({opacity:1});
