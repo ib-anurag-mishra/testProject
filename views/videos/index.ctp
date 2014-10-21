@@ -27,7 +27,7 @@
                                 <div class="video-thumbnail-container">
 
 
-                                    <a onclick="ga('send', 'event', 'Featured Videos', 'Artwork Click', '<?php echo $trackingFeaturedTitle; ?>')" href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="288" height="162" alt="" /></a>
+                                    <a onclick="ga('send', 'event', 'Featured Videos', 'Artwork Click', '<?php echo $trackingFeaturedTitle; ?>')" href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="288" height="162" alt="Video Thumbnail Image" /></a>
                                     
 
                                     <?php
@@ -142,7 +142,7 @@
 							<li> 
                   <?php endif; ?>
 						<div class="video-cover-container">
-                        	<a onclick="ga('send', 'event', 'Top Videos', 'Artwork Click', '<?php echo $trackingTopTitle; ?>')" href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>"><img alt="" src="<?= $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
+                        	<a onclick="ga('send', 'event', 'Top Videos', 'Artwork Click', '<?php echo $trackingTopTitle; ?>')" href="/videos/details/<?= $topDownload["Videodownload"]["ProdID"]; ?>"><img alt="Video Thumbnail Image" src="<?= $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
                         <?php
 								if ( $this->Session->read( 'patron' ) ):
                         ?>
