@@ -327,7 +327,8 @@ function getFileNameCDN($library_territory, $from_date, $libTypeKey, $version)
 
 function getFileNameDB($library_territory, $from_date, $libTypeKey, $version, $db)
 {
-    $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+    // $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+    $file_name = date('Y-m', strtotime($from_date)) . '_' . "Freegal_" . strtoupper($library_territory) . "_" . $libTypeKey . "_v$version" . ".txt";
 
     while (1)
     {
@@ -341,7 +342,8 @@ function getFileNameDB($library_territory, $from_date, $libTypeKey, $version, $d
         else
         {
             $version++;
-            $file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+            //$file_name = "Freegal_r_" . strtolower($library_territory) . "_" . date('Ym', strtotime($from_date)) . '_' . $libTypeKey . "_v$version" . ".txt";
+            $file_name = date('Y-m', strtotime($from_date)) . '_' . "Freegal_" . strtoupper($library_territory) . "_" . $libTypeKey . "_v$version" . ".txt";
         }
     }
     return $file_name;
@@ -349,11 +351,9 @@ function getFileNameDB($library_territory, $from_date, $libTypeKey, $version, $d
 
 function write_file($content, $file_name, $folder, $db)
 {
-   
-    
     $outputFile = "iodareports_output_" . date('Y_m_d_h_i_s') . ".txt";
     $logFileWrite = fopen(IMPORTLOGS . $outputFile, 'w') or die("Can't Open the file!");
-    
+
 
     if (count($content[1]) > 1)
     {
@@ -372,15 +372,10 @@ function write_file($content, $file_name, $folder, $db)
             }
         }
         fclose($fh);
-
         $status_message = '';
 
-
-        //$cdn_status = sendFile($file, $file_name);        
-
-        $cdn_status = 0;
-        
-
+        $cdn_status = sendFile($file, $file_name);
+        //$cdn_status = 0;
         if ($cdn_status)
         {
             $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_cdn_uploaded`='1' , modified=now() WHERE `report_name`='$file_name' ";
@@ -392,12 +387,10 @@ function write_file($content, $file_name, $folder, $db)
         {
             fwrite($logFileWrite, "$file_name not uploaded on CDN \n");
             $status_message .="$file_name not uploaded on CDN \n";
+        }
 
-        } 
-        
-       // $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
-        $ioda_status = 0;
-
+        $ioda_status = sendReportFileIODA($file, $file_name, $logFileWrite, "monthly");
+        //$ioda_status = 0;
         if ($ioda_status)
         {
             $update_query = "UPDATE `freegal`.`ioda_reports` SET `report_send_ioda`='1' , modified=now() WHERE `report_name`='$file_name' ";
@@ -421,8 +414,7 @@ function write_file($content, $file_name, $folder, $db)
         }
 
 
-       //sendReportEmail("monthly", $file_name);        
-
+        sendReportEmail("monthly", $file_name);
     }
     else
     {

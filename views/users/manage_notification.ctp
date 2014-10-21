@@ -62,11 +62,11 @@ $ieVersion = ieversion();
                         $showEmailID = "display:none;";
                     }
                     ?>
-                    <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave)); ?>
+                    <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave, 'title' => 'Newsletter Checkbox')); ?>
                     <?php __('Add your email address here to receive twice-weekly email reminders of your available downloads.'); ?>
                 </div>
                 <div id="show_newsletterboxField" style="<?php echo $showEmailID; ?>">
-                    <?php echo $this->Form->label(__('Notification Email', true)); ?>
+                    <?php echo $this->Form->label('NewsletterEmail', __('Notification Email', true)); ?>
                     <?php echo $this->Form->input('NewsletterEmail', array('label' => false, 'value' => $notificationEmail, 'div' => false, 'class' => 'form_fields')); ?>
                 </div>    
                 <div>
