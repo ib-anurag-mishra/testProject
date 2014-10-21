@@ -1394,7 +1394,7 @@ STR;
                     LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
                     INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID)                     
                     WHERE ( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)))
-                        AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) $albumAdvisory                
+                        AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) AND (Albums.Image_SaveAsName != '' AND Albums.CdnPath !='' ) $albumAdvisory                
                     group by Albums.AlbumTitle
                     ORDER BY Country.SalesDate DESC
                     LIMIT 150
@@ -1438,13 +1438,13 @@ STR;
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
             
-            
+            /*
              //update the mem datas table
             $MemDatas = ClassRegistry::init('MemDatas');
             $MemDatas->setDataSource('master');
             $this->CacheHandler->setMemData($cacheVariableName . $country,$data);
             $MemDatas->setDataSource('default');
-            
+            */
             $this->log("cache written for new releases albums for $territory", 'debug');
             //End Caching functionality for new releases albums
             return $data;
