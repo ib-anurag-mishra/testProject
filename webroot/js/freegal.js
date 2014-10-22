@@ -965,6 +965,14 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName, type)
                     location.href = unescape(downloadUsedArr[2]);
                     $('.afterClick').hide();
                     $('.beforeClick').show();
+                    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
+                        $(this).css({opacity:1});
+
+                    });
+                    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseleave',function(){
+                        $(this).css({opacity:.5});
+
+                    }); 
                     document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history" class="song-downloaded">Downloaded</a>';
                     document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                     document.getElementById('downloading_' + prodId).style.display = 'none';
@@ -1436,7 +1444,6 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
                 //run ajaxify
                 $('.content').ajaxify();
                 $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
-                    console.log('entered');
                     $(this).css({opacity:1});
 
                 });
@@ -2078,6 +2085,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added song to playlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
 

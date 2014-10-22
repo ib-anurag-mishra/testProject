@@ -225,7 +225,7 @@
                                                         <![endif]-->
                                                     </span>
                                                     <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __('Please Wait'); ?>...&nbsp;&nbsp;
-                                                            <span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="float:right;padding-right:3px;padding-top:4px;"><?php echo $html->image('ajax-loader_black.gif'); ?></span> </a> </span>
+                                                            <span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="display: block; position: absolute; left: 0; top: 0; width:28px; height: 19px; background: rgba(0,0,0,.1);"><?php echo $html->image('ajax-loader_black.gif',array('alt' => 'ajax loader gif', 'style' => 'width: 16px; height:16px; margin: 2px auto;')); ?></span> </a> </span>
                                                 </form>
                                                 </span>    
                                                 <?php

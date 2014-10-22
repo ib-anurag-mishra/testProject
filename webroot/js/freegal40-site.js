@@ -2053,7 +2053,7 @@ $(document).ready(function() {
     });
 
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
-        console.log('entered');
+
         $(this).css({opacity:1});
 
     });
