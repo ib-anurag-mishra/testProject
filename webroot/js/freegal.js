@@ -1967,6 +1967,7 @@ function addToQueueResponse(response, type)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById("ajaxflashMessage44").style.background = "red";
         document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is already added to Playlist';
         $('#ajaxflashMessage44').fadeOut(5000);
     }
@@ -1979,6 +1980,7 @@ function addToQueueResponse(response, type)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById("ajaxflashMessage44").style.background = "red";
         document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is not allowed for Streaming';
         $('#ajaxflashMessage44').fadeOut(5000);
     }
@@ -1993,6 +1995,7 @@ function addToQueueResponse(response, type)
                 document.getElementById("flash-message").setAttribute("class", "");
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
+            document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
             document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added ' + type + ' to Playlist';
             $('#ajaxflashMessage44').fadeOut(5000);
 
@@ -2059,6 +2062,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
@@ -2071,6 +2075,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not allowed for Streaming';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
@@ -2165,6 +2170,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is already added to playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
@@ -2177,6 +2183,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is not allowed for Streaming';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
@@ -2272,6 +2279,7 @@ function removeSong(pdId, divId) {
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song cannot be deleted';
                 $('#ajaxflashMessage44').fadeOut(5000);
 
@@ -2285,6 +2293,7 @@ function removeSong(pdId, divId) {
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'You need to login in for Removing a Song from your Playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
 
