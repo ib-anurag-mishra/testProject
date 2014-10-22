@@ -71,6 +71,7 @@ if ($this->Session->read("patron")) {
 
 if ($this->Session->read('library_type') == '2') {
 	echo $javascript->link(array('streaming.js'));
+	echo '<noscript>' . __('JavaScript must be enabled for this site to work correctly.', true) . '</noscript>';
 	?>
 <div class="player-wrapper">
 	<div class="fmp_container">

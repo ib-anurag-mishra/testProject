@@ -1502,13 +1502,14 @@ Class LibrariesController extends AppController
 STR;
                         $this->sendCardImoprtErrorEmail($card_error_message, $library_id, $library_name);
                     }
+                    $noscriptmessage = __('JavaScript must be enabled for this site to work correctly.', true);
 
                     echo $show_msg = <<<STR
 					<script type="text/javascript">
 						alert('Credentials imported successfully for Library name: $library_name!!');
 						window.location = "/admin/libraries/card";
 					</script>
-                    <noscript>__('JavaScript must be enabled for this site to work correctly.')</noscript>
+                    <noscript>$noscriptmessage</noscript>
 STR;
                 }
                 else
