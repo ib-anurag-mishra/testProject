@@ -213,7 +213,7 @@
                                                             <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait"); ?>...
-                                                                <span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif'); ?></span> </a> </span>
+                                                                <span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="display: block; position: absolute; left: 0; top: 0; width:28px; height: 19px; background: rgba(0,0,0,.1);"><?php echo $html->image('ajax-loader_black.gif',array('alt' => 'ajax loader gif', 'style' => 'width: 16px; height:16px; margin: 2px auto;')); ?></span> </a> </span>
                                                     </form>
                                                 </span>    
 
@@ -383,7 +383,7 @@
                                                             <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait') . '...'; ?></span>
-                                                        <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                                        <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-23px; margin-right:2px; width:16px;height:16px;')); ?></span>
                                                     </form>
                                                 </span>
                                                 <?php

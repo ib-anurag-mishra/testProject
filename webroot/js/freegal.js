@@ -834,6 +834,7 @@ function addToWishlistVideo(prodId, providerType,type)
                 {
                     if(type == 1){
 						document.getElementById("ajaxflashMessage44").style.display = "block";
+                        document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                         document.getElementById('ajaxflashMessage44').innerHTML = 'Video has been successfully added to your wishlist.';
                         return false;
                     }                    
@@ -844,6 +845,7 @@ function addToWishlistVideo(prodId, providerType,type)
                 {
                     if(type == 1){
 						document.getElementById("ajaxflashMessage44").style.display = "block";
+                        document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                         document.getElementById('ajaxflashMessage44').innerHTML = 'Añadido a su Lista Deseos';
                         return false;
                     }                    
@@ -856,6 +858,7 @@ function addToWishlistVideo(prodId, providerType,type)
             else
             {
 				document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red"; 
                 document.getElementById('ajaxflashMessage44').innerHTML = 'Your download limit has exceeded.';
                 //alert("You have been logged out from the system. Please login again.");
                 location.reload();
@@ -965,6 +968,14 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName, type)
                     location.href = unescape(downloadUsedArr[2]);
                     $('.afterClick').hide();
                     $('.beforeClick').show();
+                    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
+                        $(this).css({opacity:1});
+
+                    });
+                    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseleave',function(){
+                        $(this).css({opacity:.5});
+
+                    }); 
                     document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history" class="song-downloaded">Downloaded</a>';
                     document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                     document.getElementById('downloading_' + prodId).style.display = 'none';
@@ -1417,6 +1428,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
                     location.href = unescape(downloadUsedArr[2]);
                     $('.afterClick').hide();
                     $('.beforeClick').show();
+
                 }else{                
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                     if (languageSet === 'en') {
@@ -1434,6 +1446,14 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
 
                 //run ajaxify
                 $('.content').ajaxify();
+                $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
+                    $(this).css({opacity:1});
+
+                });
+                $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseleave',function(){
+                    $(this).css({opacity:.5});
+
+                });                 
             }
             else
             {
@@ -1950,6 +1970,7 @@ function addToQueueResponse(response, type)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById("ajaxflashMessage44").style.background = "red";
         document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is already added to Playlist';
         $('#ajaxflashMessage44').fadeOut(5000);
     }
@@ -1962,6 +1983,7 @@ function addToQueueResponse(response, type)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById("ajaxflashMessage44").style.background = "red";
         document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is not allowed for Streaming';
         $('#ajaxflashMessage44').fadeOut(5000);
     }
@@ -1976,6 +1998,7 @@ function addToQueueResponse(response, type)
                 document.getElementById("flash-message").setAttribute("class", "");
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
+            document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
             document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added ' + type + ' to Playlist';
             $('#ajaxflashMessage44').fadeOut(5000);
 
@@ -2042,6 +2065,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
@@ -2054,6 +2078,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not allowed for Streaming';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
@@ -2068,6 +2093,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added song to playlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
 
@@ -2147,6 +2173,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is already added to playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
@@ -2159,6 +2186,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is not allowed for Streaming';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
@@ -2173,6 +2201,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added Album to Playlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
 
@@ -2254,6 +2283,7 @@ function removeSong(pdId, divId) {
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'This song cannot be deleted';
                 $('#ajaxflashMessage44').fadeOut(5000);
 
@@ -2267,6 +2297,7 @@ function removeSong(pdId, divId) {
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'You need to login in for Removing a Song from your Playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
 
@@ -2282,6 +2313,7 @@ function removeSong(pdId, divId) {
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                     $('.clearfix' + divId).remove();
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Playlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
