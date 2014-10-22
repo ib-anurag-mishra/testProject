@@ -1417,6 +1417,16 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider, t
                     location.href = unescape(downloadUsedArr[2]);
                     $('.afterClick').hide();
                     $('.beforeClick').show();
+
+                    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
+                        console.log('entered');
+                        $(this).css({opacity:1});
+
+                    });
+                    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseleave',function(){
+                        $(this).css({opacity:.5});
+
+                    });  
                 }else{                
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                     if (languageSet === 'en') {
