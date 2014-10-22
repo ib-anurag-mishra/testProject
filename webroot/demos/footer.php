@@ -38,7 +38,8 @@
 		<div id="cboxOverlay"></div>
 		<div id="colorBox"></div>
 		<script type="text/javascript" src="js/freegal40-libraries.js"></script>
-
+		<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 		<script type="text/javascript" src="js/freegal40-site.js"></script>
+		<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 	</body>
 </html>

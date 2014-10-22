@@ -1508,6 +1508,7 @@ STR;
 						alert('Credentials imported successfully for Library name: $library_name!!');
 						window.location = "/admin/libraries/card";
 					</script>
+                    <noscript>__('JavaScript must be enabled for this site to work correctly.')</noscript>
 STR;
                 }
                 else

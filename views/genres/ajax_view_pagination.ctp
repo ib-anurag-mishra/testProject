@@ -3,6 +3,7 @@ if (count($artistList) > 0)
 {    
 ?>
 <script type="text/javascript" src="/js/ajaxify-html5.js"></script>
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 <?php
 	for ($i = 0; $i < count($artistList); $i++)
 	{

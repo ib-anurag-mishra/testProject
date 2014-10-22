@@ -258,6 +258,7 @@ $(document).ready(function() {
 });
 
 </script>
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 
 
 <?php

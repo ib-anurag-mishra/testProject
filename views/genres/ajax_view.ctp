@@ -1,4 +1,5 @@
 <script type="text/javascript" src="/js/ajaxify-html5.js"></script>
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 <script> 
 var ajaxartistPage = 2;
 var preValue= 1;
@@ -45,6 +46,7 @@ var preValue= 1;
    });  
 
 </script> 
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 		<!-- <div class="alphabetical-shadow-container">
 				<h3><?php __('Artist'); ?></h3> -->
 				<div class="alpha-artist-list-column">
