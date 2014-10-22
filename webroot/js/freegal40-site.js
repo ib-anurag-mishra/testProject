@@ -2052,12 +2052,12 @@ $(document).ready(function() {
 
     });
 
-    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button').find('.song-downloaded').on('mouseenter',function(){
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
         console.log('entered');
         $(this).css({opacity:1});
 
     });
-    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button').find('.song-downloaded').on('mouseleave',function(){
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
     });          
