@@ -834,6 +834,7 @@ function addToWishlistVideo(prodId, providerType,type)
                 {
                     if(type == 1){
 						document.getElementById("ajaxflashMessage44").style.display = "block";
+                        document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                         document.getElementById('ajaxflashMessage44').innerHTML = 'Video has been successfully added to your wishlist.';
                         return false;
                     }                    
@@ -844,6 +845,7 @@ function addToWishlistVideo(prodId, providerType,type)
                 {
                     if(type == 1){
 						document.getElementById("ajaxflashMessage44").style.display = "block";
+                        document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                         document.getElementById('ajaxflashMessage44').innerHTML = 'Añadido a su Lista Deseos';
                         return false;
                     }                    
@@ -856,6 +858,7 @@ function addToWishlistVideo(prodId, providerType,type)
             else
             {
 				document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red"; 
                 document.getElementById('ajaxflashMessage44').innerHTML = 'Your download limit has exceeded.';
                 //alert("You have been logged out from the system. Please login again.");
                 location.reload();
@@ -2198,6 +2201,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added Album to Playlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
 
@@ -2309,6 +2313,7 @@ function removeSong(pdId, divId) {
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                     $('.clearfix' + divId).remove();
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Playlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
