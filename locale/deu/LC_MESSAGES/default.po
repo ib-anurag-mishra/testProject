@@ -1,18 +1,11 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-09-11 20:52+0000\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: Freegal Music\n"
+"Language: de\n"
 
 #: /artists/admin_manageartist.ctp:133
 #: /artists/admin_managefeaturedartist.ctp:36
@@ -32,7 +25,7 @@ msgstr ""
 #: /users/admin_managepatron.ctp:92
 #: /users/admin_manageuser.ctp:93
 msgid "previous"
-msgstr ""
+msgstr "zurück"
 
 #: /artists/admin_manageartist.ctp:136
 #: /artists/admin_managefeaturedartist.ctp:39
@@ -52,15 +45,175 @@ msgstr ""
 #: /users/admin_managepatron.ctp:94
 #: /users/admin_manageuser.ctp:95
 msgid "next"
-msgstr ""
+msgstr "weiter"
 
-#: /artists/album.ctp:40
-#: /artists/new_album.ctp:40
-#: /artists/new_view.ctp:32
-#: /artists/view.ctp:6
-#: /genres/view.ctp:160
-msgid "All Genre"
-msgstr ""
+#: /artists/album.ctp:205;434
+#: /artists/album_ajax_view.ctp:43
+#: /artists/artist_album_ajax.ctp:61
+#: /artists/composer.ctp:169
+#: /artists/load_albums.ctp:60
+#: /artists/new_album.ctp:174;396
+#: /artists/new_view.ctp:86
+#: /artists/view.ctp:56
+#: /genres/album.ctp:219
+#: /search/index.ctp:603
+msgid "Genre"
+msgstr "Genre"
+
+#: /artists/album.ctp:222
+#: /artists/album_ajax_view.ctp:54
+#: /artists/artist_album_ajax.ctp:78
+#: /artists/composer.ctp:141;172
+#: /artists/load_albums.ctp:77
+#: /artists/new_album.ctp:191
+#: /artists/new_view.ctp:99
+#: /artists/view.ctp:70
+#: /genres/album.ctp:192;220
+msgid "Label"
+msgstr "Label"
+
+#: /artists/view.ctp:118
+#: /genres/ajax_view.ctp:49
+#: /genres/view.ctp:181
+#: /homes/my_wishlist.ctp:114;120;127
+#: /homes/search.ctp:34
+#: /search/index.ctp:87
+msgid "Artist"
+msgstr "Künstler"
+
+#: /artists/view.ctp:119
+#: /search/index.ctp:94
+msgid "Time"
+msgstr "Zeit"
+
+#: /homes/my_history.ctp:100;198;201;291;294
+#: /homes/my_wishlist.ctp:270;273;391;394
+#: /homes/search.ctp:45
+msgid "Download"
+msgstr "Download"
+
+#: /artists/album.ctp:313;315
+#: /artists/album_ajax_view.ctp:210;215
+#: /artists/new_album.ctp:275;278
+#: /artists/new_view.ctp:284;286
+#: /artists/view.ctp:291
+#: /homes/get_genre_tab_content.ctp:53
+#: /homes/my_lib_top_10.ctp:225;228;457;460
+#: /homes/national_top_download.ctp:54
+#: /homes/new_releases.ctp:161;164
+#: /homes/search.ctp:145
+#: /homes/us_top_10.ctp:213;216;404;407
+#: /queues_list_details/now_streaming.ctp:133;249
+#: /queues_list_details/queue_details.ctp:188;192
+#: /search/advanced_search.ctp:1166
+#: /search/index.ctp:893
+#: /videos/details.ctp:31;34;116;119;223;226
+#: /videos/index.ctp:45;48;162;165
+msgid "Download Now"
+msgstr "Jetzt herunterladen"
+
+#: /artists/album.ctp:335
+#: /artists/album_ajax_view.ctp:232
+#: /artists/new_album.ctp:299
+#: /artists/new_view.ctp:303
+#: /artists/view.ctp:307
+#: /homes/get_genre_tab_content.ctp:61
+#: /homes/index.ctp:185
+#: /homes/my_lib_top_10.ctp:240;472
+#: /homes/national_top_download.ctp:62
+#: /homes/new_releases.ctp:176
+#: /homes/search.ctp:152
+#: /homes/us_top_10.ctp:229;419
+#: /queues_list_details/queue_details.ctp:210
+#: /search/advanced_search.ctp:1178
+#: /search/index.ctp:236;907
+#: /videos/details.ctp:42;127;234
+#: /videos/index.ctp:56;176
+msgid "You have already downloaded this song. Get it from your recent downloads"
+msgstr "Sie haben diesen Song schon heruntergeladen. Von den letzten Downloads holen"
+
+#: /artists/album.ctp:335
+#: /artists/album_ajax_view.ctp:232
+#: /artists/new_album.ctp:299
+#: /artists/new_view.ctp:303
+#: /artists/view.ctp:307
+#: /homes/get_genre_tab_content.ctp:61
+#: /homes/my_lib_top_10.ctp:240;472
+#: /homes/national_top_download.ctp:62
+#: /homes/new_releases.ctp:176
+#: /homes/search.ctp:152
+#: /homes/us_top_10.ctp:229;419
+#: /queues_list_details/queue_details.ctp:210
+#: /search/advanced_search.ctp:1178
+#: /search/index.ctp:236;907
+#: /videos/details.ctp:42;127;234
+#: /videos/index.ctp:56;176
+msgid "Downloaded"
+msgstr "Heruntergeladen"
+
+#: /artists/composer.ctp:189
+#: /genres/album.ctp:237
+#: /search/index.ctp:258;348;926
+msgid "Added to Wishlist"
+msgstr "Zur Wunschliste hinzugefügt"
+
+#: /artists/composer.ctp:193
+#: /genres/album.ctp:241
+#: /homes/index.ctp:68;208
+#: /homes/my_lib_top_10.ctp:346
+#: /search/index.ctp:103;261;351;453;594;794;930
+msgid "Add to Wishlist"
+msgstr "Zur Wunschliste hinzufügen"
+
+#: /artists/album.ctp:373;378
+#: /artists/new_album.ctp:338;343
+#: /artists/new_view.ctp:320;326
+#: /artists/view.ctp:319;321;324
+#: /homes/get_genre_tab_content.ctp:94;94
+#: /homes/my_lib_top_10.ctp:275;280;506;511
+#: /homes/my_wishlist.ctp:281;284;404;407
+#: /homes/national_top_download.ctp:95;95
+#: /homes/new_releases.ctp:190;195
+#: /homes/search.ctp:188;188
+#: /homes/us_top_10.ctp:243;248;433;438
+#: /queues_list_details/queue_details.ctp:223;228
+#: /search/advanced_search.ctp:1226;1226
+#: /search/index.ctp:250;918
+#: /videos/details.ctp:55;59;140;144
+msgid "Coming Soon"
+msgstr "Bald erhältlich"
+
+#: /elements/footer.ctp:28
+#: /homes/terms.ctp:10;36
+msgid "Terms & Conditions"
+msgstr "Terms & Conditions"
+
+#: /elements/footer.ctp:30
+#: /elements/navigation.ctp:752
+msgid "FAQ"
+msgstr "Fragen"
+
+#: /elements/footer.ctp:35
+msgid "Also available in"
+msgstr "Auch erhältlich in"
+
+#: /elements/navigation.ctp:870
+#: /homes/my_wishlist.ctp:50;55
+msgid "My Wishlist"
+msgstr "Meine Wunschliste"
+
+#: /homes/my_history.ctp:31
+msgid "Recent Downloads"
+msgstr "Neueste Downloads"
+
+#: /elements/navigation.ctp:538
+#: /users/my_account.ctp:38;44
+msgid "My Account"
+msgstr "Mein Konto"
+
+#: /elements/navigation.ctp:552
+msgid "Logout"
+msgstr "Abmelden"
 
 #: /artists/album.ctp:46
 #: /artists/composer.ctp:95
@@ -91,253 +244,97 @@ msgstr ""
 #: /users/my_account.ctp:39
 #: /videos/details.ctp:5
 msgid "Home"
-msgstr ""
+msgstr "Startseite"
 
-#: /artists/album.ctp:114
-#: /genres/album.ctp:163
-#: /search/index.ctp:17
-msgid "Need Help? Visit our"
-msgstr ""
+#: /homes/advance_search.ctp:15;28
+msgid "Advanced Search"
+msgstr "Genauere Suche"
 
-#: /artists/album.ctp:114
-#: /search/index.ctp:17
-msgid "FAQ Section."
-msgstr ""
-
-#: /artists/album.ctp:125
-#: /elements/navigation.ctp:574
-#: /genres/album.ctp:166
-#: /homes/my_lib_top_10.ctp:15
-#: /homes/new_releases.ctp:11
-#: /homes/us_top_10.ctp:13
-#: /search/index.ctp:30;30;32;32;304;556;780
-msgid "Albums"
-msgstr ""
-
-#: /artists/album.ctp:157
-#: /artists/composer.ctp:204
-#: /artists/view.ctp:45
-#: /elements/navigation.ctp:342
-#: /genres/album.ctp:251
-#: /helpers/queue.php:33;69;103;158
-#: /homes/index.ctp:58;215
-#: /homes/my_lib_top_10.ctp:52;309
-#: /homes/new_releases.ctp:43
-#: /homes/us_top_10.ctp:274
-#: /search/index.ctp:272;361;590;940
-msgid "Create New Playlist"
-msgstr ""
-
-#: /artists/album.ctp:205;434
-#: /artists/album_ajax_view.ctp:43
-#: /artists/artist_album_ajax.ctp:61
-#: /artists/composer.ctp:169
-#: /artists/load_albums.ctp:60
-#: /artists/new_album.ctp:174;396
-#: /artists/new_view.ctp:86
-#: /artists/view.ctp:56
-#: /genres/album.ctp:219
-#: /search/index.ctp:603
-msgid "Genre"
-msgstr ""
-
-#: /artists/album.ctp:213;430
-#: /artists/album_ajax_view.ctp:49;153
-#: /artists/artist_album_ajax.ctp:69
-#: /artists/composer.ctp:147
-#: /artists/load_albums.ctp:68
-#: /artists/new_album.ctp:182;392
-#: /artists/view.ctp:63;222
-#: /genres/album.ctp:198
-#: /helpers/search.php:249
-#: /homes/index.ctp:227;261
-#: /homes/my_lib_top_10.ctp:363
-#: /homes/my_wishlist.ctp:189
-#: /homes/new_releases.ctp:82;233
-#: /homes/search.ctp:120
-#: /homes/us_top_10.ctp:87;159;310;483
-#: /search/index.ctp:145;183;837
-#: /videos/index.ctp:207
-msgid "Explicit"
-msgstr ""
-
-#: /artists/album.ctp:222
-#: /artists/album_ajax_view.ctp:54
-#: /artists/artist_album_ajax.ctp:78
-#: /artists/composer.ctp:141;172
-#: /artists/load_albums.ctp:77
-#: /artists/new_album.ctp:191
-#: /artists/new_view.ctp:99
-#: /artists/view.ctp:70
-#: /genres/album.ctp:192;220
-msgid "Label"
-msgstr ""
-
-#: /artists/album.ctp:262
-#: /elements/navigation.ctp:579
-#: /homes/my_history.ctp:73
-#: /homes/my_lib_top_10.ctp:394
-#: /homes/new_releases.ctp:107
-#: /homes/us_top_10.ctp:341
-#: /search/index.ctp:54;54;56;56;416;705
-msgid "Videos"
-msgstr ""
-
-#: /artists/album.ctp:311
-#: /artists/new_album.ctp:273
-#: /homes/my_lib_top_10.ctp:457
-#: /homes/my_wishlist.ctp:391
-#: /homes/new_releases.ctp:161
-#: /homes/us_top_10.ctp:404
-#: /videos/details.ctp:31;116;223
-#: /videos/index.ctp:162
-msgid "IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not."
-msgstr ""
-
-#: /artists/album.ctp:313;315
-#: /artists/album_ajax_view.ctp:210;215
-#: /artists/new_album.ctp:275;278
-#: /artists/new_view.ctp:284;286
-#: /artists/view.ctp:291
-#: /homes/get_genre_tab_content.ctp:53
-#: /homes/my_lib_top_10.ctp:225;228;457;460
-#: /homes/national_top_download.ctp:54
-#: /homes/new_releases.ctp:161;164
+#: /homes/my_wishlist.ctp:270
 #: /homes/search.ctp:145
-#: /homes/us_top_10.ctp:213;216;404;407
-#: /queues_list_details/now_streaming.ctp:133;249
-#: /queues_list_details/queue_details.ctp:188;192
-#: /search/advanced_search.ctp:1166
-#: /search/index.ctp:893
-#: /videos/details.ctp:31;34;116;119;223;226
-#: /videos/index.ctp:45;48;162;165
-msgid "Download Now"
-msgstr ""
+#: /search/advanced_search.ctp:1165
+msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr "WICHTIG: Bitte beachten: Sobald Sie „Jetzt herunterladen“ auswählen, haben Sie einen Ihrer Downloads verbraucht, auch wenn Sie danach auf „Abbrechen“ klicken."
 
-#: /artists/album.ctp:320
-#: /artists/album_ajax_view.ctp:219
-#: /artists/composer.ctp:195
-#: /artists/new_album.ctp:283
-#: /artists/new_view.ctp:290
-#: /artists/view.ctp:297
-#: /genres/album.ctp:242
-#: /helpers/wishlist.php:57
-#: /helpers/wishlist_video.php:83
-#: /homes/get_genre_tab_content.ctp:55;81
-#: /homes/my_history.ctp:204;297
-#: /homes/my_lib_top_10.ctp:231;463
-#: /homes/my_wishlist.ctp:288;411
-#: /homes/national_top_download.ctp:56;82
-#: /homes/new_releases.ctp:167
-#: /homes/search.ctp:147;173
-#: /homes/us_top_10.ctp:219;410
-#: /queues_list_details/now_streaming.ctp:135;251
-#: /queues_list_details/queue_details.ctp:198
-#: /search/advanced_search.ctp:1170;1212
-#: /search/index.ctp:229;264;354;900;933
-#: /videos/details.ctp:37;122;229
-#: /videos/index.ctp:51;169
-msgid "Please Wait"
-msgstr ""
+#: /homes/limits.ctp:12
+msgid "English"
+msgstr "Englisch"
 
-#: /artists/album.ctp:335
-#: /artists/album_ajax_view.ctp:232
-#: /artists/new_album.ctp:299
-#: /artists/new_view.ctp:303
-#: /artists/view.ctp:307
-#: /homes/get_genre_tab_content.ctp:61
-#: /homes/index.ctp:185
-#: /homes/my_lib_top_10.ctp:240;472
-#: /homes/national_top_download.ctp:62
-#: /homes/new_releases.ctp:176
-#: /homes/search.ctp:152
-#: /homes/us_top_10.ctp:229;419
-#: /queues_list_details/queue_details.ctp:210
-#: /search/advanced_search.ctp:1178
-#: /search/index.ctp:236;907
-#: /videos/details.ctp:42;127;234
-#: /videos/index.ctp:56;176
-msgid "You have already downloaded this song. Get it from your recent downloads"
-msgstr ""
+#: /homes/limits.ctp:13
+msgid "Spanish"
+msgstr "Spanisch"
 
-#: /artists/album.ctp:335
-#: /artists/album_ajax_view.ctp:232
-#: /artists/new_album.ctp:299
-#: /artists/new_view.ctp:303
-#: /artists/view.ctp:307
-#: /homes/get_genre_tab_content.ctp:61
-#: /homes/my_lib_top_10.ctp:240;472
-#: /homes/national_top_download.ctp:62
-#: /homes/new_releases.ctp:176
-#: /homes/search.ctp:152
-#: /homes/us_top_10.ctp:229;419
-#: /queues_list_details/queue_details.ctp:210
-#: /search/advanced_search.ctp:1178
-#: /search/index.ctp:236;907
-#: /videos/details.ctp:42;127;234
-#: /videos/index.ctp:56;176
-msgid "Downloaded"
-msgstr ""
+#: /homes/search.ctp:43
+msgid "Track"
+msgstr "Spur"
 
-#: /artists/album.ctp:350;363
-#: /artists/album_ajax_view.ctp:240
-#: /artists/new_album.ctp:315;328
-#: /artists/new_view.ctp:311
-#: /artists/view.ctp:310
-#: /homes/get_genre_tab_content.ctp:70;88
-#: /homes/my_lib_top_10.ctp:254;267;486;498
-#: /homes/my_wishlist.ctp:296
-#: /homes/national_top_download.ctp:71;89
-#: /homes/new_releases.ctp:183
-#: /homes/search.ctp:161;181
-#: /homes/us_top_10.ctp:236;426
-#: /queues_list_details/queue_details.ctp:216
-#: /search/advanced_search.ctp:1191;1220
-#: /search/index.ctp:241;910
-#: /videos/index.ctp:59;179
-msgid "Limit Met"
-msgstr ""
+#: /homes/my_history.ctp:49;51;55
+#: /homes/my_wishlist.ctp:68;74;81
+#: /queues/my_streaming_history.ctp:46;48;52
+msgid "Date"
+msgstr "Datum"
 
-#: /artists/album.ctp:373;378
-#: /artists/new_album.ctp:338;343
-#: /artists/new_view.ctp:320;326
-#: /artists/view.ctp:319;321;324
-#: /homes/get_genre_tab_content.ctp:94;94
-#: /homes/my_lib_top_10.ctp:275;280;506;511
-#: /homes/my_wishlist.ctp:281;284;404;407
-#: /homes/national_top_download.ctp:95;95
-#: /homes/new_releases.ctp:190;195
-#: /homes/search.ctp:188;188
-#: /homes/us_top_10.ctp:243;248;433;438
-#: /queues_list_details/queue_details.ctp:223;228
-#: /search/advanced_search.ctp:1226;1226
-#: /search/index.ctp:250;918
-#: /videos/details.ctp:55;59;140;144
-msgid "Coming Soon"
-msgstr ""
+#: /homes/my_history.ctp:213
+msgid "No downloaded songs from this week or last week."
+msgstr "Keine heruntergeladenen Songs für diese oder letzte Woche."
 
-#: /artists/album_ajax_view.ctp:22;252
-#: /artists/artist_album_ajax.ctp:32
-#: /artists/load_albums.ctp:31
-#: /artists/new_album.ctp:143
-#: /artists/view.ctp:329
-#: /queues_list_details/queue_details.ctp:237
-msgid "Add To Playlist"
-msgstr ""
+#: /homes/my_history.ctp:90;92;96
+#: /homes/my_wishlist.ctp:135;141;148
+#: /homes/search.ctp:40
+#: /queues/my_streaming_history.ctp:75;77;81
+#: /search/index.ctp:91
+msgid "Album"
+msgstr "Album"
 
-#: /artists/album_ajax_view.ctp:208
-#: /artists/new_view.ctp:283
-#: /artists/view.ctp:285
-#: /homes/get_genre_tab_content.ctp:53
-#: /homes/index.ctp:162
-#: /homes/my_lib_top_10.ctp:225
-#: /homes/national_top_download.ctp:54
-#: /homes/us_top_10.ctp:213
-#: /queues_list_details/now_streaming.ctp:133;249
-#: /queues_list_details/queue_details.ctp:186
-#: /search/index.ctp:214;885
-msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
-msgstr ""
+#: /search/index.ctp:3
+msgid "Search Results"
+msgstr "Suchergebnisse"
+
+#: /homes/search.ctp:37
+msgid "Composer"
+msgstr "Komponist"
+
+#: /layouts/admin.ctp:13
+#: /layouts/login_new.ctp:6
+msgid "Freegal Music : The New Music Library :"
+msgstr "Freegal Music : Die neue Musikbibliothek:"
+
+#: /layouts/aboutus.ctp:6
+#: /layouts/default.ctp:6
+#: /layouts/home.ctp:6
+#: /layouts/login.ctp:8
+msgid "Freegal Music : Your New Music Library :"
+msgstr "Freegal Music : Die neue Musikbibliothek:"
+
+#: /questions/admin_add.ctp:43
+#: /questions/admin_edit.ctp:43
+#: /questions/admin_index.ctp:12
+#: /questions/admin_view.ctp:10
+#: /questions/index.ctp:16
+msgid "FAQs"
+msgstr "Fragen"
+
+#: /users/capita.ctp:15;15
+#: /users/clogin.ctp:15;15
+#: /users/idlogin.ctp:15;15
+#: /users/ihdlogin.ctp:15;15
+#: /users/ildlogin.ctp:15;15
+#: /users/ilhdlogin.ctp:15;15
+#: /users/ilogin.ctp:15;15
+#: /users/indlogin.ctp:15;15
+#: /users/inhdlogin.ctp:15;15
+#: /users/inhlogin.ctp:15;15
+#: /users/inlogin.ctp:15;15
+#: /users/mdlogin.ctp:15;15
+#: /users/mndlogin.ctp:15;15
+#: /users/plogin.ctp:15;15
+#: /users/sdlogin.ctp:15;15
+#: /users/slogin.ctp:15;15
+#: /users/sndlogin.ctp:15;15
+#: /users/snlogin.ctp:15;15
+#: /users/symws.ctp:15;15
+msgid "Card Number"
+msgstr "Kartennummer"
 
 #: /artists/album_ajax_view.ctp:266
 #: /artists/new_album.ctp:353
@@ -367,137 +364,276 @@ msgstr ""
 #: /videos/details.ctp:65;150;248
 #: /videos/index.ctp:76
 msgid "Login"
-msgstr ""
+msgstr "Anmeldung"
+
+#: /users/login.ctp:15
+#: /users/my_account.ctp:70
+msgid "Email"
+msgstr "E-Mail"
+
+#: /users/login.ctp:19
+#: /users/my_account.ctp:74
+msgid "Password"
+msgstr "Passwort"
+
+#: /users/login.ctp:24
+msgid "Forgot Password?"
+msgstr "Passwort vergessen?"
+
+#: /users/my_account.ctp:62
+msgid "First Name"
+msgstr "Vorname"
+
+#: /users/ildlogin.ctp:19
+#: /users/ilhdlogin.ctp:19
+#: /users/my_account.ctp:66
+msgid "Last Name"
+msgstr "Nachname"
+
+#: /users/manage_notification.ctp:73
+#: /users/my_account.ctp:78;79;101
+msgid "Save"
+msgstr "Speichern"
+
+#: /artists/album.ctp:40
+#: /artists/new_album.ctp:40
+#: /artists/new_view.ctp:32
+#: /artists/view.ctp:6
+#: /genres/view.ctp:160
+msgid "All Genre"
+msgstr "Alle Genres"
+
+#: /artists/album.ctp:114
+#: /genres/album.ctp:163
+#: /search/index.ctp:17
+msgid "Need Help? Visit our"
+msgstr "Brauchen Sie Hilfe? Besuchen Sie unsere"
+
+#: /artists/album.ctp:114
+#: /search/index.ctp:17
+msgid "FAQ Section."
+msgstr "Fragenseite"
+
+#: /artists/album.ctp:125
+#: /elements/navigation.ctp:574
+#: /genres/album.ctp:166
+#: /homes/my_lib_top_10.ctp:15
+#: /homes/new_releases.ctp:11
+#: /homes/us_top_10.ctp:13
+#: /search/index.ctp:30;30;32;32;304;556;780
+msgid "Albums"
+msgstr "Alben"
+
+#: /artists/album.ctp:157
+#: /artists/composer.ctp:204
+#: /artists/view.ctp:45
+#: /elements/navigation.ctp:342
+#: /genres/album.ctp:251
+#: /helpers/queue.php:33;69;103;158
+#: /homes/index.ctp:58;215
+#: /homes/my_lib_top_10.ctp:52;309
+#: /homes/new_releases.ctp:43
+#: /homes/us_top_10.ctp:274
+#: /search/index.ctp:272;361;590;940
+msgid "Create New Playlist"
+msgstr "Neue Playliste erstellen"
+
+#: /artists/album.ctp:213;430
+#: /artists/album_ajax_view.ctp:49;153
+#: /artists/artist_album_ajax.ctp:69
+#: /artists/composer.ctp:147
+#: /artists/load_albums.ctp:68
+#: /artists/new_album.ctp:182;392
+#: /artists/view.ctp:63;222
+#: /genres/album.ctp:198
+#: /helpers/search.php:249
+#: /homes/index.ctp:227;261
+#: /homes/my_lib_top_10.ctp:363
+#: /homes/my_wishlist.ctp:189
+#: /homes/new_releases.ctp:82;233
+#: /homes/search.ctp:120
+#: /homes/us_top_10.ctp:87;159;310;483
+#: /search/index.ctp:145;183;837
+#: /videos/index.ctp:207
+msgid "Explicit"
+msgstr "Unanständige"
+
+#: /artists/album.ctp:262
+#: /elements/navigation.ctp:579
+#: /homes/my_history.ctp:73
+#: /homes/my_lib_top_10.ctp:394
+#: /homes/new_releases.ctp:107
+#: /homes/us_top_10.ctp:341
+#: /search/index.ctp:54;54;56;56;416;705
+msgid "Videos"
+msgstr "Videos"
+
+#: /artists/album.ctp:311
+#: /artists/new_album.ctp:273
+#: /homes/my_lib_top_10.ctp:457
+#: /homes/my_wishlist.ctp:391
+#: /homes/new_releases.ctp:161
+#: /homes/us_top_10.ctp:404
+#: /videos/details.ctp:31;116;223
+#: /videos/index.ctp:162
+msgid "IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not."
+msgstr "WICHTIG:  Bitte beachten: Sobald Sie „Jetzt herunterladen“ auswählen, haben Sie einen Ihrer Downloads verbraucht, auch wenn Sie danach auf „Abbrechen“ klicken."
+
+#: /artists/album.ctp:320
+#: /artists/album_ajax_view.ctp:219
+#: /artists/composer.ctp:195
+#: /artists/new_album.ctp:283
+#: /artists/new_view.ctp:290
+#: /artists/view.ctp:297
+#: /genres/album.ctp:242
+#: /helpers/wishlist.php:57
+#: /helpers/wishlist_video.php:83
+#: /homes/get_genre_tab_content.ctp:55;81
+#: /homes/my_history.ctp:204;297
+#: /homes/my_lib_top_10.ctp:231;463
+#: /homes/my_wishlist.ctp:288;411
+#: /homes/national_top_download.ctp:56;82
+#: /homes/new_releases.ctp:167
+#: /homes/search.ctp:147;173
+#: /homes/us_top_10.ctp:219;410
+#: /queues_list_details/now_streaming.ctp:135;251
+#: /queues_list_details/queue_details.ctp:198
+#: /search/advanced_search.ctp:1170;1212
+#: /search/index.ctp:229;264;354;900;933
+#: /videos/details.ctp:37;122;229
+#: /videos/index.ctp:51;169
+msgid "Please Wait"
+msgstr "Bitte warten"
+
+#: /artists/album.ctp:350;363
+#: /artists/album_ajax_view.ctp:240
+#: /artists/new_album.ctp:315;328
+#: /artists/new_view.ctp:311
+#: /artists/view.ctp:310
+#: /homes/get_genre_tab_content.ctp:70;88
+#: /homes/my_lib_top_10.ctp:254;267;486;498
+#: /homes/my_wishlist.ctp:296
+#: /homes/national_top_download.ctp:71;89
+#: /homes/new_releases.ctp:183
+#: /homes/search.ctp:161;181
+#: /homes/us_top_10.ctp:236;426
+#: /queues_list_details/queue_details.ctp:216
+#: /search/advanced_search.ctp:1191;1220
+#: /search/index.ctp:241;910
+#: /videos/index.ctp:59;179
+msgid "Limit Met"
+msgstr "Limit erreicht"
+
+#: /artists/album_ajax_view.ctp:22;252
+#: /artists/artist_album_ajax.ctp:32
+#: /artists/load_albums.ctp:31
+#: /artists/new_album.ctp:143
+#: /artists/view.ctp:329
+#: /queues_list_details/queue_details.ctp:237
+msgid "Add To Playlist"
+msgstr "Zur Playliste hinzufügen"
+
+#: /artists/album_ajax_view.ctp:208
+#: /artists/new_view.ctp:283
+#: /artists/view.ctp:285
+#: /homes/get_genre_tab_content.ctp:53
+#: /homes/index.ctp:162
+#: /homes/my_lib_top_10.ctp:225
+#: /homes/national_top_download.ctp:54
+#: /homes/us_top_10.ctp:213
+#: /queues_list_details/now_streaming.ctp:133;249
+#: /queues_list_details/queue_details.ctp:186
+#: /search/index.ctp:214;885
+msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
+msgstr "WICHTIG: Bitte beachten: Sobald Sie „Jetzt herunterladen“ auswählen, haben Sie einen Ihrer Downloads verbraucht, auch wenn Sie danach auf „Abbrechen“ klicken."
 
 #: /artists/artist_album_ajax.ctp:96
 #: /artists/new_album.ctp:209
 msgid "Previous"
-msgstr ""
+msgstr "Zurück"
 
 #: /artists/artist_album_ajax.ctp:98
 msgid "Next"
-msgstr ""
-
-#: /artists/composer.ctp:189
-#: /genres/album.ctp:237
-#: /search/index.ctp:258;348;926
-msgid "Added to Wishlist"
-msgstr ""
-
-#: /artists/composer.ctp:193
-#: /genres/album.ctp:241
-#: /homes/index.ctp:68;208
-#: /homes/my_lib_top_10.ctp:346
-#: /search/index.ctp:103;261;351;453;594;794;930
-msgid "Add to Wishlist"
-msgstr ""
+msgstr "Weiter"
 
 #: /artists/composer.ctp:200
 #: /genres/album.ctp:248
 #: /search/index.ctp:105;269;359;796
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Zur Playliste hinzufügen"
 
 #: /artists/composer.ctp:229
 #: /genres/album.ctp:279
 #: /search/index.ctp:382;619
 msgid "No Albums Found"
-msgstr ""
+msgstr "Keine Alben gefunden"
 
 #: /artists/new_album.ctp:211
 msgid " Next"
-msgstr ""
+msgstr " Weiter"
 
 #: /artists/view.ctp:53
 #: /videos/details.ctp:79
 msgid "Release Information"
-msgstr ""
+msgstr "Herausgabeinformation"
 
 #: /artists/view.ctp:117
 #: /homes/my_history.ctp:61;63;67
 #: /homes/my_wishlist.ctp:89;95;102
 #: /search/index.ctp:83
 msgid "Song"
-msgstr ""
-
-#: /artists/view.ctp:118
-#: /genres/ajax_view.ctp:49
-#: /genres/view.ctp:181
-#: /homes/my_wishlist.ctp:114;120;127
-#: /homes/search.ctp:34
-#: /search/index.ctp:87
-msgid "Artist"
-msgstr ""
-
-#: /artists/view.ctp:119
-#: /search/index.ctp:94
-msgid "Time"
-msgstr ""
+msgstr "Song"
 
 #: /artists/view.ctp:364
 msgid "Sorry, there are no more details available."
-msgstr ""
+msgstr "Leider keine weiteren Details verfügbar."
 
 #: /elements/footer.ctp:20
 #: /elements/navigation.ctp:738
 msgid "Music Videos"
-msgstr ""
+msgstr "Musikvideos"
 
 #: /elements/footer.ctp:22
 #: /elements/navigation.ctp:741;743;744
 msgid "Most Popular"
-msgstr ""
+msgstr "Am populärsten"
 
 #: /elements/footer.ctp:24
 #: /elements/navigation.ctp:748
 #: /homes/new_releases.ctp:4;9
 msgid "New Releases"
-msgstr ""
+msgstr "Neuausgaben"
 
 #: /elements/footer.ctp:26
 #: /elements/navigation.ctp:577;750
 #: /genres/view.ctp:179
 #: /search/index.ctp:48;48;50;50;734
 msgid "Genres"
-msgstr ""
-
-#: /elements/footer.ctp:28
-#: /homes/terms.ctp:10;36
-msgid "Terms & Conditions"
-msgstr ""
-
-#: /elements/footer.ctp:30
-#: /elements/navigation.ctp:752
-msgid "FAQ"
-msgstr ""
-
-#: /elements/footer.ctp:35
-msgid "Also available in"
-msgstr ""
+msgstr "Genres"
 
 #: /elements/footer.ctp:102
 msgid "To stream music, put cursor over album cover, or create a playlist, or press the play button on a song."
-msgstr ""
+msgstr "Zum Streamen von Musik den Cursor auf ein Album setzen oder eine Playliste erstellen oder bei einem Song auf \"Play\" klicken."
 
 #: /elements/navigation.ctp:313
 msgid "Rename"
-msgstr ""
+msgstr "Umbenennen"
 
 #: /elements/navigation.ctp:319;337
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: /elements/navigation.ctp:325;341;357
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: /elements/navigation.ctp:332
 msgid "Create Playlist"
-msgstr ""
+msgstr "Playliste erstellen"
 
 #: /elements/navigation.ctp:349
 msgid "Delete Playlist?"
-msgstr ""
+msgstr "Playliste löschen?"
 
 #: /elements/navigation.ctp:353
 #: /news/admin_add.ctp:57
@@ -514,167 +650,153 @@ msgstr ""
 #: /sections/admin_index.ctp:30
 #: /sections/admin_view.ctp:38;71
 msgid "Are you sure you want to delete"
-msgstr ""
+msgstr "Wollen Sie wirklich löschen"
 
 #: /elements/navigation.ctp:451
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Passwort vergessen?"
 
 #: /elements/navigation.ctp:451;457
 msgid "Click here to reset it."
-msgstr ""
+msgstr "Hier klicken und neu festlegen."
 
 #: /elements/navigation.ctp:457
 msgid "Need to change your password?"
-msgstr ""
+msgstr "Müssen Sie Ihr Passwort ändern?"
 
 #: /elements/navigation.ctp:467
 msgid "UNLIMITED"
-msgstr ""
+msgstr "UNBEGRENZT"
 
 #: /elements/navigation.ctp:501
 msgid "Streaming Time Remaining"
-msgstr ""
-
-#: /elements/navigation.ctp:538
-#: /users/my_account.ctp:38;44
-msgid "My Account"
-msgstr ""
+msgstr "Verbleibende Streamingzeit"
 
 #: /elements/navigation.ctp:544
 #: /users/manage_notification.ctp:29
 msgid "Notifications"
-msgstr ""
+msgstr "Mitteilungen"
 
 #: /elements/navigation.ctp:549
 msgid "Change Password"
-msgstr ""
-
-#: /elements/navigation.ctp:552
-msgid "Logout"
-msgstr ""
+msgstr "Passwort ändern"
 
 #: /elements/navigation.ctp:564
 msgid "Browse A-Z"
-msgstr ""
+msgstr "Durchsuchen A-Z"
 
 #: /elements/navigation.ctp:573
 msgid "Search All"
-msgstr ""
+msgstr "Alle durchsuchen"
 
 #: /elements/navigation.ctp:575
 #: /homes/my_history.ctp:78;80;84
 #: /queues/my_streaming_history.ctp:63;65;69
 #: /search/index.ctp:36;36;38;38;625;772
 msgid "Artists"
-msgstr ""
+msgstr "Künstler"
 
 #: /elements/navigation.ctp:576
 #: /search/index.ctp:42;42;44;44;666;776
 msgid "Composers"
-msgstr ""
+msgstr "Komponisten"
 
 #: /elements/navigation.ctp:578
 #: /homes/my_lib_top_10.ctp:120
 #: /homes/us_top_10.ctp:114
 #: /search/index.ctp:60;60;62;62;80;768;784
 msgid "Songs"
-msgstr ""
+msgstr "Songs"
 
 #: /elements/navigation.ctp:584
 msgid "Press enter or go"
-msgstr ""
+msgstr "Eingabe oder Wechseln klicken"
 
 #: /elements/navigation.ctp:585
 msgid "Go"
-msgstr ""
+msgstr "Wechseln zu"
 
 #: /elements/navigation.ctp:684
 msgid "The download usage counter is located in the upper right corner of freegalmusic.com displaying your weekly allotment. For instance, 1/3 means that you have a weekly limit of 3 downloads, and you have used 1 of those downloads. The download counter resets each week at Monday 12:01 AM (Eastern Time, USA)."
-msgstr ""
+msgstr "Der Download-Zähler befindet sich oben rechts in der Ecke von freegalmusic.com und zeigt Ihr wöchentliches Pensum an. 1/3 bedeutet zum Beispiel, dass Sie ein wöchentliches Limit von 3 Downloads haben und bereits 1 dieser Downloads verbraucht haben. Der Download-Zähler wird jede Woche am Montag um 00.01 Uhr (Ostküstenzeit, USA) zurückgestellt."
 
 #: /elements/navigation.ctp:735
 msgid "Concert Videos"
-msgstr ""
+msgstr "Konzertvideos"
 
 #: /elements/navigation.ctp:759;764
 msgid "My Lib Top 10"
-msgstr ""
+msgstr "Meine Bibl. Top-10"
 
 #: /elements/navigation.ctp:829
 msgid "Streaming"
-msgstr ""
+msgstr "Streaming"
 
 #: /elements/navigation.ctp:834
 msgid "Freegal Playlists"
-msgstr ""
+msgstr "Freegal Playlisten"
 
 #: /elements/navigation.ctp:847
 msgid "My Playlists"
-msgstr ""
+msgstr "Meine Playlisten"
 
 #: /elements/navigation.ctp:850
 #: /queues_list_details/now_streaming.ctp:7
 msgid "Now Streaming"
-msgstr ""
+msgstr "Wird gestreamt"
 
 #: /elements/navigation.ctp:853
 msgid "Create and Store Playlists"
-msgstr ""
+msgstr "Playlisten erstellen und speichern"
 
 #: /elements/navigation.ctp:857
 msgid "History"
-msgstr ""
+msgstr "Vorgänge"
 
 #: /elements/navigation.ctp:865
 msgid "My Downloads"
-msgstr ""
+msgstr "Meine Downloads"
 
 #: /elements/navigation.ctp:868
 #: /homes/my_history.ctp:38
 msgid "Downloads"
-msgstr ""
-
-#: /elements/navigation.ctp:870
-#: /homes/my_wishlist.ctp:50;55
-msgid "My Wishlist"
-msgstr ""
+msgstr "Downloads"
 
 #: /elements/navigation.ctp:892
 msgid "Announcements"
-msgstr ""
+msgstr "Bekanntmachungen"
 
 #: /elements/navigation.ctp:906
 msgid "Did you know?"
-msgstr ""
+msgstr "Wussten Sie?"
 
 #: /elements/navigation.ctp:908
 msgid "Freegal is also a movie service!"
-msgstr ""
+msgstr "Freegal ist auch ein Filmservice!"
 
 #: /elements/navigation.ctp:909
 msgid "Stream top movies like"
-msgstr ""
+msgstr "Streamen Sie Top-Filme wie"
 
 #: /elements/navigation.ctp:922
 msgid "Click here"
-msgstr ""
+msgstr "Hier klicken"
 
 #: /elements/navigation.ctp:922
 msgid "to log in."
-msgstr ""
+msgstr "zum Anmelden."
 
 #: /genres/album.ctp:163
 msgid "FAQ Section"
-msgstr ""
+msgstr "Fragenseite"
 
 #: /genres/index.ctp:27
 msgid "All Genres"
-msgstr ""
+msgstr "Alle Genres"
 
 #: /genres/view.ctp:173
 msgid "Search for your favorite music."
-msgstr ""
+msgstr "Suchen Sie Ihre Lieblingsmusik."
 
 #: /genres/view.ctp:174
 #: /homes/my_history.ctp:39
@@ -683,24 +805,24 @@ msgstr ""
 #: /queues_list_details/now_streaming.ctp:34
 #: /queues_list_details/queue_details.ctp:40
 msgid "Need help? Visit our"
-msgstr ""
+msgstr "Brauchen Sie Hilfe? Besuchen Sie unsere"
 
 #: /genres/view.ctp:174
 #: /homes/my_wishlist.ctp:56
 msgid "FAQ section."
-msgstr ""
+msgstr "Fragenseite."
 
 #: /genres/view.ctp:189
 msgid "All Artists"
-msgstr ""
+msgstr "Alle Künstler"
 
 #: /helpers/queue.php:280;370
 msgid "Stream Now"
-msgstr ""
+msgstr "Jetzt streamen"
 
 #: /helpers/queue.php:299
 msgid "Stream Artist"
-msgstr ""
+msgstr "Künstler streamen"
 
 #: /helpers/wishlist.php:54
 #: /helpers/wishlist_video.php:78
@@ -709,7 +831,7 @@ msgstr ""
 #: /homes/search.ctp:168
 #: /search/advanced_search.ctp:1200
 msgid "Added To Wishlist"
-msgstr ""
+msgstr "Zur Wunschliste hinzugefügt"
 
 #: /helpers/wishlist_video.php:82
 #: /homes/get_genre_tab_content.ctp:80
@@ -717,149 +839,83 @@ msgstr ""
 #: /homes/search.ctp:172
 #: /search/advanced_search.ctp:1207
 msgid "Add To Wishlist"
-msgstr ""
+msgstr "Zur Wunschliste hinzufügen"
 
 #: /homes/aboutus.ctp:16
 msgid "About Freegal Music"
-msgstr ""
+msgstr "Über Freegal Music"
 
 #: /homes/advance_search.ctp:10
 #: /search/advanced_search.ctp:166
 msgid "Advance Search"
-msgstr ""
-
-#: /homes/advance_search.ctp:15;28
-msgid "Advanced Search"
-msgstr ""
+msgstr "Genauere Suche"
 
 #: /homes/index.ctp:7
 msgid "Top Albums"
-msgstr ""
+msgstr "Top-Alben"
 
 #: /homes/index.ctp:56;213
 #: /search/index.ctp:588
 msgid "Add to a Playlist or Create a New Playlist"
-msgstr ""
+msgstr "Zur Playliste hinzufügen oder neue Playliste erstellen"
 
 #: /homes/index.ctp:99
 #: /homes/my_lib_top_10.ctp:111;383;571
 #: /homes/us_top_10.ctp:106;330;503
 msgid "Sorry, there are no downloads."
-msgstr ""
+msgstr "Sorry, keine Downloads vorhanden."
 
 #: /homes/index.ctp:115
 msgid "Top Singles"
-msgstr ""
+msgstr "Top-Singles"
 
 #: /homes/index.ctp:313
 msgid "Featured Artists & Composers"
-msgstr ""
+msgstr "Vorhandene Künstler & Komponisten"
 
 #: /homes/index.ctp:349
 msgid "More by"
-msgstr ""
-
-#: /homes/limits.ctp:12
-msgid "English"
-msgstr ""
-
-#: /homes/limits.ctp:13
-msgid "Spanish"
-msgstr ""
-
-#: /homes/my_history.ctp:31
-msgid "Recent Downloads"
-msgstr ""
-
-#: /homes/my_history.ctp:49;51;55
-#: /homes/my_wishlist.ctp:68;74;81
-#: /queues/my_streaming_history.ctp:46;48;52
-msgid "Date"
-msgstr ""
+msgstr "Mehr von"
 
 #: /homes/my_history.ctp:72
 #: /homes/my_wishlist.ctp:106
 #: /queues/my_streaming_history.ctp:56
 msgid "Music"
-msgstr ""
-
-#: /homes/my_history.ctp:90;92;96
-#: /homes/my_wishlist.ctp:135;141;148
-#: /homes/search.ctp:40
-#: /queues/my_streaming_history.ctp:75;77;81
-#: /search/index.ctp:91
-msgid "Album"
-msgstr ""
-
-#: /homes/my_history.ctp:100;198;201;291;294
-#: /homes/my_wishlist.ctp:270;273;391;394
-#: /homes/search.ctp:45
-msgid "Download"
-msgstr ""
-
-#: /homes/my_history.ctp:213
-msgid "No downloaded songs from this week or last week."
-msgstr ""
+msgstr "Musik"
 
 #: /homes/my_history.ctp:305
 msgid "No downloaded videos from this week or last week."
-msgstr ""
+msgstr "Keine heruntergeladenen Videos für diese oder letzte Woche."
 
 #: /homes/my_lib_top_10.ctp:7;12
 msgid "My Library Top 10"
-msgstr ""
+msgstr "Meine Bibl. Top-10"
 
 #: /homes/my_wishlist.ctp:107
 #: /videos/details.ctp:4
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: /homes/my_wishlist.ctp:152
 msgid "Options"
-msgstr ""
-
-#: /homes/my_wishlist.ctp:270
-#: /homes/search.ctp:145
-#: /search/advanced_search.ctp:1165
-msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
-msgstr ""
+msgstr "Optionen"
 
 #: /homes/my_wishlist.ctp:310
 msgid "You have no songs in your wishlist."
-msgstr ""
+msgstr "Sie haben keine Songs in Ihrer Wunschliste."
 
 #: /homes/my_wishlist.ctp:423
 msgid "You have no videos in your wishlist."
-msgstr ""
+msgstr "Sie haben keine Videos in Ihrer Wunschliste."
 
 #: /homes/national_top_download.ctp:129
 msgid "No songs have been downloaded yet"
-msgstr ""
-
-#: /homes/search.ctp:37
-msgid "Composer"
-msgstr ""
-
-#: /homes/search.ctp:43
-msgid "Track"
-msgstr ""
+msgstr "Es wurden noch keine Songs heruntergeladen"
 
 #: /homes/search.ctp:222
 #: /search/advanced_search.ctp:1240
 msgid "No records found"
-msgstr ""
-
-#: /layouts/aboutus.ctp:6
-#: /layouts/default.ctp:6
-#: /layouts/home.ctp:6
-#: /layouts/login.ctp:8
-msgid "Freegal Music : Your New Music Library :"
-msgstr ""
-
-#: /layouts/admin.ctp:13
-#: /layouts/login_new.ctp:6
-msgid "Freegal Music : The New Music Library :"
-msgstr ""
+msgstr "Keine Einträge gefunden"
 
 #: /libraries/admin_librarytimezone.ctp:16
 #: /libraries/admin_managelibrary.ctp:15
@@ -869,7 +925,7 @@ msgstr ""
 #: /users/admin_managepatron.ctp:48
 #: /users/admin_manageuser.ctp:48
 msgid "Page"
-msgstr ""
+msgstr "Seite"
 
 #: /libraries/admin_librarytimezone.ctp:16
 #: /libraries/admin_managelibrary.ctp:15
@@ -879,7 +935,7 @@ msgstr ""
 #: /users/admin_managepatron.ctp:48
 #: /users/admin_manageuser.ctp:48
 msgid "of"
-msgstr ""
+msgstr "von"
 
 #: /libraries/admin_librarytimezone.ctp:16
 #: /libraries/admin_managelibrary.ctp:15
@@ -889,7 +945,7 @@ msgstr ""
 #: /users/admin_managepatron.ctp:48
 #: /users/admin_manageuser.ctp:48
 msgid "showing"
-msgstr ""
+msgstr "anzeige von"
 
 #: /libraries/admin_librarytimezone.ctp:16
 #: /libraries/admin_managelibrary.ctp:15
@@ -899,7 +955,7 @@ msgstr ""
 #: /users/admin_managepatron.ctp:48
 #: /users/admin_manageuser.ctp:48
 msgid "records out of"
-msgstr ""
+msgstr "einträgen von"
 
 #: /libraries/admin_librarytimezone.ctp:16
 #: /libraries/admin_managelibrary.ctp:15
@@ -909,7 +965,7 @@ msgstr ""
 #: /users/admin_managepatron.ctp:48
 #: /users/admin_manageuser.ctp:48
 msgid "total, starting on record"
-msgstr ""
+msgstr "insgesamt, beginnend mit Eintrag "
 
 #: /libraries/admin_librarytimezone.ctp:16
 #: /libraries/admin_managelibrary.ctp:15
@@ -919,18 +975,18 @@ msgstr ""
 #: /users/admin_managepatron.ctp:48
 #: /users/admin_manageuser.ctp:48
 msgid "ending on"
-msgstr ""
+msgstr "endend mit"
 
 #: /news/admin_add.ctp:43
 msgid "Add %s"
-msgstr ""
+msgstr "%s hinzufügen"
 
 #: /news/admin_add.ctp:43;58
 #: /news/admin_edit.ctp:43;94
 #: /news/admin_index.ctp:57
 #: /news/admin_view.ctp:12;58;59;60;61
 msgid "News"
-msgstr ""
+msgstr "Neuigkeiten"
 
 #: /news/admin_add.ctp:52
 #: /news/admin_edit.ctp:88
@@ -939,7 +995,7 @@ msgstr ""
 #: /sections/admin_add.ctp:26
 #: /sections/admin_edit.ctp:29
 msgid "Submit"
-msgstr ""
+msgstr "Einreichen"
 
 #: /news/admin_add.ctp:55
 #: /news/admin_edit.ctp:91
@@ -955,7 +1011,7 @@ msgstr ""
 #: /sections/admin_index.ctp:14;51
 #: /sections/admin_view.ctp:35;54
 msgid "Actions"
-msgstr ""
+msgstr "Schritte"
 
 #: /news/admin_add.ctp:57
 #: /news/admin_edit.ctp:93
@@ -971,7 +1027,7 @@ msgstr ""
 #: /sections/admin_index.ctp:30
 #: /sections/admin_view.ctp:38;71
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: /news/admin_add.ctp:58
 #: /news/admin_view.ctp:60
@@ -985,7 +1041,7 @@ msgstr ""
 #: /sections/admin_index.ctp:54
 #: /sections/admin_view.ctp:39;41
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #: /news/admin_edit.ctp:43
 #: /news/admin_index.ctp:33
@@ -997,7 +1053,7 @@ msgstr ""
 #: /sections/admin_index.ctp:29
 #: /sections/admin_view.ctp:37;70
 msgid "Edit"
-msgstr ""
+msgstr "Editieren"
 
 #: /news/admin_edit.ctp:94
 #: /news/admin_index.ctp:57
@@ -1012,63 +1068,55 @@ msgstr ""
 #: /sections/admin_index.ctp:53;55
 #: /sections/admin_view.ctp:40;42;80
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 #: /news/admin_index.ctp:12
 msgid "News List"
-msgstr ""
+msgstr "Neuigkeitenliste"
 
 #: /news/admin_index.ctp:32
 #: /questions/admin_index.ctp:35
 #: /sections/admin_index.ctp:28
 #: /sections/admin_view.ctp:69
 msgid "View"
-msgstr ""
+msgstr "Ansicht"
 
 #: /news/admin_view.ctp:14
 msgid "Subject"
-msgstr ""
+msgstr "Betreff"
 
 #: /news/admin_view.ctp:19
 msgid "Place"
-msgstr ""
+msgstr "Ort"
 
 #: /news/admin_view.ctp:24
 msgid "Body"
-msgstr ""
+msgstr "Hauptteil"
 
 #: /news/admin_view.ctp:30
 msgid "News Image"
-msgstr ""
+msgstr "Nachrichten-Bild"
 
 #: /news/admin_view.ctp:36
 msgid "No Image"
-msgstr ""
+msgstr "Kein Bild"
 
 #: /news/admin_view.ctp:42
 #: /questions/admin_view.ctp:27
 #: /questions/view.ctp:31
 #: /sections/admin_view.ctp:22
 msgid "Created"
-msgstr ""
+msgstr "Erstellt"
 
 #: /news/admin_view.ctp:47
 #: /questions/admin_view.ctp:32
 #: /sections/admin_view.ctp:27;53
 msgid "Last Modified"
-msgstr ""
+msgstr "Zuletzt geändert"
 
 #: /questions/admin_add.ctp:43
 msgid "Add"
-msgstr ""
-
-#: /questions/admin_add.ctp:43
-#: /questions/admin_edit.ctp:43
-#: /questions/admin_index.ctp:12
-#: /questions/admin_view.ctp:10
-#: /questions/index.ctp:16
-msgid "FAQs"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: /questions/admin_add.ctp:56
 #: /questions/admin_edit.ctp:57
@@ -1079,7 +1127,7 @@ msgstr ""
 #: /sections/admin_index.ctp:54
 #: /sections/admin_view.ctp:41;47
 msgid "Questions"
-msgstr ""
+msgstr "Fragen"
 
 #: /questions/admin_add.ctp:57
 #: /questions/admin_edit.ctp:58
@@ -1090,7 +1138,7 @@ msgstr ""
 #: /sections/admin_edit.ctp:35
 #: /sections/admin_view.ctp:39
 msgid "Sections"
-msgstr ""
+msgstr "Abschnitte"
 
 #: /questions/admin_add.ctp:58
 #: /questions/admin_edit.ctp:59
@@ -1102,7 +1150,7 @@ msgstr ""
 #: /sections/admin_index.ctp:53
 #: /sections/admin_view.ctp:10;37;38;40
 msgid "Section"
-msgstr ""
+msgstr "Abschnitt"
 
 #: /questions/admin_index.ctp:60
 #: /questions/admin_view.ctp:17;42;43;45
@@ -1112,268 +1160,213 @@ msgstr ""
 #: /sections/admin_index.ctp:55
 #: /sections/admin_view.ctp:42;51;80
 msgid "Question"
-msgstr ""
+msgstr "Frage"
 
 #: /questions/admin_view.ctp:22
 #: /questions/view.ctp:26
 #: /sections/admin_view.ctp:52
 msgid "Answer"
-msgstr ""
+msgstr "Antwort"
 
 #: /questions/view.ctp:11
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: /questions/view.ctp:36
 msgid "Modified"
-msgstr ""
+msgstr "Geändert"
 
 #: /queues/my_streaming_history.ctp:31;38
 msgid "Streaming History"
-msgstr ""
+msgstr "Streaming-Vorgänge"
 
 #: /queues/my_streaming_history.ctp:57
 msgid "Playlist"
-msgstr ""
+msgstr "Playliste"
 
 #: /queues/my_streaming_history.ctp:85
 msgid "Streaming Time"
-msgstr ""
+msgstr "Streaming-Dauer"
 
 #: /queues/my_streaming_history.ctp:193
 msgid "No Streaming History from this week or last week."
-msgstr ""
+msgstr "Keine Streaming-Vorgänge für diese oder letzte Woche."
 
 #: /queues/saved_queues_list.ctp:10
 msgid "Saved Playlists"
-msgstr ""
+msgstr "Gespeicherte Playlisten"
 
 #: /queues/saved_queues_list.ctp:71
 msgid "There are currently no playlists created. Please add a new playlist to start enjoying streaming."
-msgstr ""
+msgstr "Derzeit sind keine Playlisten erstellt. Bitte fügen Sie eine neue Playliste hinzu, um das Streaming zu genießen."
 
 #: /queues_list_details/now_streaming.ctp:151;270
 #: /queues_list_details/queue_details.ctp:254
 msgid "Remove Song"
-msgstr ""
+msgstr "Song entfernen"
 
 #: /queues_list_details/now_streaming.ctp:293
 msgid "There are no Playlists currently being played."
-msgstr ""
+msgstr "Derzeit werden keine Playlisten abgespielt."
 
 #: /register_concerts/great_fall_concert.ctp:16
 msgid "The Great Fall Concert Ticket Giveaway"
-msgstr ""
-
-#: /search/index.ctp:3
-msgid "Search Results"
-msgstr ""
+msgstr "Die große Konzertticket-Verlosung im Herbst"
 
 #: /search/index.ctp:18
 msgid "Results for your search"
-msgstr ""
+msgstr "Suchergebnisse"
 
 #: /search/index.ctp:19
 msgid "Not what you're looking for? Refine your search below."
-msgstr ""
+msgstr "Nicht was Sie suchen? Schränken Sie Ihre Suche unten ein."
 
 #: /search/index.ctp:24;24;26;26
 msgid "All Music"
-msgstr ""
+msgstr "Alle Musik"
 
 #: /search/index.ctp:97
 msgid "Select All, Clear All, Add to Wishlist, Add to Playlist"
-msgstr ""
+msgstr "Alle auswählen, Alle entfernen, zur Wunschliste hinzufügen, zur Playliste hinzufügen"
 
 #: /search/index.ctp:101;792
 msgid "Select All"
-msgstr ""
+msgstr "Alle auswählen"
 
 #: /search/index.ctp:102;793
 msgid "Clear All"
-msgstr ""
+msgstr "Alle entfernen"
 
 #: /search/index.ctp:202
 msgid "Add to Wishlist, Playlist, or Download"
-msgstr ""
+msgstr "Zur Wunschliste hinzufügen, Playliste oder Download"
 
 #: /search/index.ctp:390
 msgid "More Genres Like"
-msgstr ""
+msgstr "Mehr Genres, wie"
 
 #: /search/index.ctp:408;761
 msgid "No Genres Found"
-msgstr ""
+msgstr "Keine Genres gefunden"
 
 #: /search/index.ctp:446
 msgid "Released on"
-msgstr ""
+msgstr "Herausgegeben am"
 
 #: /search/index.ctp:478
 msgid "You have already downloaded this video. Get it from your recent downloads"
-msgstr ""
+msgstr "Sie haben dieses Video bereits heruntergeladen. Von den letzten Downloads holen"
 
 #: /search/index.ctp:481
 msgid "Your download limit has been met."
-msgstr ""
+msgstr "Sie haben Ihr Limit an Downloads erreicht."
 
 #: /search/index.ctp:491;726
 msgid "No Videos Found"
-msgstr ""
+msgstr "Keine Videos gefunden"
 
 #: /search/index.ctp:497
 msgid "More Artists Like"
-msgstr ""
+msgstr "Mehr Künstler, wie"
 
 #: /search/index.ctp:510;658
 msgid "No Artists Found"
-msgstr ""
+msgstr "Keine Künstler gefunden"
 
 #: /search/index.ctp:517
 msgid "More Composers Like"
-msgstr ""
+msgstr "Mehr Komponisten, wie"
 
 #: /search/index.ctp:537;543;691;697
 msgid "No Composers Found"
-msgstr ""
+msgstr "Keine Komponisten gefunden"
 
 #: /search/index.ctp:559
 msgid "See More Albums"
-msgstr ""
+msgstr "Mehr Alben anzeigen"
 
 #: /search/index.ctp:628
 msgid "See More Artists"
-msgstr ""
+msgstr "Mehr Künstler anzeigen"
 
 #: /search/index.ctp:669
 msgid "See More Composers"
-msgstr ""
+msgstr "Mehr Komponisten anzeigen"
 
 #: /search/index.ctp:708
 msgid "See More Videos"
-msgstr ""
+msgstr "Mehr Videos anzeigen"
 
 #: /search/index.ctp:737
 msgid "See More Genres"
-msgstr ""
+msgstr "Mehr Genres anzeigen"
 
 #: /search/index.ctp:788
 msgid "Select All, Clear All, Add to Wishlist, or Add to Playlist"
-msgstr ""
+msgstr "Alle auswählen, Alle entfernen, Zur Wunschliste hinzufügen, oder Zur Playliste hinzufügen"
 
 #: /search/index.ctp:873
 msgid "Add To a Playlist, Wishlist, or Download"
-msgstr ""
+msgstr "Zu einer Playliste, Wunschliste oder zum Download hinzufügen"
 
 #: /sections/admin_add.ctp:12
 msgid "Admin Add"
-msgstr ""
+msgstr "Admin hinzufügen"
 
 #: /sections/admin_edit.ctp:12
 msgid "Admin Edit"
-msgstr ""
+msgstr "Admin ändern"
 
 #: /sections/admin_index.ctp:10
 msgid "FAQ Sections"
-msgstr ""
+msgstr "Fragenseiten"
 
 #: /sections/admin_index.ctp:15
 #: /sections/admin_view.ctp:17
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: /sections/admin_view.ctp:12
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: /sections/admin_view.ctp:47
 msgid "Related"
-msgstr ""
-
-#: /users/capita.ctp:15;15
-#: /users/clogin.ctp:15;15
-#: /users/idlogin.ctp:15;15
-#: /users/ihdlogin.ctp:15;15
-#: /users/ildlogin.ctp:15;15
-#: /users/ilhdlogin.ctp:15;15
-#: /users/ilogin.ctp:15;15
-#: /users/indlogin.ctp:15;15
-#: /users/inhdlogin.ctp:15;15
-#: /users/inhlogin.ctp:15;15
-#: /users/inlogin.ctp:15;15
-#: /users/mdlogin.ctp:15;15
-#: /users/mndlogin.ctp:15;15
-#: /users/plogin.ctp:15;15
-#: /users/sdlogin.ctp:15;15
-#: /users/slogin.ctp:15;15
-#: /users/sndlogin.ctp:15;15
-#: /users/snlogin.ctp:15;15
-#: /users/symws.ctp:15;15
-msgid "Card Number"
-msgstr ""
-
-#: /users/ildlogin.ctp:19
-#: /users/ilhdlogin.ctp:19
-#: /users/my_account.ctp:66
-msgid "Last Name"
-msgstr ""
-
-#: /users/login.ctp:15
-#: /users/my_account.ctp:70
-msgid "Email"
-msgstr ""
-
-#: /users/login.ctp:19
-#: /users/my_account.ctp:74
-msgid "Password"
-msgstr ""
-
-#: /users/login.ctp:24
-msgid "Forgot Password?"
-msgstr ""
+msgstr "Ähnlich"
 
 #: /users/manage_notification.ctp:35
 msgid "Manage Notifications"
-msgstr ""
+msgstr "Benachrichtigungen verwalten"
 
 #: /users/manage_notification.ctp:50
 msgid "Email Notification"
-msgstr ""
+msgstr "E-Mail-Nachricht"
 
 #: /users/manage_notification.ctp:66
 msgid "Add your email address here to receive twice-weekly email reminders of your available downloads."
-msgstr ""
+msgstr "Fügen Sie hier Ihre E-Mailadresse hinzu, um zweimal wöchentlich E-Mail-Erinnerungen über Ihre verfügbaren Downloads zu erhalten."
 
 #: /users/manage_notification.ctp:69
 msgid "Notification Email"
-msgstr ""
-
-#: /users/manage_notification.ctp:73
-#: /users/my_account.ctp:78;79;101
-msgid "Save"
-msgstr ""
+msgstr "E-Mail-Mitteilung"
 
 #: /users/my_account.ctp:57
 msgid "Account Information"
-msgstr ""
-
-#: /users/my_account.ctp:62
-msgid "First Name"
-msgstr ""
+msgstr "Kontoinformation"
 
 #: /videos/details.ctp:87
 msgid "More Videos By"
-msgstr ""
+msgstr "Mehr Videos von"
 
 #: /videos/index.ctp:4
 msgid "Featured Videos"
-msgstr ""
+msgstr "Angebotene Videos"
 
 #: /videos/index.ctp:45
 msgid "IMPORTANT: Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not."
-msgstr ""
+msgstr "WICHTIG: Bitte beachten: Sobald Sie „Jetzt herunterladen“ auswählen, haben Sie einen Ihrer Downloads verbraucht, auch wenn Sie danach auf „Abbrechen“ klicken."
 
 #: /videos/index.ctp:115
 msgid "Top Videos"
-msgstr ""
+msgstr "Top-Videos"
 
