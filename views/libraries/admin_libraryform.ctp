@@ -320,7 +320,7 @@ if (empty($getData))
                                         'innovative_https' => 'Innovative HTTPS',
                                         'innovative_var_https' => 'Innovative Var HTTPS',
                                         'innovative_var_https_wo_pin' => 'Innovative Var HTTPS w/o PIN',
-                                        'innovative_var_wo_pin' => 'Innovative Var w/o PIN', 'mdlogin_reference' => 'MDLogin', 'mndlogin_reference' => 'MNDLogin',  'capita' => 'Capita', 'symws' => 'Symphony WS'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
+                                        'innovative_var_wo_pin' => 'Innovative Var w/o PIN', 'mdlogin_reference' => 'MDLogin', 'mndlogin_reference' => 'MNDLogin',  'capita' => 'Capita', 'symws' => 'Symphony WS', 'ezlogin' => 'EzProxy User Object'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
                                         )
                                 );
                                 ?>

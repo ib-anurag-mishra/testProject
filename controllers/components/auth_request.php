@@ -77,7 +77,8 @@ Class AuthRequestComponent extends Object
 	}
 
 	function getEzAuthResponse($authUrl) {
-		$url = "http://ezproxy.logan.qld.gov.au:8080/login?user=15%2F5734293&pass=0101&url=http://ezproxy.logan.qld.gov.au:8080/userObject?service=getToken&returnURL=http://auth2.libraryideas.com/ezlogin.php";
+		$url = $authUrl;
+		//$url = "http://ezproxy.logan.qld.gov.au:8080/login?user=15%2F5734293&pass=0101&url=http://ezproxy.logan.qld.gov.au:8080/userObject?service=getToken&returnURL=http://auth2.libraryideas.com/ezlogin.php";
 
 		$ch = curl_init();
         	curl_setopt($ch, CURLOPT_COOKIESESSION, 1);
@@ -89,7 +90,7 @@ Class AuthRequestComponent extends Object
         	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         	$o = curl_exec($ch);
-        	print_r($o);
+        	print_r($o); exit;
         	curl_close($ch);
 	}
 }
