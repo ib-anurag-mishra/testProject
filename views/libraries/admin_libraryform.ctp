@@ -90,6 +90,7 @@ if (empty($getData))
     $getData['Library']['library_exp_date_format'] = '';
     $getData['Library']['library_type'] = '1';
     $getData['Library']['optout_email_notification'] = '0';
+    $getData['Library']['library_multi_authentication'] = '0';
 }
 
 ?>
@@ -172,6 +173,19 @@ if (empty($getData))
                             <?php echo $this->Form->label('Optout Email Request Notification'); ?>
                         </td>
                     </tr>
+                    <tr>
+                        <td width="200" align="left"><?php echo $this->Form->label('Library Authentication Type'); ?></td>
+                        <td  style="font-size:12px;">
+                            <input id="redio1" type="radio" name="data[Library][library_type]" value="1" class="form_fields" <?php
+                            if ($getData['Library']['library_multi_authentication'] == 1)
+                            {
+                                ?> checked="checked" <?php } ?>> Multi
+                            <input id="redio2" type="radio" name="data[Library][library_multi_authentication]" value="0" class="form_fields"  <?php
+                            if ($getData['Library']['library_type'] == 0)
+                            {
+                                ?> checked="checked" <?php } ?>> Single
+                        </td>
+                    </tr>                    
 		
 		  <tr style = 'display:none;'>
                         <td align="right">
