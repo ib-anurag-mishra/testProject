@@ -309,6 +309,7 @@ if (empty($getData))
                                         'sip2_var' => 'SIP2 Var',
                                         'sip2_var_wo_pin' => 'SIP2 Var w/o PIN',
                                         'ezproxy' => 'EZProxy',
+					'ezlogin' => 'EzProxy User Object',
                                         'soap' => 'SOAP Web Services',
                                         'curl_method' => 'Curl Method',
                                         'user_account' => 'User Account',
@@ -320,7 +321,7 @@ if (empty($getData))
                                         'innovative_https' => 'Innovative HTTPS',
                                         'innovative_var_https' => 'Innovative Var HTTPS',
                                         'innovative_var_https_wo_pin' => 'Innovative Var HTTPS w/o PIN',
-                                        'innovative_var_wo_pin' => 'Innovative Var w/o PIN', 'mdlogin_reference' => 'MDLogin', 'mndlogin_reference' => 'MNDLogin',  'capita' => 'Capita', 'symws' => 'Symphony WS', 'ezlogin' => 'EzProxy User Object'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
+                                        'innovative_var_wo_pin' => 'Innovative Var w/o PIN', 'mdlogin_reference' => 'MDLogin', 'mndlogin_reference' => 'MNDLogin',  'capita' => 'Capita', 'symws' => 'Symphony WS'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
                                         )
                                 );
                                 ?>
