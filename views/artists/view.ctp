@@ -274,7 +274,7 @@
 						'type' => 'post',
 						'url' => array(
 							'controller' => 'homes',
-							'action' => 'userDownload'
+							'action' => 'wishlistDownloadHome'
 						),
 						'id' => 'form' . $albumSong["Song"]["ProdID"],
 						'encoding' => null

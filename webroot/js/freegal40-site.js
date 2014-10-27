@@ -148,6 +148,11 @@ $(document).ready(function() {
 
     });
 
+    $('.top-single-container .wishlist-icon').on('mouseenter',function(){
+
+        $(this).siblings('ul').removeClass('active');
+
+    });
 
     
 
@@ -849,8 +854,8 @@ $(document).ready(function() {
 
 
 
-    $('.recent-downloads-page .recent-downloads-scrollable.recent-downloads-page').bindMouseWheel();
-    $('.recent-downloads-page .recent-video-downloads-scrollable.recent-downloads-page').bindMouseWheel();
+    // $('.recent-downloads-page .recent-downloads-scrollable.recent-downloads-page').bindMouseWheel();
+    // $('.recent-downloads-page .recent-video-downloads-scrollable.recent-downloads-page').bindMouseWheel();
 
 
 
@@ -1510,6 +1515,13 @@ $(document).ready(function() {
 
 
 
+    $('.search-results-albums .album-cover-container').on('mouseleave',function(){
+        $(this).find('ul').removeClass('active');
+
+    });
+
+
+
     $account_menu_dropdown.on('mouseleave', function() {
 
         $(this).removeClass('active');
@@ -1749,7 +1761,7 @@ $(document).ready(function() {
 
     $('.menu-btn').on('mouseleave', function(e) {
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+        if (e.offsetX > $(this).width() || e.offsetY < 0 || e.offsetX < 0) {
 
             $('.options-menu').removeClass('active');
         }
@@ -1998,6 +2010,7 @@ $(document).ready(function() {
         $this.find('.playlist-menu-icon').css({opacity:.5});
         $this.find('.top-10-download-now-button').css({opacity:.5});
         $this.find('span.top-10-download-now-button').find('.add-to-wishlist').css({opacity:.5});
+        $this.find('span.top-10-download-now-button').find('.song-downloaded').css({opacity:.5});
         $this.find('.album-preview').css({opacity:.5});
         $this.find('.wishlist-icon').css({opacity:.5});
     });
@@ -2007,6 +2020,7 @@ $(document).ready(function() {
         $this.find('.playlist-menu-icon').css({opacity:.0});
         $this.find('.top-10-download-now-button').css({opacity:0});
         $this.find('span.top-10-download-now-button').find('.add-to-wishlist').css({opacity:.0});
+        $this.find('span.top-10-download-now-button').find('.song-downloaded').css({opacity:0});
         $this.find('.album-preview').css({opacity:.0});
         $this.find('.wishlist-icon').css({opacity:.0});
     });
@@ -2036,7 +2050,17 @@ $(document).ready(function() {
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .add-to-wishlist').on('mouseleave',function(){
         $(this).css({opacity:.5});
 
-    });    
+    });
+
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseenter',function(){
+
+        $(this).css({opacity:1});
+
+    });
+    $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container span.top-10-download-now-button .song-downloaded').on('mouseleave',function(){
+        $(this).css({opacity:.5});
+
+    });          
 
     $('.my-top-100-page .songs-shadow-container .songs-scrollable ul li .song-container .wishlist-icon').on('mouseenter',function(){
         $(this).css({opacity:1});
@@ -2977,7 +3001,7 @@ function reloadJqueryFunctions() {
 
     $('.menu-btn').on('mouseleave', function(e) {
 
-        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+        if (e.offsetX > $(this).width() || e.offsetY < 0 || e.offsetX < 0) {
 
             $('.options-menu').removeClass('active');
         }
