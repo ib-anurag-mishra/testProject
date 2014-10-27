@@ -209,11 +209,13 @@
                                                             <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='ga("send", "event", "Country Top Songs", "Download", "<?php echo $trackingSongTitle; ?>", 1); return wishlistDownloadOthersHome("<?php echo $value["Song"]['ProdID']; ?>", "0", "<?php echo $value["Song"]['CdnPath']; ?>", "<?php echo $value["Song"]['FullLength_SaveAsName']; ?>", "<?php echo $value["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
                                                             <![endif]>
                                                             <!--[if IE]>
+
                                                                    <a class="no-ajaxy add-to-wishlist" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='ga("send", "event", "Country Top Songs", "Download", "<?php echo $trackingSongTitle; ?>", 1); wishlistDownloadIEHome("<?php echo $value["Song"]['ProdID']; ?>", "0" , "<?php echo $value["Song"]["provider_type"]; ?>", "<?php echo $value["Song"]['CdnPath']; ?>", "<?php echo $value["Song"]['FullLength_SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+
                                                             <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait"); ?>...
-                                                                <span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif'); ?></span> </a> </span>
+                                                                <span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="display: block; position: absolute; left: 0; top: 0; width:28px; height: 19px; background: rgba(0,0,0,.1);"><?php echo $html->image('ajax-loader_black.gif',array('alt' => 'ajax loader gif', 'style' => 'width: 16px; height:16px; margin: 2px auto;')); ?></span> </a> </span>
                                                     </form>
                                                 </span>    
 
@@ -383,7 +385,7 @@
                                                             <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait') . '...'; ?></span>
-                                                        <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                                        <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-23px; margin-right:2px; width:16px;height:16px;')); ?></span>
                                                     </form>
                                                 </span>
                                                 <?php
@@ -391,7 +393,12 @@
                                             else
                                             {
                                                 ?>
+                                                <?php
+                                                /*
                                                 <a class="mylib-top-10-video-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
+                                                */
+                                                ?>
+                                                <a class="mylib-top-10-video-download-now-button dload" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></a>
                                                 <?php
                                             }
                                         }
