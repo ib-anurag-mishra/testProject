@@ -75,4 +75,21 @@ Class AuthRequestComponent extends Object
 		$parsed_xml = Set::reverse($parsed_xml);
 		return $parsed_xml;
 	}
+
+	function getEzAuthResponse($authUrl) {
+		$url = "http://ezproxy.logan.qld.gov.au:8080/login?user=15%2F5734293&pass=0101&url=http://ezproxy.logan.qld.gov.au:8080/userObject?service=getToken&returnURL=http://auth2.libraryideas.com/ezlogin.php";
+
+		$ch = curl_init();
+        	curl_setopt($ch, CURLOPT_COOKIESESSION, 1);
+        	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        	curl_setopt($ch, CURLOPT_URL, $url);
+        	curl_setopt($ch, CURLOPT_COOKIEJAR, 'ezcookie.txt');
+        	curl_setopt($ch, CURLOPT_COOKIEFILE, 'ezcookie.txt');
+        	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        	$o = curl_exec($ch);
+        	print_r($o);
+        	curl_close($ch);
+	}
 }
