@@ -9,6 +9,7 @@ class Song extends AppModel {
 	var $name = 'Song';
 	var $useTable = 'Songs';
 	var $primaryKey = 'ProdID';
+	var $actsAs = array('Containable', 'Sphinx');
 	var $uses = array('Featuredartist', 'Country');
 
 	var $hasOne = array(
