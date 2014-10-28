@@ -17,10 +17,7 @@ class MvideoHelper extends AppHelper {
 						'Video.Title',
 						'Video.VideoTitle',
 						'Video.Artist',
-						'Video.ISRC',
-						'Full_Files.CdnPath',
-						'Full_Files.SaveAsName',
-						'Full_Files.FileID'
+						'Video.ISRC'
 				),
 				'contain' => array(
 						'Full_Files' => array(
