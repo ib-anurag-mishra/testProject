@@ -6298,13 +6298,20 @@ function login($library = null){
 					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 				}
 				else{
+						$data['database'] = 'freegal';
+						$authMethodDetails = $this->MultiAuthentication->find('all',array(
+						  'conditions' => array('library_authentication_num LIKE "%'.$this->cardNo.'%"', 'library_subdomain' => $this->subdomain),
+						  'fields' => array('AuthenticationDetail.*')
+						  )
+						); 
+
+						
 						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
-							$authUrl = Configure::read('App.AuthUrl_AU')."sdlogin_validation";
+							$authUrl = Configure::read('App.AuthUrl_AU').$authMethodDetails['0']['MultiAuthentication']['library_authentication_method']."_validation";
 						}
 						else{
-							$authUrl = Configure::read('App.AuthUrl')."sdlogin_validation";
-						}
-						$data['database'] = 'freegal';
+							$authUrl = Configure::read('App.AuthUrl').$authMethodDetails['0']['MultiAuthentication']['library_authentication_method']."_validation";
+						}						
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						$resultAnalysis[0] = $result['Posts']['status'];
 						$resultAnalysis[1] = $result['Posts']['message'];
