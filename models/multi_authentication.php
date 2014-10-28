@@ -8,6 +8,6 @@
 class MultiAuthentication extends AppModel
 {
     var $name = 'MultiAuthentication';
-	var $useTable = 'multi_authentications';
+	var $useTable = 'authentication_details';
 
 }
