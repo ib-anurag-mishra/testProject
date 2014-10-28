@@ -67,11 +67,15 @@ Class UsersController extends AppController
 		if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));                      
-                        
-                                               
                         if($library_data['Library']['library_status'] == 'inactive'){
                            $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
                            exit;                           
+                        } 
+                        if(!empty($library_data['Library']['library_multi_authentication'])) {
+                            $action = 'multi';
+                            $this->Session->write("layout_option", 'login');
+                            $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
+                            exit;
                         }                        
                         
 			$this->get_login_layout_name($library_data);                       
@@ -6143,6 +6147,16 @@ function login($library = null){
 			}
 		}
 	}
+        
+        /**
+         * 
+         *  Function Name : multilogin
+         *  Description   : This function is for multiple authentication libraries
+         */
+        
+        function multilogin($library = null) {
+            
+        }
 
 	function get_login_layout_name($library_data){
 		$mobile_auth = $library_data['Library']['mobile_auth'];
