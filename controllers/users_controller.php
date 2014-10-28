@@ -72,7 +72,7 @@ Class UsersController extends AppController
                            exit;                           
                         } 
                         if(!empty($library_data['Library']['library_multi_authentication'])) {
-                            $action = 'multi';
+                            $action = 'multilogin';
                             $this->Session->write("layout_option", 'login');
                             $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
                             exit;
