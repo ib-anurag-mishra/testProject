@@ -176,7 +176,7 @@ if (empty($getData))
                     <tr>
                         <td width="200" align="right"><?php echo $this->Form->label('Library Authentication Type'); ?></td>
                         <td  style="font-size:12px;">
-                            <input id="redio1" type="radio" name="data[Library][library_type]" value="1" class="form_fields" <?php
+                            <input id="redio1" type="radio" name="data[Library][library_multi_authentication]" value="1" class="form_fields" <?php
                             if ($getData['Library']['library_multi_authentication'] == 1)
                             {
                                 ?> checked="checked" <?php } ?>> Multi
