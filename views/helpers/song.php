@@ -17,10 +17,7 @@ class SongHelper extends AppHelper {
 						'Song.Title',
 						'Song.SongTitle',
 						'Song.Artist',
-						'Song.ISRC',
-						'Full_Files.CdnPath',
-						'Full_Files.SaveAsName',
-						'Full_Files.FileID'
+						'Song.ISRC'
 				),
 				'contain' => array(
 						'Full_Files' => array(

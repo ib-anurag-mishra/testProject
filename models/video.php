@@ -11,6 +11,7 @@ class Video extends AppModel
 	var $useTable = 'video';
 	var $primaryKey = 'ProdID';
 
+	var $actsAs = array('Containable','Sphinx');
 	var $uses = array('Featuredartist','Country');
 
 	var $hasOne = array(
