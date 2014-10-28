@@ -71,13 +71,6 @@ Class UsersController extends AppController
                            $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
                            exit;                           
                         } 
-                        if(!empty($library_data['Library']['library_multi_authentication'])) {
-                            $action = 'multilogin';
-                            $this->Session->write("layout_option", 'login');
-                            $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
-                            exit;
-                        }                        
-                        
 			$this->get_login_layout_name($library_data);                       
                         
                         
@@ -87,6 +80,12 @@ Class UsersController extends AppController
                             {
 
                                 if($_SERVER['REQUEST_URI'] == '/users/redirection_manager'){
+                                    if(!empty($library_data['Library']['library_multi_authentication'])) {
+                                        $action = 'multilogin';
+                                        $this->Session->write("layout_option", 'login');
+                                        $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
+                                        exit;
+                                    }                                    
                                     if($library_data['Library']['library_authentication_method'] == 'referral_url')
                                     {
                                             $referral = explode(",",$library_data['Library']['library_domain_name']);
