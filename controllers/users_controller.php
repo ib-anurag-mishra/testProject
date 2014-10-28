@@ -6154,7 +6154,7 @@ function login($library = null){
          */
         
         function multilogin($library = null) {
-            
+            $this->layout = 'login';
         }
 
 	function get_login_layout_name($library_data){
