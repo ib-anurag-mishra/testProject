@@ -3,6 +3,7 @@
 		$('.blkButton').corner('5px');
 	});
 </script>
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 <?php
 	$this->pageTitle = 'Login';
 	echo $session->flash();

@@ -19,6 +19,7 @@ jQuery(document).ready(function() {
         load_scroller('tab-2');
    });
 </script>
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 <div id="info-part">
 							<div id="left-part">
 								<div class="text-box vscrollable" id='tab-2-scroller-div' style="width:100%;left: -8px;">

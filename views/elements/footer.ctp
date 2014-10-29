@@ -131,3 +131,4 @@ if ($this->Session->read('library_type') == '2') {
 	ga('create', 'UA-16162084-1', 'auto');
 	ga('send', 'pageview');
 </script>
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
