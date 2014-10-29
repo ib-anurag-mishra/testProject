@@ -6272,7 +6272,7 @@ function login($library = null){
                                 }
                                 $existingLibraries = $this->MultiAuthentication->find('all', array(
                                     'conditions' => array('MultiAuthentication.library_authentication_num LIKE "%'.$cardNo.'%"','MultiAuthentication.library_subdomain' => $data['subdomain']),
-                                    'fields' => array('library_authentication_method','Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification'),
+                                    'fields' => array('library_authentication_method', 'library_authentication_url', 'Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification'),
                                     'joins' => array(
                                         array(
                                             'table' => 'libraries',
@@ -6298,18 +6298,18 @@ function login($library = null){
 						$data['method_type'] = 'multilogin';
 						$authMethod = $existingLibraries['0']['MultiAuthentication']['library_authentication_method'];
 						if($authMethod == 'innovative_var_wo_pin' || $authMethod == 'innovative_wo_pin' || $authMethod == 'innovative_var_https_name' || $authMethod == 'innovative_var_https_wo_pin' || $authMethod == 'innovative_var_name') {
-							$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+							$authUrl = $existingLibraries['0']['MultiAuthentication']['library_authentication_url'];
 							$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 						} elseif($authMethod == 'innovative_https' || $authMethod == 'innovative' || $authMethod == 'innovative_var_https') {
-							$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+							$authUrl = $existingLibraries['0']['MultiAuthentication']['library_authentication_url'];
 							$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 						} elseif($authMethod == 'soap') {
-							$data['soapUrl'] = $existingLibraries['0']['Library']['library_soap_url'];
+							$data['soapUrl'] = $existingLibraries['0']['MultiAuthentication']['library_soap_url'];
 						} elseif($authMethod == 'capita') {
-							$data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];
+							$data['library_authentication_url'] = $existingLibraries['0']['MultiAuthentication']['library_authentication_url'];
 						} elseif($authMethod == 'symws') {
-							$data['library_host_name'] = $existingLibraries['0']['Library']['library_host_name'];
-							$data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];                                        
+							$data['library_host_name'] = $existingLibraries['0']['MultiAuthentication']['library_host_name'];
+							$data['library_authentication_url'] = $existingLibraries['0']['MultiAuthentication']['library_authentication_url'];                                        
 						}					
 						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 							$authUrl = Configure::read('App.AuthUrl_AU').$this->method_action_mapper($existingLibraries['0']['MultiAuthentication']['library_authentication_method'])."_validation";
