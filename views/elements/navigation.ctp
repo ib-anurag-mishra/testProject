@@ -314,9 +314,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 		<header><?php __('Create Playlist'); ?></header>
 		<form id="FormDelete" action="#">
 			<div class="rename-form-container">
-				<label id="CreateQueueMessage"></label> <label for="name"><?php __('Name'); ?>:</label>
+				<label id="CreateQueueMessage"></label> 
+                <label for="QueueListQueueName"><?php __('Name'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-				<label for="description"><?php __('Description'); ?>:</label>
+				<label for="QueueListDescription"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
 			</div>
 			<div class="buttons-container clearfix">
