@@ -285,6 +285,7 @@
 					
 					?>
 						<span class="beforeClick" style="cursor: pointer;" id="wishlist_song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+							<![if !IE]>
 							<?php
 							echo $this->Html->link('Download Now', 'javascript:void(0)', array(
 								'class' => 'add-to-wishlist',
@@ -293,6 +294,11 @@
 
 							));
 							?>
+							<![endif]>
+                            <!--[if IE]>
+                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='ga('send, 'event', 'Artist View', 'Download, 'Song', 1); wishlistDownloadIEHome("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>", "<?php echo $albumSong['Song']['CdnPath']; ?>", "<?php echo $albumSong['Song']['FullLength_SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                            <![endif]-->                                                        
+							
 						</span>
 						
 						<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display: none;">
