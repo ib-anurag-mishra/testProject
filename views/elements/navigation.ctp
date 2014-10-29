@@ -534,7 +534,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 							</div>
 
 							<div class="master-search-field-container">
-								<input type="text" placeholder="<?php __('Press enter or go'); ?>..." class="search-text" id="search-text" name="q"> 
+								<input title="Search Input Box" type="text" placeholder="<?php __('Press enter or go'); ?>..." class="search-text" id="search-text" name="q"> 
 								<a class="go" href="javascript:void(0)" id="headerSearchSubmit"><?php __('Go'); ?></a>
 							</div>
 						</form>
