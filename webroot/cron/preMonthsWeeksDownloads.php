@@ -45,7 +45,7 @@ function sendMail($file_path, $file_name) {
 }
 
 // Connect to the database
-// $db = new mysqli('192.168.100.114', 'freegal_prod', '}e47^B1EO9hD', 'freegal');
+// $db = new mysqli('192.168.100.52', 'freegal_prod', '}e47^B1EO9hD', 'freegal');
 // $db = new mysqli('127.0.0.1', 'root', 'pelebertix', 'freegal', '3306',':/Applications/MAMP/tmp/mysql/mysql.sock');//testing
 // if ($db->connect_errno) {
 // 	die('There was an error connected to the database.' . "\n". $db->connect_error);

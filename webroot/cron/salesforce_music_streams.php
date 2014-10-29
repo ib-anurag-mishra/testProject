@@ -253,7 +253,7 @@ function sendMail($file_path, $file_name) {
 
 function freegalMusicStreams() {
 	// $SalesforceReports = new salesfore_reports('localhost;port=3306', 'freegal', 'root', '');
-	$SalesforceReports = new salesfore_reports('192.168.100.114', 'freegal', 'freegal_prod', '}e47^B1EO9hD');
+	$SalesforceReports = new salesfore_reports('192.168.100.52', 'freegal', 'freegal_prod', '}e47^B1EO9hD');
 	$labels = $SalesforceReports->getLabels();
 	$weeks = $SalesforceReports->getLastFourWeeks();
 	$months = $SalesforceReports->getLastFourMonths();
