@@ -6235,10 +6235,11 @@ function login($library = null){
 			$card = $this->data['User']['card'];
 			$data['card_orig'] = $card;
 			$card = str_replace(" ","",$card);
-
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
-			$data['pin'] = $pin;
+            if(!empty($pin)) {
+				$data['pin'] = $pin;
+			}
 			$patronId = $card;
 			$data['patronId'] = $patronId;
 			if($card == ''){
@@ -6295,12 +6296,27 @@ function login($library = null){
 				else{
 						$data['database'] = 'freegal';
 						$data['method_type'] = 'multilogin';
+						$authMethod = $existingLibraries['0']['MultiAuthentication']['library_authentication_method'];
+						if($authMethod == 'innovative_var_wo_pin' || $authMethod == 'innovative_wo_pin' || $authMethod == 'innovative_var_https_name' || $authMethod == 'innovative_var_https_wo_pin' || $authMethod == 'innovative_var_name') {
+							$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+							$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
+						} elseif($authMethod == 'innovative_https' || $authMethod == 'innovative' || $authMethod == 'innovative_var_https') {
+							$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+							$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
+						} elseif($authMethod == 'soap') {
+							$data['soapUrl'] = $existingLibraries['0']['Library']['library_soap_url'];
+						} elseif($authMethod == 'capita') {
+							$data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];
+						} elseif($authMethod == 'symws') {
+							$data['library_host_name'] = $existingLibraries['0']['Library']['library_host_name'];
+							$data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];                                        
+						}					
 						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 							$authUrl = Configure::read('App.AuthUrl_AU').$this->method_action_mapper($existingLibraries['0']['MultiAuthentication']['library_authentication_method'])."_validation";
 						}
 						else{
 							$authUrl = Configure::read('App.AuthUrl').$this->method_action_mapper($existingLibraries['0']['MultiAuthentication']['library_authentication_method'])."_validation";
-						}						
+						}
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						$resultAnalysis[0] = $result['Posts']['status'];
 						$resultAnalysis[1] = $result['Posts']['message'];
