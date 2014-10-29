@@ -103,7 +103,7 @@ $ieVersion =  ieversion();
                        
                         if( $this->Session->read('library_type') == 2 && $streamingArr['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingArr['Country']['StreamingStatus'] == 1){
                                                             
-                                $filePath = $this->Token->streamingToken($streamingArr['Full_Files']['CdnPath']."/".$streamingArr['Full_Files']['SaveAsName']);
+                                $filePath = $this->Token->streamingToken($streamingArr['Song']['CdnPath']."/".$streamingArr['Song']['streamingData']);
 
                                 if(!empty($filePath))
                                 {
@@ -137,11 +137,7 @@ $ieVersion =  ieversion();
 					</div>
 					<div class="song-title" style="left: 115px; width: 155px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                     <?php 
-      //                                             if(strlen($streamingArr['Song']['SongTitle']) >= 16) {
-						// 	echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 16)) . '...</span>';							
-						// } else {
-						// 	echo $this->getTextEncode($streamingArr['Song']['SongTitle']); 
-					 // 	}
+      
                             echo $this->getTextEncode($streamingArr['Song']['SongTitle']);         
                     
 					?>
@@ -165,22 +161,13 @@ $ieVersion =  ieversion();
 
 					<div class="album-title" style="left:561px; width: 158px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
                                              <?php 
-						// if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
-						// 	echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Album']['AlbumTitle'], 0, 19)) . '...</span>';							
-						// } else {
-						// 	echo $this->getTextEncode($streamingArr['Album']['AlbumTitle']); 
-					 // 	}
+						
                             echo $this->getTextEncode($streamingArr['Album']['AlbumTitle']); 
 					?>
                                             </a>
                                             </div>
 					<div class="artist-name" style="left:422px; width: 122px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
-						// if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
-						// 	echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .$this->getTextEncode(substr($streamingArr['Song']['ArtistText'], 0, 19)) . '...</span>';							
-						// } else {
-						// 	$ArtistName = $streamingArr['Song']['ArtistText'];
-						// 	echo $this->getTextEncode($ArtistName);
-						// }
+						
 						$ArtistName = $streamingArr['Song']['ArtistText'];
                         echo $this->getTextEncode($ArtistName);
 					?></a></div>
