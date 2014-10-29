@@ -119,7 +119,7 @@ $ieVersion =  ieversion();
                         if( $this->Session->read('library_type') == 2 && $downloadResult['Country']['StreamingSalesDate'] <= date('Y-m-d') && $downloadResult['Country']['StreamingStatus'] == 1){
                                 //do the streaming work
                             
-                                $filePath = $this->Token->streamingToken($downloadResult['Full_Files']['CdnPath']."/".$downloadResult['Full_Files']['SaveAsName']);
+                                $filePath = $this->Token->streamingToken($downloadResult['Song']['CdnPath']."/".$downloadResult['Song']['FullLength_SaveAsName']);
 
                                 if(!empty($filePath))
                                  {
@@ -190,15 +190,13 @@ $ieVersion =  ieversion();
 					<div class="download">
                    
                         <p>
-                            <?php
-                            $productInfo = $song->getDownloadData($downloadResult['Download']['ProdID'],$downloadResult['Download']['provider_type']);
-                            ?>
+                            
                                     <span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
                                             <![if !IE]>
-                                                    <a href='javascript:void(0);' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath'];?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName'];?>");'><?php __('Download');?></a>
+                                                    <a href='javascript:void(0);' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo $downloadResult['Song']['CdnPath'];?>", "<?php echo $downloadResult['Song']['FullLength_SaveAsName'];?>");'><?php __('Download');?></a>
                                             <![endif]>
                                             <!--[if IE]>
-                                                    <a onclick='historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath'];?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName'];?>");' href="javascript:void(0);"><?php __('Download');?></a>
+                                                    <a onclick='historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo $downloadResult['Song']['CdnPath'];?>", "<?php echo $downloadResult['Song']['FullLength_SaveAsName'];?>");' href="javascript:void(0);"><?php __('Download');?></a>
                                             <![endif]-->
                                     </span>
                                     <span class="afterClick" style="display:none;float:left"><?php __("Please Wait");?>...</span>
@@ -230,7 +228,7 @@ $ieVersion =  ieversion();
 					<div class="date"><?php echo date("Y-m-d",strtotime($videoDownloadResult['Videodownload']['created'])); ?></div>
 					<div class="small-album-container">
 						<?php                        
-                        $videoImage = $this->Token->artworkToken($videoDownloadResult['File']['CdnPath']."/".$videoDownloadResult['File']['SourceURL']);
+                        $videoImage = $this->Token->artworkToken($videoDownloadResult['Video']['CdnPath']."/".$videoDownloadResult['Video']['Image_SaveAsName']);
                         $videoImageUrl = Configure::read('App.Music_Path').$videoImage;
                         ?>
                         <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
@@ -281,21 +279,20 @@ $ieVersion =  ieversion();
                         <p>
                         <?php
                         
-                            $productInfo = $mvideo->getDownloadData($videoDownloadResult['Videodownload']['ProdID'],$videoDownloadResult['Videodownload']['provider_type']);                            
-                            $videoUrl = $this->Token->regularToken($productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);
+                            $videoUrl = $this->Token->regularToken($videoDownloadResult['Video']['CdnPath']."/".$videoDownloadResult['Video']['FullLength_SaveAsName']);
                             $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                             ?>
                             <span class="beforeClick" id="download_song_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>">
-                                                            <![if !IE]>
-                                                                    <a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
-                                                            <![endif]>
-                                                            <!--[if IE]>
-                                                                    <a onclick='historyDownloadVideo("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
-                                                            <![endif]-->
-							</span>
-							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait");?>...</span>
-							<span id="download_loader_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                <![if !IE]>
+                                        <a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
+                                <![endif]>
+                                <!--[if IE]>
+                                        <a onclick='historyDownloadVideo("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
+                                <![endif]-->
+                            </span>
+                            <span class="afterClick" style="display:none;float:left"><?php __("Please Wait");?>...</span>
+                            <span id="download_loader_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                        </p>
                     </div>
 				</div>

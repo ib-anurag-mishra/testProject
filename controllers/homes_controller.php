@@ -1701,29 +1701,25 @@ STR;
                             Song.Advisory,
                             Song.ArtistText,
                             Song.FullLength_Duration,
+                            Song.FullLength_SaveAsName,
+                            Song.Sample_SaveAsName,
+                            Song.CdnPath,
                             Albums.ProdID,
                             Albums.provider_type,
-                            File.CdnPath,
-                            File.SourceURL,
+                            Albums.CdnPath,
+                            Albums.Image_SaveAsName,
                             Country.Territory,
                             Country.SalesDate,
                             Country.StreamingSalesDate,
                             Country.StreamingStatus,
-                            Country.DownloadStatus,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            File.SaveAsName 
-                            
-                            
+                            Country.DownloadStatus                            
                     FROM
                             Songs AS Song
                                     LEFT JOIN
                             wishlists AS wishlists ON ( (wishlists.ProdID = Song.ProdID) && (wishlists.provider_type = Song.provider_type) )
                                     LEFT JOIN 
-                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)                                
-                                    LEFT JOIN
                             {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '')
-                                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
+                                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID)
                     WHERE
                             library_id='$libraryId' and patron_id='$patronId' order by $songSortBy $sortType                               
 
@@ -1733,7 +1729,14 @@ STR;
         //execute the query
         $wishlistResults = $this->Wishlist->query($wishlistQuery);
 
-        $wishlistResultsVideos = $this->WishlistVideo->find('all', array('joins' => array(array('table' => 'video', 'alias' => 'Video', 'type' => 'LEFT', 'conditions' => array('WishlistVideo.ProdID = Video.ProdID', 'WishlistVideo.provider_type = Video.provider_type')), array('table' => 'File', 'alias' => 'File', 'type' => 'LEFT', 'conditions' => array('Video.Image_FileID = File.FileID')), array('table' => $countryPrefix . 'countries', 'alias' => 'Country', 'type' => 'LEFT', 'conditions' => array('Country.ProdID = Video.ProdID', 'Video.provider_type = Country.provider_type', 'Country.SalesDate != ""'))), 'group' => 'WishlistVideo.id', 'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId), 'fields' => array('WishlistVideo.id', 'WishlistVideo.ProdID', 'WishlistVideo.provider_type', 'WishlistVideo.track_title', 'WishlistVideo.created', 'WishlistVideo.patron_id', 'WishlistVideo.library_id', 'WishlistVideo.artist', 'Video.Title', 'Video.ReferenceID', 'Video.ArtistText', 'Video.Advisory', 'Video.provider_type', 'File.CdnPath', 'File.SourceURL', 'Country.Territory', 'Country.SalesDate'), 'order' => "$videoSortBy $sortType"));
+        $wishlistResultsVideos = $this->WishlistVideo->find('all', 
+                array('joins' => array(
+                    array('table' => 'video', 'alias' => 'Video', 'type' => 'LEFT', 'conditions' => array('WishlistVideo.ProdID = Video.ProdID', 'WishlistVideo.provider_type = Video.provider_type')),                   
+                    array('table' => $countryPrefix . 'countries', 'alias' => 'Country', 'type' => 'LEFT', 'conditions' => 
+                        array('Country.ProdID = Video.ProdID', 'Video.provider_type = Country.provider_type', 'Country.SalesDate != ""'))),
+                    'group' => 'WishlistVideo.id', 'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId),
+                    'fields' => array('WishlistVideo.id', 'WishlistVideo.ProdID', 'WishlistVideo.provider_type', 'WishlistVideo.track_title', 'WishlistVideo.created', 'WishlistVideo.patron_id', 'WishlistVideo.library_id', 'WishlistVideo.artist', 'Video.Title', 'Video.ReferenceID', 'Video.ArtistText', 'Video.Advisory', 'Video.provider_type', 'Video.CdnPath', 'Video.Image_SaveAsName', 'Video.FullLength_SaveAsName', 'Country.Territory', 'Country.SalesDate'),
+                    'order' => "$videoSortBy $sortType"));
 
         $this->set('wishlistResults', $wishlistResults);
         $this->set('wishlistResultsVideos', $wishlistResultsVideos);
@@ -1795,10 +1798,27 @@ STR;
 
         $countryTableName = $countryPrefix . 'countries';
         $downloadResults = Array();
-        $downloadResults = $this->Download->find('all', array('joins' => array(array('table' => 'Songs', 'alias' => 'Song', 'type' => 'LEFT', 'conditions' => array('Download.ProdID = Song.ProdID', 'Download.provider_type = Song.provider_type')), array('table' => $countryTableName, 'alias' => 'Country', 'type' => 'INNER', 'conditions' => array('Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type')), array('table' => 'Albums', 'alias' => 'Album', 'type' => 'LEFT', 'conditions' => array('Song.ReferenceID = Album.ProdID', 'Song.provider_type = Album.provider_type')), array('table' => 'File', 'alias' => 'File', 'type' => 'LEFT', 'conditions' => array('Album.FileID = File.FileID')), array('table' => 'File', 'alias' => 'Full_Files', 'type' => 'LEFT', 'conditions' => array('Song.FullLength_FileID = Full_Files.FileID'))), 'group' => 'Download.id', 'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'fields' => array('Download.ProdID', 'Download.provider_type', 'Download.track_title', 'Download.created', 'Download.patron_id', 'Download.library_id', 'Download.artist, Song.Title, Song.SongTitle, Song.FullLength_Duration, Song.ProdID,Song.Advisory,Song.ArtistText,Song.ReferenceID,Song.provider_type,Album.ProdID,Album.provider_type, File.CdnPath, File.SourceURL', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'Full_Files.CdnPath', 'Full_Files.SaveAsName'), 'order' => "$songSortBy $sortType"));
+        $downloadResults = $this->Download->find('all', array('joins' => array(
+            array('table' => 'Songs', 'alias' => 'Song', 'type' => 'LEFT',
+                'conditions' => array('Download.ProdID = Song.ProdID', 'Download.provider_type = Song.provider_type')),
+            array('table' => $countryTableName, 'alias' => 'Country', 'type' => 'INNER',
+                'conditions' => array('Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type')),
+            array('table' => 'Albums', 'alias' => 'Album', 'type' => 'LEFT',
+                'conditions' => array('Song.ReferenceID = Album.ProdID', 'Song.provider_type = Album.provider_type')),
+            ),
+            'group' => 'Download.id',
+            'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),
+            'fields' => array('Download.ProdID', 'Download.provider_type', 'Download.track_title', 'Download.created', 'Download.patron_id', 'Download.library_id', 'Download.artist, Song.Title, Song.SongTitle, Song.FullLength_Duration, Song.ProdID,Song.Advisory,Song.ArtistText,Song.ReferenceID,Song.provider_type,Album.ProdID,Album.provider_type, Album.CdnPath, Album.Image_SaveAsName', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'Song.CdnPath', 'Song.Sample_SaveAsName', 'Song.FullLength_SaveAsName'),
+            'order' => "$songSortBy $sortType"));
 
         $this->set('downloadResults', $downloadResults);
-        $videoDownloadResults = $this->Videodownload->find('all', array('joins' => array(array('table' => 'video', 'alias' => 'Video', 'type' => 'LEFT', 'conditions' => array('Videodownload.ProdID = Video.ProdID', 'Videodownload.provider_type = Video.provider_type')), array('table' => 'File', 'alias' => 'File', 'type' => 'LEFT', 'conditions' => array('Video.Image_FileID = File.FileID'))), 'group' => 'Videodownload.id', 'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'fields' => array('Videodownload.ProdID', 'Videodownload.provider_type', 'Videodownload.track_title', 'Videodownload.created', 'Videodownload.patron_id', 'Videodownload.library_id', 'Videodownload.artist', 'Video.ReferenceID', 'Video.ArtistText', 'Video.Advisory', 'Video.provider_type', 'Video.Title', 'File.CdnPath', 'File.SourceURL'), 'order' => "$videoSortBy $sortType"));
+        $videoDownloadResults = $this->Videodownload->find('all', array('joins' => array(
+            array('table' => 'video', 'alias' => 'Video', 'type' => 'LEFT',
+                'conditions' => array('Videodownload.ProdID = Video.ProdID', 'Videodownload.provider_type = Video.provider_type')),
+            ),
+            'group' => 'Videodownload.id', 'conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),
+            'fields' => array('Videodownload.ProdID', 'Videodownload.provider_type', 'Videodownload.track_title', 'Videodownload.created', 'Videodownload.patron_id', 'Videodownload.library_id', 'Videodownload.artist', 'Video.ReferenceID', 'Video.ArtistText', 'Video.Advisory', 'Video.provider_type', 'Video.Title', 'Video.CdnPath', 'Video.Image_SaveAsName', 'Video.FullLength_SaveAsName'),
+            'order' => "$videoSortBy $sortType"));
 
         $this->set('videoDownloadResults', $videoDownloadResults);
         $this->set('sort', $sort);
