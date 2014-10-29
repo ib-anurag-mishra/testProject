@@ -6250,63 +6250,40 @@ function login($library = null){
 				else{
 				   $this->set('pin',"");
 				}
-			}
-                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}
-			elseif($pin == ''){
-				$this -> Session -> setFlash("Please provide pin.");
-				if($card != ''){
-				   $this->set('card',$card);
-				}
-				else{
-				   $this->set('card',"");
-				}
-			}
-			else{
-
+			} else {
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
 				$data['referral'] = $this->Session->read('referral');
 				$data['subdomain']=$this->Session->read("subdomain");
-				if($this->Session->read('referral') || $this->Session->read("subdomain")){
-					$library_cond = $this->Session->read('lId');
-					$data['library_cond'] = $library_cond;
-					$existingLibraries = $this->Library->find('all',array(
-														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
-														)
-													 );
-				} else {
-					$library_cond = '';
-					$data['library_cond'] = $library_cond;
-					$existingLibraries = $this->Library->find('all',array(
-														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var'),
-														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification')
-														)
-													 );
-				}
-				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/sdlogin"){
+                                $authMethodDetails = $this->MultiAuthentication->find('all', array(
+                                    'conditions' => array('library_authentication_num LIKE "%'.$this->cardNo.'%"'),
+                                    'fields' => array('library_authentication_method','libraries.library_territory'),
+                                    'joins' => array(
+                                        array(
+                                            'table' => 'libraries',
+                                            'alias' => 'libraries',
+                                            'type' => 'inner',
+                                            'foreignKey' => false,
+                                            'conditions'=> array('libraries.id' => 'MultiAuthentication.id', 'libraries.status' => 'active' ,'libraries.library_subdomain' => $this->subdomain,'libraries.library_multi_authentiication' => '1')
+                                        ),
+                                    )
+                                 ));                                
+
+				if(count($authMethodDetails) == 0){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/multilogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
 						$this->Session->setFlash("This is not a valid credential.");
 						}
-					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
+					$this->redirect(array('controller' => 'users', 'action' => 'multilogin'));
 				}
 				else{
 						$data['database'] = 'freegal';
-						$authMethodDetails = $this->MultiAuthentication->find('all',array(
-						  'conditions' => array('library_authentication_num LIKE "%'.$this->cardNo.'%"', 'library_subdomain' => $this->subdomain),
-						  'fields' => array('AuthenticationDetail.*')
-						  )
-						); 
-
 						
-						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						if($authMethodDetails['0']['Library']['library_territory'] == 'AU'){
 							$authUrl = Configure::read('App.AuthUrl_AU').$authMethodDetails['0']['MultiAuthentication']['library_authentication_method']."_validation";
 						}
 						else{
@@ -6420,6 +6397,7 @@ function login($library = null){
             $this->autoRender = false;
             $userType = $this->Session->read('Auth.User.type_id');
             if($userType != 1){
+                
                 $this->redirect('/home/aboutus');
 		exit('You are not allowed to use this section.');
             }
