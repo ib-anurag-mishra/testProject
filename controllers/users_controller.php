@@ -6270,7 +6270,7 @@ function login($library = null){
                                     }
                                 }
                                 $authMethodDetails = $this->MultiAuthentication->find('all', array(
-                                    'conditions' => array('MultiAuthentication.library_authentication_num LIKE "%'.$cardNo.'%"'),
+                                    'conditions' => array('MultiAuthentication.library_authentication_num LIKE "%'.$cardNo.'%"','MultiAuthentication.library_subdomain' => $data['subdomain']),
                                     'fields' => array('library_authentication_method','libraries.library_territory'),
                                     'joins' => array(
                                         array(
@@ -6278,7 +6278,7 @@ function login($library = null){
                                             'alias' => 'libraries',
                                             'type' => 'inner',
                                             'foreignKey' => false,
-                                            'conditions'=> array('libraries.id = MultiAuthentication.id', 'libraries.library_status' => 'active' ,'libraries.library_subdomain' => $data['subdomain'],'libraries.library_multi_authentication' => '1')
+                                            'conditions'=> array('libraries.id = MultiAuthentication.id', 'libraries.library_status' => 'active' ,'libraries.library_multi_authentication' => '1')
                                         ),
                                     )
                                  ));                                
