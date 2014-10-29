@@ -6294,12 +6294,12 @@ function login($library = null){
 				}
 				else{
 						$data['database'] = 'freegal';
-						
-						if($authMethodDetails['0']['Library']['library_territory'] == 'AU'){
-							$authUrl = Configure::read('App.AuthUrl_AU').$authMethodDetails['0']['MultiAuthentication']['library_authentication_method']."_validation";
+						$data['method_type'] = 'multilogin';
+						if($authMethodDetails['0']['Libraries']['library_territory'] == 'AU'){
+							$authUrl = Configure::read('App.AuthUrl_AU').$this->method_action_mapper($authMethodDetails['0']['MultiAuthentication']['library_authentication_method'])."_validation";
 						}
 						else{
-							$authUrl = Configure::read('App.AuthUrl').$authMethodDetails['0']['MultiAuthentication']['library_authentication_method']."_validation";
+							$authUrl = Configure::read('App.AuthUrl').$this->method_action_mapper($authMethodDetails['0']['MultiAuthentication']['library_authentication_method'])."_validation";
 						}						
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						$resultAnalysis[0] = $result['Posts']['status'];
