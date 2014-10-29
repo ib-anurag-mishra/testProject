@@ -1,100 +1,798 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php __('Freegal Music : Your New Music Library :'); ?>
-		<?php
-			if ($title_for_layout == "Homes") {
-				echo substr($title_for_layout, 0, -1);
-			} else {
-				echo $title_for_layout;
-			}
-			?>
-	</title>
-   	<?php
-		echo $this->Html->meta('icon');
-		echo $this->Html->css('jquery.autocomplete');
-		echo $html->css('colorbox');
-	?>
-                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,audioPlayer.js,freegal.js,jquery.bgiframe.js,"></script>
-        <?php
-            if ($this->Session->read("patron"))
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            <?php __('Freegal Music : Your New Music Library :'); ?>
+            <?php
+            if ($title_for_layout == "Homes")
             {
-                if ($this->Session->read('library_type') == '2')
-                {  ?>      
-                    <script type="text/javascript" src="/js/swfobject.js" charset="utf-8"></script>
-       <?php    }    
+                echo substr($title_for_layout, 0, -1);
+            }
+            else
+            {
+                echo $title_for_layout;
+            }
+            ?>
+        </title>        
+        <?php  echo $this->Html->charset(); ?>
+        <?php echo $this->Html->meta('icon'); ?>
+        <meta name="apple-itunes-app" content="app-id=508036345" >
+        <meta name="google-play-app" content="app-id=com.libraryideas.freegalmusic" >
+        <?php
+            echo $this->Html->css(
+                    array(
+                        'freegal_styles',
+                        'jquery.autocomplete',
+                        'colorbox',
+                        'jquery.smartbanner.css',
+                        'freegal40.css?v=06172014'
 
-            } 
-        ?>                 
-               
-	<?php
-		echo $scripts_for_layout;
-	?>
-		<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
-		<link href="<?php echo $this->webroot; ?>css/freegal_styles.php" type="text/css" rel="stylesheet">
-<!--[if lt IE 7]>
-  	<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
-    	<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>
-			<a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'>
-				<img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/>
-			</a>
-		</div>
-    	<div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
-      		<div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>
-      		<div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
-        		<div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>You are using an outdated browser</div>
-        		<div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>For a better experience using this site, please upgrade to a modern web browser.</div>
-      		</div>
-      		<div style='width: 75px; float: left;'>
-				<a href='http://www.firefox.com' target='_blank'>
-					<img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/>
-				</a>
-			</div>
-      		<div style='width: 75px; float: left;'>
-				<a href='http://www.browserforthebetter.com/download.html' target='_blank'>
-					<img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/>
-				</a>
-			</div>
-      		<div style='width: 73px; float: left;'>
-				<a href='http://www.apple.com/safari/download/' target='_blank'>
-					<img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/>
-				</a>
-			</div>
-      		<div style='float: left;'>
-				<a href='http://www.google.com/chrome' target='_blank'>
-					<img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/>
-				</a>
-			</div>
-    	</div>
-  	</div>
-<![endif]-->
-<!--[if IE 7]>
-	<style>
-		#ticker {
-			line-height: 16px;
-		}
-		ul.marquee {
-			margin-top: -16px;
-		}
-		.genreSeeAll {
-			margin-top: -20px;
-		}
-	</style>
-<![endif]-->
-  
-</head>
-<body>
-	<div id="audioPlayer"></div>
-	<?php $session->flash(); ?>
-	<div id="container">
-		<?php echo $this->element('header'); ?>
-		<div id="content">
-			<?php echo $content_for_layout; ?>
-		</div>
+                    )
+            );
+        ?>
+        <!--[if IE 8]>
+            <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
+        <![endif]-->               
+        <!--[if IE 9]>
+            <style type="text/css">
+                .artist-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .playlist-options {
 
-	</div>
-	<?php echo $this->element('footer'); ?>
+                    right: -128px;
+                }
+            </style>
+        <![endif]-->
+        <?php
+            echo $javascript->link(
+                    array(
+                        'freegal40-libraries',
+                        'freegal',
+                        'freegal40-site',
+                        'search-results',
+                        'audioPlayer',
+                        'recent-downloads',
+                        'qtip_add'
+                    )
+            );        
+        ?>
+        <?php 
+        if ($this->Session->read('library') && $this->Session->read('library') != '')
+        {
+            $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+        ?>
+            <script type="text/javascript">
+                <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>
+                var languageSet = '<?php echo $setLang; ?>';
+                var webroot = '<?php echo $this->webroot; ?>';
+                function sleep(milliseconds) {
+                    var start = new Date().getTime();
+                    for (var i = 0; i < 1e7; i++) {
+                        if ((new Date().getTime() - start) > milliseconds) {
+                            break;
+                        }
+                    }
+                }
+                function validateEmail(email) {
+                    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(email);
+                }
+
+                function setUpperNavigation(pageName) {
+
+                    var sidebar_anchor = $('.sidebar-anchor');
+                    sidebar_anchor.removeClass('active');
+                    var sidebar_sub_nav_07 = $('.sidebar-sub-nav');
+                    var sidebar_freegalqueues = $('.leftfqueuesclass');
+                    sidebar_freegalqueues.removeClass('active');
+                    var home07 = $('#home07');
+                    var concert07 = $('#concert07');
+                    var musicVideo07 = $('#musicVideo07');
+                    var newsRelease07 = $('#newsRelease07');
+                    var genre07 = $('#genre07');
+                    var faq07 = $('#faq07');
+                    var topmylib07 = $('.topmylib07');
+                    var topustop07 = $('#topustop07');
+                    var topmostpopuler07 = $('#topmostpopuler07');
+                    var leftmusicVideo07 = $('#leftmusicVideo07');
+                    var leftmylib07 = $('#leftmylib07');
+                    var ustoplib07 = $('#ustoplib07');
+                    var leftnewrelease07 = $('#leftnewrelease07');
+                    var leftmyhistory07 = $('#leftmyhistory07');
+                    var leftmywishlist07 = $('#leftmywishlist07');
+                    var leftsavedqueues07 = $('#leftsavedqueues07');
+                    var leftnowstreaming07 = $('#leftnowstreaming07');
+
+                    if (pageName.indexOf("leftfqueues_") !== -1) {
+                        var leftfqueuesclass = $('.leftfqueuesclass');
+                        leftfqueuesclass.removeClass('active');
+                        var leftfqueues = $('#' + pageName);
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        concert07.removeClass('active');
+                        home07.removeClass('active');
+                        leftfqueues.addClass('active');
+                    }
+                    if (pageName === 'home07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        concert07.removeClass('active');
+                        home07.addClass('active');
+                    } else if (pageName === 'concert07') {
+                        musicVideo07.removeClass('active');
+                        home07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                    }else if (pageName === 'musicVideo07') {
+                        home07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        musicVideo07.addClass('active');
+                        concert07.removeClass('active');
+                        leftmusicVideo07.addClass('active');
+                    } else if (pageName === 'newsRelease07') {
+                        musicVideo07.removeClass('active');
+                        home07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        concert07.removeClass('active');
+                        leftnewrelease07.addClass('active');
+                        newsRelease07.addClass('active');
+                    } else if (pageName === 'genre07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        home07.removeClass('active');
+                        faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        concert07.removeClass('active');
+                        genre07.addClass('active');
+                    } else if (pageName === 'faq07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        home07.removeClass('active');
+                        genre07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        concert07.removeClass('active');
+                        faq07.addClass('active');
+                    } else if (pageName === 'leftmusicVideo07') {
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        musicVideo07.addClass('active');
+                        concert07.removeClass('active');
+                        leftmusicVideo07.addClass('active');
+                    } else if (pageName === 'leftmylib07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        topmylib07.addClass('active');
+                        leftmylib07.addClass('active');
+                        concert07.removeClass('active');
+                    } else if (pageName === 'ustoplib07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        concert07.removeClass('active');
+                        topmylib07.addClass('active');
+                        ustoplib07.addClass('active');
+                    } else if (pageName === 'leftnewrelease07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        concert07.removeClass('active');
+                        newsRelease07.addClass('active');
+                        leftnewrelease07.addClass('active');
+                    } else if (pageName === 'leftmyhistory07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        concert07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.addClass('active');
+                    } else if (pageName === 'leftmywishlist07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        concert07.removeClass('active');
+                        leftmywishlist07.addClass('active');
+                    } else if (pageName === 'topmylib07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        topustop07.removeClass('active');
+                        concert07.removeClass('active');
+                        topmostpopuler07.addClass('active');
+                        sidebar_sub_nav_07.addClass('active');
+                        topmylib07.addClass('active');
+                        leftmylib07.addClass('active');
+                    } else if (pageName === 'topustop07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        concert07.removeClass('active');
+                        topmylib07.addClass('active');
+                        topmostpopuler07.addClass('active');
+                        ustoplib07.addClass('active');
+                    } else if (pageName === 'leftsavedqueues07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        concert07.removeClass('active');
+                        leftsavedqueues07.addClass('active');
+                    } else if (pageName === 'leftnowstreaming07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        concert07.removeClass('active');
+                        leftnowstreaming07.addClass('active');
+                    }
+                }
+
+                $(document).ready(function() {
+                    
+                    <?php
+                        if ($this->Session->read('approved') && $this->Session->read('approved') === 'no') {
+                    ?>
+                            $(".termsApproval").colorbox(
+                                    {
+                                        width: "50%", inline: true, open: true,
+                                        overlayClose: false, opacity: .5,
+                                        noEscape: true, href: "#termsApproval_div",
+                                        onOpen: function() {
+                                            $(document).unbind("keydown.cbox_close");
+                                        }
+                                    }
+                            );
+                    <?php  
+                        }  
+                    ?>
+                    <?php
+                        if($userLogin == 'yes') {
+                            if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')) {
+                    ?>
+                                $(".streamApproval").colorbox(
+                                        {
+                                            width: "50%", inline: true, open: true,
+                                            overlayClose: false, opacity: .5,
+                                            escKey: false, noEscape: true, href: "#streamApproval_div",
+                                            onOpen: function() {
+                                                $(document).unbind("keydown.cbox_close");
+                                            }
+                                        }
+                                );
+
+                                $("#colorboxOKBtn").click(function() {
+                                    var pid = '<?= $this->Session->read('patron') ?>';
+                                    var lid = <?= $this->Session->read('library') ?>;
+                                    var data = {pid: pid, lid: lid};
+                                    jQuery.ajax({
+                                        type: "post", // Request method: post, get
+                                        url: webroot + "users/savestreampopup", // URL to request
+                                        data: data, // postdata
+                                        async: false,
+                                        success: function(response) {
+                                            sleep(2000);
+                                            $.fn.colorbox.close();
+                                        },
+                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                        }
+                                    });
+                                });
+                    <?php
+                            }
+                        } else {
+                            if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')) {
+                    ?>
+                                $(".streamApproval").colorbox(
+                                        {
+                                            width: "50%", inline: true, open: true,
+                                            overlayClose: false, opacity: .5,
+                                            escKey: false, noEscape: true, href: "#streamApproval_div",
+                                            onOpen: function() {
+                                                $(document).unbind("keydown.cbox_close");
+                                            }
+                                        }
+                                );
+
+                                $("#colorboxOKBtn").click(function() {
+                                    var pid = '<?= $this->Session->read('patron') ?>';
+                                    var lid = <?= $this->Session->read('library') ?>;
+                                    var data = {pid: pid, lid: lid};
+                                    jQuery.ajax({
+                                        type: "post", // Request method: post, get
+                                        url: webroot + "users/savestreampopup", // URL to request
+                                        data: data, // postdata
+                                        async: false,
+                                        success: function(response) {
+                                            sleep(2000);
+                                            $.fn.colorbox.close();
+                                        },
+                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                        }
+                                    });
+                                });
+                   <?php
+                            }
+                        }
+                   ?>  
+                   <?php
+                      if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)) {
+                   ?>
+                            $(".notificationApproval").colorbox(
+                                    {
+                                        width: "50%", inline: true, open: true,
+                                        overlayClose: false, opacity: .5,
+                                        escKey: false, noEscape: true, href: "#notificationApproval_div",
+                                        onOpen: function() {
+                                            $(document).unbind("keydown.cbox_close");
+                                        },
+                                        onComplete: function() {
+                                            $("#cboxLoadingOverlay").remove();
+                                            $("#cboxLoadingGraphic").remove();
+                                        }
+                                    }
+                            );
+                            //close the popup 
+                            $("#colorboxCloseBtn").click(function() {
+
+                                var pid = '<?= $this->Session->read('patron') ?>';
+                                var lid = <?= $this->Session->read('library') ?>;
+                                                    if($('#doNotShowCheck').is(':checked')) {
+                                                                    var data = {pid: pid, lid: lid};
+                                                                    var url = "users/savenotifypopup";
+                                                                    $('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
+                                                    } else {
+                                                                    var data = {notificationClose: 1};
+                                                                    var url = "users/saveNotification";		        		
+                                                    }
+                                jQuery.ajax({
+                                    type: "post", // Request  method: post, get
+                                    url: webroot + url, // URL to request
+                                    data: data, // post data
+                                    success: function(response) {
+                                        $.fn.colorbox.close();
+                                        $('#noti_content').hide();
+                                        location.reload();
+                                    },
+                                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                    }
+                                });
+                            });
+                            //save email notificaion data and close t he popup
+                            $("#colorboxSubmitBtn").click(function() {
+                                                            if (!$('#userNewsletterEmailField').val() && !$('#doNotShowCheck').is(':checked')){
+                                    alert('Please provide your information');
+                                    return false;
+                                }
+
+                                                            if($('#userNewsletterEmailField').val()){
+                                    if (!validateEmail($('#userNewsletterEmailField').val())) {
+                                            alert('Please enter the valid email address.');
+                                            return false;
+                                    }
+                                                            }
+
+
+                                //post the notification information
+                                var pid = '<?= $this->Session->read('patron') ?>';
+                                var lid = <?= $this->Session->read('library') ?>;
+                                var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
+                                                            if($('#doNotShowCheck').is(':checked') && !$('#userNewsletterEmailField').val() ) {
+                                                                    var url = "users/savenotifypopup";
+                                                                    $('#noti_content').html('<span style="padding-top:15px;"><b>You will never shown this subscription form again. Thank You.</b></span>');
+                                                            }
+                                                            else {
+                                                                    var url = "users/saveNotification";
+
+                                    $('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
+                                                            }
+                                jQuery.ajax({
+                                    type: "post", // Request method: post, get
+                                    url: webroot + url, // URL to request
+                                    data: data, // postdata
+                                    async:
+                                            false,
+                                    success: function(response) {
+                                        sleep(2000);
+                                        $.fn.colorbox.close();
+                                        $('#noti_content').hide();
+                                        location.reload();
+                                    },
+                                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                    }
+                                });
+                            });
+
+                    <?php
+                        }
+                    ?>
+                });
+            </script>
+            <?php
+            } else {
+            ?>
+                <link href="<?php echo $this->webroot; ?>css/freegal_styles.php" type="text/css" rel="stylesheet" />
+                <link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
+            <?php
+            }
+            if ($this->Session->read('lId') && $this->Session->read('lId') != '') {
+            ?>
+            <script type="text/javascript">
+                var webroot = '<?php echo $this->webroot; ?>';
+
+                function showhide(flag, id)
+                {
+
+                    if (flag == "short")
+                    {
+                        document.getElementById("shortNews" + id).style.display = "block";
+                        document.getElementById("detailsNews" + id).style.display = "none";
+                    }
+
+                    if (flag == "detail")
+                    {
+                        document.getElementById("shortNews" + id).style.display = "none";
+                        document.getElementById("detailsNews" + id).style.display = "block";
+                    }
+                }
+
+                function queueModifications()
+                {
+                    document.getElementById('name').value = document.getElementById('hid_playlist_name').value;
+                    document.getElementById('description').value = document.getElementById('hid_description').value;
+                    document.getElementById('rqPlid').value = document.getElementById('hid_Plid').value;
+                    document.getElementById('dqPlid').value = document.getElementById('hid_Plid').value;
+                    queueName = $('#hid_playlist_name').val();
+                    $('.confirm-text span').text(queueName);
+                    $('.rename-queue-dialog-box span').text(queueName);
+                }
+            </script>
+
+            <?php
+                $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
+            }
+            ?>
+
+        <style>
+            #slideshow a { display: none }
+            #slideshow a.first { display: block }
+            #featured_artist a { display: none }
+            #featured_artist a.first { display: block }
+            #newly_added a { display: none }
+            #newly_added a.first { display: block }
+        </style>
+        <noscript>
+            <?php
+            if ($this->params['action'] != 'aboutus') {
+                echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0; url=" . $this->webroot . "homes/aboutus/js_err"), false);
+            }
+            ?>
+        </noscript>
+    </head>
+    <body>
+        <!--[if lt IE 9]>
+        <div class="browser-update">
+            <a href="#" id="bu-close" class="no-ajaxy"></a>
+            <a href="http://www.google.com/chrome" class="chrome"></a>
+            <a href="http://www.mozilla.org/en-US/firefox/new/" class="ff"></a>
+            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" class="ie"></a>
+            <a href="http://www.apple.com/downloads/" class="safari"></a>
+        </div>
+        <![endif]-->        
+        <div id="audioPixel">
+            <div id="audioflash">
+            </div>
+        </div>
+        <?php $session->flash(); ?>
+        <a class='upgradeFlash' href="#"></a>
+        <div style="display:none;">
+            <div id="upgradeFlash_div">   
+                This site requires Flash player version 9 or more to play the sample audio files.
+                Please <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank">click here</a> 
+                to upgrade your Flash Player.<br /><br />
+            </div>
+        </div>
+        <?php
+        if ($this->Session->read('approved') && $this->Session->read('approved') == 'no') {
+        ?>
+            <style>#cboxClose{display:none !important;}</style>
+            <a class='termsApproval' href="#"></a>
+            <div style="display:none;">
+                <div id="termsApproval_div">
+                    <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:125px;bottom:0;left:305px;right:0;z-index:10000;">
+                        <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                    </div>
+
+                    <b>You need to accept the terms and conditions to browse the site.</b><br />
+                    <div style="overflow:auto;height:200px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
+                        <?php echo $page->getPageContent('terms'); ?>
+                    </div>
+
+                    <br />
+                    <input type="button" value="Accept" 
+                           onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>', '<?php echo base64_encode($this->Session->read('patron')); ?>');"> 
+                    <input type="button" value="Deny" onclick="Javascript: history.back();">
+                </div>
+            </div>
+        <?php
+        }
+        if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)) {
+        ?>
+            <style>#cboxClose{display:none !important;}</style>
+            <a class='notificationApproval' href="#"></a>
+            <div style="display:none;">
+                <div id="notificationApproval_div">
+                    <span id="noti_content">
+                        <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:125px;bottom:0;left:305px;right:0;z-index:10000;">
+                            <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                        </div>
+                        <b>Email Notification</b>
+                        <br />
+                        <div style="height:135px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
+                            Please add your email address here to receive twice-weekly email reminders of your available downloads.
+                            <br />
+                            <br />
+                            <br />
+                            <div >
+                                <div id="emaildiv">
+                                    <b>Email :</b>
+                                    <input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'>
+                                </div><br/>
+                                <div>
+                                     <input type="checkbox" name="doNotShow" value="no" id="doNotShowCheck"> Do not show this message again
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
+                    </span>
+                </div>
+            </div>
+        <?php
+        }
+        ?>      
+        <?php
+        $userLogin = $this->Session->read("userlogin");
+        if($userLogin == 'yes') {
+            if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no')  && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')) {
+        ?>
+                <style>#cboxClose{display:none !important;}</style>
+                <a class='streamApproval' href="#"></a>
+                <div style="display:none;">
+                    <div id="streamApproval_div">
+                        <span id="stream_content">
+                            <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                                <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                            </div>
+                            <?php echo $page->getPageContent('stream_123'); ?>
+                            <br />
+                            <center><input type="button" value="OK" id="colorboxOKBtn"></center>
+                        </span>
+
+                    </div>
+                </div>
+
+        <?php 
+            }
+        } else {
+            if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')) {
+        ?>
+                <style>#cboxClose{display:none !important;}</style>
+                <a class='streamApproval' href="#"></a>
+                <div style="display:none;">
+                    <div id="streamApproval_div">
+                        <span id="stream_content">
+                            <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                                <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                            </div>
+                            <?php echo $page->getPageContent('stream_123'); ?>
+                            <br />
+                            <center><input type="button" value="OK" id="colorboxOKBtn"></center>
+                        </span>
+
+                    </div>
+                </div>
+
+        <?php 
+            }
+        }
+        ?>
+        <div id="border-background" >
+            <div id="container">
+                <?php echo $this->element('header'); ?>
+                <div id="content">
+                    <?php
+                    if ($this->Session->read('library') && $this->Session->read('library') != '') {
+                        echo $this->element('navigation');
+                    }
+                    echo $content_for_layout;
+                    ?>
+                </div>
+                <input type="hidden" value="<?php echo Configure::read('App.Script');   ?>" id="Scripts_Path" />
+            </div>
+            <?php echo $this->element('footer'); ?>
+        </div>
+    </div> <!-- body - background -->
+    <script type="text/javascript">
+        if ( !(/(iPad|iPhone|iPod).*OS [6-7].*AppleWebKit.*Mobile.*Safari/.test(navigator.userAgent)) ) {
+            $.smartbanner({
+                title: 'Freegal Music',
+                author: 'Library Ideas, LLC',
+                daysHidden: 0, 
+                daysReminder: 0,
+                icon: '<?php echo $this->webroot; ?>app/webroot/img/Android120x120.png'
+            });
+        }
+    </script>
 </body>
 </html>
