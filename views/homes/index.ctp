@@ -313,6 +313,6 @@ $replace = array('','');
 		?>
 	</div>
 	<span id="artist_loader" style="display: none;">
-		<?php echo $this->Html->image('aritst-ajax-loader.gif', array('style' => 'margin: 20px auto')); ?>
+		<?php echo $this->Html->image('aritst-ajax-loader.gif', array('style' => 'margin: 20px auto', 'alt' => 'Loading Image')); ?>
 	</span>
 </section>
