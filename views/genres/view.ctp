@@ -478,7 +478,7 @@ $totalRows = count($genresAll);
 
                     </ul>
                     <span id="artist_loader" style="display:none;"   ><!-- <img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/> -->
-                    <?php echo $this->Html->image('aritst-ajax-loader.gif', array('style' => 'padding-left:115px;padding-buttom:25px;border:0;'))?>
+                    <?php echo $this->Html->image('aritst-ajax-loader.gif', array('style' => 'padding-left:115px;padding-buttom:25px;border:0;', 'alt' => 'Loading Image'))?>
                     </span>
                 </div>
         </div>
