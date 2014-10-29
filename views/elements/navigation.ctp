@@ -258,7 +258,7 @@ $(document).ready(function() {
 });
 
 </script>
-
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 
 <?php
 /*
@@ -295,7 +295,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 		</header>
 		<form id="FormRename" action="#">
 			<div class="rename-form-container">
-				<label id="RenameQueueMessage"></label> <label for="name">Name:</label>
+				<label id="RenameQueueMessage"></label> 
+                <label for="name"><?php __('Name'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
 				<label for="description"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
@@ -313,9 +314,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 		<header><?php __('Create Playlist'); ?></header>
 		<form id="FormDelete" action="#">
 			<div class="rename-form-container">
-				<label id="CreateQueueMessage"></label> <label for="name">Name:</label>
+				<label id="CreateQueueMessage"></label> 
+                <label for="QueueListQueueName"><?php __('Name'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-				<label for="description"><?php __('Description'); ?>:</label>
+				<label for="QueueListDescription"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
 			</div>
 			<div class="buttons-container clearfix">
@@ -522,7 +524,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">
 							<div class="select-arrow-ie8"></div>
 							<div class="select-arrow-fix">
-								<select name="type" id="master-filter" class="master-search-select">
+								<select title="Search Options" name="type" id="master-filter" class="master-search-select">
 									<option value="all"><?php __('Search All'); ?></option>
 									<option value="album"><?php echo __('Albums', true); ?></option>
 									<option value="artist"><?php echo __('Artists', true); ?></option>
@@ -534,7 +536,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 							</div>
 
 							<div class="master-search-field-container">
-								<input type="text" placeholder="<?php __('Press enter or go'); ?>..." class="search-text" id="search-text" name="q"> 
+								<input title="Search Input Box" type="text" placeholder="<?php __('Press enter or go'); ?>..." class="search-text" id="search-text" name="q"> 
 								<a class="go" href="javascript:void(0)" id="headerSearchSubmit"><?php __('Go'); ?></a>
 							</div>
 						</form>

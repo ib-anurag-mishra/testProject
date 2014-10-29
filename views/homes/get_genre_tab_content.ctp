@@ -16,6 +16,7 @@ jQuery(document).ready(function() {
       load_scroller('genre-tab-<?php echo $tab_no; ?>-content');
   });
 </script>
+<noscript><?php __('JavaScript must be enabled for this site to work correctly.'); ?></noscript>
 <div id="info-part">
 	<div id="left-part">
 		<div class="text-box vscrollable">
