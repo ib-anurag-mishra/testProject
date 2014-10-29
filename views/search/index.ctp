@@ -274,7 +274,7 @@
 						<?php endif; ?>
 					</section>
 					<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
-						<input type="checkbox" class="row-checkbox">
+						<input type="checkbox" class="row-checkbox" title="row checkbox">
 					<?php else: ?>
 						<div class="sample-icon"></div>
 					<?php endif;
@@ -962,7 +962,7 @@
 														<?php endif; ?>
 												</section>
 												<?php if ( isset( $libraryType ) && $libraryType == 2 && ( $StreamFlag === 1 ) ): ?>
-														<input type="checkbox" class="row-checkbox">
+														<input type="checkbox" class="row-checkbox" title="row checkbox">
 												<?php else: ?>
 														<div class="sample-icon"></div>
 												<?php endif;
