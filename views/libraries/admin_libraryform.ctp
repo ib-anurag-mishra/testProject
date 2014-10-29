@@ -86,6 +86,7 @@ if (empty($getData))
     $getData['Library']['twiter_icon'] = '';
     $getData['Library']['youtube_icon'] = '';
     $getData['Library']['show_barcode'] = 0;
+    $getData['Library']['customer_id'] = 0;
     $getData['Library']['library_language'] = 'en';
     $getData['Library']['library_exp_date_format'] = '';
     $getData['Library']['library_type'] = '1';
@@ -114,6 +115,10 @@ if (empty($getData))
                 <?php echo $this->Form->hidden('LibraryPurchase.library_id', array('value' => $getData['Library']['id'])); ?>
                 <table cellspacing="10" cellpadding="0" border="0">
                     <tr><td id="formError1" class="formError" colspan="2"></td></tr>
+                    <tr>
+                        <td align="right" width="250"><label>Customer ID</label></td>
+                        <td align="left"><?php echo $this->Form->input('customer_id', array('label' => false, 'type' => 'text', 'value' => ($getData['Library']['customer_id']=='0'?'':$getData['Library']['customer_id']), 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
+                    </tr>
                     <tr>
                         <td align="right" width="250"><?php echo $this->Form->label('Library Name'); ?></td>
                         <td align="left"><?php echo $this->Form->input('library_name', array('label' => false, 'value' => $getData['Library']['library_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
@@ -1338,6 +1343,10 @@ if (empty($getData))
                         <?php echo $this->Form->label('Purchased Amount in $'); ?>
                         <?php echo $this->Form->input('LibraryPurchase.purchased_amount', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
                     </div>
+                    <div id="pur_acv" class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('Music ACV'); ?>
+                        <?php echo $this->Form->input('LibraryPurchase.acv', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>                        
                     </div>
                     <div class="purchase_streaming">
                         <h1>Purchase Streaming</h1><br/><br/>
@@ -1369,6 +1378,10 @@ if (empty($getData))
                         <?php echo $this->Form->label('Purchased Amount in $'); ?>
                         <?php echo $this->Form->input('LibraryPurchasesStreaming.purchased_amount', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
                     </div>
+                    <div id="str_acv" class="purchase_div" style="display:none;">
+                        <?php echo $this->Form->label('Streaming ACV'); ?>
+                        <?php echo $this->Form->input('LibraryPurchasesStreaming.acv', array('label' => false, 'value' => '', 'div' => false, 'class' => 'form_fields')); ?>
+                    </div>                        
                     </div> 
                     <div class="clr">
                     </div>
@@ -1397,6 +1410,9 @@ if (empty($getData))
                                 <th><label><b>Purchase Order #</b></label></th>
                                 <th><label><b># Of Purchased Tracks</b></label></th>
                                 <th><label><b>Purchased Amount In $</b></label></th>
+                                <?php if(!empty($getData['Library']['library_unlimited'])) { ?>
+                                    <th><label><b>ACV</b></label></th>
+                                <?php } ?>
                                 <th><label><b>Purchase Entry Date</b></lable></th>
                             </tr>
                             <?php
@@ -1408,6 +1424,9 @@ if (empty($getData))
                                     <td><label><?php echo $purchases['LibraryPurchase']['purchased_order_num']; ?></label></td>
                                     <td><label><?php echo $purchases['LibraryPurchase']['purchased_tracks']; ?></label></td>
                                     <td><label>$<?php echo $purchases['LibraryPurchase']['purchased_amount']; ?></label></td>
+                                    <?php if(!empty($getData['Library']['library_unlimited'])) { ?>
+                                        <th><label><?php echo $purchases['LibraryPurchase']['acv']; ?></label></th>
+                                    <?php } ?>                                    
                                     <td><label><?php echo $purchases['LibraryPurchase']['created']; ?></label></td>
                                 </tr>
                                 <?php
@@ -1443,6 +1462,9 @@ if (empty($getData))
                                 <th><label><b>Purchase Order #</b></label></th>
                                 <th><label><b># Of Hours Purchased</b></label></th>
                                 <th><label><b>Purchased Amount In $</b></label></th>
+                                <?php if(!empty($getData['Library']['library_unlimited'])) { ?>
+                                    <th><label><b>ACV</b></label></th>
+                                <?php } ?>                                
                                 <th><label><b>Purchase Entry Date</b></lable></th>
                             </tr>
                             <?php
@@ -1455,6 +1477,9 @@ if (empty($getData))
                                     <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_order_num']; ?></label></td>
                                     <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['purchased_hours']; ?></label></td>
                                     <td><label>$<?php echo $spurchases['LibraryPurchasesStreaming']['purchased_amount']; ?></label></td>
+                                    <?php if(!empty($getData['Library']['library_unlimited'])) { ?>
+                                        <th><label><?php echo $purchases['LibraryPurchasesStreaming']['acv']; ?></label></th>
+                                    <?php } ?>                                    
                                     <td><label><?php echo $spurchases['LibraryPurchasesStreaming']['created']; ?></label></td>
                                 </tr>
                                 <?php
