@@ -6269,21 +6269,21 @@ function login($library = null){
                                         $this->Session->setFlash("You are not authorized to view this location.");
                                     }
                                 }
-                                $authMethodDetails = $this->MultiAuthentication->find('all', array(
+                                $existingLibraries = $this->MultiAuthentication->find('all', array(
                                     'conditions' => array('MultiAuthentication.library_authentication_num LIKE "%'.$cardNo.'%"','MultiAuthentication.library_subdomain' => $data['subdomain']),
-                                    'fields' => array('library_authentication_method','libraries.library_territory'),
+                                    'fields' => array('library_authentication_method','Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.optout_email_notification'),
                                     'joins' => array(
                                         array(
                                             'table' => 'libraries',
-                                            'alias' => 'libraries',
+                                            'alias' => 'Library',
                                             'type' => 'inner',
                                             'foreignKey' => false,
-                                            'conditions'=> array('libraries.id = MultiAuthentication.id', 'libraries.library_status' => 'active' ,'libraries.library_multi_authentication' => '1')
+                                            'conditions'=> array('Library.id = MultiAuthentication.library_id', 'Library.library_status' => 'active' ,'Library.library_multi_authentication' => '1')
                                         ),
                                     )
                                  ));                                
 
-				if(count($authMethodDetails) == 0){
+				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/multilogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
@@ -6295,18 +6295,18 @@ function login($library = null){
 				else{
 						$data['database'] = 'freegal';
 						$data['method_type'] = 'multilogin';
-						if($authMethodDetails['0']['Libraries']['library_territory'] == 'AU'){
-							$authUrl = Configure::read('App.AuthUrl_AU').$this->method_action_mapper($authMethodDetails['0']['MultiAuthentication']['library_authentication_method'])."_validation";
+						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+							$authUrl = Configure::read('App.AuthUrl_AU').$this->method_action_mapper($existingLibraries['0']['MultiAuthentication']['library_authentication_method'])."_validation";
 						}
 						else{
-							$authUrl = Configure::read('App.AuthUrl').$this->method_action_mapper($authMethodDetails['0']['MultiAuthentication']['library_authentication_method'])."_validation";
+							$authUrl = Configure::read('App.AuthUrl').$this->method_action_mapper($existingLibraries['0']['MultiAuthentication']['library_authentication_method'])."_validation";
 						}						
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						$resultAnalysis[0] = $result['Posts']['status'];
 						$resultAnalysis[1] = $result['Posts']['message'];
 						if($resultAnalysis[0] == "fail"){
 							$this->Session->setFlash($resultAnalysis[1]);
-							$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
+							$this->redirect(array('controller' => 'users', 'action' => 'multilogin'));
 						}elseif($resultAnalysis[0] == "success"){
 							//writing to memcache and writing to both the memcached servers
 							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
