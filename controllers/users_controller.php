@@ -6257,8 +6257,17 @@ function login($library = null){
 				$this->Library->Behaviors->attach('Containable');
 				$data['referral'] = $this->Session->read('referral');
 				$data['subdomain']=$this->Session->read("subdomain");
+                                if(empty($data['subdomain'])) {
+                                    $url = $_SERVER['SERVER_NAME'];
+                                    $host = explode('.', $url);
+                                    $subdomains = array_slice($host, 0, count($host) - 2);
+                                    $subdomains = $subdomains[0];  
+                                    if(!empty($subdomains)) {
+                                        $this->Session->write("subdomain", $subdomains);
+                                    }
+                                }
                                 $authMethodDetails = $this->MultiAuthentication->find('all', array(
-                                    'conditions' => array('library_authentication_num LIKE "%'.$this->cardNo.'%"'),
+                                    'conditions' => array('MultiAuthentication.library_authentication_num LIKE "%'.$this->cardNo.'%"'),
                                     'fields' => array('library_authentication_method','libraries.library_territory'),
                                     'joins' => array(
                                         array(
@@ -6266,7 +6275,7 @@ function login($library = null){
                                             'alias' => 'libraries',
                                             'type' => 'inner',
                                             'foreignKey' => false,
-                                            'conditions'=> array('libraries.id' => 'MultiAuthentication.id', 'libraries.status' => 'active' ,'libraries.library_subdomain' => $this->subdomain,'libraries.library_multi_authentiication' => '1')
+                                            'conditions'=> array('libraries.id' => 'MultiAuthentication.id', 'libraries.library_status' => 'active' ,'libraries.library_subdomain' => $this->subdomain,'libraries.library_multi_authentiication' => '1')
                                         ),
                                     )
                                  ));                                
