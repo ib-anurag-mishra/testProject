@@ -6278,7 +6278,7 @@ function login($library = null){
                                             'alias' => 'libraries',
                                             'type' => 'inner',
                                             'foreignKey' => false,
-                                            'conditions'=> array('libraries.id' => 'MultiAuthentication.id', 'libraries.library_status' => 'active' ,'libraries.library_subdomain' => $data['subdomain'],'libraries.library_multi_authentication' => '1')
+                                            'conditions'=> array('libraries.id = MultiAuthentication.id', 'libraries.library_status' => 'active' ,'libraries.library_subdomain' => $data['subdomain'],'libraries.library_multi_authentication' => '1')
                                         ),
                                     )
                                  ));                                
