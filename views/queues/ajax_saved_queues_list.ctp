@@ -6,8 +6,12 @@
     {
         ?>      
                 <div class="playlists-container">
+                    <?php
+                    foreach ($queueData as $key => $value) {
+                    ?>
                     <div class="row clearfix">
                         <?php
+                        /*
                         $i = 0;
                         foreach ($queueData as $key => $value)
                         {
@@ -44,7 +48,30 @@
                             <?php
                             $i++;
                         }
+                        */
                         ?>
+                        <?php
+
+                            
+
+                            if (!empty($value['QueueList']['queue_name'])) {
+                            ?>
+                                <div class="playlist-title">
+                                    <a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id']; ?>/0/<?php echo base64_encode($value['QueueList']['queue_name']); ?>">
+                                    <?php echo $value['QueueList']['queue_name']; ?></a>
+                                </div>
+                                <div class="playlist-length"><?php echo $this->Queue->getQueueListCountUnique($value['QueueDetail']);  ?> Songs</div>
+                            <?php
+
+                            }
+
+
+                        
+                        ?>
+                    </div>
+                    <?php
+                    }
+                    ?>                        
                     </div>
                 </div>           
         <?php
