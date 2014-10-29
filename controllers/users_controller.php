@@ -6264,6 +6264,9 @@ function login($library = null){
                                     $subdomains = $subdomains[0];  
                                     if(!empty($subdomains)) {
                                         $this->Session->write("subdomain", $subdomains);
+                                        $data['subdomain']=$this->Session->read("subdomain");
+                                    } else {
+                                        $this->Session->setFlash("You are not authorized to view this location.");
                                     }
                                 }
                                 $authMethodDetails = $this->MultiAuthentication->find('all', array(
@@ -6275,7 +6278,7 @@ function login($library = null){
                                             'alias' => 'libraries',
                                             'type' => 'inner',
                                             'foreignKey' => false,
-                                            'conditions'=> array('libraries.id' => 'MultiAuthentication.id', 'libraries.library_status' => 'active' ,'libraries.library_subdomain' => $this->subdomain,'libraries.library_multi_authentication' => '1')
+                                            'conditions'=> array('libraries.id' => 'MultiAuthentication.id', 'libraries.library_status' => 'active' ,'libraries.library_subdomain' => $data['subdomain'],'libraries.library_multi_authentication' => '1')
                                         ),
                                     )
                                  ));                                
