@@ -37,9 +37,9 @@
 				echo $this->Html->image(Configure::read('App.Music_Path') . $albumArtwork, array('alt' => 'album-detail-cover', 'width' => '250', 'height' => '250'));
 
 				if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron")):
-					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']],0,0,$album['Album']['ProdID']);
+					echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']],5,0,$album['Album']['ProdID']);
 					echo $this->Form->hidden('empty', array('value' => 'album', 'id' => $album['Album']['ProdID'], 'name' => false, 'data-provider' => $album["Album"]["provider_type"]));
-					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy'));
+					echo $this->Html->link('', 'javascript:void(0)', array('class' => 'add-to-playlist-button no-ajaxy', 'onclick' => "ga('send', 'event', 'Artist View', 'Toggle Playlist', 'Album')"));
 					?>
 				
 				<?php /*<div class="wishlist-popover"> */?>
@@ -52,7 +52,7 @@
 					<li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
 
 				</ul> 
-				<a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
+				<a class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist" onclick="ga('send', 'event', 'Artist View', 'Add to Wishlist', 'Album')"></a>
 				<?php endif; ?>
 
 			</div>
@@ -116,7 +116,7 @@
 				    $artistName = substr($artistName, 0, 90) . ' ...';
 				endif;
 
-				echo $this->Html->link($this->getTextEncode($artistName), array('controller' => 'artists', 'action' => 'album', base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist'])), array('title' => $this->getTextEncode($artistNames)));
+				echo $this->Html->link($this->getTextEncode($artistName), array('controller' => 'artists', 'action' => 'album', base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist'])), array('title' => $this->getTextEncode($artistNames), 'onclick' => "ga('send', 'event', 'Artist View', 'Click', 'Artist Name')"));
 				?>
 
 			</div>
@@ -170,7 +170,7 @@
 							$song_title = $albumSong['Song']['SongTitle'];
 						endif;
 
-						echo $html->image('play.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $album_key . $key, "onClick" => 'loadSong("' . $albumSong['streamUrl'] . '", "' . base64_encode($song_title) . '","' . base64_encode($albumSong['Song']['ArtistText']) . '",' . $albumSong['totalseconds'] . ',"' . $albumSong['Song']['ProdID'] . '","' . $albumSong['Song']['provider_type'] . '");'));
+						echo $html->image('play.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $album_key . $key, "onClick" => 'ga("send", "event", "Artist View", "Stream", "Song", 1); loadSong("' . $albumSong['streamUrl'] . '", "' . base64_encode($song_title) . '","' . base64_encode($albumSong['Song']['ArtistText']) . '",' . $albumSong['totalseconds'] . ',"' . $albumSong['Song']['ProdID'] . '","' . $albumSong['Song']['provider_type'] . '");'));
 
 						if (!empty($albumSong['streamUrl']) || !empty($song_title)):
 							$playItem = array('playlistId' => 0, 'songId' => $albumSong['Song']['ProdID'], 'providerType' => $albumSong['Song']['provider_type'], 'label' => $song_title, 'songTitle' => $song_title, 'artistName' => $albumSong['Song']['ArtistText'], 'songLength' => $albumSong['totalseconds'], 'data' => $albumSong['streamUrl']);
@@ -290,14 +290,14 @@
 							echo $this->Html->link('Download Now', 'javascript:void(0)', array(
 								'class' => 'add-to-wishlist',
 								'title' => __('"IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."', true),
-								'onclick' => 'return wishlistDownloadOthersHome("' . $albumSong["Song"]['ProdID'] . '", "0", "' . $albumSong['Song']['CdnPath'] . '", "' . $albumSong['Song']['FullLength_SaveAsName'] . '", "' . $albumSong["Song"]["provider_type"] . '");'
+								'onclick' => 'ga("send", "event", "Artist View", "Download", "Song", 1); return wishlistDownloadOthersHome("' . $albumSong["Song"]['ProdID'] . '", "0", "' . $albumSong['Song']['CdnPath'] . '", "' . $albumSong['Song']['FullLength_SaveAsName'] . '", "' . $albumSong["Song"]["provider_type"] . '");'
 
 							));
 							?>
 							<![endif]>
-                                                        <!--[if IE]>
-                                                                <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>", "<?php echo $albumSong['Song']['CdnPath']; ?>", "<?php echo $albumSong['Song']['FullLength_SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
-                                                        <![endif]-->                                                        
+                            <!--[if IE]>
+                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='ga('send, 'event', 'Artist View', 'Download, 'Song', 1); wishlistDownloadIEHome("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>", "<?php echo $albumSong['Song']['CdnPath']; ?>", "<?php echo $albumSong['Song']['FullLength_SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                            <![endif]-->                                                        
 							
 						</span>
 						
