@@ -31,7 +31,7 @@ $replace = array('','');
 						?>
 				<li>
 					<div class="album-cover-container">
-						<?php echo $html->link($html->image($value['topAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Album']['ArtistText']), $value['Album']['ProdID'], base64_encode($value['Album']['provider_type'])), array('onclick' => "ga('send', 'event', 'Top Albums', 'Artwork Click', '$count-$trackingTitle')", 'class' => 'first', 'escape' => false)) ?>
+						<?php echo $html->link($html->image($value['topAlbumImage'], array('alt' => 'Album Cover Art')), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Album']['ArtistText']), $value['Album']['ProdID'], base64_encode($value['Album']['provider_type'])), array('onclick' => "ga('send', 'event', 'Top Albums', 'Artwork Click', '$count-$trackingTitle')", 'class' => 'first', 'escape' => false)) ?>
 						<div class="ranking">
 							<?php echo $count; ?>
 						</div>
