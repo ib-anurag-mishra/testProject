@@ -914,7 +914,7 @@ $(document).ready(function() {
 
 
 
-    $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
+    // $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
 
     $(document).on('click', '.saved-queues-page .add-to-playlist-button', function() {
 
