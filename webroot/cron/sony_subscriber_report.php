@@ -536,7 +536,7 @@ function sendMail($file_path, $file_name, $previousMonth) {
 }
 
 function sonyReport($previousMonth) {
-	$dbconfig = array('host' => '192.168.100.114', 'user' => 'freegal_prod', 'pass' => '}e47^B1EO9hD');
+	$dbconfig = array('host' => '192.168.100.52', 'user' => 'freegal_prod', 'pass' => '}e47^B1EO9hD');
 	//$dbconfig = array('host' => 'localhost;port=3306', 'user' => 'root', 'pass' => '');
 	
 	$sections = array(
