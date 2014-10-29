@@ -6267,7 +6267,7 @@ function login($library = null){
                                     }
                                 }
                                 $authMethodDetails = $this->MultiAuthentication->find('all', array(
-                                    'conditions' => array('MultiAuthentication.library_authentication_num LIKE "%'.$this->cardNo.'%"'),
+                                    'conditions' => array('MultiAuthentication.library_authentication_num LIKE "%'.$cardNo.'%"'),
                                     'fields' => array('library_authentication_method','libraries.library_territory'),
                                     'joins' => array(
                                         array(
