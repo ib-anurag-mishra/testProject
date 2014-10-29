@@ -524,7 +524,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">
 							<div class="select-arrow-ie8"></div>
 							<div class="select-arrow-fix">
-								<select name="type" id="master-filter" class="master-search-select">
+								<select title="Search Options" name="type" id="master-filter" class="master-search-select">
 									<option value="all"><?php __('Search All'); ?></option>
 									<option value="album"><?php echo __('Albums', true); ?></option>
 									<option value="artist"><?php echo __('Artists', true); ?></option>
