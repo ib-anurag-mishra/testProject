@@ -295,7 +295,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 		</header>
 		<form id="FormRename" action="#">
 			<div class="rename-form-container">
-				<label id="RenameQueueMessage"></label> <label for="name">Name:</label>
+				<label id="RenameQueueMessage"></label> 
+                <label for="name"><?php __('Name'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
 				<label for="description"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
@@ -313,7 +314,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '') {
 		<header><?php __('Create Playlist'); ?></header>
 		<form id="FormDelete" action="#">
 			<div class="rename-form-container">
-				<label id="CreateQueueMessage"></label> <label for="name">Name:</label>
+				<label id="CreateQueueMessage"></label> <label for="name"><?php __('Name'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
 				<label for="description"><?php __('Description'); ?>:</label>
 				<?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
