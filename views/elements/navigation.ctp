@@ -163,6 +163,7 @@ function createQueue() {
                             $(document).find('.playlists-shadow-container').find('.playlists-scrollable').append(response);
 
                             $(document).find('.playlists-shadow-container').find('.loader').remove();
+                            $('#ajaxflashMessage44').fadeOut(5000);
                           }
                     });
                 }
