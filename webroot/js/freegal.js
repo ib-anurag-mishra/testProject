@@ -1961,7 +1961,7 @@ function addToQueueResponse(response, type)
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById("ajaxflashMessage44").style.background = "red";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding ' + type + ' to Playlist.';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'There was a problem adding ' + type + ' to playlist.';
         $('#ajaxflashMessage44').fadeOut(5000);
 
         return false;
@@ -1975,7 +1975,7 @@ function addToQueueResponse(response, type)
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById("ajaxflashMessage44").style.background = "red";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is already added to Playlist';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is already added to playlist';
         $('#ajaxflashMessage44').fadeOut(5000);
     }
     else if (msg === 'invalid_for_stream')
@@ -1988,7 +1988,7 @@ function addToQueueResponse(response, type)
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById("ajaxflashMessage44").style.background = "red";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is not allowed for Streaming';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is not available for streaming';
         $('#ajaxflashMessage44').fadeOut(5000);
     }
     else
@@ -2003,7 +2003,7 @@ function addToQueueResponse(response, type)
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added ' + type + ' to Playlist';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added ' + type + ' to playlist';
             $('#ajaxflashMessage44').fadeOut(5000);
 
         }
@@ -2017,7 +2017,7 @@ function addToQueueResponse(response, type)
 
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding ' + type + ' to Playlist.';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'There was a problem adding ' + type + ' to playlist.';
             $('#ajaxflashMessage44').fadeOut(5000);
             return false;
         }
@@ -2056,7 +2056,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding song to Playlist.';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'There was a problem adding song to playlist.';
                 $('#ajaxflashMessage44').fadeOut(5000);
 
                 return false;
@@ -2070,7 +2070,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Playlist';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
             else if (msg === 'invalid_for_stream')
@@ -2083,7 +2083,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not allowed for Streaming';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not available for streaming';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
             else
@@ -2112,7 +2112,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "red";
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to playlist.';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'There was a problem adding song to playlist.';
                     $('#ajaxflashMessage44').fadeOut(5000);
                     return false;
                 }
@@ -2126,7 +2126,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to playlist is unsuccessfull';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to playlist was unsuccessfull';
             $('#ajaxflashMessage44').fadeOut(5000);
         }
     });
@@ -2164,7 +2164,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding Album to Playlist.';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'There was a problem adding album to playlist.';
                 $('#ajaxflashMessage44').fadeOut(5000);
 
                 return false;
@@ -2178,7 +2178,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is already added to playlist';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This album is already added to playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
             else if (msg === 'invalid_for_stream')
@@ -2191,7 +2191,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is not allowed for Streaming';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This album is not available for streaming';
                 $('#ajaxflashMessage44').fadeOut(5000);
             }
             else
@@ -2206,7 +2206,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added Album to Playlist';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added album to playlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
 
                 }
@@ -2220,7 +2220,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "red";
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding Album to Playlist.';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'There was a problem adding album to playlist.';
                     $('#ajaxflashMessage44').fadeOut(5000);
                     return false;
                 }
@@ -2234,7 +2234,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding Album to playlist is unsuccessfull';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding album to playlist was unsuccessfull';
             $('#ajaxflashMessage44').fadeOut(5000);
         }
     });
@@ -2274,7 +2274,7 @@ function removeSong(pdId, divId) {
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in deleting song from Playlist';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'There was a problem deleting song from playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
 
                 return false;
@@ -2302,7 +2302,7 @@ function removeSong(pdId, divId) {
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'You need to login in for Removing a Song from your Playlist';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'You need to login to remove a song from your playlist';
                 $('#ajaxflashMessage44').fadeOut(5000);
 
             }
@@ -2319,7 +2319,7 @@ function removeSong(pdId, divId) {
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                     $('.clearfix' + divId).remove();
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Playlist';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from playlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
                 
 
@@ -2334,7 +2334,7 @@ function removeSong(pdId, divId) {
 
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "red";
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when removing from Playlist.';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'There was a problem when removing song from playlist.';
                     $('#ajaxflashMessage44').fadeOut(5000);
                     
                     return false;
@@ -2349,7 +2349,7 @@ function removeSong(pdId, divId) {
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for removing song from playlist is unsuccessfull';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for removing song from playlist was unsuccessfull';
             $('#ajaxflashMessage44').fadeOut(5000);
             
         }
