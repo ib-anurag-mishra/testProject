@@ -1166,6 +1166,7 @@ $(document).ready(function() {
         $('.rename-queue-dialog-box').removeClass('active');
         $('.delete-queue-dialog-box').removeClass('active');
         $('.create-queue-dialog-box').removeClass('active');
+        $('#CreateQueueMessage').css({display:'none'});
     });
 
 
