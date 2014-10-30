@@ -1482,6 +1482,63 @@ $(document).ready(function() {
                             });
                             $siblings_carousel.children('ul').css({width:newCarouselWidth});
 
+
+                            /* reload jquery for mouse events for .album-container */
+                            $('.artist-page').find('.album-container').on('mouseleave',function(){
+                                $(this).find('ul').removeClass('active');
+                            });
+
+
+                            $('.artist-page').find('.album-container').on('mouseenter',function(){
+                                $this = $(this);
+                                $this.find('.playlist-menu-icon').css({opacity:.5});
+                                $this.find('.album-preview').css({opacity:.5});
+                                $this.find('.wishlist-icon').css({opacity:.5});
+
+                            });
+
+                            $('.artist-page').find('.album-container').on('mouseleave',function(){
+                                $this = $(this);
+                                $this.find('.playlist-menu-icon').css({opacity:0});
+                                $this.find('.album-preview').css({opacity:0});
+                                $this.find('.wishlist-icon').css({opacity:0});
+
+                            });    
+
+                            $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseenter',function(){
+                                $(this).css({opacity:1});
+
+                            });
+
+                            $('.artist-page').find('.album-container').children('.playlist-menu-icon').on('mouseleave',function(){
+                                $(this).css({opacity:.5});
+
+                            });
+
+                            $('.artist-page').find('.album-container').children('.album-preview').on('mouseenter',function(){
+                                $(this).css({opacity:1});
+
+                            });
+
+                            $('.artist-page').find('.album-container').children('.album-preview').on('mouseleave',function(){
+                                $(this).css({opacity:.5});
+
+                            });
+
+                            $('.artist-page').find('.album-container').children('.wishlist-icon').on('mouseenter',function(){
+                                $(this).css({opacity:1});
+                                $(this).prev('ul').removeClass('active');
+
+                            });
+
+                            $('.artist-page').find('.album-container').children('.wishlist-icon').on('mouseleave',function(){
+                                $(this).css({opacity:.5});
+
+                            });  
+
+
+
+
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                         }
