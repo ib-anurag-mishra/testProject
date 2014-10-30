@@ -732,12 +732,11 @@ function addToWishlist(prodId, providerType)
                 {
                     $('.beforeClick').show();
                     $('.afterClick').hide();
-                    if (languageSet === 'en') {
-                        document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
-                    } else {
-                        document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
-                    }
-                    //document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+                    document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+                    document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'This song has been added to your wishlist';
+                    $('#ajaxflashMessage44').fadeOut(5000);
                 }
                 else
                 {
