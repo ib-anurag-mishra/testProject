@@ -154,7 +154,7 @@
 							?>
 							<input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album" data-provider="<?= $album["Album"]["provider_type"] ?>" />
 							<?
-							echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']],0,0,$album['Album']['ProdID']);
+							echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']],5,$trackingAlbumTitle,$album['Album']['ProdID'],'Artist Album');
 							?>
 							<a onclick="ga('send', 'event', 'Artist Albums', 'Toggle Playlists', '<?php echo $trackingAlbumTitle ?>')" class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
 							<ul>
@@ -406,7 +406,7 @@
 						<div class="wishlist-popover">
 							<?php
 							$wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
-							echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value['Video']["provider_type"]);
+							echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value['Video']["provider_type"], 1, 'Artist Videos', $trackingVideoTitle);
 							?>
 						</div>
 						<?php } ?>

@@ -365,45 +365,85 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getAlbumStreamLabel($albumSongs,$flag = 0,$analytics = null,$AlbumID = 0) {
+//     function getAlbumStreamLabel($albumSongs,$flag = 0,$analytics = null,$AlbumID = 0) {
 
-        $albumSongs = base64_encode(json_encode($albumSongs));
+//         $albumSongs = base64_encode(json_encode($albumSongs));
         
-        if(empty($flag)){
-            $str = <<<EOD
-       <a onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
-EOD;
-            return $str;
-        }else if ($flag == 1){
-            $stream_label = __('Stream Now', true);
-            $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="play-btn-icon toggleable">$stream_label</button>
-EOD;
-            return $str;            
+//         if(empty($flag)){
+//             $str = <<<EOD
+//        <a onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+// EOD;
+//             return $str;
+//         }else if ($flag == 1){
+//             $stream_label = __('Stream Now', true);
+//             $str = <<<EOD
+//                 <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="play-btn-icon toggleable">$stream_label</button>
+// EOD;
+//             return $str;            
             
-        }else if($flag == 2){
+//         }else if($flag == 2){
        
-$str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-artist">Stream Artist</button>
-EOD;
-            return $str;
+// $str = <<<EOD
+//             <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-artist">Stream Artist</button>
+// EOD;
+//             return $str;
             
-       }else if($flag == 3){
+//        }else if($flag == 3){
        
-$str = <<<EOD
-            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-now-btn">Stream Now</button>
-EOD;
-            return $str;
+// $str = <<<EOD
+//             <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-now-btn">Stream Now</button>
+// EOD;
+//             return $str;
             
-       }else if($flag == 4){
+//        }else if($flag == 4){
 
+//             $stream_label = __('Stream Now', true);
+//             $str = <<<EOD
+//                 <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID); ga('send', 'event', 'Top Albums', 'Stream', '$analytics', 1)" class="play-btn-icon toggleable">$stream_label</button>
+// EOD;
+//             return $str;            
+//        }
+     
+//     }
+    function getAlbumStreamLabel($albumSongs, $flag = 0, $analytics = null, $AlbumID = 0, $section = null) {
+        $albumSongs = base64_encode(json_encode($albumSongs));
+        if(empty($flag)) {
             $stream_label = __('Stream Now', true);
             $str = <<<EOD
-                <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID); ga('send', 'event', 'Top Albums', 'Stream', '$analytics', 1)" class="play-btn-icon toggleable">$stream_label</button>
+            <a onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="album-preview" href="javascript:void(0);" >$stream_label</a>
 EOD;
-            return $str;            
-       }
-     
+            return $str;
+        } else if ($flag == 1) {
+            $stream_label = __('Stream Now', true);
+            $str = <<<EOD
+            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="play-btn-icon toggleable">$stream_label</button>
+EOD;
+            return $str;
+        } else if($flag == 2) {
+            $stream_label = __('Stream Artist', true);
+            $str = <<<EOD
+            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-artist">$stream_label</button>
+EOD;
+            return $str;
+        } else if($flag == 3) {
+            $stream_label = __('Stream Now', true);
+            $str = <<<EOD
+            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID);" class="stream-now-btn">$stream_label</button>
+EOD;
+            return $str;
+        } else if($flag == 4) {
+            $stream_label = __('Stream Now', true);
+            $str = <<<EOD
+            <button onclick="javascript:loadAlbumData('$albumSongs',$AlbumID); ga('send', 'event', 'Top Albums', 'Stream', '$analytics', 1)" class="play-btn-icon toggleable">$stream_label</button>
+EOD;
+            return $str;
+        } else if($flag == 5) {
+            $stream_label = __('Stream Now', true);
+            $str = <<<EOD
+            <a onclick="javascript:loadAlbumData('$albumSongs',$AlbumID); ga('send', 'event', '$section', 'Stream', '$analytics', 1)" class="album-preview" href="javascript:void(0);" >$stream_label</a>
+EOD;
+            return $str;
+        }
     }
     
     /* Function name : getfeaturedStreamLabel
