@@ -1428,7 +1428,7 @@ STR;
 
                 }
 	
-		if((count($data)>100){
+		if(count($data)>100){
 			$data = array_slice($data,0,100);
 		}
                 
