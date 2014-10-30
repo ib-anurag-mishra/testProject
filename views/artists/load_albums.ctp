@@ -8,6 +8,7 @@
     }
     ?>
     <li>
+            <!--
             <div class="album-container">
                     <?php                                         
                     $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']);
@@ -41,6 +42,59 @@
 
                     </a>
             </div>
+            -->
+
+            <div class="album-container">
+                <?php  $albumArtwork = $this->Token->artworkToken($album['Album']['CdnPath'] . "/" . $album['Album']['Image_SaveAsName']); ?>
+                <a onclick="ga('send', 'event', 'Artist Albums', 'Artwork Click', '<?php echo $trackingAlbumTitle ?>')" 
+                    href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
+                    <img
+                    src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>"
+                    width="162" height="162" alt="">
+                </a>
+
+                <?php
+                if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
+                {
+                    ?>
+                    <input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album" data-provider="<?= $album["Album"]["provider_type"] ?>" />
+                    <?
+                    echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']],5,$trackingAlbumTitle,$album['Album']['ProdID'],'Artist Album');
+                    ?>
+                    <a onclick="ga('send', 'event', 'Artist Albums', 'Toggle Playlists', '<?php echo $trackingAlbumTitle ?>')" class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
+                    <ul>
+                        <li><a href="#" class="create-new-playlist"><?php __('Create New Playlist'); ?>...</a></li>
+
+                    </ul>
+                    <a onclick="ga('send', 'event', 'Artist Albums', 'Add to Wishlist', '<?php echo $trackingAlbumTitle ?>')" class="wishlist-icon toggleable no-ajaxy" href="#" title="Add to Wishlist"></a>
+                    <?php
+                    /*
+                <a class="add-to-playlist-button no-ajaxy"
+                    href="javascript:void(0)"></a>
+                    */
+                    ?>
+                    <?php
+                    /*
+                <div class="wishlist-popover">
+                    <input type="hidden" id="<?= $album['Album']['ProdID'] ?>"
+                        value="album" /> <a class="add-to-playlist"
+                        href="javascript:void(0)">Add To Playlist</a>
+                </div>
+                */
+                ?>
+                <?php
+                }
+                ?>
+                <a
+                    href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
+
+
+                    <?php
+                    $image = Configure::read('App.Music_Path') . $albumArtwork;
+                    ?>
+
+                </a>
+            </div>            
             <div class="album-title">
                     <a
                             title="<?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>"
