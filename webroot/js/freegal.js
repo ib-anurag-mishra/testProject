@@ -710,7 +710,7 @@ function addToWishlist(prodId, providerType)
         url: webroot + "homes/addToWishlist", // URL to request
         data: data, // post data
         success: function(response) {
-            alert(response);
+            //alert(response);
             var msg = response.substring(0, 5);
             if (msg === 'error')
             {
@@ -734,7 +734,7 @@ function addToWishlist(prodId, providerType)
                     $('.afterClick').hide();
                     document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
                     document.getElementById("ajaxflashMessage44").style.display = "block";
-                    document.getElementById("ajaxflashMessage44").style.background = "red";
+                    document.getElementById("ajaxflashMessage44").style.background = "#52c6ec";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'This song has been added to your wishlist';
                     $('#ajaxflashMessage44').fadeOut(5000);
                 }
