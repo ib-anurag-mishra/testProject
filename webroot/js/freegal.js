@@ -1898,6 +1898,7 @@ function addToAlbumTest(queueID, addTo)
             success: function(response)
             {
                 //alert(response);
+                console.log(response);
                 addToQueueResponse(response, type);
             },
             error: function(jqXHR, textStatus, errorThrown) {
