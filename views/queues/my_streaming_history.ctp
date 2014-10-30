@@ -103,7 +103,7 @@ $ieVersion =  ieversion();
                        
                         if( $this->Session->read('library_type') == 2 && $streamingArr['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingArr['Country']['StreamingStatus'] == 1){
                                                             
-                                $filePath = $this->Token->streamingToken($streamingArr['Song']['CdnPath']."/".$streamingArr['Song']['streamingData']);
+                                $filePath = $this->Token->streamingToken($streamingArr['Song']['CdnPath']."/".$streamingArr['Song']['FullLength_SaveAsName']);
 
                                 if(!empty($filePath))
                                 {

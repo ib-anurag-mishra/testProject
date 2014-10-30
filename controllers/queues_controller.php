@@ -292,11 +292,6 @@ class QueuesController extends AppController
                     'alias' => 'QueueList',
                     'type' => 'LEFT',
                     'conditions' => array('QueueList.queue_id = StreamingHistory.songs_queue_id')
-                ),
-                array('table' => 'File',
-                    'alias' => 'Full_Files',
-                    'type' => 'LEFT',
-                    'conditions' => array('Song.FullLength_FileID = Full_Files.FileID')
                 )
             ),
             'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type, QueueList.queue_id',
@@ -305,7 +300,11 @@ class QueuesController extends AppController
                 'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                     Configure::read('App.twoWeekEndDate'))
             ),
-            'fields' => array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name', 'QueueList.queue_type', 'Song.Advisory', 'Song.FullLength_Duration', 'Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Song.provider_type', 'StreamingHistory.ProdID', 'StreamingHistory.provider_type', 'StreamingHistory.patron_id', 'StreamingHistory.library_id', 'StreamingHistory.consumed_time', 'StreamingHistory.createdOn', 'Song.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'Song.CdnPath', 'Song.FullLength_SaveAsName'),
+            'fields' => array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name', 'QueueList.queue_type',
+                'Song.Advisory', 'Song.FullLength_Duration', 'Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Song.provider_type',
+                'StreamingHistory.ProdID', 'StreamingHistory.provider_type', 'StreamingHistory.patron_id', 'StreamingHistory.library_id', 
+                'StreamingHistory.consumed_time', 'StreamingHistory.createdOn', 'Song.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 
+                'Song.CdnPath', 'Song.FullLength_SaveAsName'),
             'order' => "$songSortBy $sortType"));
 
         $this->set('streamingData', $streamingResults);
