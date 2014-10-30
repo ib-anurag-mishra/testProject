@@ -33,7 +33,7 @@ class Streaming
     var $STAGE_FREEGAL_DB = 'freegal';
     var $STAGE_ORCHARD_DB = 'theorchard';
     //set the database connection for production 
-    var $PODUCTION_DB_HOST = '192.168.100.114';
+    var $PODUCTION_DB_HOST = '192.168.100.52';
     var $PODUCTION_DB_USER = 'freegal_prod';
     var $PODUCTION_DB_PASS = '}e47^B1EO9hD';
     var $PODUCTION_SONY_DB = 'sony';
