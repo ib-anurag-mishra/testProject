@@ -1878,7 +1878,6 @@ function addToAlbumTest(queueID, addTo)
 {
     if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
     {
-        console.log(queueID);
         multiSongCreateNewPlaylist(queueID);
     }
     else
@@ -1891,7 +1890,6 @@ function addToAlbumTest(queueID, addTo)
             type = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
             ProdID = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
         }
-        console.log(queueID);
 
         $.ajax({
             type: "post",
@@ -1899,8 +1897,7 @@ function addToAlbumTest(queueID, addTo)
             url: webroot + 'queues/queueListAlbums',
             success: function(response)
             {
-                alert(response);
-                console.log(response);
+                //alert(response);
                 addToQueueResponse(response, type);
             },
             error: function(jqXHR, textStatus, errorThrown) {
