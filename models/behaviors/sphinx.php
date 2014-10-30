@@ -15,7 +15,7 @@ class SphinxBehavior extends ModelBehavior
      * Used for runtime configuration of model
      */
     var $runtime = array();
-    var $_defaults = array('server' => '192.168.100.114', 'port' => 9312);
+    var $_defaults = array('server' => '192.168.100.52', 'port' => 9312);
 	
 	//192.168.100.114
 
