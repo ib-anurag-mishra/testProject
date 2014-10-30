@@ -150,7 +150,7 @@
 			</div>
 		</div>
                <?php } elseif (!empty($trackDetails)) { ?>
-		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming2</span></div>
+		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
                 <?php
                 echo $session->flash();
                 ?>                
@@ -206,26 +206,26 @@
 														<?php
 														if($libraryDownload == '1' && $patronDownload == '1') { ?>
                                                     
-                                                    <form method="Post" id="form<?php echo $value["Songs"]["ProdID"]; ?>" action="/homes/userDownload">
-                                                        <input type="hidden" name="ProdID" value="<?php echo $value["Songs"]["ProdID"]; ?>" />
-                                                        <input type="hidden" name="ProviderType" value="<?php echo $value["Songs"]["provider_type"]; ?>" />
+                                                    <form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/userDownload">
+                                                        <input type="hidden" name="ProdID" value="<?php echo $value["Song"]["ProdID"]; ?>" />
+                                                        <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
 
-                                                        <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Songs"]["ProdID"]; ?>">
+                                                        <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Song"]["ProdID"]; ?>">
                                                             <![if !IE]>
                                                             <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>"
-                                                               onclick='return wishlistDownloadOthersHome("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo $value['Songs']['SCdnPath']; ?>", "<?php echo $value['Songs']['SSaveAsName']; ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'>
+                                                               onclick='return wishlistDownloadOthersHome("<?php echo $value["Song"]['ProdID']; ?>", "0", "<?php echo $value['Song']['SCdnPath']; ?>", "<?php echo $value['Song']['SSaveAsName']; ?>", "<?php echo $value["Song"]["provider_type"]; ?>");'>
                                                                    <?php __('Download Now'); ?>
                                                             </a>
                                                             <![endif]>
                                                             <!--[if IE]>
-                                                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>", "<?php echo $value['Songs']['SCdnPath']; ?>", "<?php echo $value['Songs']['SSaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                                                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Song"]['ProdID']; ?>", "0" , "<?php echo $value["Song"]["provider_type"]; ?>", "<?php echo $value['Song']['SCdnPath']; ?>", "<?php echo $value['Song']['SSaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                             <![endif]-->
                                                         </span>
 
-                                                        <span class="afterClick" id="downloading_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;">
+                                                        <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;">
                                                             <a  class="add-to-wishlist"  >
                                                                 <?php __("Please Wait"); ?>...
-                                                                <span id="wishlist_loader_<?php echo $value["Songs"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;">
+                                                                <span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;">
                                                                     <?php echo $html->image('ajax-loader_black.gif'); ?>
                                                                 </span> 
                                                             </a> 
@@ -267,7 +267,7 @@
 			</div>
 		</div>                
                 <?php } else if(!empty($albumSongs)) { ?>
-		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming3</span></div>
+		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
                 <?php
                 echo $session->flash();
                 ?>                

@@ -211,6 +211,7 @@ class QueueListDetailsController extends AppController
                 }
             }
             $this->set('trackDetails', $trackDetails);
+            
         }
     }
 
