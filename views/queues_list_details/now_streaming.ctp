@@ -150,7 +150,7 @@
 			</div>
 		</div>
                <?php } elseif (!empty($trackDetails)) { ?>
-		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
+		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming2</span></div>
                 <?php
                 echo $session->flash();
                 ?>                
@@ -267,7 +267,7 @@
 			</div>
 		</div>                
                 <?php } else if(!empty($albumSongs)) { ?>
-		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
+		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming3</span></div>
                 <?php
                 echo $session->flash();
                 ?>                
