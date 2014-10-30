@@ -1878,7 +1878,7 @@ function addToAlbumTest(queueID, addTo)
 {
     if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
     {
-        
+        console.log(queueID);
         multiSongCreateNewPlaylist(queueID);
     }
     else
