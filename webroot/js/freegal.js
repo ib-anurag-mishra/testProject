@@ -1890,6 +1890,7 @@ function addToAlbumTest(queueID, addTo)
             type = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
             ProdID = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
         }
+        console.log(queueID);
 
         $.ajax({
             type: "post",
