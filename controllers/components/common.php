@@ -1427,6 +1427,10 @@ STR;
                     }  
 
                 }
+	
+		if((count($data)>100){
+			$data = array_slice($data,0,100);
+		}
                 
                 Cache::write($cacheVariableName . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
