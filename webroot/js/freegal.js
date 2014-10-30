@@ -1897,7 +1897,7 @@ function addToAlbumTest(queueID, addTo)
             url: webroot + 'queues/queueListAlbums',
             success: function(response)
             {
-                alert(response);
+                //alert(response);
                 addToQueueResponse(response, type);
             },
             error: function(jqXHR, textStatus, errorThrown) {
