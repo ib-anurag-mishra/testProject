@@ -411,7 +411,7 @@ class QueuesController extends AppController
      */
     function addSongToPlaylist($prodID, $queueId, $type)
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
         $songDetails = array_pop($this->Common->getSongsDetails($prodID));
 
         if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) && 
