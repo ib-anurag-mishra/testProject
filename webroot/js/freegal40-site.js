@@ -1534,7 +1534,64 @@ $(document).ready(function() {
                             $('.artist-page').find('.album-container').children('.wishlist-icon').on('mouseleave',function(){
                                 $(this).css({opacity:.5});
 
-                            });  
+                            });
+
+                            $(document).find('.wishlist-icon').on('click', function(e) {
+                                e.preventDefault();
+
+                                if ($(this).hasClass('wishlist-icon'))
+                                {
+                                    var ProdID = $(this).parent().find('input[type="hidden"]').attr('id');
+                                    var Provider = $(this).parent().find('input[type="hidden"]').attr('data-provider');
+                                    var type = $(this).parent().find('input[type="hidden"]').attr('value');
+
+                                    console.log(ProdID);
+                                    console.log(Provider);
+                                    console.log(type);
+
+                                    $.ajax({
+                                        type: "post",
+                                        data: {'prodID': ProdID, 'provider_type': Provider, 'type': type},
+                                        url: webroot + 'homes/addToWishlistNewHome',
+                                        success: function(response)
+                                        {
+                                           
+                                            
+                                            displayMessage(response);
+                                        },
+                                        error: function(jqXHR, textStatus, errorThrown)
+                                        {
+                                            // log the error to the console
+                                            console.log(
+                                                    "The following error occured: " +
+                                                    textStatus, errorThrown);
+                                        }
+                                    });
+                                }
+                            });
+
+
+
+                            $('.artist-page').find('.playlist-menu-icon').on('click',function(e){
+                                e.preventDefault();
+                                
+                                var oldList = $(this).next('ul');
+                                oldList.empty();
+                                var queuelist = $(document).find('.playlist-options-new').find('ul').html();
+                                $(this).next('ul').append(queuelist).addClass('active');
+
+                            });
+
+                            $('.artist-page').find('.playlist-menu-icon').next('ul').on('mouseleave',function(){
+                                $(this).removeClass('active');
+
+                            });
+
+
+
+
+
+
 
 
 

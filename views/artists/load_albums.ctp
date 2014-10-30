@@ -45,7 +45,7 @@
             -->
 
             <div class="album-container">
-                <?php  $albumArtwork = $this->Token->artworkToken($album['Album']['CdnPath'] . "/" . $album['Album']['Image_SaveAsName']); ?>
+                <?php  $albumArtwork = $this->Token->artworkToken($album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
                 <a onclick="ga('send', 'event', 'Artist Albums', 'Artwork Click', '<?php echo $trackingAlbumTitle ?>')" 
                     href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
                     <img
