@@ -52,6 +52,7 @@
                 Router::connect('/users/ilhdlogin', array('controller' => 'users', 'action' => 'ilhdlogin', $library));
                 Router::connect('/users/mdlogin', array('controller' => 'users', 'action' => 'mdlogin', $library));
 		Router::connect('/users/mndlogin', array('controller' => 'users', 'action' => 'mndlogin', $library));
+                Router::connect('/users/multilogin', array('controller' => 'users', 'action' => 'multilogin', $library));
 		Router::connect('/libraries/patron/:id',array('controller' => 'libraries', 'action' => 'patron',$library),array('id' => '[0-9]+'));
     
 

@@ -245,7 +245,8 @@ Class LibrariesController extends AppController
                         'Library.customer_id',
                         'Library.library_streaming_hours',
 			'Library.optout_email_notification',
-			'Library.library_announcement'
+			'Library.library_announcement',
+                        'Library.library_multi_authentication'
                     ),
                     'contain' => array(
                         'User' => array(
