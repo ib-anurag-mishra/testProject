@@ -540,6 +540,16 @@ function login($library = null){
                         $this->log("users/logout: [update][libid=".$libraryId.", patronid=".$patronId.", id=".$patronDetails[0]['Currentpatron']['id'].", CNT=".count($patronDetails).", last inserted ID=".$this->Currentpatron->getLastInsertId()."]", "currentpatrons");
 			//writing to memcache and writing to both the memcached servers
 			Cache::delete("login_".$this->Session->read('library')."_".$libraryId."_".$patronId);
+			if($this->Session->read('multilogin') && ($this->Session->read('multilogin') != '')){
+				if($this->Session->read('referral')){
+					$redirectUrl = $this->Session->read('referral');
+					$this->Session->destroy();
+					$this->redirect($redirectUrl, null, true);
+				} else {
+					$this->Session->destroy();
+					$this->redirect(array('controller' => 'users', 'action' => 'multilogin'));
+				}
+			}
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 				$redirectUrl = $this->Session->read('referral_url');
 				$this->Session->destroy();
@@ -6411,6 +6421,7 @@ function login($library = null){
             $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
             $patronId = $authData['patronId'];
             if(!empty($authData['multilogin'])) {
+				$this->Session->write('multilogin','multilogin');
                 $authMethod = $existingLibraries['0']['MultiAuthentication']['library_authentication_method'];
                 $logoutUrl = $existingLibraries['0']['MultiAuthentication']['library_logout_url'];
             } else {
