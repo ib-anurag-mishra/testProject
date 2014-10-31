@@ -6182,12 +6182,12 @@ class SoapsController extends AppController {
             $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
             $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
             $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
-            $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').$this->Token->regularToken($data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
+            $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').$this->Token->regularToken($data[$cnt]['Songs']['SCdnPath']."/".$data[$cnt]['Songs']['SSaveAsName']);
             $obj->QueueAlbumProdID             = $data[$cnt]['AProduct']['AlbumProdID'];
             $obj->QueueSongProdID              = $data[$cnt]['SProduct']['SongProdID'];
             $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
             $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
-            $obj->QueueAlbumImage              = Configure::read('App.Music_Path').$this->Token->regularToken( $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
+            $obj->QueueAlbumImage              = Configure::read('App.Music_Path').$this->Token->regularToken( $data[$cnt]['Albums']['ACdnPath']."/".$data[$cnt]['Albums']['ASourceURL']);
             $obj->QueueFullLength_Duration     = $data[$cnt]['Songs']['FullLength_Duration'];
           
             if( 'T' == $data[$cnt]['Songs']['Advisory']) {
