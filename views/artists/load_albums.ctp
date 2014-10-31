@@ -1,10 +1,13 @@
 <script type="text/javascript" src="/js/ajaxify-html5.js"></script>
 <?php
+$find = array('\'', '"');
+$replace = array('', '');
 foreach ($albumData as $album_key => $album):
 //hide album if library block the explicit content
 if (($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] == 'T')) {
 	continue;
 }
+$trackingAlbumTitle = str_replace($find, $replace, $this->getTextEncode($album['Album']['AlbumTitle']));
 ?>
 <li>
 	<div class="album-container">
@@ -18,7 +21,7 @@ if (($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] == 
 			?>
 			<input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album" data-provider="<?= $album["Album"]["provider_type"] ?>" />
 			<?php
-			echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']],5,$trackingAlbumTitle,$album['Album']['ProdID'],'Artist Album');
+			echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']], 5, $trackingAlbumTitle, $album['Album']['ProdID'],'Artist Album');
 			?>
 			<a onclick="ga('send', 'event', 'Artist Albums', 'Toggle Playlists', '<?php echo $trackingAlbumTitle ?>')" class="playlist-menu-icon no-ajaxy toggleable" href="javascript:void(0)" ></a>
 			<ul>
@@ -37,7 +40,7 @@ if (($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] == 
 		</a>
 	</div>
 	<div class="album-title">
-		<a title="<?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>" href="/artists/view/<?php echo str_replace('/', '@', base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
+		<a onclick="ga('send', 'event', 'Artist Videos', 'Title Click', '<?php echo $trackingVideoTitle ?>')" title="<?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>" href="/artists/view/<?php echo str_replace('/', '@', base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>">
 
 		<b> <?php
 		if (strlen($album['Album']['AlbumTitle']) >= 50) {
@@ -49,7 +52,7 @@ if (($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] == 
 	</div>
 	<div class="genre">
 		<?php
-		echo __('Genre') . ": " . $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre'])), array("title" => $this->getTextEncode($album['Genre']['Genre']))) . '<br />';
+		echo __('Genre') . ": " . $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre'])), array('onclick' => "ga('send', 'event', 'Artist Videos', 'Genre Click', '$trackingVideoTitle')", "title" => $this->getTextEncode($album['Genre']['Genre']))) . '<br />';
 		if ($album['Album']['ArtistURL'] != '') {
 			echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank', 'style' => 'word-wrap:break-word;word-break:break-word;width:160px;'));
 			echo '<br />';
