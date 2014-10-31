@@ -134,15 +134,7 @@
                                 <?php
                             }
                             ?>
-                            <?php
-                            /*
-                            <div class="song-title">
-                                <?php
-                                echo $this->getValidText($this->getTextEncode($value['Songs']['SongTitle']));
-                                ?>
-                            </div>
-                            */
-                            ?>
+                           
 
                             <div class="song-title">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Songs']['SongTitle'])); ?>" href="/artists/view/<?php echo base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
@@ -191,12 +183,12 @@
                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Songs"]["ProdID"]; ?>">
                                                     <![if !IE]>
                                                     <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>"
-                                                       onclick='return wishlistDownloadOthersHome("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo $value['SongFile']['SCdnPath']; ?>", "<?php echo $value['SongFile']['SSaveAsName']; ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'>
+                                                       onclick='return wishlistDownloadOthersHome("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo $value['Songs']['SCdnPath']; ?>", "<?php echo $value['Songs']['SSaveAsName']; ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'>
                                                            <?php __('Download Now'); ?>
                                                     </a>
                                                     <![endif]>
                                                     <!--[if IE]>
-                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>", "<?php echo $value['SongFile']['SCdnPath']; ?>", "<?php echo $value['SongFile']['SSaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>", "<?php echo $value['Songs']['SCdnPath']; ?>", "<?php echo $value['Songs']['SSaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                     <![endif]-->
                                                 </span>
 

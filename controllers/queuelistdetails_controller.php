@@ -164,7 +164,7 @@ class QueueListDetailsController extends AppController
                 $minutes = $temp_arr[0];
                 $seconds = $temp_arr[1];
                 $total_seconds += $minutes * 60 + $seconds;                
-                $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+                $filePath = $this->Token->streamingToken($v['Songs']['SCdnPath'] . "/" . $v['Songs']['SSaveAsName']);
                 if (!empty($filePath))
                 {
                     $songPath = explode(':', $filePath);
@@ -187,7 +187,7 @@ class QueueListDetailsController extends AppController
             $albumSongs = $this->Common->getAlbumNowStreamingSongs($albumDetails['albumProdId'],$albumDetails['providerType'],$territory);
             foreach ($albumSongs as $k => $v)
             {
-                $filePath = $this->Token->streamingToken($v['Full_Files']['CdnPath'] . "/" . $v['Full_Files']['SaveAsName']);
+                $filePath = $this->Token->streamingToken($v['Song']['CdnPath'] . "/" . $v['Song']['FullLength_SaveAsName']);
                 if (!empty($filePath))
                 {
                     $songPath = explode(':', $filePath);
@@ -202,7 +202,7 @@ class QueueListDetailsController extends AppController
             $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'], $songPlaying['providerType'], $territory);
             foreach ($trackDetails as $k => $v)
             {                
-                $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+                $filePath = $this->Token->streamingToken($v['Song']['SCdnPath'] . "/" . $v['Song']['SSaveAsName']);
                 if (!empty($filePath))
                 {
                     $songPath = explode(':', $filePath);
@@ -211,6 +211,7 @@ class QueueListDetailsController extends AppController
                 }
             }
             $this->set('trackDetails', $trackDetails);
+            
         }
     }
 
@@ -257,7 +258,7 @@ class QueueListDetailsController extends AppController
             $minutes = $temp_arr[0];
             $seconds = $temp_arr[1];
             $total_seconds += $minutes * 60 + $seconds;            
-            $filePath = $this->Token->streamingToken($v['SongFile']['SCdnPath'] . "/" . $v['SongFile']['SSaveAsName']);
+            $filePath = $this->Token->streamingToken($v['Songs']['SCdnPath'] . "/" . $v['Songs']['SSaveAsName']);
             if (!empty($filePath))
             {
                 $songPath = explode(':', $filePath);
